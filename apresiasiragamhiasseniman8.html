@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presentasi Seni Rupa Indonesia</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    .font-display {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+    
+    .font-body {
+      font-family: 'Source Sans Pro', Arial, sans-serif;
+    }
+    
+    .slide {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    .slide.active {
+      display: flex;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    
+    .animate-slide-in {
+      animation: slideInLeft 0.6s ease-out forwards;
+    }
+    
+    .animate-scale-in {
+      animation: scaleIn 0.5s ease-out forwards;
+    }
+    
+    .timeline-item {
+      opacity: 0;
+      animation: slideInLeft 0.5s ease-out forwards;
+    }
+    
+    .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+    .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+    .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+    .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+    .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+    .timeline-item:nth-child(6) { animation-delay: 0.6s; }
+    .timeline-item:nth-child(7) { animation-delay: 0.7s; }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .progress-bar {
+      transition: width 0.3s ease;
+    }
+    
+    .btn-nav {
+      transition: all 0.2s ease;
+    }
+    
+    .btn-nav:hover:not(:disabled) {
+      transform: scale(1.05);
+    }
+    
+    .btn-nav:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    
+    .accordion-content.open {
+      max-height: 500px;
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .quiz-option:hover {
+      transform: translateX(5px);
+    }
+    
+    .quiz-option.selected {
+      border-color: #b45309;
+      background-color: #fef3c7;
+    }
+    
+    .quiz-option.correct {
+      border-color: #059669;
+      background-color: #d1fae5;
+    }
+    
+    .quiz-option.wrong {
+      border-color: #dc2626;
+      background-color: #fee2e2;
+    }
+    
+    .tab-btn {
+      transition: all 0.2s ease;
+    }
+    
+    .tab-btn.active {
+      background-color: #92400e;
+      color: white;
+    }
+    
+    .flip-card {
+      perspective: 1000px;
+      cursor: pointer;
+    }
+    
+    .flip-card-inner {
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    
+    .flip-card-front, .flip-card-back {
+      backface-visibility: hidden;
+    }
+    
+    .flip-card-back {
+      transform: rotateY(180deg);
+    }
+  </style>
+</head>
+<body class="h-full font-body bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
+  <div id="app" class="h-full flex flex-col overflow-auto">
+    <!-- Header Navigation -->
+    <header class="bg-gradient-to-r from-amber-800 to-orange-700 text-white px-4 py-3 shadow-lg flex-shrink-0">
+      <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+            <span class="text-xl">🎨</span>
+          </div>
+          <div>
+            <h1 class="font-display text-lg font-semibold" id="main-title">Apresiasi Seni Rupa</h1>
+            <p class="text-xs text-amber-200">Fase D / Kelas VIII</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="text-sm bg-white/20 px-3 py-1 rounded-full" id="slide-indicator">Slide 1/12</span>
+          <div class="hidden sm:flex gap-2">
+            <button onclick="goToSlide(0)" class="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-sm" title="Beranda">🏠</button>
+            <button onclick="toggleFullscreen()" class="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-sm" title="Layar Penuh">⛶</button>
+          </div>
+        </div>
+      </div>
+      <!-- Progress Bar -->
+      <div class="max-w-6xl mx-auto mt-2">
+        <div class="h-1 bg-white/20 rounded-full overflow-hidden">
+          <div id="progress-bar" class="progress-bar h-full bg-yellow-400 rounded-full" style="width: 8.33%"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-auto">
+      <!-- Slide 1: Title -->
+      <section class="slide active min-h-full flex-col items-center justify-center p-6" data-slide="0">
+        <div class="max-w-4xl mx-auto text-center animate-scale-in">
+          <div class="mb-8">
+            <span class="text-6xl mb-4 block">🖼️</span>
+            <h1 class="font-display text-3xl sm:text-5xl font-bold text-amber-900 mb-4 leading-tight">
+              Membandingkan 2 Karya Seni Rupa Seniman Indonesia
+            </h1>
+            <div class="w-32 h-1 bg-gradient-to-r from-amber-600 to-orange-500 mx-auto rounded-full mb-6"></div>
+            <p class="text-xl text-amber-700 font-medium">Unit III: Apresiasi Seni Rupa</p>
+            <p class="text-lg text-amber-600">Fase D / Kelas VIII</p>
+          </div>
+          <div class="bg-white/70 backdrop-blur rounded-2xl p-6 shadow-xl inline-block">
+            <p class="text-amber-800" id="teacher-display">👨‍🏫 Guru Pengampu</p>
+            <p class="text-amber-700" id="school-display">🏫 SMP Negeri Indonesia</p>
+          </div>
+          <div class="mt-8">
+            <button onclick="nextSlide()" class="bg-gradient-to-r from-amber-600 to-orange-500 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
+              Mulai Belajar →
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2: Apa itu Apresiasi Seni -->
+      <section class="slide min-h-full flex-col p-6" data-slide="1">
+        <div class="max-w-5xl mx-auto w-full">
+          <div class="text-center mb-8 animate-slide-in">
+            <span class="text-4xl">🤔</span>
+            <h2 class="font-display text-3xl font-bold text-amber-900 mt-2">Apa itu Apresiasi Seni?</h2>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover animate-scale-in">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-2xl">📖</div>
+                <h3 class="font-display text-xl font-semibold text-amber-800">Definisi</h3>
+              </div>
+              <p class="text-gray-700 leading-relaxed">
+                <strong>Apresiasi seni</strong> adalah penghargaan terhadap karya seni rupa dengan cara <em>menghayati</em>, <em>mengevaluasi</em>, dan memberi <em>kritik</em> tanpa kehilangan rasa simpati terhadap karya tersebut.
+              </p>
+              <div class="mt-4 p-3 bg-amber-50 rounded-lg border-l-4 border-amber-500">
+                <p class="text-sm text-amber-800">💡 <strong>Contoh Nyata:</strong> Ketika kamu mengunjungi Galeri Nasional Indonesia dan melihat lukisan "Penangkapan Pangeran Diponegoro" karya Raden Saleh, kamu tidak hanya melihat, tetapi juga merasakan emosi perjuangan yang digambarkan.</p>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-amber-600 to-orange-500 rounded-2xl p-6 shadow-lg text-white card-hover animate-scale-in" style="animation-delay: 0.2s">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl">🎯</div>
+                <h3 class="font-display text-xl font-semibold">Tujuan Pembelajaran</h3>
+              </div>
+              <ul class="space-y-3">
+                <li class="flex items-start gap-2">
+                  <span class="text-yellow-300">✓</span>
+                  <span>Menganalisis sejarah seni rupa Indonesia Modern</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-yellow-300">✓</span>
+                  <span>Menyebutkan tokoh dan judul karya seniman Indonesia</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-yellow-300">✓</span>
+                  <span>Menganalisis perbedaan karya dari dua seniman berbeda</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mt-6 bg-white rounded-2xl p-6 shadow-lg animate-slide-in" style="animation-delay: 0.3s">
+            <h4 class="font-display text-lg font-semibold text-amber-800 mb-4">🎨 Praktik Apresiasi Sederhana</h4>
+            <div class="grid sm:grid-cols-3 gap-4">
+              <div class="text-center p-4 bg-blue-50 rounded-xl">
+                <div class="text-3xl mb-2">👀</div>
+                <p class="font-medium text-blue-800">Mengamati</p>
+                <p class="text-sm text-blue-600">Perhatikan detail karya</p>
+              </div>
+              <div class="text-center p-4 bg-pink-50 rounded-xl">
+                <div class="text-3xl mb-2">💭</div>
+                <p class="font-medium text-pink-800">Merasakan</p>
+                <p class="text-sm text-pink-600">Hayati emosi dalam karya</p>
+              </div>
+              <div class="text-center p-4 bg-green-50 rounded-xl">
+                <div class="text-3xl mb-2">💬</div>
+                <p class="font-medium text-green-800">Menilai</p>
+                <p class="text-sm text-green-600">Berikan pendapatmu</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: Sejarah Seni Rupa -->
+      <section class="slide min-h-full flex-col p-6" data-slide="2">
+        <div class="max-w-5xl mx-auto w-full">
+          <div class="text-center mb-6 animate-slide-in">
+            <span class="text-4xl">📜</span>
+            <h2 class="font-display text-3xl font-bold text-amber-900 mt-2">Sejarah Seni Rupa Indonesia Modern</h2>
+            <p class="text-amber-600 mt-2">Klik setiap periode untuk melihat detail</p>
+          </div>
+
+          <div class="relative">
+            <!-- Timeline -->
+            <div class="absolute left-4 sm:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-400 via-orange-400 to-red-400 transform sm:-translate-x-1/2"></div>
+            
+            <div class="space-y-4">
+              <!-- Timeline Item 1 -->
+              <div class="timeline-item relative pl-12 sm:pl-0 sm:grid sm:grid-cols-2 sm:gap-8">
+                <div class="sm:text-right sm:pr-8">
+                  <div class="accordion bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <button onclick="toggleAccordion(this)" class="w-full p-4 text-left flex items-center justify-between hover:bg-amber-50">
+                      <div class="flex items-center gap-3">
+                        <span class="text-2xl">🌅</span>
+                        <div>
+                          <h3 class="font-semibold text-amber-800">Masa Perintisan</h3>
+                          <p class="text-sm text-gray-500">1830 - 1880</p>
+                        </div>
+                      </div>
+                      <span class="accordion-icon text-amber-600 transition-transform">▼</span>
+                    </button>
+                    <div class="accordion-content px-4 pb-4">
+                      <p class="text-gray-700 text-sm">Masa <strong>Raden Saleh Sjarif Boestaman</strong> sebagai pelopor seni lukis modern Indonesia. Beliau belajar di Eropa dan menggabungkan gaya Romantisisme dengan tema lokal.</p>
+                      <div class="mt-2 p-2 bg-amber-50 rounded text-xs">
+                        <strong>Karya Terkenal:</strong> "Penangkapan Pangeran Diponegoro" (1857), "Berburu Banteng di Jawa"
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hidden sm:block"></div>
+                <div class="absolute left-0 sm:left-1/2 top-4 w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center text-white font-bold transform sm:-translate-x-1/2 shadow-lg">1</div>
+              </div>
+
+              <!-- Timeline Item 2 -->
+              <div class="timeline-item relative pl-12 sm:pl-0 sm:grid sm:grid-cols-2 sm:gap-8">
+                <div class="hidden sm:block"></div>
+                <div class="sm:pl-8">
+                  <div class="accordion bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <button onclick="toggleAccordion(this)" class="w-full p-4 text-left flex items-center justify-between hover:bg-amber-50">
+                      <div class="flex items-center gap-3">
+                        <span class="text-2xl">🏝️</span>
+                        <div>
+                          <h3 class="font-semibold text-amber-800">Masa Indie Mooi</h3>
+                          <p class="text-sm text-gray-500">1900 - 1942</p>
+                        </div>
+                      </div>
+                      <span class="accordion-icon text-amber-600 transition-transform">▼</span>
+                    </button>
+                    <div class="accordion-content px-4 pb-4">
+                      <p class="text-gray-700 text-sm">"Indonesia Jelita" - masa lukisan pemandangan indah yang digemari kolonial Belanda. Tokoh: <strong>Basuki Abdullah</strong>, Abdullah Suriosubroto, Wakidi.</p>
+                      <div class="mt-2 p-2 bg-amber-50 rounded text-xs">
+                        <strong>Ciri Khas:</strong> Pemandangan sawah, gunung, pantai dengan nuansa romantis dan indah
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="absolute left-0 sm:left-1/2 top-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold transform sm:-translate-x-1/2 shadow-lg">2</div>
+              </div>
+
+              <!-- Timeline Item 3 -->
+              <div class="timeline-item relative pl-12 sm:pl-0 sm:grid sm:grid-cols-2 sm:gap-8">
+                <div class="sm:text-right sm:pr-8">
+                  <div class="accordion bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <button onclick="toggleAccordion(this)" class="w-full p-4 text-left flex items-center justify-between hover:bg-amber-50">
+                      <div class="flex items-center gap-3">
+                        <span class="text-2xl">🔥</span>
+                        <div>
+                          <h3 class="font-semibold text-amber-800">Masa Cita Nasional</h3>
+                          <p class="text-sm text-gray-500">1938 - 1942</p>
+                        </div>
+                      </div>
+                      <span class="accordion-icon text-amber-600 transition-transform">▼</span>
+                    </button>
+                    <div class="accordion-content px-4 pb-4">
+                      <p class="text-gray-700 text-sm">Lahirnya PERSAGI (Persatuan Ahli Gambar Indonesia). Tokoh: <strong>S. Sudjojono</strong>, Agus Djaya. Menolak "seni salon" dan mengangkat tema rakyat jelata.</p>
+                      <div class="mt-2 p-2 bg-amber-50 rounded text-xs">
+                        <strong>Semboyan:</strong> "Seni adalah jiwa tampak" - S. Sudjojono
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hidden sm:block"></div>
+                <div class="absolute left-0 sm:left-1/2 top-4 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold transform sm:-translate-x-1/2 shadow-lg">3</div>
+              </div>
+
+              <!-- Timeline Item 4 -->
+              <div class="timeline-item relative pl-12 sm:pl-0 sm:grid sm:grid-cols-2 sm:gap-8">
+                <div class="hidden sm:block"></div>
+                <div class="sm:pl-8">
+                  <div class="accordion bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <button onclick="toggleAccordion(this)" class="w-full p-4 text-left flex items-center justify-between hover:bg-amber-50">
+                      <div class="flex items-center gap-3">
+                        <span class="text-2xl">⛩️</span>
+                        <div>
+                          <h3 class="font-semibold text-amber-800">Masa Pendudukan Jepang</h3>
+                          <p class="text-sm text-gray-500">1942 - 1945</p>
+                        </div>
+                      </div>
+                      <span class="accordion-icon text-amber-600 transition-transform">▼</span>
+                    </button>
+                    <div class="accordion-content px-4 pb-4">
+                      <p class="text-gray-700 text-sm">Dibentuk <strong>Keimin Bunka Shidoso</strong> (Pusat Kebudayaan). Seni digunakan untuk propaganda Jepang, namun seniman tetap berkarya dengan semangat nasionalisme terselubung.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="absolute left-0 sm:left-1/2 top-4 w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold transform sm:-translate-x-1/2 shadow-lg">4</div>
+              </div>
+
+              <!-- Timeline Item 5 -->
+              <div class="timeline-item relative pl-12 sm:pl-0 sm:grid sm:grid-cols-2 sm:gap-8">
+                <div class="sm:text-right sm:pr-8">
+                  <div class="accordion bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <button onclick="toggleAccordion(this)" class="w-full p-4 text-left flex items-center justify-between hover:bg-amber-50">
+                      <div class="flex items-center gap-3">
+                        <span class="text-2xl">🇮🇩</span>
+                        <div>
+                          <h3 class="font-semibold text-amber-800">Masa Sesudah Kemerdekaan</h3>
+                          <p class="text-sm text-gray-500">1945 - 1950an</p>
+                        </div>
+                      </div>
+                      <span class="accordion-icon text-amber-600 transition-transform">▼</span>
+                    </button>
+                    <div class="accordion-content px-4 pb-4">
+                      <p class="text-gray-700 text-sm">Lahirnya SIM (Seniman Indonesia Muda) dan Pelukis Rakyat. Seni menjadi alat perjuangan. Tokoh: <strong>Affandi</strong>, Hendra Gunawan, Trubus.</p>
+                      <div class="mt-2 p-2 bg-amber-50 rounded text-xs">
+                        <strong>Karya Ikonik:</strong> "Potret Diri" Affandi, lukisan perjuangan rakyat
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hidden sm:block"></div>
+                <div class="absolute left-0 sm:left-1/2 top-4 w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold transform sm:-translate-x-1/2 shadow-lg">5</div>
+              </div>
+
+              <!-- Timeline Item 6 & 7 -->
+              <div class="timeline-item relative pl-12 sm:pl-0 sm:grid sm:grid-cols-2 sm:gap-8">
+                <div class="hidden sm:block"></div>
+                <div class="sm:pl-8">
+                  <div class="bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl shadow-lg p-4 text-white">
+                    <div class="flex items-center gap-3 mb-2">
+                      <span class="text-2xl">🎓</span>
+                      <h3 class="font-semibold">Masa Pendidikan Formal & Seni Rupa Baru</h3>
+                    </div>
+                    <p class="text-sm text-blue-100">Berdirinya ASRI Yogyakarta (1950) dan ITB Bandung. Gerakan Seni Rupa Baru Indonesia (1975) membawa eksperimen dan instalasi seni kontemporer.</p>
+                  </div>
+                </div>
+                <div class="absolute left-0 sm:left-1/2 top-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold transform sm:-translate-x-1/2 shadow-lg">6</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 4: Tokoh-Tokoh Utama -->
+      <section class="slide min-h-full flex-col p-6" data-slide="3">
+        <div class="max-w-5xl mx-auto w-full">
+          <div class="text-center mb-6 animate-slide-in">
+            <span class="text-4xl">👨‍🎨</span>
+            <h2 class="font-display text-3xl font-bold text-amber-900 mt-2">Tokoh-Tokoh Utama Seni Rupa Indonesia</h2>
+            <p class="text-amber-600 mt-2">Klik kartu untuk melihat informasi lebih lanjut</p>
+          </div>
+
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Raden Saleh -->
+            <div class="flip-card h-72" onclick="this.classList.toggle('flipped')">
+              <div class="flip-card-inner relative w-full h-full">
+                <div class="flip-card-front absolute w-full h-full bg-gradient-to-br from-amber-700 to-amber-900 rounded-2xl shadow-xl p-6 flex flex-col items-center justify-center text-white">
+                  <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center text-4xl mb-4">🎨</div>
+                  <h3 class="font-display text-xl font-bold">Raden Saleh</h3>
+                  <p class="text-amber-200 text-sm">1811 - 1880</p>
+                  <p class="text-amber-300 text-xs mt-2">Tap untuk detail</p>
+                </div>
+                <div class="flip-card-back absolute w-full h-full bg-white rounded-2xl shadow-xl p-4 flex flex-col">
+                  <h3 class="font-display text-lg font-bold text-amber-800 mb-2">Raden Saleh</h3>
+                  <div class="text-xs text-gray-700 space-y-2 flex-1 overflow-auto">
+                    <p><strong>Peran:</strong> Bapak Seni Lukis Indonesia Modern</p>
+                    <p><strong>Aliran:</strong> Romantisisme</p>
+                    <p><strong>Karya Terkenal:</strong></p>
+                    <ul class="list-disc list-inside pl-2">
+                      <li>Penangkapan Pangeran Diponegoro (1857)</li>
+                      <li>Berburu Banteng di Jawa</li>
+                      <li>Hutan Terbakar</li>
+                    </ul>
+                    <p><strong>Keunikan:</strong> Pelukis pertama Indonesia yang belajar di Eropa (Belanda, Jerman)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Basuki Abdullah -->
+            <div class="flip-card h-72" onclick="this.classList.toggle('flipped')">
+              <div class="flip-card-inner relative w-full h-full">
+                <div class="flip-card-front absolute w-full h-full bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-2xl shadow-xl p-6 flex flex-col items-center justify-center text-white">
+                  <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center text-4xl mb-4">🖌️</div>
+                  <h3 class="font-display text-xl font-bold">Basuki Abdullah</h3>
+                  <p class="text-emerald-200 text-sm">1915 - 1993</p>
+                  <p class="text-emerald-300 text-xs mt-2">Tap untuk detail</p>
+                </div>
+                <div class="flip-card-back absolute w-full h-full bg-white rounded-2xl shadow-xl p-4 flex flex-col">
+                  <h3 class="font-display text-lg font-bold text-emerald-800 mb-2">Basuki Abdullah</h3>
+                  <div class="text-xs text-gray-700 space-y-2 flex-1 overflow-auto">
+                    <p><strong>Peran:</strong> Maestro Realisme Indonesia</p>
+                    <p><strong>Aliran:</strong> Realisme/Naturalisme</p>
+                    <p><strong>Karya Terkenal:</strong></p>
+                    <ul class="list-disc list-inside pl-2">
+                      <li>Potret Ibu Tien Soeharto</li>
+                      <li>Diponegoro Memimpin Perang</li>
+                      <li>Kakak dan Adik</li>
+                    </ul>
+                    <p><strong>Keunikan:</strong> Pelukis istana, terkenal dengan lukisan potret yang sangat realis</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Affandi -->
+            <div class="flip-card h-72" onclick="this.classList.toggle('flipped')">
+              <div class="flip-card-inner relative w-full h-full">
+                <div class="flip-card-front absolute w-full h-full bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl shadow-xl p-6 flex flex-col items-center justify-center text-white">
+                  <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center text-4xl mb-4">🌀</div>
+                  <h3 class="font-display text-xl font-bold">Affandi</h3>
+                  <p class="text-orange-200 text-sm">1907 - 1990</p>
+                  <p class="text-orange-300 text-xs mt-2">Tap untuk detail</p>
+                </div>
+                <div class="flip-card-back absolute w-full h-full bg-white rounded-2xl shadow-xl p-4 flex flex-col">
+                  <h3 class="font-display text-lg font-bold text-orange-800 mb-2">Affandi</h3>
+                  <div class="text-xs text-gray-700 space-y-2 flex-1 overflow-auto">
+                    <p><strong>Peran:</strong> Pelukis Ekspresionis Terbesar Indonesia</p>
+                    <p><strong>Aliran:</strong> Ekspresionisme</p>
+                    <p><strong>Karya Terkenal:</strong></p>
+                    <ul class="list-disc list-inside pl-2">
+                      <li>Potret Diri (banyak versi)</li>
+                      <li>Pengemis</li>
+                      <li>Barong</li>
+                    </ul>
+                    <p><strong>Keunikan:</strong> Melukis langsung dari tube cat, tanpa kuas!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- S. Sudjojono -->
+            <div class="flip-card h-72" onclick="this.classList.toggle('flipped')">
+              <div class="flip-card-inner relative w-full h-full">
+                <div class="flip-card-front absolute w-full h-full bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl shadow-xl p-6 flex flex-col items-center justify-center text-white">
+                  <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center text-4xl mb-4">✊</div>
+                  <h3 class="font-display text-xl font-bold">S. Sudjojono</h3>
+                  <p class="text-blue-200 text-sm">1913 - 1986</p>
+                  <p class="text-blue-300 text-xs mt-2">Tap untuk detail</p>
+                </div>
+                <div class="flip-card-back absolute w-full h-full bg-white rounded-2xl shadow-xl p-4 flex flex-col">
+                  <h3 class="font-display text-lg font-bold text-blue-800 mb-2">S. Sudjojono</h3>
+                  <div class="text-xs text-gray-700 space-y-2 flex-1 overflow-auto">
+                    <p><strong>Peran:</strong> Bapak Seni Lukis Indonesia Baru</p>
+                    <p><strong>Aliran:</strong> Realisme Sosial</p>
+                    <p><strong>Karya Terkenal:</strong></p>
+                    <ul class="list-disc list-inside pl-2">
+                      <li>Kawan-kawan Revolusi</li>
+                      <li>Di Depan Kelambu Terbuka</li>
+                      <li>Cap Go Meh</li>
+                    </ul>
+                    <p><strong>Keunikan:</strong> Pendiri PERSAGI, kritikus seni yang menolak Mooi Indie</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 bg-yellow-50 rounded-xl p-4 border border-yellow-200">
+            <p class="text-center text-yellow-800 text-sm">
+              💡 <strong>Tahukah kamu?</strong> Museum Affandi di Yogyakarta berbentuk seperti daun pisang, desain unik dari sang maestro sendiri!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 5: Proses Penciptaan Karya -->
+      <section class="slide min-h-full flex-col p-6" data-slide="4">
+        <div class="max-w-5xl mx-auto w-full">
+          <div class="text-center mb-6 animate-slide-in">
+            <span class="text-4xl">💡</span>
+            <h2 class="font-display text-3xl font-bold text-amber-900 mt-2">Proses Penciptaan Karya Seni</h2>
+            <p class="text-amber-600 mt-2">Tiga tahap proses kreatif/artistik</p>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-6 mb-8">
+            <!-- Tahap 1 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover animate-scale-in">
+              <div class="bg-gradient-to-r from-purple-500 to-purple-600 p-4 text-white text-center">
+                <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-3xl mx-auto mb-2">💭</div>
+                <h3 class="font-display text-xl font-bold">Tahap 1</h3>
+                <p class="text-purple-200">Penemuan Ide/Gagasan</p>
+              </div>
+              <div class="p-5">
+                <p class="text-gray-700 text-sm mb-3">Mencari inspirasi awal dari berbagai sumber:</p>
+                <ul class="text-sm text-gray-600 space-y-2">
+                  <li class="flex items-center gap-2">
+                    <span class="text-purple-500">•</span> Pengalaman pribadi
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-purple-500">•</span> Alam sekitar
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-purple-500">•</span> Peristiwa sosial
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-purple-500">•</span> Emosi dan perasaan
+                  </li>
+                </ul>
+                <div class="mt-4 p-3 bg-purple-50 rounded-lg">
+                  <p class="text-xs text-purple-800"><strong>Contoh:</strong> Affandi mendapat ide melukis "Pengemis" setelah melihat kondisi rakyat miskin di sekitarnya</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tahap 2 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover animate-scale-in" style="animation-delay: 0.2s">
+              <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-4 text-white text-center">
+                <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-3xl mx-auto mb-2">🔄</div>
+                <h3 class="font-display text-xl font-bold">Tahap 2</h3>
+                <p class="text-blue-200">Pengembangan Ide</p>
+              </div>
+              <div class="p-5">
+                <p class="text-gray-700 text-sm mb-3">Mengolah gagasan menjadi konsep matang:</p>
+                <ul class="text-sm text-gray-600 space-y-2">
+                  <li class="flex items-center gap-2">
+                    <span class="text-blue-500">•</span> Menentukan tema
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-blue-500">•</span> Menyusun pesan moral
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-blue-500">•</span> Membuat sketsa awal
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-blue-500">•</span> Memilih gaya/aliran
+                  </li>
+                </ul>
+                <div class="mt-4 p-3 bg-blue-50 rounded-lg">
+                  <p class="text-xs text-blue-800"><strong>Contoh:</strong> Raden Saleh mengembangkan ide heroisme Diponegoro menjadi tema perlawanan kolonialisme</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tahap 3 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover animate-scale-in" style="animation-delay: 0.4s">
+              <div class="bg-gradient-to-r from-green-500 to-green-600 p-4 text-white text-center">
+                <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-3xl mx-auto mb-2">🎨</div>
+                <h3 class="font-display text-xl font-bold">Tahap 3</h3>
+                <p class="text-green-200">Visualisasi/Realisasi</p>
+              </div>
+              <div class="p-5">
+                <p class="text-gray-700 text-sm mb-3">Mewujudkan ide menjadi karya nyata:</p>
+                <ul class="text-sm text-gray-600 space-y-2">
+                  <li class="flex items-center gap-2">
+                    <span class="text-green-500">•</span> Memilih media/bahan
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-green-500">•</span> Menerapkan teknik
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-green-500">•</span> Mengeksekusi karya
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-green-500">•</span> Finishing/penyelesaian
+                  </li>
+                </ul>
+                <div class="mt-4 p-3 bg-green-50 rounded-lg">
+                  <p class="text-xs text-green-800"><strong>Contoh:</strong> Affandi memilih teknik melukis langsung dari tube tanpa kuas untuk ekspresi maksimal</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Diagram -->
+          <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h4 class="font-display text-lg font-semibold text-amber-800 mb-4 text-center">🔄 Diagram Proses Kreatif</h4>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div class="bg-purple-100 rounded-xl p-4 text-center w-full sm:w-auto">
+                <span class="text-2xl">💭</span>
+                <p class="font-medium text-purple-800 mt-1">IDE</p>
+              </div>
+              <div class="text-amber-500 text-2xl transform rotate-90 sm:rotate-0">→</div>
+              <div class="bg-blue-100 rounded-xl p-4 text-center w-full sm:w-auto">
+                <span class="text-2xl">🔄</span>
+                <p class="font-medium text-blue-800 mt-1">PENGEMBANGAN</p>
+              </div>
+              <div class="text-amber-500 text-2xl transform rotate-90 sm:rotate-0">→</div>
+              <div class="bg-green-100 rounded-xl p-4 text-center w-full sm:w-auto">
+                <span class="text-2xl">🎨</span>
+                <p class="font-medium text-green-800 mt-1">KARYA JADI</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 6: Mengapa Setiap Karya Unik -->
+      <section class="slide min-h-full flex-col p-6" data-slide="5">
+        <div class="max-w-5xl mx-auto w-full">
+          <div class="text-center mb-6 animate-slide-in">
+            <span class="text-4xl">✨</span>
+            <h2 class="font-display text-3xl font-bold text-amber-900 mt-2">Mengapa Setiap Karya Seni Unik?</h2>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl p-6 text-white shadow-xl card-hover animate-scale-in">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-3xl">🎭</div>
+                <h3 class="font-display text-2xl font-bold">Subjektif</h3>
+              </div>
+              <p class="text-pink-100 mb-4">Perwujudan ide, teknik, dan pemilihan media merupakan subjektivitas pribadi seniman. Penafsiran penikmat seni juga bisa berbeda-beda.</p>
+              <div class="bg-white/20 rounded-lg p-3">
+                <p class="text-sm"><strong>Contoh:</strong> Lukisan "Potret Diri" Affandi bisa dimaknai sebagai introspeksi, kesepian, atau keberanian - tergantung siapa yang melihat.</p>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl p-6 text-white shadow-xl card-hover animate-scale-in" style="animation-delay: 0.2s">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-3xl">👤</div>
+                <h3 class="font-display text-2xl font-bold">Individual</h3>
+              </div>
+              <p class="text-indigo-100 mb-4">Karya seni adalah hasil cipta, rasa, dan karsa pribadi yang berbeda dengan milik orang lain.</p>
+              <div class="bg-white/20 rounded-lg p-3">
+                <p class="text-sm"><strong>Contoh:</strong> Meski sama-sama melukis pemandangan, goresan Basuki Abdullah sangat halus dan detail, sedangkan Affandi penuh ekspresi dan dinamis.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-lg p-6 animate-slide-in" style="animation-delay: 0.3s">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center text-3xl">🌍</div>
+              <h3 class="font-display text-2xl font-bold text-amber-800">Faktor Pengaruh</h3>
+            </div>
+            <p class="text-gray-700 mb-4">Konsep seniman dipengaruhi oleh berbagai faktor eksternal dan internal:</p>
+            
+            <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="bg-amber-50 rounded-xl p-4 text-center">
+                <span class="text-3xl mb-2 block">🏘️</span>
+                <h4 class="font-semibold text-amber-800">Lingkungan</h4>
+                <p class="text-xs text-gray-600 mt-1">Tempat tinggal, budaya lokal</p>
+              </div>
+              <div class="bg-orange-50 rounded-xl p-4 text-center">
+                <span class="text-3xl mb-2 block">📖</span>
+                <h4 class="font-semibold text-orange-800">Pengalaman Hidup</h4>
+                <p class="text-xs text-gray-600 mt-1">Peristiwa yang dialami</p>
+              </div>
+              <div class="bg-yellow-50 rounded-xl p-4 text-center">
+                <span class="text-3xl mb-2 block">👁️</span>
+                <h4 class="font-semibold text-yellow-800">Pandangan Hidup</h4>
+                <p class="text-xs text-gray-600 mt-1">Nilai dan prinsip pribadi</p>
+              </div>
+              <div class="bg-lime-50 rounded-xl p-4 text-center">
+                <span class="text-3xl mb-2 block">💎</span>
+                <h4 class="font-semibold text-lime-800">Filsafat</h4>
+                <p class="text-xs text-gray-600 mt-1">Pemikiran mendalam</p>
+              </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-gradient-to-r from-amber-100 to-orange-100 rounded-xl border border-amber-200">
+              <p class="text-amber-900 text-sm">
+                <strong>🔍 Studi Kasus:</strong> S. Sudjojono yang lahir dari keluarga sederhana dan mengalami masa kolonial, menghasilkan karya-karya yang mengangkat tema rakyat jelata dan perjuangan. Berbeda dengan Basuki Abdullah yang dekat dengan kalangan elite, sehingga banyak melukis potret pejabat dan keluarga ningrat.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 7: Aspek Analisis Perbandingan -->
+      <section class="slide min-h-full flex-col p-6" data-slide="6">
+        <div class="max-w-5xl mx-auto w-full">
+          <div class="text-center mb-6 animate-slide-in">
+            <span class="text-4xl">🔍</span>
+            <h2 class="font-display text-3xl font-bold text-amber-900 mt-2">Aspek Analisis Perbandingan Karya</h2>
+            <p class="text-amber-600 mt-2">Aspek-aspek yang perlu diidentifikasi saat membandingkan dua karya</p>
+          </div>
+
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+            <div class="bg-white rounded-xl shadow-lg p-5 card-hover border-l-4 border-red-500 animate-scale-in">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="text-2xl">👤</span>
+                <h3 class="font-semibold text-gray-800">Identitas Seniman</h3>
+              </div>
+              <p class="text-sm text-gray-600">Nama seniman dan asal negara</p>
+              <div class="mt-2 text-xs bg-red-50 p-2 rounded">
+                <strong>Contoh:</strong> Affandi (Indonesia) vs Vincent van Gogh (Belanda)
+              </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-5 card-hover border-l-4 border-orange-500 animate-scale-in" style="animation-delay: 0.1s">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="text-2xl">📝</span>
+                <h3 class="font-semibold text-gray-800">Judul & Tahun</h3>
+              </div>
+              <p class="text-sm text-gray-600">Judul karya dan tahun pembuatan</p>
+              <div class="mt-2 text-xs bg-orange-50 p-2 rounded">
+                <strong>Contoh:</strong> "Potret Diri" (1977) vs "Starry Night" (1889)
+              </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-5 card-hover border-l-4 border-yellow-500 animate-scale-in" style="animation-delay: 0.2s">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="text-2xl">💡</span>
+                <h3 class="font-semibold text-gray-800">Ide & Tema</h3>
+              </div>
+              <p class="text-sm text-gray-600">Gagasan utama dan pesan moral</p>
+              <div class="mt-2 text-xs bg-yellow-50 p-2 rounded">
+                <strong>Contoh:</strong> Introspeksi diri, perjuangan hidup, keindahan alam
+              </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-5 card-hover border-l-4 border-green-500 animate-scale-in" style="animation-delay: 0.3s">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="text-2xl">🎨</span>
+                <h3 class="font-semibold text-gray-800">Unsur Seni Rupa</h3>
+              </div>
+              <p class="text-sm text-gray-600">Garis, warna, tekstur, bidang, ruang</p>
+              <div class="mt-2 text-xs bg-green-50 p-2 rounded">
+                <strong>Contoh:</strong> Garis ekspresif vs garis halus, warna hangat vs dingin
+              </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-5 card-hover border-l-4 border-blue-500 animate-scale-in" style="animation-delay: 0.4s">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="text-2xl">🛠️</span>
+                <h3 class="font-semibold text-gray-800">Medium & Teknik</h3>
+              </div>
+              <p class="text-sm text-gray-600">Bahan dan cara pembuatan</p>
+              <div class="mt-2 text-xs bg-blue-50 p-2 rounded">
+                <strong>Contoh:</strong> Cat minyak di kanvas, teknik impasto vs glazing
+              </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-5 card-hover border-l-4 border-purple-500 animate-scale-in" style="animation-delay: 0.5s">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="text-2xl">🏛️</span>
+                <h3 class="font-semibold text-gray-800">Gaya/Aliran</h3>
+              </div>
+              <p class="text-sm text-gray-600">Aliran seni yang dianut</p>
+              <div class="mt-2 text-xs bg-purple-50 p-2 rounded">
+                <strong>Contoh:</strong> Ekspresionisme, Realisme, Romantisisme, Abstrak
+              </div>
+            </div>
+          </div>
+
+          <!-- Example Comparison Table -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 overflow-x-auto animate-slide-in">
+            <h4 class="font-display text-lg font-semibold text-amber-800 mb-4">📊 Contoh Tabel Perbandingan</h4>
+            <table class="w-full text-sm border-collapse min-w-[500px]">
+              <thead>
+                <tr class="bg-amber-100">
+                  <th class="border border-amber-200 p-3 text-left font-semibold text-amber-900">Aspek</th>
+                  <th class="border border-amber-200 p-3 text-left font-semibold text-amber-900">Affandi</th>
+                  <th class="border border-amber-200 p-3 text-left font-semibold text-amber-900">Basuki Abdullah</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="border border-amber-100 p-3 font-medium">Aliran</td>
+                  <td class="border border-amber-100 p-3">Ekspresionisme</td>
+                  <td class="border border-amber-100 p-3">Realisme/Naturalisme</td>
+                </tr>
+                <tr class="bg-amber-50">
+                  <td class="border border-amber-100 p-3 font-medium">Teknik</td>
+                  <td class="border border-amber-100 p-3">Langsung dari tube, spontan</td>
+                  <td class="border border-amber-100 p-3">Halus, detail, berlapis</td>
+                </tr>
+                <tr>
+                  <td class="border border-amber-100 p-3 font-medium">Warna</td>
+                  <td class="border border-amber-100 p-3">Kontras, emosional</td>
+                  <td class="border border-amber-100 p-3">Natural, harmonis</td>
+                </tr>
+                <tr class="bg-amber-50">
+                  <td class="border border-amber-100 p-3 font-medium">Tema Utama</td>
+                  <td class="border border-amber-100 p-3">Rakyat jelata, potret diri</td>
+                  <td class="border border-amber-100 p-3">Potret, pemandangan indah</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 8: Tugas Proyek Kelompok -->
+      <section class="slide min-h-full flex-col p-6" data-slide="7">
+        <div class="max-w-5xl mx-auto w-full">
+          <div class="text-center mb-6 animate-slide-in">
+            <span class="text-4xl">📋</span>
+            <h2 class="font-display text-3xl font-bold text-amber-900 mt-2">Tugas Proyek Kelompok</h2>
+            <p class="text-amber-600 mt-2">Membandingkan karya 2D dari dua seniman Indonesia</p>
+          </div>
+
+          <div class="bg-gradient-to-br from-amber-600 to-orange-600 rounded-2xl p-6 text-white shadow-xl mb-6 animate-scale-in">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-3xl">👥</span>
+              <div>
+                <h3 class="font-display text-xl font-bold">Instruksi Tugas</h3>
+                <p class="text-amber-200">Buat kelompok 3-4 orang</p>
+              </div>
+            </div>
+            <p class="text-amber-100">Bandingkan karya seni rupa 2 dimensi dari <strong>dua seniman Indonesia yang berbeda</strong>. Analisis persamaan dan perbedaan berdasarkan aspek-aspek yang telah dipelajari.</p>
+          </div>
+
+          <div class="space-y-4">
+            <!-- Tahap Persiapan -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden animate-slide-in">
+              <button onclick="toggleAccordion(this)" class="w-full p-5 flex items-center justify-between hover:bg-amber-50 transition-colors">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-2xl">1️⃣</div>
+                  <div class="text-left">
+                    <h3 class="font-display text-lg font-semibold text-gray-800">Tahap Persiapan</h3>
+                    <p class="text-sm text-gray-500">Perencanaan dan pengumpulan sumber</p>
+                  </div>
+                </div>
+                <span class="accordion-icon text-amber-600 text-xl transition-transform">▼</span>
+              </button>
+              <div class="accordion-content px-5 pb-5">
+                <div class="bg-blue-50 rounded-lg p-4 space-y-3">
+                  <div class="flex items-start gap-3">
+                    <span class="text-blue-500">•</span>
+                    <div>
+                      <strong>Jenis Karya:</strong> Tentukan jenis karya 2D yang akan dibandingkan (lukisan, gambar, poster, dll)
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span class="text-blue-500">•</span>
+                    <div>
+                      <strong>Sumber Data:</strong> Internet, buku seni, museum virtual, galeri online
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span class="text-blue-500">•</span>
+                    <div>
+                      <strong>Waktu Pengambilan Data:</strong> Tentukan jadwal pencarian dan pengumpulan materi
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tahap Pelaksanaan -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden animate-slide-in" style="animation-delay: 0.1s">
+              <button onclick="toggleAccordion(this)" class="w-full p-5 flex items-center justify-between hover:bg-amber-50 transition-colors">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-2xl">2️⃣</div>
+                  <div class="text-left">
+                    <h3 class="font-display text-lg font-semibold text-gray-800">Tahap Pelaksanaan</h3>
+                    <p class="text-sm text-gray-500">Pengumpulan dan pengolahan data</p>
+                  </div>
+                </div>
+                <span class="accordion-icon text-amber-600 text-xl transition-transform">▼</span>
+              </button>
+              <div class="accordion-content px-5 pb-5">
+                <div class="bg-green-50 rounded-lg p-4 space-y-3">
+                  <div class="flex items-start gap-3">
+                    <span class="text-green-500">•</span>
+                    <div>
+                      <strong>Pengumpulan Data:</strong> Kumpulkan identitas lengkap kedua karya (nama seniman, judul, tahun, ukuran, media)
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span class="text-green-500">•</span>
+                    <div>
+                      <strong>Pengolahan Data:</strong> Buat tabel perbandingan unsur-unsur seni rupa, prinsip, teknik, dan aliran
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tahap Kesimpulan -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden animate-slide-in" style="animation-delay: 0.2s">
+              <button onclick="toggleAccordion(this)" class="w-full p-5 flex items-center justify-between hover:bg-amber-50 transition-colors">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-2xl">3️⃣</div>
+                  <div class="text-left">
+                    <h3 class="font-display text-lg font-semibold text-gray-800">Tahap Kesimpulan</h3>
+                    <p class="text-sm text-gray-500">Hasil dan pelaporan</p>
+                  </div>
+                </div>
+                <span class="accordion-icon text-amber-600 text-xl transition-transform">▼</span>
+              </button>
+              <div class="accordion-content px-5 pb-5">
+                <div class="bg-purple-50 rounded-lg p-4 space-y-3">
+                  <div class="flex items-start gap-3">
+                    <span class="text-purple-500">•</span>
+                    <div>
+                      <strong>Hasil Perbandingan:</strong> Tuliskan persamaan dan perbedaan yang ditemukan
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span class="text-purple-500">•</span>
+                    <div>
+                      <strong>Refleksi:</strong> Berikan pendapat tentang keunikan masing-masing seniman
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span class="text-purple-500">•</span>
+                    <div>
+                      <strong>Presentasi:</strong> Siapkan bahan presentasi untuk dipresentasikan di kelas
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 9: Kriteria Penilaian -->
+      <section class="slide min-h-full flex-col p-6" data-slide="8">
+        <div class="max-w-5xl mx-auto w-full">
+          <div class="text-center mb-6 animate-slide-in">
+            <span class="text-4xl">📊</span>
+            <h2 class="font-display text-3xl font-bold text-amber-900 mt-2">Kriteria Penilaian (Rubrik)</h2>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden animate-scale-in">
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm min-w-[600px]">
+                <thead>
+                  <tr class="bg-gradient-to-r from-amber-600 to-orange-600 text-white">
+                    <th class="p-4 text-left font-semibold">Aspek Penilaian</th>
+                    <th class="p-4 text-center font-semibold">Sangat Baik (4)</th>
+                    <th class="p-4 text-center font-semibold">Baik (3)</th>
+                    <th class="p-4 text-center font-semibold">Cukup (2)</th>
+                    <th class="p-4 text-center font-semibold">Kurang (1)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b border-amber-100">
+                    <td class="p-4 font-medium bg-amber-50">
+                      <div class="flex items-center gap-2">
+                        <span>📑</span>
+                        <span>Sistematika Laporan</span>
+                      </div>
+                    </td>
+                    <td class="p-4 text-center text-xs">Lengkap: Persiapan, Pelaksanaan, Pelaporan</td>
+                    <td class="p-4 text-center text-xs">Hampir lengkap, ada 1 bagian kurang</td>
+                    <td class="p-4 text-center text-xs">Kurang lengkap, ada 2 bagian kurang</td>
+                    <td class="p-4 text-center text-xs">Tidak sistematis</td>
+                  </tr>
+                  <tr class="border-b border-amber-100">
+                    <td class="p-4 font-medium bg-amber-50">
+                      <div class="flex items-center gap-2">
+                        <span>📝</span>
+                        <span>Penyajian Data</span>
+                      </div>
+                    </td>
+                    <td class="p-4 text-center text-xs">Semua aspek lengkap dan akurat</td>
+                    <td class="p-4 text-center text-xs">Sebagian besar lengkap</td>
+                    <td class="p-4 text-center text-xs">Beberapa aspek tidak lengkap</td>
+                    <td class="p-4 text-center text-xs">Banyak aspek tidak ada</td>
+                  </tr>
+                  <tr>
+                    <td class="p-4 font-medium bg-amber-50">
+                      <div class="flex items-center gap-2">
+                        <span>🤝</span>
+                        <span>Kerjasama Kelompok</span>
+                      </div>
+                    </td>
+                    <td class="p-4 text-center text-xs">Semua anggota aktif berkontribusi</td>
+                    <td class="p-4 text-center text-xs">Sebagian besar aktif</td>
+                    <td class="p-4 text-center text-xs">Hanya beberapa yang aktif</td>
+                    <td class="p-4 text-center text-xs">Tidak ada kerjasama</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-3 gap-4 mt-6">
+            <div class="bg-green-100 rounded-xl p-5 text-center animate-slide-in">
+              <div class="text-3xl mb-2">🏆</div>
+              <h4 class="font-semibold text-green-800">Nilai A</h4>
+              <p class="text-sm text-green-700">Skor 10-12</p>
+              <p class="text-xs text-green-600 mt-1">Sangat Memuaskan</p>
+            </div>
+            <div class="bg-blue-100 rounded-xl p-5 text-center animate-slide-in" style="animation-delay: 0.1s">
+              <div class="text-3xl mb-2">⭐</div>
+              <h4 class="font-semibold text-blue-800">Nilai B</h4>
+              <p class="text-sm text-blue-700">Skor 7-9</p>
+              <p class="text-xs text-blue-600 mt-1">Baik</p>
+            </div>
+            <div class="bg-yellow-100 rounded-xl p-5 text-center animate-slide-in" style="animation-delay: 0.2s">
+              <div class="text-3xl mb-2">📈</div>
+              <h4 class="font-semibold text-yellow-800">Nilai C</h4>
+              <p class="text-sm text-yellow-700">Skor 4-6</p>
+              <p class="text-xs text-yellow-600 mt-1">Perlu Perbaikan</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 10: Diskusi & Refleksi -->
+      <section class="slide min-h-full flex-col p-6" data-slide="9">
+        <div class="max-w-5xl mx-auto w-full">
+          <div class="text-center mb-6 animate-slide-in">
+            <span class="text-4xl">💬</span>
+            <h2 class="font-display text-3xl font-bold text-amber-900 mt-2">Diskusi & Refleksi</h2>
+            <p class="text-amber-600 mt-2">Mari kita renungkan bersama</p>
+          </div>
+
+          <div class="space-y-4">
+            <div class="bg-gradient-to-r from-purple-500 to-indigo-500 rounded-2xl p-6 text-white shadow-xl card-hover animate-scale-in">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl flex-shrink-0">❓</div>
+                <div>
+                  <h3 class="font-display text-xl font-bold mb-2">Pertanyaan 1</h3>
+                  <p class="text-purple-100">Apa yang dimaksud dengan proses penciptaan karya seni rupa?</p>
+                  <div class="mt-4 p-3 bg-white/10 rounded-lg">
+                    <p class="text-sm"><strong>💡 Petunjuk:</strong> Ingat tiga tahap utama: penemuan ide, pengembangan, dan visualisasi.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl p-6 text-white shadow-xl card-hover animate-scale-in" style="animation-delay: 0.1s">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl flex-shrink-0">❓</div>
+                <div>
+                  <h3 class="font-display text-xl font-bold mb-2">Pertanyaan 2</h3>
+                  <p class="text-blue-100">Dapatkah kalian menjelaskan tahapan proses tersebut?</p>
+                  <div class="mt-4 p-3 bg-white/10 rounded-lg">
+                    <p class="text-sm"><strong>💡 Petunjuk:</strong> Berikan contoh konkret dari setiap tahap berdasarkan seniman yang sudah dipelajari.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl p-6 text-white shadow-xl card-hover animate-scale-in" style="animation-delay: 0.2s">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl flex-shrink-0">❓</div>
+                <div>
+                  <h3 class="font-display text-xl font-bold mb-2">Pertanyaan 3</h3>
+                  <p class="text-green-100">Bagaimana lingkungan mempengaruhi ide seorang seniman?</p>
+                  <div class="mt-4 p-3 bg-white/10 rounded-lg">
+                    <p class="text-sm"><strong>💡 Petunjuk:</strong> Bandingkan bagaimana latar belakang S. Sudjojono dan Basuki Abdullah mempengaruhi tema karya mereka.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 bg-amber-50 rounded-2xl p-6 border border-amber-200 animate-slide-in" style="animation-delay: 0.3s">
+            <h4 class="font-display text-lg font-semibold text-amber-800 mb-3">📝 Catatan Refleksi</h4>
+            <p class="text-amber-700 text-sm mb-4">Tuliskan satu hal baru yang kamu pelajari hari ini dan bagaimana kamu akan menerapkannya saat mengapresiasi karya seni:</p>
+            <textarea 
+              class="w-full p-4 rounded-xl border border-amber-300 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 resize-none" 
+              rows="3" 
+              placeholder="Tuliskan refleksimu di sini..."
+              id="reflection-text"
+            ></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 11: Soal Latihan HOTS -->
+      <section class="slide min-h-full flex-col p-6" data-slide="10">
+        <div class="max-w-5xl mx-auto w-full">
+          <div class="text-center mb-6 animate-slide-in">
+            <span class="text-4xl">🧠</span>
+            <h2 class="font-display text-3xl font-bold text-amber-900 mt-2">Latihan Soal HOTS</h2>
+            <p class="text-amber-600 mt-2">10 Soal Pilihan Ganda - Higher Order Thinking Skills</p>
+          </div>
+
+          <div id="quiz-container" class="bg-white rounded-2xl shadow-lg p-6">
+            <!-- Quiz Progress -->
+            <div class="flex items-center justify-between mb-6">
+              <span class="text-sm text-gray-600">Soal <span id="current-question">1</span> dari 10</span>
+              <div class="flex gap-1" id="quiz-dots">
+                <!-- Dots will be generated by JS -->
+              </div>
+            </div>
+
+            <!-- Question Display -->
+            <div id="question-display">
+              <!-- Questions will be loaded here -->
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex justify-between mt-6 pt-4 border-t border-gray-200">
+              <button onclick="prevQuestion()" id="prev-btn" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                ← Sebelumnya
+              </button>
+              <button onclick="nextQuestion()" id="next-btn" class="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors">
+                Selanjutnya →
+              </button>
+              <button onclick="submitQuiz()" id="submit-btn" class="hidden px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                Selesai & Lihat Nilai
+              </button>
+            </div>
+          </div>
+
+          <!-- Results Display (Hidden initially) -->
+          <div id="quiz-results" class="hidden bg-white rounded-2xl shadow-lg p-6 mt-6">
+            <div class="text-center">
+              <div id="result-icon" class="text-6xl mb-4">🎉</div>
+              <h3 class="font-display text-2xl font-bold text-gray-800 mb-2">Hasil Latihan</h3>
+              <div id="score-display" class="text-4xl font-bold text-amber-600 mb-4">0/10</div>
+              <p id="score-message" class="text-gray-600 mb-6">Pesan akan muncul di sini</p>
+              <button onclick="resetQuiz()" class="px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors">
+                Ulangi Latihan
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 12: Penutup -->
+      <section class="slide min-h-full flex-col items-center justify-center p-6" data-slide="11">
+        <div class="max-w-4xl mx-auto text-center animate-scale-in">
+          <div class="mb-8">
+            <span class="text-6xl mb-4 block">🙏</span>
+            <h2 class="font-display text-4xl font-bold text-amber-900 mb-4">Terima Kasih</h2>
+            <div class="w-32 h-1 bg-gradient-to-r from-amber-600 to-orange-500 mx-auto rounded-full mb-6"></div>
+            <p class="text-xl text-amber-700">Semoga materi ini bermanfaat untuk pembelajaran kalian</p>
+          </div>
+
+          <div class="bg-white/80 backdrop-blur rounded-2xl p-8 shadow-xl mb-8">
+            <h3 class="font-display text-xl font-semibold text-amber-800 mb-4">📚 Rangkuman Materi</h3>
+            <div class="grid sm:grid-cols-2 gap-4 text-left text-sm">
+              <div class="flex items-start gap-2">
+                <span class="text-amber-500">✓</span>
+                <span>Memahami konsep apresiasi seni rupa</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <span class="text-amber-500">✓</span>
+                <span>Mengenal sejarah seni rupa Indonesia Modern</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <span class="text-amber-500">✓</span>
+                <span>Mengenal tokoh-tokoh seniman Indonesia</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <span class="text-amber-500">✓</span>
+                <span>Memahami proses penciptaan karya seni</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <span class="text-amber-500">✓</span>
+                <span>Mengetahui keunikan setiap karya seni</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <span class="text-amber-500">✓</span>
+                <span>Mampu menganalisis dan membandingkan karya</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button onclick="goToSlide(0)" class="px-6 py-3 bg-white text-amber-700 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all border-2 border-amber-600">
+              🏠 Kembali ke Awal
+            </button>
+            <button onclick="goToSlide(10)" class="px-6 py-3 bg-gradient-to-r from-amber-600 to-orange-500 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all">
+              📝 Kerjakan Soal Latihan
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Navigation -->
+    <footer class="bg-white border-t border-amber-200 px-4 py-3 flex-shrink-0">
+      <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <button onclick="prevSlide()" id="prev-slide-btn" class="btn-nav flex items-center gap-2 px-4 py-2 bg-amber-100 text-amber-700 rounded-lg hover:bg-amber-200 disabled:opacity-50" disabled>
+          <span>←</span>
+          <span class="hidden sm:inline">Sebelumnya</span>
+        </button>
+        
+        <div class="flex gap-1" id="slide-dots">
+          <!-- Dots will be generated by JavaScript -->
+        </div>
+        
+        <button onclick="nextSlide()" id="next-slide-btn" class="btn-nav flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700">
+          <span class="hidden sm:inline">Selanjutnya</span>
+          <span>→</span>
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      teacher_name: "Guru Pengampu",
+      school_name: "SMP Negeri Indonesia",
+      primary_color: "#92400e",
+      secondary_color: "#f59e0b",
+      background_color: "#fffbeb"
+    };
+
+    let config = { ...defaultConfig };
+    let currentSlide = 0;
+    const totalSlides = 12;
+
+    // Quiz Data - HOTS Questions
+    const quizData = [
+      {
+        question: "Raden Saleh melukis 'Penangkapan Pangeran Diponegoro' pada tahun 1857, jauh setelah peristiwa sebenarnya terjadi (1830). Apa yang dapat disimpulkan tentang pendekatan Raden Saleh dalam menciptakan karya ini?",
+        options: [
+          "Raden Saleh hanya menyalin foto dokumentasi peristiwa tersebut",
+          "Raden Saleh menggunakan imajinasi dan riset historis untuk merekonstruksi peristiwa dengan gaya Romantisisme",
+          "Raden Saleh hadir langsung saat penangkapan Diponegoro",
+          "Lukisan tersebut tidak akurat secara historis karena dibuat terlalu lama setelah peristiwa"
+        ],
+        correct: 1,
+        explanation: "Raden Saleh menggunakan pendekatan Romantisisme yang mengkombinasikan riset historis dengan imajinasi artistik untuk menciptakan narasi visual yang dramatis tentang peristiwa yang tidak ia saksikan langsung."
+      },
+      {
+        question: "S. Sudjojono menolak aliran Mooi Indie dan mendirikan PERSAGI. Jika dianalisis dari konteks sosial-politik masa itu, apa motivasi utama penolakan tersebut?",
+        options: [
+          "Mooi Indie terlalu sulit untuk dilukis",
+          "Seniman Mooi Indie tidak memiliki kemampuan teknis yang baik",
+          "Aliran Mooi Indie dianggap tidak merepresentasikan realitas kehidupan rakyat Indonesia dan hanya memanjakan selera kolonial",
+          "Mooi Indie menggunakan cat yang terlalu mahal"
+        ],
+        correct: 2,
+        explanation: "S. Sudjojono menolak Mooi Indie karena aliran tersebut hanya menampilkan keindahan alam Indonesia untuk memanjakan selera kolonial, tanpa mengangkat realitas penderitaan rakyat Indonesia di masa penjajahan."
+      },
+      {
+        question: "Affandi terkenal dengan teknik melukis langsung dari tube cat tanpa kuas. Bagaimana teknik unik ini mencerminkan prinsip aliran Ekspresionisme?",
+        options: [
+          "Ekspresionisme mewajibkan seniman tidak menggunakan kuas",
+          "Teknik ini memungkinkan ekspresi emosi yang lebih spontan dan langsung tanpa hambatan alat",
+          "Melukis tanpa kuas lebih hemat biaya",
+          "Teknik ini membuat lukisan lebih cepat selesai"
+        ],
+        correct: 1,
+        explanation: "Teknik Affandi mencerminkan esensi Ekspresionisme yaitu mengutamakan ekspresi emosi pribadi yang spontan dan langsung. Tanpa kuas, tidak ada 'penghalang' antara emosi seniman dan kanvas."
+      },
+      {
+        question: "Bandingkan karya Basuki Abdullah yang realis dengan karya Affandi yang ekspresif. Dalam konteks apresiasi seni, manakah pernyataan yang PALING TEPAT?",
+        options: [
+          "Karya Basuki Abdullah lebih bernilai karena lebih mirip aslinya",
+          "Karya Affandi lebih bernilai karena lebih unik",
+          "Kedua karya memiliki nilai estetis yang setara namun dengan pendekatan dan tujuan artistik yang berbeda",
+          "Tidak mungkin membandingkan kedua karya karena sangat berbeda"
+        ],
+        correct: 2,
+        explanation: "Dalam apresiasi seni, tidak ada aliran yang lebih baik dari yang lain. Keduanya memiliki nilai estetis yang setara dengan pendekatan berbeda - Basuki Abdullah mengutamakan keindahan visual realistis, Affandi mengutamakan ekspresi emosi."
+      },
+      {
+        question: "Pada masa pendudukan Jepang, dibentuk Keimin Bunka Shidoso untuk mengontrol seniman Indonesia. Namun banyak seniman tetap menyisipkan pesan nasionalisme dalam karya mereka. Apa yang dapat disimpulkan tentang peran seni dalam konteks ini?",
+        options: [
+          "Seni hanya berfungsi sebagai hiburan semata",
+          "Seni dapat menjadi media perlawanan dan komunikasi pesan terselubung dalam situasi represif",
+          "Seniman pada masa itu tidak memiliki kebebasan sama sekali",
+          "Jepang berhasil sepenuhnya mengontrol seni Indonesia"
+        ],
+        correct: 1,
+        explanation: "Sejarah menunjukkan bahwa seni dapat menjadi media perlawanan yang efektif. Meski dalam tekanan, seniman Indonesia tetap mampu menyisipkan pesan nasionalisme melalui simbol dan makna terselubung dalam karya mereka."
+      },
+      {
+        question: "Seorang seniman kontemporer ingin membuat karya yang mengkritik isu lingkungan di Indonesia. Berdasarkan proses penciptaan karya seni yang telah dipelajari, tahapan mana yang PALING KRITIS untuk keberhasilan pesan karya tersebut?",
+        options: [
+          "Tahap penemuan ide - karena tanpa ide, tidak ada karya",
+          "Tahap pengembangan ide - karena di sinilah pesan moral dan strategi penyampaian dirumuskan",
+          "Tahap visualisasi - karena teknik yang bagus akan menarik perhatian",
+          "Semua tahap sama pentingnya tanpa ada yang lebih kritis"
+        ],
+        correct: 1,
+        explanation: "Untuk karya yang bertujuan menyampaikan kritik sosial, tahap pengembangan ide sangat kritis. Di tahap ini seniman merumuskan pesan moral, memilih simbol yang tepat, dan merancang strategi agar pesan dapat tersampaikan efektif kepada audiens."
+      },
+      {
+        question: "Perhatikan pernyataan berikut: 'Dua orang melihat lukisan yang sama, namun memiliki interpretasi yang berbeda.' Fenomena ini menunjukkan sifat karya seni yang...",
+        options: [
+          "Objektif - karena makna sudah ditentukan oleh seniman",
+          "Subjektif - karena interpretasi dipengaruhi oleh pengalaman dan sudut pandang masing-masing penghayat",
+          "Universal - karena semua orang seharusnya memiliki interpretasi yang sama",
+          "Tidak bermakna - karena tidak ada interpretasi yang benar"
+        ],
+        correct: 1,
+        explanation: "Karya seni bersifat subjektif. Setiap penikmat seni membawa pengalaman hidup, nilai-nilai, dan perspektif pribadi yang mempengaruhi cara mereka menginterpretasi sebuah karya. Tidak ada interpretasi yang mutlak benar atau salah."
+      },
+      {
+        question: "Museum Affandi di Yogyakarta memiliki bentuk arsitektur unik menyerupai daun pisang, dirancang oleh Affandi sendiri. Apa yang dapat dianalisis tentang hubungan antara karya lukis Affandi dan arsitektur museumnya?",
+        options: [
+          "Tidak ada hubungan, keduanya adalah bidang yang berbeda",
+          "Keduanya mencerminkan konsistensi filosofi Affandi: organik, mengalir, dan menyatu dengan alam Indonesia",
+          "Affandi tidak memiliki pengetahuan arsitektur sehingga hanya kebetulan",
+          "Bentuk daun pisang dipilih karena paling murah untuk dibangun"
+        ],
+        correct: 1,
+        explanation: "Baik lukisan maupun arsitektur museum Affandi menunjukkan konsistensi filosofi pribadinya - bentuk organik, garis mengalir, dan kedekatan dengan alam Indonesia. Ini menunjukkan bahwa visi seniman seringkali melampaui satu medium saja."
+      },
+      {
+        question: "Dalam membandingkan karya dua seniman, seorang siswa hanya fokus pada perbedaan warna yang digunakan. Evaluasi pendekatan ini berdasarkan aspek analisis perbandingan yang lengkap:",
+        options: [
+          "Pendekatan tersebut sudah cukup karena warna adalah unsur terpenting",
+          "Pendekatan tersebut kurang komprehensif karena mengabaikan aspek lain seperti gaya, teknik, tema, dan konteks historis seniman",
+          "Pendekatan tersebut terlalu kompleks untuk tingkat SMP",
+          "Warna tidak relevan dalam membandingkan karya seni"
+        ],
+        correct: 1,
+        explanation: "Perbandingan karya seni yang komprehensif harus mencakup berbagai aspek: identitas seniman, gaya/aliran, teknik, unsur-unsur rupa, tema/pesan, serta konteks historis dan sosial. Fokus pada satu aspek saja akan menghasilkan analisis yang dangkal."
+      },
+      {
+        question: "Jika kamu diminta membuat proyek perbandingan antara karya Raden Saleh dan karya seniman kontemporer Indonesia seperti Eko Nugroho, aspek mana yang akan menjadi tantangan TERBESAR dan mengapa?",
+        options: [
+          "Perbedaan teknik - karena teknik selalu sama dari masa ke masa",
+          "Perbedaan konteks zaman - karena karya seni adalah cerminan zamannya, membandingkan karya dari era yang sangat berbeda memerlukan pemahaman mendalam tentang konteks masing-masing",
+          "Perbedaan ukuran karya - karena ukuran menentukan nilai",
+          "Perbedaan nama seniman - karena nama mempengaruhi kualitas karya"
+        ],
+        correct: 1,
+        explanation: "Karya seni adalah produk zamannya. Raden Saleh berkarya di era kolonial dengan tantangan dan nilai berbeda dari Eko Nugroho yang berkarya di era digital. Memahami konteks zaman masing-masing adalah kunci untuk perbandingan yang adil dan bermakna."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(10).fill(null);
+    let quizSubmitted = false;
+
+    // Initialize presentation
+    function init() {
+      generateSlideDots();
+      generateQuizDots();
+      loadQuestion(0);
+      updateSlideNavigation();
+    }
+
+    // Slide Navigation Functions
+    function goToSlide(index) {
+      if (index >= 0 && index < totalSlides) {
+        const slides = document.querySelectorAll('.slide');
+        slides[currentSlide].classList.remove('active');
+        slides[index].classList.add('active');
+        currentSlide = index;
+        updateSlideNavigation();
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        goToSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        goToSlide(currentSlide - 1);
+      }
+    }
+
+    function updateSlideNavigation() {
+      const prevBtn = document.getElementById('prev-slide-btn');
+      const nextBtn = document.getElementById('next-slide-btn');
+      const indicator = document.getElementById('slide-indicator');
+      const progressBar = document.getElementById('progress-bar');
+      
+      prevBtn.disabled = currentSlide === 0;
+      nextBtn.disabled = currentSlide === totalSlides - 1;
+      indicator.textContent = `Slide ${currentSlide + 1}/${totalSlides}`;
+      progressBar.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+      
+      // Update dots
+      const dots = document.querySelectorAll('#slide-dots button');
+      dots.forEach((dot, index) => {
+        if (index === currentSlide) {
+          dot.classList.add('bg-amber-600');
+          dot.classList.remove('bg-amber-200');
+        } else {
+          dot.classList.remove('bg-amber-600');
+          dot.classList.add('bg-amber-200');
+        }
+      });
+    }
+
+    function generateSlideDots() {
+      const container = document.getElementById('slide-dots');
+      container.innerHTML = '';
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('button');
+        dot.className = `w-2 h-2 rounded-full transition-colors ${i === 0 ? 'bg-amber-600' : 'bg-amber-200'}`;
+        dot.onclick = () => goToSlide(i);
+        dot.title = `Slide ${i + 1}`;
+        container.appendChild(dot);
+      }
+    }
+
+    // Accordion Function
+    function toggleAccordion(button) {
+      const content = button.nextElementSibling;
+      const icon = button.querySelector('.accordion-icon');
+      
+      content.classList.toggle('open');
+      icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0)';
+    }
+
+    // Fullscreen Toggle
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Quiz Functions
+    function generateQuizDots() {
+      const container = document.getElementById('quiz-dots');
+      container.innerHTML = '';
+      for (let i = 0; i < 10; i++) {
+        const dot = document.createElement('div');
+        dot.className = `w-3 h-3 rounded-full ${i === 0 ? 'bg-amber-600' : 'bg-gray-300'} transition-colors`;
+        dot.id = `quiz-dot-${i}`;
+        container.appendChild(dot);
+      }
+    }
+
+    function loadQuestion(index) {
+      const questionDisplay = document.getElementById('question-display');
+      const q = quizData[index];
+      
+      let optionsHtml = q.options.map((opt, i) => {
+        let classes = 'quiz-option p-4 border-2 rounded-xl flex items-start gap-3';
+        if (userAnswers[index] === i) {
+          classes += ' selected';
+        }
+        if (quizSubmitted) {
+          if (i === q.correct) {
+            classes += ' correct';
+          } else if (userAnswers[index] === i && i !== q.correct) {
+            classes += ' wrong';
+          }
+        }
+        return `
+          <div class="${classes}" onclick="${quizSubmitted ? '' : `selectAnswer(${index}, ${i})`}">
+            <span class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center font-semibold text-amber-800 flex-shrink-0">
+              ${String.fromCharCode(65 + i)}
+            </span>
+            <span class="text-gray-700">${opt}</span>
+          </div>
+        `;
+      }).join('');
+
+      let explanationHtml = '';
+      if (quizSubmitted) {
+        explanationHtml = `
+          <div class="mt-4 p-4 bg-blue-50 rounded-xl border border-blue-200">
+            <h4 class="font-semibold text-blue-800 mb-2">💡 Pembahasan:</h4>
+            <p class="text-sm text-blue-700">${q.explanation}</p>
+          </div>
+        `;
+      }
+
+      questionDisplay.innerHTML = `
+        <div class="mb-6">
+          <span class="inline-block px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm font-medium mb-3">
+            Soal ${index + 1}
+          </span>
+          <p class="text-lg text-gray-800 leading-relaxed">${q.question}</p>
+        </div>
+        <div class="space-y-3">
+          ${optionsHtml}
+        </div>
+        ${explanationHtml}
+      `;
+
+      document.getElementById('current-question').textContent = index + 1;
+      updateQuizNavigation();
+      updateQuizDots();
+    }
+
+    function selectAnswer(questionIndex, answerIndex) {
+      if (quizSubmitted) return;
+      userAnswers[questionIndex] = answerIndex;
+      loadQuestion(questionIndex);
+    }
+
+    function updateQuizNavigation() {
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const submitBtn = document.getElementById('submit-btn');
+
+      prevBtn.disabled = currentQuestion === 0;
+      
+      if (currentQuestion === 9) {
+        nextBtn.classList.add('hidden');
+        submitBtn.classList.remove('hidden');
+      } else {
+        nextBtn.classList.remove('hidden');
+        submitBtn.classList.add('hidden');
+      }
+    }
+
+    function updateQuizDots() {
+      for (let i = 0; i < 10; i++) {
+        const dot = document.getElementById(`quiz-dot-${i}`);
+        if (i === currentQuestion) {
+          dot.className = 'w-3 h-3 rounded-full bg-amber-600 transition-colors';
+        } else if (userAnswers[i] !== null) {
+          dot.className = 'w-3 h-3 rounded-full bg-green-500 transition-colors';
+        } else {
+          dot.className = 'w-3 h-3 rounded-full bg-gray-300 transition-colors';
+        }
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < 9) {
+        currentQuestion++;
+        loadQuestion(currentQuestion);
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion(currentQuestion);
+      }
+    }
+
+    function submitQuiz() {
+      quizSubmitted = true;
+      
+      let score = 0;
+      for (let i = 0; i < 10; i++) {
+        if (userAnswers[i] === quizData[i].correct) {
+          score++;
+        }
+      }
+
+      // Show results
+      const quizContainer = document.getElementById('quiz-container');
+      const resultsContainer = document.getElementById('quiz-results');
+      const scoreDisplay = document.getElementById('score-display');
+      const scoreMessage = document.getElementById('score-message');
+      const resultIcon = document.getElementById('result-icon');
+
+      scoreDisplay.textContent = `${score}/10`;
+
+      if (score >= 9) {
+        resultIcon.textContent = '🏆';
+        scoreMessage.textContent = 'Luar biasa! Kamu sangat memahami materi ini!';
+      } else if (score >= 7) {
+        resultIcon.textContent = '🎉';
+        scoreMessage.textContent = 'Bagus sekali! Pemahaman kamu sudah baik!';
+      } else if (score >= 5) {
+        resultIcon.textContent = '👍';
+        scoreMessage.textContent = 'Cukup baik! Terus belajar untuk hasil yang lebih baik!';
+      } else {
+        resultIcon.textContent = '📚';
+        scoreMessage.textContent = 'Ayo pelajari kembali materinya dan coba lagi!';
+      }
+
+      resultsContainer.classList.remove('hidden');
+      
+      // Reload current question to show correct/wrong
+      loadQuestion(currentQuestion);
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      userAnswers = new Array(10).fill(null);
+      quizSubmitted = false;
+      
+      document.getElementById('quiz-results').classList.add('hidden');
+      generateQuizDots();
+      loadQuestion(0);
+    }
+
+    // Keyboard Navigation
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      } else if (e.key === 'Home') {
+        goToSlide(0);
+      } else if (e.key === 'End') {
+        goToSlide(totalSlides - 1);
+      }
+    });
+
+    // Element SDK Integration
+    async function onConfigChange(newConfig) {
+      config = { ...config, ...newConfig };
+      
+      // Update teacher and school display
+      const teacherDisplay = document.getElementById('teacher-display');
+      const schoolDisplay = document.getElementById('school-display');
+      
+      if (teacherDisplay) {
+        teacherDisplay.textContent = `👨‍🏫 ${config.teacher_name || defaultConfig.teacher_name}`;
+      }
+      if (schoolDisplay) {
+        schoolDisplay.textContent = `🏫 ${config.school_name || defaultConfig.school_name}`;
+      }
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["teacher_name", config.teacher_name || defaultConfig.teacher_name],
+        ["school_name", config.school_name || defaultConfig.school_name]
+      ]);
+    }
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    // Initialize on load
+    init();
+  </script>
+</body>
+</html>

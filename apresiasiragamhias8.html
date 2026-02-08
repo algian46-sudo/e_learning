@@ -1,0 +1,1172 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ragam Hias Nusantara</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Nunito:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    .font-display {
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .font-body {
+      font-family: 'Nunito', sans-serif;
+    }
+    
+    .batik-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5L35 15L45 15L37 22L40 32L30 26L20 32L23 22L15 15L25 15Z' fill='%23d4a574' fill-opacity='0.1'/%3E%3Ccircle cx='30' cy='45' r='8' fill='none' stroke='%23d4a574' stroke-opacity='0.1' stroke-width='2'/%3E%3C/svg%3E");
+    }
+    
+    .kawung-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse cx='20' cy='20' rx='8' ry='12' fill='none' stroke='%23ffffff' stroke-opacity='0.1' stroke-width='1'/%3E%3Cellipse cx='20' cy='20' rx='12' ry='8' fill='none' stroke='%23ffffff' stroke-opacity='0.1' stroke-width='1'/%3E%3C/svg%3E");
+    }
+    
+    .slide-enter {
+      animation: slideIn 0.5s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .progress-bar {
+      transition: width 0.3s ease;
+    }
+    
+    .interactive-card {
+      transition: all 0.3s ease;
+    }
+    
+    .interactive-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.disabled) {
+      transform: scale(1.02);
+      border-color: #d4a574;
+    }
+    
+    .correct {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+      border-color: #10b981 !important;
+      color: white !important;
+    }
+    
+    .incorrect {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+      border-color: #ef4444 !important;
+      color: white !important;
+    }
+    
+    .motif-svg {
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body">
+  <div id="app" class="h-full overflow-auto" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);"><!-- Progress Bar -->
+   <div class="fixed top-0 left-0 right-0 z-50 h-1 bg-gray-800">
+    <div id="progress" class="progress-bar h-full bg-gradient-to-r from-amber-500 to-orange-600" style="width: 0%"></div>
+   </div><!-- Navigation -->
+   <nav class="fixed top-4 left-1/2 transform -translate-x-1/2 z-40 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 flex items-center gap-4"><button id="prevBtn" class="w-10 h-10 rounded-full bg-amber-600 hover:bg-amber-500 text-white flex items-center justify-center transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+     <svg width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6" />
+     </svg></button> <span id="slideCounter" class="text-white font-semibold min-w-[80px] text-center">1 / 12</span> <button id="nextBtn" class="w-10 h-10 rounded-full bg-amber-600 hover:bg-amber-500 text-white flex items-center justify-center transition-all">
+     <svg width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6" />
+     </svg></button>
+   </nav><!-- Slides Container -->
+   <div id="slidesContainer" class="min-h-full pt-20 pb-10 px-4"><!-- Slide 1: Judul -->
+    <section id="slide1" class="slide min-h-screen flex items-center justify-center batik-pattern">
+     <div class="text-center max-w-4xl mx-auto slide-enter">
+      <div class="mb-8 float-animation">
+       <svg class="mx-auto motif-svg" width="120" height="120" viewbox="0 0 120 120"><defs>
+         <lineargradient id="gold1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#f59e0b" />
+          <stop offset="100%" style="stop-color:#d97706" />
+         </lineargradient>
+        </defs> <circle cx="60" cy="60" r="55" fill="none" stroke="url(#gold1)" stroke-width="3" /> <ellipse cx="60" cy="60" rx="20" ry="35" fill="none" stroke="url(#gold1)" stroke-width="2" /> <ellipse cx="60" cy="60" rx="35" ry="20" fill="none" stroke="url(#gold1)" stroke-width="2" /> <circle cx="60" cy="60" r="8" fill="url(#gold1)" /> <circle cx="60" cy="25" r="5" fill="url(#gold1)" /> <circle cx="60" cy="95" r="5" fill="url(#gold1)" /> <circle cx="25" cy="60" r="5" fill="url(#gold1)" /> <circle cx="95" cy="60" r="5" fill="url(#gold1)" />
+       </svg>
+      </div>
+      <h1 id="mainTitle" class="font-display text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">Apresiasi Ragam Hias<br>
+       Tradisional Nusantara</h1>
+      <p id="subtitle" class="text-xl md:text-2xl text-amber-200 mb-8">Mengenal Warisan Budaya Seni Rupa Bangsa Indonesia</p>
+      <div class="flex justify-center gap-4 flex-wrap"><span class="px-4 py-2 bg-amber-600/30 rounded-full text-amber-100 text-sm">🎨 Seni Rupa</span> <span class="px-4 py-2 bg-amber-600/30 rounded-full text-amber-100 text-sm">🏛️ Budaya</span> <span class="px-4 py-2 bg-amber-600/30 rounded-full text-amber-100 text-sm">🇮🇩 Indonesia</span>
+      </div>
+     </div>
+    </section><!-- Slide 2: Tujuan Pembelajaran -->
+    <section id="slide2" class="slide min-h-screen flex items-center justify-center hidden">
+     <div class="max-w-5xl mx-auto slide-enter">
+      <h2 class="font-display text-4xl md:text-5xl font-bold text-white text-center mb-12">🎯 Tujuan Pembelajaran</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+       <div class="interactive-card bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl p-6 text-white">
+        <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4"><span class="text-3xl">📚</span>
+        </div>
+        <h3 class="font-bold text-xl mb-3">Memahami Sejarah</h3>
+        <p class="text-emerald-100">Memahami sejarah perkembangan ragam hias tradisional di Nusantara dari masa ke masa.</p>
+       </div>
+       <div class="interactive-card bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-6 text-white">
+        <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4"><span class="text-3xl">🔍</span>
+        </div>
+        <h3 class="font-bold text-xl mb-3">Mengidentifikasi Motif</h3>
+        <p class="text-blue-100">Mengidentifikasi berbagai motif ragam hias sebagai budaya seni rupa Indonesia.</p>
+       </div>
+       <div class="interactive-card bg-gradient-to-br from-purple-600 to-purple-700 rounded-2xl p-6 text-white">
+        <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4"><span class="text-3xl">💎</span>
+        </div>
+        <h3 class="font-bold text-xl mb-3">Mengapresiasi Warisan</h3>
+        <p class="text-purple-100">Mengapresiasi ragam hias Nusantara sebagai warisan budaya bernilai tinggi yang sejajar dengan budaya dunia.</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 3: Definisi dan Konsep Dasar -->
+    <section id="slide3" class="slide min-h-screen flex items-center justify-center hidden">
+     <div class="max-w-6xl mx-auto slide-enter">
+      <h2 class="font-display text-4xl md:text-5xl font-bold text-white text-center mb-12">📖 Definisi &amp; Konsep Dasar</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+       <div class="interactive-card bg-white/10 backdrop-blur rounded-2xl p-8 border border-amber-500/30">
+        <div class="flex items-start gap-4">
+         <div class="w-14 h-14 bg-amber-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">🎨</span>
+         </div>
+         <div>
+          <h3 class="font-bold text-2xl text-amber-400 mb-2">Ragam Hias</h3>
+          <p class="text-gray-300 text-lg">Aneka corak seni rupa yang bertujuan menghias benda lain agar lebih indah dan bermakna.</p>
+         </div>
+        </div>
+        <div class="mt-4 p-4 bg-amber-900/30 rounded-xl">
+         <p class="text-amber-200 text-sm italic">💡 Contoh: Ukiran pada pintu rumah adat, batik pada kain</p>
+        </div>
+       </div>
+       <div class="interactive-card bg-white/10 backdrop-blur rounded-2xl p-8 border border-emerald-500/30">
+        <div class="flex items-start gap-4">
+         <div class="w-14 h-14 bg-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">✨</span>
+         </div>
+         <div>
+          <h3 class="font-bold text-2xl text-emerald-400 mb-2">Ornamen</h3>
+          <p class="text-gray-300 text-lg">Dekorasi yang berfungsi memperindah suatu benda dengan menambah nilai estetika.</p>
+         </div>
+        </div>
+        <div class="mt-4 p-4 bg-emerald-900/30 rounded-xl">
+         <p class="text-emerald-200 text-sm italic">💡 Contoh: Hiasan pada keramik, ukiran pada furniture</p>
+        </div>
+       </div>
+       <div class="interactive-card bg-white/10 backdrop-blur rounded-2xl p-8 border border-blue-500/30">
+        <div class="flex items-start gap-4">
+         <div class="w-14 h-14 bg-blue-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">🌟</span>
+         </div>
+         <div>
+          <h3 class="font-bold text-2xl text-blue-400 mb-2">Motif</h3>
+          <p class="text-gray-300 text-lg">Pokok atau tema utama dalam ragam hias yang menjadi dasar penciptaan pola.</p>
+         </div>
+        </div>
+        <div class="mt-4 p-4 bg-blue-900/30 rounded-xl">
+         <p class="text-blue-200 text-sm italic">💡 Contoh: Motif kawung, parang, mega mendung</p>
+        </div>
+       </div>
+       <div class="interactive-card bg-white/10 backdrop-blur rounded-2xl p-8 border border-purple-500/30">
+        <div class="flex items-start gap-4">
+         <div class="w-14 h-14 bg-purple-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">🏺</span>
+         </div>
+         <div>
+          <h3 class="font-bold text-2xl text-purple-400 mb-2">Tradisional</h3>
+          <p class="text-gray-300 text-lg">Dikembangkan secara turun-temurun, menjaga bentuk dan nilai filosofisnya.</p>
+         </div>
+        </div>
+        <div class="mt-4 p-4 bg-purple-900/30 rounded-xl">
+         <p class="text-purple-200 text-sm italic">💡 Diwariskan dari generasi ke generasi</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 4: Sejarah & Asal-Usul -->
+    <section id="slide4" class="slide min-h-screen flex items-center justify-center hidden">
+     <div class="max-w-6xl mx-auto slide-enter">
+      <h2 class="font-display text-4xl md:text-5xl font-bold text-white text-center mb-12">⏳ Sejarah &amp; Asal-Usul</h2>
+      <div class="relative"><!-- Timeline Line -->
+       <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-amber-500 via-emerald-500 to-blue-500 rounded-full hidden md:block"></div>
+       <div class="space-y-12"><!-- Era 1 -->
+        <div class="flex flex-col md:flex-row items-center gap-8">
+         <div class="md:w-1/2 md:text-right">
+          <div class="interactive-card bg-gradient-to-br from-amber-600/80 to-amber-700/80 backdrop-blur rounded-2xl p-6 inline-block"><span class="text-amber-200 font-bold text-lg">± 1500 SM</span>
+           <h3 class="text-white font-bold text-2xl mt-2">Zaman Nenek Moyang</h3>
+           <p class="text-amber-100 mt-2">Migrasi penduduk dari Yunan (Tiongkok Selatan) membawa cikal bakal seni ragam hias ke Nusantara.</p>
+          </div>
+         </div>
+         <div class="w-16 h-16 bg-amber-500 rounded-full flex items-center justify-center z-10 flex-shrink-0 shadow-lg shadow-amber-500/50"><span class="text-2xl">🚢</span>
+         </div>
+         <div class="md:w-1/2">
+          <svg class="motif-svg" width="150" height="100" viewbox="0 0 150 100"><rect x="10" y="50" width="130" height="40" rx="5" fill="#92400e" stroke="#fbbf24" stroke-width="2" /> <path d="M75 10 L90 50 L60 50 Z" fill="#fbbf24" /> <circle cx="40" cy="70" r="8" fill="#1a1a2e" /> <circle cx="110" cy="70" r="8" fill="#1a1a2e" /> <path d="M20 50 Q75 20 130 50" fill="none" stroke="#fbbf24" stroke-width="2" />
+          </svg>
+         </div>
+        </div><!-- Era 2 -->
+        <div class="flex flex-col md:flex-row-reverse items-center gap-8">
+         <div class="md:w-1/2 md:text-left">
+          <div class="interactive-card bg-gradient-to-br from-emerald-600/80 to-emerald-700/80 backdrop-blur rounded-2xl p-6 inline-block"><span class="text-emerald-200 font-bold text-lg">Masa Pleistosen</span>
+           <h3 class="text-white font-bold text-2xl mt-2">Seni Lukis Gua</h3>
+           <p class="text-emerald-100 mt-2">Temuan seni lukis gua di Sulawesi dan Maluku membuktikan tumbuhnya seni rupa sejak zaman purba.</p>
+          </div>
+         </div>
+         <div class="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center z-10 flex-shrink-0 shadow-lg shadow-emerald-500/50"><span class="text-2xl">🎨</span>
+         </div>
+         <div class="md:w-1/2 md:text-right">
+          <svg class="motif-svg" width="180" height="120" viewbox="0 0 180 120"><ellipse cx="90" cy="60" rx="85" ry="55" fill="#374151" stroke="#10b981" stroke-width="2" /> <path d="M50 40 Q60 30 70 40 L75 60 Q70 70 60 65 L55 45" fill="#10b981" opacity="0.7" /> <circle cx="65" cy="38" r="5" fill="#fbbf24" /> <path d="M100 50 L110 45 L115 55 L105 60 Z" fill="#ef4444" opacity="0.7" /> <path d="M130 70 Q140 65 145 75 L140 85 Q130 80 130 70" fill="#fbbf24" opacity="0.7" /> <circle cx="60" cy="80" r="3" fill="#fbbf24" /> <circle cx="120" cy="40" r="3" fill="#fbbf24" />
+          </svg>
+         </div>
+        </div><!-- Era 3 -->
+        <div class="flex flex-col md:flex-row items-center gap-8">
+         <div class="md:w-1/2 md:text-right">
+          <div class="interactive-card bg-gradient-to-br from-blue-600/80 to-blue-700/80 backdrop-blur rounded-2xl p-6 inline-block"><span class="text-blue-200 font-bold text-lg">500 - 300 SM</span>
+           <h3 class="text-white font-bold text-2xl mt-2">Pengaruh Dong Son</h3>
+           <p class="text-blue-100 mt-2">Kebudayaan perunggu memperkenalkan motif seperti pilin, swastika, dan meander (banji).</p>
+          </div>
+         </div>
+         <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center z-10 flex-shrink-0 shadow-lg shadow-blue-500/50"><span class="text-2xl">🏺</span>
+         </div>
+         <div class="md:w-1/2">
+          <svg class="motif-svg" width="150" height="150" viewbox="0 0 150 150"><ellipse cx="75" cy="30" rx="40" ry="15" fill="#3b82f6" /> <path d="M35 30 L35 120 Q75 140 115 120 L115 30" fill="none" stroke="#3b82f6" stroke-width="3" /> <ellipse cx="75" cy="120" rx="40" ry="15" fill="#3b82f6" /> <!-- Spiral Pattern --> <path d="M55 50 Q45 50 45 60 Q45 70 55 70 Q65 70 65 60 Q65 55 60 52" fill="none" stroke="#fbbf24" stroke-width="2" /> <path d="M85 50 Q95 50 95 60 Q95 70 85 70 Q75 70 75 60 Q75 55 80 52" fill="none" stroke="#fbbf24" stroke-width="2" /> <!-- Geometric Pattern --> <path d="M50 85 L60 85 L60 95 L50 95 Z M60 85 L70 85 L70 95 L60 95 Z" fill="none" stroke="#fbbf24" stroke-width="1.5" /> <path d="M80 85 L90 85 L90 95 L80 95 Z M90 85 L100 85 L100 95 L90 95 Z" fill="none" stroke="#fbbf24" stroke-width="1.5" />
+          </svg>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 5: Mengapa Manusia Menghias Benda -->
+    <section id="slide5" class="slide min-h-screen flex items-center justify-center hidden">
+     <div class="max-w-5xl mx-auto slide-enter">
+      <h2 class="font-display text-4xl md:text-5xl font-bold text-white text-center mb-12">🤔 Mengapa Manusia Menghias Benda?</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+       <div class="interactive-card bg-gradient-to-br from-rose-500/90 to-pink-600/90 rounded-3xl p-8 text-white">
+        <div class="text-6xl mb-6">
+         👁️
+        </div>
+        <h3 class="font-bold text-3xl mb-4">Naluri Keindahan</h3>
+        <p class="text-rose-100 text-lg mb-6">Setiap manusia pada dasarnya menyukai keindahan (estetika). Ini adalah naluri alamiah yang mendorong kita untuk menciptakan sesuatu yang indah.</p>
+        <div class="bg-white/20 rounded-xl p-4">
+         <p class="text-sm italic">"Keindahan adalah kebutuhan jiwa manusia sejak zaman purba"</p>
+        </div>
+       </div>
+       <div class="interactive-card bg-gradient-to-br from-cyan-500/90 to-teal-600/90 rounded-3xl p-8 text-white">
+        <div class="text-6xl mb-6">
+         🏠
+        </div>
+        <h3 class="font-bold text-3xl mb-4">Benda Fungsional</h3>
+        <p class="text-cyan-100 text-lg mb-6">Awalnya, ragam hias diterapkan untuk mempercantik benda pakai sehari-hari seperti alat rumah tangga dari gerabah atau perkakas batu.</p>
+        <div class="flex gap-4 justify-center">
+         <svg width="60" height="60" viewbox="0 0 60 60"><path d="M30 5 L40 20 L40 50 Q30 55 20 50 L20 20 Z" fill="#0d9488" stroke="#ffffff" stroke-width="2" /> <ellipse cx="30" cy="50" rx="10" ry="5" fill="#0d9488" stroke="#ffffff" stroke-width="2" /> <path d="M25 25 Q30 20 35 25" fill="none" stroke="#fbbf24" stroke-width="2" /> <path d="M25 35 Q30 30 35 35" fill="none" stroke="#fbbf24" stroke-width="2" />
+         </svg>
+         <svg width="60" height="60" viewbox="0 0 60 60"><ellipse cx="30" cy="45" rx="20" ry="10" fill="#0d9488" stroke="#ffffff" stroke-width="2" /> <path d="M10 45 L10 25 Q30 5 50 25 L50 45" fill="none" stroke="#ffffff" stroke-width="2" /> <circle cx="20" cy="30" r="3" fill="#fbbf24" /> <circle cx="40" cy="30" r="3" fill="#fbbf24" /> <circle cx="30" cy="20" r="3" fill="#fbbf24" />
+         </svg>
+        </div>
+       </div>
+      </div><!-- Interactive Activity -->
+      <div class="mt-12 bg-white/10 backdrop-blur rounded-2xl p-8">
+       <h4 class="text-amber-400 font-bold text-xl mb-4">🎮 Aktivitas Interaktif: Temukan Ragam Hias di Sekitarmu!</h4>
+       <p class="text-gray-300 mb-4">Klik benda-benda di bawah ini yang menurutmu memiliki ragam hias:</p>
+       <div id="activity1" class="grid grid-cols-4 md:grid-cols-8 gap-4"><button class="activity-item p-4 bg-white/5 rounded-xl hover:bg-amber-500/30 transition-all text-4xl" data-has-ornament="true">🏺</button> <button class="activity-item p-4 bg-white/5 rounded-xl hover:bg-amber-500/30 transition-all text-4xl" data-has-ornament="true">👘</button> <button class="activity-item p-4 bg-white/5 rounded-xl hover:bg-amber-500/30 transition-all text-4xl" data-has-ornament="false">📱</button> <button class="activity-item p-4 bg-white/5 rounded-xl hover:bg-amber-500/30 transition-all text-4xl" data-has-ornament="true">🚪</button> <button class="activity-item p-4 bg-white/5 rounded-xl hover:bg-amber-500/30 transition-all text-4xl" data-has-ornament="true">🎭</button> <button class="activity-item p-4 bg-white/5 rounded-xl hover:bg-amber-500/30 transition-all text-4xl" data-has-ornament="false">💻</button> <button class="activity-item p-4 bg-white/5 rounded-xl hover:bg-amber-500/30 transition-all text-4xl" data-has-ornament="true">🛖</button> <button class="activity-item p-4 bg-white/5 rounded-xl hover:bg-amber-500/30 transition-all text-4xl" data-has-ornament="true">⛵</button>
+       </div>
+       <p id="activity1Feedback" class="text-center mt-4 text-lg"></p>
+      </div>
+     </div>
+    </section><!-- Slide 6: Klasifikasi Motif -->
+    <section id="slide6" class="slide min-h-screen flex items-center justify-center hidden">
+     <div class="max-w-6xl mx-auto slide-enter">
+      <h2 class="font-display text-4xl md:text-5xl font-bold text-white text-center mb-12">📊 Klasifikasi Motif Ragam Hias</h2>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+       <div class="interactive-card bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-6 text-white text-center">
+        <svg class="mx-auto mb-4" width="80" height="80" viewbox="0 0 80 80"><rect x="10" y="10" width="25" height="25" fill="none" stroke="white" stroke-width="2" /> <circle cx="55" cy="22" r="12" fill="none" stroke="white" stroke-width="2" /> <polygon points="40,45 55,70 25,70" fill="none" stroke="white" stroke-width="2" /> <line x1="55" y1="50" x2="70" y2="70" stroke="white" stroke-width="2" />
+        </svg>
+        <h3 class="font-bold text-lg">Geometris</h3>
+        <p class="text-amber-100 text-sm mt-2">Unsur garis sebagai elemen utama</p>
+       </div>
+       <div class="interactive-card bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl p-6 text-white text-center">
+        <svg class="mx-auto mb-4" width="80" height="80" viewbox="0 0 80 80"><path d="M40 10 Q50 20 45 35 Q55 45 40 55 Q25 45 35 35 Q30 20 40 10" fill="none" stroke="white" stroke-width="2" /> <circle cx="40" cy="30" r="5" fill="white" /> <path d="M35 55 Q40 70 45 55" fill="none" stroke="white" stroke-width="2" /> <path d="M25 40 Q15 45 20 55" fill="none" stroke="white" stroke-width="2" /> <path d="M55 40 Q65 45 60 55" fill="none" stroke="white" stroke-width="2" />
+        </svg>
+        <h3 class="font-bold text-lg">Flora</h3>
+        <p class="text-emerald-100 text-sm mt-2">Motif tumbuhan</p>
+       </div>
+       <div class="interactive-card bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-6 text-white text-center">
+        <svg class="mx-auto mb-4" width="80" height="80" viewbox="0 0 80 80"><ellipse cx="40" cy="35" rx="25" ry="15" fill="none" stroke="white" stroke-width="2" /> <circle cx="30" cy="32" r="3" fill="white" /> <path d="M15 35 L5 40 L15 45" fill="none" stroke="white" stroke-width="2" /> <path d="M65 30 Q75 35 65 45 Q55 40 65 30" fill="none" stroke="white" stroke-width="2" /> <path d="M30 50 L25 65 M35 50 L35 65 M40 50 L40 60 M45 50 L45 65 M50 50 L55 65" stroke="white" stroke-width="2" />
+        </svg>
+        <h3 class="font-bold text-lg">Fauna</h3>
+        <p class="text-blue-100 text-sm mt-2">Motif binatang</p>
+       </div>
+       <div class="interactive-card bg-gradient-to-br from-purple-500 to-violet-600 rounded-2xl p-6 text-white text-center">
+        <svg class="mx-auto mb-4" width="80" height="80" viewbox="0 0 80 80"><circle cx="40" cy="20" r="12" fill="none" stroke="white" stroke-width="2" /> <circle cx="36" cy="18" r="2" fill="white" /> <circle cx="44" cy="18" r="2" fill="white" /> <path d="M36 24 Q40 28 44 24" fill="none" stroke="white" stroke-width="1.5" /> <path d="M40 32 L40 55" stroke="white" stroke-width="2" /> <path d="M40 40 L25 50 M40 40 L55 50" stroke="white" stroke-width="2" /> <path d="M40 55 L30 75 M40 55 L50 75" stroke="white" stroke-width="2" />
+        </svg>
+        <h3 class="font-bold text-lg">Manusia</h3>
+        <p class="text-purple-100 text-sm mt-2">Motif figur manusia</p>
+       </div>
+       <div class="interactive-card bg-gradient-to-br from-cyan-500 to-teal-600 rounded-2xl p-6 text-white text-center">
+        <svg class="mx-auto mb-4" width="80" height="80" viewbox="0 0 80 80"><circle cx="25" cy="25" r="10" fill="white" opacity="0.9" /> <path d="M15 50 Q25 40 40 50 Q55 60 70 50" fill="none" stroke="white" stroke-width="2" /> <path d="M10 60 Q30 50 50 60 Q70 70 80 60" fill="none" stroke="white" stroke-width="2" /> <path d="M60 20 L65 25 L60 30 M65 25 L75 25" stroke="white" stroke-width="2" />
+        </svg>
+        <h3 class="font-bold text-lg">Alam</h3>
+        <p class="text-cyan-100 text-sm mt-2">Motif unsur alam</p>
+       </div>
+      </div><!-- Interactive Matching Game -->
+      <div class="mt-12 bg-white/10 backdrop-blur rounded-2xl p-8">
+       <h4 class="text-amber-400 font-bold text-xl mb-4">🎮 Aktivitas: Cocokkan Gambar dengan Kategori!</h4>
+       <p class="text-gray-300 mb-6">Pilih kategori yang tepat untuk setiap gambar:</p>
+       <div id="matchingGame" class="space-y-4">
+        <div class="matching-item flex flex-col md:flex-row items-center gap-4 p-4 bg-white/5 rounded-xl" data-correct="flora">
+         <svg width="60" height="60" viewbox="0 0 60 60"><path d="M30 5 Q40 15 35 25 Q45 30 35 40 Q40 50 30 55 Q20 50 25 40 Q15 30 25 25 Q20 15 30 5" fill="#22c55e" stroke="#16a34a" stroke-width="2" /> <circle cx="30" cy="25" r="4" fill="#fbbf24" />
+         </svg>
+         <div class="flex flex-wrap gap-2"><button class="match-btn px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-white text-sm transition-all">Geometris</button> <button class="match-btn px-4 py-2 bg-emerald-600 hover:bg-emerald-500 rounded-lg text-white text-sm transition-all">Flora</button> <button class="match-btn px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white text-sm transition-all">Fauna</button>
+         </div><span class="match-result text-lg"></span>
+        </div>
+        <div class="matching-item flex flex-col md:flex-row items-center gap-4 p-4 bg-white/5 rounded-xl" data-correct="geometris">
+         <svg width="60" height="60" viewbox="0 0 60 60"><rect x="10" y="10" width="40" height="40" fill="none" stroke="#f59e0b" stroke-width="2" /> <line x1="10" y1="30" x2="50" y2="30" stroke="#f59e0b" stroke-width="2" /> <line x1="30" y1="10" x2="30" y2="50" stroke="#f59e0b" stroke-width="2" /> <circle cx="30" cy="30" r="8" fill="none" stroke="#f59e0b" stroke-width="2" />
+         </svg>
+         <div class="flex flex-wrap gap-2"><button class="match-btn px-4 py-2 bg-amber-600 hover:bg-amber-500 rounded-lg text-white text-sm transition-all">Geometris</button> <button class="match-btn px-4 py-2 bg-purple-600 hover:bg-purple-500 rounded-lg text-white text-sm transition-all">Manusia</button> <button class="match-btn px-4 py-2 bg-cyan-600 hover:bg-cyan-500 rounded-lg text-white text-sm transition-all">Alam</button>
+         </div><span class="match-result text-lg"></span>
+        </div>
+        <div class="matching-item flex flex-col md:flex-row items-center gap-4 p-4 bg-white/5 rounded-xl" data-correct="fauna">
+         <svg width="60" height="60" viewbox="0 0 60 60"><ellipse cx="30" cy="30" rx="20" ry="12" fill="#3b82f6" stroke="#2563eb" stroke-width="2" /> <circle cx="20" cy="28" r="3" fill="white" /> <circle cx="19" cy="28" r="1.5" fill="#1e3a8a" /> <path d="M10 30 L2 35" stroke="#2563eb" stroke-width="2" /> <path d="M50 25 Q58 30 50 35" fill="#3b82f6" stroke="#2563eb" stroke-width="2" />
+         </svg>
+         <div class="flex flex-wrap gap-2"><button class="match-btn px-4 py-2 bg-emerald-600 hover:bg-emerald-500 rounded-lg text-white text-sm transition-all">Flora</button> <button class="match-btn px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white text-sm transition-all">Fauna</button> <button class="match-btn px-4 py-2 bg-cyan-600 hover:bg-cyan-500 rounded-lg text-white text-sm transition-all">Alam</button>
+         </div><span class="match-result text-lg"></span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 7: Contoh Motif Geometris -->
+    <section id="slide7" class="slide min-h-screen flex items-center justify-center hidden">
+     <div class="max-w-6xl mx-auto slide-enter">
+      <h2 class="font-display text-4xl md:text-5xl font-bold text-white text-center mb-4">📐 Contoh Motif Geometris</h2>
+      <p class="text-amber-200 text-center mb-12 text-lg">Motif geometris menggunakan unsur garis sebagai elemen utama</p>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"><!-- Pilin -->
+       <div class="interactive-card bg-white/10 backdrop-blur rounded-2xl p-6 text-center">
+        <div class="bg-gradient-to-br from-amber-600 to-amber-700 rounded-xl p-4 mb-4">
+         <svg class="mx-auto" width="100" height="100" viewbox="0 0 100 100"><path d="M20 50 Q20 20 50 20 Q80 20 80 50 Q80 70 60 70 Q40 70 40 50 Q40 35 50 35 Q60 35 60 50" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" /> <path d="M80 50 Q80 80 50 80 Q20 80 20 50" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.5" />
+         </svg>
+        </div>
+        <h3 class="text-white font-bold text-xl mb-2">Pilin &amp; Pilin Ganda</h3>
+        <p class="text-gray-300 text-sm">Bentuk spiral yang melambangkan keabadian dan perjalanan hidup</p>
+       </div><!-- Swastika -->
+       <div class="interactive-card bg-white/10 backdrop-blur rounded-2xl p-6 text-center">
+        <div class="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-xl p-4 mb-4">
+         <svg class="mx-auto" width="100" height="100" viewbox="0 0 100 100"><path d="M50 20 L50 50 L80 50 M50 50 L50 80 M50 50 L20 50" stroke="white" stroke-width="4" fill="none" /> <path d="M50 20 L70 20 M80 50 L80 70 M50 80 L30 80 M20 50 L20 30" stroke="white" stroke-width="4" fill="none" />
+         </svg>
+        </div>
+        <h3 class="text-white font-bold text-xl mb-2">Swastika</h3>
+        <p class="text-gray-300 text-sm">Simbol matahari dan keberuntungan dalam budaya kuno</p>
+       </div><!-- Kawung -->
+       <div class="interactive-card bg-white/10 backdrop-blur rounded-2xl p-6 text-center">
+        <div class="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-4 mb-4">
+         <svg class="mx-auto" width="100" height="100" viewbox="0 0 100 100"><ellipse cx="50" cy="50" rx="15" ry="30" fill="none" stroke="white" stroke-width="2" /> <ellipse cx="50" cy="50" rx="30" ry="15" fill="none" stroke="white" stroke-width="2" /> <circle cx="50" cy="50" r="8" fill="white" opacity="0.5" /> <circle cx="50" cy="20" r="5" fill="white" opacity="0.3" /> <circle cx="50" cy="80" r="5" fill="white" opacity="0.3" /> <circle cx="20" cy="50" r="5" fill="white" opacity="0.3" /> <circle cx="80" cy="50" r="5" fill="white" opacity="0.3" />
+         </svg>
+        </div>
+        <h3 class="text-white font-bold text-xl mb-2">Kawung</h3>
+        <p class="text-gray-300 text-sm">Motif buah aren yang melambangkan kesucian dan kesempurnaan</p>
+       </div><!-- Tumpal -->
+       <div class="interactive-card bg-white/10 backdrop-blur rounded-2xl p-6 text-center">
+        <div class="bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl p-4 mb-4">
+         <svg class="mx-auto" width="100" height="100" viewbox="0 0 100 100"><polygon points="15,80 30,30 45,80" fill="none" stroke="white" stroke-width="2" /> <polygon points="35,80 50,30 65,80" fill="none" stroke="white" stroke-width="2" /> <polygon points="55,80 70,30 85,80" fill="none" stroke="white" stroke-width="2" /> <line x1="10" y1="80" x2="90" y2="80" stroke="white" stroke-width="2" />
+         </svg>
+        </div>
+        <h3 class="text-white font-bold text-xl mb-2">Tumpal</h3>
+        <p class="text-gray-300 text-sm">Deretan segitiga yang melambangkan gunung dan kesuburan</p>
+       </div>
+      </div><!-- Drawing Activity -->
+      <div class="mt-12 bg-white/10 backdrop-blur rounded-2xl p-8">
+       <h4 class="text-amber-400 font-bold text-xl mb-4">🎨 Aktivitas: Buat Pola Kawung Sederhana!</h4>
+       <div class="flex flex-col md:flex-row gap-6 items-center">
+        <div class="flex-1">
+         <p class="text-gray-300 mb-4">Klik kotak-kotak untuk membuat pola kawung:</p>
+         <div id="kawungGrid" class="grid grid-cols-5 gap-2 max-w-xs mx-auto"><!-- Grid will be generated by JS -->
+         </div><button id="resetKawung" class="mt-4 px-4 py-2 bg-red-600 hover:bg-red-500 rounded-lg text-white text-sm transition-all">Reset</button>
+        </div>
+        <div class="flex-1 text-center">
+         <p class="text-gray-400 text-sm mb-2">Contoh Pola Kawung:</p>
+         <svg width="150" height="150" viewbox="0 0 150 150" class="mx-auto"><rect width="150" height="150" fill="#1e3a5f" /> <g transform="translate(25, 25)">
+           <ellipse cx="25" cy="25" rx="10" ry="20" fill="none" stroke="#fbbf24" stroke-width="2" />
+           <ellipse cx="25" cy="25" rx="20" ry="10" fill="none" stroke="#fbbf24" stroke-width="2" />
+           <circle cx="25" cy="25" r="5" fill="#fbbf24" />
+          </g> <g transform="translate(75, 25)">
+           <ellipse cx="25" cy="25" rx="10" ry="20" fill="none" stroke="#fbbf24" stroke-width="2" />
+           <ellipse cx="25" cy="25" rx="20" ry="10" fill="none" stroke="#fbbf24" stroke-width="2" />
+           <circle cx="25" cy="25" r="5" fill="#fbbf24" />
+          </g> <g transform="translate(25, 75)">
+           <ellipse cx="25" cy="25" rx="10" ry="20" fill="none" stroke="#fbbf24" stroke-width="2" />
+           <ellipse cx="25" cy="25" rx="20" ry="10" fill="none" stroke="#fbbf24" stroke-width="2" />
+           <circle cx="25" cy="25" r="5" fill="#fbbf24" />
+          </g> <g transform="translate(75, 75)">
+           <ellipse cx="25" cy="25" rx="10" ry="20" fill="none" stroke="#fbbf24" stroke-width="2" />
+           <ellipse cx="25" cy="25" rx="20" ry="10" fill="none" stroke="#fbbf24" stroke-width="2" />
+           <circle cx="25" cy="25" r="5" fill="#fbbf24" />
+          </g>
+         </svg>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 8: Contoh Visual di Daerah -->
+    <section id="slide8" class="slide min-h-screen flex items-center justify-center hidden">
+     <div class="max-w-6xl mx-auto slide-enter">
+      <h2 class="font-display text-4xl md:text-5xl font-bold text-white text-center mb-4">🗺️ Ragam Hias di Berbagai Daerah</h2>
+      <p class="text-amber-200 text-center mb-12 text-lg">Setiap daerah memiliki ciri khas motif yang unik</p>
+      <div class="grid md:grid-cols-3 gap-8"><!-- Sumatra -->
+       <div class="interactive-card bg-gradient-to-br from-emerald-800/80 to-emerald-900/80 rounded-2xl overflow-hidden">
+        <div class="h-48 bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center p-4">
+         <svg width="180" height="140" viewbox="0 0 180 140"><!-- Sirih Gadang Pattern --> <path d="M90 10 Q120 30 110 60 Q130 80 100 100 Q70 80 70 60 Q60 30 90 10" fill="#22c55e" stroke="#16a34a" stroke-width="2" /> <path d="M90 25 Q105 35 100 50 Q110 60 95 70 Q80 60 80 50 Q75 35 90 25" fill="#4ade80" stroke="#22c55e" stroke-width="1" /> <line x1="90" y1="10" x2="90" y2="100" stroke="#15803d" stroke-width="2" /> <path d="M75 40 Q90 35 105 40" fill="none" stroke="#15803d" stroke-width="1" /> <path d="M70 60 Q90 55 110 60" fill="none" stroke="#15803d" stroke-width="1" /> <circle cx="90" cy="30" r="3" fill="#fbbf24" /> <!-- Decorative elements --> <circle cx="40" cy="70" r="15" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="3,3" /> <circle cx="140" cy="70" r="15" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="3,3" />
+         </svg>
+        </div>
+        <div class="p-6">
+         <div class="flex items-center gap-2 mb-3"><span class="text-2xl">🌿</span>
+          <h3 class="text-white font-bold text-2xl">Sumatra</h3>
+         </div>
+         <p class="text-emerald-200 font-semibold mb-2">Motif Sirih Gadang - Jambi</p>
+         <p class="text-gray-300 text-sm">Motif flora yang menggambarkan daun sirih, melambangkan keramahan dan persahabatan dalam budaya Melayu.</p>
+        </div>
+       </div><!-- Papua -->
+       <div class="interactive-card bg-gradient-to-br from-amber-800/80 to-amber-900/80 rounded-2xl overflow-hidden">
+        <div class="h-48 bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center p-4">
+         <svg width="180" height="140" viewbox="0 0 180 140"><!-- Asmat Style Bird Pattern --> <ellipse cx="90" cy="70" rx="50" ry="30" fill="#92400e" stroke="#fbbf24" stroke-width="3" /> <circle cx="60" cy="65" r="8" fill="white" /> <circle cx="58" cy="65" r="4" fill="#1a1a2e" /> <path d="M35 70 L10 60 L15 70 L10 80 L35 70" fill="#fbbf24" stroke="#f59e0b" stroke-width="2" /> <path d="M140 50 Q160 70 140 90" fill="none" stroke="#fbbf24" stroke-width="3" /> <path d="M145 55 Q165 70 145 85" fill="none" stroke="#fbbf24" stroke-width="2" /> <!-- Decorative tribal patterns --> <path d="M70 100 L75 115 L80 100 L85 115 L90 100 L95 115 L100 100 L105 115 L110 100" stroke="#fbbf24" stroke-width="2" fill="none" /> <circle cx="90" cy="40" r="5" fill="#fbbf24" /> <path d="M80 35 L90 25 L100 35" fill="none" stroke="#fbbf24" stroke-width="2" />
+         </svg>
+        </div>
+        <div class="p-6">
+         <div class="flex items-center gap-2 mb-3"><span class="text-2xl">🦅</span>
+          <h3 class="text-white font-bold text-2xl">Papua</h3>
+         </div>
+         <p class="text-amber-200 font-semibold mb-2">Motif Fauna Asmat</p>
+         <p class="text-gray-300 text-sm">Motif binatang yang kuat dan simbolis, sering menggambarkan burung cenderawasih dan hewan totem suku.</p>
+        </div>
+       </div><!-- Jawa -->
+       <div class="interactive-card bg-gradient-to-br from-blue-800/80 to-blue-900/80 rounded-2xl overflow-hidden">
+        <div class="h-48 bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center p-4">
+         <svg width="180" height="140" viewbox="0 0 180 140"><!-- Kawung Pattern Repeated --> <g transform="translate(30, 20)">
+           <ellipse cx="30" cy="30" rx="12" ry="25" fill="none" stroke="#fbbf24" stroke-width="2" />
+           <ellipse cx="30" cy="30" rx="25" ry="12" fill="none" stroke="#fbbf24" stroke-width="2" />
+           <circle cx="30" cy="30" r="6" fill="#fbbf24" />
+          </g> <g transform="translate(90, 20)">
+           <ellipse cx="30" cy="30" rx="12" ry="25" fill="none" stroke="#fbbf24" stroke-width="2" />
+           <ellipse cx="30" cy="30" rx="25" ry="12" fill="none" stroke="#fbbf24" stroke-width="2" />
+           <circle cx="30" cy="30" r="6" fill="#fbbf24" />
+          </g> <g transform="translate(60, 60)">
+           <ellipse cx="30" cy="30" rx="12" ry="25" fill="none" stroke="#fbbf24" stroke-width="2" />
+           <ellipse cx="30" cy="30" rx="25" ry="12" fill="none" stroke="#fbbf24" stroke-width="2" />
+           <circle cx="30" cy="30" r="6" fill="#fbbf24" />
+          </g>
+         </svg>
+        </div>
+        <div class="p-6">
+         <div class="flex items-center gap-2 mb-3"><span class="text-2xl">🎭</span>
+          <h3 class="text-white font-bold text-2xl">Jawa</h3>
+         </div>
+         <p class="text-blue-200 font-semibold mb-2">Motif Kawung</p>
+         <p class="text-gray-300 text-sm">Motif geometris berbentuk bulatan yang simetris, dulunya hanya boleh dikenakan keluarga keraton.</p>
+        </div>
+       </div>
+      </div><!-- Map Activity -->
+      <div class="mt-12 bg-white/10 backdrop-blur rounded-2xl p-8">
+       <h4 class="text-amber-400 font-bold text-xl mb-4">🗺️ Aktivitas: Jelajahi Peta Indonesia!</h4>
+       <p class="text-gray-300 mb-4">Klik pada pulau untuk melihat ragam hias khasnya:</p>
+       <div id="mapActivity" class="relative max-w-3xl mx-auto">
+        <svg viewbox="0 0 400 200" class="w-full"><!-- Simplified Indonesia Map --> <rect width="400" height="200" fill="#0c4a6e" /> <!-- Sumatra --> <path id="sumatra" class="map-region cursor-pointer hover:opacity-80 transition-opacity" d="M50 40 Q30 80 40 120 Q60 140 80 130 Q100 100 90 60 Q70 30 50 40" fill="#16a34a" stroke="#15803d" stroke-width="2" /> <!-- Java --> <path id="java" class="map-region cursor-pointer hover:opacity-80 transition-opacity" d="M100 130 Q130 125 170 130 Q180 135 170 140 Q130 145 100 140 Q95 135 100 130" fill="#3b82f6" stroke="#2563eb" stroke-width="2" /> <!-- Kalimantan --> <path id="kalimantan" class="map-region cursor-pointer hover:opacity-80 transition-opacity" d="M140 50 Q180 40 200 60 Q210 90 190 110 Q160 120 140 100 Q120 70 140 50" fill="#8b5cf6" stroke="#7c3aed" stroke-width="2" /> <!-- Sulawesi --> <path id="sulawesi" class="map-region cursor-pointer hover:opacity-80 transition-opacity" d="M240 60 Q260 50 270 70 Q265 90 280 100 Q270 120 250 110 Q240 90 250 80 Q235 70 240 60" fill="#ec4899" stroke="#db2777" stroke-width="2" /> <!-- Papua --> <path id="papua" class="map-region cursor-pointer hover:opacity-80 transition-opacity" d="M320 60 Q370 50 380 80 Q375 120 340 130 Q310 120 300 90 Q305 70 320 60" fill="#f59e0b" stroke="#d97706" stroke-width="2" /> <!-- Labels --> <text x="60" y="85" fill="white" font-size="10" text-anchor="middle">
+          Sumatra
+         </text> <text x="135" y="138" fill="white" font-size="8" text-anchor="middle">
+          Jawa
+         </text> <text x="170" y="80" fill="white" font-size="10" text-anchor="middle">
+          Kalimantan
+         </text> <text x="255" y="90" fill="white" font-size="8" text-anchor="middle">
+          Sulawesi
+         </text> <text x="345" y="95" fill="white" font-size="10" text-anchor="middle">
+          Papua
+         </text>
+        </svg>
+        <div id="mapInfo" class="mt-4 p-4 bg-white/5 rounded-xl text-center min-h-[60px]">
+         <p class="text-gray-400">Klik pada pulau untuk melihat informasi ragam hias khasnya</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 9: Nilai Strategis -->
+    <section id="slide9" class="slide min-h-screen flex items-center justify-center hidden">
+     <div class="max-w-5xl mx-auto slide-enter">
+      <h2 class="font-display text-4xl md:text-5xl font-bold text-white text-center mb-12">💎 Nilai Strategis Ragam Hias</h2>
+      <div class="grid md:grid-cols-2 gap-8 mb-12">
+       <div class="interactive-card bg-gradient-to-br from-amber-600/90 to-orange-700/90 rounded-3xl p-8 text-white">
+        <div class="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center mb-6"><span class="text-5xl">🏆</span>
+        </div>
+        <h3 class="font-bold text-2xl mb-4">Bukan Budaya Nomor Dua!</h3>
+        <p class="text-amber-100 text-lg leading-relaxed">Ragam hias Indonesia memiliki kedudukan <strong>sejajar</strong> dengan seni rupa bangsa lain di dunia. Kualitas, keindahan, dan kedalaman maknanya tidak kalah dengan seni dari peradaban manapun.</p>
+       </div>
+       <div class="interactive-card bg-gradient-to-br from-blue-600/90 to-indigo-700/90 rounded-3xl p-8 text-white">
+        <div class="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center mb-6"><span class="text-5xl">🇮🇩</span>
+        </div>
+        <h3 class="font-bold text-2xl mb-4">Identitas Bangsa</h3>
+        <p class="text-blue-100 text-lg leading-relaxed">Merupakan budaya seni rupa <strong>tertua</strong> yang harus dibanggakan dan dilestarikan oleh generasi muda sebagai jati diri bangsa Indonesia.</p>
+       </div>
+      </div><!-- Comparison with World Art -->
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-8">
+       <h4 class="text-amber-400 font-bold text-xl mb-6 text-center">🌍 Perbandingan dengan Seni Dunia</h4>
+       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="text-center p-4 bg-white/5 rounded-xl">
+         <div class="text-4xl mb-2">
+          🏛️
+         </div>
+         <p class="text-white font-semibold">Yunani</p>
+         <p class="text-gray-400 text-sm">Motif Meander</p>
+        </div>
+        <div class="text-center p-4 bg-white/5 rounded-xl">
+         <div class="text-4xl mb-2">
+          🏯
+         </div>
+         <p class="text-white font-semibold">Tiongkok</p>
+         <p class="text-gray-400 text-sm">Motif Naga</p>
+        </div>
+        <div class="text-center p-4 bg-white/5 rounded-xl">
+         <div class="text-4xl mb-2">
+          🕌
+         </div>
+         <p class="text-white font-semibold">Arab</p>
+         <p class="text-gray-400 text-sm">Arabesk</p>
+        </div>
+        <div class="text-center p-4 bg-amber-600/30 rounded-xl border-2 border-amber-500">
+         <div class="text-4xl mb-2">
+          🎨
+         </div>
+         <p class="text-amber-400 font-semibold">Indonesia</p>
+         <p class="text-amber-200 text-sm">Batik, Ukir, Tenun</p>
+        </div>
+       </div>
+       <p class="text-center text-gray-300 mt-6 italic">"Ragam hias Nusantara berdiri sejajar dengan karya seni dunia lainnya"</p>
+      </div>
+     </div>
+    </section><!-- Slide 10: Kesimpulan -->
+    <section id="slide10" class="slide min-h-screen flex items-center justify-center hidden">
+     <div class="max-w-5xl mx-auto slide-enter">
+      <h2 class="font-display text-4xl md:text-5xl font-bold text-white text-center mb-12">📝 Kesimpulan &amp; Refleksi</h2>
+      <div class="bg-gradient-to-br from-amber-600/30 to-orange-700/30 border border-amber-500/50 rounded-3xl p-8 mb-12">
+       <div class="flex items-start gap-4">
+        <div class="w-16 h-16 bg-amber-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-3xl">💡</span>
+        </div>
+        <div>
+         <h3 class="text-white font-bold text-2xl mb-4">Poin Penting</h3>
+         <ul class="space-y-3 text-amber-100 text-lg">
+          <li class="flex items-start gap-2"><span class="text-amber-400">✓</span> Ragam hias adalah bukti peradaban tinggi nenek moyang kita</li>
+          <li class="flex items-start gap-2"><span class="text-amber-400">✓</span> Setiap motif memiliki makna filosofis yang dalam</li>
+          <li class="flex items-start gap-2"><span class="text-amber-400">✓</span> Kualitasnya sejajar dengan seni rupa dunia</li>
+          <li class="flex items-start gap-2"><span class="text-amber-400">✓</span> Pelestarian adalah tanggung jawab generasi muda</li>
+         </ul>
+        </div>
+       </div>
+      </div><!-- Reflection Activity -->
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-8">
+       <h4 class="text-amber-400 font-bold text-xl mb-4">🤔 Pertanyaan Refleksi</h4>
+       <p class="text-white text-xl mb-6 italic">"Bagaimana cara kita sebagai generasi sekarang untuk tetap melestarikan motif-motif tradisional ini agar tidak punah?"</p>
+       <div class="space-y-4">
+        <p class="text-gray-300">Pilih cara pelestarian yang paling ingin kamu lakukan:</p>
+        <div id="reflectionOptions" class="grid md:grid-cols-2 gap-4"><button class="reflection-btn p-4 bg-white/5 hover:bg-emerald-600/30 border border-transparent hover:border-emerald-500 rounded-xl text-left transition-all"> <span class="text-2xl">👕</span> <p class="text-white font-semibold mt-2">Memakai produk bermotif tradisional</p></button> <button class="reflection-btn p-4 bg-white/5 hover:bg-blue-600/30 border border-transparent hover:border-blue-500 rounded-xl text-left transition-all"> <span class="text-2xl">📱</span> <p class="text-white font-semibold mt-2">Membagikan di media sosial</p></button> <button class="reflection-btn p-4 bg-white/5 hover:bg-purple-600/30 border border-transparent hover:border-purple-500 rounded-xl text-left transition-all"> <span class="text-2xl">🎨</span> <p class="text-white font-semibold mt-2">Belajar membuat ragam hias</p></button> <button class="reflection-btn p-4 bg-white/5 hover:bg-amber-600/30 border border-transparent hover:border-amber-500 rounded-xl text-left transition-all"> <span class="text-2xl">📚</span> <p class="text-white font-semibold mt-2">Mempelajari sejarah dan maknanya</p></button>
+        </div>
+        <p id="reflectionFeedback" class="text-center text-lg mt-4"></p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 11: Quiz -->
+    <section id="slide11" class="slide min-h-screen flex items-center justify-center hidden">
+     <div class="max-w-4xl mx-auto slide-enter w-full px-4">
+      <h2 class="font-display text-4xl md:text-5xl font-bold text-white text-center mb-4">📋 Kuis HOTS</h2>
+      <p class="text-amber-200 text-center mb-8">Uji pemahamanmu dengan 10 soal pilihan ganda tingkat tinggi</p>
+      <div id="quizContainer" class="bg-white/10 backdrop-blur rounded-2xl p-6 md:p-8">
+       <div class="flex justify-between items-center mb-6"><span id="questionNumber" class="text-amber-400 font-bold">Soal 1 dari 10</span> <span id="quizScore" class="text-white bg-emerald-600 px-4 py-2 rounded-full">Skor: 0</span>
+       </div>
+       <div id="questionArea">
+        <p id="questionText" class="text-white text-xl mb-6 leading-relaxed"></p>
+        <div id="optionsContainer" class="space-y-3"><!-- Options will be generated by JS -->
+        </div>
+       </div>
+       <div id="explanationArea" class="hidden mt-6 p-4 bg-blue-900/50 rounded-xl">
+        <p class="text-blue-200 font-semibold mb-2">💡 Pembahasan:</p>
+        <p id="explanationText" class="text-gray-300"></p>
+       </div>
+       <div class="flex justify-between mt-8"><button id="prevQuestion" class="px-6 py-3 bg-gray-600 hover:bg-gray-500 rounded-xl text-white font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"> ← Sebelumnya </button> <button id="nextQuestion" class="px-6 py-3 bg-amber-600 hover:bg-amber-500 rounded-xl text-white font-semibold transition-all"> Selanjutnya → </button>
+       </div>
+      </div><!-- Quiz Results -->
+      <div id="quizResults" class="hidden bg-gradient-to-br from-emerald-600/90 to-teal-700/90 rounded-2xl p-8 text-center">
+       <div class="text-6xl mb-4">
+        🎉
+       </div>
+       <h3 class="text-white text-3xl font-bold mb-4">Kuis Selesai!</h3>
+       <p id="finalScore" class="text-emerald-100 text-xl mb-6"></p>
+       <div id="scoreMessage" class="text-white text-lg mb-6"></div><button id="retryQuiz" class="px-8 py-4 bg-white text-emerald-700 font-bold rounded-xl hover:bg-emerald-100 transition-all"> 🔄 Ulangi Kuis </button>
+      </div>
+     </div>
+    </section><!-- Slide 12: Thank You -->
+    <section id="slide12" class="slide min-h-screen flex items-center justify-center hidden kawung-pattern">
+     <div class="text-center max-w-4xl mx-auto slide-enter">
+      <div class="mb-8">
+       <svg class="mx-auto float-animation" width="150" height="150" viewbox="0 0 150 150"><defs>
+         <lineargradient id="gold2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#f59e0b" />
+          <stop offset="100%" style="stop-color:#d97706" />
+         </lineargradient>
+        </defs> <circle cx="75" cy="75" r="70" fill="none" stroke="url(#gold2)" stroke-width="3" /> <ellipse cx="75" cy="75" rx="25" ry="45" fill="none" stroke="url(#gold2)" stroke-width="2" /> <ellipse cx="75" cy="75" rx="45" ry="25" fill="none" stroke="url(#gold2)" stroke-width="2" /> <circle cx="75" cy="75" r="12" fill="url(#gold2)" /> <text x="75" y="82" text-anchor="middle" fill="white" font-size="16" font-weight="bold">
+         🙏
+        </text>
+       </svg>
+      </div>
+      <h2 class="font-display text-5xl md:text-7xl font-bold text-white mb-6">Terima Kasih!</h2>
+      <p class="text-xl md:text-2xl text-amber-200 mb-8">Mari Lestarikan Ragam Hias Nusantara</p>
+      <div class="flex justify-center gap-4 flex-wrap mb-12"><span class="px-6 py-3 bg-amber-600/50 rounded-full text-amber-100">🎨 Kreatif</span> <span class="px-6 py-3 bg-amber-600/50 rounded-full text-amber-100">🏺 Tradisional</span> <span class="px-6 py-3 bg-amber-600/50 rounded-full text-amber-100">💎 Berharga</span>
+      </div>
+      <p class="text-gray-400 text-sm">"Bangga dengan warisan budaya, wujudkan dalam kehidupan sehari-hari"</p>
+     </div>
+    </section>
+   </div>
+  </div>
+  <script>
+    // Default Config
+    const defaultConfig = {
+      main_title: 'Apresiasi Ragam Hias Tradisional Nusantara',
+      subtitle: 'Mengenal Warisan Budaya Seni Rupa Bangsa Indonesia',
+      background_color: '#1a1a2e',
+      surface_color: '#ffffff1a',
+      text_color: '#ffffff',
+      primary_action: '#d97706',
+      secondary_action: '#f59e0b'
+    };
+    
+    let config = { ...defaultConfig };
+    
+    // State
+    let currentSlide = 1;
+    const totalSlides = 12;
+    let currentQuestion = 0;
+    let score = 0;
+    let answers = [];
+    
+    // Quiz Questions - HOTS Level
+    const quizQuestions = [
+      {
+        question: "Berdasarkan sejarah perkembangan ragam hias, mengapa motif pilin dan swastika banyak ditemukan pada artefak perunggu di Indonesia? Analisis hubungannya dengan kebudayaan Dong Son.",
+        options: [
+          "Motif tersebut diciptakan sendiri oleh nenek moyang Indonesia tanpa pengaruh luar",
+          "Kebudayaan Dong Son (500-300 SM) yang berkembang di Asia Tenggara membawa teknik perunggu beserta motif-motif geometris seperti pilin dan swastika ke Nusantara",
+          "Pedagang Arab yang datang ke Indonesia membawa motif-motif tersebut",
+          "Motif tersebut berasal dari lukisan gua zaman Pleistosen yang kemudian diadaptasi"
+        ],
+        correct: 1,
+        explanation: "Kebudayaan Dong Son yang berkembang di Asia Tenggara (500-300 SM) memperkenalkan teknik pengolahan perunggu dan membawa motif-motif khas seperti pilin, swastika, dan meander (banji) ke Nusantara melalui jalur migrasi dan perdagangan."
+      },
+      {
+        question: "Motif Kawung dulunya hanya boleh dikenakan oleh keluarga keraton Jawa. Apa yang dapat disimpulkan tentang fungsi ragam hias dalam konteks sosial budaya masyarakat tradisional?",
+        options: [
+          "Ragam hias hanya berfungsi sebagai hiasan tanpa makna sosial",
+          "Ragam hias merupakan penanda status sosial dan memiliki aturan penggunaan berdasarkan hierarki masyarakat",
+          "Semua orang bebas menggunakan ragam hias apapun tanpa batasan",
+          "Ragam hias hanya digunakan untuk upacara keagamaan"
+        ],
+        correct: 1,
+        explanation: "Dalam masyarakat tradisional, ragam hias tidak hanya berfungsi estetis tetapi juga sebagai penanda status sosial. Pembatasan penggunaan motif tertentu mencerminkan hierarki dan tata nilai sosial yang berlaku."
+      },
+      {
+        question: "Jika kamu menemukan artefak dengan motif geometris berupa deretan segitiga di daerah pesisir Indonesia, motif apakah itu dan apa makna filosofisnya?",
+        options: [
+          "Motif Pilin - melambangkan keabadian",
+          "Motif Tumpal - melambangkan gunung dan kesuburan",
+          "Motif Kawung - melambangkan kesucian",
+          "Motif Swastika - melambangkan matahari"
+        ],
+        correct: 1,
+        explanation: "Motif Tumpal berbentuk deretan segitiga yang melambangkan gunung dan kesuburan. Motif ini sering ditemukan di daerah pesisir dan pegunungan, mencerminkan hubungan manusia dengan alam."
+      },
+      {
+        question: "Mengapa penemuan lukisan gua di Sulawesi dan Maluku menjadi bukti penting dalam memahami asal-usul ragam hias Nusantara?",
+        options: [
+          "Lukisan tersebut menunjukkan bahwa seni rupa Indonesia berasal dari luar negeri",
+          "Lukisan tersebut membuktikan bahwa naluri estetis dan kemampuan berkarya seni sudah ada sejak zaman purba (Pleistosen)",
+          "Lukisan tersebut hanya berupa coretan tanpa makna artistik",
+          "Lukisan tersebut dibuat oleh pendatang dari Eropa"
+        ],
+        correct: 1,
+        explanation: "Penemuan lukisan gua di Sulawesi dan Maluku dari masa Pleistosen membuktikan bahwa nenek moyang bangsa Indonesia sudah memiliki naluri keindahan dan kemampuan berkarya seni sejak zaman purba, jauh sebelum pengaruh budaya luar masuk."
+      },
+      {
+        question: "Bagaimana cara terbaik untuk mengaplikasikan ragam hias tradisional dalam kehidupan modern tanpa menghilangkan nilai filosofisnya?",
+        options: [
+          "Mengubah total bentuk motif agar lebih modern",
+          "Memadukan motif tradisional dengan desain kontemporer sambil mempertahankan struktur dan makna aslinya",
+          "Menghilangkan ragam hias tradisional dan menggantinya dengan desain baru",
+          "Hanya menggunakan ragam hias tradisional untuk keperluan adat saja"
+        ],
+        correct: 1,
+        explanation: "Pelestarian ragam hias yang efektif adalah dengan memadukan motif tradisional dalam konteks modern sambil tetap mempertahankan struktur dan makna filosofisnya, sehingga warisan budaya tetap relevan dan berkembang."
+      },
+      {
+        question: "Perhatikan karakteristik motif: berbentuk oval bertumpuk membentuk pola empat arah simetris dengan titik pusat. Motif apakah ini dan dari daerah mana asalnya?",
+        options: [
+          "Motif Mega Mendung dari Cirebon",
+          "Motif Kawung dari Jawa",
+          "Motif Sirih Gadang dari Jambi",
+          "Motif Asmat dari Papua"
+        ],
+        correct: 1,
+        explanation: "Motif Kawung memiliki ciri khas bentuk oval/elips yang bertumpuk membentuk pola empat arah simetris dengan titik pusat, menyerupai buah aren. Motif ini berasal dari Jawa dan memiliki makna kesucian."
+      },
+      {
+        question: "Apa perbedaan mendasar antara ragam hias tradisional dengan seni dekoratif modern dari perspektif nilai budaya?",
+        options: [
+          "Tidak ada perbedaan, keduanya sama-sama untuk menghias",
+          "Ragam hias tradisional memiliki nilai filosofis yang diwariskan turun-temurun, sedangkan seni dekoratif modern lebih fokus pada estetika visual",
+          "Seni dekoratif modern lebih bernilai daripada ragam hias tradisional",
+          "Ragam hias tradisional tidak memiliki nilai estetika"
+        ],
+        correct: 1,
+        explanation: "Ragam hias tradisional tidak hanya bernilai estetis tetapi juga mengandung makna filosofis yang dalam dan diwariskan secara turun-temurun, berbeda dengan seni dekoratif modern yang umumnya lebih fokus pada aspek visual."
+      },
+      {
+        question: "Jika ragam hias Indonesia ingin diakui sebagai warisan budaya dunia oleh UNESCO, aspek apa yang perlu ditekankan dalam pengajuannya?",
+        options: [
+          "Hanya keindahan visualnya saja",
+          "Keunikan motif, nilai filosofis yang mendalam, teknik pembuatan yang khas, serta keberlanjutan praktik budayanya",
+          "Kuantitas produksi yang banyak",
+          "Harga jual yang tinggi di pasar internasional"
+        ],
+        correct: 1,
+        explanation: "Pengakuan UNESCO mempertimbangkan aspek keunikan, nilai filosofis, teknik khas, dan keberlanjutan praktik budaya. Ragam hias Indonesia memiliki semua aspek tersebut yang menjadikannya layak sejajar dengan warisan budaya dunia."
+      },
+      {
+        question: "Mengapa motif fauna lebih dominan dalam ragam hias Papua dibandingkan dengan motif geometris yang dominan di Jawa?",
+        options: [
+          "Masyarakat Papua tidak mengenal bentuk geometris",
+          "Perbedaan ini mencerminkan adaptasi budaya terhadap lingkungan alam sekitar - Papua kaya fauna hutan, Jawa lebih terpengaruh budaya keraton yang formalistik",
+          "Motif geometris lebih sulit dibuat",
+          "Pengaruh agama yang berbeda"
+        ],
+        correct: 1,
+        explanation: "Ragam hias mencerminkan adaptasi budaya terhadap lingkungan. Papua yang kaya keanekaragaman fauna menghasilkan motif binatang yang kuat, sedangkan Jawa dengan tradisi keraton mengembangkan motif geometris yang lebih formalistik dan simbolik."
+      },
+      {
+        question: "Sebagai generasi muda, langkah konkret apa yang paling efektif untuk melestarikan ragam hias tradisional di era digital?",
+        options: [
+          "Menyimpan ragam hias di museum saja tanpa menggunakannya",
+          "Mengintegrasikan ragam hias dalam produk digital, media sosial, dan kehidupan sehari-hari sambil tetap mempelajari makna dan sejarahnya",
+          "Membiarkan ragam hias punah karena sudah ketinggalan zaman",
+          "Hanya mempelajari ragam hias dalam pelajaran sekolah saja"
+        ],
+        correct: 1,
+        explanation: "Pelestarian yang efektif di era digital adalah dengan mengintegrasikan ragam hias dalam berbagai aspek kehidupan modern - produk digital, media sosial, fashion - sambil tetap memahami dan menyebarkan pengetahuan tentang makna dan sejarahnya."
+      }
+    ];
+    
+    // Map region info
+    const regionInfo = {
+      sumatra: {
+        title: 'Sumatra',
+        motif: 'Sirih Gadang, Pucuk Rebung',
+        desc: 'Motif flora yang melambangkan keramahan dan persahabatan'
+      },
+      java: {
+        title: 'Jawa',
+        motif: 'Kawung, Parang, Mega Mendung',
+        desc: 'Motif geometris dengan makna filosofis mendalam'
+      },
+      kalimantan: {
+        title: 'Kalimantan',
+        motif: 'Motif Dayak, Burung Enggang',
+        desc: 'Perpaduan motif flora dan fauna khas hutan Borneo'
+      },
+      sulawesi: {
+        title: 'Sulawesi',
+        motif: 'Motif Toraja, Pa\'tedong',
+        desc: 'Motif geometris dan fauna dengan simbolisme kerbau'
+      },
+      papua: {
+        title: 'Papua',
+        motif: 'Motif Asmat, Cenderawasih',
+        desc: 'Motif fauna yang kuat dengan warna-warna cerah'
+      }
+    };
+    
+    // Initialize
+    function init() {
+      setupNavigation();
+      setupActivities();
+      setupQuiz();
+      setupKawungGrid();
+      setupMapActivity();
+      setupReflection();
+      updateSlide();
+      
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (newConfig) => {
+            config = { ...defaultConfig, ...newConfig };
+            applyConfig();
+          },
+          mapToCapabilities: (cfg) => ({
+            recolorables: [
+              {
+                get: () => cfg.background_color || defaultConfig.background_color,
+                set: (value) => {
+                  cfg.background_color = value;
+                  window.elementSdk.setConfig({ background_color: value });
+                }
+              },
+              {
+                get: () => cfg.surface_color || defaultConfig.surface_color,
+                set: (value) => {
+                  cfg.surface_color = value;
+                  window.elementSdk.setConfig({ surface_color: value });
+                }
+              },
+              {
+                get: () => cfg.text_color || defaultConfig.text_color,
+                set: (value) => {
+                  cfg.text_color = value;
+                  window.elementSdk.setConfig({ text_color: value });
+                }
+              },
+              {
+                get: () => cfg.primary_action || defaultConfig.primary_action,
+                set: (value) => {
+                  cfg.primary_action = value;
+                  window.elementSdk.setConfig({ primary_action: value });
+                }
+              },
+              {
+                get: () => cfg.secondary_action || defaultConfig.secondary_action,
+                set: (value) => {
+                  cfg.secondary_action = value;
+                  window.elementSdk.setConfig({ secondary_action: value });
+                }
+              }
+            ],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (cfg) => new Map([
+            ['main_title', cfg.main_title || defaultConfig.main_title],
+            ['subtitle', cfg.subtitle || defaultConfig.subtitle]
+          ])
+        });
+      }
+    }
+    
+    function applyConfig() {
+      const mainTitle = document.getElementById('mainTitle');
+      const subtitle = document.getElementById('subtitle');
+      const app = document.getElementById('app');
+      
+      if (mainTitle) mainTitle.innerHTML = config.main_title.replace(/\n/g, '<br/>') || defaultConfig.main_title;
+      if (subtitle) subtitle.textContent = config.subtitle || defaultConfig.subtitle;
+      
+      // Apply colors
+      document.documentElement.style.setProperty('--bg-color', config.background_color || defaultConfig.background_color);
+      document.documentElement.style.setProperty('--surface-color', config.surface_color || defaultConfig.surface_color);
+      document.documentElement.style.setProperty('--text-color', config.text_color || defaultConfig.text_color);
+      document.documentElement.style.setProperty('--primary-action', config.primary_action || defaultConfig.primary_action);
+      document.documentElement.style.setProperty('--secondary-action', config.secondary_action || defaultConfig.secondary_action);
+    }
+    
+    function setupNavigation() {
+      document.getElementById('prevBtn').addEventListener('click', () => {
+        if (currentSlide > 1) {
+          currentSlide--;
+          updateSlide();
+        }
+      });
+      
+      document.getElementById('nextBtn').addEventListener('click', () => {
+        if (currentSlide < totalSlides) {
+          currentSlide++;
+          updateSlide();
+        }
+      });
+      
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' && currentSlide < totalSlides) {
+          currentSlide++;
+          updateSlide();
+        } else if (e.key === 'ArrowLeft' && currentSlide > 1) {
+          currentSlide--;
+          updateSlide();
+        }
+      });
+    }
+    
+    function updateSlide() {
+      // Hide all slides
+      document.querySelectorAll('.slide').forEach(slide => {
+        slide.classList.add('hidden');
+      });
+      
+      // Show current slide
+      const currentSlideEl = document.getElementById(`slide${currentSlide}`);
+      if (currentSlideEl) {
+        currentSlideEl.classList.remove('hidden');
+        currentSlideEl.querySelector('.slide-enter')?.classList.remove('slide-enter');
+        void currentSlideEl.offsetWidth;
+        currentSlideEl.querySelector('div')?.classList.add('slide-enter');
+      }
+      
+      // Update counter
+      document.getElementById('slideCounter').textContent = `${currentSlide} / ${totalSlides}`;
+      
+      // Update progress
+      document.getElementById('progress').style.width = `${(currentSlide / totalSlides) * 100}%`;
+      
+      // Update buttons
+      document.getElementById('prevBtn').disabled = currentSlide === 1;
+      document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+    }
+    
+    function setupActivities() {
+      // Activity 1 - Find ornaments
+      document.querySelectorAll('.activity-item').forEach(item => {
+        item.addEventListener('click', function() {
+          const hasOrnament = this.dataset.hasOrnament === 'true';
+          if (hasOrnament) {
+            this.classList.add('bg-emerald-600');
+            this.classList.remove('bg-white/5');
+          } else {
+            this.classList.add('bg-red-600');
+            this.classList.remove('bg-white/5');
+          }
+          
+          // Check if all correct items are selected
+          const allItems = document.querySelectorAll('.activity-item');
+          let correctCount = 0;
+          let incorrectCount = 0;
+          allItems.forEach(i => {
+            if (i.classList.contains('bg-emerald-600') && i.dataset.hasOrnament === 'true') correctCount++;
+            if (i.classList.contains('bg-red-600')) incorrectCount++;
+          });
+          
+          const feedback = document.getElementById('activity1Feedback');
+          if (incorrectCount > 0) {
+            feedback.textContent = '❌ Benda tersebut umumnya tidak memiliki ragam hias tradisional';
+            feedback.className = 'text-center mt-4 text-lg text-red-400';
+          } else if (correctCount > 0) {
+            feedback.textContent = `✅ Bagus! Kamu menemukan ${correctCount} benda dengan ragam hias!`;
+            feedback.className = 'text-center mt-4 text-lg text-emerald-400';
+          }
+        });
+      });
+      
+      // Matching game
+      document.querySelectorAll('.matching-item').forEach(item => {
+        const buttons = item.querySelectorAll('.match-btn');
+        buttons.forEach(btn => {
+          btn.addEventListener('click', function() {
+            const correct = item.dataset.correct;
+            const selected = this.textContent.toLowerCase();
+            const result = item.querySelector('.match-result');
+            
+            buttons.forEach(b => b.disabled = true);
+            
+            if (selected === correct) {
+              this.classList.add('correct');
+              result.textContent = '✅ Benar!';
+              result.className = 'match-result text-lg text-emerald-400';
+            } else {
+              this.classList.add('incorrect');
+              result.textContent = `❌ Jawaban yang benar: ${correct.charAt(0).toUpperCase() + correct.slice(1)}`;
+              result.className = 'match-result text-lg text-red-400';
+            }
+          });
+        });
+      });
+    }
+    
+    function setupKawungGrid() {
+      const grid = document.getElementById('kawungGrid');
+      for (let i = 0; i < 25; i++) {
+        const cell = document.createElement('button');
+        cell.className = 'w-10 h-10 bg-white/10 rounded-lg hover:bg-amber-500/50 transition-all border border-white/20';
+        cell.addEventListener('click', function() {
+          this.classList.toggle('bg-amber-500');
+          this.classList.toggle('bg-white/10');
+        });
+        grid.appendChild(cell);
+      }
+      
+      document.getElementById('resetKawung').addEventListener('click', () => {
+        grid.querySelectorAll('button').forEach(cell => {
+          cell.classList.remove('bg-amber-500');
+          cell.classList.add('bg-white/10');
+        });
+      });
+    }
+    
+    function setupMapActivity() {
+      document.querySelectorAll('.map-region').forEach(region => {
+        region.addEventListener('click', function() {
+          const id = this.id;
+          const info = regionInfo[id];
+          const infoDiv = document.getElementById('mapInfo');
+          
+          if (info) {
+            infoDiv.innerHTML = `
+              <h5 class="text-amber-400 font-bold text-lg">${info.title}</h5>
+              <p class="text-white"><strong>Motif Khas:</strong> ${info.motif}</p>
+              <p class="text-gray-300 text-sm">${info.desc}</p>
+            `;
+          }
+        });
+      });
+    }
+    
+    function setupReflection() {
+      document.querySelectorAll('.reflection-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.reflection-btn').forEach(b => {
+            b.classList.remove('bg-emerald-600/50', 'border-emerald-500');
+            b.classList.add('bg-white/5');
+          });
+          this.classList.add('bg-emerald-600/50', 'border-emerald-500');
+          this.classList.remove('bg-white/5');
+          
+          document.getElementById('reflectionFeedback').innerHTML = '✨ <strong>Pilihan yang bagus!</strong> Setiap cara pelestarian sama pentingnya. Yang terpenting adalah konsistensi dan rasa cinta terhadap budaya sendiri.';
+          document.getElementById('reflectionFeedback').className = 'text-center text-lg mt-4 text-emerald-400';
+        });
+      });
+    }
+    
+    function setupQuiz() {
+      answers = new Array(quizQuestions.length).fill(null);
+      renderQuestion();
+      
+      document.getElementById('prevQuestion').addEventListener('click', () => {
+        if (currentQuestion > 0) {
+          currentQuestion--;
+          renderQuestion();
+        }
+      });
+      
+      document.getElementById('nextQuestion').addEventListener('click', () => {
+        if (currentQuestion < quizQuestions.length - 1) {
+          currentQuestion++;
+          renderQuestion();
+        } else {
+          showResults();
+        }
+      });
+      
+      document.getElementById('retryQuiz').addEventListener('click', () => {
+        currentQuestion = 0;
+        score = 0;
+        answers = new Array(quizQuestions.length).fill(null);
+        document.getElementById('quizResults').classList.add('hidden');
+        document.getElementById('quizContainer').classList.remove('hidden');
+        renderQuestion();
+      });
+    }
+    
+    function renderQuestion() {
+      const q = quizQuestions[currentQuestion];
+      document.getElementById('questionNumber').textContent = `Soal ${currentQuestion + 1} dari ${quizQuestions.length}`;
+      document.getElementById('questionText').textContent = q.question;
+      
+      const optionsContainer = document.getElementById('optionsContainer');
+      optionsContainer.innerHTML = '';
+      
+      q.options.forEach((option, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option w-full p-4 text-left bg-white/5 hover:bg-white/10 border-2 border-white/20 rounded-xl text-white transition-all';
+        btn.innerHTML = `<span class="font-bold mr-2">${String.fromCharCode(65 + index)}.</span> ${option}`;
+        
+        if (answers[currentQuestion] !== null) {
+          btn.classList.add('disabled');
+          if (index === q.correct) {
+            btn.classList.add('correct');
+          } else if (index === answers[currentQuestion] && answers[currentQuestion] !== q.correct) {
+            btn.classList.add('incorrect');
+          }
+        }
+        
+        btn.addEventListener('click', () => selectAnswer(index));
+        optionsContainer.appendChild(btn);
+      });
+      
+      // Show/hide explanation
+      const explanationArea = document.getElementById('explanationArea');
+      if (answers[currentQuestion] !== null) {
+        explanationArea.classList.remove('hidden');
+        document.getElementById('explanationText').textContent = q.explanation;
+      } else {
+        explanationArea.classList.add('hidden');
+      }
+      
+      // Update navigation
+      document.getElementById('prevQuestion').disabled = currentQuestion === 0;
+      document.getElementById('nextQuestion').textContent = currentQuestion === quizQuestions.length - 1 ? 'Lihat Hasil' : 'Selanjutnya →';
+      
+      // Update score display
+      updateScoreDisplay();
+    }
+    
+    function selectAnswer(index) {
+      if (answers[currentQuestion] !== null) return;
+      
+      const q = quizQuestions[currentQuestion];
+      answers[currentQuestion] = index;
+      
+      if (index === q.correct) {
+        score++;
+      }
+      
+      renderQuestion();
+    }
+    
+    function updateScoreDisplay() {
+      document.getElementById('quizScore').textContent = `Skor: ${score}`;
+    }
+    
+    function showResults() {
+      document.getElementById('quizContainer').classList.add('hidden');
+      document.getElementById('quizResults').classList.remove('hidden');
+      
+      const percentage = (score / quizQuestions.length) * 100;
+      document.getElementById('finalScore').textContent = `Skor Akhir: ${score} dari ${quizQuestions.length} (${percentage}%)`;
+      
+      let message = '';
+      if (percentage >= 90) {
+        message = '🌟 Luar Biasa! Kamu sangat memahami ragam hias Nusantara!';
+      } else if (percentage >= 70) {
+        message = '👏 Bagus! Pemahamanmu sudah baik, terus pelajari lebih dalam!';
+      } else if (percentage >= 50) {
+        message = '💪 Cukup baik! Masih ada ruang untuk belajar lebih banyak.';
+      } else {
+        message = '📚 Jangan menyerah! Pelajari kembali materinya dan coba lagi.';
+      }
+      
+      document.getElementById('scoreMessage').textContent = message;
+    }
+    
+    // Start
+    init();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c8de15d917fd8ca',t:'MTc3MDI0NzAzNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

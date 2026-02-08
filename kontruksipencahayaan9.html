@@ -1,0 +1,1141 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pembelajaran Perspektif dan Pencahayaan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .title-font {
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .slide {
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    .slide.active {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.6); }
+    }
+    
+    .sun-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #f59e0b, #ef4444, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    
+    .progress-bar {
+      transition: width 0.3s ease;
+    }
+    
+    .interactive-canvas {
+      cursor: crosshair;
+    }
+    
+    .light-ray {
+      stroke-dasharray: 10, 5;
+      animation: dash 1s linear infinite;
+    }
+    
+    @keyframes dash {
+      to { stroke-dashoffset: -15; }
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    
+    .quiz-option:hover {
+      transform: scale(1.02);
+    }
+    
+    .quiz-option.correct {
+      background: linear-gradient(135deg, #10b981, #059669) !important;
+      color: white !important;
+    }
+    
+    .quiz-option.incorrect {
+      background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+      color: white !important;
+    }
+    
+    .tooltip {
+      position: relative;
+    }
+    
+    .tooltip::after {
+      content: attr(data-tip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1f2937;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.75rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    
+    .tooltip:hover::after {
+      opacity: 1;
+    }
+    
+    input[type="range"] {
+      -webkit-appearance: none;
+      background: transparent;
+    }
+    
+    input[type="range"]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 8px;
+      background: linear-gradient(90deg, #fbbf24, #f59e0b);
+      border-radius: 4px;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 24px;
+      width: 24px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      margin-top: -8px;
+      cursor: pointer;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white overflow-auto">
+  <div id="app" class="h-full w-full"><!-- Header Navigation -->
+   <header class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center"><span class="text-xl">🎨</span>
+      </div>
+      <div>
+       <h1 id="header-title" class="font-semibold text-sm">Menggambar Konstruksi</h1>
+       <p id="header-subject" class="text-xs text-slate-400">Seni Rupa Kelas IX</p>
+      </div>
+     </div>
+     <div class="flex items-center gap-4"><span id="slide-counter" class="text-sm text-slate-400">Slide 1/12</span>
+      <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
+       <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-amber-400 to-orange-500 rounded-full" style="width: 8.33%"></div>
+      </div>
+     </div>
+    </div>
+   </header><!-- Main Content -->
+   <main class="pt-20 pb-24 px-4 min-h-full">
+    <div class="max-w-5xl mx-auto"><!-- Slide 1: Judul -->
+     <div class="slide active" data-slide="1">
+      <div class="text-center py-12">
+       <div class="inline-block mb-6 px-4 py-2 bg-amber-500/20 rounded-full border border-amber-500/30"><span class="text-amber-400 text-sm font-medium">Subunit 3 - Seni Rupa Kelas IX</span>
+       </div>
+       <h1 class="title-font text-5xl md:text-7xl font-bold mb-6 gradient-text">Menggambar Konstruksi</h1>
+       <p class="text-2xl md:text-3xl text-slate-300 mb-8">Perspektif dengan Pencahayaan</p><!-- Interactive Light Animation -->
+       <div class="relative w-full max-w-lg mx-auto h-64 my-12">
+        <svg viewbox="0 0 400 200" class="w-full h-full"><!-- Sun --> <circle cx="50" cy="40" r="25" fill="url(#sunGradient)" class="sun-glow" /> <defs>
+          <radialgradient id="sunGradient">
+           <stop offset="0%" stop-color="#fcd34d" />
+           <stop offset="100%" stop-color="#f59e0b" />
+          </radialgradient>
+         </defs> <!-- Light Rays --> <line x1="50" y1="40" x2="200" y2="120" stroke="#fbbf24" stroke-width="2" class="light-ray" opacity="0.5" /> <line x1="50" y1="40" x2="250" y2="140" stroke="#fbbf24" stroke-width="2" class="light-ray" opacity="0.5" /> <line x1="50" y1="40" x2="300" y2="160" stroke="#fbbf24" stroke-width="2" class="light-ray" opacity="0.5" /> <!-- 3D Box --> <polygon points="200,100 260,100 260,160 200,160" fill="#6366f1" /> <polygon points="200,100 230,80 290,80 260,100" fill="#818cf8" /> <polygon points="260,100 290,80 290,140 260,160" fill="#4f46e5" /> <!-- Shadow --> <polygon points="200,160 260,160 350,180 280,180" fill="rgba(0,0,0,0.4)" />
+        </svg>
+       </div>
+       <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 max-w-2xl mx-auto">
+        <h3 class="text-lg font-semibold text-amber-400 mb-3">🎯 Tujuan Pembelajaran</h3>
+        <p class="text-slate-300">Siswa mampu menggambar perspektif (1 atau 2 titik hilang) dengan mempraktikkan konsep <span class="text-amber-400 font-medium">naungan</span> dan <span class="text-purple-400 font-medium">bayangan</span> secara akurat.</p>
+       </div>
+      </div>
+     </div><!-- Slide 2: Mengapa Kita Melihat Benda -->
+     <div class="slide" data-slide="2">
+      <div class="py-8">
+       <h2 class="title-font text-4xl font-bold mb-8 text-center"><span class="gradient-text">Mengapa Kita Melihat Benda?</span> 👁️</h2><!-- Interactive Eye Diagram -->
+       <div class="bg-gradient-to-br from-slate-800/50 to-purple-900/30 rounded-3xl p-8 mb-8 border border-white/10">
+        <div class="flex flex-col md:flex-row items-center gap-8">
+         <div class="flex-1">
+          <svg viewbox="0 0 300 200" class="w-full max-w-sm mx-auto"><!-- Sun --> <circle cx="30" cy="40" r="20" fill="#fbbf24" class="sun-glow" /> <text x="30" y="75" text-anchor="middle" fill="#fbbf24" font-size="10">
+            Matahari
+           </text> <!-- Light to object --> <line x1="50" y1="40" x2="130" y2="100" stroke="#fbbf24" stroke-width="2" class="light-ray" /> <!-- Object (Box) --> <rect x="120" y="80" width="40" height="40" fill="#8b5cf6" rx="2" /> <text x="140" y="140" text-anchor="middle" fill="#a78bfa" font-size="10">
+            Benda
+           </text> <!-- Reflected light to eye --> <line x1="160" y1="100" x2="240" y2="80" stroke="#22d3ee" stroke-width="2" stroke-dasharray="5,3" /> <!-- Eye --> <ellipse cx="260" cy="80" rx="25" ry="15" fill="white" /> <circle cx="260" cy="80" r="8" fill="#1e3a8a" /> <circle cx="258" cy="78" r="3" fill="white" /> <text x="260" y="110" text-anchor="middle" fill="#22d3ee" font-size="10">
+            Mata Kita
+           </text>
+          </svg>
+         </div>
+         <div class="flex-1 space-y-4">
+          <div class="bg-white/5 rounded-xl p-4 border-l-4 border-amber-400">
+           <h4 class="font-semibold text-amber-400 mb-2">💡 Prinsip Cahaya</h4>
+           <p class="text-slate-300 text-sm">Kita dapat melihat benda karena cahaya jatuh ke permukaan benda dan memantul ke mata kita.</p>
+          </div>
+         </div>
+        </div>
+       </div><!-- Light Sources Cards -->
+       <div class="grid md:grid-cols-2 gap-6 mb-8">
+        <div class="card-hover bg-gradient-to-br from-amber-500/20 to-orange-500/10 rounded-2xl p-6 border border-amber-500/30">
+         <div class="text-4xl mb-4">
+          ☀️
+         </div>
+         <h3 class="text-xl font-bold text-amber-400 mb-2">Cahaya Alami</h3>
+         <p class="text-slate-300">Matahari adalah sumber cahaya utama di bumi. Memberikan pencahayaan merata dan konsisten.</p>
+        </div>
+        <div class="card-hover bg-gradient-to-br from-cyan-500/20 to-blue-500/10 rounded-2xl p-6 border border-cyan-500/30">
+         <div class="text-4xl mb-4">
+          💡
+         </div>
+         <h3 class="text-xl font-bold text-cyan-400 mb-2">Cahaya Buatan</h3>
+         <p class="text-slate-300">Lampu rumah, lampu meja, senter, dan sumber cahaya yang dibuat manusia.</p>
+        </div>
+       </div>
+       <div class="bg-purple-500/10 rounded-2xl p-6 border border-purple-500/30">
+        <h4 class="text-lg font-semibold text-purple-400 mb-2">✨ Cahaya Primer</h4>
+        <p class="text-slate-300">Sebutan untuk <strong>satu sumber cahaya utama</strong> yang digunakan sebagai acuan dalam menggambar. Ini membantu menentukan arah bayangan secara konsisten.</p>
+       </div>
+      </div>
+     </div><!-- Slide 3: Bayangan vs Naungan -->
+     <div class="slide" data-slide="3">
+      <div class="py-8">
+       <h2 class="title-font text-4xl font-bold mb-8 text-center"><span class="gradient-text">Bayangan vs Naungan</span> 🌗</h2><!-- Interactive Comparison -->
+       <div class="grid md:grid-cols-2 gap-8 mb-8"><!-- Shadow -->
+        <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-6 border border-slate-600">
+         <div class="text-center mb-6"><span class="text-6xl">🌑</span>
+         </div>
+         <h3 class="text-2xl font-bold text-slate-300 mb-4 text-center">Bayangan (Shadow)</h3>
+         <svg viewbox="0 0 200 150" class="w-full max-w-xs mx-auto mb-4"><!-- Sun indicator --> <circle cx="30" cy="20" r="12" fill="#fbbf24" /> <line x1="42" y1="20" x2="80" y2="60" stroke="#fbbf24" stroke-width="1" opacity="0.5" /> <!-- Box --> <rect x="80" y="40" width="40" height="40" fill="#6366f1" /> <!-- Ground --> <line x1="20" y1="80" x2="180" y2="80" stroke="#475569" stroke-width="2" /> <!-- Shadow on ground --> <polygon points="80,80 120,80 160,100 120,100" fill="#1e293b" /> <text x="140" y="115" fill="#94a3b8" font-size="8">
+           Bayangan di lantai
+          </text>
+         </svg>
+         <p class="text-slate-400 text-sm text-center">Bagian gelap yang terbentuk di atas permukaan (lantai/tanah) karena cahaya terhalang oleh benda.</p>
+        </div><!-- Shade -->
+        <div class="card-hover bg-gradient-to-br from-purple-900 to-slate-900 rounded-3xl p-6 border border-purple-600">
+         <div class="text-center mb-6"><span class="text-6xl">🌓</span>
+         </div>
+         <h3 class="text-2xl font-bold text-purple-300 mb-4 text-center">Naungan (Shade)</h3>
+         <svg viewbox="0 0 200 150" class="w-full max-w-xs mx-auto mb-4"><!-- Sun indicator --> <circle cx="30" cy="20" r="12" fill="#fbbf24" /> <!-- Box with shading --> <rect x="80" y="40" width="40" height="40" fill="#818cf8" /> <rect x="100" y="40" width="20" height="40" fill="#4c1d95" /> <!-- Arrow pointing to shade --> <line x1="140" y1="60" x2="122" y2="60" stroke="#a78bfa" stroke-width="2" marker-end="url(#arrowhead)" /> <defs>
+           <marker id="arrowhead" markerwidth="10" markerheight="7" refx="0" refy="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#a78bfa" />
+           </marker>
+          </defs> <text x="155" y="63" fill="#a78bfa" font-size="8">
+           Sisi gelap benda
+          </text> <!-- Ground --> <line x1="20" y1="80" x2="180" y2="80" stroke="#475569" stroke-width="2" />
+         </svg>
+         <p class="text-slate-400 text-sm text-center">Bagian dari benda itu sendiri yang tidak terkena cahaya secara langsung (sisi gelap benda).</p>
+        </div>
+       </div><!-- Tips Card -->
+       <div class="bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-2xl p-6 border border-amber-500/30">
+        <h4 class="text-lg font-semibold text-amber-400 mb-3">💡 Tips Observasi</h4>
+        <p class="text-slate-300">Letakkan sebuah benda di bawah lampu meja dan amatilah perbedaan antara <strong>sisi gelap di badan benda</strong> (naungan) dengan <strong>bayangan yang jatuh di meja</strong> (bayangan).</p>
+        <div class="mt-4 flex items-center gap-2 text-sm text-amber-300"><span>🔬</span> <span>Coba praktikkan sekarang dengan benda di sekitarmu!</span>
+        </div>
+       </div>
+      </div>
+     </div><!-- Slide 4: Konstruksi Garis Cahaya -->
+     <div class="slide" data-slide="4">
+      <div class="py-8">
+       <h2 class="title-font text-4xl font-bold mb-8 text-center"><span class="gradient-text">Konstruksi Garis Cahaya</span> 📐</h2>
+       <div class="bg-slate-800/50 rounded-3xl p-8 mb-8 border border-white/10">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+         <div>
+          <svg viewbox="0 0 300 250" class="w-full"><!-- Grid background --> <defs>
+            <pattern id="grid" width="20" height="20" patternunits="userSpaceOnUse">
+             <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#334155" stroke-width="0.5" />
+            </pattern>
+           </defs> <rect width="300" height="250" fill="url(#grid)" /> <!-- Ground plane --> <line x1="20" y1="180" x2="280" y2="180" stroke="#64748b" stroke-width="2" /> <!-- Sun/Light source --> <circle cx="50" cy="40" r="20" fill="#fbbf24" class="sun-glow" /> <text x="50" y="75" text-anchor="middle" fill="#fbbf24" font-size="10">
+            Sumber Cahaya
+           </text> <!-- 45 degree angle indicator --> <path d="M 50 40 L 80 40" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,2" /> <path d="M 50 40 L 71 61" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,2" /> <text x="75" y="55" fill="#f59e0b" font-size="10">
+            45°
+           </text> <!-- Box --> <rect x="150" y="130" width="50" height="50" fill="#6366f1" stroke="#818cf8" stroke-width="2" /> <!-- Light angle line --> <line x1="50" y1="40" x2="200" y2="130" stroke="#fbbf24" stroke-width="2" class="light-ray" /> <line x1="200" y1="130" x2="250" y2="180" stroke="#fbbf24" stroke-width="2" class="light-ray" /> <!-- Direction line on ground --> <line x1="200" y1="180" x2="250" y2="180" stroke="#22d3ee" stroke-width="2" stroke-dasharray="5,3" /> <!-- Labels --> <text x="130" y="100" fill="#fbbf24" font-size="9">
+            Garis Sudut
+           </text> <text x="220" y="200" fill="#22d3ee" font-size="9">
+            Garis Arah
+           </text> <!-- Shadow --> <polygon points="150,180 200,180 250,200 200,200" fill="rgba(0,0,0,0.5)" />
+          </svg>
+         </div>
+         <div class="space-y-4">
+          <div class="bg-amber-500/10 rounded-xl p-4 border-l-4 border-amber-500">
+           <h4 class="font-semibold text-amber-400 mb-2">📐 Sudut Cahaya</h4>
+           <p class="text-slate-300 text-sm">Diasumsikan cahaya datang dari sudut <strong>45°</strong>. Sudut ini memudahkan perhitungan bayangan.</p>
+          </div>
+          <div class="bg-cyan-500/10 rounded-xl p-4 border-l-4 border-cyan-500">
+           <h4 class="font-semibold text-cyan-400 mb-2">➡️ Arah Cahaya</h4>
+           <p class="text-slate-300 text-sm">Menentukan ke mana bayangan akan memanjang (misalnya dari kanan-depan).</p>
+          </div>
+          <div class="bg-purple-500/10 rounded-xl p-4 border-l-4 border-purple-500">
+           <h4 class="font-semibold text-purple-400 mb-2">📏 Alat Bantu</h4>
+           <p class="text-slate-300 text-sm">Gunakan penggaris untuk menarik garis lurus dari sumber cahaya melewati titik sudut benda hingga menyentuh permukaan lantai.</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Slide 5: Langkah Menggambar 1 -->
+     <div class="slide" data-slide="5">
+      <div class="py-8">
+       <h2 class="title-font text-4xl font-bold mb-8 text-center"><span class="gradient-text">Langkah Menggambar</span> <span class="text-2xl">(Bagian 1)</span></h2>
+       <div class="grid md:grid-cols-2 gap-6">
+        <div class="card-hover bg-gradient-to-br from-blue-900/50 to-slate-900 rounded-2xl p-6 border border-blue-500/30">
+         <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-2xl font-bold">
+           1
+          </div>
+          <h3 class="text-xl font-bold text-blue-400">Buat Objek 3D</h3>
+         </div>
+         <svg viewbox="0 0 200 150" class="w-full max-w-xs mx-auto mb-4"><!-- Perspective box --> <polygon points="60,80 120,80 120,120 60,120" fill="#6366f1" stroke="#818cf8" stroke-width="2" /> <polygon points="60,80 80,60 140,60 120,80" fill="#818cf8" stroke="#a5b4fc" stroke-width="2" /> <polygon points="120,80 140,60 140,100 120,120" fill="#4f46e5" stroke="#6366f1" stroke-width="2" /> <!-- Vanishing point indicator --> <circle cx="180" cy="70" r="3" fill="#f59e0b" /> <text x="180" y="85" text-anchor="middle" fill="#f59e0b" font-size="8">
+           Titik Hilang
+          </text>
+         </svg>
+         <p class="text-slate-400 text-sm">Gambar benda dalam perspektif satu atau dua titik hilang.</p>
+        </div>
+        <div class="card-hover bg-gradient-to-br from-amber-900/50 to-slate-900 rounded-2xl p-6 border border-amber-500/30">
+         <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center text-2xl font-bold">
+           2
+          </div>
+          <h3 class="text-xl font-bold text-amber-400">Tentukan Titik Cahaya</h3>
+         </div>
+         <svg viewbox="0 0 200 150" class="w-full max-w-xs mx-auto mb-4"><polygon points="80,80 120,80 120,120 80,120" fill="#6366f1" /> <circle cx="40" cy="30" r="18" fill="#fbbf24" class="sun-glow" /> <text x="40" y="60" text-anchor="middle" fill="#fbbf24" font-size="8">
+           ☀️ Cahaya Primer
+          </text>
+         </svg>
+         <p class="text-slate-400 text-sm">Tentukan posisi sumber cahaya primer di gambar.</p>
+        </div>
+        <div class="card-hover bg-gradient-to-br from-orange-900/50 to-slate-900 rounded-2xl p-6 border border-orange-500/30">
+         <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center text-2xl font-bold">
+           3
+          </div>
+          <h3 class="text-xl font-bold text-orange-400">Tarik Garis Sudut</h3>
+         </div>
+         <svg viewbox="0 0 200 150" class="w-full max-w-xs mx-auto mb-4"><polygon points="80,70 120,70 120,110 80,110" fill="#6366f1" /> <circle cx="40" cy="30" r="12" fill="#fbbf24" /> <line x1="40" y1="30" x2="120" y2="70" stroke="#f97316" stroke-width="2" class="light-ray" /> <line x1="120" y1="70" x2="160" y2="130" stroke="#f97316" stroke-width="2" class="light-ray" />
+         </svg>
+         <p class="text-slate-400 text-sm">Tarik garis diagonal dari sumber cahaya melewati sudut atas benda.</p>
+        </div>
+        <div class="card-hover bg-gradient-to-br from-cyan-900/50 to-slate-900 rounded-2xl p-6 border border-cyan-500/30">
+         <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 rounded-full bg-cyan-500 flex items-center justify-center text-2xl font-bold">
+           4
+          </div>
+          <h3 class="text-xl font-bold text-cyan-400">Tarik Garis Arah</h3>
+         </div>
+         <svg viewbox="0 0 200 150" class="w-full max-w-xs mx-auto mb-4"><line x1="20" y1="110" x2="180" y2="110" stroke="#475569" stroke-width="2" /> <polygon points="80,70 120,70 120,110 80,110" fill="#6366f1" /> <line x1="120" y1="110" x2="160" y2="110" stroke="#22d3ee" stroke-width="3" /> <text x="140" y="125" fill="#22d3ee" font-size="8">
+           Garis Arah
+          </text>
+         </svg>
+         <p class="text-slate-400 text-sm">Tarik garis mendatar di permukaan lantai dari dasar benda.</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Slide 6: Langkah Menggambar 2 -->
+     <div class="slide" data-slide="6">
+      <div class="py-8">
+       <h2 class="title-font text-4xl font-bold mb-8 text-center"><span class="gradient-text">Langkah Menggambar</span> <span class="text-2xl">(Bagian 2)</span></h2>
+       <div class="grid md:grid-cols-2 gap-8">
+        <div class="card-hover bg-gradient-to-br from-green-900/50 to-slate-900 rounded-2xl p-6 border border-green-500/30">
+         <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-2xl font-bold">
+           5
+          </div>
+          <h3 class="text-xl font-bold text-green-400">Titik Perpotongan</h3>
+         </div>
+         <svg viewbox="0 0 250 180" class="w-full mx-auto mb-4"><line x1="20" y1="140" x2="230" y2="140" stroke="#475569" stroke-width="2" /> <polygon points="80,80 130,80 130,140 80,140" fill="#6366f1" /> <circle cx="40" cy="30" r="15" fill="#fbbf24" /> <!-- Angle line --> <line x1="40" y1="30" x2="130" y2="80" stroke="#f97316" stroke-width="2" stroke-dasharray="5,3" /> <line x1="130" y1="80" x2="200" y2="140" stroke="#f97316" stroke-width="2" stroke-dasharray="5,3" /> <!-- Direction line --> <line x1="130" y1="140" x2="200" y2="140" stroke="#22d3ee" stroke-width="2" stroke-dasharray="5,3" /> <!-- Intersection point --> <circle cx="200" cy="140" r="6" fill="#22c55e" stroke="white" stroke-width="2" /> <text x="200" y="160" text-anchor="middle" fill="#22c55e" font-size="10">
+           Titik Potong!
+          </text>
+         </svg>
+         <p class="text-slate-400 text-sm">Berikan titik pada pertemuan antara garis sudut cahaya dan garis arah sinar di lantai.</p>
+        </div>
+        <div class="card-hover bg-gradient-to-br from-purple-900/50 to-slate-900 rounded-2xl p-6 border border-purple-500/30">
+         <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center text-2xl font-bold">
+           6
+          </div>
+          <h3 class="text-xl font-bold text-purple-400">Hubungkan &amp; Arsir</h3>
+         </div>
+         <svg viewbox="0 0 250 180" class="w-full mx-auto mb-4"><line x1="20" y1="140" x2="230" y2="140" stroke="#475569" stroke-width="2" /> <!-- Box with shade --> <polygon points="80,80 130,80 130,140 80,140" fill="#818cf8" /> <polygon points="110,80 130,80 130,140 110,140" fill="#4c1d95" /> <circle cx="40" cy="30" r="15" fill="#fbbf24" /> <!-- Completed shadow --> <polygon points="80,140 130,140 200,160 140,160" fill="#1e1b4b" stroke="#4c1d95" stroke-width="1" /> <!-- Hatching lines in shadow --> <line x1="95" y1="142" x2="115" y2="158" stroke="#312e81" stroke-width="1" /> <line x1="115" y1="142" x2="140" y2="158" stroke="#312e81" stroke-width="1" /> <line x1="135" y1="142" x2="165" y2="158" stroke="#312e81" stroke-width="1" /> <line x1="155" y1="142" x2="185" y2="158" stroke="#312e81" stroke-width="1" />
+         </svg>
+         <p class="text-slate-400 text-sm">Hubungkan titik-titik tersebut untuk membentuk pola bayangan, lalu arsir dengan warna gelap.</p>
+        </div>
+       </div><!-- Complete Process Animation -->
+       <div class="mt-8 bg-slate-800/50 rounded-3xl p-6 border border-white/10">
+        <h3 class="text-xl font-bold text-center mb-4">🎬 Hasil Akhir</h3>
+        <svg viewbox="0 0 400 250" class="w-full max-w-2xl mx-auto"><defs>
+          <pattern id="gridPattern" width="20" height="20" patternunits="userSpaceOnUse">
+           <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e293b" stroke-width="0.5" />
+          </pattern>
+         </defs> <rect width="400" height="250" fill="url(#gridPattern)" /> <!-- Ground --> <line x1="20" y1="200" x2="380" y2="200" stroke="#475569" stroke-width="3" /> <!-- Sun --> <circle cx="60" cy="50" r="25" fill="#fbbf24" class="sun-glow" /> <text x="60" y="90" text-anchor="middle" fill="#fbbf24" font-size="12">
+          ☀️
+         </text> <!-- 3D Box --> <polygon points="150,120 220,120 220,200 150,200" fill="#818cf8" /> <polygon points="150,120 180,90 250,90 220,120" fill="#a5b4fc" /> <polygon points="220,120 250,90 250,170 220,200" fill="#4c1d95" /> <!-- Light rays --> <line x1="60" y1="50" x2="180" y2="90" stroke="#fbbf24" stroke-width="1" opacity="0.5" class="light-ray" /> <line x1="60" y1="50" x2="250" y2="90" stroke="#fbbf24" stroke-width="1" opacity="0.5" class="light-ray" /> <!-- Shadow --> <polygon points="150,200 220,200 330,230 250,230" fill="rgba(30,27,75,0.8)" /> <!-- Labels --> <text x="185" y="165" fill="white" font-size="10">
+          Naungan
+         </text> <text x="270" y="220" fill="#94a3b8" font-size="10">
+          Bayangan
+         </text>
+        </svg>
+       </div>
+      </div>
+     </div><!-- Slide 7: Tips Kreatif -->
+     <div class="slide" data-slide="7">
+      <div class="py-8">
+       <h2 class="title-font text-4xl font-bold mb-8 text-center"><span class="gradient-text">Tips &amp; Alternatif Kreatif</span> ✨</h2>
+       <div class="grid md:grid-cols-3 gap-6 mb-8">
+        <div class="card-hover bg-gradient-to-br from-pink-900/50 to-slate-900 rounded-2xl p-6 border border-pink-500/30">
+         <div class="text-4xl mb-4 text-center">
+          🔄
+         </div>
+         <h3 class="text-lg font-bold text-pink-400 mb-3 text-center">Eksperimen Posisi</h3>
+         <p class="text-slate-400 text-sm text-center">Jika sumber cahaya dipindahkan, bentuk dan panjang bayangan akan otomatis berubah.</p>
+        </div>
+        <div class="card-hover bg-gradient-to-br from-emerald-900/50 to-slate-900 rounded-2xl p-6 border border-emerald-500/30">
+         <div class="text-4xl mb-4 text-center">
+          📏
+         </div>
+         <h3 class="text-lg font-bold text-emerald-400 mb-3 text-center">Tanpa Penggaris</h3>
+         <p class="text-slate-400 text-sm text-center">Gunakan benda bertepi lurus lainnya sebagai alat bantu agar garis tetap konstruktif.</p>
+        </div>
+        <div class="card-hover bg-gradient-to-br from-sky-900/50 to-slate-900 rounded-2xl p-6 border border-sky-500/30">
+         <div class="text-4xl mb-4 text-center">
+          ✨
+         </div>
+         <h3 class="text-lg font-bold text-sky-400 mb-3 text-center">Kerapian</h3>
+         <p class="text-slate-400 text-sm text-center">Hasil akhir yang rapi menunjukkan pemahaman yang lebih baik terhadap arah datangnya cahaya.</p>
+        </div>
+       </div><!-- Interactive Light Position Demo -->
+       <div class="bg-slate-800/50 rounded-3xl p-6 border border-white/10">
+        <h3 class="text-xl font-bold text-center mb-6">🎮 Simulasi Interaktif: Geser Posisi Cahaya</h3>
+        <div class="max-w-2xl mx-auto">
+         <svg id="interactive-shadow" viewbox="0 0 400 220" class="w-full mb-4"><defs>
+           <radialgradient id="sunGrad">
+            <stop offset="0%" stop-color="#fcd34d" />
+            <stop offset="100%" stop-color="#f59e0b" />
+           </radialgradient>
+          </defs> <!-- Ground --> <rect x="0" y="180" width="400" height="40" fill="#1e293b" /> <line x1="0" y1="180" x2="400" y2="180" stroke="#475569" stroke-width="2" /> <!-- Box --> <rect id="box-main" x="170" y="120" width="60" height="60" fill="#6366f1" /> <polygon id="box-top" points="170,120 190,100 250,100 230,120" fill="#818cf8" /> <polygon id="box-side" points="230,120 250,100 250,160 230,180" fill="#4c1d95" /> <!-- Dynamic Sun --> <circle id="sun-circle" cx="80" cy="60" r="20" fill="url(#sunGrad)" /> <!-- Dynamic Shadow --> <polygon id="shadow-polygon" points="170,180 230,180 300,200 230,200" fill="rgba(0,0,0,0.5)" /> <!-- Light rays --> <line id="light-ray-1" x1="80" y1="60" x2="190" y2="100" stroke="#fbbf24" stroke-width="1" opacity="0.3" class="light-ray" /> <line id="light-ray-2" x1="80" y1="60" x2="250" y2="100" stroke="#fbbf24" stroke-width="1" opacity="0.3" class="light-ray" />
+         </svg>
+         <div class="flex items-center gap-4"><span class="text-amber-400">☀️ Kiri</span> <input type="range" id="light-slider" min="40" max="360" value="80" class="flex-1"> <span class="text-amber-400">Kanan ☀️</span>
+         </div>
+         <p class="text-center text-slate-400 text-sm mt-3">Geser slider untuk melihat bagaimana posisi cahaya mempengaruhi bayangan!</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Slide 8: Kegiatan Praktik -->
+     <div class="slide" data-slide="8">
+      <div class="py-8">
+       <h2 class="title-font text-4xl font-bold mb-8 text-center"><span class="gradient-text">Kegiatan Praktik</span> 🎨</h2>
+       <div class="grid md:grid-cols-2 gap-8"><!-- Activity 1 -->
+        <div class="bg-gradient-to-br from-violet-900/50 to-slate-900 rounded-3xl p-6 border border-violet-500/30">
+         <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-full bg-violet-500 flex items-center justify-center">
+           🔬
+          </div>
+          <h3 class="text-xl font-bold text-violet-400">Kegiatan 1: Observasi</h3>
+         </div>
+         <ol class="space-y-3 text-slate-300 text-sm">
+          <li class="flex gap-2"><span class="text-violet-400 font-bold">1.</span> Siapkan benda berbentuk kubus/kotak (misalnya kardus tisu)</li>
+          <li class="flex gap-2"><span class="text-violet-400 font-bold">2.</span> Letakkan di bawah lampu meja</li>
+          <li class="flex gap-2"><span class="text-violet-400 font-bold">3.</span> Amati dan sketsa: naungan di benda &amp; bayangan di meja</li>
+          <li class="flex gap-2"><span class="text-violet-400 font-bold">4.</span> Pindahkan lampu dan amati perubahan</li>
+         </ol>
+        </div><!-- Activity 2 -->
+        <div class="bg-gradient-to-br from-rose-900/50 to-slate-900 rounded-3xl p-6 border border-rose-500/30">
+         <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-full bg-rose-500 flex items-center justify-center">
+           📸
+          </div>
+          <h3 class="text-xl font-bold text-rose-400">Kegiatan 2: Fotografi</h3>
+         </div>
+         <ol class="space-y-3 text-slate-300 text-sm">
+          <li class="flex gap-2"><span class="text-rose-400 font-bold">1.</span> Pilih gedung di sekolah</li>
+          <li class="flex gap-2"><span class="text-rose-400 font-bold">2.</span> Foto dari sudut yang sama pada pukul 10 pagi</li>
+          <li class="flex gap-2"><span class="text-rose-400 font-bold">3.</span> Foto lagi pada pukul 4 sore</li>
+          <li class="flex gap-2"><span class="text-rose-400 font-bold">4.</span> Bandingkan perbedaan bayangan</li>
+         </ol>
+        </div>
+       </div><!-- Drawing Canvas -->
+       <div class="mt-8 bg-slate-800/50 rounded-3xl p-6 border border-white/10">
+        <h3 class="text-xl font-bold text-center mb-4">✏️ Kanvas Menggambar Sederhana</h3>
+        <div class="flex flex-wrap gap-4 justify-center mb-4"><button onclick="setDrawColor('#ffffff')" class="w-8 h-8 rounded-full bg-white border-2 border-slate-600 hover:scale-110 transition-transform"></button> <button onclick="setDrawColor('#fbbf24')" class="w-8 h-8 rounded-full bg-amber-400 border-2 border-slate-600 hover:scale-110 transition-transform"></button> <button onclick="setDrawColor('#6366f1')" class="w-8 h-8 rounded-full bg-indigo-500 border-2 border-slate-600 hover:scale-110 transition-transform"></button> <button onclick="setDrawColor('#1e293b')" class="w-8 h-8 rounded-full bg-slate-800 border-2 border-slate-600 hover:scale-110 transition-transform"></button> <button onclick="clearCanvas()" class="px-4 py-2 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors text-sm">🗑️ Hapus</button>
+        </div>
+        <canvas id="drawing-canvas" class="w-full bg-slate-900 rounded-xl cursor-crosshair" style="height: 300px; touch-action: none;"></canvas>
+        <p class="text-center text-slate-400 text-sm mt-2">Praktikkan menggambar kubus dengan bayangan di sini!</p>
+       </div>
+      </div>
+     </div><!-- Slide 9: Evaluasi -->
+     <div class="slide" data-slide="9">
+      <div class="py-8">
+       <h2 class="title-font text-4xl font-bold mb-8 text-center"><span class="gradient-text">Evaluasi &amp; Refleksi</span> 📋</h2>
+       <div class="grid md:grid-cols-2 gap-8 mb-8">
+        <div class="bg-gradient-to-br from-teal-900/50 to-slate-900 rounded-2xl p-6 border border-teal-500/30">
+         <h3 class="text-xl font-bold text-teal-400 mb-4">✅ Cek Mandiri</h3>
+         <div class="space-y-3"><label class="flex items-start gap-3 cursor-pointer group"> <input type="checkbox" class="mt-1 w-5 h-5 rounded accent-teal-500"> <span class="text-slate-300 group-hover:text-white transition-colors">Apakah posisi bayangan sudah berlawanan dengan arah cahaya?</span> </label> <label class="flex items-start gap-3 cursor-pointer group"> <input type="checkbox" class="mt-1 w-5 h-5 rounded accent-teal-500"> <span class="text-slate-300 group-hover:text-white transition-colors">Apakah garis bayangan sudah bertemu tepat di titik potong?</span> </label> <label class="flex items-start gap-3 cursor-pointer group"> <input type="checkbox" class="mt-1 w-5 h-5 rounded accent-teal-500"> <span class="text-slate-300 group-hover:text-white transition-colors">Apakah naungan sudah diterapkan pada sisi benda yang tidak terkena cahaya?</span> </label>
+         </div>
+        </div>
+        <div class="bg-gradient-to-br from-fuchsia-900/50 to-slate-900 rounded-2xl p-6 border border-fuchsia-500/30">
+         <h3 class="text-xl font-bold text-fuchsia-400 mb-4">🤔 Refleksi</h3>
+         <p class="text-slate-300 mb-4">Bagian mana yang paling sulit?</p>
+         <div class="space-y-2"><button onclick="selectReflection(this)" class="w-full text-left p-3 rounded-lg bg-slate-700/50 hover:bg-fuchsia-500/20 transition-colors text-slate-300 text-sm">Menentukan sudut cahaya</button> <button onclick="selectReflection(this)" class="w-full text-left p-3 rounded-lg bg-slate-700/50 hover:bg-fuchsia-500/20 transition-colors text-slate-300 text-sm">Menarik garis perspektif</button> <button onclick="selectReflection(this)" class="w-full text-left p-3 rounded-lg bg-slate-700/50 hover:bg-fuchsia-500/20 transition-colors text-slate-300 text-sm">Menghubungkan titik-titik bayangan</button> <button onclick="selectReflection(this)" class="w-full text-left p-3 rounded-lg bg-slate-700/50 hover:bg-fuchsia-500/20 transition-colors text-slate-300 text-sm">Membedakan naungan dan bayangan</button>
+         </div>
+        </div>
+       </div><!-- Teacher Notes -->
+       <div class="bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-2xl p-6 border border-amber-500/30">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4">📚 Ide Pengembangan untuk Guru</h3>
+        <div class="grid md:grid-cols-2 gap-4">
+         <div class="bg-white/5 rounded-xl p-4">
+          <h4 class="font-medium text-amber-300 mb-2">🔦 Demo Langsung</h4>
+          <p class="text-slate-400 text-sm">Gunakan lampu senter di kelas yang gelap untuk menunjukkan bagaimana bayangan memanjang dan memendek saat senter digerakkan.</p>
+         </div>
+         <div class="bg-white/5 rounded-xl p-4">
+          <h4 class="font-medium text-amber-300 mb-2">📷 Tugas Proyek</h4>
+          <p class="text-slate-400 text-sm">Mintalah siswa memotret gedung di sekolah pada jam 10 pagi dan jam 4 sore, lalu bandingkan perbedaan bayangannya secara perspektif.</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Slide 10: Materi Tambahan - Perspektif 1 Titik -->
+     <div class="slide" data-slide="10">
+      <div class="py-8">
+       <h2 class="title-font text-4xl font-bold mb-8 text-center"><span class="gradient-text">Perspektif 1 Titik Hilang</span> 🎯</h2>
+       <div class="bg-slate-800/50 rounded-3xl p-8 mb-8 border border-white/10">
+        <svg viewbox="0 0 500 300" class="w-full max-w-3xl mx-auto"><!-- Horizon line --> <line x1="20" y1="150" x2="480" y2="150" stroke="#64748b" stroke-width="2" stroke-dasharray="10,5" /> <text x="30" y="140" fill="#94a3b8" font-size="12">
+          Garis Horizon
+         </text> <!-- Vanishing point --> <circle cx="250" cy="150" r="8" fill="#f59e0b" /> <text x="250" y="175" text-anchor="middle" fill="#f59e0b" font-size="12">
+          Titik Hilang
+         </text> <!-- Front face of box --> <rect x="100" y="180" width="100" height="80" fill="#6366f1" stroke="#818cf8" stroke-width="2" /> <!-- Perspective lines --> <line x1="100" y1="180" x2="250" y2="150" stroke="#818cf8" stroke-width="1" stroke-dasharray="5,3" /> <line x1="200" y1="180" x2="250" y2="150" stroke="#818cf8" stroke-width="1" stroke-dasharray="5,3" /> <line x1="100" y1="260" x2="250" y2="150" stroke="#818cf8" stroke-width="1" stroke-dasharray="5,3" /> <line x1="200" y1="260" x2="250" y2="150" stroke="#818cf8" stroke-width="1" stroke-dasharray="5,3" /> <!-- Side face --> <polygon points="200,180 250,160 250,230 200,260" fill="#4f46e5" stroke="#6366f1" stroke-width="1" /> <!-- Top face --> <polygon points="100,180 150,160 250,160 200,180" fill="#a5b4fc" stroke="#818cf8" stroke-width="1" /> <!-- Labels --> <text x="150" y="230" text-anchor="middle" fill="white" font-size="11">
+          Bidang Depan
+         </text>
+        </svg>
+        <div class="mt-6 grid md:grid-cols-3 gap-4">
+         <div class="bg-indigo-500/10 rounded-xl p-4 border border-indigo-500/30">
+          <h4 class="font-semibold text-indigo-400 mb-2">🎯 Ciri Khas</h4>
+          <p class="text-slate-300 text-sm">Semua garis menuju satu titik hilang di horizon</p>
+         </div>
+         <div class="bg-indigo-500/10 rounded-xl p-4 border border-indigo-500/30">
+          <h4 class="font-semibold text-indigo-400 mb-2">📐 Penggunaan</h4>
+          <p class="text-slate-300 text-sm">Koridor, jalan lurus, interior ruangan</p>
+         </div>
+         <div class="bg-indigo-500/10 rounded-xl p-4 border border-indigo-500/30">
+          <h4 class="font-semibold text-indigo-400 mb-2">👁️ Sudut Pandang</h4>
+          <p class="text-slate-300 text-sm">Pengamat menghadap langsung ke objek</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Slide 11: Materi Tambahan - Perspektif 2 Titik -->
+     <div class="slide" data-slide="11">
+      <div class="py-8">
+       <h2 class="title-font text-4xl font-bold mb-8 text-center"><span class="gradient-text">Perspektif 2 Titik Hilang</span> 🎯🎯</h2>
+       <div class="bg-slate-800/50 rounded-3xl p-8 mb-8 border border-white/10">
+        <svg viewbox="0 0 500 300" class="w-full max-w-3xl mx-auto"><!-- Horizon line --> <line x1="20" y1="120" x2="480" y2="120" stroke="#64748b" stroke-width="2" stroke-dasharray="10,5" /> <text x="250" y="110" text-anchor="middle" fill="#94a3b8" font-size="12">
+          Garis Horizon
+         </text> <!-- Left vanishing point --> <circle cx="40" cy="120" r="6" fill="#f59e0b" /> <text x="40" y="145" text-anchor="middle" fill="#f59e0b" font-size="10">
+          VP1
+         </text> <!-- Right vanishing point --> <circle cx="460" cy="120" r="6" fill="#22d3ee" /> <text x="460" y="145" text-anchor="middle" fill="#22d3ee" font-size="10">
+          VP2
+         </text> <!-- Vertical edge --> <line x1="250" y1="160" x2="250" y2="260" stroke="#818cf8" stroke-width="3" /> <!-- Lines to left VP --> <line x1="250" y1="160" x2="40" y2="120" stroke="#f59e0b" stroke-width="1" stroke-dasharray="5,3" /> <line x1="250" y1="260" x2="40" y2="120" stroke="#f59e0b" stroke-width="1" stroke-dasharray="5,3" /> <!-- Lines to right VP --> <line x1="250" y1="160" x2="460" y2="120" stroke="#22d3ee" stroke-width="1" stroke-dasharray="5,3" /> <line x1="250" y1="260" x2="460" y2="120" stroke="#22d3ee" stroke-width="1" stroke-dasharray="5,3" /> <!-- Left face --> <polygon points="250,160 250,260 150,230 150,145" fill="#6366f1" /> <!-- Right face --> <polygon points="250,160 250,260 350,230 350,145" fill="#4f46e5" /> <!-- Top face --> <polygon points="250,160 150,145 200,130 350,145" fill="#a5b4fc" />
+        </svg>
+        <div class="mt-6 grid md:grid-cols-3 gap-4">
+         <div class="bg-purple-500/10 rounded-xl p-4 border border-purple-500/30">
+          <h4 class="font-semibold text-purple-400 mb-2">🎯 Ciri Khas</h4>
+          <p class="text-slate-300 text-sm">Garis horizontal menuju 2 titik hilang berbeda</p>
+         </div>
+         <div class="bg-purple-500/10 rounded-xl p-4 border border-purple-500/30">
+          <h4 class="font-semibold text-purple-400 mb-2">📐 Penggunaan</h4>
+          <p class="text-slate-300 text-sm">Sudut bangunan, eksterior gedung</p>
+         </div>
+         <div class="bg-purple-500/10 rounded-xl p-4 border border-purple-500/30">
+          <h4 class="font-semibold text-purple-400 mb-2">👁️ Sudut Pandang</h4>
+          <p class="text-slate-300 text-sm">Pengamat melihat dari sudut/pojok objek</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Slide 12: Quiz HOTS -->
+     <div class="slide" data-slide="12">
+      <div class="py-8">
+       <h2 class="title-font text-4xl font-bold mb-6 text-center"><span class="gradient-text">Soal HOTS</span> 🧠</h2>
+       <p class="text-center text-slate-400 mb-8">Higher Order Thinking Skills - Uji Pemahaman Mendalam</p>
+       <div id="quiz-container" class="space-y-6"><!-- Quiz questions will be rendered here -->
+       </div>
+       <div id="quiz-results" class="hidden mt-8 bg-gradient-to-br from-green-900/50 to-slate-900 rounded-3xl p-8 border border-green-500/30 text-center">
+        <div class="text-6xl mb-4">
+         🎉
+        </div>
+        <h3 class="text-2xl font-bold text-green-400 mb-2">Hasil Kuis</h3>
+        <p id="quiz-score" class="text-4xl font-bold text-white mb-4">0/10</p>
+        <p id="quiz-feedback" class="text-slate-300 mb-6"></p><button onclick="resetQuiz()" class="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl font-semibold transition-colors"> Ulangi Kuis </button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </main><!-- Navigation Footer -->
+   <footer class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between"><button id="prev-btn" onclick="changeSlide(-1)" class="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"> <span>←</span> <span class="hidden sm:inline">Sebelumnya</span> </button>
+     <div class="flex gap-2" id="slide-dots"><!-- Dots will be generated by JS -->
+     </div><button id="next-btn" onclick="changeSlide(1)" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 rounded-xl transition-colors font-semibold"> <span class="hidden sm:inline">Selanjutnya</span> <span>→</span> </button>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_title: "Menggambar Konstruksi",
+      subject_info: "Seni Rupa Kelas IX",
+      primary_color: "#f59e0b",
+      secondary_color: "#6366f1",
+      background_color: "#0f172a",
+      text_color: "#f1f5f9",
+      accent_color: "#22d3ee"
+    };
+
+    let currentSlide = 1;
+    const totalSlides = 12;
+    let quizAnswers = {};
+    let quizSubmitted = false;
+
+    // HOTS Questions
+    const hotsQuestions = [
+      {
+        id: 1,
+        question: "Seorang seniman ingin menggambar bayangan gedung pencakar langit pada siang hari dengan matahari tepat di atas kepala. Apa yang akan terjadi pada bayangan gedung tersebut?",
+        options: [
+          "Bayangan akan sangat panjang ke arah barat",
+          "Bayangan akan sangat pendek, hampir di bawah gedung",
+          "Bayangan akan memanjang ke arah timur",
+          "Bayangan tidak akan terbentuk sama sekali"
+        ],
+        correct: 1,
+        explanation: "Saat matahari tepat di atas kepala (zenith), sudut cahaya hampir 90° vertikal, sehingga bayangan menjadi sangat pendek dan berada tepat di bawah objek."
+      },
+      {
+        id: 2,
+        question: "Dalam perspektif 2 titik hilang, mengapa garis vertikal pada bangunan tetap digambar tegak lurus, tidak menuju titik hilang manapun?",
+        options: [
+          "Karena garis vertikal tidak terpengaruh perspektif",
+          "Karena kita mengasumsikan pengamat sejajar dengan horizon, sehingga garis vertikal paralel dengan garis pandang mata",
+          "Karena akan terlalu rumit jika digambar miring",
+          "Karena bangunan asli memiliki dinding tegak"
+        ],
+        correct: 1,
+        explanation: "Dalam perspektif 2 titik, pengamat dianggap berada sejajar dengan horizon. Garis vertikal tetap paralel karena tidak ada distorsi ke atas/bawah - titik hilang hanya untuk garis horizontal."
+      },
+      {
+        id: 3,
+        question: "Analisis: Jika sebuah kubus digambar dengan cahaya datang dari kiri-depan dengan sudut 45°, sisi mana yang akan memiliki naungan PALING GELAP?",
+        options: [
+          "Sisi depan",
+          "Sisi atas",
+          "Sisi kanan-belakang",
+          "Semua sisi sama gelapnya"
+        ],
+        correct: 2,
+        explanation: "Sisi kanan-belakang akan paling gelap karena posisinya paling jauh dari sumber cahaya dan tidak menerima pantulan cahaya langsung maupun tidak langsung."
+      },
+      {
+        id: 4,
+        question: "Seorang arsitek ingin membuat ilustrasi interior ruangan yang terlihat lebih luas. Jenis perspektif mana yang sebaiknya digunakan dan mengapa?",
+        options: [
+          "Perspektif 2 titik, karena menunjukkan lebih banyak detail",
+          "Perspektif 1 titik dengan titik hilang di tengah, karena menciptakan kedalaman yang membuat ruangan terasa lebih panjang",
+          "Perspektif isometrik, karena lebih akurat",
+          "Tidak menggunakan perspektif, gambar datar saja"
+        ],
+        correct: 1,
+        explanation: "Perspektif 1 titik dengan titik hilang di tengah menciptakan ilusi kedalaman maksimal, membuat koridor atau ruangan terasa lebih panjang dan luas."
+      },
+      {
+        id: 5,
+        question: "Evaluasi pernyataan berikut: 'Bayangan selalu berbentuk sama persis dengan objeknya, hanya lebih gelap.' Apakah pernyataan ini benar?",
+        options: [
+          "Benar, bayangan adalah duplikat gelap dari objek",
+          "Salah, bayangan mengalami distorsi berdasarkan sudut cahaya dan permukaan tempat jatuhnya bayangan",
+          "Benar, hanya ukurannya yang berbeda",
+          "Salah, bayangan selalu berbentuk lingkaran"
+        ],
+        correct: 1,
+        explanation: "Bayangan mengalami distorsi perspektif. Bentuknya dipengaruhi oleh sudut datangnya cahaya, sudut permukaan tempat bayangan jatuh, dan posisi objek terhadap sumber cahaya."
+      },
+      {
+        id: 6,
+        question: "Dalam sebuah still life dengan dua sumber cahaya berbeda warna (merah dan biru), bagaimana bayangan akan terbentuk di area yang tidak terkena kedua cahaya?",
+        options: [
+          "Tidak akan ada bayangan",
+          "Bayangan akan berwarna ungu (campuran merah-biru)",
+          "Akan terbentuk bayangan ganda dengan intensitas berbeda di setiap area",
+          "Bayangan tetap hitam seperti biasa"
+        ],
+        correct: 2,
+        explanation: "Dua sumber cahaya menciptakan bayangan ganda. Area yang hanya disinari satu cahaya akan memiliki bayangan dari cahaya lain, dan area tanpa cahaya sama sekali akan paling gelap."
+      },
+      {
+        id: 7,
+        question: "Mengapa dalam fotografi arsitektur profesional, fotografer sering memilih waktu golden hour (pagi/sore) untuk memotret bangunan dibanding siang hari?",
+        options: [
+          "Karena cuaca lebih sejuk",
+          "Karena sudut cahaya rendah menciptakan bayangan panjang yang memberikan dimensi dan tekstur pada fasad bangunan",
+          "Karena tidak ada orang di sekitar",
+          "Karena kamera bekerja lebih baik"
+        ],
+        correct: 1,
+        explanation: "Golden hour menghasilkan cahaya dengan sudut rendah yang menciptakan bayangan panjang dan dramatis, menampilkan tekstur dan detail arsitektural yang tidak terlihat saat cahaya siang yang rata."
+      },
+      {
+        id: 8,
+        question: "Sintesis: Jika kamu diminta menggambar sebuah kota futuristik dengan gedung-gedung tinggi, kombinasi teknik perspektif dan pencahayaan mana yang akan menciptakan kesan paling dramatis?",
+        options: [
+          "Perspektif 1 titik dengan cahaya depan yang rata",
+          "Perspektif 2 titik dengan cahaya samping rendah menciptakan kontras naungan yang kuat",
+          "Perspektif isometrik tanpa bayangan",
+          "Gambar tampak atas tanpa perspektif"
+        ],
+        correct: 1,
+        explanation: "Perspektif 2 titik menunjukkan kedalaman kota, sementara cahaya samping rendah menciptakan kontras dramatis antara sisi terang dan gelap gedung, memberikan kesan megah dan futuristik."
+      },
+      {
+        id: 9,
+        question: "Seorang siswa menggambar bayangan dari tiang bendera tetapi bayangan terlihat lebih pendek dari tiangnya, padahal cahaya datang dari sudut 45°. Apa yang mungkin menjadi kesalahan?",
+        options: [
+          "Warna bayangan kurang gelap",
+          "Siswa tidak memperhitungkan proyeksi perspektif bayangan di tanah yang seharusnya memanjang sesuai sudut pandang",
+          "Tiang terlalu tinggi",
+          "Tidak ada yang salah, bayangan memang selalu lebih pendek"
+        ],
+        correct: 1,
+        explanation: "Dalam perspektif, bayangan yang jatuh ke tanah juga mengikuti aturan titik hilang. Jika tidak diperhitungkan, bayangan akan terlihat tidak proporsional meskipun sudut cahaya sudah benar."
+      },
+      {
+        id: 10,
+        question: "Kreasi: Jika kamu ingin menggambar suasana misterius di sebuah lorong kastil kuno, bagaimana kamu akan mengatur cahaya dan perspektif?",
+        options: [
+          "Perspektif 1 titik dengan cahaya terang merata dari depan",
+          "Perspektif 1 titik dengan satu sumber cahaya lemah di kejauhan (titik hilang), menciptakan gradasi gelap-terang dramatis dan bayangan panjang di dinding",
+          "Perspektif 2 titik dengan cahaya dari atas",
+          "Tanpa perspektif dengan pencahayaan netral"
+        ],
+        correct: 1,
+        explanation: "Perspektif 1 titik menarik pandangan ke kedalaman lorong. Sumber cahaya lemah di kejauhan (dekat titik hilang) menciptakan bayangan panjang yang menyeramkan dan gradasi yang misterius."
+      }
+    ];
+
+    // Initialize Elements SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          document.getElementById('header-title').textContent = config.main_title || defaultConfig.main_title;
+          document.getElementById('header-subject').textContent = config.subject_info || defaultConfig.subject_info;
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => window.elementSdk.setConfig({ primary_color: value })
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => window.elementSdk.setConfig({ secondary_color: value })
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["main_title", config.main_title || defaultConfig.main_title],
+          ["subject_info", config.subject_info || defaultConfig.subject_info]
+        ])
+      });
+    }
+
+    // Slide Navigation
+    function changeSlide(direction) {
+      const newSlide = currentSlide + direction;
+      if (newSlide >= 1 && newSlide <= totalSlides) {
+        goToSlide(newSlide);
+      }
+    }
+
+    function goToSlide(slideNum) {
+      // Hide all slides
+      document.querySelectorAll('.slide').forEach(slide => {
+        slide.classList.remove('active');
+      });
+      
+      // Show target slide
+      const targetSlide = document.querySelector(`[data-slide="${slideNum}"]`);
+      if (targetSlide) {
+        targetSlide.classList.add('active');
+        currentSlide = slideNum;
+        updateNavigation();
+      }
+    }
+
+    function updateNavigation() {
+      // Update counter
+      document.getElementById('slide-counter').textContent = `Slide ${currentSlide}/${totalSlides}`;
+      
+      // Update progress bar
+      const progress = (currentSlide / totalSlides) * 100;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+      
+      // Update buttons
+      document.getElementById('prev-btn').disabled = currentSlide === 1;
+      document.getElementById('next-btn').disabled = currentSlide === totalSlides;
+      
+      // Update dots
+      document.querySelectorAll('#slide-dots button').forEach((dot, index) => {
+        if (index + 1 === currentSlide) {
+          dot.classList.add('bg-amber-500');
+          dot.classList.remove('bg-slate-600');
+        } else {
+          dot.classList.remove('bg-amber-500');
+          dot.classList.add('bg-slate-600');
+        }
+      });
+    }
+
+    function generateDots() {
+      const dotsContainer = document.getElementById('slide-dots');
+      dotsContainer.innerHTML = '';
+      
+      for (let i = 1; i <= totalSlides; i++) {
+        const dot = document.createElement('button');
+        dot.className = `w-2 h-2 rounded-full transition-colors ${i === 1 ? 'bg-amber-500' : 'bg-slate-600'}`;
+        dot.onclick = () => goToSlide(i);
+        dot.setAttribute('aria-label', `Go to slide ${i}`);
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    // Interactive Shadow Demo
+    function setupLightSlider() {
+      const slider = document.getElementById('light-slider');
+      if (!slider) return;
+      
+      slider.addEventListener('input', (e) => {
+        const sunX = parseInt(e.target.value);
+        const sunCircle = document.getElementById('sun-circle');
+        const shadowPolygon = document.getElementById('shadow-polygon');
+        const lightRay1 = document.getElementById('light-ray-1');
+        const lightRay2 = document.getElementById('light-ray-2');
+        
+        if (sunCircle) sunCircle.setAttribute('cx', sunX);
+        
+        // Calculate shadow based on sun position
+        const boxLeft = 170;
+        const boxRight = 230;
+        const boxTop = 100;
+        const groundY = 180;
+        
+        // Shadow projection
+        const shadowExtend = ((200 - sunX) / 2) + 50;
+        const shadowLeft = boxLeft + (sunX > 200 ? -shadowExtend : 0);
+        const shadowRight = boxRight + (sunX < 200 ? shadowExtend : 0);
+        
+        if (shadowPolygon) {
+          if (sunX < 200) {
+            shadowPolygon.setAttribute('points', `${boxLeft},${groundY} ${boxRight},${groundY} ${boxRight + shadowExtend},200 ${boxLeft + shadowExtend/2},200`);
+          } else {
+            shadowPolygon.setAttribute('points', `${boxLeft},${groundY} ${boxRight},${groundY} ${boxRight - shadowExtend/2},200 ${boxLeft - shadowExtend},200`);
+          }
+        }
+        
+        if (lightRay1) {
+          lightRay1.setAttribute('x1', sunX);
+          lightRay1.setAttribute('x2', 190);
+        }
+        if (lightRay2) {
+          lightRay2.setAttribute('x1', sunX);
+          lightRay2.setAttribute('x2', 250);
+        }
+      });
+    }
+
+    // Drawing Canvas
+    let isDrawing = false;
+    let drawColor = '#ffffff';
+    let lastX = 0;
+    let lastY = 0;
+
+    function setupCanvas() {
+      const canvas = document.getElementById('drawing-canvas');
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      
+      // Set canvas resolution
+      function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * 2;
+        canvas.height = rect.height * 2;
+        ctx.scale(2, 2);
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.lineWidth = 3;
+      }
+      
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+      
+      function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return {
+          x: clientX - rect.left,
+          y: clientY - rect.top
+        };
+      }
+      
+      function startDrawing(e) {
+        isDrawing = true;
+        const pos = getPos(e);
+        lastX = pos.x;
+        lastY = pos.y;
+      }
+      
+      function draw(e) {
+        if (!isDrawing) return;
+        e.preventDefault();
+        
+        const pos = getPos(e);
+        ctx.strokeStyle = drawColor;
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        
+        lastX = pos.x;
+        lastY = pos.y;
+      }
+      
+      function stopDrawing() {
+        isDrawing = false;
+      }
+      
+      canvas.addEventListener('mousedown', startDrawing);
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseup', stopDrawing);
+      canvas.addEventListener('mouseout', stopDrawing);
+      
+      canvas.addEventListener('touchstart', startDrawing);
+      canvas.addEventListener('touchmove', draw);
+      canvas.addEventListener('touchend', stopDrawing);
+    }
+
+    function setDrawColor(color) {
+      drawColor = color;
+    }
+
+    function clearCanvas() {
+      const canvas = document.getElementById('drawing-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // Reflection Selection
+    function selectReflection(btn) {
+      const buttons = btn.parentElement.querySelectorAll('button');
+      buttons.forEach(b => {
+        b.classList.remove('bg-fuchsia-500/40', 'border', 'border-fuchsia-400');
+        b.classList.add('bg-slate-700/50');
+      });
+      btn.classList.remove('bg-slate-700/50');
+      btn.classList.add('bg-fuchsia-500/40', 'border', 'border-fuchsia-400');
+    }
+
+    // Quiz System
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      if (!container) return;
+      
+      container.innerHTML = hotsQuestions.map((q, index) => `
+        <div class="bg-slate-800/50 rounded-2xl p-6 border border-white/10">
+          <div class="flex items-start gap-4 mb-4">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center font-bold text-sm">${index + 1}</span>
+            <p class="text-slate-200 font-medium">${q.question}</p>
+          </div>
+          <div class="space-y-2 ml-12">
+            ${q.options.map((opt, optIndex) => `
+              <button 
+                onclick="selectAnswer(${q.id}, ${optIndex})"
+                class="quiz-option w-full text-left p-3 rounded-xl bg-slate-700/50 hover:bg-slate-600/50 text-slate-300 text-sm transition-all border border-transparent"
+                data-question="${q.id}"
+                data-option="${optIndex}"
+              >
+                <span class="font-medium text-amber-400 mr-2">${String.fromCharCode(65 + optIndex)}.</span>
+                ${opt}
+              </button>
+            `).join('')}
+          </div>
+          <div class="hidden ml-12 mt-4 p-4 rounded-xl bg-green-500/10 border border-green-500/30" data-explanation="${q.id}">
+            <p class="text-green-300 text-sm"><strong>Penjelasan:</strong> ${q.explanation}</p>
+          </div>
+        </div>
+      `).join('');
+      
+      // Add submit button
+      container.innerHTML += `
+        <div class="text-center mt-8">
+          <button onclick="submitQuiz()" id="submit-quiz-btn" class="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-xl font-bold text-lg transition-all transform hover:scale-105">
+            📝 Kirim Jawaban
+          </button>
+        </div>
+      `;
+    }
+
+    function selectAnswer(questionId, optionIndex) {
+      if (quizSubmitted) return;
+      
+      quizAnswers[questionId] = optionIndex;
+      
+      // Update visual state
+      const buttons = document.querySelectorAll(`[data-question="${questionId}"]`);
+      buttons.forEach((btn, index) => {
+        if (index === optionIndex) {
+          btn.classList.add('bg-amber-500/30', 'border-amber-500');
+          btn.classList.remove('bg-slate-700/50');
+        } else {
+          btn.classList.remove('bg-amber-500/30', 'border-amber-500');
+          btn.classList.add('bg-slate-700/50');
+        }
+      });
+    }
+
+    function submitQuiz() {
+      if (Object.keys(quizAnswers).length < hotsQuestions.length) {
+        // Show inline message instead of alert
+        const submitBtn = document.getElementById('submit-quiz-btn');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '⚠️ Jawab semua soal dulu!';
+        submitBtn.classList.add('bg-red-500', 'from-red-500', 'to-red-600');
+        setTimeout(() => {
+          submitBtn.innerHTML = originalText;
+          submitBtn.classList.remove('bg-red-500', 'from-red-500', 'to-red-600');
+        }, 2000);
+        return;
+      }
+      
+      quizSubmitted = true;
+      let score = 0;
+      
+      hotsQuestions.forEach(q => {
+        const userAnswer = quizAnswers[q.id];
+        const buttons = document.querySelectorAll(`[data-question="${q.id}"]`);
+        const explanation = document.querySelector(`[data-explanation="${q.id}"]`);
+        
+        buttons.forEach((btn, index) => {
+          if (index === q.correct) {
+            btn.classList.add('correct');
+          } else if (index === userAnswer && userAnswer !== q.correct) {
+            btn.classList.add('incorrect');
+          }
+          btn.disabled = true;
+        });
+        
+        if (userAnswer === q.correct) {
+          score++;
+        }
+        
+        if (explanation) {
+          explanation.classList.remove('hidden');
+        }
+      });
+      
+      // Show results
+      const resultsDiv = document.getElementById('quiz-results');
+      const scoreEl = document.getElementById('quiz-score');
+      const feedbackEl = document.getElementById('quiz-feedback');
+      
+      scoreEl.textContent = `${score}/${hotsQuestions.length}`;
+      
+      let feedback = '';
+      if (score === 10) {
+        feedback = '🌟 Luar biasa! Kamu menguasai materi dengan sempurna!';
+      } else if (score >= 8) {
+        feedback = '👏 Hebat! Pemahaman kamu sangat baik!';
+      } else if (score >= 6) {
+        feedback = '👍 Bagus! Terus tingkatkan pemahamanmu!';
+      } else if (score >= 4) {
+        feedback = '💪 Cukup baik, tapi masih perlu belajar lebih banyak.';
+      } else {
+        feedback = '📚 Ayo pelajari lagi materinya dan coba lagi!';
+      }
+      
+      feedbackEl.textContent = feedback;
+      resultsDiv.classList.remove('hidden');
+      
+      // Hide submit button
+      document.getElementById('submit-quiz-btn').classList.add('hidden');
+    }
+
+    function resetQuiz() {
+      quizAnswers = {};
+      quizSubmitted = false;
+      renderQuiz();
+      document.getElementById('quiz-results').classList.add('hidden');
+    }
+
+    // Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        changeSlide(1);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        changeSlide(-1);
+      }
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      generateDots();
+      setupLightSlider();
+      setupCanvas();
+      renderQuiz();
+      updateNavigation();
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c99a99343071c0e',t:'MTc3MDM3MDU3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

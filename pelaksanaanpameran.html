@@ -1,0 +1,1060 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pelaksanaan Pameran Seni Rupa - Kelas IX</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Source+Sans+Pro:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    .font-display {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+    
+    .font-body {
+      font-family: 'Source Sans Pro', Arial, sans-serif;
+    }
+    
+    .gradient-hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+    
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .timeline-line {
+      background: linear-gradient(180deg, #e94560 0%, #f39422 100%);
+    }
+    
+    .section-fade {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      background-color: #fef3c7;
+      border-color: #f59e0b;
+    }
+    
+    .quiz-option.selected {
+      background-color: #dbeafe;
+      border-color: #3b82f6;
+    }
+    
+    .quiz-option.correct {
+      background-color: #d1fae5;
+      border-color: #10b981;
+    }
+    
+    .quiz-option.incorrect {
+      background-color: #fee2e2;
+      border-color: #ef4444;
+    }
+    
+    .tab-active {
+      background: linear-gradient(135deg, #e94560 0%, #f39422 100%);
+      color: white;
+    }
+    
+    .progress-ring {
+      transition: stroke-dashoffset 0.5s ease;
+    }
+    
+    .image-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      aspect-ratio: 4/3;
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+    
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      padding: 1.5rem 1rem 1rem;
+      color: white;
+    }
+    
+    .checklist-item {
+      transition: all 0.2s ease;
+    }
+    
+    .checklist-item.completed {
+      background-color: #d1fae5;
+    }
+    
+    .checklist-item.completed .check-icon {
+      color: #10b981;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body bg-gray-50 text-gray-800 overflow-auto">
+  <div id="app" class="w-full h-full"><!-- Hero Section -->
+   <header class="gradient-hero text-white py-16 px-6 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+     <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><pattern id="grid" width="40" height="40" patternunits="userSpaceOnUse">
+       <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="0.5" />
+      </pattern> <rect width="100%" height="100%" fill="url(#grid)" />
+     </svg>
+    </div>
+    <div class="max-w-5xl mx-auto text-center relative z-10">
+     <div class="inline-block px-4 py-2 bg-white/20 rounded-full text-sm font-semibold mb-4 backdrop-blur-sm">
+      📚 Subunit 2 | Kelas IX
+     </div>
+     <h1 id="main-title" class="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">Pelaksanaan Pameran Seni Rupa</h1>
+     <p id="subtitle" class="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto">Merayakan Kreativitas Melalui Pameran yang Berkesan</p>
+     <div class="mt-8 flex flex-wrap justify-center gap-4">
+      <div class="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg backdrop-blur-sm">
+       <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20">
+        <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" />
+       </svg><span>8 Jam Pelajaran</span>
+      </div>
+      <div class="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg backdrop-blur-sm">
+       <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20">
+        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+       </svg><span>Kerja Tim</span>
+      </div>
+     </div>
+    </div>
+   </header><!-- Navigation Tabs -->
+   <nav class="sticky top-0 z-50 bg-white shadow-md">
+    <div class="max-w-5xl mx-auto px-4">
+     <div class="flex overflow-x-auto gap-1 py-2" id="nav-tabs"><button onclick="scrollToSection('section-1')" class="nav-tab px-4 py-2 rounded-lg font-semibold whitespace-nowrap text-sm transition-all hover:bg-gray-100"> 📌 Pentingnya Pameran </button> <button onclick="scrollToSection('section-2')" class="nav-tab px-4 py-2 rounded-lg font-semibold whitespace-nowrap text-sm transition-all hover:bg-gray-100"> 📋 Prosedur </button> <button onclick="scrollToSection('section-3')" class="nav-tab px-4 py-2 rounded-lg font-semibold whitespace-nowrap text-sm transition-all hover:bg-gray-100"> 🎨 Galeri Inspirasi </button> <button onclick="scrollToSection('section-4')" class="nav-tab px-4 py-2 rounded-lg font-semibold whitespace-nowrap text-sm transition-all hover:bg-gray-100"> 💡 Alternatif </button> <button onclick="scrollToSection('section-5')" class="nav-tab px-4 py-2 rounded-lg font-semibold whitespace-nowrap text-sm transition-all hover:bg-gray-100"> ✅ Penilaian </button> <button onclick="scrollToSection('section-6')" class="nav-tab px-4 py-2 rounded-lg font-semibold whitespace-nowrap text-sm transition-all hover:bg-gray-100"> 🪞 Refleksi </button> <button onclick="scrollToSection('section-7')" class="nav-tab px-4 py-2 rounded-lg font-semibold whitespace-nowrap text-sm transition-all hover:bg-gray-100"> 📝 Kuis HOTS </button>
+     </div>
+    </div>
+   </nav>
+   <main class="max-w-5xl mx-auto px-4 py-8 space-y-12"><!-- Section 1: Pentingnya Pameran -->
+    <section id="section-1" class="section-fade">
+     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+      <div class="bg-gradient-to-r from-rose-500 to-orange-400 p-6 text-white">
+       <h2 class="font-display text-2xl md:text-3xl font-bold flex items-center gap-3"><span class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">1</span> Mengapa Pelaksanaan Pameran Itu Penting?</h2>
+      </div>
+      <div class="p-6 md:p-8">
+       <div class="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg mb-6">
+        <p class="text-lg font-medium text-amber-800">💡 Pelaksanaan pameran bukan sekadar memajang karya, melainkan sebuah <strong>selebrasi</strong> atau perayaan atas keberhasilan proses belajar siswa.</p>
+       </div>
+       <div class="grid md:grid-cols-2 gap-6 mb-8">
+        <div class="card-hover bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100">
+         <div class="w-14 h-14 bg-blue-500 rounded-xl flex items-center justify-center mb-4">
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+         </div>
+         <h3 class="font-display text-xl font-bold text-blue-900 mb-2">Tujuan Utama</h3>
+         <ul class="space-y-2 text-blue-800">
+          <li class="flex items-start gap-2"><span class="text-blue-500 mt-1">✓</span> Menghargai kerja keras siswa</li>
+          <li class="flex items-start gap-2"><span class="text-blue-500 mt-1">✓</span> Mempublikasikan karya kepada audiens</li>
+          <li class="flex items-start gap-2"><span class="text-blue-500 mt-1">✓</span> Membangun rasa percaya diri</li>
+          <li class="flex items-start gap-2"><span class="text-blue-500 mt-1">✓</span> Mengasah kemampuan presentasi</li>
+         </ul>
+        </div>
+        <div class="card-hover bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border border-green-100">
+         <div class="w-14 h-14 bg-green-500 rounded-xl flex items-center justify-center mb-4">
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+         </div>
+         <h3 class="font-display text-xl font-bold text-green-900 mb-2">Waktu Pelaksanaan</h3>
+         <ul class="space-y-2 text-green-800">
+          <li class="flex items-start gap-2"><span class="text-green-500 mt-1">📅</span> Hari besar nasional (17 Agustus, Kartini)</li>
+          <li class="flex items-start gap-2"><span class="text-green-500 mt-1">🏫</span> Acara internal sekolah</li>
+          <li class="flex items-start gap-2"><span class="text-green-500 mt-1">⏱️</span> Alokasi: 4 × 2 jam pertemuan</li>
+          <li class="flex items-start gap-2"><span class="text-green-500 mt-1">🎓</span> Akhir semester/tahun ajaran</li>
+         </ul>
+        </div>
+       </div><!-- Interactive: Benefits Carousel -->
+       <div class="bg-gray-50 rounded-xl p-6">
+        <h4 class="font-semibold text-lg mb-4">🎯 Manfaat Pameran bagi Siswa</h4>
+        <div id="benefit-carousel" class="relative">
+         <div class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory" id="benefits-container">
+          <div class="snap-center flex-shrink-0 w-64 bg-white p-5 rounded-xl shadow-md border-t-4 border-rose-400">
+           <div class="text-3xl mb-2">
+            🎨
+           </div>
+           <h5 class="font-bold text-gray-900">Apresiasi Seni</h5>
+           <p class="text-sm text-gray-600 mt-2">Meningkatkan kemampuan mengapresiasi karya seni sendiri dan orang lain</p>
+          </div>
+          <div class="snap-center flex-shrink-0 w-64 bg-white p-5 rounded-xl shadow-md border-t-4 border-orange-400">
+           <div class="text-3xl mb-2">
+            🤝
+           </div>
+           <h5 class="font-bold text-gray-900">Kerja Tim</h5>
+           <p class="text-sm text-gray-600 mt-2">Mengembangkan kemampuan berkolaborasi dan berkomunikasi</p>
+          </div>
+          <div class="snap-center flex-shrink-0 w-64 bg-white p-5 rounded-xl shadow-md border-t-4 border-yellow-400">
+           <div class="text-3xl mb-2">
+            💪
+           </div>
+           <h5 class="font-bold text-gray-900">Percaya Diri</h5>
+           <p class="text-sm text-gray-600 mt-2">Membangun keberanian tampil di depan publik</p>
+          </div>
+          <div class="snap-center flex-shrink-0 w-64 bg-white p-5 rounded-xl shadow-md border-t-4 border-green-400">
+           <div class="text-3xl mb-2">
+            📊
+           </div>
+           <h5 class="font-bold text-gray-900">Manajemen</h5>
+           <p class="text-sm text-gray-600 mt-2">Belajar mengorganisir acara dari awal hingga akhir</p>
+          </div>
+          <div class="snap-center flex-shrink-0 w-64 bg-white p-5 rounded-xl shadow-md border-t-4 border-blue-400">
+           <div class="text-3xl mb-2">
+            🌟
+           </div>
+           <h5 class="font-bold text-gray-900">Pengalaman</h5>
+           <p class="text-sm text-gray-600 mt-2">Mendapat pengalaman berharga yang tak terlupakan</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 2: Prosedur Persiapan & Pelaksanaan -->
+    <section id="section-2" class="section-fade">
+     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+      <div class="bg-gradient-to-r from-violet-500 to-purple-500 p-6 text-white">
+       <h2 class="font-display text-2xl md:text-3xl font-bold flex items-center gap-3"><span class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">2</span> Prosedur Persiapan &amp; Pelaksanaan</h2>
+      </div>
+      <div class="p-6 md:p-8">
+       <p class="text-lg text-gray-600 mb-8">Untuk menyukseskan acara, siswa diharapkan terlibat aktif dalam setiap tahapan berikut:</p><!-- Interactive Timeline -->
+       <div class="relative"><!-- Timeline Line -->
+        <div class="absolute left-6 top-0 bottom-0 w-1 timeline-line rounded-full hidden md:block"></div>
+        <div class="space-y-6"><!-- Step 1 -->
+         <div class="relative flex gap-4 md:gap-6">
+          <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-rose-500 to-orange-400 rounded-full flex items-center justify-center text-white font-bold text-lg z-10">
+           1
+          </div>
+          <div class="flex-1 card-hover bg-gradient-to-r from-rose-50 to-orange-50 p-5 rounded-xl border border-rose-100">
+           <h3 class="font-display text-xl font-bold text-rose-900 mb-2">📮 Administrasi &amp; Publikasi</h3>
+           <ul class="space-y-2 text-gray-700">
+            <li class="flex items-start gap-2"><span class="text-rose-500">•</span> Membuat undangan resmi untuk tamu dan orang tua</li>
+            <li class="flex items-start gap-2"><span class="text-rose-500">•</span> Menyusun urutan acara (rundown kegiatan)</li>
+            <li class="flex items-start gap-2"><span class="text-rose-500">•</span> Membuat poster dan publikasi di media sosial</li>
+            <li class="flex items-start gap-2"><span class="text-rose-500">•</span> Menyiapkan buku tamu dan dokumentasi</li>
+           </ul>
+          </div>
+         </div><!-- Step 2 -->
+         <div class="relative flex gap-4 md:gap-6">
+          <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-violet-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg z-10">
+           2
+          </div>
+          <div class="flex-1 card-hover bg-gradient-to-r from-violet-50 to-purple-50 p-5 rounded-xl border border-violet-100">
+           <h3 class="font-display text-xl font-bold text-violet-900 mb-2">👥 Manajemen Tim</h3>
+           <ul class="space-y-2 text-gray-700">
+            <li class="flex items-start gap-2"><span class="text-violet-500">•</span> Menunjuk ketua panitia dan wakil</li>
+            <li class="flex items-start gap-2"><span class="text-violet-500">•</span> Membentuk divisi: dekorasi, konsumsi, dokumentasi, keamanan</li>
+            <li class="flex items-start gap-2"><span class="text-violet-500">•</span> Membuat jadwal piket dan pembagian tugas</li>
+            <li class="flex items-start gap-2"><span class="text-violet-500">•</span> Koordinasi rutin antar divisi</li>
+           </ul>
+          </div>
+         </div><!-- Step 3 -->
+         <div class="relative flex gap-4 md:gap-6">
+          <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-lg z-10">
+           3
+          </div>
+          <div class="flex-1 card-hover bg-gradient-to-r from-blue-50 to-cyan-50 p-5 rounded-xl border border-blue-100">
+           <h3 class="font-display text-xl font-bold text-blue-900 mb-2">🔧 Teknis Lapangan</h3>
+           <ul class="space-y-2 text-gray-700">
+            <li class="flex items-start gap-2"><span class="text-blue-500">•</span> Finishing properti pameran (label karya, frame)</li>
+            <li class="flex items-start gap-2"><span class="text-blue-500">•</span> Penataan dekorasi dan pencahayaan ruangan</li>
+            <li class="flex items-start gap-2"><span class="text-blue-500">•</span> Penyiapan perlengkapan display (panel, meja, easel)</li>
+            <li class="flex items-start gap-2"><span class="text-blue-500">•</span> Pengaturan alur pengunjung</li>
+           </ul>
+          </div>
+         </div><!-- Step 4 -->
+         <div class="relative flex gap-4 md:gap-6">
+          <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-full flex items-center justify-center text-white font-bold text-lg z-10">
+           4
+          </div>
+          <div class="flex-1 card-hover bg-gradient-to-r from-amber-50 to-yellow-50 p-5 rounded-xl border border-amber-100">
+           <h3 class="font-display text-xl font-bold text-amber-900 mb-2">🎭 Gladi Resik (Uji Coba)</h3>
+           <ul class="space-y-2 text-gray-700">
+            <li class="flex items-start gap-2"><span class="text-amber-500">•</span> Simulasi acara dari pembukaan hingga penutupan</li>
+            <li class="flex items-start gap-2"><span class="text-amber-500">•</span> Mengecek kesiapan semua perlengkapan</li>
+            <li class="flex items-start gap-2"><span class="text-amber-500">•</span> Latihan MC dan presenter karya</li>
+            <li class="flex items-start gap-2"><span class="text-amber-500">•</span> Identifikasi dan antisipasi masalah</li>
+           </ul>
+          </div>
+         </div><!-- Step 5 -->
+         <div class="relative flex gap-4 md:gap-6">
+          <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-white font-bold text-lg z-10">
+           5
+          </div>
+          <div class="flex-1 card-hover bg-gradient-to-r from-green-50 to-emerald-50 p-5 rounded-xl border border-green-100">
+           <h3 class="font-display text-xl font-bold text-green-900 mb-2">🎉 Hari Pelaksanaan</h3>
+           <ul class="space-y-2 text-gray-700">
+            <li class="flex items-start gap-2"><span class="text-green-500">•</span> Menjalankan pameran sesuai rundown</li>
+            <li class="flex items-start gap-2"><span class="text-green-500">•</span> Menyambut dan memandu pengunjung</li>
+            <li class="flex items-start gap-2"><span class="text-green-500">•</span> Presentasi karya oleh seniman siswa</li>
+            <li class="flex items-start gap-2"><span class="text-green-500">•</span> Dokumentasi dan closing ceremony</li>
+           </ul>
+          </div>
+         </div>
+        </div>
+       </div><!-- Interactive Checklist -->
+       <div class="mt-8 bg-gray-50 rounded-xl p-6">
+        <h4 class="font-semibold text-lg mb-4">✅ Checklist Persiapan Pameran</h4>
+        <p class="text-sm text-gray-500 mb-4">Klik item untuk menandai sebagai selesai:</p>
+        <div class="grid md:grid-cols-2 gap-3" id="checklist-container">
+         <div class="checklist-item bg-white p-4 rounded-lg border-2 border-gray-200 cursor-pointer flex items-center gap-3" onclick="toggleChecklist(this)">
+          <div class="check-icon w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center text-transparent">
+           ✓
+          </div><span>Undangan sudah disebarkan</span>
+         </div>
+         <div class="checklist-item bg-white p-4 rounded-lg border-2 border-gray-200 cursor-pointer flex items-center gap-3" onclick="toggleChecklist(this)">
+          <div class="check-icon w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center text-transparent">
+           ✓
+          </div><span>Rundown acara final</span>
+         </div>
+         <div class="checklist-item bg-white p-4 rounded-lg border-2 border-gray-200 cursor-pointer flex items-center gap-3" onclick="toggleChecklist(this)">
+          <div class="check-icon w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center text-transparent">
+           ✓
+          </div><span>Semua karya sudah diberi label</span>
+         </div>
+         <div class="checklist-item bg-white p-4 rounded-lg border-2 border-gray-200 cursor-pointer flex items-center gap-3" onclick="toggleChecklist(this)">
+          <div class="check-icon w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center text-transparent">
+           ✓
+          </div><span>Dekorasi ruangan selesai</span>
+         </div>
+         <div class="checklist-item bg-white p-4 rounded-lg border-2 border-gray-200 cursor-pointer flex items-center gap-3" onclick="toggleChecklist(this)">
+          <div class="check-icon w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center text-transparent">
+           ✓
+          </div><span>Tim siap di posisi masing-masing</span>
+         </div>
+         <div class="checklist-item bg-white p-4 rounded-lg border-2 border-gray-200 cursor-pointer flex items-center gap-3" onclick="toggleChecklist(this)">
+          <div class="check-icon w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center text-transparent">
+           ✓
+          </div><span>Gladi resik telah dilakukan</span>
+         </div>
+        </div>
+        <div class="mt-4 text-center"><span class="text-sm text-gray-500">Progress: </span> <span id="checklist-progress" class="font-bold text-green-600">0/6</span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 3: Galeri Inspirasi -->
+    <section id="section-3" class="section-fade">
+     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+      <div class="bg-gradient-to-r from-pink-500 to-rose-500 p-6 text-white">
+       <h2 class="font-display text-2xl md:text-3xl font-bold flex items-center gap-3"><span class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">3</span> Galeri Inspirasi Pameran</h2>
+      </div>
+      <div class="p-6 md:p-8">
+       <p class="text-lg text-gray-600 mb-6">Lihat contoh-contoh pameran seni rupa yang bisa menjadi inspirasi untuk pameranmu:</p>
+       <div class="image-gallery"><!-- Gallery Item 1 -->
+        <div class="gallery-item shadow-lg"><img src="https://images.unsplash.com/photo-1594794312433-05a69a98b7a0?w=600&amp;q=80" alt="Pameran lukisan di galeri" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; this.alt='Gambar tidak tersedia';">
+         <div class="gallery-overlay">
+          <h5 class="font-bold">Pameran Lukisan</h5>
+          <p class="text-sm opacity-90">Penataan karya 2D di dinding galeri</p>
+         </div>
+        </div><!-- Gallery Item 2 -->
+        <div class="gallery-item shadow-lg"><img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=600&amp;q=80" alt="Display karya seni modern" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'; this.alt='Gambar tidak tersedia';">
+         <div class="gallery-overlay">
+          <h5 class="font-bold">Instalasi Seni</h5>
+          <p class="text-sm opacity-90">Karya 3D dengan pencahayaan dramatis</p>
+         </div>
+        </div><!-- Gallery Item 3 -->
+        <div class="gallery-item shadow-lg"><img src="https://images.unsplash.com/photo-1577083552431-6e5fd01988ec?w=600&amp;q=80" alt="Pameran patung" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'; this.alt='Gambar tidak tersedia';">
+         <div class="gallery-overlay">
+          <h5 class="font-bold">Pameran Patung</h5>
+          <p class="text-sm opacity-90">Display karya tiga dimensi</p>
+         </div>
+        </div><!-- Gallery Item 4 -->
+        <div class="gallery-item shadow-lg"><img src="https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=600&amp;q=80" alt="Pengunjung melihat karya seni" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'; this.alt='Gambar tidak tersedia';">
+         <div class="gallery-overlay">
+          <h5 class="font-bold">Interaksi Pengunjung</h5>
+          <p class="text-sm opacity-90">Apresiasi karya oleh audiens</p>
+         </div>
+        </div><!-- Gallery Item 5 -->
+        <div class="gallery-item shadow-lg"><img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&amp;q=80" alt="Karya seni warna-warni" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #fa709a 0%, #fee140 100%)'; this.alt='Gambar tidak tersedia';">
+         <div class="gallery-overlay">
+          <h5 class="font-bold">Karya Abstrak</h5>
+          <p class="text-sm opacity-90">Eksplorasi warna dan bentuk</p>
+         </div>
+        </div><!-- Gallery Item 6 -->
+        <div class="gallery-item shadow-lg"><img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&amp;q=80" alt="Perlengkapan melukis" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)'; this.alt='Gambar tidak tersedia';">
+         <div class="gallery-overlay">
+          <h5 class="font-bold">Proses Berkarya</h5>
+          <p class="text-sm opacity-90">Di balik layar pembuatan karya</p>
+         </div>
+        </div>
+       </div><!-- Tips Display -->
+       <div class="mt-8 bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl p-6">
+        <h4 class="font-display text-xl font-bold text-purple-900 mb-4">💡 Tips Penataan Pameran</h4>
+        <div class="grid md:grid-cols-2 gap-4">
+         <div class="flex items-start gap-3"><span class="text-2xl">🖼️</span>
+          <div>
+           <h5 class="font-semibold">Eye Level</h5>
+           <p class="text-sm text-gray-600">Pasang karya setinggi mata (150-160 cm dari lantai)</p>
+          </div>
+         </div>
+         <div class="flex items-start gap-3"><span class="text-2xl">💡</span>
+          <div>
+           <h5 class="font-semibold">Pencahayaan</h5>
+           <p class="text-sm text-gray-600">Gunakan lampu sorot untuk highlight karya utama</p>
+          </div>
+         </div>
+         <div class="flex items-start gap-3"><span class="text-2xl">📏</span>
+          <div>
+           <h5 class="font-semibold">Jarak Antar Karya</h5>
+           <p class="text-sm text-gray-600">Beri jarak 10-15 cm agar tidak terlihat penuh</p>
+          </div>
+         </div>
+         <div class="flex items-start gap-3"><span class="text-2xl">🏷️</span>
+          <div>
+           <h5 class="font-semibold">Label Informatif</h5>
+           <p class="text-sm text-gray-600">Cantumkan judul, nama seniman, media, dan tahun</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 4: Solusi Alternatif -->
+    <section id="section-4" class="section-fade">
+     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+      <div class="bg-gradient-to-r from-cyan-500 to-blue-500 p-6 text-white">
+       <h2 class="font-display text-2xl md:text-3xl font-bold flex items-center gap-3"><span class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">4</span> Solusi Alternatif</h2>
+      </div>
+      <div class="p-6 md:p-8">
+       <div class="bg-cyan-50 border-l-4 border-cyan-400 p-4 rounded-r-lg mb-6">
+        <p class="text-lg text-cyan-800">🤔 <strong>Jika kondisi tidak memungkinkan</strong> untuk mengadakan pameran secara langsung, siswa tetap harus memiliki wadah untuk menunjukkan karyanya.</p>
+       </div>
+       <div class="grid md:grid-cols-2 gap-6"><!-- Option 1 -->
+        <div class="card-hover bg-gradient-to-br from-indigo-50 to-blue-50 p-6 rounded-xl border border-indigo-100">
+         <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 bg-indigo-500 rounded-xl flex items-center justify-center">
+           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+           </svg>
+          </div>
+          <h3 class="font-display text-xl font-bold text-indigo-900">Buletin Karya</h3>
+         </div>
+         <p class="text-gray-600 mb-4">Kumpulan karya siswa dalam bentuk majalah atau booklet yang bisa dicetak atau digital.</p>
+         <ul class="space-y-2 text-sm text-gray-600">
+          <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Mudah didistribusikan</li>
+          <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Bisa disimpan sebagai kenangan</li>
+          <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Biaya relatif terjangkau</li>
+         </ul>
+        </div><!-- Option 2 -->
+        <div class="card-hover bg-gradient-to-br from-emerald-50 to-green-50 p-6 rounded-xl border border-emerald-100">
+         <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center">
+           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+           </svg>
+          </div>
+          <h3 class="font-display text-xl font-bold text-emerald-900">Majalah Dinding</h3>
+         </div>
+         <p class="text-gray-600 mb-4">Pameran permanen di area sekolah yang bisa dinikmati seluruh warga sekolah.</p>
+         <ul class="space-y-2 text-sm text-gray-600">
+          <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Terlihat lebih lama</li>
+          <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Memperindah sekolah</li>
+          <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Bisa di-update berkala</li>
+         </ul>
+        </div><!-- Option 3 -->
+        <div class="card-hover bg-gradient-to-br from-violet-50 to-purple-50 p-6 rounded-xl border border-violet-100">
+         <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 bg-violet-500 rounded-xl flex items-center justify-center">
+           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+           </svg>
+          </div>
+          <h3 class="font-display text-xl font-bold text-violet-900">Pameran Virtual</h3>
+         </div>
+         <p class="text-gray-600 mb-4">Galeri online menggunakan website, media sosial, atau platform digital.</p>
+         <ul class="space-y-2 text-sm text-gray-600">
+          <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Jangkauan lebih luas</li>
+          <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Bisa diakses kapan saja</li>
+          <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Ramah lingkungan</li>
+         </ul>
+        </div><!-- Option 4 -->
+        <div class="card-hover bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-xl border border-amber-100">
+         <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center">
+           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+           </svg>
+          </div>
+          <h3 class="font-display text-xl font-bold text-amber-900">Video Dokumentasi</h3>
+         </div>
+         <p class="text-gray-600 mb-4">Rekaman video presentasi karya yang bisa dibagikan ke orang tua dan masyarakat.</p>
+         <ul class="space-y-2 text-sm text-gray-600">
+          <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Lebih personal</li>
+          <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Menampilkan proses</li>
+          <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Bisa di-share mudah</li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 5: Indikator Penilaian -->
+    <section id="section-5" class="section-fade">
+     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+      <div class="bg-gradient-to-r from-emerald-500 to-teal-500 p-6 text-white">
+       <h2 class="font-display text-2xl md:text-3xl font-bold flex items-center gap-3"><span class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">5</span> Indikator Penilaian</h2>
+      </div>
+      <div class="p-6 md:p-8">
+       <div class="bg-emerald-50 border-l-4 border-emerald-400 p-4 rounded-r-lg mb-6">
+        <p class="text-lg text-emerald-800">📊 Dalam kegiatan ini, aspek yang dinilai <strong>bukan hanya hasil akhir</strong>, melainkan <strong>proses kolaborasi</strong>.</p>
+       </div><!-- Rating Cards -->
+       <div class="space-y-4"><!-- Criteria 1 -->
+        <div class="bg-white border-2 border-gray-100 rounded-xl p-5 hover:border-emerald-200 transition-colors">
+         <div class="flex flex-col md:flex-row md:items-center gap-4">
+          <div class="flex-shrink-0">
+           <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center"><span class="text-3xl">🤝</span>
+           </div>
+          </div>
+          <div class="flex-1">
+           <h3 class="font-display text-xl font-bold text-gray-900 mb-1">Kerja Sama</h3>
+           <p class="text-gray-600 mb-3">Kemampuan berkolaborasi dengan anggota tim</p>
+           <div class="flex flex-wrap gap-2"><span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">Kurang: Pasif</span> <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium">Cukup: Berkontribusi sedikit</span> <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">Baik: Aktif berkontribusi</span> <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Sangat Baik: Kolaborasi maksimal</span>
+           </div>
+          </div>
+         </div>
+        </div><!-- Criteria 2 -->
+        <div class="bg-white border-2 border-gray-100 rounded-xl p-5 hover:border-emerald-200 transition-colors">
+         <div class="flex flex-col md:flex-row md:items-center gap-4">
+          <div class="flex-shrink-0">
+           <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center"><span class="text-3xl">💡</span>
+           </div>
+          </div>
+          <div class="flex-1">
+           <h3 class="font-display text-xl font-bold text-gray-900 mb-1">Keaktifan &amp; Solusi</h3>
+           <p class="text-gray-600 mb-3">Inisiatif dan kemampuan memecahkan masalah</p>
+           <div class="flex flex-wrap gap-2"><span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">Kurang: Menunggu arahan</span> <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium">Cukup: Kadang berinisiatif</span> <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">Baik: Sering berinisiatif</span> <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Sangat Baik: Cepat tanggap</span>
+           </div>
+          </div>
+         </div>
+        </div><!-- Criteria 3 -->
+        <div class="bg-white border-2 border-gray-100 rounded-xl p-5 hover:border-emerald-200 transition-colors">
+         <div class="flex flex-col md:flex-row md:items-center gap-4">
+          <div class="flex-shrink-0">
+           <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl flex items-center justify-center"><span class="text-3xl">⭐</span>
+           </div>
+          </div>
+          <div class="flex-1">
+           <h3 class="font-display text-xl font-bold text-gray-900 mb-1">Kualitas Acara</h3>
+           <p class="text-gray-600 mb-3">Kesesuaian pelaksanaan dengan konsep yang direncanakan</p>
+           <div class="flex flex-wrap gap-2"><span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">Kurang: Banyak kekurangan</span> <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium">Cukup: Beberapa detail terlewat</span> <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">Baik: Hampir sesuai rencana</span> <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Sangat Baik: Sesuai konsep sempurna</span>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div><!-- Self Assessment Tool -->
+       <div class="mt-8 bg-gradient-to-r from-teal-50 to-emerald-50 rounded-xl p-6">
+        <h4 class="font-display text-xl font-bold text-teal-900 mb-4">🎯 Penilaian Diri Sendiri</h4>
+        <p class="text-sm text-gray-600 mb-4">Geser slider untuk menilai dirimu sendiri:</p>
+        <div class="space-y-6">
+         <div><label class="block text-sm font-medium text-gray-700 mb-2">Kerja Sama Tim</label> <input type="range" min="1" max="4" value="3" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" id="self-collab">
+          <div class="flex justify-between text-xs text-gray-500 mt-1"><span>Kurang</span> <span>Cukup</span> <span>Baik</span> <span>Sangat Baik</span>
+          </div>
+         </div>
+         <div><label class="block text-sm font-medium text-gray-700 mb-2">Keaktifan &amp; Inisiatif</label> <input type="range" min="1" max="4" value="3" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" id="self-initiative">
+          <div class="flex justify-between text-xs text-gray-500 mt-1"><span>Kurang</span> <span>Cukup</span> <span>Baik</span> <span>Sangat Baik</span>
+          </div>
+         </div>
+         <div><label class="block text-sm font-medium text-gray-700 mb-2">Kontribusi pada Kualitas</label> <input type="range" min="1" max="4" value="3" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" id="self-quality">
+          <div class="flex justify-between text-xs text-gray-500 mt-1"><span>Kurang</span> <span>Cukup</span> <span>Baik</span> <span>Sangat Baik</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 6: Refleksi -->
+    <section id="section-6" class="section-fade">
+     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+      <div class="bg-gradient-to-r from-amber-500 to-orange-500 p-6 text-white">
+       <h2 class="font-display text-2xl md:text-3xl font-bold flex items-center gap-3"><span class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">6</span> Sesi Refleksi</h2>
+      </div>
+      <div class="p-6 md:p-8">
+       <p class="text-lg text-gray-600 mb-6">Setelah pameran selesai, penting untuk mengevaluasi diri dengan pertanyaan berikut:</p><!-- Reflection Questions -->
+       <div class="space-y-4 mb-8">
+        <div class="bg-gradient-to-r from-rose-50 to-pink-50 p-5 rounded-xl border border-rose-100">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-rose-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+           1
+          </div>
+          <div>
+           <h4 class="font-display text-lg font-bold text-rose-900 mb-2">Apakah kita sudah bekerja sama dengan maksimal?</h4>
+           <p class="text-gray-600 text-sm">Evaluasi bagaimana tim berkolaborasi, apakah ada yang mendominasi atau justru pasif?</p>
+          </div>
+         </div>
+        </div>
+        <div class="bg-gradient-to-r from-violet-50 to-purple-50 p-5 rounded-xl border border-violet-100">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-violet-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+           2
+          </div>
+          <div>
+           <h4 class="font-display text-lg font-bold text-violet-900 mb-2">Bagaimana cara kita mengatasi kendala yang muncul tiba-tiba?</h4>
+           <p class="text-gray-600 text-sm">Ingat masalah apa saja yang terjadi dan solusi yang diambil. Apakah sudah tepat?</p>
+          </div>
+         </div>
+        </div>
+        <div class="bg-gradient-to-r from-emerald-50 to-teal-50 p-5 rounded-xl border border-emerald-100">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+           3
+          </div>
+          <div>
+           <h4 class="font-display text-lg font-bold text-emerald-900 mb-2">Apa yang perlu diperbaiki untuk pameran atau proyek berikutnya?</h4>
+           <p class="text-gray-600 text-sm">Catat pembelajaran penting agar tidak mengulangi kesalahan yang sama.</p>
+          </div>
+         </div>
+        </div>
+       </div><!-- Interactive Reflection Journal -->
+       <div class="bg-gray-50 rounded-xl p-6">
+        <h4 class="font-display text-xl font-bold text-gray-900 mb-4">📔 Jurnal Refleksi Pribadi</h4>
+        <p class="text-sm text-gray-500 mb-4">Tuliskan refleksimu di sini (tidak akan disimpan - hanya untuk latihan):</p>
+        <div class="space-y-4">
+         <div><label class="block text-sm font-medium text-gray-700 mb-2">Apa yang paling membanggakan dari pameran ini?</label> <textarea class="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-amber-400 focus:ring-0 resize-none" rows="2" placeholder="Tuliskan jawabanmu..."></textarea>
+         </div>
+         <div><label class="block text-sm font-medium text-gray-700 mb-2">Tantangan terbesar yang dihadapi?</label> <textarea class="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-amber-400 focus:ring-0 resize-none" rows="2" placeholder="Tuliskan jawabanmu..."></textarea>
+         </div>
+         <div><label class="block text-sm font-medium text-gray-700 mb-2">Satu hal yang akan kamu lakukan berbeda?</label> <textarea class="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-amber-400 focus:ring-0 resize-none" rows="2" placeholder="Tuliskan jawabanmu..."></textarea>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 7: Quiz HOTS -->
+    <section id="section-7" class="section-fade">
+     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+      <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white">
+       <h2 class="font-display text-2xl md:text-3xl font-bold flex items-center gap-3"><span class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">7</span> Kuis HOTS - Uji Pemahamanmu!</h2>
+       <p class="text-indigo-100 mt-2">10 Soal Higher Order Thinking Skills</p>
+      </div>
+      <div class="p-6 md:p-8"><!-- Progress Bar -->
+       <div class="mb-6">
+        <div class="flex justify-between items-center mb-2"><span class="text-sm font-medium text-gray-600">Progress</span> <span id="quiz-progress-text" class="text-sm font-bold text-indigo-600">0/10</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-3">
+         <div id="quiz-progress-bar" class="bg-gradient-to-r from-indigo-500 to-purple-500 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+       </div><!-- Quiz Container -->
+       <div id="quiz-container"><!-- Questions will be rendered here by JavaScript -->
+       </div><!-- Quiz Results -->
+       <div id="quiz-results" class="hidden">
+        <div class="text-center py-8">
+         <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center"><span id="result-emoji" class="text-5xl">🎉</span>
+         </div>
+         <h3 class="font-display text-2xl font-bold text-gray-900 mb-2">Hasil Kuis</h3>
+         <p class="text-4xl font-bold text-indigo-600 mb-2"><span id="final-score">0</span>/10</p>
+         <p id="result-message" class="text-gray-600 mb-6">Pesan hasil</p><button onclick="resetQuiz()" class="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold rounded-lg hover:shadow-lg transition-all"> Ulangi Kuis </button>
+        </div>
+       </div><!-- Navigation Buttons -->
+       <div id="quiz-nav" class="flex justify-between items-center mt-6 pt-6 border-t border-gray-200"><button id="prev-btn" onclick="prevQuestion()" class="px-5 py-2 bg-gray-100 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled> ← Sebelumnya </button> <span id="question-number" class="text-sm text-gray-500">Soal 1 dari 10</span> <button id="next-btn" onclick="nextQuestion()" class="px-5 py-2 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 transition-colors"> Selanjutnya → </button>
+       </div>
+      </div>
+     </div>
+    </section>
+   </main><!-- Footer -->
+   <footer class="bg-gray-900 text-white py-8 px-6 mt-12">
+    <div class="max-w-5xl mx-auto text-center">
+     <p class="text-gray-400 text-sm">📚 Materi Pembelajaran Seni Budaya - Kelas IX<br>
+       Pelaksanaan Pameran Seni Rupa</p>
+     <p class="text-gray-500 text-xs mt-4">© 2024 Media Pembelajaran Interaktif</p>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Pelaksanaan Pameran Seni Rupa',
+      subtitle: 'Merayakan Kreativitas Melalui Pameran yang Berkesan',
+      primary_color: '#e94560',
+      secondary_color: '#16213e',
+      text_color: '#1f2937'
+    };
+
+    let config = { ...defaultConfig };
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          
+          // Update main title
+          const mainTitle = document.getElementById('main-title');
+          if (mainTitle) {
+            mainTitle.textContent = config.main_title || defaultConfig.main_title;
+          }
+          
+          // Update subtitle
+          const subtitle = document.getElementById('subtitle');
+          if (subtitle) {
+            subtitle.textContent = config.subtitle || defaultConfig.subtitle;
+          }
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['main_title', config.main_title || defaultConfig.main_title],
+          ['subtitle', config.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
+
+    // Smooth scroll to section
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // Checklist functionality
+    function toggleChecklist(element) {
+      element.classList.toggle('completed');
+      const checkIcon = element.querySelector('.check-icon');
+      if (element.classList.contains('completed')) {
+        checkIcon.style.color = '#10b981';
+        checkIcon.style.borderColor = '#10b981';
+        element.style.borderColor = '#10b981';
+      } else {
+        checkIcon.style.color = 'transparent';
+        checkIcon.style.borderColor = '#d1d5db';
+        element.style.borderColor = '#e5e7eb';
+      }
+      updateChecklistProgress();
+    }
+
+    function updateChecklistProgress() {
+      const items = document.querySelectorAll('.checklist-item');
+      const completed = document.querySelectorAll('.checklist-item.completed');
+      document.getElementById('checklist-progress').textContent = `${completed.length}/${items.length}`;
+    }
+
+    // Quiz Data - HOTS Questions
+    const quizData = [
+      {
+        question: "Sebuah sekolah ingin mengadakan pameran seni rupa, tetapi ruang aula sedang direnovasi. Tim panitia berdebat apakah harus menunda acara atau mencari alternatif. Keputusan manakah yang paling TEPAT berdasarkan prinsip manajemen pameran?",
+        options: [
+          "Menunda pameran hingga renovasi selesai karena kualitas ruangan adalah yang utama",
+          "Mengadakan pameran virtual atau membuat majalah dinding sebagai solusi alternatif yang tetap memfasilitasi apresiasi karya",
+          "Memaksa menggunakan ruang aula yang sedang direnovasi agar jadwal tidak berubah",
+          "Membatalkan pameran dan menggantinya dengan tugas individu"
+        ],
+        correct: 1,
+        explanation: "Prinsip pameran adalah memberikan wadah bagi siswa menampilkan karya. Jika ada kendala, harus dicari solusi alternatif seperti pameran virtual atau majalah dinding, bukan membatalkan kesempatan siswa."
+      },
+      {
+        question: "Pada hari-H pameran, terjadi pemadaman listrik mendadak saat acara pembukaan berlangsung. Sebagai ketua panitia, tindakan PRIORITAS pertama yang harus dilakukan adalah...",
+        options: [
+          "Segera membubarkan pengunjung untuk keamanan",
+          "Menghubungi PLN dan menunggu listrik menyala",
+          "Menenangkan pengunjung, mengaktifkan pencahayaan darurat, dan melanjutkan acara dengan penyesuaian",
+          "Menunda acara pembukaan hingga listrik pulih"
+        ],
+        correct: 2,
+        explanation: "Kemampuan problem solving dan ketenangan adalah kunci. Ketua panitia harus cepat tanggap dengan solusi darurat sambil tetap menjaga kenyamanan pengunjung."
+      },
+      {
+        question: "Dalam penilaian pameran, aspek 'Kerja Sama' mendapat bobot tinggi. Manakah BUKTI yang paling valid untuk menunjukkan kerja sama tim yang sangat baik?",
+        options: [
+          "Semua anggota hadir di setiap rapat persiapan",
+          "Ketua panitia mengerjakan semua tugas sendiri dengan hasil sempurna",
+          "Setiap divisi menyelesaikan tugasnya sesuai deadline dan saling membantu saat ada divisi yang kesulitan",
+          "Tidak ada konflik sama sekali selama persiapan"
+        ],
+        correct: 2,
+        explanation: "Kerja sama yang baik bukan hanya hadir atau tanpa konflik, tetapi ditunjukkan melalui penyelesaian tugas tepat waktu dan kesediaan saling membantu antar divisi."
+      },
+      {
+        question: "Seorang siswa menolak karyanya dipamerkan karena merasa karyanya tidak sebagus teman-temannya. Bagaimana respons yang paling TEPAT dari perspektif tujuan pembelajaran pameran?",
+        options: [
+          "Memaksa siswa tersebut untuk tetap berpartisipasi",
+          "Menyetujui keputusannya dan tidak memamerkan karyanya",
+          "Memberikan pemahaman bahwa pameran adalah selebrasi proses belajar, bukan kompetisi, dan setiap karya memiliki nilai unik",
+          "Meminta siswa tersebut membuat karya baru yang lebih baik"
+        ],
+        correct: 2,
+        explanation: "Tujuan utama pameran adalah menghargai proses belajar dan membangun kepercayaan diri, bukan kompetisi. Siswa perlu memahami bahwa setiap karya adalah bukti pembelajaran yang berharga."
+      },
+      {
+        question: "Tim dokumentasi ingin mengunggah seluruh foto karya siswa ke media sosial sekolah. Pertimbangan ETIKA apa yang harus diperhatikan sebelum publikasi?",
+        options: [
+          "Kualitas foto harus profesional agar sekolah terlihat bagus",
+          "Izin dari siswa/wali murid untuk publikasi karya, serta pencantuman kredit yang benar",
+          "Hanya karya terbaik yang boleh diunggah",
+          "Waktu posting harus saat jam ramai media sosial"
+        ],
+        correct: 1,
+        explanation: "Publikasi karya siswa menyangkut hak cipta dan privasi. Etika mengharuskan adanya izin dari pihak terkait dan pengakuan kredit yang benar kepada pembuat karya."
+      },
+      {
+        question: "Analisis kasus: Pameran A menggunakan konsep 'gallery walk' dengan label lengkap dan pemandu, sementara Pameran B hanya memajang karya tanpa informasi pendukung. Dari perspektif EDUKASI, apa perbedaan dampak kedua pameran tersebut?",
+        options: [
+          "Tidak ada perbedaan karena keduanya sama-sama memajang karya",
+          "Pameran A lebih efektif karena pengunjung mendapat konteks dan pemahaman lebih dalam tentang karya",
+          "Pameran B lebih baik karena memberi kebebasan interpretasi kepada pengunjung",
+          "Pameran A terlalu rumit dan mengurangi pengalaman menikmati karya"
+        ],
+        correct: 1,
+        explanation: "Pameran yang edukatif memberikan informasi kontekstual sehingga pengunjung tidak hanya melihat, tetapi juga memahami proses kreatif dan makna di balik karya."
+      },
+      {
+        question: "Gladi resik menunjukkan bahwa waktu acara melebihi jadwal 30 menit. Sebagai koordinator acara, evaluasi dan solusi yang paling EFEKTIF adalah...",
+        options: [
+          "Membiarkan saja karena sudah terlanjur direncanakan",
+          "Menganalisis bagian mana yang memakan waktu lebih lama, lalu memangkas atau menyesuaikan durasi per sesi",
+          "Memajukan waktu mulai acara 30 menit lebih awal",
+          "Menghilangkan sesi penutupan untuk menghemat waktu"
+        ],
+        correct: 1,
+        explanation: "Gladi resik berfungsi untuk identifikasi masalah. Solusi efektif adalah menganalisis penyebab keterlambatan dan melakukan penyesuaian proporsional, bukan menghilangkan bagian penting."
+      },
+      {
+        question: "Dalam konteks pameran sekolah, mengapa KOLABORASI antar divisi lebih penting daripada kerja individual yang sempurna?",
+        options: [
+          "Karena kolaborasi lebih mudah daripada kerja individual",
+          "Karena tidak semua siswa memiliki kemampuan yang sama",
+          "Karena pameran adalah proyek kompleks yang membutuhkan sinergi berbagai keahlian, dan keberhasilan satu divisi bergantung pada divisi lain",
+          "Karena guru lebih mudah menilai kerja kelompok"
+        ],
+        correct: 2,
+        explanation: "Pameran adalah sistem yang saling terhubung. Dokumentasi butuh karya yang sudah dipajang, acara butuh dekorasi yang siap, dll. Tanpa kolaborasi, satu kegagalan bisa mengganggu keseluruhan."
+      },
+      {
+        question: "Setelah pameran berakhir, tim melakukan refleksi dan menemukan bahwa banyak pengunjung kesulitan menemukan karya tertentu. REKOMENDASI perbaikan yang paling tepat untuk pameran berikutnya adalah...",
+        options: [
+          "Mengurangi jumlah karya yang dipamerkan",
+          "Membuat sistem wayfinding yang lebih baik: denah, signage, pengelompokan karya per kategori, dan panduan pengunjung",
+          "Memperluas ruang pameran",
+          "Menyediakan lebih banyak pemandu"
+        ],
+        correct: 1,
+        explanation: "Masalah navigasi pengunjung diselesaikan dengan sistem wayfinding yang komprehensif, bukan hanya menambah pemandu atau mengubah jumlah karya."
+      },
+      {
+        question: "Skenario: Budget pameran terbatas, tetapi konsep awal membutuhkan biaya besar untuk dekorasi mewah. Prinsip KREATIVITAS dalam manajemen pameran mengajarkan kita untuk...",
+        options: [
+          "Menurunkan standar konsep agar sesuai budget",
+          "Mencari sponsor untuk menutupi kekurangan dana",
+          "Mengeksplorasi alternatif material yang lebih murah namun tetap estetik, atau mengubah konsep menjadi lebih simpel tapi berkesan",
+          "Membatalkan dekorasi dan fokus pada karya saja"
+        ],
+        correct: 2,
+        explanation: "Keterbatasan budget seharusnya memicu kreativitas, bukan menurunkan kualitas. Banyak material sederhana bisa diolah menjadi dekorasi menarik dengan ide kreatif."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+    let quizCompleted = false;
+
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      const q = quizData[currentQuestion];
+      
+      let optionsHtml = q.options.map((opt, idx) => {
+        let stateClass = '';
+        if (userAnswers[currentQuestion] !== null) {
+          if (idx === q.correct) {
+            stateClass = 'correct';
+          } else if (idx === userAnswers[currentQuestion] && idx !== q.correct) {
+            stateClass = 'incorrect';
+          }
+        } else if (userAnswers[currentQuestion] === idx) {
+          stateClass = 'selected';
+        }
+        
+        const disabled = userAnswers[currentQuestion] !== null ? 'pointer-events-none' : '';
+        
+        return `
+          <div class="quiz-option ${stateClass} ${disabled} p-4 border-2 border-gray-200 rounded-xl cursor-pointer mb-3 transition-all" onclick="selectAnswer(${idx})">
+            <div class="flex items-start gap-3">
+              <span class="w-8 h-8 flex-shrink-0 rounded-full bg-gray-100 flex items-center justify-center font-bold text-gray-600">${String.fromCharCode(65 + idx)}</span>
+              <p class="text-gray-700 pt-1">${opt}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      let explanationHtml = '';
+      if (userAnswers[currentQuestion] !== null) {
+        const isCorrect = userAnswers[currentQuestion] === q.correct;
+        explanationHtml = `
+          <div class="mt-4 p-4 rounded-xl ${isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}">
+            <p class="font-semibold ${isCorrect ? 'text-green-800' : 'text-red-800'} mb-2">
+              ${isCorrect ? '✅ Benar!' : '❌ Kurang Tepat'}
+            </p>
+            <p class="text-gray-700 text-sm">${q.explanation}</p>
+          </div>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-5 rounded-xl mb-6">
+          <span class="text-xs font-semibold text-indigo-600 uppercase tracking-wide">Soal ${currentQuestion + 1}</span>
+          <h3 class="font-display text-lg font-bold text-gray-900 mt-2">${q.question}</h3>
+        </div>
+        <div class="space-y-0">
+          ${optionsHtml}
+        </div>
+        ${explanationHtml}
+      `;
+
+      updateQuizProgress();
+      updateNavButtons();
+    }
+
+    function selectAnswer(index) {
+      if (userAnswers[currentQuestion] !== null) return;
+      
+      userAnswers[currentQuestion] = index;
+      renderQuiz();
+    }
+
+    function updateQuizProgress() {
+      const answered = userAnswers.filter(a => a !== null).length;
+      const percentage = (answered / quizData.length) * 100;
+      
+      document.getElementById('quiz-progress-text').textContent = `${answered}/${quizData.length}`;
+      document.getElementById('quiz-progress-bar').style.width = `${percentage}%`;
+      document.getElementById('question-number').textContent = `Soal ${currentQuestion + 1} dari ${quizData.length}`;
+    }
+
+    function updateNavButtons() {
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      
+      prevBtn.disabled = currentQuestion === 0;
+      
+      if (currentQuestion === quizData.length - 1) {
+        const allAnswered = userAnswers.every(a => a !== null);
+        nextBtn.textContent = allAnswered ? 'Lihat Hasil' : 'Selanjutnya →';
+        nextBtn.onclick = allAnswered ? showResults : nextQuestion;
+      } else {
+        nextBtn.textContent = 'Selanjutnya →';
+        nextBtn.onclick = nextQuestion;
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuiz();
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        renderQuiz();
+      }
+    }
+
+    function showResults() {
+      const score = userAnswers.reduce((acc, answer, idx) => {
+        return acc + (answer === quizData[idx].correct ? 1 : 0);
+      }, 0);
+      
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-nav').classList.add('hidden');
+      document.getElementById('quiz-results').classList.remove('hidden');
+      
+      document.getElementById('final-score').textContent = score;
+      
+      let emoji, message;
+      if (score >= 9) {
+        emoji = '🏆';
+        message = 'Luar biasa! Kamu menguasai materi dengan sangat baik!';
+      } else if (score >= 7) {
+        emoji = '🎉';
+        message = 'Bagus sekali! Pemahamanmu sudah sangat baik!';
+      } else if (score >= 5) {
+        emoji = '👍';
+        message = 'Cukup baik! Terus belajar untuk hasil lebih baik!';
+      } else {
+        emoji = '📚';
+        message = 'Ayo pelajari lagi materinya dan coba lagi!';
+      }
+      
+      document.getElementById('result-emoji').textContent = emoji;
+      document.getElementById('result-message').textContent = message;
+      quizCompleted = true;
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      userAnswers = new Array(quizData.length).fill(null);
+      quizCompleted = false;
+      
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('quiz-nav').classList.remove('hidden');
+      document.getElementById('quiz-results').classList.add('hidden');
+      
+      renderQuiz();
+    }
+
+    // Initialize quiz on page load
+    renderQuiz();
+
+    // Intersection Observer for section animations
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.section-fade').forEach(section => {
+      section.style.animationPlayState = 'paused';
+      sectionObserver.observe(section);
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c9b34a12580959b',t:'MTc3MDM4Njc2MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

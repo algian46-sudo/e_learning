@@ -1,0 +1,1354 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pertumbuhan dan Perkembangan Manusia</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Fredoka+One&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Nunito', sans-serif;
+    }
+    
+    .title-font {
+      font-family: 'Fredoka One', cursive;
+    }
+    
+    .slide {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    .slide.active {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .pulse-animation {
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .progress-bar {
+      transition: width 0.3s ease;
+    }
+    
+    .nav-dot {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-dot.active {
+      transform: scale(1.3);
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    
+    .timeline-item {
+      position: relative;
+      padding-left: 30px;
+    }
+    
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, #6366f1, #8b5cf6);
+    }
+    
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      left: -6px;
+      top: 5px;
+      width: 15px;
+      height: 15px;
+      background: #6366f1;
+      border-radius: 50%;
+      border: 3px solid white;
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .quiz-option:hover {
+      transform: scale(1.02);
+    }
+    
+    .quiz-option.selected {
+      border-color: #6366f1;
+      background: #eef2ff;
+    }
+    
+    .quiz-option.correct {
+      border-color: #10b981;
+      background: #d1fae5;
+    }
+    
+    .quiz-option.incorrect {
+      border-color: #ef4444;
+      background: #fee2e2;
+    }
+    
+    .image-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    
+    .image-container img {
+      transition: transform 0.3s ease;
+    }
+    
+    .image-container:hover img {
+      transform: scale(1.05);
+    }
+    
+    .fact-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .interactive-diagram {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .interactive-diagram:hover {
+      filter: brightness(1.1);
+    }
+    
+    .tooltip {
+      position: absolute;
+      background: #1f2937;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 100;
+    }
+    
+    .has-tooltip:hover .tooltip {
+      opacity: 1;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+  <div id="app" class="h-full flex flex-col overflow-auto"><!-- Header Navigation -->
+   <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm px-4 py-3">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center"><span class="text-white text-xl">📚</span>
+      </div>
+      <div>
+       <h1 id="header-title" class="title-font text-lg text-indigo-900">Pertumbuhan &amp; Perkembangan</h1>
+       <p class="text-xs text-gray-500">Kelas IPA</p>
+      </div>
+     </div>
+     <div class="flex items-center gap-2"><span id="slide-counter" class="text-sm font-semibold text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full">1/14</span>
+     </div>
+    </div><!-- Progress Bar -->
+    <div class="max-w-6xl mx-auto mt-2">
+     <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+      <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" style="width: 7.14%"></div>
+     </div>
+    </div>
+   </header><!-- Main Content -->
+   <main class="flex-1 px-4 py-6">
+    <div class="max-w-5xl mx-auto"><!-- Slide 1: Judul -->
+     <section id="slide-1" class="slide active">
+      <div class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-3xl p-8 md:p-12 text-white text-center relative overflow-hidden min-h-96 flex flex-col justify-center">
+       <div class="absolute inset-0 opacity-20">
+        <div class="absolute top-10 left-10 w-20 h-20 bg-white rounded-full float-animation"></div>
+        <div class="absolute bottom-20 right-20 w-16 h-16 bg-white rounded-full float-animation" style="animation-delay: 1s"></div>
+        <div class="absolute top-1/2 left-1/4 w-12 h-12 bg-white rounded-full float-animation" style="animation-delay: 2s"></div>
+       </div>
+       <div class="relative z-10">
+        <div class="text-6xl mb-6 pulse-animation">
+         🧬
+        </div>
+        <p class="text-indigo-200 text-lg mb-2">BAB 1</p>
+        <h1 id="main-title" class="title-font text-3xl md:text-5xl mb-4">Pertumbuhan dan Perkembangan Manusia</h1>
+        <p class="text-xl text-indigo-100 mb-6">Memahami Siklus Hidup dan Transformasi Diri dari Bayi hingga Dewasa</p>
+        <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full"><span class="text-2xl">👨‍🏫</span> <span id="teacher-name" class="font-semibold">Guru IPA</span>
+        </div>
+       </div>
+      </div>
+      <div class="mt-6 grid grid-cols-3 gap-4">
+       <div class="bg-white rounded-2xl p-4 text-center card-hover shadow-md"><span class="text-3xl">📖</span>
+        <p class="text-sm font-semibold text-gray-700 mt-2">12 Materi</p>
+       </div>
+       <div class="bg-white rounded-2xl p-4 text-center card-hover shadow-md"><span class="text-3xl">🎯</span>
+        <p class="text-sm font-semibold text-gray-700 mt-2">Aktivitas Interaktif</p>
+       </div>
+       <div class="bg-white rounded-2xl p-4 text-center card-hover shadow-md"><span class="text-3xl">📝</span>
+        <p class="text-sm font-semibold text-gray-700 mt-2">10 Soal HOTS</p>
+       </div>
+      </div>
+     </section><!-- Slide 2: Apa yang Terjadi pada Tubuh Kita? -->
+     <section id="slide-2" class="slide">
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg">
+       <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center"><span class="text-2xl">🤔</span>
+        </div>
+        <h2 class="title-font text-2xl md:text-3xl text-gray-800">Apa yang Terjadi pada Tubuh Kita?</h2>
+       </div>
+       <div class="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-2xl p-6 mb-6">
+        <p class="text-lg text-gray-700 italic">"Pernahkah kalian bertanya-tanya mengapa tubuh berubah?"</p>
+       </div>
+       <h3 class="font-bold text-gray-700 mb-4 flex items-center gap-2"><span class="text-xl">📋</span> Tanda-tanda Umum Perubahan:</h3>
+       <div class="grid md:grid-cols-2 gap-4 mb-6">
+        <div class="bg-blue-50 rounded-xl p-4 flex items-center gap-4 card-hover">
+         <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-3xl">
+          📏
+         </div>
+         <div>
+          <p class="font-semibold text-blue-800">Badan Bertambah Tinggi</p>
+          <p class="text-sm text-gray-600">Tulang terus tumbuh memanjang</p>
+         </div>
+        </div>
+        <div class="bg-purple-50 rounded-xl p-4 flex items-center gap-4 card-hover">
+         <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center text-3xl">
+          🎤
+         </div>
+         <div>
+          <p class="font-semibold text-purple-800">Suara Mulai Berubah</p>
+          <p class="text-sm text-gray-600">Pita suara berkembang</p>
+         </div>
+        </div>
+        <div class="bg-pink-50 rounded-xl p-4 flex items-center gap-4 card-hover">
+         <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center text-3xl">
+          😊
+         </div>
+         <div>
+          <p class="font-semibold text-pink-800">Wajah Mulai Berjerawat</p>
+          <p class="text-sm text-gray-600">Hormon mulai aktif</p>
+         </div>
+        </div>
+        <div class="bg-green-50 rounded-xl p-4 flex items-center gap-4 card-hover">
+         <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-3xl">
+          💭
+         </div>
+         <div>
+          <p class="font-semibold text-green-800">Perilaku Mulai Berubah</p>
+          <p class="text-sm text-gray-600">Emosi dan pikiran berkembang</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl p-6 text-white">
+        <div class="flex items-center gap-3"><span class="text-3xl">✨</span>
+         <div>
+          <p class="font-bold text-lg">Kesimpulan</p>
+          <p>Hal ini NORMAL karena kita sedang dalam proses bertumbuh dan berkembang!</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 3: Pertumbuhan vs Perkembangan -->
+     <section id="slide-3" class="slide">
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg">
+       <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center"><span class="text-2xl">⚖️</span>
+        </div>
+        <h2 class="title-font text-2xl md:text-3xl text-gray-800">Pertumbuhan vs Perkembangan</h2>
+       </div>
+       <div class="grid md:grid-cols-2 gap-6"><!-- Pertumbuhan -->
+        <div class="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl p-6 text-white">
+         <div class="text-center mb-4"><span class="text-5xl">📊</span>
+          <h3 class="title-font text-2xl mt-2">PERTUMBUHAN</h3><span class="inline-block bg-white/20 px-3 py-1 rounded-full text-sm mt-2">Kuantitatif</span>
+         </div>
+         <ul class="space-y-3">
+          <li class="flex items-start gap-2"><span class="text-yellow-300">✓</span> <span>Dapat diukur dengan angka/sistem ukur</span></li>
+          <li class="flex items-start gap-2"><span class="text-yellow-300">✓</span> <span>Terlihat jelas perubahannya</span></li>
+         </ul>
+         <div class="mt-4 bg-white/20 rounded-xl p-4">
+          <p class="text-sm font-semibold mb-2">📌 Contoh:</p>
+          <ul class="text-sm space-y-1">
+           <li>• Tinggi: 100 cm → 150 cm</li>
+           <li>• Berat badan: 30 kg → 50 kg</li>
+           <li>• Volume organ bertambah</li>
+          </ul>
+         </div>
+        </div><!-- Perkembangan -->
+        <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl p-6 text-white">
+         <div class="text-center mb-4"><span class="text-5xl">🧠</span>
+          <h3 class="title-font text-2xl mt-2">PERKEMBANGAN</h3><span class="inline-block bg-white/20 px-3 py-1 rounded-full text-sm mt-2">Kualitatif</span>
+         </div>
+         <ul class="space-y-3">
+          <li class="flex items-start gap-2"><span class="text-yellow-300">✓</span> <span>Tidak dapat diukur dengan angka</span></li>
+          <li class="flex items-start gap-2"><span class="text-yellow-300">✓</span> <span>Penambahan kemampuan berbagai aspek</span></li>
+         </ul>
+         <div class="mt-4 bg-white/20 rounded-xl p-4">
+          <p class="text-sm font-semibold mb-2">📌 Contoh:</p>
+          <ul class="text-sm space-y-1">
+           <li>• Bayi: belum bisa bicara → lancar bicara</li>
+           <li>• Belajar berjalan → berlari</li>
+           <li>• Kemampuan berpikir meningkat</li>
+          </ul>
+         </div>
+        </div>
+       </div><!-- Interactive Activity -->
+       <div class="mt-6 bg-yellow-50 rounded-2xl p-6 border-2 border-yellow-200">
+        <h4 class="font-bold text-yellow-800 mb-4 flex items-center gap-2"><span class="text-xl">🎯</span> Aktivitas Interaktif: Klasifikasikan!</h4>
+        <p class="text-sm text-gray-600 mb-4">Klik pada setiap pernyataan untuk menentukan apakah itu Pertumbuhan atau Perkembangan:</p>
+        <div id="classify-activity" class="space-y-2"><button onclick="classifyItem(this, 'pertumbuhan')" class="w-full text-left bg-white p-3 rounded-xl border-2 border-gray-200 hover:border-indigo-300 transition-all"> <span class="font-medium">Berat badan bayi bertambah 2 kg</span> <span class="answer hidden ml-2 text-sm font-bold"></span> </button> <button onclick="classifyItem(this, 'perkembangan')" class="w-full text-left bg-white p-3 rounded-xl border-2 border-gray-200 hover:border-indigo-300 transition-all"> <span class="font-medium">Anak mulai bisa membaca</span> <span class="answer hidden ml-2 text-sm font-bold"></span> </button> <button onclick="classifyItem(this, 'pertumbuhan')" class="w-full text-left bg-white p-3 rounded-xl border-2 border-gray-200 hover:border-indigo-300 transition-all"> <span class="font-medium">Lingkar kepala bertambah 5 cm</span> <span class="answer hidden ml-2 text-sm font-bold"></span> </button> <button onclick="classifyItem(this, 'perkembangan')" class="w-full text-left bg-white p-3 rounded-xl border-2 border-gray-200 hover:border-indigo-300 transition-all"> <span class="font-medium">Remaja mulai berpikir abstrak</span> <span class="answer hidden ml-2 text-sm font-bold"></span> </button>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 4: Faktor yang Mempengaruhi -->
+     <section id="slide-4" class="slide">
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg">
+       <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center"><span class="text-2xl">🔬</span>
+        </div>
+        <h2 class="title-font text-2xl md:text-3xl text-gray-800">Faktor yang Mempengaruhi</h2>
+       </div>
+       <div class="grid md:grid-cols-2 gap-4 mb-6"><!-- Faktor Internal -->
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-5 border-2 border-blue-200">
+         <h3 class="font-bold text-blue-800 mb-4 text-center text-lg">🔵 Faktor INTERNAL</h3>
+         <div class="space-y-3">
+          <div class="bg-white rounded-xl p-4 card-hover shadow-sm">
+           <div class="flex items-center gap-3"><span class="text-3xl">🧬</span>
+            <div>
+             <p class="font-bold text-gray-800">Genetik (Keturunan)</p>
+             <p class="text-sm text-gray-600">DNA dari orang tua menentukan potensi pertumbuhan</p>
+            </div>
+           </div>
+          </div>
+          <div class="bg-white rounded-xl p-4 card-hover shadow-sm">
+           <div class="flex items-center gap-3"><span class="text-3xl">💉</span>
+            <div>
+             <p class="font-bold text-gray-800">Hormon</p>
+             <p class="text-sm text-gray-600">Zat kimia yang mengatur pertumbuhan tubuh</p>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div><!-- Faktor Eksternal -->
+        <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-5 border-2 border-green-200">
+         <h3 class="font-bold text-green-800 mb-4 text-center text-lg">🟢 Faktor EKSTERNAL</h3>
+         <div class="space-y-3">
+          <div class="bg-white rounded-xl p-4 card-hover shadow-sm">
+           <div class="flex items-center gap-3"><span class="text-3xl">🥗</span>
+            <div>
+             <p class="font-bold text-gray-800">Makanan (Nutrisi)</p>
+             <p class="text-sm text-gray-600">Protein, vitamin, mineral untuk pertumbuhan optimal</p>
+            </div>
+           </div>
+          </div>
+          <div class="bg-white rounded-xl p-4 card-hover shadow-sm">
+           <div class="flex items-center gap-3"><span class="text-3xl">🏠</span>
+            <div>
+             <p class="font-bold text-gray-800">Lingkungan</p>
+             <p class="text-sm text-gray-600">Tempat tinggal, sanitasi, dan kondisi sekitar</p>
+            </div>
+           </div>
+          </div>
+          <div class="bg-white rounded-xl p-4 card-hover shadow-sm">
+           <div class="flex items-center gap-3"><span class="text-3xl">🏃</span>
+            <div>
+             <p class="font-bold text-gray-800">Gaya Hidup</p>
+             <p class="text-sm text-gray-600">Olahraga, tidur cukup, dan kebiasaan sehat</p>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div><!-- Diagram Interaktif -->
+       <div class="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-6">
+        <h4 class="font-bold text-purple-800 mb-4 text-center">🎯 Diagram Interaktif: Hover untuk Info Lebih Lanjut</h4>
+        <div class="flex justify-center items-center gap-4 flex-wrap">
+         <div class="has-tooltip relative">
+          <div class="w-24 h-24 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white text-3xl cursor-pointer interactive-diagram shadow-lg">
+           🧬
+          </div>
+          <div class="tooltip -top-16 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+           Gen menentukan 60-80% tinggi badan
+          </div>
+         </div>
+         <div class="text-2xl text-gray-400">
+          +
+         </div>
+         <div class="has-tooltip relative">
+          <div class="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white text-3xl cursor-pointer interactive-diagram shadow-lg">
+           🥗
+          </div>
+          <div class="tooltip -top-16 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+           Nutrisi membantu mencapai potensi maksimal
+          </div>
+         </div>
+         <div class="text-2xl text-gray-400">
+          +
+         </div>
+         <div class="has-tooltip relative">
+          <div class="w-24 h-24 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white text-3xl cursor-pointer interactive-diagram shadow-lg">
+           🏃
+          </div>
+          <div class="tooltip -top-16 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+           Olahraga merangsang hormon pertumbuhan
+          </div>
+         </div>
+         <div class="text-2xl text-gray-400">
+          =
+         </div>
+         <div class="has-tooltip relative">
+          <div class="w-28 h-28 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-4xl cursor-pointer interactive-diagram shadow-lg pulse-animation">
+           💪
+          </div>
+          <div class="tooltip -top-16 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+           Pertumbuhan Optimal!
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 5: Awal Mula Kehidupan -->
+     <section id="slide-5" class="slide">
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg">
+       <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center"><span class="text-2xl">🌟</span>
+        </div>
+        <h2 class="title-font text-2xl md:text-3xl text-gray-800">Awal Mula Kehidupan (Fase Janin)</h2>
+       </div>
+       <div class="bg-gradient-to-r from-pink-50 to-purple-50 rounded-2xl p-6 mb-6">
+        <h3 class="font-bold text-pink-800 mb-3 flex items-center gap-2"><span class="text-xl">🔬</span> Proses Fertilisasi</h3>
+        <p class="text-gray-700">Pertemuan <strong>sperma</strong> dan <strong>sel telur (ovum)</strong> di dalam tubuh wanita, menghasilkan sel baru yang akan berkembang menjadi manusia.</p>
+       </div>
+       <h3 class="font-bold text-gray-700 mb-4">📈 Tahapan Perkembangan Awal:</h3>
+       <div class="relative"><!-- Timeline -->
+        <div class="space-y-4">
+         <div class="timeline-item">
+          <div class="bg-gradient-to-r from-red-100 to-red-50 rounded-xl p-4">
+           <div class="flex items-center gap-4">
+            <div class="w-16 h-16 bg-red-200 rounded-full flex items-center justify-center flex-shrink-0">
+             <svg viewbox="0 0 100 100" class="w-12 h-12"><circle cx="50" cy="50" r="40" fill="#ef4444" opacity="0.8" />
+             </svg>
+            </div>
+            <div>
+             <h4 class="font-bold text-red-800">1. ZIGOT</h4>
+             <p class="text-sm text-gray-600">Sel tunggal hasil pembuahan. Ukuran sekitar 0.1 mm - lebih kecil dari titik di akhir kalimat ini!</p>
+            </div>
+           </div>
+          </div>
+         </div>
+         <div class="timeline-item">
+          <div class="bg-gradient-to-r from-orange-100 to-orange-50 rounded-xl p-4">
+           <div class="flex items-center gap-4">
+            <div class="w-16 h-16 bg-orange-200 rounded-full flex items-center justify-center flex-shrink-0">
+             <svg viewbox="0 0 100 100" class="w-12 h-12"><circle cx="35" cy="35" r="20" fill="#f97316" opacity="0.8" /> <circle cx="65" cy="35" r="20" fill="#f97316" opacity="0.8" /> <circle cx="35" cy="65" r="20" fill="#f97316" opacity="0.8" /> <circle cx="65" cy="65" r="20" fill="#f97316" opacity="0.8" />
+             </svg>
+            </div>
+            <div>
+             <h4 class="font-bold text-orange-800">2. MORULA</h4>
+             <p class="text-sm text-gray-600">Pembelahan sel tanpa pertambahan massa. Bentuknya seperti buah murbei (mulberry).</p>
+            </div>
+           </div>
+          </div>
+         </div>
+         <div class="timeline-item">
+          <div class="bg-gradient-to-r from-yellow-100 to-yellow-50 rounded-xl p-4">
+           <div class="flex items-center gap-4">
+            <div class="w-16 h-16 bg-yellow-200 rounded-full flex items-center justify-center flex-shrink-0">
+             <svg viewbox="0 0 100 100" class="w-12 h-12"><circle cx="50" cy="50" r="40" fill="none" stroke="#eab308" stroke-width="8" /> <circle cx="50" cy="50" r="20" fill="#eab308" opacity="0.5" />
+             </svg>
+            </div>
+            <div>
+             <h4 class="font-bold text-yellow-800">3. BLASTULA / BLASTOSIS</h4>
+             <p class="text-sm text-gray-600">Pembentukan rongga pada sel. Mulai menempel di dinding rahim.</p>
+            </div>
+           </div>
+          </div>
+         </div>
+         <div class="timeline-item">
+          <div class="bg-gradient-to-r from-green-100 to-green-50 rounded-xl p-4">
+           <div class="flex items-center gap-4">
+            <div class="w-16 h-16 bg-green-200 rounded-full flex items-center justify-center flex-shrink-0">
+             <svg viewbox="0 0 100 100" class="w-12 h-12"><ellipse cx="50" cy="50" rx="40" ry="30" fill="none" stroke="#22c55e" stroke-width="4" /> <path d="M20 50 Q50 30 80 50" fill="none" stroke="#22c55e" stroke-width="3" /> <path d="M20 50 Q50 70 80 50" fill="none" stroke="#22c55e" stroke-width="3" />
+             </svg>
+            </div>
+            <div>
+             <h4 class="font-bold text-green-800">4. GASTRULA</h4>
+             <p class="text-sm text-gray-600">Tahap setelah blastula. Mulai terbentuk 3 lapisan (ektoderm, mesoderm, endoderm).</p>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 6: Dari Embrio Menjadi Bayi -->
+     <section id="slide-6" class="slide">
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg">
+       <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center"><span class="text-2xl">👶</span>
+        </div>
+        <h2 class="title-font text-2xl md:text-3xl text-gray-800">Dari Embrio Menjadi Bayi</h2>
+       </div>
+       <div class="grid md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-5 text-white text-center card-hover">
+         <div class="w-20 h-20 bg-white/20 rounded-full mx-auto mb-3 flex items-center justify-center">
+          <svg viewbox="0 0 100 100" class="w-14 h-14"><ellipse cx="50" cy="50" rx="30" ry="35" fill="white" opacity="0.9" /> <circle cx="40" cy="45" r="3" fill="#3b82f6" /> <circle cx="60" cy="45" r="3" fill="#3b82f6" />
+          </svg>
+         </div>
+         <h3 class="font-bold text-lg">EMBRIO</h3>
+         <p class="text-sm text-blue-100 mt-2">Minggu 3-8</p>
+         <p class="text-xs mt-2 text-blue-200">Perkembangan setelah fase gastrula. Organ-organ mulai terbentuk.</p>
+        </div>
+        <div class="bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl p-5 text-white text-center card-hover">
+         <div class="w-20 h-20 bg-white/20 rounded-full mx-auto mb-3 flex items-center justify-center">
+          <svg viewbox="0 0 100 100" class="w-14 h-14"><ellipse cx="50" cy="45" rx="25" ry="28" fill="white" opacity="0.9" /> <ellipse cx="50" cy="75" rx="15" ry="18" fill="white" opacity="0.9" /> <circle cx="42" cy="40" r="2" fill="#8b5cf6" /> <circle cx="58" cy="40" r="2" fill="#8b5cf6" /> <line x1="35" y1="55" x2="25" y2="70" stroke="white" stroke-width="4" stroke-linecap="round" /> <line x1="65" y1="55" x2="75" y2="70" stroke="white" stroke-width="4" stroke-linecap="round" />
+          </svg>
+         </div>
+         <h3 class="font-bold text-lg">FETUS (JANIN)</h3>
+         <p class="text-sm text-purple-100 mt-2">Minggu 9-40</p>
+         <p class="text-xs mt-2 text-purple-200">Organ-organ tubuh mulai lengkap dan terus berkembang.</p>
+        </div>
+        <div class="bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl p-5 text-white text-center card-hover">
+         <div class="w-20 h-20 bg-white/20 rounded-full mx-auto mb-3 flex items-center justify-center text-4xl">
+          👶
+         </div>
+         <h3 class="font-bold text-lg">BAYI</h3>
+         <p class="text-sm text-pink-100 mt-2">Setelah Kelahiran</p>
+         <p class="text-xs mt-2 text-pink-200">Fetus terus berkembang hingga siap dilahirkan menjadi bayi.</p>
+        </div>
+       </div><!-- Timeline Perkembangan -->
+       <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6">
+        <h4 class="font-bold text-indigo-800 mb-4">📅 Timeline Perkembangan dalam Kandungan:</h4>
+        <div class="overflow-x-auto">
+         <div class="flex gap-3 min-w-max pb-2">
+          <div class="bg-white rounded-xl p-3 shadow-sm w-32 text-center">
+           <p class="text-xs text-gray-500">Minggu 4</p>
+           <p class="font-semibold text-sm text-indigo-700">❤️ Jantung mulai berdetak</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 shadow-sm w-32 text-center">
+           <p class="text-xs text-gray-500">Minggu 8</p>
+           <p class="font-semibold text-sm text-indigo-700">👋 Jari tangan terbentuk</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 shadow-sm w-32 text-center">
+           <p class="text-xs text-gray-500">Minggu 12</p>
+           <p class="font-semibold text-sm text-indigo-700">🦴 Tulang mulai mengeras</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 shadow-sm w-32 text-center">
+           <p class="text-xs text-gray-500">Minggu 20</p>
+           <p class="font-semibold text-sm text-indigo-700">🦶 Bayi mulai menendang</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 shadow-sm w-32 text-center">
+           <p class="text-xs text-gray-500">Minggu 28</p>
+           <p class="font-semibold text-sm text-indigo-700">👁️ Mata bisa membuka</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 shadow-sm w-32 text-center">
+           <p class="text-xs text-gray-500">Minggu 40</p>
+           <p class="font-semibold text-sm text-indigo-700">🎉 Siap lahir!</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 7: Masa Bayi -->
+     <section id="slide-7" class="slide">
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg">
+       <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center"><span class="text-2xl">🍼</span>
+        </div>
+        <h2 class="title-font text-2xl md:text-3xl text-gray-800">Masa Bayi (0-2 Tahun)</h2>
+       </div>
+       <div class="grid md:grid-cols-2 gap-6">
+        <div>
+         <div class="bg-gradient-to-br from-pink-100 to-rose-100 rounded-2xl p-5 mb-4">
+          <h3 class="font-bold text-pink-800 mb-3 flex items-center gap-2"><span class="text-xl">📈</span> Pertumbuhan Pesat</h3>
+          <div class="bg-white rounded-xl p-4">
+           <p class="text-gray-700 mb-3">Berat badan bisa bertambah <strong>berkali-kali lipat</strong> dibanding saat lahir!</p>
+           <div class="flex items-center justify-around">
+            <div class="text-center"><span class="text-3xl">👶</span>
+             <p class="text-sm font-semibold">Lahir</p>
+             <p class="text-lg text-pink-600 font-bold">~3 kg</p>
+            </div><span class="text-2xl text-gray-400">→</span>
+            <div class="text-center"><span class="text-3xl">🧒</span>
+             <p class="text-sm font-semibold">1 Tahun</p>
+             <p class="text-lg text-pink-600 font-bold">~10 kg</p>
+            </div>
+           </div>
+          </div>
+         </div>
+         <div class="bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl p-5">
+          <h3 class="font-bold text-blue-800 mb-3 flex items-center gap-2"><span class="text-xl">📏</span> Proporsi Tubuh Unik</h3>
+          <div class="bg-white rounded-xl p-4">
+           <p class="text-gray-700">Kepala bayi saat lahir adalah <strong>1/4 dari panjang tubuh</strong>!</p>
+           <div class="flex justify-center mt-3">
+            <svg viewbox="0 0 100 200" class="h-32"><!-- Baby figure --> <circle cx="50" cy="30" r="25" fill="#fcd34d" stroke="#f59e0b" stroke-width="2" /> <ellipse cx="50" cy="90" rx="20" ry="35" fill="#93c5fd" stroke="#3b82f6" stroke-width="2" /> <line x1="30" y1="80" x2="15" y2="110" stroke="#f59e0b" stroke-width="6" stroke-linecap="round" /> <line x1="70" y1="80" x2="85" y2="110" stroke="#f59e0b" stroke-width="6" stroke-linecap="round" /> <line x1="40" y1="120" x2="35" y2="160" stroke="#f59e0b" stroke-width="6" stroke-linecap="round" /> <line x1="60" y1="120" x2="65" y2="160" stroke="#f59e0b" stroke-width="6" stroke-linecap="round" /> <!-- Measurement lines --> <line x1="90" y1="5" x2="90" y2="55" stroke="#ef4444" stroke-width="2" /> <text x="95" y="35" fill="#ef4444" font-size="8">
+              1/4
+             </text>
+            </svg>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl p-5">
+         <h3 class="font-bold text-green-800 mb-4 flex items-center gap-2"><span class="text-xl">🎯</span> Perkembangan Motorik</h3>
+         <div class="space-y-3">
+          <div class="bg-white rounded-xl p-3 flex items-center gap-3">
+           <div class="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center text-xl">
+            1️⃣
+           </div>
+           <div>
+            <p class="font-semibold text-green-800">Tengkurap</p>
+            <p class="text-xs text-gray-500">Usia 3-4 bulan</p>
+           </div>
+          </div>
+          <div class="bg-white rounded-xl p-3 flex items-center gap-3">
+           <div class="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center text-xl">
+            2️⃣
+           </div>
+           <div>
+            <p class="font-semibold text-green-800">Duduk</p>
+            <p class="text-xs text-gray-500">Usia 6-8 bulan</p>
+           </div>
+          </div>
+          <div class="bg-white rounded-xl p-3 flex items-center gap-3">
+           <div class="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center text-xl">
+            3️⃣
+           </div>
+           <div>
+            <p class="font-semibold text-green-800">Merangkak</p>
+            <p class="text-xs text-gray-500">Usia 7-10 bulan</p>
+           </div>
+          </div>
+          <div class="bg-white rounded-xl p-3 flex items-center gap-3">
+           <div class="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center text-xl">
+            4️⃣
+           </div>
+           <div>
+            <p class="font-semibold text-green-800">Berjalan</p>
+            <p class="text-xs text-gray-500">Usia 10-15 bulan</p>
+           </div>
+          </div>
+          <div class="bg-white rounded-xl p-3 flex items-center gap-3">
+           <div class="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center text-xl">
+            5️⃣
+           </div>
+           <div>
+            <p class="font-semibold text-green-800">Belajar Bicara</p>
+            <p class="text-xs text-gray-500">Usia 12-24 bulan</p>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 8: Masa Anak-anak -->
+     <section id="slide-8" class="slide">
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg">
+       <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center"><span class="text-2xl">🧒</span>
+        </div>
+        <h2 class="title-font text-2xl md:text-3xl text-gray-800">Masa Anak-anak (2-5 Tahun)</h2>
+       </div>
+       <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-5 mb-6">
+        <h3 class="font-bold text-yellow-800 mb-3 flex items-center gap-2"><span class="text-xl">⭐</span> Karakteristik Utama</h3>
+        <div class="grid md:grid-cols-3 gap-3">
+         <div class="bg-white rounded-xl p-4 text-center card-hover"><span class="text-3xl">🔍</span>
+          <p class="font-semibold text-gray-800 mt-2">Rasa Ingin Tahu Tinggi</p>
+          <p class="text-xs text-gray-500">Sering bertanya "Mengapa?"</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 text-center card-hover"><span class="text-3xl">🧠</span>
+          <p class="font-semibold text-gray-800 mt-2">Kemampuan Mental ↑</p>
+          <p class="text-xs text-gray-500">Mulai berpikir logis sederhana</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 text-center card-hover"><span class="text-3xl">💬</span>
+          <p class="font-semibold text-gray-800 mt-2">Bahasa Meningkat</p>
+          <p class="text-xs text-gray-500">Kosakata bertambah pesat</p>
+         </div>
+        </div>
+       </div>
+       <h3 class="font-bold text-gray-700 mb-4 flex items-center gap-2"><span class="text-xl">🏃</span> Perkembangan Motorik Kasar per Usia:</h3>
+       <div class="grid md:grid-cols-3 gap-4">
+        <div class="bg-gradient-to-br from-red-400 to-pink-500 rounded-2xl p-5 text-white">
+         <div class="text-center mb-3"><span class="text-4xl">3️⃣</span>
+          <p class="font-bold text-lg">Usia 3 Tahun</p>
+         </div>
+         <ul class="space-y-2 text-sm">
+          <li class="flex items-center gap-2"><span>🦶</span> Berdiri satu kaki</li>
+          <li class="flex items-center gap-2"><span>⚽</span> Menendang bola</li>
+          <li class="flex items-center gap-2"><span>🏃</span> Berlari tanpa jatuh</li>
+         </ul>
+        </div>
+        <div class="bg-gradient-to-br from-blue-400 to-indigo-500 rounded-2xl p-5 text-white">
+         <div class="text-center mb-3"><span class="text-4xl">4️⃣</span>
+          <p class="font-bold text-lg">Usia 4 Tahun</p>
+         </div>
+         <ul class="space-y-2 text-sm">
+          <li class="flex items-center gap-2"><span>🪜</span> Naik-turun tangga</li>
+          <li class="flex items-center gap-2"><span>👟</span> Kaki bergantian</li>
+          <li class="flex items-center gap-2"><span>🤸</span> Melompat di tempat</li>
+         </ul>
+        </div>
+        <div class="bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl p-5 text-white">
+         <div class="text-center mb-3"><span class="text-4xl">5️⃣</span>
+          <p class="font-bold text-lg">Usia 5 Tahun</p>
+         </div>
+         <ul class="space-y-2 text-sm">
+          <li class="flex items-center gap-2"><span>🚲</span> Naik sepeda roda 2</li>
+          <li class="flex items-center gap-2"><span>🦘</span> Melompat satu kaki</li>
+          <li class="flex items-center gap-2"><span>🎯</span> Menangkap bola</li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 9: Masa Remaja dan Pubertas -->
+     <section id="slide-9" class="slide">
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg">
+       <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center"><span class="text-2xl">🧑</span>
+        </div>
+        <h2 class="title-font text-2xl md:text-3xl text-gray-800">Masa Remaja dan Pubertas</h2>
+       </div>
+       <div class="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl p-5 mb-6">
+        <div class="flex items-center gap-4"><span class="text-4xl">🎯</span>
+         <div>
+          <h3 class="font-bold text-indigo-800">Apa itu Pubertas?</h3>
+          <p class="text-gray-700">Masa transisi dari anak-anak ke dewasa, dimulai usia <strong>9-15 tahun</strong>, ditandai dengan aktifnya hormon reproduksi.</p>
+         </div>
+        </div>
+       </div>
+       <div class="grid md:grid-cols-2 gap-6"><!-- Pria -->
+        <div class="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-5 text-white">
+         <div class="text-center mb-4"><span class="text-5xl">👦</span>
+          <h3 class="font-bold text-xl mt-2">LAKI-LAKI</h3>
+          <div class="inline-block bg-white/20 px-3 py-1 rounded-full text-sm mt-2">
+           Hormon: <strong>Testosteron</strong>
+          </div>
+         </div>
+         <h4 class="font-semibold mb-3 text-blue-200">Ciri-ciri Seks Sekunder:</h4>
+         <ul class="space-y-2 text-sm">
+          <li class="flex items-center gap-2 bg-white/10 rounded-lg p-2"><span class="text-lg">🔊</span> <span>Suara membesar/memberat</span></li>
+          <li class="flex items-center gap-2 bg-white/10 rounded-lg p-2"><span class="text-lg">🎤</span> <span>Tumbuh jakun di leher</span></li>
+          <li class="flex items-center gap-2 bg-white/10 rounded-lg p-2"><span class="text-lg">🧔</span> <span>Tumbuh rambut wajah (kumis, jenggot)</span></li>
+          <li class="flex items-center gap-2 bg-white/10 rounded-lg p-2"><span class="text-lg">💪</span> <span>Otot dan bahu melebar</span></li>
+          <li class="flex items-center gap-2 bg-white/10 rounded-lg p-2"><span class="text-lg">🔬</span> <span>Testis memproduksi sperma</span></li>
+         </ul>
+        </div><!-- Wanita -->
+        <div class="bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl p-5 text-white">
+         <div class="text-center mb-4"><span class="text-5xl">👧</span>
+          <h3 class="font-bold text-xl mt-2">PEREMPUAN</h3>
+          <div class="inline-block bg-white/20 px-3 py-1 rounded-full text-sm mt-2">
+           Hormon: <strong>Estrogen &amp; Progesteron</strong>
+          </div>
+         </div>
+         <h4 class="font-semibold mb-3 text-pink-200">Ciri-ciri Seks Sekunder:</h4>
+         <ul class="space-y-2 text-sm">
+          <li class="flex items-center gap-2 bg-white/10 rounded-lg p-2"><span class="text-lg">👚</span> <span>Payudara mulai berkembang</span></li>
+          <li class="flex items-center gap-2 bg-white/10 rounded-lg p-2"><span class="text-lg">👗</span> <span>Pinggul melebar</span></li>
+          <li class="flex items-center gap-2 bg-white/10 rounded-lg p-2"><span class="text-lg">🎀</span> <span>Suara menjadi lebih halus</span></li>
+          <li class="flex items-center gap-2 bg-white/10 rounded-lg p-2"><span class="text-lg">🩸</span> <span>Dimulainya menstruasi</span></li>
+          <li class="flex items-center gap-2 bg-white/10 rounded-lg p-2"><span class="text-lg">🔬</span> <span>Ovarium memproduksi sel telur</span></li>
+         </ul>
+        </div>
+       </div>
+       <div class="mt-6 bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-5">
+        <h4 class="font-bold text-yellow-800 flex items-center gap-2 mb-2"><span class="text-xl">💡</span> Perlu Diketahui</h4>
+        <p class="text-gray-700 text-sm">Setiap orang mengalami pubertas pada waktu yang berbeda. Tidak perlu khawatir jika temanmu sudah mengalami perubahan lebih dulu. Semuanya akan terjadi pada waktunya!</p>
+       </div>
+      </div>
+     </section><!-- Slide 10: Masa Dewasa dan Penuaan -->
+     <section id="slide-10" class="slide">
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg">
+       <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center"><span class="text-2xl">👨‍💼</span>
+        </div>
+        <h2 class="title-font text-2xl md:text-3xl text-gray-800">Masa Dewasa dan Penuaan</h2>
+       </div>
+       <div class="grid md:grid-cols-2 gap-6 mb-6"><!-- Dewasa -->
+        <div class="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-5 text-white">
+         <div class="text-center mb-4"><span class="text-5xl">💼</span>
+          <h3 class="font-bold text-xl mt-2">MASA DEWASA</h3>
+          <p class="text-emerald-200 text-sm">Usia 18-40 tahun</p>
+         </div>
+         <ul class="space-y-3">
+          <li class="flex items-start gap-2"><span class="text-yellow-300">✓</span> <span>Mental dan emosi mulai stabil</span></li>
+          <li class="flex items-start gap-2"><span class="text-yellow-300">✓</span> <span>Fisik mencapai puncak kekuatan</span></li>
+          <li class="flex items-start gap-2"><span class="text-yellow-300">✓</span> <span>Pertumbuhan tinggi badan berhenti</span></li>
+          <li class="flex items-start gap-2"><span class="text-yellow-300">✓</span> <span>Sistem reproduksi berfungsi optimal</span></li>
+         </ul>
+        </div><!-- Penuaan -->
+        <div class="bg-gradient-to-br from-gray-500 to-slate-600 rounded-2xl p-5 text-white">
+         <div class="text-center mb-4"><span class="text-5xl">👴</span>
+          <h3 class="font-bold text-xl mt-2">MASA PENUAAN</h3>
+          <p class="text-gray-300 text-sm">Mulai usia 40+ tahun</p>
+         </div>
+         <h4 class="font-semibold mb-2 text-gray-300">Tanda-tanda Penuaan:</h4>
+         <ul class="space-y-2 text-sm">
+          <li class="flex items-center gap-2 bg-white/10 rounded-lg p-2"><span>🦳</span> Muncul rambut putih (uban)</li>
+          <li class="flex items-center gap-2 bg-white/10 rounded-lg p-2"><span>💪</span> Massa otot berkurang</li>
+          <li class="flex items-center gap-2 bg-white/10 rounded-lg p-2"><span>👁️</span> Penglihatan menurun</li>
+          <li class="flex items-center gap-2 bg-white/10 rounded-lg p-2"><span>🦴</span> Tulang mulai rapuh</li>
+         </ul>
+        </div>
+       </div>
+       <div class="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-5">
+        <h4 class="font-bold text-purple-800 mb-4">🔬 Fase Lanjut Sistem Reproduksi:</h4>
+        <div class="grid md:grid-cols-2 gap-4">
+         <div class="bg-white rounded-xl p-4 shadow-sm">
+          <div class="flex items-center gap-3 mb-2"><span class="text-3xl">👩</span>
+           <div>
+            <p class="font-bold text-purple-800">Menopause (Wanita)</p>
+            <p class="text-xs text-gray-500">Usia 40-50 tahun</p>
+           </div>
+          </div>
+          <p class="text-sm text-gray-600">Berhentinya masa menstruasi dan kemampuan reproduksi.</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 shadow-sm">
+          <div class="flex items-center gap-3 mb-2"><span class="text-3xl">👨</span>
+           <div>
+            <p class="font-bold text-purple-800">Andropause (Pria)</p>
+            <p class="text-xs text-gray-500">Usia 50+ tahun</p>
+           </div>
+          </div>
+          <p class="text-sm text-gray-600">Produksi sperma dan hormon testosteron berkurang.</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 11: Fakta Unik -->
+     <section id="slide-11" class="slide">
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg">
+       <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center"><span class="text-2xl">🌟</span>
+        </div>
+        <h2 class="title-font text-2xl md:text-3xl text-gray-800">Fakta Unik &amp; Menarik!</h2>
+       </div>
+       <div class="grid md:grid-cols-2 gap-4">
+        <div class="fact-card rounded-2xl p-5 text-white card-hover">
+         <div class="flex items-start gap-4"><span class="text-4xl">🦴</span>
+          <div>
+           <h4 class="font-bold text-lg mb-2">Tulang Menyusut?</h4>
+           <p class="text-sm text-purple-100">Bayi memiliki <strong>~300 tulang</strong>, sedangkan dewasa hanya <strong>206 tulang</strong> karena banyak yang menyatu saat tumbuh!</p>
+          </div>
+         </div>
+        </div>
+        <div class="bg-gradient-to-br from-orange-400 to-red-500 rounded-2xl p-5 text-white card-hover">
+         <div class="flex items-start gap-4"><span class="text-4xl">🦵</span>
+          <div>
+           <h4 class="font-bold text-lg mb-2">Tanpa Tempurung Lutut!</h4>
+           <p class="text-sm text-orange-100">Bayi baru lahir <strong>tidak memiliki tempurung lutut</strong>. Tulang ini baru terbentuk saat usia 3-5 tahun!</p>
+          </div>
+         </div>
+        </div>
+        <div class="bg-gradient-to-br from-red-400 to-pink-500 rounded-2xl p-5 text-white card-hover">
+         <div class="flex items-start gap-4"><span class="text-4xl">👁️</span>
+          <div>
+           <h4 class="font-bold text-lg mb-2">Warna Pertama</h4>
+           <p class="text-sm text-red-100">Warna pertama yang dilihat bayi adalah <strong>MERAH</strong>. Warna ungu dan biru adalah yang terakhir bisa dilihat!</p>
+          </div>
+         </div>
+        </div>
+        <div class="bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl p-5 text-white card-hover">
+         <div class="flex items-start gap-4"><span class="text-4xl">🫃</span>
+          <div>
+           <h4 class="font-bold text-lg mb-2">Lambung Super Kecil</h4>
+           <p class="text-sm text-green-100">Lambung bayi baru lahir hanya sebesar <strong>biji walnut</strong> (~5-7 ml)! Itulah mengapa bayi sering menyusu.</p>
+          </div>
+         </div>
+        </div>
+        <div class="bg-gradient-to-br from-blue-400 to-indigo-500 rounded-2xl p-5 text-white card-hover">
+         <div class="flex items-start gap-4"><span class="text-4xl">💓</span>
+          <div>
+           <h4 class="font-bold text-lg mb-2">Jantung Super Cepat</h4>
+           <p class="text-sm text-blue-100">Detak jantung bayi bisa mencapai <strong>120-160 kali per menit</strong>, hampir 2x lipat orang dewasa!</p>
+          </div>
+         </div>
+        </div>
+        <div class="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl p-5 text-white card-hover">
+         <div class="flex items-start gap-4"><span class="text-4xl">😴</span>
+          <div>
+           <h4 class="font-bold text-lg mb-2">Tidur Panjang</h4>
+           <p class="text-sm text-yellow-100">Bayi baru lahir tidur <strong>16-17 jam sehari</strong> karena otak berkembang pesat saat tidur!</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 12: Ringkasan -->
+     <section id="slide-12" class="slide">
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg">
+       <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center"><span class="text-2xl">📋</span>
+        </div>
+        <h2 class="title-font text-2xl md:text-3xl text-gray-800">Ringkasan Materi</h2>
+       </div>
+       <div class="grid md:grid-cols-2 gap-4 mb-6">
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border-l-4 border-blue-500">
+         <h4 class="font-bold text-blue-800 mb-2">📊 Pertumbuhan</h4>
+         <p class="text-sm text-gray-600">Perubahan kuantitatif yang dapat diukur (tinggi, berat, volume)</p>
+        </div>
+        <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-4 border-l-4 border-purple-500">
+         <h4 class="font-bold text-purple-800 mb-2">🧠 Perkembangan</h4>
+         <p class="text-sm text-gray-600">Perubahan kualitatif berupa penambahan kemampuan</p>
+        </div>
+       </div>
+       <div class="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl p-5 mb-6">
+        <h4 class="font-bold text-indigo-800 mb-3">🔄 Tahapan Kehidupan Manusia:</h4>
+        <div class="flex flex-wrap justify-center gap-2"><span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">Zigot</span> <span class="text-gray-400">→</span> <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold">Embrio</span> <span class="text-gray-400">→</span> <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-semibold">Janin</span> <span class="text-gray-400">→</span> <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">Bayi</span> <span class="text-gray-400">→</span> <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">Anak</span> <span class="text-gray-400">→</span> <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-semibold">Remaja</span> <span class="text-gray-400">→</span> <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold">Dewasa</span> <span class="text-gray-400">→</span> <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm font-semibold">Lansia</span>
+        </div>
+       </div>
+       <div class="bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl p-6 text-white text-center"><span class="text-4xl mb-3 block">💪</span>
+        <h4 class="font-bold text-xl mb-2">Pesan Penting!</h4>
+        <p class="text-green-100">Terapkan pola hidup sehat agar mencapai pertumbuhan dan perkembangan yang optimal!</p>
+        <div class="flex justify-center gap-4 mt-4"><span class="bg-white/20 px-3 py-1 rounded-full text-sm">🥗 Makan Bergizi</span> <span class="bg-white/20 px-3 py-1 rounded-full text-sm">🏃 Olahraga</span> <span class="bg-white/20 px-3 py-1 rounded-full text-sm">😴 Istirahat Cukup</span>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 13: Quiz HOTS -->
+     <section id="slide-13" class="slide">
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg">
+       <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center"><span class="text-2xl">📝</span>
+        </div>
+        <h2 class="title-font text-2xl md:text-3xl text-gray-800">Soal HOTS (Higher Order Thinking Skills)</h2>
+       </div>
+       <div class="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-4 mb-6">
+        <p class="text-gray-700 text-sm">🎯 Kerjakan 10 soal berikut untuk menguji pemahaman dan kemampuan berpikir tingkat tinggi kamu!</p>
+       </div>
+       <div id="quiz-container"><!-- Quiz will be rendered here -->
+       </div>
+       <div id="quiz-result" class="hidden mt-6 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl p-6 text-white text-center"><span class="text-5xl mb-3 block">🏆</span>
+        <h3 class="font-bold text-2xl mb-2">Hasil Quiz</h3>
+        <p id="score-text" class="text-xl"></p><button onclick="resetQuiz()" class="mt-4 bg-white text-indigo-600 px-6 py-2 rounded-full font-semibold hover:bg-indigo-100 transition-all"> 🔄 Ulangi Quiz </button>
+       </div>
+      </div>
+     </section><!-- Slide 14: Penutup -->
+     <section id="slide-14" class="slide">
+      <div class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-3xl p-8 md:p-12 text-white text-center relative overflow-hidden min-h-96 flex flex-col justify-center">
+       <div class="absolute inset-0 opacity-20">
+        <div class="absolute top-10 left-10 w-20 h-20 bg-white rounded-full float-animation"></div>
+        <div class="absolute bottom-20 right-20 w-16 h-16 bg-white rounded-full float-animation" style="animation-delay: 1s"></div>
+       </div>
+       <div class="relative z-10"><span class="text-6xl mb-6 block">🎉</span>
+        <h2 class="title-font text-3xl md:text-4xl mb-4">Terima Kasih!</h2>
+        <p class="text-xl text-indigo-100 mb-6">Semoga pembelajaran hari ini bermanfaat dan menambah wawasan kalian.</p>
+        <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-6 max-w-md mx-auto">
+         <h3 class="font-bold text-lg mb-3">📚 Yang Sudah Dipelajari:</h3>
+         <ul class="text-left text-sm space-y-2 text-indigo-100">
+          <li>✓ Perbedaan pertumbuhan dan perkembangan</li>
+          <li>✓ Faktor-faktor yang mempengaruhi</li>
+          <li>✓ Tahapan kehidupan manusia</li>
+          <li>✓ Masa pubertas dan perubahan tubuh</li>
+          <li>✓ Fakta-fakta unik tentang tubuh</li>
+         </ul>
+        </div>
+        <div class="mt-8">
+         <p class="text-indigo-200 mb-2">Ada pertanyaan? 🤔</p>
+         <p class="text-sm text-indigo-300">Jangan ragu untuk bertanya kepada gurumu!</p>
+        </div>
+       </div>
+      </div>
+     </section>
+    </div>
+   </main><!-- Navigation Footer -->
+   <footer class="sticky bottom-0 bg-white/95 backdrop-blur-md shadow-lg px-4 py-3 border-t">
+    <div class="max-w-5xl mx-auto">
+     <div class="flex items-center justify-between"><button id="prev-btn" onclick="changeSlide(-1)" class="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled> <span>←</span> <span class="hidden sm:inline">Sebelumnya</span> </button>
+      <div class="flex gap-1 overflow-x-auto px-2"><button onclick="goToSlide(1)" class="nav-dot w-3 h-3 rounded-full bg-indigo-500 active" data-slide="1"></button> <button onclick="goToSlide(2)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="2"></button> <button onclick="goToSlide(3)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="3"></button> <button onclick="goToSlide(4)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="4"></button> <button onclick="goToSlide(5)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="5"></button> <button onclick="goToSlide(6)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="6"></button> <button onclick="goToSlide(7)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="7"></button> <button onclick="goToSlide(8)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="8"></button> <button onclick="goToSlide(9)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="9"></button> <button onclick="goToSlide(10)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="10"></button> <button onclick="goToSlide(11)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="11"></button> <button onclick="goToSlide(12)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="12"></button> <button onclick="goToSlide(13)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="13"></button> <button onclick="goToSlide(14)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="14"></button>
+      </div><button id="next-btn" onclick="changeSlide(1)" class="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-xl transition-all"> <span class="hidden sm:inline">Selanjutnya</span> <span>→</span> </button>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_title: 'Pertumbuhan dan Perkembangan Manusia',
+      teacher_name: 'ALgian Manggara, S.Agr',
+      primary_color: '#6366f1',
+      secondary_color: '#8b5cf6',
+      text_color: '#1f2937',
+      background_color: '#f5f3ff',
+      accent_color: '#ec4899'
+    };
+    
+    let config = { ...defaultConfig };
+    
+    // Slide Navigation
+    let currentSlide = 1;
+    const totalSlides = 14;
+    
+    function changeSlide(direction) {
+      const newSlide = currentSlide + direction;
+      if (newSlide >= 1 && newSlide <= totalSlides) {
+        goToSlide(newSlide);
+      }
+    }
+    
+    function goToSlide(slideNum) {
+      document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active'));
+      document.getElementById(`slide-${slideNum}`).classList.add('active');
+      
+      document.querySelectorAll('.nav-dot').forEach(dot => {
+        dot.classList.remove('active', 'bg-indigo-500');
+        dot.classList.add('bg-gray-300');
+      });
+      document.querySelector(`.nav-dot[data-slide="${slideNum}"]`).classList.add('active', 'bg-indigo-500');
+      document.querySelector(`.nav-dot[data-slide="${slideNum}"]`).classList.remove('bg-gray-300');
+      
+      currentSlide = slideNum;
+      document.getElementById('slide-counter').textContent = `${currentSlide}/${totalSlides}`;
+      document.getElementById('progress-bar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+      
+      document.getElementById('prev-btn').disabled = currentSlide === 1;
+      document.getElementById('next-btn').disabled = currentSlide === totalSlides;
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    // Classify Activity
+    function classifyItem(button, correct) {
+      const answerSpan = button.querySelector('.answer');
+      const isCorrect = button.dataset.answered !== 'true';
+      
+      if (button.dataset.answered === 'true') return;
+      
+      button.dataset.answered = 'true';
+      answerSpan.classList.remove('hidden');
+      
+      if (correct === 'pertumbuhan') {
+        answerSpan.textContent = '→ PERTUMBUHAN ✓';
+        answerSpan.classList.add('text-blue-600');
+        button.classList.add('border-blue-400', 'bg-blue-50');
+      } else {
+        answerSpan.textContent = '→ PERKEMBANGAN ✓';
+        answerSpan.classList.add('text-purple-600');
+        button.classList.add('border-purple-400', 'bg-purple-50');
+      }
+    }
+    
+    // Quiz System
+    const quizQuestions = [
+      {
+        question: "Seorang bayi lahir dengan berat 3 kg. Setelah 1 tahun, beratnya menjadi 9 kg. Jika pola pertumbuhan ini berlanjut dengan cara yang sama, perkirakan berapa berat bayi tersebut pada usia 2 tahun?",
+        options: ["12 kg", "15 kg", "18 kg", "27 kg"],
+        correct: 0,
+        explanation: "Pertumbuhan tidak linier. Pada tahun pertama, berat naik 3x lipat (3→9 kg). Pada tahun kedua, pertumbuhan melambat menjadi sekitar 2-3 kg, sehingga beratnya sekitar 11-12 kg."
+      },
+      {
+        question: "Mengapa bayi memiliki lebih banyak tulang (300) dibandingkan orang dewasa (206)?",
+        options: [
+          "Karena tulang bayi lebih kecil",
+          "Karena banyak tulang bayi yang menyatu seiring pertumbuhan",
+          "Karena orang dewasa kehilangan tulang karena usia",
+          "Karena bayi membutuhkan lebih banyak tulang untuk bergerak"
+        ],
+        correct: 1,
+        explanation: "Tulang bayi awalnya terpisah untuk memudahkan proses kelahiran dan pertumbuhan. Seiring waktu, tulang-tulang ini menyatu menjadi tulang yang lebih besar dan kuat."
+      },
+      {
+        question: "Dua anak kembar identik dibesarkan di lingkungan berbeda. Anak A mendapat nutrisi baik dan olahraga teratur, sedangkan Anak B kurang gizi dan jarang bergerak. Apa yang dapat disimpulkan tentang tinggi badan mereka saat dewasa?",
+        options: [
+          "Tinggi badan mereka akan sama karena genetik identik",
+          "Anak A kemungkinan lebih tinggi karena faktor eksternal optimal",
+          "Anak B akan lebih tinggi karena tubuhnya beradaptasi",
+          "Genetik tidak mempengaruhi tinggi badan sama sekali"
+        ],
+        correct: 1,
+        explanation: "Meskipun genetik identik, faktor eksternal seperti nutrisi dan gaya hidup dapat mempengaruhi apakah seseorang mencapai potensi genetik maksimalnya atau tidak."
+      },
+      {
+        question: "Seorang remaja laki-laki berusia 14 tahun mengalami suara yang kadang tinggi kadang rendah. Fenomena ini terjadi karena...",
+        options: [
+          "Pita suara sedang rusak dan perlu diobati",
+          "Hormon testosteron menyebabkan pita suara membesar",
+          "Terlalu banyak berbicara sehingga suara serak",
+          "Kurang tidur menyebabkan perubahan suara"
+        ],
+        correct: 1,
+        explanation: "Selama pubertas, hormon testosteron menyebabkan pita suara laki-laki membesar dan menebal. Selama masa transisi ini, suara bisa tidak stabil."
+      },
+      {
+        question: "Mengapa wanita mengalami menopause pada usia 40-50 tahun sementara pria masih dapat memproduksi sperma hingga usia tua?",
+        options: [
+          "Karena wanita memiliki jumlah sel telur terbatas sejak lahir",
+          "Karena hormon wanita lebih cepat habis",
+          "Karena sistem reproduksi wanita lebih lemah",
+          "Karena pria memiliki lebih banyak energi"
+        ],
+        correct: 0,
+        explanation: "Wanita lahir dengan jumlah sel telur terbatas (sekitar 1-2 juta) yang terus berkurang. Saat sel telur habis, menstruasi berhenti. Pria terus memproduksi sperma baru sepanjang hidup."
+      },
+      {
+        question: "Tahap manakah yang BUKAN merupakan urutan perkembangan awal manusia yang benar?",
+        options: [
+          "Zigot → Morula → Blastula → Gastrula",
+          "Zigot → Blastula → Morula → Gastrula",
+          "Fertilisasi → Zigot → Morula → Blastula",
+          "Gastrula → Embrio → Fetus → Bayi"
+        ],
+        correct: 1,
+        explanation: "Urutan yang benar adalah Zigot → Morula → Blastula → Gastrula. Morula terbentuk sebelum blastula, bukan sebaliknya."
+      },
+      {
+        question: "Seorang ibu hamil kekurangan asam folat selama trimester pertama kehamilan. Organ apa yang paling berisiko mengalami kelainan perkembangan?",
+        options: [
+          "Jantung",
+          "Sistem saraf dan otak",
+          "Tulang",
+          "Kulit"
+        ],
+        correct: 1,
+        explanation: "Asam folat sangat penting untuk perkembangan sistem saraf. Kekurangan asam folat di awal kehamilan dapat menyebabkan cacat tabung saraf seperti spina bifida."
+      },
+      {
+        question: "Perhatikan pernyataan berikut: (1) Pertambahan tinggi badan, (2) Kemampuan berbicara, (3) Pertambahan berat badan, (4) Kemampuan berpikir abstrak. Manakah yang termasuk perkembangan?",
+        options: [
+          "1 dan 3",
+          "2 dan 4",
+          "1 dan 2",
+          "3 dan 4"
+        ],
+        correct: 1,
+        explanation: "Perkembangan adalah perubahan kualitatif (kemampuan). Berbicara dan berpikir abstrak adalah kemampuan baru. Tinggi dan berat adalah perubahan kuantitatif (pertumbuhan)."
+      },
+      {
+        question: "Jika seorang anak berusia 4 tahun masih kesulitan naik turun tangga dengan kaki bergantian, apa yang sebaiknya dilakukan orang tua?",
+        options: [
+          "Membiarkan saja karena setiap anak berbeda",
+          "Segera membawa ke dokter karena pasti ada kelainan",
+          "Melatih kemampuan motorik dan berkonsultasi jika tidak ada kemajuan",
+          "Melarang anak naik tangga untuk keamanan"
+        ],
+        correct: 2,
+        explanation: "Milestone perkembangan adalah panduan, bukan patokan mutlak. Stimulasi dan latihan penting, tapi jika keterlambatan signifikan, konsultasi profesional diperlukan untuk deteksi dini."
+      },
+      {
+        question: "Seorang atlet remaja ingin mempercepat pertumbuhannya dengan mengonsumsi suplemen hormon pertumbuhan tanpa resep dokter. Apa risiko yang mungkin terjadi?",
+        options: [
+          "Pertumbuhan akan lebih cepat tanpa efek samping",
+          "Gangguan keseimbangan hormon alami dan masalah kesehatan serius",
+          "Tidak ada efek karena hormon tidak bisa diserap",
+          "Hanya akan mempengaruhi tinggi badan, bukan yang lain"
+        ],
+        correct: 1,
+        explanation: "Penggunaan hormon tanpa pengawasan medis dapat mengganggu keseimbangan hormonal alami, menyebabkan efek samping serius seperti diabetes, masalah jantung, dan gangguan pertumbuhan tulang."
+      }
+    ];
+    
+    let currentQuestion = 0;
+    let userAnswers = [];
+    let quizSubmitted = false;
+    
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      
+      if (quizSubmitted) {
+        showResults();
+        return;
+      }
+      
+      const q = quizQuestions[currentQuestion];
+      container.innerHTML = `
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-semibold text-indigo-600">Soal ${currentQuestion + 1} dari ${quizQuestions.length}</span>
+            <span class="text-sm text-gray-500">${Math.round(((currentQuestion) / quizQuestions.length) * 100)}% selesai</span>
+          </div>
+          <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div class="h-full bg-indigo-500 rounded-full transition-all" style="width: ${((currentQuestion) / quizQuestions.length) * 100}%"></div>
+          </div>
+        </div>
+        
+        <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-5 mb-4">
+          <p class="font-semibold text-gray-800">${q.question}</p>
+        </div>
+        
+        <div class="space-y-3 mb-6">
+          ${q.options.map((opt, i) => `
+            <button onclick="selectAnswer(${i})" class="quiz-option w-full text-left p-4 rounded-xl border-2 ${userAnswers[currentQuestion] === i ? 'selected border-indigo-500 bg-indigo-50' : 'border-gray-200 hover:border-indigo-300'} transition-all">
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-full ${userAnswers[currentQuestion] === i ? 'bg-indigo-500 text-white' : 'bg-gray-100 text-gray-600'} mr-3 font-semibold text-sm">${String.fromCharCode(65 + i)}</span>
+              <span class="text-gray-700">${opt}</span>
+            </button>
+          `).join('')}
+        </div>
+        
+        <div class="flex justify-between">
+          <button onclick="prevQuestion()" class="px-4 py-2 rounded-xl ${currentQuestion === 0 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-gray-200 hover:bg-gray-300 text-gray-700'} transition-all" ${currentQuestion === 0 ? 'disabled' : ''}>
+            ← Sebelumnya
+          </button>
+          ${currentQuestion === quizQuestions.length - 1 ? `
+            <button onclick="submitQuiz()" class="px-6 py-2 rounded-xl bg-green-500 hover:bg-green-600 text-white font-semibold transition-all">
+              ✓ Selesai
+            </button>
+          ` : `
+            <button onclick="nextQuestion()" class="px-4 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-600 text-white transition-all">
+              Selanjutnya →
+            </button>
+          `}
+        </div>
+      `;
+    }
+    
+    function selectAnswer(index) {
+      userAnswers[currentQuestion] = index;
+      renderQuiz();
+    }
+    
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        renderQuiz();
+      }
+    }
+    
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuiz();
+      }
+    }
+    
+    function submitQuiz() {
+      quizSubmitted = true;
+      showResults();
+    }
+    
+    function showResults() {
+      let score = 0;
+      quizQuestions.forEach((q, i) => {
+        if (userAnswers[i] === q.correct) score++;
+      });
+      
+      const percentage = Math.round((score / quizQuestions.length) * 100);
+      
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = `
+        <div class="space-y-4">
+          ${quizQuestions.map((q, i) => `
+            <div class="bg-gray-50 rounded-xl p-4 border-l-4 ${userAnswers[i] === q.correct ? 'border-green-500' : 'border-red-500'}">
+              <div class="flex items-start gap-2 mb-2">
+                <span class="${userAnswers[i] === q.correct ? 'text-green-500' : 'text-red-500'} text-xl">${userAnswers[i] === q.correct ? '✓' : '✗'}</span>
+                <p class="font-semibold text-gray-800 text-sm">${i + 1}. ${q.question}</p>
+              </div>
+              <div class="ml-7 text-sm">
+                <p class="text-gray-600">Jawabanmu: <span class="${userAnswers[i] === q.correct ? 'text-green-600' : 'text-red-600'} font-semibold">${q.options[userAnswers[i]] || 'Tidak dijawab'}</span></p>
+                ${userAnswers[i] !== q.correct ? `<p class="text-green-600">Jawaban benar: <span class="font-semibold">${q.options[q.correct]}</span></p>` : ''}
+                <p class="text-indigo-600 mt-1 italic text-xs">💡 ${q.explanation}</p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      
+      const resultDiv = document.getElementById('quiz-result');
+      resultDiv.classList.remove('hidden');
+      document.getElementById('score-text').innerHTML = `
+        Skor: <strong>${score}/${quizQuestions.length}</strong> (${percentage}%)<br>
+        <span class="text-lg">${percentage >= 80 ? '🌟 Luar Biasa!' : percentage >= 60 ? '👍 Bagus!' : '💪 Tetap Semangat!'}</span>
+      `;
+    }
+    
+    function resetQuiz() {
+      currentQuestion = 0;
+      userAnswers = [];
+      quizSubmitted = false;
+      document.getElementById('quiz-result').classList.add('hidden');
+      renderQuiz();
+    }
+    
+    // Initialize
+    function initApp() {
+      renderQuiz();
+      
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') changeSlide(1);
+        if (e.key === 'ArrowLeft') changeSlide(-1);
+      });
+    }
+    
+    // Element SDK Integration
+    function onConfigChange(newConfig) {
+      config = { ...config, ...newConfig };
+      
+      const mainTitle = document.getElementById('main-title');
+      if (mainTitle) mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      
+      const teacherName = document.getElementById('teacher-name');
+      if (teacherName) teacherName.textContent = config.teacher_name || defaultConfig.teacher_name;
+    }
+    
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (value) => { cfg.primary_color = value; window.elementSdk.setConfig({ primary_color: value }); }
+            },
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (value) => { cfg.secondary_color = value; window.elementSdk.setConfig({ secondary_color: value }); }
+            },
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (value) => { cfg.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (value) => { cfg.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+            },
+            {
+              get: () => cfg.accent_color || defaultConfig.accent_color,
+              set: (value) => { cfg.accent_color = value; window.elementSdk.setConfig({ accent_color: value }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['main_title', cfg.main_title || defaultConfig.main_title],
+          ['teacher_name', cfg.teacher_name || defaultConfig.teacher_name]
+        ])
+      });
+    }
+    
+    initApp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ca98c47b4794c64',t:'MTc3MDUzNzE1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

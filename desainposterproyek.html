@@ -1,0 +1,1288 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mendesain: Poster Proyek &amp; Dekorasi Pameran</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&amp;family=Playfair+Display:wght@700;800;900&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    .font-display {
+      font-family: 'Playfair Display', serif;
+    }
+    .slide {
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+    .slide.active {
+      display: flex;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+    }
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    .glow-effect {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    .progress-bar {
+      transition: width 0.3s ease;
+    }
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    .quiz-option:hover:not(.selected):not(.disabled) {
+      transform: scale(1.02);
+      border-color: #6366f1;
+    }
+    .quiz-option.selected {
+      border-color: #6366f1;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+    }
+    .quiz-option.correct {
+      border-color: #10b981;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.1));
+    }
+    .quiz-option.incorrect {
+      border-color: #ef4444;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(248, 113, 113, 0.1));
+    }
+    .interactive-demo {
+      cursor: pointer;
+    }
+    .principle-card {
+      transition: all 0.3s ease;
+    }
+    .principle-card:hover {
+      transform: scale(1.05);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white overflow-auto">
+  <div class="app-wrapper w-full h-full flex flex-col"><!-- Navigation Bar -->
+   <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center"><span class="text-xl">🎨</span>
+      </div><span class="font-semibold text-sm hidden sm:block">Seni Rupa IX</span>
+     </div>
+     <div class="flex items-center gap-2"><span id="slideIndicator" class="text-sm text-white/70">1 / 15</span>
+      <div class="w-32 h-2 bg-white/10 rounded-full overflow-hidden">
+       <div id="progressBar" class="progress-bar h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" style="width: 6.67%"></div>
+      </div>
+     </div>
+     <div class="flex gap-2"><button onclick="prevSlide()" class="px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all text-sm"> ← Prev </button> <button onclick="nextSlide()" class="px-3 py-2 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 transition-all text-sm"> Next → </button>
+     </div>
+    </div>
+   </nav><!-- Main Content -->
+   <main class="flex-1 pt-20 pb-8 px-4">
+    <div class="max-w-6xl mx-auto"><!-- Slide 1: Title -->
+     <section class="slide active min-h-[80vh] flex-col items-center justify-center text-center" data-slide="1">
+      <div class="float-animation mb-8">
+       <div class="w-32 h-32 mx-auto rounded-3xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center glow-effect"><span class="text-6xl">🎨</span>
+       </div>
+      </div>
+      <h1 class="font-display text-4xl md:text-6xl font-bold mb-4"><span class="gradient-text">Mendesain</span></h1>
+      <h2 class="text-2xl md:text-3xl font-light text-white/90 mb-6">Poster Proyek &amp; Dekorasi Pameran</h2>
+      <div class="flex flex-wrap justify-center gap-3 mb-8"><span class="px-4 py-2 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-sm">Seni Rupa Kelas IX</span> <span class="px-4 py-2 rounded-full bg-purple-500/20 border border-purple-400/30 text-sm">Kurikulum Merdeka</span>
+      </div>
+      <div class="bg-white/5 backdrop-blur rounded-2xl p-6 max-w-lg mx-auto border border-white/10">
+       <p class="text-white/70 text-sm mb-2">Penyusun:</p>
+       <p id="presenterName" class="text-lg font-semibold mb-4">[Algian Manggara, S.Agr]</p>
+       <p class="text-white/70 text-sm">Materi: Unit 2 (Subunit 1 &amp; 2)</p>
+       <p class="text-white/50 text-xs mt-2">Referensi: Buku Panduan Guru Seni Rupa SMP/MTs Kelas IX</p>
+      </div>
+     </section><!-- Slide 2: Apa itu Desain? -->
+     <section class="slide min-h-[80vh] flex-col items-center justify-center" data-slide="2">
+      <div class="text-center mb-12"><span class="text-6xl mb-4 block">💡</span>
+       <h2 class="font-display text-4xl md:text-5xl font-bold gradient-text mb-4">Apa itu Desain?</h2>
+       <p class="text-white/70">Definisi &amp; Esensi Desain</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 w-full max-w-4xl">
+       <div class="bg-gradient-to-br from-indigo-500/20 to-purple-500/20 backdrop-blur rounded-2xl p-6 border border-white/10 card-hover">
+        <div class="w-14 h-14 rounded-xl bg-indigo-500/30 flex items-center justify-center mb-4"><span class="text-2xl">📝</span>
+        </div>
+        <h3 class="text-xl font-bold mb-3">Pengertian Desain</h3>
+        <p class="text-white/80 leading-relaxed">Desain adalah <strong class="text-indigo-300">kegiatan kreatif</strong> untuk merencanakan dan merancang sesuatu yang <strong class="text-purple-300">fungsional</strong> guna menyelesaikan masalah tertentu agar lebih bermanfaat.</p>
+       </div>
+       <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur rounded-2xl p-6 border border-white/10 card-hover">
+        <div class="w-14 h-14 rounded-xl bg-purple-500/30 flex items-center justify-center mb-4"><span class="text-2xl">🎯</span>
+        </div>
+        <h3 class="text-xl font-bold mb-3">Tujuan Desain</h3>
+        <p class="text-white/80 leading-relaxed">Memberikan <strong class="text-pink-300">nilai lebih</strong> pada suatu objek yang sebelumnya belum ada, menciptakan solusi visual yang bermakna.</p>
+       </div>
+      </div>
+      <div class="mt-8 bg-white/5 backdrop-blur rounded-2xl p-6 w-full max-w-4xl border border-white/10">
+       <h3 class="text-lg font-semibold mb-4 text-center">📚 Cakupan Unit 2</h3>
+       <div class="flex flex-wrap justify-center gap-4">
+        <div class="flex items-center gap-3 bg-indigo-500/20 rounded-xl px-4 py-3"><span class="text-2xl">1️⃣</span> <span>Desain Poster untuk Proyek</span>
+        </div>
+        <div class="flex items-center gap-3 bg-purple-500/20 rounded-xl px-4 py-3"><span class="text-2xl">2️⃣</span> <span>Desain Dekorasi untuk Pameran</span>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 3: Tujuan Pembelajaran -->
+     <section class="slide min-h-[80vh] flex-col items-center justify-center" data-slide="3">
+      <div class="text-center mb-12"><span class="text-6xl mb-4 block">🎯</span>
+       <h2 class="font-display text-4xl md:text-5xl font-bold gradient-text mb-4">Tujuan Pembelajaran</h2>
+       <p class="text-white/70">Apa yang Akan Kita Capai?</p>
+      </div>
+      <div class="w-full max-w-3xl space-y-4">
+       <div class="bg-gradient-to-r from-indigo-500/20 to-transparent backdrop-blur rounded-xl p-5 border-l-4 border-indigo-500 card-hover">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-full bg-indigo-500/30 flex items-center justify-center flex-shrink-0"><span class="text-xl">✅</span>
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg mb-1">Membuat Karya Desain Poster</h3>
+          <p class="text-white/70">Mampu menciptakan poster yang efektif dan komunikatif</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-gradient-to-r from-purple-500/20 to-transparent backdrop-blur rounded-xl p-5 border-l-4 border-purple-500 card-hover">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-full bg-purple-500/30 flex items-center justify-center flex-shrink-0"><span class="text-xl">✅</span>
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg mb-1">Merancang Desain Dekorasi</h3>
+          <p class="text-white/70">Sebagai penunjang pameran seni yang menarik</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-gradient-to-r from-pink-500/20 to-transparent backdrop-blur rounded-xl p-5 border-l-4 border-pink-500 card-hover">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-full bg-pink-500/30 flex items-center justify-center flex-shrink-0"><span class="text-xl">✅</span>
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg mb-1">Menerapkan Elemen Artistik</h3>
+          <p class="text-white/70">Berpikir dan bekerja artistik dalam menghasilkan ide kreatif</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 4: Profil Pelajar Pancasila -->
+     <section class="slide min-h-[80vh] flex-col items-center justify-center" data-slide="4">
+      <div class="text-center mb-10"><span class="text-6xl mb-4 block">🇮🇩</span>
+       <h2 class="font-display text-4xl md:text-5xl font-bold gradient-text mb-4">Profil Pelajar Pancasila</h2>
+       <p class="text-white/70">Karakter yang Dikembangkan</p>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full max-w-5xl">
+       <div class="bg-gradient-to-br from-blue-500/20 to-blue-600/10 backdrop-blur rounded-2xl p-5 border border-blue-400/20 text-center principle-card">
+        <div class="text-4xl mb-3">
+         🦅
+        </div>
+        <h3 class="font-bold text-blue-300 mb-2">Mandiri</h3>
+        <p class="text-xs text-white/70">Berani mencoba dan mengeksplorasi kemampuan diri</p>
+       </div>
+       <div class="bg-gradient-to-br from-green-500/20 to-green-600/10 backdrop-blur rounded-2xl p-5 border border-green-400/20 text-center principle-card">
+        <div class="text-4xl mb-3">
+         🧠
+        </div>
+        <h3 class="font-bold text-green-300 mb-2">Bernalar Kritis</h3>
+        <p class="text-xs text-white/70">Menerapkan dekorasi sesuai proporsi ruang</p>
+       </div>
+       <div class="bg-gradient-to-br from-yellow-500/20 to-yellow-600/10 backdrop-blur rounded-2xl p-5 border border-yellow-400/20 text-center principle-card">
+        <div class="text-4xl mb-3">
+         💡
+        </div>
+        <h3 class="font-bold text-yellow-300 mb-2">Kreatif</h3>
+        <p class="text-xs text-white/70">Menghasilkan gagasan dan karya yang orisinal</p>
+       </div>
+       <div class="bg-gradient-to-br from-red-500/20 to-red-600/10 backdrop-blur rounded-2xl p-5 border border-red-400/20 text-center principle-card">
+        <div class="text-4xl mb-3">
+         🤝
+        </div>
+        <h3 class="font-bold text-red-300 mb-2">Gotong Royong</h3>
+        <p class="text-xs text-white/70">Berkolaborasi dalam menyelenggarakan pameran</p>
+       </div>
+       <div class="bg-gradient-to-br from-purple-500/20 to-purple-600/10 backdrop-blur rounded-2xl p-5 border border-purple-400/20 text-center principle-card col-span-2 md:col-span-1">
+        <div class="text-4xl mb-3">
+         🌏
+        </div>
+        <h3 class="font-bold text-purple-300 mb-2">Berkebinekaan Global</h3>
+        <p class="text-xs text-white/70">Mengeksplorasi elemen lokal daerah masing-masing</p>
+       </div>
+      </div>
+     </section><!-- Slide 5: Evolusi Materi -->
+     <section class="slide min-h-[80vh] flex-col items-center justify-center" data-slide="5">
+      <div class="text-center mb-10"><span class="text-6xl mb-4 block">📈</span>
+       <h2 class="font-display text-4xl md:text-5xl font-bold gradient-text mb-4">Evolusi Materi Mendesain</h2>
+       <p class="text-white/70">Kaitan dengan Materi Kelas Sebelumnya</p>
+      </div>
+      <div class="w-full max-w-4xl">
+       <div class="relative"><!-- Timeline line -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 rounded-full"></div><!-- Kelas 7 -->
+        <div class="relative flex items-center mb-8">
+         <div class="w-1/2 pr-8 text-right">
+          <div class="bg-indigo-500/20 backdrop-blur rounded-xl p-5 border border-indigo-400/30 inline-block">
+           <h3 class="font-bold text-xl text-indigo-300 mb-2">Kelas 7</h3>
+           <p class="text-white/80 text-sm">Fokus pada <strong>desain logo</strong>, tipografi, dan pola geometris</p>
+          </div>
+         </div>
+         <div class="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-indigo-500 flex items-center justify-center z-10"><span class="text-xl">7️⃣</span>
+         </div>
+         <div class="w-1/2 pl-8"></div>
+        </div><!-- Kelas 8 -->
+        <div class="relative flex items-center mb-8">
+         <div class="w-1/2 pr-8"></div>
+         <div class="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center z-10"><span class="text-xl">8️⃣</span>
+         </div>
+         <div class="w-1/2 pl-8">
+          <div class="bg-purple-500/20 backdrop-blur rounded-xl p-5 border border-purple-400/30 inline-block">
+           <h3 class="font-bold text-xl text-purple-300 mb-2">Kelas 8</h3>
+           <p class="text-white/80 text-sm">Fokus pada pembuatan <strong>poster</strong> dan ragam hias daerah</p>
+          </div>
+         </div>
+        </div><!-- Kelas 9 -->
+        <div class="relative flex items-center">
+         <div class="w-1/2 pr-8 text-right">
+          <div class="bg-pink-500/20 backdrop-blur rounded-xl p-5 border border-pink-400/30 inline-block glow-effect">
+           <h3 class="font-bold text-xl text-pink-300 mb-2">Kelas 9 (Sekarang)</h3>
+           <p class="text-white/80 text-sm">Menghubungkan poster dengan <strong>kegiatan pameran</strong> serta merancang dekorasi ruang pameran</p>
+          </div>
+         </div>
+         <div class="absolute left-1/2 transform -translate-x-1/2 w-14 h-14 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center z-10 glow-effect"><span class="text-2xl">9️⃣</span>
+         </div>
+         <div class="w-1/2 pl-8"></div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 6: Memulai Desain Poster -->
+     <section class="slide min-h-[80vh] flex-col items-center justify-center" data-slide="6">
+      <div class="text-center mb-10"><span class="text-6xl mb-4 block">🚀</span>
+       <h2 class="font-display text-4xl md:text-5xl font-bold gradient-text mb-4">Memulai Desain Poster</h2>
+       <p class="text-white/70">Pentingnya Tema dalam Desain</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 w-full max-w-4xl mb-8">
+       <div class="bg-gradient-to-br from-indigo-500/20 to-purple-500/20 backdrop-blur rounded-2xl p-6 border border-white/10">
+        <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">🎯</span> Mengapa Tema Penting?</h3>
+        <p class="text-white/80 leading-relaxed">Mendesain dengan tema memudahkan pencarian <strong class="text-indigo-300">"benang merah"</strong> konsep pameran. Tema menjadi panduan visual yang menyatukan semua elemen desain.</p>
+       </div>
+       <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur rounded-2xl p-6 border border-white/10">
+        <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">⏰</span> Alokasi Waktu</h3>
+        <p class="text-white/80 leading-relaxed text-3xl font-bold text-center py-4">6 × 2 <span class="text-lg font-normal">jam pertemuan</span></p>
+       </div>
+      </div>
+      <div class="bg-white/5 backdrop-blur rounded-2xl p-6 w-full max-w-4xl border border-white/10">
+       <h3 class="text-lg font-semibold mb-4 text-center">💡 Contoh Tema yang Bisa Digunakan</h3>
+       <div class="flex flex-wrap justify-center gap-4">
+        <div class="bg-gradient-to-r from-indigo-500/30 to-purple-500/30 rounded-xl px-6 py-4 border border-indigo-400/30 card-hover cursor-pointer"><span class="text-3xl block text-center mb-2">🪞</span> <span class="font-semibold">"Identitasku"</span>
+        </div>
+        <div class="bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-xl px-6 py-4 border border-purple-400/30 card-hover cursor-pointer"><span class="text-3xl block text-center mb-2">✍️</span> <span class="font-semibold">"Aksara Nusantara"</span>
+        </div>
+        <div class="bg-gradient-to-r from-pink-500/30 to-red-500/30 rounded-xl px-6 py-4 border border-pink-400/30 card-hover cursor-pointer"><span class="text-3xl block text-center mb-2">🌿</span> <span class="font-semibold">"Alam &amp; Lingkungan"</span>
+        </div>
+        <div class="bg-gradient-to-r from-green-500/30 to-teal-500/30 rounded-xl px-6 py-4 border border-green-400/30 card-hover cursor-pointer"><span class="text-3xl block text-center mb-2">🏛️</span> <span class="font-semibold">"Budaya Lokal"</span>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 7: Prinsip Desain (Part 1) -->
+     <section class="slide min-h-[80vh] flex-col items-center justify-center" data-slide="7">
+      <div class="text-center mb-10"><span class="text-6xl mb-4 block">⚖️</span>
+       <h2 class="font-display text-4xl md:text-5xl font-bold gradient-text mb-4">Prinsip Desain Poster</h2>
+       <p class="text-white/70">Bagian 1: Keseimbangan &amp; Kontras</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 w-full max-w-5xl"><!-- Keseimbangan -->
+       <div class="bg-gradient-to-br from-blue-500/20 to-indigo-500/20 backdrop-blur rounded-2xl p-6 border border-white/10">
+        <div class="flex items-center gap-3 mb-4">
+         <div class="w-12 h-12 rounded-xl bg-blue-500/30 flex items-center justify-center"><span class="text-2xl">⚖️</span>
+         </div>
+         <h3 class="text-2xl font-bold">1. Keseimbangan</h3>
+        </div>
+        <div class="space-y-4">
+         <div class="bg-white/5 rounded-xl p-4">
+          <h4 class="font-semibold text-blue-300 mb-2">Simetri</h4>
+          <p class="text-white/70 text-sm mb-3">Posisi elemen yang terlihat seimbang secara kasat mata (rata kiri-kanan/atas-bawah)</p><!-- Visual Demo Simetri -->
+          <div class="flex justify-center gap-2">
+           <div class="w-16 h-20 bg-blue-500/40 rounded-lg"></div>
+           <div class="w-1 h-20 bg-white/30"></div>
+           <div class="w-16 h-20 bg-blue-500/40 rounded-lg"></div>
+          </div>
+         </div>
+         <div class="bg-white/5 rounded-xl p-4">
+          <h4 class="font-semibold text-indigo-300 mb-2">Asimetri</h4>
+          <p class="text-white/70 text-sm mb-3">Keseimbangan yang tidak sama persis namun tetap harmonis</p><!-- Visual Demo Asimetri -->
+          <div class="flex justify-center items-end gap-2">
+           <div class="w-20 h-24 bg-indigo-500/40 rounded-lg"></div>
+           <div class="w-12 h-16 bg-indigo-400/40 rounded-lg"></div>
+           <div class="w-8 h-10 bg-indigo-300/40 rounded-lg"></div>
+          </div>
+         </div>
+        </div>
+       </div><!-- Kontras -->
+       <div class="bg-gradient-to-br from-orange-500/20 to-red-500/20 backdrop-blur rounded-2xl p-6 border border-white/10">
+        <div class="flex items-center gap-3 mb-4">
+         <div class="w-12 h-12 rounded-xl bg-orange-500/30 flex items-center justify-center"><span class="text-2xl">🔆</span>
+         </div>
+         <h3 class="text-2xl font-bold">2. Kontras</h3>
+        </div>
+        <p class="text-white/80 mb-4">Memberikan poin menarik (focal point) agar mata langsung tertuju pada bagian tertentu.</p><!-- Visual Demo Kontras -->
+        <div class="bg-white/5 rounded-xl p-6">
+         <div class="flex justify-center items-center gap-3 mb-4">
+          <div class="w-10 h-10 bg-gray-500/40 rounded-full"></div>
+          <div class="w-10 h-10 bg-gray-500/40 rounded-full"></div>
+          <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full glow-effect flex items-center justify-center"><span class="text-xl">👁️</span>
+          </div>
+          <div class="w-10 h-10 bg-gray-500/40 rounded-full"></div>
+          <div class="w-10 h-10 bg-gray-500/40 rounded-full"></div>
+         </div>
+         <p class="text-center text-sm text-white/60">Focal point menarik perhatian</p>
+        </div>
+        <div class="mt-4 bg-white/5 rounded-xl p-4">
+         <p class="text-sm text-white/70"><strong class="text-orange-300">Cara menciptakan kontras:</strong><br>
+           • Tulisan tebal vs tipis<br>
+           • Warna mencolok vs netral<br>
+           • Ukuran besar vs kecil</p>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 8: Prinsip Desain (Part 2) -->
+     <section class="slide min-h-[80vh] flex-col items-center justify-center" data-slide="8">
+      <div class="text-center mb-10"><span class="text-6xl mb-4 block">📐</span>
+       <h2 class="font-display text-4xl md:text-5xl font-bold gradient-text mb-4">Prinsip Desain Poster</h2>
+       <p class="text-white/70">Bagian 2: Alignment, Proximity &amp; Hierarki</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6 w-full max-w-5xl"><!-- Kesejajaran -->
+       <div class="bg-gradient-to-br from-green-500/20 to-teal-500/20 backdrop-blur rounded-2xl p-5 border border-white/10">
+        <div class="text-center mb-4">
+         <div class="w-14 h-14 rounded-xl bg-green-500/30 flex items-center justify-center mx-auto mb-3"><span class="text-2xl">📏</span>
+         </div>
+         <h3 class="text-xl font-bold">3. Kesejajaran</h3>
+         <p class="text-xs text-green-300">(Alignment/Proporsi)</p>
+        </div>
+        <p class="text-white/70 text-sm mb-4">Menyusun gambar dan tulisan agar terlihat lebih rapi dan "enak" dipandang.</p><!-- Visual Demo -->
+        <div class="bg-white/5 rounded-xl p-4 space-y-2">
+         <div class="h-3 bg-green-500/40 rounded w-full"></div>
+         <div class="h-3 bg-green-400/40 rounded w-4/5"></div>
+         <div class="h-3 bg-green-300/40 rounded w-3/5"></div>
+         <p class="text-xs text-center text-white/50 mt-2">Elemen yang sejajar = rapi</p>
+        </div>
+       </div><!-- Kedekatan -->
+       <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur rounded-2xl p-5 border border-white/10">
+        <div class="text-center mb-4">
+         <div class="w-14 h-14 rounded-xl bg-purple-500/30 flex items-center justify-center mx-auto mb-3"><span class="text-2xl">📦</span>
+         </div>
+         <h3 class="text-xl font-bold">4. Kedekatan</h3>
+         <p class="text-xs text-purple-300">(Proximity)</p>
+        </div>
+        <p class="text-white/70 text-sm mb-4">Mengatur jarak antar benda untuk memberikan kesan tertentu.</p><!-- Visual Demo -->
+        <div class="bg-white/5 rounded-xl p-4">
+         <div class="flex justify-center gap-1 mb-2">
+          <div class="w-6 h-6 bg-purple-500/60 rounded"></div>
+          <div class="w-6 h-6 bg-purple-500/60 rounded"></div>
+          <div class="w-6 h-6 bg-purple-500/60 rounded"></div>
+         </div>
+         <p class="text-xs text-center text-purple-300 mb-3">Grup A</p>
+         <div class="flex justify-center gap-1">
+          <div class="w-6 h-6 bg-pink-500/60 rounded"></div>
+          <div class="w-6 h-6 bg-pink-500/60 rounded"></div>
+         </div>
+         <p class="text-xs text-center text-pink-300 mt-1">Grup B</p>
+         <p class="text-xs text-center text-white/50 mt-3">Ruang kosong memisahkan grup</p>
+        </div>
+       </div><!-- Hierarki -->
+       <div class="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 backdrop-blur rounded-2xl p-5 border border-white/10">
+        <div class="text-center mb-4">
+         <div class="w-14 h-14 rounded-xl bg-yellow-500/30 flex items-center justify-center mx-auto mb-3"><span class="text-2xl">📊</span>
+         </div>
+         <h3 class="text-xl font-bold">5. Hierarki</h3>
+         <p class="text-xs text-yellow-300">(Tata Urutan)</p>
+        </div>
+        <p class="text-white/70 text-sm mb-4">Tata urutan elemen untuk menciptakan keterpaduan visual.</p><!-- Visual Demo -->
+        <div class="bg-white/5 rounded-xl p-4 text-center">
+         <div class="text-2xl font-bold text-yellow-300 mb-1">
+          JUDUL BESAR
+         </div>
+         <div class="text-lg font-semibold text-yellow-400/80 mb-1">
+          Sub Judul
+         </div>
+         <div class="text-sm text-yellow-500/60">
+          Teks pendukung
+         </div>
+         <div class="text-xs text-yellow-600/40 mt-1">
+          keterangan kecil
+         </div>
+         <p class="text-xs text-white/50 mt-3">Besar → Kecil = Hierarki</p>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 9: Contoh Poster -->
+     <section class="slide min-h-[80vh] flex-col items-center justify-center" data-slide="9">
+      <div class="text-center mb-10"><span class="text-6xl mb-4 block">🖼️</span>
+       <h2 class="font-display text-4xl md:text-5xl font-bold gradient-text mb-4">Inspirasi Desain</h2>
+       <p class="text-white/70">Contoh Implementasi Poster Pameran</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6 w-full max-w-5xl"><!-- Poster 1 -->
+       <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden border border-white/10 card-hover">
+        <div class="aspect-[3/4] bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 p-4 flex flex-col justify-between">
+         <div>
+          <div class="text-xs uppercase tracking-widest opacity-80 mb-2">
+           Pameran Seni
+          </div>
+          <div class="text-3xl font-display font-bold leading-tight">
+           IDENTITAS<br>
+           KU
+          </div>
+         </div>
+         <div class="space-y-1 text-xs">
+          <div>
+           📅 15-20 Oktober 2024
+          </div>
+          <div>
+           📍 Aula SMP Sukamaju
+          </div>
+          <div>
+           🕐 09.00 - 16.00 WIB
+          </div>
+         </div>
+        </div>
+        <div class="p-4">
+         <h4 class="font-semibold text-sm mb-1">Poster Promosi</h4>
+         <p class="text-xs text-white/60">Informasi waktu, lokasi, dan tema</p>
+        </div>
+       </div><!-- Poster 2 -->
+       <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden border border-white/10 card-hover">
+        <div class="aspect-[3/4] bg-gradient-to-b from-orange-900 to-slate-900 p-4 flex flex-col justify-between relative overflow-hidden">
+         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-orange-500/20 blur-2xl"></div>
+         <div class="relative">
+          <div class="text-xs uppercase tracking-widest opacity-80 mb-2">
+           Virtual Exhibition
+          </div>
+         </div>
+         <div class="relative text-center">
+          <div class="text-4xl font-display font-bold mb-2">
+           TERBENAM
+          </div>
+          <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-b from-orange-400 to-orange-600 opacity-80"></div>
+         </div>
+         <div class="relative text-center text-xs opacity-80">
+          Scan QR untuk mengunjungi
+         </div>
+        </div>
+        <div class="p-4">
+         <h4 class="font-semibold text-sm mb-1">Poster Virtual</h4>
+         <p class="text-xs text-white/60">Pameran online dengan tema sunset</p>
+        </div>
+       </div><!-- Poster 3 -->
+       <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden border border-white/10 card-hover">
+        <div class="aspect-[3/4] bg-slate-950 p-4 flex flex-col justify-between relative">
+         <div class="absolute inset-0 opacity-20">
+          <svg viewbox="0 0 100 100" class="w-full h-full"><path d="M10 80 Q30 20 50 50 T90 30" stroke="white" fill="none" stroke-width="0.5" /> <path d="M20 70 Q40 30 60 60 T80 40" stroke="white" fill="none" stroke-width="0.5" />
+          </svg>
+         </div>
+         <div class="relative">
+          <div class="text-xs uppercase tracking-widest opacity-80">
+           Art Exhibition
+          </div>
+         </div>
+         <div class="relative text-center">
+          <div class="text-3xl font-display font-bold tracking-wider">
+           LINE ART
+          </div>
+          <div class="text-sm opacity-60 mt-2">
+           EXHIBITION
+          </div>
+         </div>
+         <div class="relative text-xs text-center opacity-60">
+          Karya Siswa Kelas IX
+         </div>
+        </div>
+        <div class="p-4">
+         <h4 class="font-semibold text-sm mb-1">Poster Minimalis</h4>
+         <p class="text-xs text-white/60">Desain simpel dengan line art</p>
+        </div>
+       </div>
+      </div>
+      <div class="mt-8 bg-yellow-500/20 backdrop-blur rounded-xl p-4 max-w-2xl border border-yellow-400/30">
+       <p class="text-sm text-center"><span class="text-yellow-300 font-semibold">💡 Tips:</span> Pastikan mencantumkan <strong>kontak</strong> atau <strong>cara pendaftaran</strong> jika diperlukan!</p>
+      </div>
+     </section><!-- Slide 10: Interactive Activity - Prinsip Desain -->
+     <section class="slide min-h-[80vh] flex-col items-center justify-center" data-slide="10">
+      <div class="text-center mb-8"><span class="text-6xl mb-4 block">🎮</span>
+       <h2 class="font-display text-4xl md:text-5xl font-bold gradient-text mb-4">Aktivitas Interaktif</h2>
+       <p class="text-white/70">Cocokkan Prinsip Desain dengan Contohnya</p>
+      </div>
+      <div class="w-full max-w-4xl bg-white/5 backdrop-blur rounded-2xl p-6 border border-white/10">
+       <div id="matchingGame" class="space-y-6">
+        <div class="grid md:grid-cols-2 gap-6"><!-- Principles Column -->
+         <div class="space-y-3">
+          <h3 class="font-semibold text-lg mb-4 text-center">Prinsip Desain</h3>
+          <div class="principle-btn bg-indigo-500/30 rounded-xl p-4 cursor-pointer border-2 border-transparent hover:border-indigo-400 transition-all" data-principle="balance" onclick="selectPrinciple(this)"><span class="text-xl mr-2">⚖️</span> Keseimbangan (Balance)
+          </div>
+          <div class="principle-btn bg-orange-500/30 rounded-xl p-4 cursor-pointer border-2 border-transparent hover:border-orange-400 transition-all" data-principle="contrast" onclick="selectPrinciple(this)"><span class="text-xl mr-2">🔆</span> Kontras (Penekanan)
+          </div>
+          <div class="principle-btn bg-green-500/30 rounded-xl p-4 cursor-pointer border-2 border-transparent hover:border-green-400 transition-all" data-principle="alignment" onclick="selectPrinciple(this)"><span class="text-xl mr-2">📏</span> Kesejajaran (Alignment)
+          </div>
+          <div class="principle-btn bg-purple-500/30 rounded-xl p-4 cursor-pointer border-2 border-transparent hover:border-purple-400 transition-all" data-principle="proximity" onclick="selectPrinciple(this)"><span class="text-xl mr-2">📦</span> Kedekatan (Proximity)
+          </div>
+         </div><!-- Examples Column -->
+         <div class="space-y-3">
+          <h3 class="font-semibold text-lg mb-4 text-center">Contoh Penerapan</h3>
+          <div class="example-btn bg-white/10 rounded-xl p-4 cursor-pointer border-2 border-transparent hover:border-white/50 transition-all" data-answer="proximity" onclick="selectExample(this)">
+           Mengelompokkan informasi tanggal dan lokasi dalam satu area
+          </div>
+          <div class="example-btn bg-white/10 rounded-xl p-4 cursor-pointer border-2 border-transparent hover:border-white/50 transition-all" data-answer="contrast" onclick="selectExample(this)">
+           Judul poster dibuat sangat besar dan berwarna mencolok
+          </div>
+          <div class="example-btn bg-white/10 rounded-xl p-4 cursor-pointer border-2 border-transparent hover:border-white/50 transition-all" data-answer="balance" onclick="selectExample(this)">
+           Gambar di kiri dan teks di kanan memiliki "berat" visual yang sama
+          </div>
+          <div class="example-btn bg-white/10 rounded-xl p-4 cursor-pointer border-2 border-transparent hover:border-white/50 transition-all" data-answer="alignment" onclick="selectExample(this)">
+           Semua teks rata kiri membentuk garis imajiner yang rapi
+          </div>
+         </div>
+        </div>
+        <div id="matchResult" class="text-center py-4 hidden">
+         <div class="text-lg font-semibold"></div>
+        </div>
+        <div class="text-center"><button onclick="resetMatchingGame()" class="px-6 py-2 bg-white/10 hover:bg-white/20 rounded-xl transition-all"> 🔄 Reset Permainan </button>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 11: Dekorasi Pameran -->
+     <section class="slide min-h-[80vh] flex-col items-center justify-center" data-slide="11">
+      <div class="text-center mb-10"><span class="text-6xl mb-4 block">🎪</span>
+       <h2 class="font-display text-4xl md:text-5xl font-bold gradient-text mb-4">Desain Dekorasi Pameran</h2>
+       <p class="text-white/70">Menciptakan Suasana Ruang yang Mendukung</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 w-full max-w-5xl">
+       <div class="bg-gradient-to-br from-teal-500/20 to-cyan-500/20 backdrop-blur rounded-2xl p-6 border border-white/10">
+        <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">🎯</span> Fungsi Dekorasi</h3>
+        <ul class="space-y-3 text-white/80">
+         <li class="flex items-start gap-2"><span class="text-teal-400">✓</span> Menciptakan atmosfer sesuai tema pameran</li>
+         <li class="flex items-start gap-2"><span class="text-teal-400">✓</span> Memandu alur pengunjung melihat karya</li>
+         <li class="flex items-start gap-2"><span class="text-teal-400">✓</span> Memperkuat pesan dan kesan karya</li>
+         <li class="flex items-start gap-2"><span class="text-teal-400">✓</span> Memberikan pengalaman visual yang menyeluruh</li>
+        </ul>
+       </div>
+       <div class="bg-gradient-to-br from-pink-500/20 to-rose-500/20 backdrop-blur rounded-2xl p-6 border border-white/10">
+        <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">🧩</span> Elemen Dekorasi</h3>
+        <div class="grid grid-cols-2 gap-3">
+         <div class="bg-white/5 rounded-xl p-3 text-center"><span class="text-2xl block mb-1">🖼️</span> <span class="text-sm">Panel Display</span>
+         </div>
+         <div class="bg-white/5 rounded-xl p-3 text-center"><span class="text-2xl block mb-1">💡</span> <span class="text-sm">Pencahayaan</span>
+         </div>
+         <div class="bg-white/5 rounded-xl p-3 text-center"><span class="text-2xl block mb-1">🎨</span> <span class="text-sm">Warna Ruang</span>
+         </div>
+         <div class="bg-white/5 rounded-xl p-3 text-center"><span class="text-2xl block mb-1">📍</span> <span class="text-sm">Signage</span>
+         </div>
+         <div class="bg-white/5 rounded-xl p-3 text-center"><span class="text-2xl block mb-1">🌸</span> <span class="text-sm">Aksen Dekoratif</span>
+         </div>
+         <div class="bg-white/5 rounded-xl p-3 text-center"><span class="text-2xl block mb-1">🚶</span> <span class="text-sm">Jalur Pengunjung</span>
+         </div>
+        </div>
+       </div>
+      </div><!-- Interactive Room Layout -->
+      <div class="mt-8 w-full max-w-3xl">
+       <h3 class="text-center font-semibold mb-4">🏛️ Contoh Denah Ruang Pameran (Klik untuk Detail)</h3>
+       <div class="bg-slate-800/50 rounded-2xl p-6 border border-white/20 relative aspect-video"><!-- Room Layout SVG -->
+        <svg viewbox="0 0 400 250" class="w-full h-full"><!-- Room outline --> <rect x="20" y="20" width="360" height="210" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" rx="5" /> <!-- Entrance --> <rect x="170" y="210" width="60" height="20" fill="rgba(34,197,94,0.3)" stroke="rgba(34,197,94,0.8)" stroke-width="2" /> <text x="200" y="225" text-anchor="middle" fill="white" font-size="10">
+          PINTU MASUK
+         </text> <!-- Display Panels --> <g class="interactive-demo" onclick="showDecorationTip('panel')">
+          <rect x="30" y="40" width="80" height="60" fill="rgba(99,102,241,0.3)" stroke="rgba(99,102,241,0.8)" stroke-width="2" rx="3" />
+          <text x="70" y="75" text-anchor="middle" fill="white" font-size="9">
+           Panel A
+          </text>
+         </g> <g class="interactive-demo" onclick="showDecorationTip('panel')">
+          <rect x="290" y="40" width="80" height="60" fill="rgba(99,102,241,0.3)" stroke="rgba(99,102,241,0.8)" stroke-width="2" rx="3" />
+          <text x="330" y="75" text-anchor="middle" fill="white" font-size="9">
+           Panel B
+          </text>
+         </g> <!-- Center Display --> <g class="interactive-demo" onclick="showDecorationTip('center')">
+          <rect x="150" y="80" width="100" height="80" fill="rgba(236,72,153,0.3)" stroke="rgba(236,72,153,0.8)" stroke-width="2" rx="3" />
+          <text x="200" y="125" text-anchor="middle" fill="white" font-size="9">
+           Karya Utama
+          </text>
+         </g> <!-- Visitor Path --> <path d="M200 200 L200 170 L80 170 L80 110 L150 110" stroke="rgba(34,197,94,0.6)" stroke-width="2" stroke-dasharray="5,5" fill="none" /> <path d="M250 110 L320 110 L320 170 L200 170" stroke="rgba(34,197,94,0.6)" stroke-width="2" stroke-dasharray="5,5" fill="none" /> <!-- Light indicators --> <circle cx="70" cy="70" r="5" fill="rgba(251,191,36,0.8)" class="float-animation" /> <circle cx="330" cy="70" r="5" fill="rgba(251,191,36,0.8)" class="float-animation" /> <circle cx="200" cy="120" r="8" fill="rgba(251,191,36,0.8)" class="float-animation" />
+        </svg>
+       </div>
+       <div id="decorationTip" class="mt-4 bg-white/5 rounded-xl p-4 text-center text-sm text-white/70 hidden">
+        Klik elemen pada denah untuk melihat tips!
+       </div>
+      </div>
+     </section><!-- Slide 12: Tugas Proyek -->
+     <section class="slide min-h-[80vh] flex-col items-center justify-center" data-slide="12">
+      <div class="text-center mb-10"><span class="text-6xl mb-4 block">📝</span>
+       <h2 class="font-display text-4xl md:text-5xl font-bold gradient-text mb-4">Tugas Proyek</h2>
+       <p class="text-white/70">Mari Berkarya!</p>
+      </div>
+      <div class="w-full max-w-3xl space-y-4">
+       <div class="bg-gradient-to-r from-indigo-500/20 to-transparent backdrop-blur rounded-xl p-5 border-l-4 border-indigo-500">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-full bg-indigo-500 flex items-center justify-center flex-shrink-0 text-xl font-bold">
+          1
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg mb-1">Tentukan Tema Pameran</h3>
+          <p class="text-white/70">Pilih tema yang menarik dan relevan dengan kondisi sekitarmu. Contoh: Identitasku, Aksara Nusantara, Alam Sekitar.</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-gradient-to-r from-purple-500/20 to-transparent backdrop-blur rounded-xl p-5 border-l-4 border-purple-500">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center flex-shrink-0 text-xl font-bold">
+          2
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg mb-1">Buat Draf Kasar (Sketch)</h3>
+          <p class="text-white/70">Buat sketsa poster dengan menerapkan <strong class="text-purple-300">minimal 3 prinsip desain</strong> yang telah dipelajari.</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-gradient-to-r from-pink-500/20 to-transparent backdrop-blur rounded-xl p-5 border-l-4 border-pink-500">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-full bg-pink-500 flex items-center justify-center flex-shrink-0 text-xl font-bold">
+          3
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg mb-1">Gunakan Elemen Lokal</h3>
+          <p class="text-white/70">Tambahkan elemen budaya lokal daerahmu untuk menambah nilai estetika dan keunikan karya.</p>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="mt-8 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur rounded-2xl p-6 w-full max-w-3xl border border-yellow-400/30">
+       <h3 class="font-bold text-lg mb-3 text-center">📋 Kriteria Penilaian</h3>
+       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+        <div class="bg-white/5 rounded-xl p-3">
+         <div class="text-2xl mb-1">
+          🎨
+         </div>
+         <div class="text-sm">
+          Kreativitas
+         </div>
+        </div>
+        <div class="bg-white/5 rounded-xl p-3">
+         <div class="text-2xl mb-1">
+          📐
+         </div>
+         <div class="text-sm">
+          Prinsip Desain
+         </div>
+        </div>
+        <div class="bg-white/5 rounded-xl p-3">
+         <div class="text-2xl mb-1">
+          🏛️
+         </div>
+         <div class="text-sm">
+          Elemen Lokal
+         </div>
+        </div>
+        <div class="bg-white/5 rounded-xl p-3">
+         <div class="text-2xl mb-1">
+          ✨
+         </div>
+         <div class="text-sm">
+          Kerapian
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 13: Interactive Canvas -->
+     <section class="slide min-h-[80vh] flex-col items-center justify-center" data-slide="13">
+      <div class="text-center mb-8"><span class="text-6xl mb-4 block">✏️</span>
+       <h2 class="font-display text-4xl md:text-5xl font-bold gradient-text mb-4">Kanvas Kreatif</h2>
+       <p class="text-white/70">Corat-coret ide postermu di sini!</p>
+      </div>
+      <div class="w-full max-w-4xl">
+       <div class="bg-white/5 backdrop-blur rounded-2xl p-4 border border-white/10">
+        <div class="flex flex-wrap gap-2 mb-4"><button onclick="setDrawColor('#ffffff')" class="w-8 h-8 rounded-full bg-white border-2 border-white/50"></button> <button onclick="setDrawColor('#ef4444')" class="w-8 h-8 rounded-full bg-red-500 border-2 border-transparent hover:border-white/50"></button> <button onclick="setDrawColor('#f97316')" class="w-8 h-8 rounded-full bg-orange-500 border-2 border-transparent hover:border-white/50"></button> <button onclick="setDrawColor('#eab308')" class="w-8 h-8 rounded-full bg-yellow-500 border-2 border-transparent hover:border-white/50"></button> <button onclick="setDrawColor('#22c55e')" class="w-8 h-8 rounded-full bg-green-500 border-2 border-transparent hover:border-white/50"></button> <button onclick="setDrawColor('#3b82f6')" class="w-8 h-8 rounded-full bg-blue-500 border-2 border-transparent hover:border-white/50"></button> <button onclick="setDrawColor('#8b5cf6')" class="w-8 h-8 rounded-full bg-purple-500 border-2 border-transparent hover:border-white/50"></button> <button onclick="setDrawColor('#ec4899')" class="w-8 h-8 rounded-full bg-pink-500 border-2 border-transparent hover:border-white/50"></button>
+         <div class="flex-1"></div><button onclick="setBrushSize(3)" class="px-3 py-1 bg-white/10 rounded-lg text-sm hover:bg-white/20">Tipis</button> <button onclick="setBrushSize(8)" class="px-3 py-1 bg-white/20 rounded-lg text-sm hover:bg-white/30">Sedang</button> <button onclick="setBrushSize(15)" class="px-3 py-1 bg-white/10 rounded-lg text-sm hover:bg-white/20">Tebal</button> <button onclick="clearCanvas()" class="px-3 py-1 bg-red-500/30 rounded-lg text-sm hover:bg-red-500/50">🗑️ Hapus</button>
+        </div>
+        <canvas id="drawCanvas" class="w-full rounded-xl bg-slate-800 cursor-crosshair" style="aspect-ratio: 16/9; touch-action: none;"></canvas>
+        <p class="text-center text-white/50 text-sm mt-3">Gunakan mouse atau jari untuk menggambar</p>
+       </div>
+      </div>
+     </section><!-- Slide 14: Quiz HOTS -->
+     <section class="slide min-h-[80vh] flex-col items-center justify-center" data-slide="14">
+      <div class="text-center mb-8"><span class="text-6xl mb-4 block">🧠</span>
+       <h2 class="font-display text-4xl md:text-5xl font-bold gradient-text mb-4">Latihan Soal HOTS</h2>
+       <p class="text-white/70">Uji Pemahamanmu!</p>
+      </div>
+      <div class="w-full max-w-3xl">
+       <div class="bg-white/5 backdrop-blur rounded-2xl p-6 border border-white/10">
+        <div class="flex items-center justify-between mb-6"><span class="text-sm text-white/60">Soal <span id="currentQuestion">1</span> dari 10</span> <span class="px-3 py-1 bg-indigo-500/30 rounded-full text-sm">Skor: <span id="quizScore">0</span></span>
+        </div>
+        <div id="quizContainer"><!-- Quiz questions will be loaded here -->
+        </div>
+        <div class="flex justify-between mt-6"><button id="prevQuizBtn" onclick="prevQuestion()" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl transition-all disabled:opacity-50" disabled> ← Sebelumnya </button> <button id="nextQuizBtn" onclick="nextQuestion()" class="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 rounded-xl transition-all"> Selanjutnya → </button>
+        </div>
+       </div>
+       <div id="quizResult" class="hidden mt-6 bg-gradient-to-r from-green-500/20 to-teal-500/20 backdrop-blur rounded-2xl p-6 border border-green-400/30 text-center"><span class="text-4xl block mb-4">🎉</span>
+        <h3 class="text-2xl font-bold mb-2">Hasil Akhir</h3>
+        <p class="text-3xl font-bold text-green-400"><span id="finalScore">0</span>/10</p>
+        <p class="text-white/70 mt-2" id="scoreMessage"></p><button onclick="resetQuiz()" class="mt-4 px-6 py-2 bg-white/10 hover:bg-white/20 rounded-xl transition-all"> 🔄 Ulangi Quiz </button>
+       </div>
+      </div>
+     </section><!-- Slide 15: Closing -->
+     <section class="slide min-h-[80vh] flex-col items-center justify-center text-center" data-slide="15">
+      <div class="float-animation mb-8">
+       <div class="w-32 h-32 mx-auto rounded-3xl bg-gradient-to-br from-green-500 via-teal-500 to-cyan-500 flex items-center justify-center glow-effect"><span class="text-6xl">🎨</span>
+       </div>
+      </div>
+      <h2 class="font-display text-4xl md:text-5xl font-bold mb-6"><span class="gradient-text">Terima Kasih!</span></h2>
+      <p class="text-xl text-white/80 mb-8 max-w-2xl">Selamat berkarya dan berkreasi! Ingat, desain yang baik adalah desain yang dapat menyampaikan pesan dengan efektif dan estetis.</p>
+      <div class="flex flex-wrap justify-center gap-4 mb-8">
+       <div class="bg-white/5 backdrop-blur rounded-xl p-4 border border-white/10"><span class="text-2xl block mb-2">📝</span> <span class="text-sm">Buat Poster</span>
+       </div>
+       <div class="bg-white/5 backdrop-blur rounded-xl p-4 border border-white/10"><span class="text-2xl block mb-2">🎪</span> <span class="text-sm">Rancang Dekorasi</span>
+       </div>
+       <div class="bg-white/5 backdrop-blur rounded-xl p-4 border border-white/10"><span class="text-2xl block mb-2">🤝</span> <span class="text-sm">Kolaborasi</span>
+       </div>
+       <div class="bg-white/5 backdrop-blur rounded-xl p-4 border border-white/10"><span class="text-2xl block mb-2">🌟</span> <span class="text-sm">Pamerkan!</span>
+       </div>
+      </div>
+      <div class="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 backdrop-blur rounded-2xl p-6 max-w-lg border border-white/10">
+       <p class="text-white/70 text-sm mb-2">Quote of the Day:</p>
+       <p class="text-lg italic">"Design is not just what it looks like and feels like. Design is how it works."</p>
+       <p class="text-white/50 text-sm mt-2">— Steve Jobs</p>
+      </div>
+     </section>
+    </div>
+   </main><!-- Slide Navigation Dots -->
+   <div class="fixed bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 bg-slate-900/80 backdrop-blur rounded-full px-4 py-2 z-50"><button onclick="goToSlide(1)" class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all active" data-dot="1"></button> <button onclick="goToSlide(2)" class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all" data-dot="2"></button> <button onclick="goToSlide(3)" class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all" data-dot="3"></button> <button onclick="goToSlide(4)" class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all" data-dot="4"></button> <button onclick="goToSlide(5)" class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all" data-dot="5"></button> <button onclick="goToSlide(6)" class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all" data-dot="6"></button> <button onclick="goToSlide(7)" class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all" data-dot="7"></button> <button onclick="goToSlide(8)" class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all" data-dot="8"></button> <button onclick="goToSlide(9)" class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all" data-dot="9"></button> <button onclick="goToSlide(10)" class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all" data-dot="10"></button> <button onclick="goToSlide(11)" class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all" data-dot="11"></button> <button onclick="goToSlide(12)" class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all" data-dot="12"></button> <button onclick="goToSlide(13)" class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all" data-dot="13"></button> <button onclick="goToSlide(14)" class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all" data-dot="14"></button> <button onclick="goToSlide(15)" class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all" data-dot="15"></button>
+   </div>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      presenter_name: '[Algian Manggara, S.Agr]',
+      school_name: 'SMP Negeri 8 Cikarang Utara',
+      primary_color: '#6366f1',
+      secondary_color: '#a855f7',
+      accent_color: '#ec4899',
+      text_color: '#ffffff',
+      background_color: '#0f172a'
+    };
+
+    let config = { ...defaultConfig };
+    let currentSlide = 1;
+    const totalSlides = 15;
+
+    // Element SDK initialization
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          updateUI();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                cfg.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (value) => {
+                cfg.secondary_color = value;
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            },
+            {
+              get: () => cfg.accent_color || defaultConfig.accent_color,
+              set: (value) => {
+                cfg.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['presenter_name', cfg.presenter_name || defaultConfig.presenter_name],
+          ['school_name', cfg.school_name || defaultConfig.school_name]
+        ])
+      });
+    }
+
+    function updateUI() {
+      document.getElementById('presenterName').textContent = config.presenter_name || defaultConfig.presenter_name;
+    }
+
+    // Slide navigation
+    function showSlide(n) {
+      const slides = document.querySelectorAll('.slide');
+      const dots = document.querySelectorAll('.slide-dot');
+      
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active', 'bg-white'));
+      dots.forEach(dot => dot.classList.add('bg-white/30'));
+      
+      currentSlide = n;
+      if (currentSlide > totalSlides) currentSlide = totalSlides;
+      if (currentSlide < 1) currentSlide = 1;
+      
+      slides[currentSlide - 1].classList.add('active');
+      dots[currentSlide - 1].classList.add('active', 'bg-white');
+      dots[currentSlide - 1].classList.remove('bg-white/30');
+      
+      document.getElementById('slideIndicator').textContent = `${currentSlide} / ${totalSlides}`;
+      document.getElementById('progressBar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+      
+      // Initialize quiz when reaching slide 14
+      if (currentSlide === 14 && !quizInitialized) {
+        initQuiz();
+      }
+      
+      // Initialize canvas when reaching slide 13
+      if (currentSlide === 13 && !canvasInitialized) {
+        initCanvas();
+      }
+    }
+
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      showSlide(currentSlide - 1);
+    }
+
+    function goToSlide(n) {
+      showSlide(n);
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+      }
+    });
+
+    // Matching game
+    let selectedPrinciple = null;
+    let matchedPairs = 0;
+
+    function selectPrinciple(el) {
+      if (el.classList.contains('matched')) return;
+      
+      document.querySelectorAll('.principle-btn').forEach(btn => {
+        btn.classList.remove('ring-2', 'ring-white');
+      });
+      
+      el.classList.add('ring-2', 'ring-white');
+      selectedPrinciple = el.dataset.principle;
+    }
+
+    function selectExample(el) {
+      if (!selectedPrinciple || el.classList.contains('matched')) return;
+      
+      const answer = el.dataset.answer;
+      const resultEl = document.getElementById('matchResult');
+      
+      if (answer === selectedPrinciple) {
+        el.classList.add('matched', 'bg-green-500/30', 'border-green-400');
+        document.querySelector(`[data-principle="${selectedPrinciple}"]`).classList.add('matched', 'opacity-50');
+        matchedPairs++;
+        
+        resultEl.classList.remove('hidden');
+        resultEl.querySelector('div').innerHTML = '<span class="text-green-400">✓ Benar!</span>';
+        
+        if (matchedPairs === 4) {
+          setTimeout(() => {
+            resultEl.querySelector('div').innerHTML = '<span class="text-green-400">🎉 Selamat! Semua pasangan cocok!</span>';
+          }, 500);
+        }
+      } else {
+        resultEl.classList.remove('hidden');
+        resultEl.querySelector('div').innerHTML = '<span class="text-red-400">✗ Coba lagi!</span>';
+      }
+      
+      selectedPrinciple = null;
+      document.querySelectorAll('.principle-btn').forEach(btn => {
+        btn.classList.remove('ring-2', 'ring-white');
+      });
+    }
+
+    function resetMatchingGame() {
+      selectedPrinciple = null;
+      matchedPairs = 0;
+      
+      document.querySelectorAll('.principle-btn, .example-btn').forEach(btn => {
+        btn.classList.remove('matched', 'bg-green-500/30', 'border-green-400', 'opacity-50', 'ring-2', 'ring-white');
+      });
+      
+      document.getElementById('matchResult').classList.add('hidden');
+    }
+
+    // Decoration tips
+    function showDecorationTip(type) {
+      const tipEl = document.getElementById('decorationTip');
+      tipEl.classList.remove('hidden');
+      
+      const tips = {
+        panel: '🖼️ <strong>Panel Display:</strong> Pastikan ketinggian panel sesuai dengan eye-level pengunjung (sekitar 150-160cm dari lantai). Berikan jarak antar karya minimal 30cm.',
+        center: '⭐ <strong>Karya Utama:</strong> Tempatkan karya utama di tengah ruangan dengan pencahayaan khusus. Ini akan menjadi focal point yang menarik perhatian pengunjung.'
+      };
+      
+      tipEl.innerHTML = tips[type] || 'Klik elemen pada denah untuk melihat tips!';
+    }
+
+    // Canvas drawing
+    let canvasInitialized = false;
+    let canvas, ctx;
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+    let drawColor = '#ffffff';
+    let brushSize = 8;
+
+    function initCanvas() {
+      canvas = document.getElementById('drawCanvas');
+      ctx = canvas.getContext('2d');
+      
+      // Set canvas size
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * 2;
+      canvas.height = rect.height * 2;
+      ctx.scale(2, 2);
+      
+      // Fill with dark background
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Mouse events
+      canvas.addEventListener('mousedown', startDrawing);
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseup', stopDrawing);
+      canvas.addEventListener('mouseout', stopDrawing);
+      
+      // Touch events
+      canvas.addEventListener('touchstart', handleTouchStart);
+      canvas.addEventListener('touchmove', handleTouchMove);
+      canvas.addEventListener('touchend', stopDrawing);
+      
+      canvasInitialized = true;
+    }
+
+    function startDrawing(e) {
+      isDrawing = true;
+      const rect = canvas.getBoundingClientRect();
+      lastX = e.clientX - rect.left;
+      lastY = e.clientY - rect.top;
+    }
+
+    function draw(e) {
+      if (!isDrawing) return;
+      
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(x, y);
+      ctx.strokeStyle = drawColor;
+      ctx.lineWidth = brushSize;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+      
+      lastX = x;
+      lastY = y;
+    }
+
+    function handleTouchStart(e) {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      isDrawing = true;
+      lastX = touch.clientX - rect.left;
+      lastY = touch.clientY - rect.top;
+    }
+
+    function handleTouchMove(e) {
+      e.preventDefault();
+      if (!isDrawing) return;
+      
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(x, y);
+      ctx.strokeStyle = drawColor;
+      ctx.lineWidth = brushSize;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+      
+      lastX = x;
+      lastY = y;
+    }
+
+    function stopDrawing() {
+      isDrawing = false;
+    }
+
+    function setDrawColor(color) {
+      drawColor = color;
+    }
+
+    function setBrushSize(size) {
+      brushSize = size;
+    }
+
+    function clearCanvas() {
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(0, 0, canvas.width / 2, canvas.height / 2);
+    }
+
+    // Quiz HOTS
+    let quizInitialized = false;
+    let currentQ = 0;
+    let score = 0;
+    let userAnswers = [];
+
+    const quizQuestions = [
+      {
+        question: "Seorang desainer ingin membuat poster pameran dengan tema 'Budaya Lokal'. Ia memiliki gambar batik di sisi kiri dan ingin menambahkan teks di sisi kanan. Prinsip desain apa yang sedang ia terapkan?",
+        options: ["Kontras", "Keseimbangan Asimetris", "Proximity", "Hierarki"],
+        answer: 1,
+        explanation: "Menempatkan gambar dan teks di sisi berbeda untuk menciptakan harmoni visual adalah contoh keseimbangan asimetris."
+      },
+      {
+        question: "Dalam sebuah poster, judul 'PAMERAN SENI' dibuat dengan ukuran 72pt, sub-judul 36pt, dan keterangan 12pt. Analisis prinsip desain yang diterapkan!",
+        options: ["Alignment", "Proximity", "Hierarki", "Kontras warna"],
+        answer: 2,
+        explanation: "Pengaturan ukuran font dari besar ke kecil menunjukkan tingkat kepentingan informasi, ini adalah prinsip hierarki."
+      },
+      {
+        question: "Jika kamu diminta membuat dekorasi ruang pameran untuk 20 karya lukisan, faktor apa yang PALING penting dipertimbangkan terlebih dahulu?",
+        options: ["Warna cat dinding", "Jenis bingkai", "Proporsi ruang dan jumlah karya", "Harga material"],
+        answer: 2,
+        explanation: "Proporsi ruang dan jumlah karya menentukan layout, jarak antar karya, dan pengalaman pengunjung secara keseluruhan."
+      },
+      {
+        question: "Sebuah poster pameran virtual menggunakan warna latar hitam dengan teks putih dan satu elemen berwarna merah terang. Apa tujuan penggunaan warna merah tersebut?",
+        options: ["Membuat poster lebih ramai", "Menciptakan focal point", "Mengikuti tren", "Menghemat tinta"],
+        answer: 1,
+        explanation: "Warna kontras (merah pada latar hitam-putih) berfungsi sebagai focal point yang menarik perhatian pada elemen tertentu."
+      },
+      {
+        question: "Dalam mendesain poster, seorang siswa menempatkan tanggal, waktu, dan lokasi dalam satu kotak yang sama. Prinsip desain apa yang diterapkan?",
+        options: ["Keseimbangan", "Kesejajaran", "Kedekatan (Proximity)", "Kontras"],
+        answer: 2,
+        explanation: "Mengelompokkan informasi yang berkaitan (tanggal, waktu, lokasi) dalam satu area adalah penerapan prinsip proximity."
+      },
+      {
+        question: "Evaluasi pernyataan berikut: 'Desain poster yang baik harus selalu menggunakan banyak warna agar menarik.' Apakah pernyataan ini tepat?",
+        options: ["Tepat, karena warna menarik perhatian", "Tidak tepat, efektivitas lebih penting dari banyaknya warna", "Tepat, karena poster harus mencolok", "Tidak tepat, poster hanya boleh hitam-putih"],
+        answer: 1,
+        explanation: "Desain yang baik fokus pada efektivitas komunikasi visual, bukan banyaknya warna. Poster minimalis bisa sangat efektif."
+      },
+      {
+        question: "Saat mendekorasi ruang pameran, jalur pengunjung dirancang melingkar dengan karya utama di tengah. Apa keuntungan layout ini?",
+        options: ["Menghemat ruang", "Semua karya mendapat porsi perhatian yang adil dengan highlight di tengah", "Lebih mudah dibuat", "Pengunjung bisa pulang lebih cepat"],
+        answer: 1,
+        explanation: "Layout melingkar dengan focal point di tengah memastikan semua karya dilihat dan karya utama mendapat perhatian khusus."
+      },
+      {
+        question: "Jika tema pameran adalah 'Aksara Nusantara', elemen lokal apa yang paling tepat untuk diintegrasikan ke dalam desain poster?",
+        options: ["Gambar gedung modern", "Huruf-huruf tradisional daerah seperti Jawa, Sunda, atau Bali", "Foto artis terkenal", "Logo merek internasional"],
+        answer: 1,
+        explanation: "Aksara/huruf tradisional daerah langsung relevan dengan tema dan menunjukkan kekayaan budaya lokal."
+      },
+      {
+        question: "Dalam konteks profil pelajar Pancasila, aktivitas apa dalam proyek pameran yang paling merepresentasikan 'Gotong Royong'?",
+        options: ["Membuat poster sendiri", "Menilai karya teman", "Bekerja sama menyusun dekorasi ruang pameran", "Membeli bahan sendiri"],
+        answer: 2,
+        explanation: "Kolaborasi dalam menyusun dekorasi melibatkan kerja sama tim, pembagian tugas, dan tanggung jawab bersama."
+      },
+      {
+        question: "Bandingkan fungsi poster promosi dan poster karya dalam pameran. Apa perbedaan utamanya?",
+        options: ["Poster promosi lebih besar", "Poster promosi berisi informasi event, poster karya menampilkan hasil seni", "Poster karya lebih mahal", "Tidak ada perbedaan"],
+        answer: 1,
+        explanation: "Poster promosi berfungsi menginformasikan kapan/dimana pameran, sedangkan poster karya menampilkan hasil kreasi seni."
+      }
+    ];
+
+    function initQuiz() {
+      currentQ = 0;
+      score = 0;
+      userAnswers = new Array(quizQuestions.length).fill(null);
+      document.getElementById('quizScore').textContent = '0';
+      document.getElementById('quizResult').classList.add('hidden');
+      loadQuestion();
+      quizInitialized = true;
+    }
+
+    function loadQuestion() {
+      const q = quizQuestions[currentQ];
+      const container = document.getElementById('quizContainer');
+      
+      document.getElementById('currentQuestion').textContent = currentQ + 1;
+      document.getElementById('prevQuizBtn').disabled = currentQ === 0;
+      
+      const isLast = currentQ === quizQuestions.length - 1;
+      document.getElementById('nextQuizBtn').textContent = isLast ? 'Selesai ✓' : 'Selanjutnya →';
+      
+      let optionsHtml = q.options.map((opt, i) => {
+        let classes = 'quiz-option p-4 rounded-xl border-2 border-white/20 cursor-pointer';
+        if (userAnswers[currentQ] === i) {
+          classes += ' selected';
+        }
+        return `<div class="${classes}" data-index="${i}" onclick="selectAnswer(${i})">${String.fromCharCode(65 + i)}. ${opt}</div>`;
+      }).join('');
+      
+      container.innerHTML = `
+        <div class="mb-6">
+          <p class="text-lg leading-relaxed">${q.question}</p>
+        </div>
+        <div class="space-y-3">
+          ${optionsHtml}
+        </div>
+        <div id="explanation" class="mt-4 hidden bg-blue-500/20 rounded-xl p-4 text-sm">
+          <strong>Penjelasan:</strong> ${q.explanation}
+        </div>
+      `;
+    }
+
+    function selectAnswer(index) {
+      userAnswers[currentQ] = index;
+      
+      const options = document.querySelectorAll('.quiz-option');
+      options.forEach((opt, i) => {
+        opt.classList.remove('selected', 'correct', 'incorrect');
+        if (i === index) {
+          opt.classList.add('selected');
+        }
+      });
+    }
+
+    function nextQuestion() {
+      // Check if answered
+      if (userAnswers[currentQ] === null) {
+        // Show inline message instead of alert
+        const container = document.getElementById('quizContainer');
+        let msg = container.querySelector('.warning-msg');
+        if (!msg) {
+          msg = document.createElement('div');
+          msg.className = 'warning-msg text-yellow-400 text-sm mt-2 text-center';
+          msg.textContent = '⚠️ Pilih jawaban terlebih dahulu!';
+          container.appendChild(msg);
+        }
+        return;
+      }
+      
+      // Remove warning if exists
+      const warning = document.querySelector('.warning-msg');
+      if (warning) warning.remove();
+      
+      // Show correct answer
+      const options = document.querySelectorAll('.quiz-option');
+      const q = quizQuestions[currentQ];
+      options.forEach((opt, i) => {
+        opt.classList.add('disabled');
+        opt.style.pointerEvents = 'none';
+        if (i === q.answer) {
+          opt.classList.add('correct');
+        } else if (i === userAnswers[currentQ] && userAnswers[currentQ] !== q.answer) {
+          opt.classList.add('incorrect');
+        }
+      });
+      
+      // Show explanation
+      document.getElementById('explanation').classList.remove('hidden');
+      
+      // Calculate score
+      if (userAnswers[currentQ] === q.answer) {
+        score++;
+        document.getElementById('quizScore').textContent = score;
+      }
+      
+      // Move to next after delay
+      setTimeout(() => {
+        if (currentQ < quizQuestions.length - 1) {
+          currentQ++;
+          loadQuestion();
+        } else {
+          showQuizResult();
+        }
+      }, 2000);
+    }
+
+    function prevQuestion() {
+      if (currentQ > 0) {
+        currentQ--;
+        loadQuestion();
+      }
+    }
+
+    function showQuizResult() {
+      document.getElementById('quizContainer').innerHTML = '';
+      document.getElementById('quizResult').classList.remove('hidden');
+      document.getElementById('finalScore').textContent = score;
+      document.getElementById('prevQuizBtn').style.display = 'none';
+      document.getElementById('nextQuizBtn').style.display = 'none';
+      
+      let message = '';
+      if (score >= 9) {
+        message = '🌟 Luar biasa! Kamu menguasai materi dengan sangat baik!';
+      } else if (score >= 7) {
+        message = '👍 Bagus! Pemahamanmu sudah baik, terus tingkatkan!';
+      } else if (score >= 5) {
+        message = '💪 Cukup baik! Pelajari lagi materi yang kurang dipahami.';
+      } else {
+        message = '📚 Perlu belajar lebih giat. Ulangi materi dan coba lagi!';
+      }
+      
+      document.getElementById('scoreMessage').textContent = message;
+    }
+
+    function resetQuiz() {
+      document.getElementById('prevQuizBtn').style.display = 'block';
+      document.getElementById('nextQuizBtn').style.display = 'block';
+      initQuiz();
+    }
+
+    // Initialize
+    showSlide(1);
+    updateUI();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c9a9b15f4adc649',t:'MTc3MDM4MDQ3MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,1716 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pembelajaran Tekanan Gas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Quicksand:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Nunito', sans-serif;
+    }
+    
+    .heading-font {
+      font-family: 'Quicksand', sans-serif;
+    }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+    
+    .card-glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:hover {
+      transform: translateX(8px);
+    }
+    
+    .nav-item.active {
+      background: linear-gradient(90deg, #e94560 0%, #ff6b6b 100%);
+      color: white;
+    }
+    
+    .section-card {
+      animation: fadeInUp 0.6s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(233, 69, 96, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(233, 69, 96, 0.6); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      background: rgba(233, 69, 96, 0.2);
+      border-color: #e94560;
+    }
+    
+    .quiz-option.selected {
+      background: rgba(233, 69, 96, 0.3);
+      border-color: #e94560;
+    }
+    
+    .quiz-option.correct {
+      background: rgba(34, 197, 94, 0.3);
+      border-color: #22c55e;
+    }
+    
+    .quiz-option.incorrect {
+      background: rgba(239, 68, 68, 0.3);
+      border-color: #ef4444;
+    }
+    
+    .progress-bar {
+      background: linear-gradient(90deg, #e94560, #ff6b6b);
+    }
+    
+    .illustration-container {
+      background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+      border-radius: 20px;
+      padding: 20px;
+    }
+    
+    .interactive-demo {
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    
+    .interactive-demo:hover {
+      transform: scale(1.02);
+    }
+    
+    .balloon {
+      transition: all 0.5s ease;
+    }
+    
+    .molecule {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #ff6b6b;
+      border-radius: 50%;
+      animation: bounce-molecule 1s ease-in-out infinite;
+    }
+    
+    @keyframes bounce-molecule {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(5px, -5px); }
+      50% { transform: translate(-3px, 3px); }
+      75% { transform: translate(4px, 2px); }
+    }
+    
+    .water-drop {
+      animation: water-rise 2s ease-in-out infinite;
+    }
+    
+    @keyframes water-rise {
+      0% { transform: translateY(100%); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-100%); opacity: 0; }
+    }
+    
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #e94560;
+      border-radius: 4px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full gradient-bg text-white overflow-auto">
+  <div class="h-full flex flex-col lg:flex-row"><!-- Sidebar Navigation -->
+   <aside class="w-full lg:w-72 bg-black/30 p-4 lg:p-6 lg:overflow-auto flex-shrink-0">
+    <div class="text-center mb-6">
+     <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-br from-pink-500 to-red-500 flex items-center justify-center pulse-glow">
+      <svg class="w-8 h-8" fill="white" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+      </svg>
+     </div>
+     <h1 id="main-title" class="heading-font text-xl font-bold text-white">Tekanan Gas</h1>
+     <p id="teacher-name" class="text-pink-300 text-sm mt-1">Pembelajaran Fisika</p>
+    </div>
+    <nav class="space-y-2" id="nav-menu"><!-- Navigation items will be generated by JavaScript -->
+    </nav>
+    <div class="mt-6 p-4 card-glass rounded-xl">
+     <h3 class="text-sm font-semibold text-pink-300 mb-2">📊 Progress Belajar</h3>
+     <div class="w-full bg-white/10 rounded-full h-3">
+      <div id="learning-progress" class="progress-bar h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+     </div>
+     <p id="progress-text" class="text-xs text-gray-300 mt-2">0 dari 7 materi dipelajari</p>
+    </div>
+   </aside><!-- Main Content -->
+   <main class="flex-1 p-4 lg:p-8 overflow-auto">
+    <div id="content-container" class="max-w-4xl mx-auto"><!-- Content will be dynamically loaded -->
+    </div>
+   </main>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_title: "Tekanan Gas",
+      teacher_name: "Pembelajaran Fisika",
+      primary_color: "#e94560",
+      secondary_color: "#1a1a2e",
+      text_color: "#ffffff",
+      accent_color: "#ff6b6b",
+      surface_color: "#16213e"
+    };
+
+    let config = { ...defaultConfig };
+    let currentSection = 0;
+    let visitedSections = new Set([0]);
+    let quizAnswers = {};
+    let quizSubmitted = false;
+
+    // Content Data
+    const sections = [
+      {
+        id: "intro",
+        title: "Pendahuluan Tekanan Gas",
+        icon: "🎈"
+      },
+      {
+        id: "temp-pressure",
+        title: "Hubungan Suhu & Tekanan",
+        icon: "🌡️"
+      },
+      {
+        id: "hot-air-balloon",
+        title: "Balon Udara",
+        icon: "🎪"
+      },
+      {
+        id: "pascal",
+        title: "Hukum Pascal",
+        icon: "⚙️"
+      },
+      {
+        id: "human",
+        title: "Tekanan pada Manusia",
+        icon: "🫀"
+      },
+      {
+        id: "plant",
+        title: "Tekanan pada Tumbuhan",
+        icon: "🌱"
+      },
+      {
+        id: "quiz",
+        title: "Kuis HOTS (10 Soal)",
+        icon: "📝"
+      }
+    ];
+
+    // Quiz Questions (HOTS - Higher Order Thinking Skills)
+    const quizQuestions = [
+      {
+        id: 1,
+        question: "Seorang penyelam berada pada kedalaman 30 meter di bawah permukaan laut. Jika ia naik terlalu cepat ke permukaan, gelembung nitrogen dalam darahnya akan mengembang. Konsep fisika apa yang menjelaskan fenomena ini?",
+        options: [
+          "Hukum Archimedes tentang gaya apung",
+          "Hukum Boyle tentang hubungan tekanan dan volume gas",
+          "Hukum Pascal tentang tekanan dalam fluida",
+          "Hukum Newton tentang gravitasi"
+        ],
+        correct: 1,
+        explanation: "Hukum Boyle menyatakan bahwa pada suhu tetap, volume gas berbanding terbalik dengan tekanannya (P₁V₁ = P₂V₂). Saat penyelam naik, tekanan menurun sehingga volume gelembung gas meningkat."
+      },
+      {
+        id: 2,
+        question: "Sebuah balon udara panas memiliki volume 2.800 m³ dan massa total (balon + penumpang + peralatan) 480 kg. Jika massa jenis udara luar adalah 1,2 kg/m³, berapakah massa jenis minimum udara panas di dalam balon agar balon dapat terbang?",
+        options: [
+          "Kurang dari 0,17 kg/m³",
+          "Kurang dari 1,03 kg/m³",
+          "Lebih dari 1,2 kg/m³",
+          "Tepat 1,2 kg/m³"
+        ],
+        correct: 1,
+        explanation: "Gaya apung = ρ_udara × V × g. Agar terbang, gaya apung > berat total. Berat total = 480 kg + (ρ_dalam × 2800). Massa jenis udara dalam harus < (1,2 × 2800 - 480)/2800 ≈ 1,03 kg/m³."
+      },
+      {
+        id: 3,
+        question: "Pada dongkrak hidrolik, piston kecil memiliki luas penampang 4 cm² dan piston besar 100 cm². Jika gaya 50 N diberikan pada piston kecil, berapa gaya yang dihasilkan pada piston besar?",
+        options: [
+          "500 N",
+          "1.000 N",
+          "1.250 N",
+          "2.500 N"
+        ],
+        correct: 2,
+        explanation: "Berdasarkan Hukum Pascal: F₁/A₁ = F₂/A₂. Maka F₂ = F₁ × (A₂/A₁) = 50 × (100/4) = 50 × 25 = 1.250 N."
+      },
+      {
+        id: 4,
+        question: "Mengapa pendaki gunung sering mengalami hidung berdarah saat berada di ketinggian tinggi?",
+        options: [
+          "Suhu udara yang sangat dingin membekukan darah",
+          "Tekanan udara luar yang rendah menyebabkan pembuluh darah pecah",
+          "Kadar oksigen yang tinggi merusak pembuluh darah",
+          "Gravitasi yang lebih kuat menekan pembuluh darah"
+        ],
+        correct: 1,
+        explanation: "Di ketinggian, tekanan atmosfer menurun. Tekanan darah di dalam tubuh relatif lebih tinggi dibanding tekanan luar, menyebabkan pembuluh darah kapiler (yang tipis) di hidung dapat pecah."
+      },
+      {
+        id: 5,
+        question: "Dalam eksperimen gelas air dengan kertas HVS yang dibalik, faktor apa yang PALING menentukan keberhasilan eksperimen?",
+        options: [
+          "Ketebalan kertas HVS",
+          "Berat air dalam gelas",
+          "Tidak adanya gelembung udara antara air dan kertas",
+          "Bentuk gelas yang digunakan"
+        ],
+        correct: 2,
+        explanation: "Keberhasilan eksperimen bergantung pada tekanan atmosfer yang mendorong kertas. Jika ada gelembung udara, tekanan di dalam gelas tidak murni dari air saja, mengurangi efektivitas tekanan atmosfer dalam menahan kertas."
+      },
+      {
+        id: 6,
+        question: "Seorang petani menanam pohon di daerah kering. Untuk membantu pengangkutan air ke daun yang tinggi, strategi mana yang PALING efektif berdasarkan prinsip tekanan pada tumbuhan?",
+        options: [
+          "Menyiram lebih banyak air ke tanah",
+          "Memotong sebagian daun untuk mengurangi transpirasi",
+          "Menanam di tempat teduh untuk mengurangi penguapan",
+          "Memberikan pupuk langsung ke daun"
+        ],
+        correct: 1,
+        explanation: "Memotong sebagian daun mengurangi laju transpirasi berlebihan yang dapat menyebabkan dehidrasi. Di daerah kering, keseimbangan antara transpirasi dan penyerapan air sangat penting untuk kelangsungan hidup tanaman."
+      },
+      {
+        id: 7,
+        question: "Sebuah tabung Erlenmeyer berisi udara ditutup balon dan dipanaskan. Kemudian didinginkan dengan es. Apa yang terjadi dan mengapa?",
+        options: [
+          "Balon tetap sama karena jumlah molekul gas tidak berubah",
+          "Balon mengempis karena molekul gas bergerak lebih lambat dan tekanan dalam menurun",
+          "Balon mengembang karena es menambah kelembaban",
+          "Balon pecah karena perubahan suhu yang drastis"
+        ],
+        correct: 1,
+        explanation: "Saat didinginkan, energi kinetik molekul gas menurun, molekul bergerak lebih lambat, dan tekanan gas di dalam tabung menurun. Karena tekanan luar lebih besar dari tekanan dalam, balon terdorong ke dalam (mengempis)."
+      },
+      {
+        id: 8,
+        question: "Dalam pengukuran tekanan darah, mengapa manset tensimeter harus dipasang sejajar dengan jantung?",
+        options: [
+          "Agar lebih nyaman bagi pasien",
+          "Untuk menghindari pengaruh tekanan hidrostatik",
+          "Karena pembuluh darah di lengan lebih mudah diakses",
+          "Untuk menghemat waktu pengukuran"
+        ],
+        correct: 1,
+        explanation: "Jika manset lebih tinggi atau lebih rendah dari jantung, akan ada perbedaan tekanan hidrostatik yang mempengaruhi hasil pengukuran. Setiap 10 cm perbedaan tinggi dapat mengubah pembacaan sekitar 7-8 mmHg."
+      },
+      {
+        id: 9,
+        question: "Mengapa ban sepeda lebih mudah meletus saat cuaca sangat panas dibandingkan saat cuaca dingin?",
+        options: [
+          "Karet ban menjadi lebih tipis saat panas",
+          "Tekanan udara atmosfer meningkat saat panas",
+          "Volume udara dalam ban meningkat saat suhu naik, meningkatkan tekanan",
+          "Karet ban menyerap panas dan meleleh"
+        ],
+        correct: 2,
+        explanation: "Berdasarkan Hukum Gay-Lussac, pada volume tetap, tekanan gas berbanding lurus dengan suhu. Saat suhu meningkat, tekanan udara dalam ban meningkat. Jika tekanan melebihi batas kekuatan ban, ban bisa meletus."
+      },
+      {
+        id: 10,
+        question: "Analisis mengapa pertukaran O₂ dan CO₂ di alveolus paru-paru dapat terjadi secara efisien meskipun tanpa menggunakan energi aktif (ATP)?",
+        options: [
+          "Karena alveolus memiliki enzim khusus untuk pertukaran gas",
+          "Karena perbedaan tekanan parsial gas antara alveolus dan kapiler darah",
+          "Karena darah memiliki hemoglobin yang menarik oksigen secara aktif",
+          "Karena paru-paru berkontraksi untuk mendorong gas"
+        ],
+        correct: 1,
+        explanation: "Pertukaran gas terjadi secara difusi pasif akibat perbedaan tekanan parsial. PO₂ di alveolus (104 mmHg) > di kapiler (40 mmHg), sehingga O₂ berdifusi masuk. PCO₂ di kapiler (45 mmHg) > di alveolus (40 mmHg), sehingga CO₂ berdifusi keluar."
+      }
+    ];
+
+    // Render Navigation
+    function renderNavigation() {
+      const navMenu = document.getElementById('nav-menu');
+      navMenu.innerHTML = sections.map((section, index) => `
+        <button onclick="navigateTo(${index})" 
+                class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 ${index === currentSection ? 'active' : 'text-gray-300 hover:bg-white/10'}">
+          <span class="text-xl">${section.icon}</span>
+          <span class="text-sm font-medium">${section.title}</span>
+          ${visitedSections.has(index) && index !== currentSection ? '<span class="ml-auto text-green-400">✓</span>' : ''}
+        </button>
+      `).join('');
+    }
+
+    // Update Progress
+    function updateProgress() {
+      const progress = (visitedSections.size / sections.length) * 100;
+      document.getElementById('learning-progress').style.width = `${progress}%`;
+      document.getElementById('progress-text').textContent = `${visitedSections.size} dari ${sections.length} materi dipelajari`;
+    }
+
+    // Navigate to Section
+    function navigateTo(index) {
+      currentSection = index;
+      visitedSections.add(index);
+      renderNavigation();
+      updateProgress();
+      renderContent();
+    }
+
+    // Render Content
+    function renderContent() {
+      const container = document.getElementById('content-container');
+      
+      switch(sections[currentSection].id) {
+        case 'intro':
+          container.innerHTML = renderIntroSection();
+          break;
+        case 'temp-pressure':
+          container.innerHTML = renderTempPressureSection();
+          break;
+        case 'hot-air-balloon':
+          container.innerHTML = renderBalloonSection();
+          break;
+        case 'pascal':
+          container.innerHTML = renderPascalSection();
+          break;
+        case 'human':
+          container.innerHTML = renderHumanSection();
+          break;
+        case 'plant':
+          container.innerHTML = renderPlantSection();
+          break;
+        case 'quiz':
+          container.innerHTML = renderQuizSection();
+          break;
+      }
+    }
+
+    // Section 1: Introduction
+    function renderIntroSection() {
+      return `
+        <div class="section-card">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-500 to-red-500 flex items-center justify-center text-2xl">
+              🎈
+            </div>
+            <div>
+              <h2 class="heading-font text-2xl lg:text-3xl font-bold">Pendahuluan Tekanan Gas</h2>
+              <p class="text-pink-300">Memahami konsep dasar tekanan gas</p>
+            </div>
+          </div>
+
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">📚 Konsep Dasar</h3>
+            <p class="text-gray-200 leading-relaxed mb-4">
+              <strong>Tekanan gas</strong> adalah gaya yang diberikan oleh molekul-molekul gas saat bertumbukan dengan dinding wadah per satuan luas. Gas memberikan tekanan ke <strong>segala arah</strong> dengan besar yang sama.
+            </p>
+            <div class="bg-pink-500/20 border-l-4 border-pink-500 p-4 rounded-r-xl">
+              <p class="text-sm">
+                <strong>💡 Rumus Tekanan:</strong> P = F/A<br>
+                Dimana P = Tekanan (Pa), F = Gaya (N), A = Luas (m²)
+              </p>
+            </div>
+          </div>
+
+          <!-- Interactive Experiment -->
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">🔬 Eksperimen Interaktif: Gelas Air Terbalik</h3>
+            
+            <div class="illustration-container mb-6">
+              <div class="relative flex justify-center items-end gap-8 h-64" id="glass-experiment">
+                <!-- Glass illustration -->
+                <div class="relative">
+                  <div id="glass-container" class="relative transition-all duration-700" style="transform: rotate(0deg)">
+                    <!-- Glass body -->
+                    <svg width="120" height="160" viewBox="0 0 120 160">
+                      <defs>
+                        <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                          <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:0.8" />
+                          <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0.9" />
+                        </linearGradient>
+                        <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.3" />
+                          <stop offset="50%" style="stop-color:#ffffff;stop-opacity:0.1" />
+                          <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.3" />
+                        </linearGradient>
+                      </defs>
+                      <!-- Glass outline -->
+                      <path d="M20 10 L15 150 Q15 155 20 155 L100 155 Q105 155 105 150 L100 10 Z" 
+                            fill="url(#glassGrad)" stroke="#ffffff" stroke-width="2"/>
+                      <!-- Water -->
+                      <path id="water-path" d="M22 30 L18 148 Q18 152 22 152 L98 152 Q102 152 102 148 L98 30 Z" 
+                            fill="url(#waterGrad)"/>
+                      <!-- Glass shine -->
+                      <path d="M25 15 L23 145 L30 145 L32 15 Z" fill="rgba(255,255,255,0.2)"/>
+                    </svg>
+                    <!-- Paper -->
+                    <div id="paper" class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-3 bg-white rounded-sm shadow-lg transition-all duration-700"></div>
+                  </div>
+                  
+                  <!-- Pressure arrows -->
+                  <div id="pressure-arrows" class="absolute inset-0 opacity-0 transition-opacity duration-500">
+                    <div class="absolute -left-8 top-1/2 transform -translate-y-1/2 text-yellow-400 animate-pulse">
+                      <svg width="30" height="20" viewBox="0 0 30 20">
+                        <path d="M0 10 L20 10 M15 5 L20 10 L15 15" stroke="#facc15" stroke-width="2" fill="none"/>
+                      </svg>
+                    </div>
+                    <div class="absolute -right-8 top-1/2 transform -translate-y-1/2 text-yellow-400 animate-pulse">
+                      <svg width="30" height="20" viewBox="0 0 30 20">
+                        <path d="M30 10 L10 10 M15 5 L10 10 L15 15" stroke="#facc15" stroke-width="2" fill="none"/>
+                      </svg>
+                    </div>
+                    <div class="absolute left-1/2 -bottom-12 transform -translate-x-1/2 text-yellow-400 animate-pulse">
+                      <svg width="20" height="30" viewBox="0 0 20 30">
+                        <path d="M10 30 L10 10 M5 15 L10 10 L15 15" stroke="#facc15" stroke-width="2" fill="none"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Info panel -->
+                <div id="experiment-info" class="w-48 text-sm">
+                  <div class="bg-white/10 rounded-xl p-4">
+                    <p id="experiment-status" class="text-gray-200">Klik tombol untuk memulai eksperimen</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="flex justify-center gap-4">
+              <button onclick="flipGlass()" id="flip-btn" 
+                      class="px-6 py-3 bg-gradient-to-r from-pink-500 to-red-500 rounded-xl font-semibold hover:opacity-90 transition">
+                🔄 Balik Gelas
+              </button>
+              <button onclick="resetExperiment()" 
+                      class="px-6 py-3 bg-white/10 rounded-xl font-semibold hover:bg-white/20 transition">
+                ↻ Reset
+              </button>
+            </div>
+          </div>
+
+          <!-- Explanation -->
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">📖 Penjelasan Fenomena</h3>
+            <div class="space-y-4">
+              <div class="flex gap-4">
+                <div class="w-10 h-10 rounded-full bg-blue-500/30 flex items-center justify-center flex-shrink-0">1</div>
+                <div>
+                  <h4 class="font-semibold text-white">Tekanan Atmosfer</h4>
+                  <p class="text-gray-300 text-sm">Udara di sekitar kita memiliki tekanan sekitar 101.325 Pa (1 atm) pada permukaan laut.</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="w-10 h-10 rounded-full bg-blue-500/30 flex items-center justify-center flex-shrink-0">2</div>
+                <div>
+                  <h4 class="font-semibold text-white">Gaya ke Atas</h4>
+                  <p class="text-gray-300 text-sm">Tekanan atmosfer mendorong kertas dari bawah dengan gaya yang lebih besar daripada berat air di dalam gelas.</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="w-10 h-10 rounded-full bg-blue-500/30 flex items-center justify-center flex-shrink-0">3</div>
+                <div>
+                  <h4 class="font-semibold text-white">Kesetimbangan</h4>
+                  <p class="text-gray-300 text-sm">Kertas tetap menempel karena gaya tekanan atmosfer ke atas > gaya gravitasi air ke bawah.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="flex justify-end">
+            <button onclick="navigateTo(1)" class="px-6 py-3 bg-gradient-to-r from-pink-500 to-red-500 rounded-xl font-semibold hover:opacity-90 transition flex items-center gap-2">
+              Materi Selanjutnya <span>→</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    let isFlipped = false;
+    
+    function flipGlass() {
+      isFlipped = !isFlipped;
+      const container = document.getElementById('glass-container');
+      const arrows = document.getElementById('pressure-arrows');
+      const status = document.getElementById('experiment-status');
+      const btn = document.getElementById('flip-btn');
+      
+      if (isFlipped) {
+        container.style.transform = 'rotate(180deg)';
+        arrows.style.opacity = '1';
+        status.innerHTML = `
+          <span class="text-green-400 font-bold">Air tidak tumpah!</span><br><br>
+          Tekanan atmosfer (≈101.325 Pa) mendorong kertas ke atas, menahan air di dalam gelas.
+        `;
+        btn.textContent = '🔄 Tegakkan Gelas';
+      } else {
+        container.style.transform = 'rotate(0deg)';
+        arrows.style.opacity = '0';
+        status.textContent = 'Klik tombol untuk memulai eksperimen';
+        btn.textContent = '🔄 Balik Gelas';
+      }
+    }
+
+    function resetExperiment() {
+      isFlipped = false;
+      const container = document.getElementById('glass-container');
+      const arrows = document.getElementById('pressure-arrows');
+      const status = document.getElementById('experiment-status');
+      const btn = document.getElementById('flip-btn');
+      
+      container.style.transform = 'rotate(0deg)';
+      arrows.style.opacity = '0';
+      status.textContent = 'Klik tombol untuk memulai eksperimen';
+      btn.textContent = '🔄 Balik Gelas';
+    }
+
+    // Section 2: Temperature and Pressure
+    function renderTempPressureSection() {
+      return `
+        <div class="section-card">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-2xl">
+              🌡️
+            </div>
+            <div>
+              <h2 class="heading-font text-2xl lg:text-3xl font-bold">Hubungan Suhu dan Tekanan Gas</h2>
+              <p class="text-pink-300">Hukum Gay-Lussac dan penerapannya</p>
+            </div>
+          </div>
+
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">📚 Teori Kinetik Gas</h3>
+            <p class="text-gray-200 leading-relaxed mb-4">
+              Molekul gas selalu bergerak secara acak dan bertumbukan dengan dinding wadah. <strong>Suhu</strong> adalah ukuran energi kinetik rata-rata molekul gas.
+            </p>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="bg-red-500/20 p-4 rounded-xl border border-red-500/30">
+                <h4 class="font-bold text-red-400 mb-2">🔥 Pemanasan</h4>
+                <ul class="text-sm text-gray-300 space-y-1">
+                  <li>• Energi kinetik molekul meningkat</li>
+                  <li>• Molekul bergerak lebih cepat</li>
+                  <li>• Tumbukan lebih sering & kuat</li>
+                  <li>• Tekanan gas meningkat</li>
+                </ul>
+              </div>
+              <div class="bg-blue-500/20 p-4 rounded-xl border border-blue-500/30">
+                <h4 class="font-bold text-blue-400 mb-2">❄️ Pendinginan</h4>
+                <ul class="text-sm text-gray-300 space-y-1">
+                  <li>• Energi kinetik molekul menurun</li>
+                  <li>• Molekul bergerak lebih lambat</li>
+                  <li>• Tumbukan lebih jarang & lemah</li>
+                  <li>• Tekanan gas menurun</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Demo -->
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">🔬 Simulasi Interaktif: Balon pada Erlenmeyer</h3>
+            
+            <div class="illustration-container mb-6">
+              <div class="flex flex-col items-center">
+                <!-- Temperature Control -->
+                <div class="mb-6 w-full max-w-md">
+                  <label class="block text-sm text-gray-300 mb-2">Atur Suhu: <span id="temp-display" class="font-bold text-white">25°C</span></label>
+                  <input type="range" id="temp-slider" min="-20" max="100" value="25" 
+                         class="w-full h-3 bg-white/20 rounded-lg appearance-none cursor-pointer"
+                         oninput="updateBalloonDemo(this.value)">
+                  <div class="flex justify-between text-xs text-gray-400 mt-1">
+                    <span>❄️ -20°C</span>
+                    <span>🌡️ 25°C</span>
+                    <span>🔥 100°C</span>
+                  </div>
+                </div>
+                
+                <!-- Erlenmeyer Illustration -->
+                <div class="relative">
+                  <!-- Balloon -->
+                  <div id="balloon-demo" class="absolute -top-12 left-1/2 transform -translate-x-1/2 transition-all duration-500"
+                       style="width: 60px; height: 40px;">
+                    <svg viewBox="0 0 100 80" class="w-full h-full">
+                      <ellipse cx="50" cy="40" rx="45" ry="35" fill="#e94560" opacity="0.8"/>
+                      <ellipse cx="50" cy="40" rx="40" ry="30" fill="#ff6b6b" opacity="0.5"/>
+                      <ellipse cx="35" cy="30" rx="8" ry="5" fill="white" opacity="0.3"/>
+                    </svg>
+                  </div>
+                  
+                  <!-- Erlenmeyer Flask -->
+                  <svg width="180" height="200" viewBox="0 0 180 200">
+                    <defs>
+                      <linearGradient id="flaskGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.2" />
+                        <stop offset="50%" style="stop-color:#ffffff;stop-opacity:0.05" />
+                        <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.2" />
+                      </linearGradient>
+                    </defs>
+                    <!-- Flask body -->
+                    <path d="M70 40 L70 80 L20 180 Q15 190 25 195 L155 195 Q165 190 160 180 L110 80 L110 40" 
+                          fill="url(#flaskGrad)" stroke="#ffffff" stroke-width="2"/>
+                    <!-- Neck -->
+                    <rect x="70" y="20" width="40" height="25" fill="url(#flaskGrad)" stroke="#ffffff" stroke-width="2"/>
+                    <!-- Shine -->
+                    <path d="M75 45 L75 80 L35 170" stroke="rgba(255,255,255,0.3)" stroke-width="3" fill="none"/>
+                  </svg>
+                  
+                  <!-- Molecules -->
+                  <div id="molecules-container" class="absolute inset-0 overflow-hidden" style="top: 80px; left: 30px; width: 120px; height: 100px;">
+                  </div>
+                  
+                  <!-- Heat source indicator -->
+                  <div id="heat-indicator" class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-300">
+                    <div class="text-center">
+                      <span id="heat-emoji" class="text-3xl">🌡️</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Info Panel -->
+                <div id="temp-info" class="mt-8 p-4 bg-white/10 rounded-xl max-w-md text-center">
+                  <p class="text-gray-200">Suhu normal (25°C). Molekul bergerak dengan kecepatan rata-rata.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formula -->
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">📐 Rumus Hukum Gay-Lussac</h3>
+            <div class="bg-gradient-to-r from-purple-500/20 to-pink-500/20 p-6 rounded-xl text-center mb-4">
+              <p class="text-2xl font-mono text-white mb-2">P₁/T₁ = P₂/T₂</p>
+              <p class="text-sm text-gray-300">Pada volume tetap, tekanan berbanding lurus dengan suhu mutlak (Kelvin)</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-4 text-sm">
+              <div class="bg-white/5 p-3 rounded-lg">
+                <strong class="text-pink-300">P</strong> = Tekanan (Pa)
+              </div>
+              <div class="bg-white/5 p-3 rounded-lg">
+                <strong class="text-pink-300">T</strong> = Suhu (Kelvin)
+              </div>
+              <div class="bg-white/5 p-3 rounded-lg">
+                <strong class="text-pink-300">K</strong> = °C + 273
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="flex justify-between">
+            <button onclick="navigateTo(0)" class="px-6 py-3 bg-white/10 rounded-xl font-semibold hover:bg-white/20 transition flex items-center gap-2">
+              <span>←</span> Sebelumnya
+            </button>
+            <button onclick="navigateTo(2)" class="px-6 py-3 bg-gradient-to-r from-pink-500 to-red-500 rounded-xl font-semibold hover:opacity-90 transition flex items-center gap-2">
+              Materi Selanjutnya <span>→</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function updateBalloonDemo(temp) {
+      const tempNum = parseInt(temp);
+      document.getElementById('temp-display').textContent = `${tempNum}°C`;
+      
+      const balloon = document.getElementById('balloon-demo');
+      const info = document.getElementById('temp-info');
+      const heatEmoji = document.getElementById('heat-emoji');
+      
+      // Calculate balloon size based on temperature
+      const baseWidth = 60;
+      const baseHeight = 40;
+      const scaleFactor = 1 + (tempNum - 25) / 100;
+      const newWidth = Math.max(20, Math.min(120, baseWidth * scaleFactor));
+      const newHeight = Math.max(15, Math.min(80, baseHeight * scaleFactor));
+      
+      balloon.style.width = `${newWidth}px`;
+      balloon.style.height = `${newHeight}px`;
+      
+      // Update heat indicator and info
+      if (tempNum < 0) {
+        heatEmoji.textContent = '🧊';
+        info.innerHTML = `<p class="text-blue-300">Suhu sangat dingin (${tempNum}°C). Molekul bergerak sangat lambat, tekanan menurun drastis. Balon mengempis ke dalam.</p>`;
+      } else if (tempNum < 25) {
+        heatEmoji.textContent = '❄️';
+        info.innerHTML = `<p class="text-blue-200">Suhu dingin (${tempNum}°C). Molekul bergerak lambat, tekanan menurun. Balon sedikit mengempis.</p>`;
+      } else if (tempNum <= 40) {
+        heatEmoji.textContent = '🌡️';
+        info.innerHTML = `<p class="text-gray-200">Suhu normal (${tempNum}°C). Molekul bergerak dengan kecepatan rata-rata.</p>`;
+      } else if (tempNum <= 70) {
+        heatEmoji.textContent = '🔥';
+        info.innerHTML = `<p class="text-orange-300">Suhu panas (${tempNum}°C). Molekul bergerak cepat, tekanan meningkat. Balon mulai mengembang.</p>`;
+      } else {
+        heatEmoji.textContent = '🌋';
+        info.innerHTML = `<p class="text-red-300">Suhu sangat panas (${tempNum}°C). Molekul bergerak sangat cepat, tekanan sangat tinggi. Balon mengembang maksimal!</p>`;
+      }
+    }
+
+    // Section 3: Hot Air Balloon
+    function renderBalloonSection() {
+      return `
+        <div class="section-card">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center text-2xl">
+              🎪
+            </div>
+            <div>
+              <h2 class="heading-font text-2xl lg:text-3xl font-bold">Aplikasi: Balon Udara Panas</h2>
+              <p class="text-pink-300">Prinsip kerja dan mekanisme terbang</p>
+            </div>
+          </div>
+
+          <!-- Real Image Placeholder - Hot Air Balloon -->
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <div class="illustration-container">
+              <div class="relative h-64 flex items-center justify-center">
+                <!-- Hot Air Balloon SVG Illustration -->
+                <svg viewBox="0 0 300 400" class="h-full float-animation">
+                  <!-- Sky background gradient -->
+                  <defs>
+                    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" style="stop-color:#87ceeb;stop-opacity:0.3" />
+                      <stop offset="100%" style="stop-color:#e0f4ff;stop-opacity:0.1" />
+                    </linearGradient>
+                    <linearGradient id="balloonGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" style="stop-color:#e94560" />
+                      <stop offset="50%" style="stop-color:#ff6b6b" />
+                      <stop offset="100%" style="stop-color:#e94560" />
+                    </linearGradient>
+                    <linearGradient id="stripeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" style="stop-color:#fbbf24" />
+                      <stop offset="100%" style="stop-color:#f59e0b" />
+                    </linearGradient>
+                  </defs>
+                  
+                  <!-- Balloon envelope -->
+                  <ellipse cx="150" cy="130" rx="100" ry="120" fill="url(#balloonGrad)"/>
+                  
+                  <!-- Balloon stripes -->
+                  <path d="M60 100 Q90 250 150 260 Q210 250 240 100" fill="none" stroke="url(#stripeGrad)" stroke-width="20"/>
+                  <path d="M80 80 Q110 220 150 235 Q190 220 220 80" fill="none" stroke="#fff" stroke-width="8" opacity="0.3"/>
+                  
+                  <!-- Balloon opening -->
+                  <ellipse cx="150" cy="245" rx="40" ry="15" fill="#333"/>
+                  
+                  <!-- Ropes -->
+                  <line x1="115" y1="255" x2="105" y2="310" stroke="#8b5a2b" stroke-width="2"/>
+                  <line x1="185" y1="255" x2="195" y2="310" stroke="#8b5a2b" stroke-width="2"/>
+                  <line x1="130" y1="258" x2="120" y2="310" stroke="#8b5a2b" stroke-width="2"/>
+                  <line x1="170" y1="258" x2="180" y2="310" stroke="#8b5a2b" stroke-width="2"/>
+                  
+                  <!-- Basket -->
+                  <rect x="100" y="310" width="100" height="60" rx="5" fill="#8b4513"/>
+                  <rect x="100" y="310" width="100" height="10" rx="3" fill="#a0522d"/>
+                  <rect x="100" y="360" width="100" height="10" rx="3" fill="#a0522d"/>
+                  
+                  <!-- Basket weave pattern -->
+                  <line x1="120" y1="320" x2="120" y2="360" stroke="#654321" stroke-width="2"/>
+                  <line x1="150" y1="320" x2="150" y2="360" stroke="#654321" stroke-width="2"/>
+                  <line x1="180" y1="320" x2="180" y2="360" stroke="#654321" stroke-width="2"/>
+                  
+                  <!-- Flame -->
+                  <ellipse cx="150" cy="280" rx="15" ry="25" fill="#ff6b35" opacity="0.8">
+                    <animate attributeName="ry" values="25;30;25" dur="0.5s" repeatCount="indefinite"/>
+                  </ellipse>
+                  <ellipse cx="150" cy="275" rx="8" ry="15" fill="#fbbf24">
+                    <animate attributeName="ry" values="15;18;15" dur="0.3s" repeatCount="indefinite"/>
+                  </ellipse>
+                  
+                  <!-- Hot air arrows inside balloon -->
+                  <path d="M130 180 L150 150 L170 180" stroke="#fff" stroke-width="3" fill="none" opacity="0.5">
+                    <animate attributeName="opacity" values="0.5;0.8;0.5" dur="1s" repeatCount="indefinite"/>
+                  </path>
+                  <path d="M130 200 L150 170 L170 200" stroke="#fff" stroke-width="3" fill="none" opacity="0.3">
+                    <animate attributeName="opacity" values="0.3;0.6;0.3" dur="1s" repeatCount="indefinite"/>
+                  </path>
+                  
+                  <!-- Clouds -->
+                  <ellipse cx="50" cy="80" rx="30" ry="15" fill="white" opacity="0.3"/>
+                  <ellipse cx="70" cy="85" rx="25" ry="12" fill="white" opacity="0.3"/>
+                  <ellipse cx="250" cy="120" rx="35" ry="18" fill="white" opacity="0.3"/>
+                </svg>
+              </div>
+              <p class="text-center text-gray-400 text-sm mt-2">Ilustrasi: Balon udara panas dengan api pemanas</p>
+            </div>
+          </div>
+
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">⚙️ Prinsip Kerja</h3>
+            <p class="text-gray-200 leading-relaxed mb-4">
+              Balon udara dapat terbang karena <strong>massa jenis totalnya lebih rendah</strong> daripada massa jenis udara di sekitarnya, sehingga mengalami gaya apung ke atas (Hukum Archimedes).
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-4 mb-6">
+              <div class="bg-gradient-to-br from-green-500/20 to-emerald-500/20 p-4 rounded-xl border border-green-500/30">
+                <h4 class="font-bold text-green-400 mb-3 flex items-center gap-2">
+                  <span class="text-2xl">⬆️</span> Mekanisme Naik
+                </h4>
+                <ol class="text-sm text-gray-300 space-y-2">
+                  <li>1. Api pembakar dinyalakan</li>
+                  <li>2. Udara di dalam balon dipanaskan</li>
+                  <li>3. Molekul udara bergerak lebih cepat & menyebar</li>
+                  <li>4. Massa jenis udara dalam balon menurun</li>
+                  <li>5. Gaya apung > berat total → balon naik</li>
+                </ol>
+              </div>
+              <div class="bg-gradient-to-br from-blue-500/20 to-cyan-500/20 p-4 rounded-xl border border-blue-500/30">
+                <h4 class="font-bold text-blue-400 mb-3 flex items-center gap-2">
+                  <span class="text-2xl">⬇️</span> Mekanisme Turun
+                </h4>
+                <ol class="text-sm text-gray-300 space-y-2">
+                  <li>1. Api pembakar dikurangi/dimatikan</li>
+                  <li>2. Udara di dalam balon mendingin</li>
+                  <li>3. Molekul udara bergerak lebih lambat</li>
+                  <li>4. Massa jenis udara dalam balon meningkat</li>
+                  <li>5. Gaya apung < berat total → balon turun</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- Archimedes Connection -->
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">🔗 Hubungan dengan Hukum Archimedes</h3>
+            <div class="bg-gradient-to-r from-purple-500/20 to-pink-500/20 p-6 rounded-xl mb-4">
+              <p class="text-lg font-mono text-white text-center mb-2">F<sub>apung</sub> = ρ<sub>udara</sub> × V × g</p>
+              <p class="text-sm text-gray-300 text-center">Gaya apung = massa jenis fluida × volume benda × gravitasi</p>
+            </div>
+            <div class="bg-yellow-500/20 border-l-4 border-yellow-500 p-4 rounded-r-xl">
+              <p class="text-sm text-gray-200">
+                <strong>💡 Syarat Terbang:</strong> Gaya apung (F<sub>apung</sub>) harus lebih besar dari berat total balon (W = m × g). Ini tercapai ketika massa jenis udara panas di dalam balon lebih kecil dari massa jenis udara dingin di luar.
+              </p>
+            </div>
+          </div>
+
+          <!-- Discussion Activity -->
+          <div class="card-glass rounded-2xl p-6 mb-6 border-2 border-dashed border-pink-500/50">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">💬 Aktivitas Diskusi</h3>
+            <div class="bg-white/5 p-4 rounded-xl">
+              <p class="text-gray-200 font-medium mb-3">
+                "Mengapa balon udara bisa pecah jika terbang terlalu tinggi?"
+              </p>
+              <p class="text-sm text-gray-400 mb-4">Diskusikan dengan teman berdasarkan konsep tekanan gas yang telah dipelajari.</p>
+              
+              <div id="discussion-toggle" class="cursor-pointer">
+                <button onclick="toggleDiscussion()" class="text-pink-400 text-sm hover:text-pink-300 transition">
+                  📖 Lihat Petunjuk Jawaban
+                </button>
+              </div>
+              <div id="discussion-answer" class="hidden mt-4 p-4 bg-green-500/10 rounded-xl border border-green-500/30">
+                <p class="text-sm text-gray-200">
+                  <strong>Petunjuk:</strong> Di ketinggian tinggi, tekanan atmosfer menurun. Berdasarkan Hukum Boyle (P₁V₁ = P₂V₂), saat tekanan luar menurun, volume gas di dalam balon akan meningkat. Jika pengembangan melebihi batas elastisitas material balon, balon akan pecah.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="flex justify-between">
+            <button onclick="navigateTo(1)" class="px-6 py-3 bg-white/10 rounded-xl font-semibold hover:bg-white/20 transition flex items-center gap-2">
+              <span>←</span> Sebelumnya
+            </button>
+            <button onclick="navigateTo(3)" class="px-6 py-3 bg-gradient-to-r from-pink-500 to-red-500 rounded-xl font-semibold hover:opacity-90 transition flex items-center gap-2">
+              Materi Selanjutnya <span>→</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function toggleDiscussion() {
+      const answer = document.getElementById('discussion-answer');
+      answer.classList.toggle('hidden');
+    }
+
+    // Section 4: Pascal's Law
+    function renderPascalSection() {
+      return `
+        <div class="section-card">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-2xl">
+              ⚙️
+            </div>
+            <div>
+              <h2 class="heading-font text-2xl lg:text-3xl font-bold">Hukum Pascal</h2>
+              <p class="text-pink-300">Prinsip tekanan pada fluida tertutup</p>
+            </div>
+          </div>
+
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">📜 Bunyi Hukum Pascal</h3>
+            <div class="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 p-6 rounded-xl text-center">
+              <p class="text-lg text-gray-200 italic">
+                "Tekanan yang diberikan pada zat cair atau gas dalam ruang tertutup akan diteruskan ke segala arah dengan besar yang sama."
+              </p>
+              <p class="text-sm text-gray-400 mt-2">— Blaise Pascal (1623-1662)</p>
+            </div>
+          </div>
+
+          <!-- Hydraulic Lift Interactive Demo -->
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">🔬 Simulasi: Dongkrak Hidrolik</h3>
+            
+            <div class="illustration-container mb-6">
+              <div class="relative flex flex-col items-center">
+                <!-- Hydraulic System SVG -->
+                <svg viewBox="0 0 500 250" class="w-full max-w-lg">
+                  <defs>
+                    <linearGradient id="oilGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0.8" />
+                      <stop offset="100%" style="stop-color:#d97706;stop-opacity:0.9" />
+                    </linearGradient>
+                    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" style="stop-color:#6b7280" />
+                      <stop offset="50%" style="stop-color:#9ca3af" />
+                      <stop offset="100%" style="stop-color:#6b7280" />
+                    </linearGradient>
+                  </defs>
+                  
+                  <!-- Container -->
+                  <rect x="50" y="150" width="400" height="80" rx="10" fill="url(#metalGrad)" stroke="#374151" stroke-width="2"/>
+                  
+                  <!-- Oil -->
+                  <rect x="55" y="155" width="390" height="70" rx="8" fill="url(#oilGrad)"/>
+                  
+                  <!-- Small Piston (Input) -->
+                  <g id="small-piston">
+                    <rect x="80" y="80" width="40" height="80" fill="url(#metalGrad)" stroke="#374151" stroke-width="2"/>
+                    <rect x="75" y="70" width="50" height="15" rx="3" fill="#4b5563"/>
+                    <!-- Force Arrow -->
+                    <path d="M100 30 L100 60 M90 50 L100 60 L110 50" stroke="#e94560" stroke-width="3" fill="none"/>
+                    <text x="100" y="20" text-anchor="middle" fill="#e94560" font-size="14" font-weight="bold">F₁</text>
+                  </g>
+                  
+                  <!-- Large Piston (Output) -->
+                  <g id="large-piston">
+                    <rect x="330" y="60" width="100" height="100" fill="url(#metalGrad)" stroke="#374151" stroke-width="2"/>
+                    <rect x="320" y="45" width="120" height="20" rx="5" fill="#4b5563"/>
+                    <!-- Car silhouette -->
+                    <g transform="translate(340, 10)">
+                      <rect x="10" y="20" width="60" height="20" rx="3" fill="#1f2937"/>
+                      <rect x="5" y="25" width="70" height="15" rx="2" fill="#374151"/>
+                      <circle cx="20" cy="40" r="8" fill="#1f2937"/>
+                      <circle cx="60" cy="40" r="8" fill="#1f2937"/>
+                    </g>
+                    <!-- Force Arrow -->
+                    <path d="M380 -10 L380 30 M370 20 L380 30 L390 20" stroke="#22c55e" stroke-width="3" fill="none"/>
+                    <text x="380" y="-20" text-anchor="middle" fill="#22c55e" font-size="14" font-weight="bold">F₂</text>
+                  </g>
+                  
+                  <!-- Pressure arrows in oil -->
+                  <g opacity="0.6">
+                    <circle cx="200" cy="190" r="3" fill="#fff"/>
+                    <path d="M200 190 L180 175" stroke="#fff" stroke-width="1"/>
+                    <path d="M200 190 L220 175" stroke="#fff" stroke-width="1"/>
+                    <path d="M200 190 L200 210" stroke="#fff" stroke-width="1"/>
+                    <path d="M200 190 L180 205" stroke="#fff" stroke-width="1"/>
+                    <path d="M200 190 L220 205" stroke="#fff" stroke-width="1"/>
+                  </g>
+                  
+                  <!-- Labels -->
+                  <text x="100" y="175" text-anchor="middle" fill="#fff" font-size="12">A₁ = 4 cm²</text>
+                  <text x="380" y="175" text-anchor="middle" fill="#fff" font-size="12">A₂ = 100 cm²</text>
+                </svg>
+                
+                <!-- Calculator -->
+                <div class="mt-6 w-full max-w-md">
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm text-gray-300 mb-1">Gaya Input (F₁) dalam Newton:</label>
+                      <input type="number" id="force-input" value="50" min="1" max="1000"
+                             class="w-full px-4 py-2 bg-white/10 rounded-lg border border-white/20 text-white"
+                             onchange="calculateHydraulic()">
+                    </div>
+                    <div>
+                      <label class="block text-sm text-gray-300 mb-1">Luas A₁ (cm²):</label>
+                      <input type="number" id="area-small" value="4" min="1" max="100"
+                             class="w-full px-4 py-2 bg-white/10 rounded-lg border border-white/20 text-white"
+                             onchange="calculateHydraulic()">
+                    </div>
+                    <div>
+                      <label class="block text-sm text-gray-300 mb-1">Luas A₂ (cm²):</label>
+                      <input type="number" id="area-large" value="100" min="1" max="1000"
+                             class="w-full px-4 py-2 bg-white/10 rounded-lg border border-white/20 text-white"
+                             onchange="calculateHydraulic()">
+                    </div>
+                    <div>
+                      <label class="block text-sm text-gray-300 mb-1">Gaya Output (F₂):</label>
+                      <div id="force-output" class="w-full px-4 py-2 bg-green-500/20 rounded-lg border border-green-500/30 text-green-400 font-bold">
+                        1.250 N
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formula Explanation -->
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">📐 Rumus Hukum Pascal</h3>
+            <div class="bg-gradient-to-r from-purple-500/20 to-pink-500/20 p-6 rounded-xl text-center mb-4">
+              <p class="text-3xl font-mono text-white mb-2">F₁/A₁ = F₂/A₂</p>
+              <p class="text-lg font-mono text-gray-300">F₂ = F₁ × (A₂/A₁)</p>
+            </div>
+            <div class="grid md:grid-cols-4 gap-3 text-sm">
+              <div class="bg-white/5 p-3 rounded-lg text-center">
+                <strong class="text-pink-300">F₁</strong><br>
+                <span class="text-gray-400">Gaya input (N)</span>
+              </div>
+              <div class="bg-white/5 p-3 rounded-lg text-center">
+                <strong class="text-pink-300">F₂</strong><br>
+                <span class="text-gray-400">Gaya output (N)</span>
+              </div>
+              <div class="bg-white/5 p-3 rounded-lg text-center">
+                <strong class="text-pink-300">A₁</strong><br>
+                <span class="text-gray-400">Luas piston kecil</span>
+              </div>
+              <div class="bg-white/5 p-3 rounded-lg text-center">
+                <strong class="text-pink-300">A₂</strong><br>
+                <span class="text-gray-400">Luas piston besar</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Real World Applications -->
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">🌍 Aplikasi di Kehidupan</h3>
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="bg-white/5 p-4 rounded-xl text-center">
+                <span class="text-4xl mb-2 block">🚗</span>
+                <h4 class="font-semibold text-white">Dongkrak Mobil</h4>
+                <p class="text-xs text-gray-400 mt-1">Mengangkat mobil dengan gaya kecil</p>
+              </div>
+              <div class="bg-white/5 p-4 rounded-xl text-center">
+                <span class="text-4xl mb-2 block">🛑</span>
+                <h4 class="font-semibold text-white">Rem Hidrolik</h4>
+                <p class="text-xs text-gray-400 mt-1">Menghentikan kendaraan dengan efisien</p>
+              </div>
+              <div class="bg-white/5 p-4 rounded-xl text-center">
+                <span class="text-4xl mb-2 block">🦷</span>
+                <h4 class="font-semibold text-white">Kursi Dokter Gigi</h4>
+                <p class="text-xs text-gray-400 mt-1">Mengatur ketinggian kursi dengan mudah</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="flex justify-between">
+            <button onclick="navigateTo(2)" class="px-6 py-3 bg-white/10 rounded-xl font-semibold hover:bg-white/20 transition flex items-center gap-2">
+              <span>←</span> Sebelumnya
+            </button>
+            <button onclick="navigateTo(4)" class="px-6 py-3 bg-gradient-to-r from-pink-500 to-red-500 rounded-xl font-semibold hover:opacity-90 transition flex items-center gap-2">
+              Materi Selanjutnya <span>→</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function calculateHydraulic() {
+      const f1 = parseFloat(document.getElementById('force-input').value) || 0;
+      const a1 = parseFloat(document.getElementById('area-small').value) || 1;
+      const a2 = parseFloat(document.getElementById('area-large').value) || 1;
+      
+      const f2 = f1 * (a2 / a1);
+      document.getElementById('force-output').textContent = f2.toLocaleString('id-ID') + ' N';
+    }
+
+    // Section 5: Human Body
+    function renderHumanSection() {
+      return `
+        <div class="section-card">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-pink-500 flex items-center justify-center text-2xl">
+              🫀
+            </div>
+            <div>
+              <h2 class="heading-font text-2xl lg:text-3xl font-bold">Tekanan pada Tubuh Manusia</h2>
+              <p class="text-pink-300">Tekanan darah dan sistem pernapasan</p>
+            </div>
+          </div>
+
+          <!-- Blood Pressure Section -->
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">🩸 Tekanan Darah</h3>
+            
+            <!-- Heart and Blood Pressure Illustration -->
+            <div class="illustration-container mb-6">
+              <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                <!-- Heart SVG -->
+                <svg viewBox="0 0 200 200" class="w-40 h-40">
+                  <defs>
+                    <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style="stop-color:#ef4444" />
+                      <stop offset="100%" style="stop-color:#991b1b" />
+                    </linearGradient>
+                  </defs>
+                  <!-- Heart shape -->
+                  <path d="M100 180 C20 120 0 80 30 50 C60 20 100 40 100 70 C100 40 140 20 170 50 C200 80 180 120 100 180Z" 
+                        fill="url(#heartGrad)">
+                    <animate attributeName="transform" attributeType="XML" type="scale" 
+                             values="1;1.05;1" dur="0.8s" repeatCount="indefinite" 
+                             additive="sum" origin="center"/>
+                  </path>
+                  <!-- Arteries -->
+                  <path d="M100 50 L100 20 L80 0" stroke="#ef4444" stroke-width="8" fill="none" stroke-linecap="round"/>
+                  <path d="M100 50 L100 20 L120 0" stroke="#ef4444" stroke-width="8" fill="none" stroke-linecap="round"/>
+                  <path d="M100 50 L100 20 L100 -10" stroke="#3b82f6" stroke-width="6" fill="none" stroke-linecap="round"/>
+                </svg>
+                
+                <!-- Blood Pressure Monitor -->
+                <div class="bg-white/10 rounded-2xl p-4 w-48">
+                  <div class="text-center">
+                    <p class="text-xs text-gray-400 mb-1">Tekanan Darah Normal</p>
+                    <div class="text-3xl font-bold text-white">120/80</div>
+                    <p class="text-xs text-gray-400 mt-1">mmHg</p>
+                  </div>
+                  <div class="mt-3 space-y-1 text-xs">
+                    <div class="flex justify-between">
+                      <span class="text-red-400">Sistolik</span>
+                      <span>120 mmHg</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-blue-400">Diastolik</span>
+                      <span>80 mmHg</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <div class="bg-white/5 p-4 rounded-xl">
+                <h4 class="font-semibold text-white mb-2">🔬 Prinsip Hukum Pascal pada Tekanan Darah</h4>
+                <p class="text-sm text-gray-300">
+                  Darah berada dalam sistem tertutup (pembuluh darah). Ketika jantung memompa, tekanan yang dihasilkan diteruskan ke seluruh bagian tubuh dengan besar yang sama, sesuai dengan Hukum Pascal.
+                </p>
+              </div>
+              
+              <div class="bg-white/5 p-4 rounded-xl">
+                <h4 class="font-semibold text-white mb-2">📏 Cara Pengukuran</h4>
+                <p class="text-sm text-gray-300">
+                  Menggunakan <strong>sphygmomanometer</strong> (tensimeter). Manset dipasang di lengan atas sejajar jantung. Tekanan di pembuluh nadi lengan atas dianggap sama dengan tekanan pada aorta.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Respiration Section -->
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">🫁 Sistem Pernapasan</h3>
+            
+            <!-- Lungs Illustration -->
+            <div class="illustration-container mb-6">
+              <div class="flex justify-center">
+                <svg viewBox="0 0 300 250" class="w-full max-w-sm">
+                  <!-- Trachea -->
+                  <rect x="140" y="10" width="20" height="50" rx="5" fill="#f0abfc"/>
+                  
+                  <!-- Bronchi -->
+                  <path d="M150 60 Q100 80 80 120" stroke="#f0abfc" stroke-width="12" fill="none" stroke-linecap="round"/>
+                  <path d="M150 60 Q200 80 220 120" stroke="#f0abfc" stroke-width="12" fill="none" stroke-linecap="round"/>
+                  
+                  <!-- Left Lung -->
+                  <ellipse cx="90" cy="150" rx="70" ry="80" fill="#fca5a5" opacity="0.7">
+                    <animate attributeName="rx" values="70;75;70" dur="3s" repeatCount="indefinite"/>
+                    <animate attributeName="ry" values="80;85;80" dur="3s" repeatCount="indefinite"/>
+                  </ellipse>
+                  
+                  <!-- Right Lung -->
+                  <ellipse cx="210" cy="150" rx="70" ry="80" fill="#fca5a5" opacity="0.7">
+                    <animate attributeName="rx" values="70;75;70" dur="3s" repeatCount="indefinite"/>
+                    <animate attributeName="ry" values="80;85;80" dur="3s" repeatCount="indefinite"/>
+                  </ellipse>
+                  
+                  <!-- Alveoli representation -->
+                  <g opacity="0.5">
+                    <circle cx="60" cy="130" r="8" fill="#fecaca"/>
+                    <circle cx="80" cy="150" r="10" fill="#fecaca"/>
+                    <circle cx="100" cy="170" r="8" fill="#fecaca"/>
+                    <circle cx="120" cy="140" r="9" fill="#fecaca"/>
+                    
+                    <circle cx="240" cy="130" r="8" fill="#fecaca"/>
+                    <circle cx="220" cy="150" r="10" fill="#fecaca"/>
+                    <circle cx="200" cy="170" r="8" fill="#fecaca"/>
+                    <circle cx="180" cy="140" r="9" fill="#fecaca"/>
+                  </g>
+                  
+                  <!-- O2 and CO2 labels -->
+                  <g font-size="12" font-weight="bold">
+                    <text x="30" y="100" fill="#22c55e">O₂ →</text>
+                    <text x="240" y="100" fill="#ef4444">← CO₂</text>
+                  </g>
+                </svg>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-green-500/20 to-blue-500/20 p-4 rounded-xl mb-4">
+              <h4 class="font-semibold text-white mb-2">🔄 Pertukaran Gas di Alveolus</h4>
+              <p class="text-sm text-gray-300">
+                Pertukaran O₂ dan CO₂ terjadi secara <strong>difusi</strong> karena perbedaan <strong>tekanan parsial</strong>.
+              </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="bg-green-500/10 p-4 rounded-xl border border-green-500/30">
+                <h4 class="font-bold text-green-400 mb-2">O₂ Masuk</h4>
+                <p class="text-sm text-gray-300">
+                  PO₂ alveolus (104 mmHg) > PO₂ kapiler (40 mmHg)<br>
+                  → O₂ berdifusi masuk ke darah
+                </p>
+              </div>
+              <div class="bg-red-500/10 p-4 rounded-xl border border-red-500/30">
+                <h4 class="font-bold text-red-400 mb-2">CO₂ Keluar</h4>
+                <p class="text-sm text-gray-300">
+                  PCO₂ kapiler (45 mmHg) > PCO₂ alveolus (40 mmHg)<br>
+                  → CO₂ berdifusi keluar ke alveolus
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="flex justify-between">
+            <button onclick="navigateTo(3)" class="px-6 py-3 bg-white/10 rounded-xl font-semibold hover:bg-white/20 transition flex items-center gap-2">
+              <span>←</span> Sebelumnya
+            </button>
+            <button onclick="navigateTo(5)" class="px-6 py-3 bg-gradient-to-r from-pink-500 to-red-500 rounded-xl font-semibold hover:opacity-90 transition flex items-center gap-2">
+              Materi Selanjutnya <span>→</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Section 6: Plants
+    function renderPlantSection() {
+      return `
+        <div class="section-card">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-2xl">
+              🌱
+            </div>
+            <div>
+              <h2 class="heading-font text-2xl lg:text-3xl font-bold">Tekanan pada Tumbuhan</h2>
+              <p class="text-pink-300">Pengangkutan air dan nutrisi</p>
+            </div>
+          </div>
+
+          <!-- Water Transport -->
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">💧 Pengangkutan Air (Xilem)</h3>
+            
+            <!-- Plant Illustration -->
+            <div class="illustration-container mb-6">
+              <div class="flex justify-center">
+                <svg viewBox="0 0 300 400" class="w-full max-w-xs">
+                  <!-- Roots -->
+                  <g stroke="#8b4513" stroke-width="3" fill="none">
+                    <path d="M150 350 Q120 380 100 400"/>
+                    <path d="M150 350 Q140 380 130 400"/>
+                    <path d="M150 350 Q160 380 170 400"/>
+                    <path d="M150 350 Q180 380 200 400"/>
+                    <path d="M150 350 Q130 370 110 385"/>
+                    <path d="M150 350 Q170 370 190 385"/>
+                  </g>
+                  
+                  <!-- Stem -->
+                  <rect x="145" y="100" width="10" height="250" fill="#228b22"/>
+                  
+                  <!-- Xylem vessels (inside stem) -->
+                  <g opacity="0.5">
+                    <line x1="148" y1="350" x2="148" y2="100" stroke="#60a5fa" stroke-width="2"/>
+                    <line x1="152" y1="350" x2="152" y2="100" stroke="#60a5fa" stroke-width="2"/>
+                  </g>
+                  
+                  <!-- Water droplets moving up -->
+                  <circle cx="148" cy="300" r="3" fill="#60a5fa">
+                    <animate attributeName="cy" values="350;100" dur="3s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" values="1;0" dur="3s" repeatCount="indefinite"/>
+                  </circle>
+                  <circle cx="152" cy="250" r="3" fill="#60a5fa">
+                    <animate attributeName="cy" values="350;100" dur="3s" repeatCount="indefinite" begin="1s"/>
+                    <animate attributeName="opacity" values="1;0" dur="3s" repeatCount="indefinite" begin="1s"/>
+                  </circle>
+                  
+                  <!-- Leaves -->
+                  <ellipse cx="100" cy="80" rx="50" ry="25" fill="#22c55e" transform="rotate(-30, 100, 80)"/>
+                  <ellipse cx="200" cy="80" rx="50" ry="25" fill="#22c55e" transform="rotate(30, 200, 80)"/>
+                  <ellipse cx="90" cy="140" rx="45" ry="22" fill="#16a34a" transform="rotate(-20, 90, 140)"/>
+                  <ellipse cx="210" cy="140" rx="45" ry="22" fill="#16a34a" transform="rotate(20, 210, 140)"/>
+                  <ellipse cx="150" cy="50" rx="40" ry="20" fill="#15803d"/>
+                  
+                  <!-- Transpiration arrows -->
+                  <g stroke="#87ceeb" stroke-width="2" opacity="0.7">
+                    <path d="M100 60 L90 40 M95 50 L85 45 L95 40" fill="none">
+                      <animate attributeName="opacity" values="0.7;0;0.7" dur="2s" repeatCount="indefinite"/>
+                    </path>
+                    <path d="M200 60 L210 40 M205 50 L215 45 L205 40" fill="none">
+                      <animate attributeName="opacity" values="0.7;0;0.7" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+                    </path>
+                    <path d="M150 30 L150 10 M145 20 L150 10 L155 20" fill="none">
+                      <animate attributeName="opacity" values="0.7;0;0.7" dur="2s" repeatCount="indefinite" begin="1s"/>
+                    </path>
+                  </g>
+                  
+                  <!-- Soil -->
+                  <rect x="50" y="350" width="200" height="50" fill="#8b4513" opacity="0.3" rx="5"/>
+                  
+                  <!-- Labels -->
+                  <text x="35" y="385" fill="#fff" font-size="10">Penyerapan</text>
+                  <text x="50" y="50" fill="#87ceeb" font-size="10">Transpirasi</text>
+                </svg>
+              </div>
+            </div>
+
+            <div class="bg-blue-500/10 p-4 rounded-xl mb-4">
+              <h4 class="font-semibold text-white mb-2">🔬 Mekanisme Kapilaritas</h4>
+              <p class="text-sm text-gray-300">
+                Air naik dari akar ke daun melalui pembuluh <strong>xilem</strong> akibat <strong>daya kapilaritas</strong> batang.
+              </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="bg-white/5 p-4 rounded-xl">
+                <h4 class="font-bold text-blue-400 mb-2">Kohesi</h4>
+                <p class="text-xs text-gray-300">Gaya tarik-menarik antara molekul air (sejenis)</p>
+              </div>
+              <div class="bg-white/5 p-4 rounded-xl">
+                <h4 class="font-bold text-green-400 mb-2">Adhesi</h4>
+                <p class="text-xs text-gray-300">Gaya tarik antara air dengan dinding xilem (berbeda jenis)</p>
+              </div>
+              <div class="bg-white/5 p-4 rounded-xl">
+                <h4 class="font-bold text-cyan-400 mb-2">Transpirasi</h4>
+                <p class="text-xs text-gray-300">Penguapan air di daun yang menarik kolom air ke atas</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nutrient Transport -->
+          <div class="card-glass rounded-2xl p-6 mb-6">
+            <h3 class="text-xl font-bold text-pink-300 mb-4">🍃 Pengangkutan Nutrisi (Floem)</h3>
+            
+            <div class="bg-yellow-500/10 p-4 rounded-xl mb-4">
+              <h4 class="font-semibold text-white mb-2">🌞 Hasil Fotosintesis</h4>
+              <p class="text-sm text-gray-300">
+                Gula hasil fotosintesis diedarkan melalui <strong>floem</strong> dari daerah berkonsentrasi gula tinggi (daun) ke daerah berkonsentrasi rendah (akar, batang, buah).
+              </p>
+            </div>
+
+            <div class="flex items-center justify-center gap-4 p-4 bg-white/5 rounded-xl">
+              <div class="text-center">
+                <span class="text-3xl">🌿</span>
+                <p class="text-xs text-gray-400 mt-1">Daun</p>
+                <p class="text-xs text-green-400">(Gula tinggi)</p>
+              </div>
+              <div class="text-2xl text-yellow-400">→→→</div>
+              <div class="text-center">
+                <span class="text-3xl">🌳</span>
+                <p class="text-xs text-gray-400 mt-1">Batang/Akar</p>
+                <p class="text-xs text-orange-400">(Gula rendah)</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="flex justify-between">
+            <button onclick="navigateTo(4)" class="px-6 py-3 bg-white/10 rounded-xl font-semibold hover:bg-white/20 transition flex items-center gap-2">
+              <span>←</span> Sebelumnya
+            </button>
+            <button onclick="navigateTo(6)" class="px-6 py-3 bg-gradient-to-r from-pink-500 to-red-500 rounded-xl font-semibold hover:opacity-90 transition flex items-center gap-2">
+              Kerjakan Kuis <span>→</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Section 7: Quiz
+    function renderQuizSection() {
+      return `
+        <div class="section-card">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-2xl">
+              📝
+            </div>
+            <div>
+              <h2 class="heading-font text-2xl lg:text-3xl font-bold">Kuis HOTS</h2>
+              <p class="text-pink-300">10 Soal Higher Order Thinking Skills</p>
+            </div>
+          </div>
+
+          ${quizSubmitted ? renderQuizResults() : renderQuizQuestions()}
+        </div>
+      `;
+    }
+
+    function renderQuizQuestions() {
+      return `
+        <div class="space-y-6">
+          ${quizQuestions.map((q, index) => `
+            <div class="card-glass rounded-2xl p-6">
+              <div class="flex items-start gap-4 mb-4">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center font-bold flex-shrink-0">
+                  ${index + 1}
+                </div>
+                <p class="text-gray-200 leading-relaxed">${q.question}</p>
+              </div>
+              
+              <div class="space-y-3 ml-14">
+                ${q.options.map((opt, optIndex) => `
+                  <button onclick="selectAnswer(${q.id}, ${optIndex})" 
+                          class="quiz-option w-full text-left p-4 rounded-xl border border-white/20 transition ${quizAnswers[q.id] === optIndex ? 'selected' : ''}">
+                    <span class="font-semibold text-pink-300 mr-2">${String.fromCharCode(65 + optIndex)}.</span>
+                    ${opt}
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+          
+          <div class="flex justify-center mt-8">
+            <button onclick="submitQuiz()" 
+                    class="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 rounded-xl font-bold text-lg hover:opacity-90 transition pulse-glow">
+              📤 Submit Jawaban
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderQuizResults() {
+      const score = calculateScore();
+      const percentage = (score / quizQuestions.length) * 100;
+      
+      return `
+        <div class="space-y-6">
+          <!-- Score Card -->
+          <div class="card-glass rounded-2xl p-8 text-center">
+            <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center">
+              <span class="text-5xl font-bold">${score}</span>
+            </div>
+            <p class="text-xl text-gray-200">dari ${quizQuestions.length} soal benar</p>
+            <p class="text-3xl font-bold mt-2 ${percentage >= 70 ? 'text-green-400' : percentage >= 50 ? 'text-yellow-400' : 'text-red-400'}">
+              ${percentage}%
+            </p>
+            <p class="text-gray-400 mt-2">
+              ${percentage >= 80 ? '🌟 Luar biasa! Kamu menguasai materi dengan sangat baik!' : 
+                percentage >= 60 ? '👍 Bagus! Terus tingkatkan pemahamanmu!' : 
+                '📚 Pelajari kembali materinya ya!'}
+            </p>
+          </div>
+
+          <!-- Detailed Results -->
+          ${quizQuestions.map((q, index) => {
+            const userAnswer = quizAnswers[q.id];
+            const isCorrect = userAnswer === q.correct;
+            
+            return `
+              <div class="card-glass rounded-2xl p-6 ${isCorrect ? 'border-2 border-green-500/30' : 'border-2 border-red-500/30'}">
+                <div class="flex items-start gap-4 mb-4">
+                  <div class="w-10 h-10 rounded-full ${isCorrect ? 'bg-green-500' : 'bg-red-500'} flex items-center justify-center font-bold flex-shrink-0">
+                    ${isCorrect ? '✓' : '✗'}
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-400 mb-1">Soal ${index + 1}</p>
+                    <p class="text-gray-200 leading-relaxed">${q.question}</p>
+                  </div>
+                </div>
+                
+                <div class="space-y-3 ml-14">
+                  ${q.options.map((opt, optIndex) => `
+                    <div class="p-4 rounded-xl border ${
+                      optIndex === q.correct ? 'border-green-500 bg-green-500/10' : 
+                      optIndex === userAnswer && optIndex !== q.correct ? 'border-red-500 bg-red-500/10' : 
+                      'border-white/10'
+                    }">
+                      <span class="font-semibold ${optIndex === q.correct ? 'text-green-400' : optIndex === userAnswer ? 'text-red-400' : 'text-pink-300'} mr-2">
+                        ${String.fromCharCode(65 + optIndex)}.
+                      </span>
+                      ${opt}
+                      ${optIndex === q.correct ? ' <span class="text-green-400 ml-2">✓ Jawaban Benar</span>' : ''}
+                      ${optIndex === userAnswer && optIndex !== q.correct ? ' <span class="text-red-400 ml-2">✗ Jawabanmu</span>' : ''}
+                    </div>
+                  `).join('')}
+                </div>
+                
+                <div class="mt-4 ml-14 p-4 bg-blue-500/10 rounded-xl border border-blue-500/30">
+                  <p class="text-sm text-blue-300 font-semibold mb-1">💡 Penjelasan:</p>
+                  <p class="text-sm text-gray-300">${q.explanation}</p>
+                </div>
+              </div>
+            `;
+          }).join('')}
+          
+          <div class="flex justify-center gap-4 mt-8">
+            <button onclick="resetQuiz()" 
+                    class="px-6 py-3 bg-white/10 rounded-xl font-semibold hover:bg-white/20 transition">
+              🔄 Ulangi Kuis
+            </button>
+            <button onclick="navigateTo(0)" 
+                    class="px-6 py-3 bg-gradient-to-r from-pink-500 to-red-500 rounded-xl font-semibold hover:opacity-90 transition">
+              📚 Pelajari Lagi
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function selectAnswer(questionId, optionIndex) {
+      quizAnswers[questionId] = optionIndex;
+      renderContent();
+    }
+
+    function submitQuiz() {
+      // Check if all questions answered
+      const unanswered = quizQuestions.filter(q => quizAnswers[q.id] === undefined);
+      if (unanswered.length > 0) {
+        const notification = document.createElement('div');
+        notification.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-xl shadow-lg z-50';
+        notification.innerHTML = `⚠️ Masih ada ${unanswered.length} soal yang belum dijawab!`;
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
+        return;
+      }
+      
+      quizSubmitted = true;
+      renderContent();
+    }
+
+    function calculateScore() {
+      return quizQuestions.filter(q => quizAnswers[q.id] === q.correct).length;
+    }
+
+    function resetQuiz() {
+      quizAnswers = {};
+      quizSubmitted = false;
+      renderContent();
+    }
+
+    // Element SDK Integration
+    const element = {
+      defaultConfig,
+      onConfigChange: async (newConfig) => {
+        config = { ...defaultConfig, ...newConfig };
+        
+        // Update title
+        const titleEl = document.getElementById('main-title');
+        if (titleEl) {
+          titleEl.textContent = config.main_title || defaultConfig.main_title;
+        }
+        
+        // Update teacher name
+        const teacherEl = document.getElementById('teacher-name');
+        if (teacherEl) {
+          teacherEl.textContent = config.teacher_name || defaultConfig.teacher_name;
+        }
+      },
+      mapToCapabilities: (config) => ({
+        recolorables: [
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              config.secondary_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ secondary_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ accent_color: value });
+            }
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (value) => {
+              config.surface_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ surface_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      }),
+      mapToEditPanelValues: (config) => new Map([
+        ["main_title", config.main_title || defaultConfig.main_title],
+        ["teacher_name", config.teacher_name || defaultConfig.teacher_name]
+      ])
+    };
+
+    // Initialize
+    async function init() {
+      if (window.elementSdk) {
+        await window.elementSdk.init(element);
+        config = { ...defaultConfig, ...window.elementSdk.config };
+      }
+      
+      renderNavigation();
+      updateProgress();
+      renderContent();
+    }
+
+    init();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9caa3fd89289e77c',t:'MTc3MDU0NDUwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

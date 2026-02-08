@@ -1,0 +1,1767 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tekanan Zat Cair - Media Pembelajaran Interaktif</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-bg: #0f172a;
+            --secondary-surface: #1e293b;
+            --text-color: #f1f5f9;
+            --primary-action: #06b6d4;
+            --secondary-action: #8b5cf6;
+        }
+        
+        .font-primary {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .font-secondary {
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-action), var(--secondary-action));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-glass {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background: linear-gradient(135deg, var(--primary-action), var(--secondary-action));
+            transform: translateX(5px);
+        }
+        
+        .water-animation {
+            background: linear-gradient(180deg, 
+                rgba(6, 182, 212, 0.1) 0%, 
+                rgba(6, 182, 212, 0.3) 50%, 
+                rgba(6, 182, 212, 0.5) 100%);
+            animation: wave 3s ease-in-out infinite;
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        @keyframes sink {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(20px); }
+        }
+        
+        @keyframes bubble {
+            0% { transform: translateY(100%) scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100%) scale(1); opacity: 0; }
+        }
+        
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .sink-animation {
+            animation: sink 3s ease-in-out infinite;
+        }
+        
+        .bubble {
+            animation: bubble 4s ease-in-out infinite;
+        }
+        
+        .pressure-gradient {
+            background: linear-gradient(180deg, 
+                rgba(6, 182, 212, 0.2) 0%, 
+                rgba(6, 182, 212, 0.9) 100%);
+        }
+        
+        .quiz-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .quiz-option:hover {
+            transform: translateX(10px);
+            background: rgba(6, 182, 212, 0.2);
+        }
+        
+        .quiz-option.selected {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: var(--secondary-action);
+        }
+        
+        .quiz-option.correct {
+            background: rgba(34, 197, 94, 0.3);
+            border-color: #22c55e;
+        }
+        
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: #ef4444;
+        }
+        
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        
+        .slide-enter {
+            animation: slideIn 0.5s ease forwards;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .submarine-container {
+            position: relative;
+            height: 300px;
+            background: linear-gradient(180deg, #0ea5e9 0%, #0369a1 50%, #1e3a5a 100%);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        
+        .submarine {
+            transition: top 1s ease-in-out;
+        }
+        
+        .dam-illustration {
+            clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-secondary overflow-auto" style="background: var(--primary-bg); color: var(--text-color);">
+  <div class="min-h-full w-full"><!-- Background Pattern -->
+   <div class="fixed inset-0 opacity-5 pointer-events-none">
+    <svg width="100%" height="100%"><pattern id="waves" x="0" y="0" width="100" height="100" patternunits="userSpaceOnUse">
+      <path d="M0 50 Q25 30 50 50 T100 50" stroke="currentColor" fill="none" stroke-width="2" />
+      <path d="M0 70 Q25 50 50 70 T100 70" stroke="currentColor" fill="none" stroke-width="1" />
+     </pattern> <rect width="100%" height="100%" fill="url(#waves)" />
+    </svg>
+   </div><!-- Main Container -->
+   <div class="relative z-10 flex flex-col lg:flex-row min-h-full"><!-- Sidebar Navigation -->
+    <nav class="lg:w-72 lg:min-h-full p-4 lg:p-6 lg:border-r border-white/10" style="background: var(--secondary-surface);">
+     <div class="mb-8">
+      <h1 id="main-title" class="text-2xl font-bold font-primary gradient-text">Tekanan Zat Cair</h1>
+      <p id="subtitle" class="text-sm opacity-70 mt-1">Hidrostatis &amp; Hukum Archimedes</p>
+     </div>
+     <div class="space-y-2"><button onclick="navigateTo(0)" class="nav-item w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 active" data-nav="0"> <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style="background: var(--primary-action);">1</span> <span class="text-sm">Pendahuluan</span> </button> <button onclick="navigateTo(1)" class="nav-item w-full text-left px-4 py-3 rounded-lg flex items-center gap-3" data-nav="1"> <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style="background: var(--secondary-action);">2</span> <span class="text-sm">Tekanan Hidrostatis</span> </button> <button onclick="navigateTo(2)" class="nav-item w-full text-left px-4 py-3 rounded-lg flex items-center gap-3" data-nav="2"> <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style="background: var(--primary-action);">3</span> <span class="text-sm">Batas Kemampuan</span> </button> <button onclick="navigateTo(3)" class="nav-item w-full text-left px-4 py-3 rounded-lg flex items-center gap-3" data-nav="3"> <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style="background: var(--secondary-action);">4</span> <span class="text-sm">Hukum Archimedes</span> </button> <button onclick="navigateTo(4)" class="nav-item w-full text-left px-4 py-3 rounded-lg flex items-center gap-3" data-nav="4"> <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style="background: var(--primary-action);">5</span> <span class="text-sm">Terapung, Melayang, Tenggelam</span> </button> <button onclick="navigateTo(5)" class="nav-item w-full text-left px-4 py-3 rounded-lg flex items-center gap-3" data-nav="5"> <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style="background: var(--secondary-action);">6</span> <span class="text-sm">Aplikasi Teknologi</span> </button> <button onclick="navigateTo(6)" class="nav-item w-full text-left px-4 py-3 rounded-lg flex items-center gap-3" data-nav="6"> <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style="background: var(--primary-action);">7</span> <span class="text-sm">Simulasi Interaktif</span> </button> <button onclick="navigateTo(7)" class="nav-item w-full text-left px-4 py-3 rounded-lg flex items-center gap-3" data-nav="7"> <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold bg-gradient-to-r from-cyan-500 to-purple-500">🎯</span> <span class="text-sm">Quiz HOTS (10 Soal)</span> </button>
+     </div><!-- Progress -->
+     <div class="mt-8 pt-6 border-t border-white/10">
+      <p class="text-xs opacity-50 mb-2">Progress Pembelajaran</p>
+      <div class="h-2 rounded-full overflow-hidden" style="background: var(--primary-bg);">
+       <div id="progress-bar" class="progress-bar h-full rounded-full" style="width: 12.5%; background: linear-gradient(90deg, var(--primary-action), var(--secondary-action));"></div>
+      </div>
+      <p id="progress-text" class="text-xs opacity-50 mt-2">1 dari 8 materi</p>
+     </div>
+    </nav><!-- Main Content Area -->
+    <main class="flex-1 p-4 lg:p-8 overflow-auto">
+     <div id="content-container" class="max-w-4xl mx-auto"><!-- Content will be loaded here -->
+     </div>
+    </main>
+   </div>
+  </div>
+  <script>
+        // Default configuration
+        const defaultConfig = {
+            main_title: 'Tekanan Zat Cair',
+            subtitle: 'Hidrostatis & Hukum Archimedes',
+            background_color: '#0f172a',
+            surface_color: '#1e293b',
+            text_color: '#f1f5f9',
+            primary_action_color: '#06b6d4',
+            secondary_action_color: '#8b5cf6'
+        };
+
+        let config = { ...defaultConfig };
+        let currentSlide = 0;
+        let quizAnswers = {};
+        let quizSubmitted = false;
+
+        // Quiz data - 10 HOTS questions
+        const quizData = [
+            {
+                id: 1,
+                question: "Seorang penyelam berada di kedalaman 15 meter di bawah permukaan laut (ρ = 1025 kg/m³). Jika g = 10 m/s², berapakah tekanan hidrostatis yang dialami penyelam tersebut?",
+                options: [
+                    "A. 150.000 Pa",
+                    "B. 153.750 Pa",
+                    "C. 155.000 Pa",
+                    "D. 160.000 Pa"
+                ],
+                correct: 1,
+                explanation: "P = ρ × g × h = 1025 × 10 × 15 = 153.750 Pa. Perhatikan bahwa massa jenis air laut (1025 kg/m³) berbeda dengan air tawar (1000 kg/m³)."
+            },
+            {
+                id: 2,
+                question: "Mengapa bendungan selalu dibangun dengan bagian bawah yang lebih tebal dibandingkan bagian atas?",
+                options: [
+                    "A. Untuk menghemat material bangunan",
+                    "B. Karena tekanan air meningkat seiring bertambahnya kedalaman",
+                    "C. Agar terlihat lebih estetis",
+                    "D. Karena bagian atas terkena angin lebih kencang"
+                ],
+                correct: 1,
+                explanation: "Berdasarkan rumus P = ρgh, tekanan hidrostatis berbanding lurus dengan kedalaman. Semakin dalam, tekanan semakin besar, sehingga bagian bawah bendungan harus lebih kuat untuk menahan tekanan yang lebih besar."
+            },
+            {
+                id: 3,
+                question: "Sebuah bola besi (ρ = 7800 kg/m³) dan bola plastik (ρ = 900 kg/m³) dengan volume yang sama dimasukkan ke dalam air (ρ = 1000 kg/m³). Manakah pernyataan yang BENAR?",
+                options: [
+                    "A. Kedua bola mengalami gaya apung yang berbeda",
+                    "B. Bola besi mengalami gaya apung lebih besar",
+                    "C. Kedua bola mengalami gaya apung yang sama",
+                    "D. Bola plastik tidak mengalami gaya apung"
+                ],
+                correct: 2,
+                explanation: "Gaya apung (Fa = ρcair × Vtercelup × g) bergantung pada volume zat cair yang dipindahkan. Karena kedua bola memiliki volume sama dan tercelup sempurna, keduanya memindahkan volume air yang sama sehingga gaya apungnya sama."
+            },
+            {
+                id: 4,
+                question: "Kapal selam dapat mengatur kedalaman menyelamnya dengan mengisi atau mengosongkan tangki balasnya. Prinsip fisika apa yang mendasari cara kerja ini?",
+                options: [
+                    "A. Hukum Pascal",
+                    "B. Hukum Archimedes",
+                    "C. Hukum Bernoulli",
+                    "D. Hukum Boyle"
+                ],
+                correct: 1,
+                explanation: "Kapal selam menggunakan prinsip Hukum Archimedes. Dengan mengisi tangki balas dengan air, berat kapal bertambah sehingga gaya berat > gaya apung dan kapal tenggelam. Sebaliknya, memompa air keluar membuat berat kapal berkurang sehingga kapal naik."
+            },
+            {
+                id: 5,
+                question: "Sebuah balok kayu dengan volume 0,5 m³ dan massa jenis 600 kg/m³ dimasukkan ke dalam air. Berapa bagian volume balok yang muncul di atas permukaan air? (ρair = 1000 kg/m³)",
+                options: [
+                    "A. 20%",
+                    "B. 40%",
+                    "C. 50%",
+                    "D. 60%"
+                ],
+                correct: 1,
+                explanation: "Saat benda terapung, berat benda = gaya apung. Volume tercelup/Volume total = ρbenda/ρair = 600/1000 = 0,6 atau 60%. Jadi volume yang muncul = 100% - 60% = 40%."
+            },
+            {
+                id: 6,
+                question: "Seorang anak memasukkan telur ke dalam air tawar dan telur tenggelam. Kemudian ia menambahkan garam ke dalam air hingga telur melayang. Apa yang terjadi pada sistem tersebut?",
+                options: [
+                    "A. Massa jenis telur berkurang",
+                    "B. Massa jenis air meningkat menjadi sama dengan massa jenis telur",
+                    "C. Volume telur bertambah",
+                    "D. Gaya gravitasi pada telur berkurang"
+                ],
+                correct: 1,
+                explanation: "Penambahan garam meningkatkan massa jenis larutan. Saat massa jenis larutan = massa jenis telur, gaya apung = berat telur, sehingga telur melayang. Massa jenis dan volume telur tidak berubah."
+            },
+            {
+                id: 7,
+                question: "Pada kedalaman 50 meter di bawah permukaan danau, tekanan total yang dialami penyelam adalah... (ρair = 1000 kg/m³, g = 10 m/s², tekanan atmosfer = 101.325 Pa)",
+                options: [
+                    "A. 500.000 Pa",
+                    "B. 601.325 Pa",
+                    "C. 500.000 Pa + tekanan atmosfer",
+                    "D. Hanya tekanan atmosfer"
+                ],
+                correct: 1,
+                explanation: "Tekanan total = tekanan atmosfer + tekanan hidrostatis = 101.325 + (1000 × 10 × 50) = 101.325 + 500.000 = 601.325 Pa. Penyelam merasakan tekanan dari udara di atas ditambah tekanan kolom air di atasnya."
+            },
+            {
+                id: 8,
+                question: "Sebuah kapal baja dapat terapung di laut karena...",
+                options: [
+                    "A. Baja memiliki massa jenis lebih kecil dari air laut",
+                    "B. Kapal dirancang dengan lambung berongga sehingga rata-rata massa jenisnya lebih kecil dari air",
+                    "C. Air laut memiliki gaya tolak terhadap logam",
+                    "D. Baja bersifat anti-gravitasi di dalam air"
+                ],
+                correct: 1,
+                explanation: "Meskipun baja memiliki massa jenis tinggi (~7800 kg/m³), kapal dirancang dengan lambung berongga berisi udara. Hal ini membuat rata-rata massa jenis keseluruhan kapal lebih kecil dari air laut, sehingga kapal dapat terapung."
+            },
+            {
+                id: 9,
+                question: "Dua wadah berbeda berisi air dengan ketinggian yang sama. Wadah A berbentuk silinder dan wadah B berbentuk kerucut (lebar di atas). Bagaimana perbandingan tekanan di dasar kedua wadah?",
+                options: [
+                    "A. Tekanan di wadah A lebih besar karena volumenya lebih besar",
+                    "B. Tekanan di wadah B lebih besar karena bentuknya berbeda",
+                    "C. Tekanan di kedua wadah sama karena ketinggian airnya sama",
+                    "D. Tidak bisa dibandingkan karena bentuknya berbeda"
+                ],
+                correct: 2,
+                explanation: "Tekanan hidrostatis hanya bergantung pada kedalaman (P = ρgh), bukan pada bentuk wadah atau volume total air. Karena ketinggian air sama dan menggunakan zat cair yang sama, tekanan di dasar kedua wadah adalah sama."
+            },
+            {
+                id: 10,
+                question: "Seorang penyelam profesional yang akan menyelam ke kedalaman 40 meter perlu menggunakan campuran gas pernapasan khusus (bukan udara biasa). Mengapa hal ini diperlukan?",
+                options: [
+                    "A. Udara biasa terlalu ringan di kedalaman tersebut",
+                    "B. Tekanan tinggi menyebabkan nitrogen dalam udara larut berlebihan dalam darah, menyebabkan penyakit dekompresi",
+                    "C. Oksigen dalam udara habis lebih cepat di kedalaman",
+                    "D. Udara biasa tidak bisa dimampatkan pada tekanan tinggi"
+                ],
+                correct: 1,
+                explanation: "Pada tekanan tinggi (di kedalaman), gas nitrogen larut lebih banyak dalam darah. Saat naik ke permukaan terlalu cepat, nitrogen membentuk gelembung di dalam darah (penyakit dekompresi/caisson disease). Campuran gas khusus seperti Nitrox atau Trimix mengurangi kadar nitrogen untuk mencegah hal ini."
+            }
+        ];
+
+        // Slide content
+        const slides = [
+            // Slide 0: Pendahuluan
+            `<div class="slide-enter">
+                <div class="card-glass rounded-2xl p-8 mb-6">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 rounded-full flex items-center justify-center text-3xl" style="background: linear-gradient(135deg, var(--primary-action), var(--secondary-action));">
+                            💧
+                        </div>
+                        <div>
+                            <h2 class="text-3xl font-bold font-primary gradient-text">Tekanan Zat Cair</h2>
+                            <p class="opacity-70">Hidrostatis & Hukum Archimedes</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-xl p-6 mb-6">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                            <span>🤔</span> Pertanyaan Pemantik
+                        </h3>
+                        <div class="space-y-4">
+                            <p class="text-lg leading-relaxed">
+                                <strong>Pernahkah telingamu terasa sakit saat menyelam di kolam yang dalam?</strong>
+                            </p>
+                            <p class="text-lg leading-relaxed">
+                                <strong>Mengapa kapal pesiar yang beratnya ribuan ton bisa terapung, sementara batu kecil tenggelam?</strong>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Illustration: Swimming Pool -->
+                    <div class="relative h-64 rounded-xl overflow-hidden mb-6">
+                        <svg viewBox="0 0 800 300" class="w-full h-full">
+                            <!-- Sky -->
+                            <rect width="800" height="100" fill="#87CEEB"/>
+                            <circle cx="700" cy="40" r="30" fill="#FFD700"/>
+                            
+                            <!-- Pool -->
+                            <rect x="50" y="100" width="700" height="180" fill="#0891b2" rx="10"/>
+                            <rect x="50" y="100" width="700" height="30" fill="#22d3ee" opacity="0.5"/>
+                            
+                            <!-- Pool tiles pattern -->
+                            <pattern id="poolTiles" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                                <rect width="40" height="40" fill="#0891b2"/>
+                                <rect x="1" y="1" width="18" height="18" fill="#0e7490"/>
+                                <rect x="21" y="1" width="18" height="18" fill="#0e7490"/>
+                                <rect x="1" y="21" width="18" height="18" fill="#0e7490"/>
+                                <rect x="21" y="21" width="18" height="18" fill="#0e7490"/>
+                            </pattern>
+                            <rect x="50" y="130" width="700" height="150" fill="url(#poolTiles)" opacity="0.3"/>
+                            
+                            <!-- Diver -->
+                            <g class="sink-animation">
+                                <ellipse cx="400" cy="200" rx="20" ry="25" fill="#fcd34d"/>
+                                <circle cx="400" cy="180" r="15" fill="#fcd34d"/>
+                                <circle cx="395" cy="177" r="3" fill="#1e293b"/>
+                                <circle cx="405" cy="177" r="3" fill="#1e293b"/>
+                                <path d="M395 185 Q400 190 405 185" stroke="#1e293b" stroke-width="2" fill="none"/>
+                                <rect x="385" y="165" width="30" height="8" rx="4" fill="#1e293b"/>
+                            </g>
+                            
+                            <!-- Pressure arrows -->
+                            <g>
+                                <line x1="500" y1="140" x2="500" y2="160" stroke="#ef4444" stroke-width="3"/>
+                                <polygon points="500,165 495,155 505,155" fill="#ef4444"/>
+                                <text x="520" y="155" fill="white" font-size="12">Tekanan kecil</text>
+                                
+                                <line x1="500" y1="220" x2="500" y2="250" stroke="#ef4444" stroke-width="5"/>
+                                <polygon points="500,258 492,243 508,243" fill="#ef4444"/>
+                                <text x="520" y="250" fill="white" font-size="12">Tekanan besar</text>
+                            </g>
+                            
+                            <!-- Depth markers -->
+                            <line x1="60" y1="130" x2="80" y2="130" stroke="white" stroke-width="2"/>
+                            <text x="85" y="135" fill="white" font-size="10">0 m</text>
+                            <line x1="60" y1="200" x2="80" y2="200" stroke="white" stroke-width="2"/>
+                            <text x="85" y="205" fill="white" font-size="10">3 m</text>
+                            <line x1="60" y1="270" x2="80" y2="270" stroke="white" stroke-width="2"/>
+                            <text x="85" y="275" fill="white" font-size="10">6 m</text>
+                        </svg>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="p-4 rounded-xl" style="background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.3);">
+                            <h4 class="font-semibold mb-2 flex items-center gap-2">
+                                <span>📚</span> Yang Akan Kamu Pelajari
+                            </h4>
+                            <ul class="text-sm space-y-1 opacity-80">
+                                <li>• Konsep tekanan hidrostatis</li>
+                                <li>• Hukum Archimedes</li>
+                                <li>• Kondisi terapung, melayang, tenggelam</li>
+                                <li>• Aplikasi dalam kehidupan sehari-hari</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 rounded-xl" style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3);">
+                            <h4 class="font-semibold mb-2 flex items-center gap-2">
+                                <span>🎯</span> Tujuan Pembelajaran
+                            </h4>
+                            <ul class="text-sm space-y-1 opacity-80">
+                                <li>• Menghitung tekanan hidrostatis</li>
+                                <li>• Menghitung gaya apung</li>
+                                <li>• Menganalisis kondisi benda dalam fluida</li>
+                                <li>• Menerapkan konsep dalam teknologi</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <button onclick="navigateTo(1)" class="w-full py-4 rounded-xl font-semibold text-lg transition-all hover:scale-105" style="background: linear-gradient(135deg, var(--primary-action), var(--secondary-action));">
+                    Mulai Belajar →
+                </button>
+            </div>`,
+            
+            // Slide 1: Tekanan Hidrostatis
+            `<div class="slide-enter">
+                <div class="card-glass rounded-2xl p-8 mb-6">
+                    <h2 class="text-2xl font-bold font-primary gradient-text mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--secondary-action);">2</span>
+                        Tekanan Hidrostatis
+                    </h2>
+                    
+                    <div class="bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-xl p-6 mb-6">
+                        <h3 class="text-lg font-semibold mb-3">📖 Definisi</h3>
+                        <p class="text-lg leading-relaxed">
+                            <strong>Tekanan hidrostatis</strong> adalah tekanan yang diberikan oleh zat cair ke seluruh arah pada benda di dalamnya akibat <strong>gaya gravitasi</strong>.
+                        </p>
+                    </div>
+                    
+                    <!-- Interactive Pressure Visualization -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold mb-4">🔬 Visualisasi Tekanan Hidrostatis</h3>
+                        <div class="relative h-80 rounded-xl overflow-hidden pressure-gradient">
+                            <svg viewBox="0 0 600 320" class="w-full h-full">
+                                <!-- Water container -->
+                                <rect x="100" y="20" width="400" height="280" fill="none" stroke="white" stroke-width="4" rx="10"/>
+                                
+                                <!-- Water levels with gradient -->
+                                <defs>
+                                    <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:0.3"/>
+                                        <stop offset="50%" style="stop-color:#0891b2;stop-opacity:0.6"/>
+                                        <stop offset="100%" style="stop-color:#0e7490;stop-opacity:0.9"/>
+                                    </linearGradient>
+                                </defs>
+                                <rect x="102" y="22" width="396" height="276" fill="url(#waterGrad)" rx="8"/>
+                                
+                                <!-- Depth markers -->
+                                <g fill="white" font-size="14">
+                                    <text x="520" y="50">h = 0 m</text>
+                                    <text x="520" y="120">h = 5 m</text>
+                                    <text x="520" y="190">h = 10 m</text>
+                                    <text x="520" y="260">h = 15 m</text>
+                                </g>
+                                
+                                <!-- Pressure indicators -->
+                                <g>
+                                    <!-- Small pressure at top -->
+                                    <circle cx="300" cy="60" r="8" fill="#fbbf24"/>
+                                    <g transform="translate(300, 60)">
+                                        <line x1="-20" y1="0" x2="-35" y2="0" stroke="#fbbf24" stroke-width="2"/>
+                                        <line x1="20" y1="0" x2="35" y2="0" stroke="#fbbf24" stroke-width="2"/>
+                                        <line x1="0" y1="-20" x2="0" y2="-35" stroke="#fbbf24" stroke-width="2"/>
+                                        <line x1="0" y1="20" x2="0" y2="35" stroke="#fbbf24" stroke-width="2"/>
+                                    </g>
+                                    <text x="350" y="65" fill="#fbbf24" font-size="12">P = 50.000 Pa</text>
+                                    
+                                    <!-- Medium pressure -->
+                                    <circle cx="300" cy="150" r="12" fill="#f97316"/>
+                                    <g transform="translate(300, 150)">
+                                        <line x1="-25" y1="0" x2="-45" y2="0" stroke="#f97316" stroke-width="3"/>
+                                        <line x1="25" y1="0" x2="45" y2="0" stroke="#f97316" stroke-width="3"/>
+                                        <line x1="0" y1="-25" x2="0" y2="-45" stroke="#f97316" stroke-width="3"/>
+                                        <line x1="0" y1="25" x2="0" y2="45" stroke="#f97316" stroke-width="3"/>
+                                    </g>
+                                    <text x="360" y="155" fill="#f97316" font-size="12">P = 100.000 Pa</text>
+                                    
+                                    <!-- Large pressure at bottom -->
+                                    <circle cx="300" cy="250" r="16" fill="#ef4444"/>
+                                    <g transform="translate(300, 250)">
+                                        <line x1="-30" y1="0" x2="-55" y2="0" stroke="#ef4444" stroke-width="4"/>
+                                        <line x1="30" y1="0" x2="55" y2="0" stroke="#ef4444" stroke-width="4"/>
+                                        <line x1="0" y1="-30" x2="0" y2="-55" stroke="#ef4444" stroke-width="4"/>
+                                        <line x1="0" y1="30" x2="0" y2="55" stroke="#ef4444" stroke-width="4"/>
+                                    </g>
+                                    <text x="370" y="255" fill="#ef4444" font-size="12">P = 150.000 Pa</text>
+                                </g>
+                                
+                                <!-- Labels -->
+                                <text x="300" y="310" fill="white" font-size="14" text-anchor="middle">Semakin dalam → Tekanan semakin besar</text>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="p-5 rounded-xl" style="background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3);">
+                            <h4 class="font-semibold mb-3 flex items-center gap-2">
+                                <span>📏</span> Faktor: Kedalaman
+                            </h4>
+                            <p class="text-sm opacity-90">
+                                Semakin <strong>dalam</strong> kamu menyelam, semakin <strong>besar</strong> tekanan yang kamu rasakan. Tekanan berbanding lurus dengan kedalaman.
+                            </p>
+                        </div>
+                        <div class="p-5 rounded-xl" style="background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3);">
+                            <h4 class="font-semibold mb-3 flex items-center gap-2">
+                                <span>⚗️</span> Faktor: Massa Jenis
+                            </h4>
+                            <p class="text-sm opacity-90">
+                                Semakin <strong>kental/padat</strong> zat cair (massa jenis besar), semakin <strong>besar</strong> tekanannya pada kedalaman yang sama.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Formula Box -->
+                    <div class="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-xl p-6 border border-yellow-500/30">
+                        <h3 class="text-xl font-bold mb-4 text-center">📐 Rumus Tekanan Hidrostatis</h3>
+                        <div class="text-center text-4xl font-bold mb-6 font-primary" style="color: var(--primary-action);">
+                            P = ρ × g × h
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4 text-sm">
+                            <div class="flex items-start gap-3">
+                                <span class="font-bold text-lg" style="color: var(--primary-action);">P</span>
+                                <span>= Tekanan (N/m² atau Pascal)</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="font-bold text-lg" style="color: var(--secondary-action);">ρ</span>
+                                <span>= Massa jenis zat cair (kg/m³)</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="font-bold text-lg" style="color: var(--primary-action);">g</span>
+                                <span>= Percepatan gravitasi (m/s²)</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="font-bold text-lg" style="color: var(--secondary-action);">h</span>
+                                <span>= Kedalaman dari permukaan (m)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex gap-4">
+                    <button onclick="navigateTo(0)" class="flex-1 py-3 rounded-xl font-semibold border border-white/20 hover:bg-white/10 transition-all">
+                        ← Sebelumnya
+                    </button>
+                    <button onclick="navigateTo(2)" class="flex-1 py-3 rounded-xl font-semibold transition-all hover:scale-105" style="background: linear-gradient(135deg, var(--primary-action), var(--secondary-action));">
+                        Selanjutnya →
+                    </button>
+                </div>
+            </div>`,
+            
+            // Slide 2: Batas Kemampuan
+            `<div class="slide-enter">
+                <div class="card-glass rounded-2xl p-8 mb-6">
+                    <h2 class="text-2xl font-bold font-primary gradient-text mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--primary-action);">3</span>
+                        Batas Kemampuan Manusia & Teknologi
+                    </h2>
+                    
+                    <!-- Human diving illustration -->
+                    <div class="relative h-96 rounded-xl overflow-hidden mb-6">
+                        <svg viewBox="0 0 800 400" class="w-full h-full">
+                            <!-- Background gradient - ocean depth -->
+                            <defs>
+                                <linearGradient id="oceanDepth" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#38bdf8;stop-opacity:1"/>
+                                    <stop offset="30%" style="stop-color:#0284c7;stop-opacity:1"/>
+                                    <stop offset="60%" style="stop-color:#0369a1;stop-opacity:1"/>
+                                    <stop offset="100%" style="stop-color:#0c4a6e;stop-opacity:1"/>
+                                </linearGradient>
+                            </defs>
+                            <rect width="800" height="400" fill="url(#oceanDepth)"/>
+                            
+                            <!-- Surface line -->
+                            <path d="M0 30 Q100 20 200 30 T400 30 T600 30 T800 30" stroke="white" stroke-width="2" fill="none" opacity="0.5"/>
+                            <text x="20" y="25" fill="white" font-size="12">Permukaan Laut</text>
+                            
+                            <!-- Depth zones -->
+                            <rect x="0" y="30" width="800" height="100" fill="rgba(34, 197, 94, 0.2)"/>
+                            <text x="650" y="80" fill="#22c55e" font-size="14" font-weight="bold">ZONA AMAN</text>
+                            <text x="650" y="100" fill="#22c55e" font-size="11">0 - 20 meter</text>
+                            
+                            <rect x="0" y="130" width="800" height="100" fill="rgba(251, 191, 36, 0.2)"/>
+                            <text x="650" y="180" fill="#fbbf24" font-size="14" font-weight="bold">ZONA BAHAYA</text>
+                            <text x="650" y="200" fill="#fbbf24" font-size="11">20 - 40 meter</text>
+                            
+                            <rect x="0" y="230" width="800" height="170" fill="rgba(239, 68, 68, 0.2)"/>
+                            <text x="650" y="300" fill="#ef4444" font-size="14" font-weight="bold">ZONA MEMATIKAN</text>
+                            <text x="650" y="320" fill="#ef4444" font-size="11">> 40 meter</text>
+                            
+                            <!-- Depth markers -->
+                            <g fill="white" font-size="12">
+                                <line x1="50" y1="30" x2="70" y2="30" stroke="white" stroke-width="2"/>
+                                <text x="75" y="35">0 m</text>
+                                
+                                <line x1="50" y1="130" x2="70" y2="130" stroke="white" stroke-width="2"/>
+                                <text x="75" y="135">20 m</text>
+                                
+                                <line x1="50" y1="230" x2="70" y2="230" stroke="white" stroke-width="2"/>
+                                <text x="75" y="235">40 m</text>
+                                
+                                <line x1="50" y1="330" x2="70" y2="330" stroke="white" stroke-width="2"/>
+                                <text x="75" y="335">60 m</text>
+                            </g>
+                            
+                            <!-- Casual swimmer at safe zone -->
+                            <g transform="translate(200, 80)">
+                                <ellipse cx="0" cy="0" rx="25" ry="15" fill="#fcd34d"/>
+                                <circle cx="-15" cy="-5" r="12" fill="#fcd34d"/>
+                                <circle cx="-18" cy="-8" r="2" fill="#1e293b"/>
+                                <path d="M-20 -2 Q-15 2 -10 -2" stroke="#1e293b" stroke-width="2" fill="none"/>
+                                <ellipse cx="30" cy="5" rx="15" ry="8" fill="#fcd34d"/>
+                            </g>
+                            <text x="170" y="120" fill="white" font-size="11" text-anchor="middle">Perenang biasa</text>
+                            
+                            <!-- Professional diver with equipment -->
+                            <g transform="translate(350, 180)">
+                                <rect x="-20" y="-30" width="40" height="50" rx="5" fill="#1e293b"/>
+                                <circle cx="0" cy="-45" r="18" fill="#fcd34d"/>
+                                <rect x="-25" y="-60" width="50" height="15" rx="5" fill="#374151"/>
+                                <circle cx="-5" cy="-48" r="3" fill="#1e293b"/>
+                                <circle cx="8" cy="-48" r="3" fill="#1e293b"/>
+                                <rect x="25" y="-35" width="20" height="35" rx="3" fill="#4b5563"/>
+                                <ellipse cx="-5" cy="30" rx="10" ry="20" fill="#1e293b"/>
+                                <ellipse cx="15" cy="30" rx="10" ry="20" fill="#1e293b"/>
+                            </g>
+                            <text x="350" y="240" fill="white" font-size="11" text-anchor="middle">Penyelam profesional</text>
+                            <text x="350" y="255" fill="white" font-size="10" text-anchor="middle">(dengan peralatan)</text>
+                            
+                            <!-- Danger warning at deep zone -->
+                            <g transform="translate(350, 320)">
+                                <polygon points="0,-20 20,15 -20,15" fill="#ef4444" stroke="#fbbf24" stroke-width="2"/>
+                                <text x="0" y="8" fill="white" font-size="16" text-anchor="middle" font-weight="bold">!</text>
+                            </g>
+                            <text x="350" y="360" fill="#ef4444" font-size="12" text-anchor="middle" font-weight="bold">Paru-paru bisa hancur!</text>
+                            
+                            <!-- Pressure indicators -->
+                            <g transform="translate(550, 80)">
+                                <text x="0" y="0" fill="white" font-size="11">P ≈ 200.000 Pa</text>
+                            </g>
+                            <g transform="translate(550, 180)">
+                                <text x="0" y="0" fill="white" font-size="11">P ≈ 400.000 Pa</text>
+                            </g>
+                            <g transform="translate(550, 280)">
+                                <text x="0" y="0" fill="white" font-size="11">P > 600.000 Pa</text>
+                            </g>
+                            
+                            <!-- Bubbles -->
+                            <circle cx="220" cy="100" r="5" fill="white" opacity="0.3" class="bubble"/>
+                            <circle cx="370" cy="200" r="4" fill="white" opacity="0.3" class="bubble" style="animation-delay: 0.5s"/>
+                            <circle cx="330" cy="220" r="3" fill="white" opacity="0.3" class="bubble" style="animation-delay: 1s"/>
+                        </svg>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="p-5 rounded-xl bg-red-500/10 border border-red-500/30">
+                            <h4 class="font-semibold mb-3 flex items-center gap-2 text-red-400">
+                                <span>⚠️</span> Ketahanan Manusia
+                            </h4>
+                            <ul class="text-sm space-y-2 opacity-90">
+                                <li>• Manusia rata-rata hanya mampu menyelam hingga <strong>20 meter</strong></li>
+                                <li>• Di kedalaman lebih dari itu, tekanan air <strong>> 240.000 Pa</strong></li>
+                                <li>• Tekanan sebesar itu dapat <strong>menghancurkan paru-paru</strong> manusia</li>
+                            </ul>
+                        </div>
+                        <div class="p-5 rounded-xl bg-green-500/10 border border-green-500/30">
+                            <h4 class="font-semibold mb-3 flex items-center gap-2 text-green-400">
+                                <span>🛡️</span> Perlindungan Penyelam
+                            </h4>
+                            <ul class="text-sm space-y-2 opacity-90">
+                                <li>• <strong>Baju selam</strong> (wetsuit) melindungi dari suhu dingin</li>
+                                <li>• <strong>Tangki oksigen</strong> dengan tekanan khusus</li>
+                                <li>• <strong>Campuran gas</strong> khusus untuk penyelaman dalam</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Dam illustration -->
+                    <div class="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-xl p-6 border border-blue-500/30">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                            <span>🏗️</span> Penerapan: Arsitektur Bendungan
+                        </h3>
+                        <div class="flex flex-col md:flex-row gap-6 items-center">
+                            <div class="flex-1">
+                                <svg viewBox="0 0 400 250" class="w-full max-w-md">
+                                    <!-- Water -->
+                                    <rect x="20" y="50" width="180" height="180" fill="#0891b2" opacity="0.7"/>
+                                    
+                                    <!-- Dam structure - thicker at bottom -->
+                                    <polygon points="200,50 220,50 280,230 200,230" fill="#6b7280" stroke="#374151" stroke-width="2"/>
+                                    <polygon points="200,50 220,50 280,230 200,230" fill="url(#damPattern)" opacity="0.3"/>
+                                    
+                                    <!-- Dam pattern -->
+                                    <defs>
+                                        <pattern id="damPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                                            <rect width="20" height="20" fill="#6b7280"/>
+                                            <rect x="0" y="0" width="10" height="10" fill="#4b5563"/>
+                                            <rect x="10" y="10" width="10" height="10" fill="#4b5563"/>
+                                        </pattern>
+                                    </defs>
+                                    
+                                    <!-- Water surface waves -->
+                                    <path d="M20 50 Q60 45 100 50 T180 50" stroke="#22d3ee" stroke-width="2" fill="none"/>
+                                    
+                                    <!-- Pressure arrows -->
+                                    <g stroke="#ef4444" stroke-width="2" fill="#ef4444">
+                                        <line x1="180" y1="80" x2="200" y2="80"/>
+                                        <polygon points="200,80 195,77 195,83"/>
+                                        
+                                        <line x1="180" y1="120" x2="205" y2="120"/>
+                                        <polygon points="205,120 200,117 200,123"/>
+                                        
+                                        <line x1="180" y1="160" x2="215" y2="160"/>
+                                        <polygon points="215,160 208,155 208,165"/>
+                                        
+                                        <line x1="180" y1="200" x2="225" y2="200"/>
+                                        <polygon points="225,200 215,193 215,207"/>
+                                    </g>
+                                    
+                                    <!-- Labels -->
+                                    <text x="100" y="40" fill="white" font-size="12" text-anchor="middle">Air Waduk</text>
+                                    <text x="250" y="145" fill="white" font-size="10" text-anchor="middle">Bendungan</text>
+                                    <text x="250" y="160" fill="white" font-size="10" text-anchor="middle">(lebih tebal</text>
+                                    <text x="250" y="175" fill="white" font-size="10" text-anchor="middle">di bawah)</text>
+                                    
+                                    <!-- Dimension indicators -->
+                                    <line x1="205" y1="55" x2="205" y2="45" stroke="white" stroke-width="1"/>
+                                    <line x1="220" y1="55" x2="220" y2="45" stroke="white" stroke-width="1"/>
+                                    <line x1="205" y1="50" x2="220" y2="50" stroke="white" stroke-width="1"/>
+                                    <text x="212" y="43" fill="white" font-size="8" text-anchor="middle">tipis</text>
+                                    
+                                    <line x1="200" y1="235" x2="200" y2="245" stroke="white" stroke-width="1"/>
+                                    <line x1="280" y1="235" x2="280" y2="245" stroke="white" stroke-width="1"/>
+                                    <line x1="200" y1="240" x2="280" y2="240" stroke="white" stroke-width="1"/>
+                                    <text x="240" y="250" fill="white" font-size="8" text-anchor="middle">tebal</text>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm opacity-90 leading-relaxed">
+                                    Struktur bendungan selalu dibuat <strong>lebih tebal di bagian bawah</strong> untuk menahan tekanan air yang sangat besar di dasar. 
+                                </p>
+                                <p class="text-sm opacity-90 leading-relaxed mt-3">
+                                    Berdasarkan rumus <strong>P = ρgh</strong>, tekanan di dasar bendungan bisa ratusan kali lebih besar dibanding di permukaan!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex gap-4">
+                    <button onclick="navigateTo(1)" class="flex-1 py-3 rounded-xl font-semibold border border-white/20 hover:bg-white/10 transition-all">
+                        ← Sebelumnya
+                    </button>
+                    <button onclick="navigateTo(3)" class="flex-1 py-3 rounded-xl font-semibold transition-all hover:scale-105" style="background: linear-gradient(135deg, var(--primary-action), var(--secondary-action));">
+                        Selanjutnya →
+                    </button>
+                </div>
+            </div>`,
+            
+            // Slide 3: Hukum Archimedes
+            `<div class="slide-enter">
+                <div class="card-glass rounded-2xl p-8 mb-6">
+                    <h2 class="text-2xl font-bold font-primary gradient-text mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--secondary-action);">4</span>
+                        Hukum Archimedes (Gaya Apung)
+                    </h2>
+                    
+                    <!-- Archimedes Portrait and Story -->
+                    <div class="flex flex-col md:flex-row gap-6 mb-6">
+                        <div class="md:w-1/3">
+                            <div class="rounded-xl overflow-hidden border-2 border-purple-500/30">
+                                <svg viewBox="0 0 200 250" class="w-full">
+                                    <rect width="200" height="250" fill="#1e293b"/>
+                                    <!-- Archimedes illustration -->
+                                    <circle cx="100" cy="80" r="50" fill="#fcd34d"/>
+                                    <circle cx="85" cy="70" r="5" fill="#1e293b"/>
+                                    <circle cx="115" cy="70" r="5" fill="#1e293b"/>
+                                    <path d="M85 95 Q100 110 115 95" stroke="#1e293b" stroke-width="3" fill="none"/>
+                                    <!-- Beard -->
+                                    <ellipse cx="100" cy="115" rx="30" ry="25" fill="#9ca3af"/>
+                                    <!-- Toga -->
+                                    <path d="M40 250 L60 140 Q100 130 140 140 L160 250" fill="#8b5cf6"/>
+                                    <!-- Crown/wreath -->
+                                    <ellipse cx="100" cy="35" rx="35" ry="10" fill="none" stroke="#22c55e" stroke-width="5"/>
+                                    <!-- Stars around -->
+                                    <text x="30" y="30" fill="#fbbf24" font-size="20">✨</text>
+                                    <text x="160" y="50" fill="#fbbf24" font-size="15">✨</text>
+                                    <!-- Name plate -->
+                                    <rect x="30" y="200" width="140" height="40" rx="5" fill="#0f172a"/>
+                                    <text x="100" y="225" fill="white" font-size="14" text-anchor="middle" font-weight="bold">ARCHIMEDES</text>
+                                    <text x="100" y="240" fill="#94a3b8" font-size="10" text-anchor="middle">287-212 SM</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3">
+                            <div class="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl p-6 border border-purple-500/30 h-full">
+                                <h3 class="text-lg font-semibold mb-3">📜 Bunyi Hukum Archimedes</h3>
+                                <blockquote class="text-lg italic border-l-4 border-purple-500 pl-4 mb-4">
+                                    "Benda yang dicelupkan ke dalam zat cair akan mendapatkan <strong>gaya ke atas (F<sub>a</sub>)</strong> yang besarnya sama dengan <strong>berat zat cair yang dipindahkan</strong>."
+                                </blockquote>
+                                <div class="bg-yellow-500/10 rounded-lg p-4">
+                                    <p class="text-sm">
+                                        <strong>💡 Fun Fact:</strong> Archimedes menemukan prinsip ini saat mandi! Ia berteriak "Eureka!" (Saya menemukannya!) dan berlari telanjang ke jalanan karena terlalu bersemangat.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Buoyancy Force Illustration -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold mb-4">🎈 Mengapa Benda Terasa Ringan di Air?</h3>
+                        <div class="relative h-72 rounded-xl overflow-hidden" style="background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);">
+                            <svg viewBox="0 0 700 280" class="w-full h-full">
+                                <!-- Water -->
+                                <rect x="0" y="50" width="700" height="230" fill="#0891b2" opacity="0.8"/>
+                                
+                                <!-- Object in water -->
+                                <rect x="280" y="100" width="140" height="120" rx="10" fill="#f97316" stroke="#ea580c" stroke-width="3"/>
+                                <text x="350" y="165" fill="white" font-size="16" text-anchor="middle" font-weight="bold">Benda</text>
+                                
+                                <!-- Weight force (down) -->
+                                <line x1="350" y1="220" x2="350" y2="270" stroke="#ef4444" stroke-width="6"/>
+                                <polygon points="350,280 340,260 360,260" fill="#ef4444"/>
+                                <text x="390" y="270" fill="#ef4444" font-size="14" font-weight="bold">W (Berat)</text>
+                                
+                                <!-- Buoyancy force (up) -->
+                                <line x1="350" y1="100" x2="350" y2="50" stroke="#22c55e" stroke-width="6"/>
+                                <polygon points="350,40 340,60 360,60" fill="#22c55e"/>
+                                <text x="390" y="55" fill="#22c55e" font-size="14" font-weight="bold">Fa (Gaya Apung)</text>
+                                
+                                <!-- Side pressure arrows -->
+                                <g stroke="#06b6d4" stroke-width="3" fill="#06b6d4">
+                                    <line x1="250" y1="160" x2="280" y2="160"/>
+                                    <polygon points="280,160 268,155 268,165"/>
+                                    
+                                    <line x1="450" y1="160" x2="420" y2="160"/>
+                                    <polygon points="420,160 432,155 432,165"/>
+                                </g>
+                                
+                                <!-- Displaced water indication -->
+                                <path d="M200 50 Q220 40 240 50 T280 50" stroke="#22d3ee" stroke-width="2" fill="none"/>
+                                <path d="M420 50 Q440 40 460 50 T500 50" stroke="#22d3ee" stroke-width="2" fill="none"/>
+                                
+                                <!-- Labels -->
+                                <text x="100" y="30" fill="white" font-size="12">Air yang dipindahkan</text>
+                                <text x="550" y="30" fill="white" font-size="12">Air yang dipindahkan</text>
+                                
+                                <!-- Explanation box -->
+                                <rect x="500" y="100" width="180" height="100" rx="10" fill="rgba(0,0,0,0.5)"/>
+                                <text x="590" y="125" fill="white" font-size="11" text-anchor="middle">Gaya apung mendorong</text>
+                                <text x="590" y="145" fill="white" font-size="11" text-anchor="middle">benda ke ATAS,</text>
+                                <text x="590" y="165" fill="white" font-size="11" text-anchor="middle">berlawanan dengan</text>
+                                <text x="590" y="185" fill="white" font-size="11" text-anchor="middle">arah gravitasi</text>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Formula -->
+                    <div class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl p-6 border border-green-500/30">
+                        <h3 class="text-xl font-bold mb-4 text-center">📐 Rumus Gaya Apung</h3>
+                        <div class="text-center text-4xl font-bold mb-6 font-primary" style="color: #22c55e;">
+                            F<sub>a</sub> = ρ<sub>c</sub> × V<sub>cp</sub> × g
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4 text-sm">
+                            <div class="flex items-start gap-3">
+                                <span class="font-bold text-lg text-green-400">F<sub>a</sub></span>
+                                <span>= Gaya apung (Newton)</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="font-bold text-lg text-green-400">ρ<sub>c</sub></span>
+                                <span>= Massa jenis zat cair (kg/m³)</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="font-bold text-lg text-green-400">V<sub>cp</sub></span>
+                                <span>= Volume zat cair yang dipindahkan (m³)</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="font-bold text-lg text-green-400">g</span>
+                                <span>= Percepatan gravitasi (m/s²)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex gap-4">
+                    <button onclick="navigateTo(2)" class="flex-1 py-3 rounded-xl font-semibold border border-white/20 hover:bg-white/10 transition-all">
+                        ← Sebelumnya
+                    </button>
+                    <button onclick="navigateTo(4)" class="flex-1 py-3 rounded-xl font-semibold transition-all hover:scale-105" style="background: linear-gradient(135deg, var(--primary-action), var(--secondary-action));">
+                        Selanjutnya →
+                    </button>
+                </div>
+            </div>`,
+            
+            // Slide 4: Terapung, Melayang, Tenggelam
+            `<div class="slide-enter">
+                <div class="card-glass rounded-2xl p-8 mb-6">
+                    <h2 class="text-2xl font-bold font-primary gradient-text mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--primary-action);">5</span>
+                        Terapung, Melayang, dan Tenggelam
+                    </h2>
+                    
+                    <!-- Visual comparison -->
+                    <div class="grid md:grid-cols-3 gap-6 mb-6">
+                        <!-- Terapung -->
+                        <div class="rounded-xl overflow-hidden border-2 border-green-500/30">
+                            <div class="h-48 relative" style="background: linear-gradient(180deg, #93c5fd 0%, #0891b2 30%, #0e7490 100%);">
+                                <svg viewBox="0 0 200 200" class="w-full h-full">
+                                    <!-- Water surface -->
+                                    <rect x="0" y="60" width="200" height="140" fill="#0891b2" opacity="0.8"/>
+                                    <path d="M0 60 Q50 55 100 60 T200 60" stroke="#22d3ee" stroke-width="2" fill="none"/>
+                                    
+                                    <!-- Floating object -->
+                                    <rect x="60" y="40" width="80" height="60" rx="5" fill="#f97316" class="float-animation"/>
+                                    <text x="100" y="75" fill="white" font-size="10" text-anchor="middle">🪵</text>
+                                    
+                                    <!-- Forces -->
+                                    <line x1="100" y1="30" x2="100" y2="10" stroke="#22c55e" stroke-width="4"/>
+                                    <polygon points="100,5 95,15 105,15" fill="#22c55e"/>
+                                    <text x="130" y="15" fill="#22c55e" font-size="10">Fa ></text>
+                                    
+                                    <line x1="100" y1="105" x2="100" y2="125" stroke="#ef4444" stroke-width="3"/>
+                                    <polygon points="100,130 95,120 105,120" fill="#ef4444"/>
+                                    <text x="130" y="125" fill="#ef4444" font-size="10">W</text>
+                                </svg>
+                            </div>
+                            <div class="p-4 text-center" style="background: rgba(34, 197, 94, 0.2);">
+                                <h4 class="font-bold text-green-400 text-lg">TERAPUNG</h4>
+                                <p class="text-xs mt-1 opacity-80">Sebagian benda di atas permukaan</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Melayang -->
+                        <div class="rounded-xl overflow-hidden border-2 border-yellow-500/30">
+                            <div class="h-48 relative" style="background: linear-gradient(180deg, #93c5fd 0%, #0891b2 30%, #0e7490 100%);">
+                                <svg viewBox="0 0 200 200" class="w-full h-full">
+                                    <!-- Water surface -->
+                                    <rect x="0" y="40" width="200" height="160" fill="#0891b2" opacity="0.8"/>
+                                    <path d="M0 40 Q50 35 100 40 T200 40" stroke="#22d3ee" stroke-width="2" fill="none"/>
+                                    
+                                    <!-- Hovering object -->
+                                    <ellipse cx="100" cy="110" rx="35" ry="25" fill="#fbbf24"/>
+                                    <text x="100" y="115" fill="#1e293b" font-size="12" text-anchor="middle">🐟</text>
+                                    
+                                    <!-- Forces (equal) -->
+                                    <line x1="100" y1="80" x2="100" y2="60" stroke="#22c55e" stroke-width="4"/>
+                                    <polygon points="100,55 95,65 105,65" fill="#22c55e"/>
+                                    <text x="130" y="65" fill="#22c55e" font-size="10">Fa =</text>
+                                    
+                                    <line x1="100" y1="140" x2="100" y2="160" stroke="#ef4444" stroke-width="4"/>
+                                    <polygon points="100,165 95,155 105,155" fill="#ef4444"/>
+                                    <text x="130" y="160" fill="#ef4444" font-size="10">W</text>
+                                </svg>
+                            </div>
+                            <div class="p-4 text-center" style="background: rgba(251, 191, 36, 0.2);">
+                                <h4 class="font-bold text-yellow-400 text-lg">MELAYANG</h4>
+                                <p class="text-xs mt-1 opacity-80">Benda di tengah-tengah air</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Tenggelam -->
+                        <div class="rounded-xl overflow-hidden border-2 border-red-500/30">
+                            <div class="h-48 relative" style="background: linear-gradient(180deg, #93c5fd 0%, #0891b2 30%, #0e7490 100%);">
+                                <svg viewBox="0 0 200 200" class="w-full h-full">
+                                    <!-- Water surface -->
+                                    <rect x="0" y="30" width="200" height="170" fill="#0891b2" opacity="0.8"/>
+                                    <path d="M0 30 Q50 25 100 30 T200 30" stroke="#22d3ee" stroke-width="2" fill="none"/>
+                                    
+                                    <!-- Bottom -->
+                                    <rect x="0" y="170" width="200" height="30" fill="#374151"/>
+                                    
+                                    <!-- Sinking object -->
+                                    <circle cx="100" cy="155" r="25" fill="#6b7280" class="sink-animation"/>
+                                    <text x="100" y="160" fill="white" font-size="12" text-anchor="middle">🪨</text>
+                                    
+                                    <!-- Forces -->
+                                    <line x1="100" y1="125" x2="100" y2="110" stroke="#22c55e" stroke-width="3"/>
+                                    <polygon points="100,105 95,115 105,115" fill="#22c55e"/>
+                                    <text x="130" y="110" fill="#22c55e" font-size="10">Fa <</text>
+                                    
+                                    <line x1="100" y1="185" x2="100" y2="200" stroke="#ef4444" stroke-width="5"/>
+                                    <polygon points="100,205 93,190 107,190" fill="#ef4444"/>
+                                    <text x="130" y="195" fill="#ef4444" font-size="10">W</text>
+                                </svg>
+                            </div>
+                            <div class="p-4 text-center" style="background: rgba(239, 68, 68, 0.2);">
+                                <h4 class="font-bold text-red-400 text-lg">TENGGELAM</h4>
+                                <p class="text-xs mt-1 opacity-80">Benda jatuh ke dasar</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Comparison Table -->
+                    <div class="overflow-x-auto mb-6">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr style="background: var(--secondary-surface);">
+                                    <th class="p-4 text-left rounded-tl-xl">Kondisi</th>
+                                    <th class="p-4 text-left">Perbandingan Gaya</th>
+                                    <th class="p-4 text-left">Perbandingan Massa Jenis</th>
+                                    <th class="p-4 text-left rounded-tr-xl">Contoh</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-white/10">
+                                    <td class="p-4">
+                                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-500/20 text-green-400">TERAPUNG</span>
+                                    </td>
+                                    <td class="p-4">F<sub>a</sub> > W</td>
+                                    <td class="p-4">ρ<sub>benda</sub> < ρ<sub>air</sub></td>
+                                    <td class="p-4">Kayu, Gabus, Plastik</td>
+                                </tr>
+                                <tr class="border-b border-white/10">
+                                    <td class="p-4">
+                                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-500/20 text-yellow-400">MELAYANG</span>
+                                    </td>
+                                    <td class="p-4">F<sub>a</sub> = W</td>
+                                    <td class="p-4">ρ<sub>benda</sub> = ρ<sub>air</sub></td>
+                                    <td class="p-4">Ikan, Telur di air garam</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 rounded-bl-xl">
+                                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-red-500/20 text-red-400">TENGGELAM</span>
+                                    </td>
+                                    <td class="p-4">F<sub>a</sub> < W</td>
+                                    <td class="p-4">ρ<sub>benda</sub> > ρ<sub>air</sub></td>
+                                    <td class="p-4 rounded-br-xl">Batu, Besi, Koin</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Key insight -->
+                    <div class="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl p-6 border border-purple-500/30">
+                        <h4 class="font-semibold mb-3 flex items-center gap-2">
+                            <span>💡</span> Kunci Pemahaman
+                        </h4>
+                        <p class="text-sm opacity-90 leading-relaxed">
+                            Kondisi benda dalam zat cair ditentukan oleh perbandingan <strong>massa jenis benda</strong> dan <strong>massa jenis zat cair</strong>. 
+                            Jika massa jenis benda lebih kecil, benda akan terapung. Jika sama, benda melayang. Jika lebih besar, benda tenggelam.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="flex gap-4">
+                    <button onclick="navigateTo(3)" class="flex-1 py-3 rounded-xl font-semibold border border-white/20 hover:bg-white/10 transition-all">
+                        ← Sebelumnya
+                    </button>
+                    <button onclick="navigateTo(5)" class="flex-1 py-3 rounded-xl font-semibold transition-all hover:scale-105" style="background: linear-gradient(135deg, var(--primary-action), var(--secondary-action));">
+                        Selanjutnya →
+                    </button>
+                </div>
+            </div>`,
+            
+            // Slide 5: Aplikasi Teknologi
+            `<div class="slide-enter">
+                <div class="card-glass rounded-2xl p-8 mb-6">
+                    <h2 class="text-2xl font-bold font-primary gradient-text mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--secondary-action);">6</span>
+                        Aplikasi Teknologi
+                    </h2>
+                    
+                    <!-- Ship Section -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                            <span>🚢</span> Kapal Laut
+                        </h3>
+                        <div class="flex flex-col md:flex-row gap-6">
+                            <div class="md:w-1/2">
+                                <div class="rounded-xl overflow-hidden" style="background: linear-gradient(180deg, #7dd3fc 0%, #0284c7 50%, #0369a1 100%);">
+                                    <svg viewBox="0 0 400 250" class="w-full">
+                                        <!-- Sky -->
+                                        <rect width="400" height="100" fill="#7dd3fc"/>
+                                        <circle cx="50" cy="40" r="25" fill="#fbbf24"/>
+                                        
+                                        <!-- Clouds -->
+                                        <g fill="white" opacity="0.8">
+                                            <ellipse cx="150" cy="35" rx="30" ry="15"/>
+                                            <ellipse cx="170" cy="30" rx="25" ry="12"/>
+                                            <ellipse cx="300" cy="50" rx="35" ry="18"/>
+                                        </g>
+                                        
+                                        <!-- Water -->
+                                        <rect x="0" y="100" width="400" height="150" fill="#0284c7"/>
+                                        <path d="M0 100 Q50 95 100 100 T200 100 T300 100 T400 100" stroke="#22d3ee" stroke-width="2" fill="none"/>
+                                        
+                                        <!-- Ship hull -->
+                                        <path d="M80 100 L100 180 L300 180 L320 100 Z" fill="#6b7280"/>
+                                        <path d="M80 100 L100 180 L300 180 L320 100 Z" fill="#4b5563" opacity="0.5"/>
+                                        
+                                        <!-- Ship deck -->
+                                        <rect x="70" y="70" width="260" height="35" rx="5" fill="#374151"/>
+                                        
+                                        <!-- Cabin -->
+                                        <rect x="140" y="30" width="120" height="45" rx="5" fill="#1e293b"/>
+                                        <rect x="155" y="40" width="20" height="25" rx="2" fill="#38bdf8"/>
+                                        <rect x="185" y="40" width="20" height="25" rx="2" fill="#38bdf8"/>
+                                        <rect x="215" y="40" width="20" height="25" rx="2" fill="#38bdf8"/>
+                                        
+                                        <!-- Chimney -->
+                                        <rect x="270" y="10" width="25" height="35" rx="3" fill="#ef4444"/>
+                                        <ellipse cx="282" cy="5" rx="8" ry="4" fill="#9ca3af"/>
+                                        
+                                        <!-- Air space indicator -->
+                                        <ellipse cx="200" cy="140" rx="60" ry="25" fill="none" stroke="#22c55e" stroke-width="2" stroke-dasharray="5,5"/>
+                                        <text x="200" y="145" fill="#22c55e" font-size="10" text-anchor="middle">Ruang Udara</text>
+                                        
+                                        <!-- Buoyancy arrows -->
+                                        <g stroke="#22c55e" stroke-width="3" fill="#22c55e">
+                                            <line x1="120" y1="190" x2="120" y2="210"/>
+                                            <polygon points="120,190 115,200 125,200"/>
+                                            
+                                            <line x1="200" y1="190" x2="200" y2="210"/>
+                                            <polygon points="200,190 195,200 205,200"/>
+                                            
+                                            <line x1="280" y1="190" x2="280" y2="210"/>
+                                            <polygon points="280,190 275,200 285,200"/>
+                                        </g>
+                                        <text x="200" y="230" fill="#22c55e" font-size="10" text-anchor="middle">Gaya Apung (Fa)</text>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="md:w-1/2">
+                                <div class="p-5 rounded-xl h-full" style="background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.3);">
+                                    <h4 class="font-semibold mb-3">Mengapa Kapal Baja Bisa Terapung?</h4>
+                                    <ul class="text-sm space-y-3 opacity-90">
+                                        <li class="flex items-start gap-2">
+                                            <span class="text-green-400">✓</span>
+                                            <span>Lambung kapal dirancang <strong>berongga</strong> dan berisi udara</span>
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <span class="text-green-400">✓</span>
+                                            <span>Volume air yang dipindahkan <strong>sangat besar</strong></span>
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <span class="text-green-400">✓</span>
+                                            <span>Gaya apung yang dihasilkan <strong>cukup untuk menopang</strong> berat kapal</span>
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <span class="text-green-400">✓</span>
+                                            <span>Rata-rata massa jenis kapal < massa jenis air</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Submarine Section -->
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                            <span>🚤</span> Kapal Selam
+                        </h3>
+                        <div class="submarine-container mb-4" id="submarine-demo">
+                            <svg viewBox="0 0 600 300" class="w-full h-full">
+                                <!-- Water gradient already in container -->
+                                
+                                <!-- Surface waves -->
+                                <path d="M0 30 Q75 20 150 30 T300 30 T450 30 T600 30" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none"/>
+                                
+                                <!-- Depth markers -->
+                                <g fill="white" font-size="12" opacity="0.7">
+                                    <text x="550" y="50">Permukaan</text>
+                                    <text x="550" y="150">Tengah</text>
+                                    <text x="550" y="270">Dasar</text>
+                                </g>
+                                
+                                <!-- Submarine body -->
+                                <g id="submarine" class="submarine" style="transition: transform 1s ease-in-out;">
+                                    <ellipse cx="200" cy="150" rx="120" ry="45" fill="#374151"/>
+                                    <ellipse cx="200" cy="150" rx="110" ry="38" fill="#4b5563"/>
+                                    
+                                    <!-- Conning tower -->
+                                    <rect x="170" y="105" width="60" height="35" rx="5" fill="#374151"/>
+                                    <rect x="185" y="95" width="30" height="15" rx="3" fill="#1e293b"/>
+                                    
+                                    <!-- Periscope -->
+                                    <rect x="197" y="70" width="6" height="30" fill="#1e293b"/>
+                                    <rect x="193" y="65" width="14" height="8" fill="#1e293b"/>
+                                    
+                                    <!-- Windows -->
+                                    <circle cx="140" cy="150" r="12" fill="#38bdf8" opacity="0.8"/>
+                                    <circle cx="180" cy="150" r="12" fill="#38bdf8" opacity="0.8"/>
+                                    <circle cx="220" cy="150" r="12" fill="#38bdf8" opacity="0.8"/>
+                                    <circle cx="260" cy="150" r="12" fill="#38bdf8" opacity="0.8"/>
+                                    
+                                    <!-- Propeller -->
+                                    <ellipse cx="320" cy="150" rx="8" ry="25" fill="#1e293b"/>
+                                    <circle cx="320" cy="150" r="8" fill="#374151"/>
+                                    
+                                    <!-- Ballast tank indicator -->
+                                    <rect x="100" y="140" width="30" height="20" rx="3" fill="#0f172a" stroke="#22c55e" stroke-width="2"/>
+                                    <rect id="ballast-water" x="102" y="142" width="26" height="8" fill="#0891b2"/>
+                                    <text x="115" y="175" fill="white" font-size="8" text-anchor="middle">Tangki</text>
+                                </g>
+                                
+                                <!-- Bubbles -->
+                                <g id="bubbles">
+                                    <circle cx="330" cy="160" r="4" fill="white" opacity="0.5"/>
+                                    <circle cx="340" cy="145" r="3" fill="white" opacity="0.4"/>
+                                    <circle cx="335" cy="155" r="2" fill="white" opacity="0.3"/>
+                                </g>
+                            </svg>
+                        </div>
+                        
+                        <!-- Controls -->
+                        <div class="flex flex-wrap gap-4 justify-center mb-6">
+                            <button onclick="moveSubmarine('surface')" class="px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105" style="background: rgba(34, 197, 94, 0.3); border: 1px solid #22c55e;">
+                                🔼 Naik ke Permukaan
+                            </button>
+                            <button onclick="moveSubmarine('middle')" class="px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105" style="background: rgba(251, 191, 36, 0.3); border: 1px solid #fbbf24;">
+                                ⏸️ Melayang di Tengah
+                            </button>
+                            <button onclick="moveSubmarine('bottom')" class="px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105" style="background: rgba(239, 68, 68, 0.3); border: 1px solid #ef4444;">
+                                🔽 Menyelam ke Dasar
+                            </button>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3);">
+                                <h4 class="font-semibold mb-2 text-red-400">🔻 Cara Tenggelam</h4>
+                                <p class="text-sm opacity-90">
+                                    Mengisi <strong>tangki balas dengan air</strong> → Berat kapal bertambah → Gaya berat > Gaya apung → Kapal turun
+                                </p>
+                            </div>
+                            <div class="p-4 rounded-xl" style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3);">
+                                <h4 class="font-semibold mb-2 text-green-400">🔺 Cara Terapung</h4>
+                                <p class="text-sm opacity-90">
+                                    <strong>Memompa air keluar</strong> dan menggantinya dengan udara → Berat kapal berkurang → Gaya apung > Gaya berat → Kapal naik
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex gap-4">
+                    <button onclick="navigateTo(4)" class="flex-1 py-3 rounded-xl font-semibold border border-white/20 hover:bg-white/10 transition-all">
+                        ← Sebelumnya
+                    </button>
+                    <button onclick="navigateTo(6)" class="flex-1 py-3 rounded-xl font-semibold transition-all hover:scale-105" style="background: linear-gradient(135deg, var(--primary-action), var(--secondary-action));">
+                        Selanjutnya →
+                    </button>
+                </div>
+            </div>`,
+            
+            // Slide 6: Simulasi Interaktif
+            `<div class="slide-enter">
+                <div class="card-glass rounded-2xl p-8 mb-6">
+                    <h2 class="text-2xl font-bold font-primary gradient-text mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--primary-action);">7</span>
+                        Simulasi Interaktif
+                    </h2>
+                    
+                    <!-- Pressure Calculator -->
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                            <span>🧮</span> Kalkulator Tekanan Hidrostatis
+                        </h3>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm mb-2" for="calc-density">Massa Jenis Zat Cair (kg/m³)</label>
+                                    <select id="calc-density" class="w-full p-3 rounded-xl bg-white/10 border border-white/20 focus:border-cyan-500 outline-none">
+                                        <option value="1000">Air Tawar (1000 kg/m³)</option>
+                                        <option value="1025">Air Laut (1025 kg/m³)</option>
+                                        <option value="13600">Raksa (13600 kg/m³)</option>
+                                        <option value="800">Minyak (800 kg/m³)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm mb-2" for="calc-depth">Kedalaman (m): <span id="depth-value">5</span></label>
+                                    <input type="range" id="calc-depth" min="0" max="100" value="5" class="w-full" oninput="updateCalculation()">
+                                </div>
+                                <div>
+                                    <label class="block text-sm mb-2" for="calc-gravity">Percepatan Gravitasi (m/s²)</label>
+                                    <select id="calc-gravity" class="w-full p-3 rounded-xl bg-white/10 border border-white/20 focus:border-cyan-500 outline-none">
+                                        <option value="10">10 m/s² (Pembulatan)</option>
+                                        <option value="9.8">9,8 m/s² (Standar)</option>
+                                    </select>
+                                </div>
+                                <button onclick="calculatePressure()" class="w-full py-3 rounded-xl font-semibold transition-all hover:scale-105" style="background: linear-gradient(135deg, var(--primary-action), var(--secondary-action));">
+                                    Hitung Tekanan
+                                </button>
+                            </div>
+                            <div class="p-6 rounded-xl" style="background: var(--secondary-surface);">
+                                <h4 class="text-sm opacity-70 mb-2">Hasil Perhitungan:</h4>
+                                <div id="calc-result" class="space-y-3">
+                                    <div class="text-3xl font-bold" style="color: var(--primary-action);">
+                                        P = <span id="result-pressure">50.000</span> Pa
+                                    </div>
+                                    <div class="text-sm opacity-70">
+                                        <p>Rumus: P = ρ × g × h</p>
+                                        <p id="calc-formula">P = 1000 × 10 × 5 = 50.000 Pa</p>
+                                    </div>
+                                    <div class="mt-4 p-3 rounded-lg bg-cyan-500/20 border border-cyan-500/30">
+                                        <p class="text-sm" id="pressure-comparison">
+                                            Tekanan ini setara dengan 0,5 atm (atmosfer)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Buoyancy Simulator -->
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                            <span>⚖️</span> Simulator Gaya Apung
+                        </h3>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm mb-2" for="obj-density">Pilih Benda:</label>
+                                    <select id="obj-density" class="w-full p-3 rounded-xl bg-white/10 border border-white/20 focus:border-cyan-500 outline-none" onchange="updateBuoyancy()">
+                                        <option value="500">🪵 Kayu (500 kg/m³)</option>
+                                        <option value="700">🧈 Gabus (700 kg/m³)</option>
+                                        <option value="920">🧊 Es (920 kg/m³)</option>
+                                        <option value="1000">🥚 Telur (1000 kg/m³)</option>
+                                        <option value="2500">🪨 Batu (2500 kg/m³)</option>
+                                        <option value="7800">⚙️ Besi (7800 kg/m³)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm mb-2" for="liquid-density">Pilih Zat Cair:</label>
+                                    <select id="liquid-density" class="w-full p-3 rounded-xl bg-white/10 border border-white/20 focus:border-cyan-500 outline-none" onchange="updateBuoyancy()">
+                                        <option value="1000">💧 Air Tawar (1000 kg/m³)</option>
+                                        <option value="1025">🌊 Air Laut (1025 kg/m³)</option>
+                                        <option value="1200">🧂 Air Garam Pekat (1200 kg/m³)</option>
+                                        <option value="13600">☿️ Raksa (13600 kg/m³)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="relative h-64 rounded-xl overflow-hidden" style="background: linear-gradient(180deg, #93c5fd 0%, #0891b2 30%, #0e7490 100%);">
+                                <svg viewBox="0 0 300 200" class="w-full h-full" id="buoyancy-svg">
+                                    <!-- Water -->
+                                    <rect x="0" y="50" width="300" height="150" fill="#0891b2" opacity="0.8"/>
+                                    <path d="M0 50 Q75 45 150 50 T300 50" stroke="#22d3ee" stroke-width="2" fill="none"/>
+                                    
+                                    <!-- Object -->
+                                    <g id="buoyancy-object">
+                                        <rect x="120" y="30" width="60" height="60" rx="5" fill="#f97316" id="float-obj"/>
+                                    </g>
+                                    
+                                    <!-- Result text -->
+                                    <text id="buoyancy-result" x="150" y="180" fill="white" font-size="14" text-anchor="middle" font-weight="bold">TERAPUNG</text>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Discussion Questions -->
+                    <div class="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl p-6 border border-purple-500/30">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                            <span>💬</span> Mari Berdiskusi
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="p-4 rounded-lg" style="background: rgba(255,255,255,0.05);">
+                                <p class="font-semibold mb-2">1. Bagaimana cara memposisikan tubuh agar bisa mengambang saat berenang?</p>
+                                <p class="text-sm opacity-70">💡 Petunjuk: Pikirkan tentang volume tubuh yang tercelup dan posisi yang memaksimalkan gaya apung...</p>
+                            </div>
+                            <div class="p-4 rounded-lg" style="background: rgba(255,255,255,0.05);">
+                                <p class="font-semibold mb-2">2. Mengapa penyelam profesional membutuhkan baju khusus dan tangki oksigen dengan tekanan tertentu?</p>
+                                <p class="text-sm opacity-70">💡 Petunjuk: Hubungkan dengan tekanan hidrostatis dan kebutuhan gas pernapasan di kedalaman...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex gap-4">
+                    <button onclick="navigateTo(5)" class="flex-1 py-3 rounded-xl font-semibold border border-white/20 hover:bg-white/10 transition-all">
+                        ← Sebelumnya
+                    </button>
+                    <button onclick="navigateTo(7)" class="flex-1 py-3 rounded-xl font-semibold transition-all hover:scale-105" style="background: linear-gradient(135deg, var(--primary-action), var(--secondary-action));">
+                        Mulai Quiz →
+                    </button>
+                </div>
+            </div>`,
+            
+            // Slide 7: Quiz HOTS
+            `<div class="slide-enter">
+                <div class="card-glass rounded-2xl p-8 mb-6">
+                    <h2 class="text-2xl font-bold font-primary gradient-text mb-2 flex items-center gap-3">
+                        <span class="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-r from-cyan-500 to-purple-500">🎯</span>
+                        Quiz HOTS - Uji Pemahamanmu!
+                    </h2>
+                    <p class="opacity-70 mb-6">10 soal Higher Order Thinking Skills</p>
+                    
+                    <!-- Quiz Progress -->
+                    <div class="mb-6">
+                        <div class="flex justify-between text-sm mb-2">
+                            <span>Progress</span>
+                            <span id="quiz-progress-text">0/10 terjawab</span>
+                        </div>
+                        <div class="h-3 rounded-full overflow-hidden" style="background: var(--primary-bg);">
+                            <div id="quiz-progress-bar" class="h-full rounded-full transition-all" style="width: 0%; background: linear-gradient(90deg, var(--primary-action), var(--secondary-action));"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quiz Container -->
+                    <div id="quiz-container" class="space-y-6">
+                        <!-- Questions will be rendered here -->
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div id="quiz-submit-section" class="mt-8 hidden">
+                        <button onclick="submitQuiz()" class="w-full py-4 rounded-xl font-semibold text-lg transition-all hover:scale-105" style="background: linear-gradient(135deg, var(--primary-action), var(--secondary-action));">
+                            📝 Kumpulkan Jawaban
+                        </button>
+                    </div>
+                    
+                    <!-- Results Section -->
+                    <div id="quiz-results" class="hidden mt-8">
+                        <div class="text-center p-8 rounded-xl" style="background: var(--secondary-surface);">
+                            <div class="text-6xl mb-4" id="result-emoji">🎉</div>
+                            <h3 class="text-2xl font-bold mb-2">Hasil Quiz</h3>
+                            <div class="text-4xl font-bold mb-4" style="color: var(--primary-action);">
+                                <span id="correct-count">0</span>/10
+                            </div>
+                            <p class="text-lg mb-4" id="result-message">Kamu mendapat nilai...</p>
+                            <div class="grid grid-cols-2 gap-4 max-w-md mx-auto mb-6">
+                                <div class="p-4 rounded-lg bg-green-500/20">
+                                    <div class="text-2xl font-bold text-green-400" id="correct-answers">0</div>
+                                    <div class="text-sm opacity-70">Benar</div>
+                                </div>
+                                <div class="p-4 rounded-lg bg-red-500/20">
+                                    <div class="text-2xl font-bold text-red-400" id="wrong-answers">0</div>
+                                    <div class="text-sm opacity-70">Salah</div>
+                                </div>
+                            </div>
+                            <button onclick="resetQuiz()" class="px-8 py-3 rounded-xl font-semibold transition-all hover:scale-105 border border-white/20">
+                                🔄 Ulangi Quiz
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex gap-4">
+                    <button onclick="navigateTo(6)" class="flex-1 py-3 rounded-xl font-semibold border border-white/20 hover:bg-white/10 transition-all">
+                        ← Kembali ke Materi
+                    </button>
+                    <button onclick="navigateTo(0)" class="flex-1 py-3 rounded-xl font-semibold transition-all hover:scale-105" style="background: linear-gradient(135deg, var(--primary-action), var(--secondary-action));">
+                        🏠 Ke Awal
+                    </button>
+                </div>
+            </div>`
+        ];
+
+        // Navigation function
+        function navigateTo(index) {
+            currentSlide = index;
+            document.getElementById('content-container').innerHTML = slides[index];
+            
+            // Update navigation
+            document.querySelectorAll('.nav-item').forEach((item, i) => {
+                if (parseInt(item.dataset.nav) === index) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Update progress
+            const progress = ((index + 1) / slides.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            document.getElementById('progress-text').textContent = `${index + 1} dari ${slides.length} materi`;
+            
+            // Initialize quiz if on quiz slide
+            if (index === 7) {
+                renderQuiz();
+            }
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Submarine animation
+        function moveSubmarine(position) {
+            const submarine = document.getElementById('submarine');
+            if (!submarine) return;
+            
+            const ballast = document.getElementById('ballast-water');
+            
+            switch(position) {
+                case 'surface':
+                    submarine.style.transform = 'translateY(-100px)';
+                    if (ballast) ballast.setAttribute('height', '2');
+                    break;
+                case 'middle':
+                    submarine.style.transform = 'translateY(0)';
+                    if (ballast) ballast.setAttribute('height', '8');
+                    break;
+                case 'bottom':
+                    submarine.style.transform = 'translateY(100px)';
+                    if (ballast) ballast.setAttribute('height', '16');
+                    break;
+            }
+        }
+
+        // Pressure calculator
+        function updateCalculation() {
+            const depth = document.getElementById('calc-depth').value;
+            document.getElementById('depth-value').textContent = depth;
+        }
+
+        function calculatePressure() {
+            const density = parseFloat(document.getElementById('calc-density').value);
+            const depth = parseFloat(document.getElementById('calc-depth').value);
+            const gravity = parseFloat(document.getElementById('calc-gravity').value);
+            
+            const pressure = density * gravity * depth;
+            const pressureFormatted = pressure.toLocaleString('id-ID');
+            
+            document.getElementById('result-pressure').textContent = pressureFormatted;
+            document.getElementById('calc-formula').textContent = `P = ${density} × ${gravity} × ${depth} = ${pressureFormatted} Pa`;
+            
+            const atm = (pressure / 101325).toFixed(2);
+            document.getElementById('pressure-comparison').textContent = `Tekanan ini setara dengan ${atm} atm (atmosfer)`;
+        }
+
+        // Buoyancy simulator
+        function updateBuoyancy() {
+            const objDensity = parseFloat(document.getElementById('obj-density').value);
+            const liquidDensity = parseFloat(document.getElementById('liquid-density').value);
+            const obj = document.getElementById('float-obj');
+            const resultText = document.getElementById('buoyancy-result');
+            
+            if (!obj || !resultText) return;
+            
+            if (objDensity < liquidDensity) {
+                // Terapung
+                const submergedRatio = objDensity / liquidDensity;
+                const yPos = 50 - (1 - submergedRatio) * 60;
+                obj.setAttribute('y', yPos);
+                obj.setAttribute('fill', '#22c55e');
+                resultText.textContent = 'TERAPUNG';
+                resultText.setAttribute('fill', '#22c55e');
+            } else if (objDensity === liquidDensity) {
+                // Melayang
+                obj.setAttribute('y', '70');
+                obj.setAttribute('fill', '#fbbf24');
+                resultText.textContent = 'MELAYANG';
+                resultText.setAttribute('fill', '#fbbf24');
+            } else {
+                // Tenggelam
+                obj.setAttribute('y', '130');
+                obj.setAttribute('fill', '#ef4444');
+                resultText.textContent = 'TENGGELAM';
+                resultText.setAttribute('fill', '#ef4444');
+            }
+        }
+
+        // Quiz functions
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            if (!container) return;
+            
+            if (quizSubmitted) {
+                return;
+            }
+            
+            let html = '';
+            quizData.forEach((q, index) => {
+                html += `
+                    <div class="p-6 rounded-xl" style="background: var(--secondary-surface);">
+                        <div class="flex gap-3 mb-4">
+                            <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0" style="background: linear-gradient(135deg, var(--primary-action), var(--secondary-action));">${index + 1}</span>
+                            <p class="font-semibold">${q.question}</p>
+                        </div>
+                        <div class="space-y-2 ml-11">
+                            ${q.options.map((opt, optIndex) => `
+                                <div class="quiz-option p-3 rounded-lg border border-white/10 ${quizAnswers[q.id] === optIndex ? 'selected' : ''}" 
+                                     onclick="selectAnswer(${q.id}, ${optIndex})" data-question="${q.id}" data-option="${optIndex}">
+                                    ${opt}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div id="explanation-${q.id}" class="hidden mt-4 ml-11 p-4 rounded-lg bg-blue-500/20 border border-blue-500/30">
+                            <p class="text-sm"><strong>Pembahasan:</strong> ${q.explanation}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            updateQuizProgress();
+        }
+
+        function selectAnswer(questionId, optionIndex) {
+            if (quizSubmitted) return;
+            
+            quizAnswers[questionId] = optionIndex;
+            
+            // Update UI
+            document.querySelectorAll(`[data-question="${questionId}"]`).forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            document.querySelector(`[data-question="${questionId}"][data-option="${optionIndex}"]`).classList.add('selected');
+            
+            updateQuizProgress();
+        }
+
+        function updateQuizProgress() {
+            const answered = Object.keys(quizAnswers).length;
+            document.getElementById('quiz-progress-text').textContent = `${answered}/10 terjawab`;
+            document.getElementById('quiz-progress-bar').style.width = `${(answered / 10) * 100}%`;
+            
+            // Show submit button when all answered
+            if (answered === 10) {
+                document.getElementById('quiz-submit-section').classList.remove('hidden');
+            }
+        }
+
+        function submitQuiz() {
+            quizSubmitted = true;
+            let correct = 0;
+            
+            quizData.forEach(q => {
+                const userAnswer = quizAnswers[q.id];
+                const isCorrect = userAnswer === q.correct;
+                
+                if (isCorrect) correct++;
+                
+                // Show correct/incorrect styling
+                document.querySelectorAll(`[data-question="${q.id}"]`).forEach((opt, index) => {
+                    opt.classList.remove('selected');
+                    if (index === q.correct) {
+                        opt.classList.add('correct');
+                    } else if (index === userAnswer && !isCorrect) {
+                        opt.classList.add('incorrect');
+                    }
+                });
+                
+                // Show explanation
+                document.getElementById(`explanation-${q.id}`).classList.remove('hidden');
+            });
+            
+            // Show results
+            document.getElementById('quiz-submit-section').classList.add('hidden');
+            document.getElementById('quiz-results').classList.remove('hidden');
+            document.getElementById('correct-count').textContent = correct;
+            document.getElementById('correct-answers').textContent = correct;
+            document.getElementById('wrong-answers').textContent = 10 - correct;
+            
+            // Set emoji and message based on score
+            const emoji = document.getElementById('result-emoji');
+            const message = document.getElementById('result-message');
+            
+            if (correct >= 9) {
+                emoji.textContent = '🏆';
+                message.textContent = 'Luar biasa! Kamu menguasai materi dengan sangat baik!';
+            } else if (correct >= 7) {
+                emoji.textContent = '🎉';
+                message.textContent = 'Bagus sekali! Pemahaman kamu sudah sangat baik!';
+            } else if (correct >= 5) {
+                emoji.textContent = '👍';
+                message.textContent = 'Cukup baik! Terus belajar untuk hasil lebih baik!';
+            } else {
+                emoji.textContent = '💪';
+                message.textContent = 'Jangan menyerah! Pelajari lagi materinya ya!';
+            }
+        }
+
+        function resetQuiz() {
+            quizAnswers = {};
+            quizSubmitted = false;
+            document.getElementById('quiz-results').classList.add('hidden');
+            renderQuiz();
+        }
+
+        // Initialize
+        async function init() {
+            if (window.elementSdk) {
+                await window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange: async (newConfig) => {
+                        config = { ...defaultConfig, ...newConfig };
+                        
+                        // Update title
+                        const titleEl = document.getElementById('main-title');
+                        if (titleEl) titleEl.textContent = config.main_title || defaultConfig.main_title;
+                        
+                        const subtitleEl = document.getElementById('subtitle');
+                        if (subtitleEl) subtitleEl.textContent = config.subtitle || defaultConfig.subtitle;
+                        
+                        // Update colors
+                        document.documentElement.style.setProperty('--primary-bg', config.background_color || defaultConfig.background_color);
+                        document.documentElement.style.setProperty('--secondary-surface', config.surface_color || defaultConfig.surface_color);
+                        document.documentElement.style.setProperty('--text-color', config.text_color || defaultConfig.text_color);
+                        document.documentElement.style.setProperty('--primary-action', config.primary_action_color || defaultConfig.primary_action_color);
+                        document.documentElement.style.setProperty('--secondary-action', config.secondary_action_color || defaultConfig.secondary_action_color);
+                    },
+                    mapToCapabilities: (config) => ({
+                        recolorables: [
+                            {
+                                get: () => config.background_color || defaultConfig.background_color,
+                                set: (value) => window.elementSdk.setConfig({ background_color: value })
+                            },
+                            {
+                                get: () => config.surface_color || defaultConfig.surface_color,
+                                set: (value) => window.elementSdk.setConfig({ surface_color: value })
+                            },
+                            {
+                                get: () => config.text_color || defaultConfig.text_color,
+                                set: (value) => window.elementSdk.setConfig({ text_color: value })
+                            },
+                            {
+                                get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                                set: (value) => window.elementSdk.setConfig({ primary_action_color: value })
+                            },
+                            {
+                                get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+                                set: (value) => window.elementSdk.setConfig({ secondary_action_color: value })
+                            }
+                        ],
+                        borderables: [],
+                        fontEditable: undefined,
+                        fontSizeable: undefined
+                    }),
+                    mapToEditPanelValues: (config) => new Map([
+                        ['main_title', config.main_title || defaultConfig.main_title],
+                        ['subtitle', config.subtitle || defaultConfig.subtitle]
+                    ])
+                });
+            }
+            
+            // Load first slide
+            navigateTo(0);
+        }
+
+        init();
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9caa351385859d72',t:'MTc3MDU0NDA2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,1082 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memperbesar Gambar dengan Teknik Grid</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Caveat:wght@500;700&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    html, body {
+      box-sizing: border-box;
+      height: 100%;
+    }
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    .font-handwriting {
+      font-family: 'Caveat', cursive;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    }
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    .grid-pattern {
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .nav-link {
+      position: relative;
+      overflow: hidden;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: #f093fb;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 80%;
+    }
+    .pulse-animation {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .fade-in {
+      animation: fadeIn 0.5s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .grid-cell {
+      transition: all 0.2s ease;
+    }
+    .grid-cell:hover {
+      background: rgba(102, 126, 234, 0.3) !important;
+    }
+    .step-number {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .quiz-option {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .quiz-option:hover {
+      background: rgba(102, 126, 234, 0.1);
+      border-color: #667eea;
+    }
+    .quiz-option.selected {
+      background: rgba(102, 126, 234, 0.2);
+      border-color: #667eea;
+    }
+    .quiz-option.correct {
+      background: rgba(34, 197, 94, 0.2);
+      border-color: #22c55e;
+    }
+    .quiz-option.wrong {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #ef4444;
+    }
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    .app-wrapper {
+      height: 100%;
+      overflow-y: auto;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ </a>          
+<a href="index.html" class="btn-close-white">
+<i class="fas fa-home me-2"></i> Menu
+</a>
+ <body class="h-full bg-dark-blue-50">
+  <div id="app" class="app-wrapper"><!-- Navigation -->
+   <nav class="gradient-bg grid-pattern sticky top-0 z-50 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div class="flex items-center gap-3">
+       <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur"><span class="text-2xl">🎨</span>
+       </div>
+       <div>
+        <h1 id="main-title" class="text-dark-blue font-bold text-lg md:text-xl">Teknik Grid &amp; Skala</h1>
+        <p class="text-emerald-400/80 text-xs md:text-sm">Seni Rupa SMP Kelas VIII</p>
+       </div>
+      </div>
+      <div class="flex flex-wrap gap-2 md:gap-4"><button onclick="showSection('home')" class="nav-link active text-emerald-400 text-sm px-3 py-2 rounded-lg hover:bg-white/10" data-section="home">🏠 Beranda</button> <button onclick="showSection('materi')" class="nav-link text-emerald-400 text-sm px-3 py-2 rounded-lg hover:bg-white/10" data-section="materi">📚 Materi</button> <button onclick="showSection('praktik')" class="nav-link text-emerald-400 text-sm px-3 py-2 rounded-lg hover:bg-white/10" data-section="praktik">✏️ Praktik</button> <button onclick="showSection('quiz')" class="nav-link text-emerald-400 text-sm px-3 py-2 rounded-lg hover:bg-white/10" data-section="quiz">📝 Kuis HOTS</button>
+      </div>
+     </div>
+    </div>
+   </nav><!-- Main Content -->
+   <main class="max-w-7xl mx-auto px-4 py-8"><!-- Home Section -->
+    <section id="home" class="fade-in"><!-- Hero -->
+     <div class="gradient-bg grid-pattern rounded-3xl p-8 md:p-12 mb-12 text-center relative overflow-hidden">
+      <div class="absolute top-4 right-4 text-6xl opacity-20">
+       📐
+      </div>
+      <div class="absolute bottom-4 left-4 text-6xl opacity-20">
+       🖼️
+      </div><span class="inline-block bg-white/20 backdrop-blur px-4 py-2 rounded-full text-emerald-400 text-sm mb-4">Unit 1.3 • Semester 1</span>
+      <h2 class="text-3xl md:text-5xl font-bold text-indigo-500 mb-4 font-handwriting">Memperbesar Gambar dengan Teknik Grid</h2>
+      <p class="text-indigo-500/90 text-lg md:text-xl max-w-2xl mx-auto mb-8">Pelajari teknik klasik yang digunakan seniman untuk memperbesar gambar dengan proporsi yang tepat!</p><button onclick="showSection('materi')" class="pulse-animation bg-white text-purple-600 font-bold px-8 py-4 rounded-xl hover:bg-purple-50 transition shadow-lg"> Mulai Belajar 🚀 </button>
+     </div><!-- Feature Cards -->
+     <div class="grid md:grid-cols-3 gap-6 mb-12">
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border-t-4 border-purple-500">
+       <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mb-4"><span class="text-3xl">📖</span>
+       </div>
+       <h3 class="font-bold text-xl text-gray-800 mb-2">Materi Lengkap</h3>
+       <p class="text-gray-600">Penjelasan detail tentang teknik grid dan skala dengan contoh visual yang menarik.</p>
+      </div>
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border-t-4 border-pink-500">
+       <div class="w-16 h-16 bg-pink-100 rounded-2xl flex items-center justify-center mb-4"><span class="text-3xl">🎯</span>
+       </div>
+       <h3 class="font-bold text-xl text-gray-800 mb-2">Praktik Interaktif</h3>
+       <p class="text-gray-600">Latihan langsung membuat grid dan menyalin gambar secara digital.</p>
+      </div>
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border-t-4 border-indigo-500">
+       <div class="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center mb-4"><span class="text-3xl">🧠</span>
+       </div>
+       <h3 class="font-bold text-xl text-gray-800 mb-2">Kuis HOTS</h3>
+       <p class="text-gray-600">10 soal Higher Order Thinking Skills untuk menguji pemahaman.</p>
+      </div>
+     </div><!-- Quick Stats -->
+     <div class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl p-6 text-white">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+       <div>
+        <div class="text-3xl font-bold">
+         8
+        </div>
+        <div class="text-white/80 text-sm">
+         Slide Materi
+        </div>
+       </div>
+       <div>
+        <div class="text-3xl font-bold">
+         5
+        </div>
+        <div class="text-white/80 text-sm">
+         Praktik Interaktif
+        </div>
+       </div>
+       <div>
+        <div class="text-3xl font-bold">
+         10
+        </div>
+        <div class="text-white/80 text-sm">
+         Soal HOTS
+        </div>
+       </div>
+       <div>
+        <div class="text-3xl font-bold">
+         ∞
+        </div>
+        <div class="text-white/80 text-sm">
+         Kreativitas
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Materi Section -->
+    <section id="materi" class="hidden fade-in">
+     <h2 class="text-3xl font-bold text-gray-800 mb-8 flex items-center gap-3"><span class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">📚</span> Materi Pembelajaran</h2><!-- Slide 1: What is Grid -->
+     <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8 border-l-4 border-purple-500">
+      <div class="flex items-start gap-4 mb-6">
+       <div class="step-number">
+        1
+       </div>
+       <div>
+        <h3 class="text-2xl font-bold text-gray-800 mb-2">Apa itu Grid dan Skala?</h3>
+        <p class="text-gray-600">Memahami konsep dasar teknik memperbesar gambar</p>
+       </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+       <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6">
+        <div class="flex items-center gap-3 mb-4"><span class="text-3xl">📦</span>
+         <h4 class="font-bold text-lg text-purple-700">Grid (Jejaring)</h4>
+        </div>
+        <p class="text-gray-700 mb-4">Jaringan bujur sangkar yang saling berhimpitan membentuk suatu jejaring.</p>
+        <div class="bg-white rounded-lg p-4 border-2 border-dashed border-purple-300">
+         <div class="grid grid-cols-4 gap-1">
+          <div class="aspect-square bg-purple-100 border border-purple-300 rounded"></div>
+          <div class="aspect-square bg-purple-100 border border-purple-300 rounded"></div>
+          <div class="aspect-square bg-purple-100 border border-purple-300 rounded"></div>
+          <div class="aspect-square bg-purple-100 border border-purple-300 rounded"></div>
+          <div class="aspect-square bg-purple-100 border border-purple-300 rounded"></div>
+          <div class="aspect-square bg-purple-100 border border-purple-300 rounded"></div>
+          <div class="aspect-square bg-purple-100 border border-purple-300 rounded"></div>
+          <div class="aspect-square bg-purple-100 border border-purple-300 rounded"></div>
+          <div class="aspect-square bg-purple-100 border border-purple-300 rounded"></div>
+          <div class="aspect-square bg-purple-100 border border-purple-300 rounded"></div>
+          <div class="aspect-square bg-purple-100 border border-purple-300 rounded"></div>
+          <div class="aspect-square bg-purple-100 border border-purple-300 rounded"></div>
+          <div class="aspect-square bg-purple-100 border border-purple-300 rounded"></div>
+          <div class="aspect-square bg-purple-100 border border-purple-300 rounded"></div>
+          <div class="aspect-square bg-purple-100 border border-purple-300 rounded"></div>
+          <div class="aspect-square bg-purple-100 border border-purple-300 rounded"></div>
+         </div>
+         <p class="text-center text-sm text-purple-600 mt-2 font-medium">Contoh Grid 4x4</p>
+        </div>
+       </div>
+       <div class="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl p-6">
+        <div class="flex items-center gap-3 mb-4"><span class="text-3xl">📏</span>
+         <h4 class="font-bold text-lg text-indigo-700">Skala</h4>
+        </div>
+        <p class="text-gray-700 mb-4">Perbandingan ukuran besarnya gambar dengan keadaan yang sebenarnya.</p>
+        <div class="bg-white rounded-lg p-4">
+         <div class="flex items-center justify-center gap-4">
+          <div class="text-center">
+           <div class="w-12 h-12 bg-indigo-200 rounded border-2 border-indigo-400"></div>
+           <p class="text-xs mt-1 text-indigo-600">1 cm</p>
+          </div><span class="text-2xl text-indigo-500">→</span>
+          <div class="text-center">
+           <div class="w-20 h-20 bg-indigo-300 rounded border-2 border-indigo-500"></div>
+           <p class="text-xs mt-1 text-indigo-600">5 cm (Skala 1:5)</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Interactive Practice 1 -->
+      <div class="mt-6 bg-yellow-50 rounded-xl p-6 border-2 border-yellow-200">
+       <h4 class="font-bold text-lg text-yellow-800 mb-4 flex items-center gap-2"><span>⭐</span> Praktik Interaktif 1: Hitung Skala</h4>
+       <p class="text-gray-700 mb-4">Jika gambar asli berukuran <strong>2 cm × 2 cm</strong>, berapa ukuran hasil pembesaran dengan skala 1:4?</p>
+       <div class="flex flex-wrap gap-3"><button onclick="checkAnswer1('4x4')" class="practice-btn-1 px-6 py-3 bg-white border-2 border-gray-300 rounded-xl hover:border-purple-500 transition font-medium">4 × 4 cm</button> <button onclick="checkAnswer1('6x6')" class="practice-btn-1 px-6 py-3 bg-white border-2 border-gray-300 rounded-xl hover:border-purple-500 transition font-medium">6 × 6 cm</button> <button onclick="checkAnswer1('8x8')" class="practice-btn-1 px-6 py-3 bg-white border-2 border-gray-300 rounded-xl hover:border-purple-500 transition font-medium">8 × 8 cm</button> <button onclick="checkAnswer1('10x10')" class="practice-btn-1 px-6 py-3 bg-white border-2 border-gray-300 rounded-xl hover:border-purple-500 transition font-medium">10 × 10 cm</button>
+       </div>
+       <div id="practice1-result" class="mt-4 hidden"></div>
+      </div>
+     </div><!-- Slide 2: Why Grid -->
+     <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8 border-l-4 border-pink-500">
+      <div class="flex items-start gap-4 mb-6">
+       <div class="step-number">
+        2
+       </div>
+       <div>
+        <h3 class="text-2xl font-bold text-gray-800 mb-2">Mengapa Menggunakan Grid?</h3>
+        <p class="text-gray-600">Keunggulan teknik grid dalam seni rupa</p>
+       </div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-4">
+       <div class="bg-gradient-to-br from-pink-50 to-red-50 rounded-xl p-5 text-center">
+        <div class="w-16 h-16 bg-pink-200 rounded-full flex items-center justify-center mx-auto mb-3"><span class="text-3xl">🏆</span>
+        </div>
+        <h4 class="font-bold text-pink-700 mb-2">Teknik Populer</h4>
+        <p class="text-sm text-gray-600">Cara paling populer untuk mengubah ukuran gambar secara manual sebelum era digital</p>
+       </div>
+       <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-5 text-center">
+        <div class="w-16 h-16 bg-green-200 rounded-full flex items-center justify-center mx-auto mb-3"><span class="text-3xl">🎯</span>
+        </div>
+        <h4 class="font-bold text-green-700 mb-2">Akurasi Tinggi</h4>
+        <p class="text-sm text-gray-600">Membantu menjaga proporsi objek agar tetap tepat dan akurat</p>
+       </div>
+       <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-5 text-center">
+        <div class="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-3"><span class="text-3xl">✨</span>
+        </div>
+        <h4 class="font-bold text-blue-700 mb-2">Sederhana</h4>
+        <p class="text-sm text-gray-600">Cukup meniru detail gambar pada setiap kotak bujur sangkar</p>
+       </div>
+      </div><!-- Interactive Practice 2 -->
+      <div class="mt-6 bg-green-50 rounded-xl p-6 border-2 border-green-200">
+       <h4 class="font-bold text-lg text-green-800 mb-4 flex items-center gap-2"><span>⭐</span> Praktik Interaktif 2: Pilih Keunggulan</h4>
+       <p class="text-gray-700 mb-4">Centang semua keunggulan dari teknik grid:</p>
+       <div class="space-y-3" id="practice2-options"><label class="flex items-center gap-3 p-3 bg-white rounded-lg border-2 border-gray-200 cursor-pointer hover:border-green-400 transition"> <input type="checkbox" value="proporsi" class="w-5 h-5 text-green-600 rounded"> <span class="text-gray-700">Menjaga proporsi gambar</span> </label> <label class="flex items-center gap-3 p-3 bg-white rounded-lg border-2 border-gray-200 cursor-pointer hover:border-red-400 transition"> <input type="checkbox" value="digital" class="w-5 h-5 text-red-600 rounded"> <span class="text-gray-700">Membutuhkan komputer canggih</span> </label> <label class="flex items-center gap-3 p-3 bg-white rounded-lg border-2 border-gray-200 cursor-pointer hover:border-green-400 transition"> <input type="checkbox" value="manual" class="w-5 h-5 text-green-600 rounded"> <span class="text-gray-700">Dapat dilakukan secara manual</span> </label> <label class="flex items-center gap-3 p-3 bg-white rounded-lg border-2 border-gray-200 cursor-pointer hover:border-green-400 transition"> <input type="checkbox" value="akurat" class="w-5 h-5 text-green-600 rounded"> <span class="text-gray-700">Hasil lebih akurat</span> </label>
+       </div><button onclick="checkPractice2()" class="mt-4 px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition font-medium">Periksa Jawaban</button>
+       <div id="practice2-result" class="mt-4 hidden"></div>
+      </div>
+     </div><!-- Slide 3: How Scale Works -->
+     <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8 border-l-4 border-indigo-500">
+      <div class="flex items-start gap-4 mb-6">
+       <div class="step-number">
+        3
+       </div>
+       <div>
+        <h3 class="text-2xl font-bold text-gray-800 mb-2">Cara Kerja Skala pada Grid</h3>
+        <p class="text-gray-600">Prinsip matematika di balik teknik grid</p>
+       </div>
+      </div>
+      <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 mb-6">
+       <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+        <div class="text-center">
+         <div class="w-24 h-24 bg-white rounded-lg shadow-md flex items-center justify-center mb-2 mx-auto">
+          <div class="grid grid-cols-3 gap-0.5 p-2">
+           <div class="w-4 h-4 bg-indigo-200 border border-indigo-300"></div>
+           <div class="w-4 h-4 bg-indigo-200 border border-indigo-300"></div>
+           <div class="w-4 h-4 bg-indigo-200 border border-indigo-300"></div>
+           <div class="w-4 h-4 bg-indigo-200 border border-indigo-300"></div>
+           <div class="w-4 h-4 bg-indigo-200 border border-indigo-300"></div>
+           <div class="w-4 h-4 bg-indigo-200 border border-indigo-300"></div>
+           <div class="w-4 h-4 bg-indigo-200 border border-indigo-300"></div>
+           <div class="w-4 h-4 bg-indigo-200 border border-indigo-300"></div>
+           <div class="w-4 h-4 bg-indigo-200 border border-indigo-300"></div>
+          </div>
+         </div>
+         <p class="font-medium text-indigo-700">Grid Asli</p>
+         <p class="text-sm text-gray-600">1 cm × 1 cm per kotak</p>
+        </div>
+        <div class="text-4xl text-indigo-500 font-bold">
+         ×5
+        </div>
+        <div class="text-center">
+         <div class="w-40 h-40 bg-white rounded-lg shadow-md flex items-center justify-center mb-2 mx-auto">
+          <div class="grid grid-cols-3 gap-1 p-3">
+           <div class="w-8 h-8 bg-purple-200 border border-purple-300"></div>
+           <div class="w-8 h-8 bg-purple-200 border border-purple-300"></div>
+           <div class="w-8 h-8 bg-purple-200 border border-purple-300"></div>
+           <div class="w-8 h-8 bg-purple-200 border border-purple-300"></div>
+           <div class="w-8 h-8 bg-purple-200 border border-purple-300"></div>
+           <div class="w-8 h-8 bg-purple-200 border border-purple-300"></div>
+           <div class="w-8 h-8 bg-purple-200 border border-purple-300"></div>
+           <div class="w-8 h-8 bg-purple-200 border border-purple-300"></div>
+           <div class="w-8 h-8 bg-purple-200 border border-purple-300"></div>
+          </div>
+         </div>
+         <p class="font-medium text-purple-700">Grid Hasil</p>
+         <p class="text-sm text-gray-600">5 cm × 5 cm per kotak</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-amber-50 border-2 border-amber-200 rounded-xl p-4">
+       <p class="flex items-start gap-2 text-amber-800"><span class="text-2xl">💡</span> <span><strong>Tips:</strong> Semakin kecil ukuran bujur sangkar yang dibuat, maka detail gambar yang dihasilkan akan semakin akurat!</span></p>
+      </div>
+     </div><!-- Slide 4: Tools -->
+     <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8 border-l-4 border-green-500">
+      <div class="flex items-start gap-4 mb-6">
+       <div class="step-number">
+        4
+       </div>
+       <div>
+        <h3 class="text-2xl font-bold text-gray-800 mb-2">Alat dan Bahan</h3>
+        <p class="text-gray-600">Persiapkan alat-alat berikut untuk hasil maksimal</p>
+       </div>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+       <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 text-center hover:shadow-lg transition">
+        <div class="text-4xl mb-2">
+         📄
+        </div>
+        <p class="font-medium text-gray-700">Kertas Gambar</p>
+       </div>
+       <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 text-center hover:shadow-lg transition">
+        <div class="text-4xl mb-2">
+         ✏️
+        </div>
+        <p class="font-medium text-gray-700">Pensil</p>
+       </div>
+       <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 text-center hover:shadow-lg transition">
+        <div class="text-4xl mb-2">
+         📏
+        </div>
+        <p class="font-medium text-gray-700">Penggaris</p>
+       </div>
+       <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 text-center hover:shadow-lg transition">
+        <div class="text-4xl mb-2">
+         🧽
+        </div>
+        <p class="font-medium text-gray-700">Penghapus</p>
+       </div>
+       <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 text-center hover:shadow-lg transition">
+        <div class="text-4xl mb-2">
+         🖼️
+        </div>
+        <p class="font-medium text-gray-700">Objek Gambar</p>
+       </div>
+      </div>
+     </div><!-- Slide 5-6: Steps -->
+     <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8 border-l-4 border-cyan-500">
+      <div class="flex items-start gap-4 mb-6">
+       <div class="step-number">
+        5
+       </div>
+       <div>
+        <h3 class="text-2xl font-bold text-gray-800 mb-2">Langkah-Langkah Praktis</h3>
+        <p class="text-gray-600">Ikuti tahapan berikut dengan teliti</p>
+       </div>
+      </div>
+      <div class="space-y-4">
+       <div class="flex items-start gap-4 p-4 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-xl">
+        <div class="w-10 h-10 bg-cyan-500 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">
+         1
+        </div>
+        <div>
+         <h4 class="font-bold text-cyan-700">Pilih Objek</h4>
+         <p class="text-gray-600">Siapkan foto atau peta yang ingin disalin</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl">
+        <div class="w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">
+         2
+        </div>
+        <div>
+         <h4 class="font-bold text-blue-700">Buat Grid pada Objek</h4>
+         <p class="text-gray-600">Gambar garis horizontal dan vertikal beraturan hingga membentuk kotak-kotak</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl">
+        <div class="w-10 h-10 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">
+         3
+        </div>
+        <div>
+         <h4 class="font-bold text-indigo-700">Beri Nomor</h4>
+         <p class="text-gray-600">Nomori setiap baris dan kolom untuk memudahkan pelacakan posisi</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl">
+        <div class="w-10 h-10 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">
+         4
+        </div>
+        <div>
+         <h4 class="font-bold text-purple-700">Siapkan Media Baru</h4>
+         <p class="text-gray-600">Buat grid serupa dengan skala yang diinginkan pada kertas baru</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 p-4 bg-gradient-to-r from-pink-50 to-rose-50 rounded-xl">
+        <div class="w-10 h-10 bg-pink-500 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">
+         5
+        </div>
+        <div>
+         <h4 class="font-bold text-pink-700">Salin Detail</h4>
+         <p class="text-gray-600">Salin detail gambar dari kotak asli ke kotak baru satu per satu</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 p-4 bg-gradient-to-r from-rose-50 to-red-50 rounded-xl">
+        <div class="w-10 h-10 bg-rose-500 text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">
+         6
+        </div>
+        <div>
+         <h4 class="font-bold text-rose-700">Finishing</h4>
+         <p class="text-gray-600">Tambahkan detail dan arsiran setelah sketsa selesai</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Slide 7: Tips -->
+     <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8 border-l-4 border-amber-500">
+      <div class="flex items-start gap-4 mb-6">
+       <div class="step-number">
+        6
+       </div>
+       <div>
+        <h3 class="text-2xl font-bold text-gray-800 mb-2">Tips Penting</h3>
+        <p class="text-gray-600">Rahasia keberhasilan dalam teknik grid</p>
+       </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+       <div class="space-y-4">
+        <div class="flex items-start gap-3 p-4 bg-amber-50 rounded-xl"><span class="text-2xl">✏️</span>
+         <div>
+          <h4 class="font-bold text-amber-700">Gunakan Garis Tipis</h4>
+          <p class="text-sm text-gray-600">Agar mudah dihapus nantinya</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-3 p-4 bg-green-50 rounded-xl"><span class="text-2xl">🖼️</span>
+         <div>
+          <h4 class="font-bold text-green-700">Untuk Foto</h4>
+          <p class="text-sm text-gray-600">Grid harus dihapus setelah selesai</p>
+         </div>
+        </div>
+       </div>
+       <div class="space-y-4">
+        <div class="flex items-start gap-3 p-4 bg-blue-50 rounded-xl"><span class="text-2xl">🗺️</span>
+         <div>
+          <h4 class="font-bold text-blue-700">Untuk Peta</h4>
+          <p class="text-sm text-gray-600">Grid biasanya tidak perlu dihapus</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-3 p-4 bg-purple-50 rounded-xl"><span class="text-2xl">⭐</span>
+         <div>
+          <h4 class="font-bold text-purple-700">Kunci Sukses</h4>
+          <p class="text-sm text-gray-600">Kerapian, akurasi skala, dan kemiripan hasil</p>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="mt-6 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl p-6 text-white text-center">
+       <p class="text-xl font-handwriting text-2xl">"Ketelitian dan kesabaran adalah kunci utama dalam teknik grid."</p>
+      </div>
+     </div><!-- Navigation -->
+     <div class="flex justify-center gap-4 mb-8"><button onclick="showSection('praktik')" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-bold hover:shadow-lg transition"> Lanjut ke Praktik ✏️ </button>
+     </div>
+    </section><!-- Praktik Section -->
+    <section id="praktik" class="hidden fade-in">
+     <h2 class="text-3xl font-bold text-gray-800 mb-8 flex items-center gap-3"><span class="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center">✏️</span> Praktik Interaktif</h2><!-- Practice 3: Grid Creator -->
+     <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8">
+      <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2"><span class="text-3xl">🎨</span> Praktik 3: Buat Grid Sendiri</h3>
+      <p class="text-gray-600 mb-6">Pilih ukuran grid yang ingin kamu buat:</p>
+      <div class="flex flex-wrap gap-3 mb-6"><button onclick="createGrid(3)" class="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition font-medium">3 × 3</button> <button onclick="createGrid(4)" class="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition font-medium">4 × 4</button> <button onclick="createGrid(5)" class="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition font-medium">5 × 5</button> <button onclick="createGrid(6)" class="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition font-medium">6 × 6</button>
+      </div>
+      <div id="grid-creator" class="bg-gray-50 rounded-xl p-6 min-h-64 flex items-center justify-center">
+       <p class="text-gray-400">Pilih ukuran grid di atas untuk memulai</p>
+      </div>
+      <div class="mt-4 flex flex-wrap gap-3"><button onclick="clearGrid()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">🗑️ Hapus Grid</button>
+       <div class="flex items-center gap-2 ml-auto"><label class="text-sm text-gray-600">Warna:</label> <input type="color" id="grid-color" value="#667eea" class="w-10 h-10 rounded cursor-pointer">
+       </div>
+      </div>
+     </div><!-- Practice 4: Scale Calculator -->
+     <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8">
+      <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2"><span class="text-3xl">🧮</span> Praktik 4: Kalkulator Skala</h3>
+      <p class="text-gray-600 mb-6">Hitung ukuran hasil pembesaran atau pengecilan gambar:</p>
+      <div class="grid md:grid-cols-3 gap-6">
+       <div><label class="block text-sm font-medium text-gray-700 mb-2">Ukuran Asli (cm)</label> <input type="number" id="original-size" value="2" min="1" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none">
+       </div>
+       <div><label class="block text-sm font-medium text-gray-700 mb-2">Faktor Skala</label> <input type="number" id="scale-factor" value="5" min="1" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none">
+       </div>
+       <div><label class="block text-sm font-medium text-gray-700 mb-2">Hasil (cm)</label>
+        <div id="scale-result" class="w-full px-4 py-3 bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl font-bold text-purple-700 text-center text-xl">
+         10
+        </div>
+       </div>
+      </div><button onclick="calculateScale()" class="mt-6 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-bold hover:shadow-lg transition"> Hitung Skala 📐 </button>
+      <div class="mt-6 p-4 bg-blue-50 rounded-xl">
+       <p class="text-blue-800 flex items-start gap-2"><span class="text-xl">💡</span> <span><strong>Rumus:</strong> Ukuran Hasil = Ukuran Asli × Faktor Skala</span></p>
+      </div>
+     </div><!-- Practice 5: Copy Grid Drawing -->
+     <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8">
+      <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2"><span class="text-3xl">🎨</span> Praktik 5: Salin Gambar dengan Grid</h3>
+      <p class="text-gray-600 mb-6">Klik kotak-kotak untuk mewarnai dan membuat pola sesuai contoh:</p>
+      <div class="grid md:grid-cols-2 gap-8">
+       <div>
+        <h4 class="font-bold text-gray-700 mb-3 text-center">🎯 Contoh (Grid Asli)</h4>
+        <div id="original-grid" class="grid grid-cols-4 gap-1 bg-gray-100 p-4 rounded-xl max-w-64 mx-auto"><!-- Will be populated by JS -->
+        </div><button onclick="generatePattern()" class="mt-4 w-full px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition">🔄 Pola Baru</button>
+       </div>
+       <div>
+        <h4 class="font-bold text-gray-700 mb-3 text-center">✏️ Gambar Kamu (Grid Target)</h4>
+        <div id="target-grid" class="grid grid-cols-4 gap-1 bg-gray-100 p-4 rounded-xl max-w-64 mx-auto"><!-- Will be populated by JS -->
+        </div><button onclick="clearTargetGrid()" class="mt-4 w-full px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">🗑️ Reset</button>
+       </div>
+      </div>
+      <div class="mt-6 flex justify-center"><button onclick="checkDrawing()" class="px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-bold hover:shadow-lg transition"> ✅ Periksa Gambar </button>
+      </div>
+      <div id="drawing-result" class="mt-4 text-center hidden"></div>
+     </div><!-- Navigation -->
+     <div class="flex justify-center gap-4 mb-8"><button onclick="showSection('quiz')" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-bold hover:shadow-lg transition"> Lanjut ke Kuis HOTS 🧠 </button>
+     </div>
+    </section><!-- Quiz Section -->
+    <section id="quiz" class="hidden fade-in">
+     <h2 class="text-3xl font-bold text-gray-800 mb-4 flex items-center gap-3"><span class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">🧠</span> Kuis HOTS (Higher Order Thinking Skills)</h2>
+     <p class="text-gray-600 mb-8">Uji pemahamanmu dengan 10 soal tingkat tinggi!</p><!-- Progress Bar -->
+     <div class="bg-white rounded-xl p-4 mb-6 shadow-lg">
+      <div class="flex items-center justify-between mb-2"><span class="text-sm font-medium text-gray-600">Progres</span> <span id="quiz-progress" class="text-sm font-bold text-purple-600">0/10</span>
+      </div>
+      <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
+       <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-purple-600 to-pink-600 rounded-full" style="width: 0%"></div>
+      </div>
+     </div><!-- Quiz Container -->
+     <div id="quiz-container" class="bg-white rounded-2xl shadow-lg p-6 md:p-8"><!-- Will be populated by JS -->
+     </div><!-- Quiz Results -->
+     <div id="quiz-results" class="hidden bg-white rounded-2xl shadow-lg p-6 md:p-8 text-center mb-8">
+      <div class="text-6xl mb-4">
+       🏆
+      </div>
+      <h3 class="text-2xl font-bold text-gray-800 mb-2">Hasil Kuis</h3>
+      <div id="final-score" class="text-5xl font-bold text-purple-600 mb-4">
+       0/10
+      </div>
+      <p id="score-message" class="text-gray-600 mb-6 text-lg"></p><button onclick="restartQuiz()" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-bold hover:shadow-lg transition"> 🔄 Ulangi Kuis </button>
+     </div>
+    </section>
+   </main><!-- Footer -->
+   <footer class="gradient-bg grid-pattern mt-12 py-8 text-center text-indigo-500">
+    <p class="font-handwriting text-2xl mb-2">Selamat Belajar! 🎨</p>
+    <p class="text-indigo-500/80 text-sm">Seni Rupa SMP Kelas VIII • Unit 1.3</p>
+   </footer>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_title: 'Teknik Grid & Skala'
+    };
+
+    // Current state
+    let currentPattern = [];
+    let userPattern = [];
+    let currentQuestion = 0;
+    let score = 0;
+    let answeredQuestions = new Map();
+
+    // Quiz Questions (HOTS)
+    const quizQuestions = [
+      {
+        question: "Seorang seniman ingin memperbesar gambar dengan skala 1:8 menggunakan grid 2 cm × 2 cm. Berapakah ukuran grid pada gambar hasil?",
+        options: ["8 cm × 8 cm", "16 cm × 16 cm", "10 cm × 10 cm", "4 cm × 4 cm"],
+        correct: 1,
+        explanation: "Grid hasil = 2 cm × 8 = 16 cm. Jadi ukuran grid hasil adalah 16 cm × 16 cm."
+      },
+      {
+        question: "Mengapa seniman zaman Renaissance seperti Leonardo da Vinci menggunakan teknik grid untuk melukis mural di dinding?",
+        options: [
+          "Karena tidak ada teknologi proyektor saat itu",
+          "Untuk menjaga proporsi gambar kecil saat diperbesar ke dinding yang sangat besar",
+          "Karena lebih murah daripada metode lain",
+          "Untuk membuat gambar terlihat lebih artistik"
+        ],
+        correct: 1,
+        explanation: "Teknik grid membantu seniman menjaga proporsi saat memindahkan sketsa kecil ke permukaan besar seperti dinding gereja."
+      },
+      {
+        question: "Andi membuat grid 5×5 pada foto berukuran 10 cm × 10 cm. Jika ingin memperbesar 3 kali, berapa ukuran setiap kotak pada grid baru?",
+        options: ["2 cm × 2 cm", "6 cm × 6 cm", "15 cm × 15 cm", "3 cm × 3 cm"],
+        correct: 1,
+        explanation: "Ukuran asli setiap kotak = 10/5 = 2 cm. Setelah diperbesar 3 kali = 2 × 3 = 6 cm per kotak."
+      },
+      {
+        question: "Saat menyalin peta dengan teknik grid, mengapa grid biasanya tidak perlu dihapus?",
+        options: [
+          "Karena grid peta terlalu sulit dihapus",
+          "Karena grid pada peta berfungsi sebagai koordinat dan referensi lokasi",
+          "Karena peta tidak perlu estetika",
+          "Karena kertas peta tidak bisa dihapus"
+        ],
+        correct: 1,
+        explanation: "Grid pada peta berfungsi sebagai sistem koordinat yang membantu pembaca menentukan lokasi."
+      },
+      {
+        question: "Jika detail gambar yang dihasilkan kurang akurat, apa yang sebaiknya dilakukan?",
+        options: [
+          "Menggunakan penggaris yang lebih besar",
+          "Membuat ukuran grid yang lebih kecil",
+          "Menggunakan pensil yang lebih tebal",
+          "Menggambar lebih cepat"
+        ],
+        correct: 1,
+        explanation: "Grid yang lebih kecil membagi gambar menjadi bagian yang lebih detail, sehingga hasil salinan lebih akurat."
+      },
+      {
+        question: "Sebuah poster berukuran 20 cm × 30 cm akan diperbesar menjadi 100 cm × 150 cm. Berapa faktor skala yang digunakan?",
+        options: ["1:3", "1:4", "1:5", "1:6"],
+        correct: 2,
+        explanation: "Faktor skala = 100/20 = 5 atau 150/30 = 5. Jadi skala yang digunakan adalah 1:5."
+      },
+      {
+        question: "Mengapa garis grid harus dibuat tipis saat menggambar foto?",
+        options: [
+          "Agar hemat pensil",
+          "Agar lebih cepat selesai",
+          "Agar mudah dihapus tanpa merusak gambar utama",
+          "Agar terlihat lebih profesional"
+        ],
+        correct: 2,
+        explanation: "Garis tipis lebih mudah dihapus dan tidak meninggalkan bekas yang merusak hasil akhir gambar."
+      },
+      {
+        question: "Seorang arsitek menggunakan skala 1:100 pada denah rumah. Jika panjang ruangan pada denah adalah 5 cm, berapa panjang sebenarnya?",
+        options: ["50 cm", "500 cm (5 m)", "5000 cm (50 m)", "5 cm"],
+        correct: 1,
+        explanation: "Panjang sebenarnya = 5 cm × 100 = 500 cm = 5 meter."
+      },
+      {
+        question: "Apa keuntungan utama menggunakan sistem penomoran baris dan kolom pada grid?",
+        options: [
+          "Membuat gambar terlihat lebih rapi",
+          "Memudahkan pelacakan posisi saat menyalin detail dari kotak ke kotak",
+          "Menghemat waktu menggambar",
+          "Membuat grid lebih mudah dihapus"
+        ],
+        correct: 1,
+        explanation: "Penomoran membantu seniman tidak kehilangan orientasi saat menyalin detail dari grid asli ke grid baru."
+      },
+      {
+        question: "Mengapa teknik grid tetap relevan di era digital saat ini?",
+        options: [
+          "Karena komputer tidak bisa memperbesar gambar",
+          "Karena lebih murah daripada printer",
+          "Karena melatih ketelitian, kesabaran, dan pemahaman proporsi secara manual",
+          "Karena hasil digital kurang bagus"
+        ],
+        correct: 2,
+        explanation: "Teknik grid melatih keterampilan fundamental dalam seni rupa: ketelitian, kesabaran, dan pemahaman proporsi yang tidak bisa digantikan teknologi."
+      }
+    ];
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['main_title', config.main_title || defaultConfig.main_title]
+        ])
+      });
+    }
+
+    // Navigation
+    function showSection(sectionId) {
+      document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden'));
+      document.getElementById(sectionId).classList.remove('hidden');
+      
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.dataset.section === sectionId) {
+          link.classList.add('active');
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (sectionId === 'praktik') {
+        initPracticeGrids();
+      }
+      if (sectionId === 'quiz') {
+        initQuiz();
+      }
+    }
+
+    // Practice 1: Scale Calculation
+    function checkAnswer1(answer) {
+      const buttons = document.querySelectorAll('.practice-btn-1');
+      const resultDiv = document.getElementById('practice1-result');
+      
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-green-100', 'border-green-500', 'bg-red-100', 'border-red-500');
+        btn.classList.add('bg-white', 'border-gray-300');
+      });
+
+      resultDiv.classList.remove('hidden');
+
+      const clickedBtn = event.target;
+      if (answer === '8x8') {
+        clickedBtn.classList.remove('bg-white', 'border-gray-300');
+        clickedBtn.classList.add('bg-green-100', 'border-green-500', 'font-bold');
+        resultDiv.innerHTML = '<div class="p-4 bg-green-100 border-2 border-green-500 rounded-xl text-green-800"><span class="text-xl">✅</span> <strong>Benar!</strong> 2 cm × 4 = 8 cm. Ukuran hasil adalah 8 × 8 cm.</div>';
+      } else {
+        clickedBtn.classList.remove('bg-white', 'border-gray-300');
+        clickedBtn.classList.add('bg-red-100', 'border-red-500', 'font-bold');
+        resultDiv.innerHTML = '<div class="p-4 bg-red-100 border-2 border-red-500 rounded-xl text-red-800"><span class="text-xl">❌</span> <strong>Kurang tepat.</strong> Ingat rumus: Ukuran asli × Skala. Jadi 2 × 4 = 8 cm.</div>';
+      }
+    }
+
+    // Practice 2: Checkbox
+    function checkPractice2() {
+      const checkboxes = document.querySelectorAll('#practice2-options input[type="checkbox"]');
+      const correctAnswers = ['proporsi', 'manual', 'akurat'];
+      let userAnswers = [];
+      
+      checkboxes.forEach(cb => {
+        if (cb.checked) userAnswers.push(cb.value);
+      });
+
+      const resultDiv = document.getElementById('practice2-result');
+      resultDiv.classList.remove('hidden');
+
+      const isCorrect = correctAnswers.length === userAnswers.length && 
+                        correctAnswers.every(a => userAnswers.includes(a));
+
+      if (isCorrect) {
+        resultDiv.innerHTML = '<div class="p-4 bg-green-100 border-2 border-green-500 rounded-xl text-green-800"><span class="text-xl">✅</span> <strong>Sempurna!</strong> Kamu memahami keunggulan teknik grid dengan baik.</div>';
+      } else {
+        resultDiv.innerHTML = '<div class="p-4 bg-amber-100 border-2 border-amber-500 rounded-xl text-amber-800"><span class="text-xl">💡</span> <strong>Hampir!</strong> Keunggulan grid: menjaga proporsi, dapat dilakukan manual, dan hasil lebih akurat. "Membutuhkan komputer canggih" adalah SALAH karena grid justru teknik manual.</div>';
+      }
+    }
+
+    // Practice 3: Grid Creator
+    let createdGrid = [];
+
+    function createGrid(size) {
+      const container = document.getElementById('grid-creator');
+      container.innerHTML = '';
+      createdGrid = [];
+
+      const gridWrapper = document.createElement('div');
+      gridWrapper.className = `grid gap-1`;
+      gridWrapper.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+      gridWrapper.style.maxWidth = '320px';
+      gridWrapper.style.margin = '0 auto';
+
+      for (let i = 0; i < size * size; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'aspect-square bg-white border-2 border-purple-300 rounded cursor-pointer grid-cell flex items-center justify-center text-xs text-gray-400 hover:bg-purple-100 transition';
+        
+        const row = Math.floor(i / size) + 1;
+        const col = (i % size) + 1;
+        cell.textContent = `${row},${col}`;
+        cell.dataset.filled = 'false';
+        
+        cell.onclick = function() {
+          const color = document.getElementById('grid-color').value;
+          const isFilled = this.dataset.filled === 'true';
+          
+          if (isFilled) {
+            this.style.backgroundColor = 'white';
+            this.style.color = '#9ca3af';
+            this.textContent = `${row},${col}`;
+            this.dataset.filled = 'false';
+          } else {
+            this.style.backgroundColor = color;
+            this.style.color = 'white';
+            this.textContent = '✓';
+            this.dataset.filled = 'true';
+          }
+        };
+        
+        gridWrapper.appendChild(cell);
+        createdGrid.push(cell);
+      }
+
+      container.appendChild(gridWrapper);
+    }
+
+    function clearGrid() {
+      createdGrid.forEach(cell => {
+        const text = cell.textContent;
+        const coords = text.split(',');
+        cell.style.backgroundColor = 'white';
+        cell.style.color = '#9ca3af';
+        cell.textContent = text;
+        cell.dataset.filled = 'false';
+      });
+    }
+
+    // Practice 4: Scale Calculator
+    function calculateScale() {
+      const original = parseFloat(document.getElementById('original-size').value) || 0;
+      const factor = parseFloat(document.getElementById('scale-factor').value) || 0;
+      const result = original * factor;
+      document.getElementById('scale-result').textContent = result.toFixed(1) + ' cm';
+    }
+
+    // Practice 5: Copy Grid Drawing
+    function initPracticeGrids() {
+      generatePattern();
+      initTargetGrid();
+    }
+
+    function generatePattern() {
+      const grid = document.getElementById('original-grid');
+      grid.innerHTML = '';
+      currentPattern = [];
+
+      for (let i = 0; i < 16; i++) {
+        const filled = Math.random() > 0.5;
+        currentPattern.push(filled);
+        
+        const cell = document.createElement('div');
+        cell.className = `aspect-square rounded ${filled ? 'bg-purple-500' : 'bg-white'} border-2 border-purple-300`;
+        grid.appendChild(cell);
+      }
+
+      initTargetGrid();
+    }
+
+    function initTargetGrid() {
+      const grid = document.getElementById('target-grid');
+      grid.innerHTML = '';
+      userPattern = Array(16).fill(false);
+
+      for (let i = 0; i < 16; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'aspect-square rounded bg-white border-2 border-gray-300 cursor-pointer hover:border-purple-400 transition';
+        cell.dataset.index = i;
+        
+        cell.onclick = function() {
+          const idx = parseInt(this.dataset.index);
+          userPattern[idx] = !userPattern[idx];
+          this.className = `aspect-square rounded cursor-pointer transition ${userPattern[idx] ? 'bg-purple-500 border-2 border-purple-600' : 'bg-white border-2 border-gray-300 hover:border-purple-400'}`;
+        };
+        
+        grid.appendChild(cell);
+      }
+    }
+
+    function clearTargetGrid() {
+      initTargetGrid();
+      document.getElementById('drawing-result').classList.add('hidden');
+    }
+
+    function checkDrawing() {
+      const resultDiv = document.getElementById('drawing-result');
+      resultDiv.classList.remove('hidden');
+
+      let correct = 0;
+      for (let i = 0; i < 16; i++) {
+        if (currentPattern[i] === userPattern[i]) correct++;
+      }
+
+      const percentage = Math.round((correct / 16) * 100);
+
+      if (percentage === 100) {
+        resultDiv.innerHTML = '<div class="p-4 bg-green-100 border-2 border-green-500 rounded-xl text-green-800"><span class="text-xl">🎉</span> <strong>Sempurna!</strong> Gambarmu 100% sama dengan contoh!</div>';
+      } else if (percentage >= 75) {
+        resultDiv.innerHTML = `<div class="p-4 bg-yellow-100 border-2 border-yellow-500 rounded-xl text-yellow-800"><span class="text-xl">👍</span> <strong>Bagus!</strong> Akurasi ${percentage}%. Periksa lagi kotak yang berbeda.</div>`;
+      } else {
+        resultDiv.innerHTML = `<div class="p-4 bg-blue-100 border-2 border-blue-500 rounded-xl text-blue-800"><span class="text-xl">💪</span> <strong>Terus berlatih!</strong> Akurasi ${percentage}%. Perhatikan setiap kotak dengan teliti.</div>`;
+      }
+    }
+
+    // Quiz Functions
+    function initQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answeredQuestions.clear();
+      document.getElementById('quiz-results').classList.add('hidden');
+      document.getElementById('quiz-container').classList.remove('hidden');
+      updateProgress();
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const container = document.getElementById('quiz-container');
+      const q = quizQuestions[currentQuestion];
+
+      let optionsHTML = '';
+      q.options.forEach((opt, idx) => {
+        optionsHTML += `
+          <div class="quiz-option p-4 border-2 border-gray-200 rounded-xl ${answeredQuestions.has(currentQuestion) ? 'pointer-events-none' : ''}" onclick="selectOption(${idx})" data-index="${idx}">
+            <span class="inline-block w-8 h-8 bg-gray-100 rounded-full text-center leading-8 mr-3 font-bold">${String.fromCharCode(65 + idx)}</span>
+            ${opt}
+          </div>
+        `;
+      });
+
+      container.innerHTML = `
+        <div class="mb-6">
+          <span class="inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full font-bold mb-4">Soal ${currentQuestion + 1} dari 10</span>
+          <h3 class="text-xl font-bold text-gray-800">${q.question}</h3>
+        </div>
+        <div class="space-y-3" id="options-container">
+          ${optionsHTML}
+        </div>
+        <div id="explanation" class="mt-6 hidden"></div>
+        <div class="mt-6 flex justify-between">
+          <button onclick="prevQuestion()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition ${currentQuestion === 0 ? 'invisible' : ''}" ${currentQuestion === 0 ? 'disabled' : ''}>← Sebelumnya</button>
+          <button onclick="nextQuestion()" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">${currentQuestion === 9 ? 'Lihat Hasil' : 'Selanjutnya →'}</button>
+        </div>
+      `;
+
+      if (answeredQuestions.has(currentQuestion)) {
+        const options = document.querySelectorAll('.quiz-option');
+        const userAnswer = answeredQuestions.get(currentQuestion);
+        options.forEach((opt, idx) => {
+          if (idx === q.correct) {
+            opt.classList.add('correct');
+          } else if (idx === userAnswer && userAnswer !== q.correct) {
+            opt.classList.add('wrong');
+          }
+        });
+        showExplanation(q);
+      }
+    }
+
+    function selectOption(index) {
+      if (answeredQuestions.has(currentQuestion)) return;
+
+      const q = quizQuestions[currentQuestion];
+      const options = document.querySelectorAll('.quiz-option');
+      
+      answeredQuestions.set(currentQuestion, index);
+
+      options.forEach((opt, idx) => {
+        opt.classList.add('pointer-events-none');
+        if (idx === q.correct) {
+          opt.classList.add('correct');
+        } else if (idx === index && index !== q.correct) {
+          opt.classList.add('wrong');
+        }
+      });
+
+      if (index === q.correct) {
+        score++;
+      }
+
+      showExplanation(q);
+      updateProgress();
+    }
+
+    function showExplanation(q) {
+      const expDiv = document.getElementById('explanation');
+      expDiv.classList.remove('hidden');
+      expDiv.innerHTML = `
+        <div class="p-4 bg-blue-50 border-2 border-blue-200 rounded-xl">
+          <p class="font-bold text-blue-700 mb-2">💡 Penjelasan:</p>
+          <p class="text-gray-700">${q.explanation}</p>
+        </div>
+      `;
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        showQuestion();
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < 9) {
+        currentQuestion++;
+        showQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function updateProgress() {
+      const answered = answeredQuestions.size;
+      document.getElementById('quiz-progress').textContent = `${answered}/10`;
+      document.getElementById('progress-bar').style.width = `${(answered / 10) * 100}%`;
+    }
+
+    function showResults() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-results').classList.remove('hidden');
+      document.getElementById('final-score').textContent = `${score}/10`;
+
+      let message = '';
+      if (score === 10) {
+        message = '🎉 Luar biasa! Kamu menguasai materi dengan sempurna!';
+      } else if (score >= 8) {
+        message = '👏 Hebat! Pemahamanmu sangat baik!';
+      } else if (score >= 6) {
+        message = '👍 Bagus! Terus belajar untuk hasil yang lebih baik.';
+      } else if (score >= 4) {
+        message = '💪 Cukup baik. Pelajari lagi materi yang belum dipahami.';
+      } else {
+        message = '📚 Jangan menyerah! Baca ulang materi dan coba lagi.';
+      }
+      document.getElementById('score-message').textContent = message;
+    }
+
+    function restartQuiz() {
+      initQuiz();
+    }
+
+    // Initialize on load
+    document.getElementById('original-size').addEventListener('input', calculateScale);
+    document.getElementById('scale-factor').addEventListener('input', calculateScale);
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c882118b15f4ab7',t:'MTc3MDE4NjczMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,1154 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perspektif Dua Titik Hilang</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    .font-display { font-family: 'Instrument Serif', serif; }
+    .font-body { font-family: 'Space Grotesk', sans-serif; }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+    
+    .card-glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .perspective-canvas {
+      background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+    
+    .horizon-line {
+      stroke-dasharray: 10, 5;
+      animation: dash 20s linear infinite;
+    }
+    
+    @keyframes dash {
+      to { stroke-dashoffset: -100; }
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-fade-in {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+    
+    .slide-indicator {
+      transition: all 0.3s ease;
+    }
+    
+    .slide-indicator.active {
+      width: 2rem;
+      background: #f59e0b;
+    }
+    
+    .nav-btn {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .nav-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 40px rgba(245, 158, 11, 0.3);
+    }
+    
+    .interactive-point {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .interactive-point:hover {
+      transform: scale(1.2);
+      filter: drop-shadow(0 0 10px currentColor);
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      background: rgba(245, 158, 11, 0.1);
+      border-color: #f59e0b;
+    }
+    
+    .quiz-option.selected {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: #3b82f6;
+    }
+    
+    .quiz-option.correct {
+      background: rgba(34, 197, 94, 0.2);
+      border-color: #22c55e;
+    }
+    
+    .quiz-option.incorrect {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #ef4444;
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .tooltip {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    
+    .tooltip-trigger:hover .tooltip {
+      opacity: 1;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body text-white gradient-bg overflow-auto">
+  <div id="app" class="min-h-full w-full"><!-- Header -->
+   <header class="fixed top-0 left-0 right-0 z-50 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+     <div class="flex items-center gap-3">
+      </a>          
+<a href="index.html" class="btn-close-white">
+<i class="fas fa-home me-2"></i> Menu
+</a>
+      <div class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center">
+       <svg width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polygon points="12,2 22,8.5 22,15.5 12,22 2,15.5 2,8.5" /> <line x1="12" y1="22" x2="12" y2="15.5" /> <polyline points="22,8.5 12,15.5 2,8.5"></polyline>
+       </svg>
+      </div>
+      <div>
+       <h1 id="main-title" class="font-display text-xl font-semibold">Perspektif Dua Titik Hilang</h1>
+       <p id="subtitle" class="text-xs text-slate-400">Seni Rupa Kelas VIII</p>
+      </div>
+     </div>
+     <div class="flex items-center gap-2"><span id="slide-counter" class="text-sm text-slate-400">1 / 8</span>
+     </div>
+    </div>
+   </header><!-- Progress Bar -->
+   <div class="fixed top-16 left-0 right-0 z-40 h-1 bg-slate-800">
+    <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-amber-500 to-orange-500" style="width: 12.5%"></div>
+   </div><!-- Main Content -->
+   <main class="pt-24 pb-32 px-6">
+    <div class="max-w-5xl mx-auto"><!-- Slide 1: Pengertian -->
+     <section id="slide-1" class="slide animate-fade-in">
+      <div class="text-center mb-8"><span class="inline-block px-4 py-1 rounded-full bg-amber-500/20 text-amber-400 text-sm mb-4">Materi 1</span>
+       <h2 class="font-display text-4xl md:text-5xl mb-4">Pengertian Perspektif<br><span class="text-amber-400">Dua Titik Hilang</span></h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+       <div class="space-y-6">
+        <div class="card-glass rounded-2xl p-6">
+         <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center flex-shrink-0"><span class="text-2xl">📐</span>
+          </div>
+          <div>
+           <h3 class="font-semibold text-lg mb-2">Definisi</h3>
+           <p class="text-slate-300 text-sm leading-relaxed">Teknik menggambar objek menggunakan <strong class="text-amber-400">dua titik hilang</strong> yang terletak berjauhan di ujung kanan dan kiri garis horizon.</p>
+          </div>
+         </div>
+        </div>
+        <div class="card-glass rounded-2xl p-6">
+         <h3 class="font-semibold text-lg mb-4 flex items-center gap-2"><span class="text-amber-400">✦</span> Karakteristik Utama</h3>
+         <ul class="space-y-3">
+          <li class="flex items-start gap-3 text-sm text-slate-300"><span class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">1</span> <span>Digunakan untuk objek dengan bidang datar yang tidak sejajar dengan garis horizon</span></li>
+          <li class="flex items-start gap-3 text-sm text-slate-300"><span class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">2</span> <span>Bidang datar objek selalu membentuk sudut terhadap garis horizon</span></li>
+         </ul>
+        </div>
+        <div class="card-glass rounded-2xl p-6 border-l-4 border-amber-500">
+         <p class="text-slate-300 text-sm"><span class="text-amber-400 font-semibold">💡 Keunggulan:</span> Hasil gambar terlihat lebih wajar, dinamis, dan tidak simetris (tidak statis).</p>
+        </div>
+       </div><!-- Interactive Illustration -->
+       <div class="perspective-canvas rounded-2xl p-4 relative">
+        <svg id="perspective-demo-1" viewbox="0 0 400 300" class="w-full h-auto"><!-- Grid Background --> <defs>
+          <pattern id="grid" width="20" height="20" patternunits="userSpaceOnUse">
+           <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#cbd5e1" stroke-width="0.5" />
+          </pattern>
+         </defs> <rect width="400" height="300" fill="url(#grid)" /> <!-- Horizon Line --> <line x1="0" y1="150" x2="400" y2="150" stroke="#3b82f6" stroke-width="2" class="horizon-line" /> <text x="200" y="140" text-anchor="middle" fill="#3b82f6" font-size="12" font-weight="600">
+          GARIS HORIZON
+         </text> <!-- Vanishing Points --> <circle id="vp1" cx="30" cy="150" r="8" fill="#ef4444" class="interactive-point" /> <text x="30" y="175" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="600">
+          TH 1
+         </text> <circle id="vp2" cx="370" cy="150" r="8" fill="#ef4444" class="interactive-point" /> <text x="370" y="175" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="600">
+          TH 2
+         </text> <!-- Perspective Lines --> <g id="perspective-lines-1" stroke="#64748b" stroke-width="1" opacity="0.5">
+          <line x1="30" y1="150" x2="200" y2="100" />
+          <line x1="30" y1="150" x2="200" y2="200" />
+          <line x1="370" y1="150" x2="200" y2="100" />
+          <line x1="370" y1="150" x2="200" y2="200" />
+         </g> <!-- 3D Box --> <g id="box-1">
+          <polygon points="180,110 220,105 220,185 180,180" fill="#f59e0b" fill-opacity="0.3" stroke="#f59e0b" stroke-width="2" />
+          <polygon points="220,105 280,115 280,195 220,185" fill="#d97706" fill-opacity="0.3" stroke="#d97706" stroke-width="2" />
+          <polygon points="180,110 220,105 280,115 240,120" fill="#fbbf24" fill-opacity="0.3" stroke="#fbbf24" stroke-width="2" />
+         </g> <!-- Animated guide --> <circle r="4" fill="#22c55e">
+          <animatemotion dur="3s" repeatcount="indefinite" path="M30,150 L200,140 L370,150" />
+         </circle>
+        </svg>
+        <p class="text-center text-slate-600 text-sm mt-3">🖱️ Arahkan kursor ke titik hilang untuk melihat detail</p>
+       </div>
+      </div>
+     </section><!-- Slide 2: Sudut Pandang -->
+     <section id="slide-2" class="slide hidden">
+      <div class="text-center mb-8"><span class="inline-block px-4 py-1 rounded-full bg-amber-500/20 text-amber-400 text-sm mb-4">Materi 2</span>
+       <h2 class="font-display text-4xl md:text-5xl mb-4">Jenis <span class="text-amber-400">Sudut Pandang</span> Mata</h2>
+       <p class="text-slate-400 max-w-2xl mx-auto">Tiga jenis sudut pandang dalam menggambar perspektif yang menentukan posisi pengamat terhadap objek</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6 mb-8"><!-- Mata Burung -->
+       <div class="card-glass rounded-2xl p-6 hover:border-amber-500/50 transition-all cursor-pointer" onclick="setViewMode('bird')">
+        <div class="text-center mb-4"><span class="text-5xl">🦅</span>
+        </div>
+        <h3 class="font-display text-xl text-center mb-3 text-amber-400">Mata Burung</h3>
+        <p class="text-slate-300 text-sm text-center">Objek berada <strong>di bawah</strong> garis horizon; pengamat seolah melihat dari atas.</p>
+        <div class="mt-4 p-3 bg-slate-800/50 rounded-lg">
+         <p class="text-xs text-slate-400 text-center">Bird's Eye View</p>
+        </div>
+       </div><!-- Mata Normal -->
+       <div class="card-glass rounded-2xl p-6 hover:border-amber-500/50 transition-all cursor-pointer" onclick="setViewMode('normal')">
+        <div class="text-center mb-4"><span class="text-5xl">👁️</span>
+        </div>
+        <h3 class="font-display text-xl text-center mb-3 text-emerald-400">Mata Normal</h3>
+        <p class="text-slate-300 text-sm text-center">Objek berada <strong>setinggi</strong> garis horizon; pengamat sejajar dengan objek.</p>
+        <div class="mt-4 p-3 bg-slate-800/50 rounded-lg">
+         <p class="text-xs text-slate-400 text-center">Eye Level View</p>
+        </div>
+       </div><!-- Mata Katak -->
+       <div class="card-glass rounded-2xl p-6 hover:border-amber-500/50 transition-all cursor-pointer" onclick="setViewMode('frog')">
+        <div class="text-center mb-4"><span class="text-5xl">🐸</span>
+        </div>
+        <h3 class="font-display text-xl text-center mb-3 text-blue-400">Mata Katak</h3>
+        <p class="text-slate-300 text-sm text-center">Objek berada <strong>di atas</strong> garis horizon; pengamat seolah melihat dari bawah.</p>
+        <div class="mt-4 p-3 bg-slate-800/50 rounded-lg">
+         <p class="text-xs text-slate-400 text-center">Worm's Eye View</p>
+        </div>
+       </div>
+      </div><!-- Interactive View Demo -->
+      <div class="perspective-canvas rounded-2xl p-6">
+       <svg id="view-demo" viewbox="0 0 500 350" class="w-full h-auto"><defs>
+         <lineargradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#0ea5e9" />
+          <stop offset="100%" style="stop-color:#bae6fd" />
+         </lineargradient>
+         <lineargradient id="groundGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#84cc16" />
+          <stop offset="100%" style="stop-color:#65a30d" />
+         </lineargradient>
+        </defs> <!-- Sky --> <rect id="sky" x="0" y="0" width="500" height="175" fill="url(#skyGradient)" /> <!-- Ground --> <rect id="ground" x="0" y="175" width="500" height="175" fill="url(#groundGradient)" /> <!-- Horizon Line --> <line id="horizon-view" x1="0" y1="175" x2="500" y2="175" stroke="#f59e0b" stroke-width="3" /> <text id="horizon-label" x="250" y="165" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="600">
+         GARIS HORIZON
+        </text> <!-- Building --> <g id="building">
+         <rect x="200" y="100" width="100" height="150" fill="#475569" stroke="#334155" stroke-width="2" />
+         <rect x="210" y="120" width="30" height="40" fill="#0ea5e9" opacity="0.5" />
+         <rect x="260" y="120" width="30" height="40" fill="#0ea5e9" opacity="0.5" />
+         <rect x="210" y="180" width="30" height="40" fill="#0ea5e9" opacity="0.5" />
+         <rect x="260" y="180" width="30" height="40" fill="#0ea5e9" opacity="0.5" />
+         <polygon points="200,100 250,60 300,100" fill="#94a3b8" />
+        </g> <!-- Observer Icon --> <g id="observer">
+         <circle cx="80" cy="175" r="15" fill="#ef4444" />
+         <text x="80" y="180" text-anchor="middle" fill="white" font-size="14">
+          👤
+         </text>
+         <text x="80" y="210" text-anchor="middle" fill="#334155" font-size="11" font-weight="600">
+          Pengamat
+         </text>
+        </g> <!-- View Indicator --> <text id="view-label" x="250" y="330" text-anchor="middle" fill="#334155" font-size="16" font-weight="600">
+         Klik kartu di atas untuk melihat perubahan
+        </text>
+       </svg>
+      </div>
+     </section><!-- Slide 3: Alat dan Bahan -->
+     <section id="slide-3" class="slide hidden">
+      <div class="text-center mb-8"><span class="inline-block px-4 py-1 rounded-full bg-amber-500/20 text-amber-400 text-sm mb-4">Materi 3</span>
+       <h2 class="font-display text-4xl md:text-5xl mb-4">Alat, Bahan, dan <span class="text-amber-400">Media</span></h2>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"><!-- Kertas -->
+       <div class="card-glass rounded-2xl p-6 group hover:bg-white/10 transition-all">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center group-hover:scale-110 transition-transform"><span class="text-4xl">📄</span>
+        </div>
+        <h3 class="font-display text-xl text-center mb-2">Kertas</h3>
+        <p class="text-slate-400 text-sm text-center mb-3">Kertas yang halus dan kuat</p>
+        <div class="bg-amber-500/10 rounded-lg p-3">
+         <p class="text-amber-400 text-xs text-center font-medium">Rekomendasi: Kertas Manila</p>
+        </div>
+       </div><!-- Pensil Proyeksi -->
+       <div class="card-glass rounded-2xl p-6 group hover:bg-white/10 transition-all">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center group-hover:scale-110 transition-transform"><span class="text-4xl">✏️</span>
+        </div>
+        <h3 class="font-display text-xl text-center mb-2">Pensil Proyeksi</h3>
+        <p class="text-slate-400 text-sm text-center mb-3">Untuk garis bantu</p>
+        <div class="bg-emerald-500/10 rounded-lg p-3">
+         <p class="text-emerald-400 text-xs text-center font-medium">Jenis: H atau HB (keras-sedang)</p>
+        </div>
+       </div><!-- Pensil Finishing -->
+       <div class="card-glass rounded-2xl p-6 group hover:bg-white/10 transition-all">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center group-hover:scale-110 transition-transform"><span class="text-4xl">🖊️</span>
+        </div>
+        <h3 class="font-display text-xl text-center mb-2">Pensil Finishing</h3>
+        <p class="text-slate-400 text-sm text-center mb-3">Untuk mempertebal objek</p>
+        <div class="bg-blue-500/10 rounded-lg p-3">
+         <p class="text-blue-400 text-xs text-center font-medium">Jenis: B (lunak, pekat)</p>
+        </div>
+       </div><!-- Alat Bantu -->
+       <div class="card-glass rounded-2xl p-6 group hover:bg-white/10 transition-all">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-rose-100 to-rose-200 flex items-center justify-center group-hover:scale-110 transition-transform"><span class="text-4xl">📏</span>
+        </div>
+        <h3 class="font-display text-xl text-center mb-2">Alat Bantu</h3>
+        <p class="text-slate-400 text-sm text-center mb-3">Pendukung menggambar</p>
+        <div class="bg-rose-500/10 rounded-lg p-3">
+         <p class="text-rose-400 text-xs text-center font-medium">Penggaris &amp; Penghapus</p>
+        </div>
+       </div>
+      </div><!-- Interactive Pencil Scale -->
+      <div class="mt-10 card-glass rounded-2xl p-8">
+       <h3 class="font-display text-2xl text-center mb-6">Skala Kekerasan Pensil</h3>
+       <div class="relative">
+        <div class="flex justify-between items-center">
+         <div class="text-center">
+          <div class="w-12 h-24 mx-auto bg-gradient-to-b from-slate-300 to-slate-500 rounded-t-sm mb-2"></div><span class="text-xs text-slate-400">9H</span>
+          <p class="text-xs text-slate-500">Sangat Keras</p>
+         </div>
+         <div class="flex-1 mx-4">
+          <div class="h-2 rounded-full bg-gradient-to-r from-slate-300 via-slate-500 to-slate-900"></div>
+          <div class="flex justify-between mt-2 px-4"><span class="text-xs text-emerald-400 font-semibold">← Garis Bantu (H/HB)</span> <span class="text-xs text-amber-400 font-semibold">Finishing (B) →</span>
+          </div>
+         </div>
+         <div class="text-center">
+          <div class="w-12 h-24 mx-auto bg-gradient-to-b from-slate-700 to-slate-900 rounded-t-sm mb-2"></div><span class="text-xs text-slate-400">9B</span>
+          <p class="text-xs text-slate-500">Sangat Lunak</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 4: Kaidah Dasar -->
+     <section id="slide-4" class="slide hidden">
+      <div class="text-center mb-8"><span class="inline-block px-4 py-1 rounded-full bg-amber-500/20 text-amber-400 text-sm mb-4">Materi 4</span>
+       <h2 class="font-display text-4xl md:text-5xl mb-4">Kaidah Dasar <span class="text-amber-400">Menggambar</span></h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+       <div class="space-y-4">
+        <div class="card-glass rounded-2xl p-6 border-l-4 border-amber-500">
+         <div class="flex items-start gap-4"><span class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-slate-900 font-bold flex-shrink-0">1</span>
+          <div>
+           <h3 class="font-semibold mb-2">Bidang Tidak Sejajar</h3>
+           <p class="text-slate-300 text-sm">Bidang datar objek tidak sejajar horizon dan membentuk sudut.</p>
+          </div>
+         </div>
+        </div>
+        <div class="card-glass rounded-2xl p-6 border-l-4 border-emerald-500">
+         <div class="flex items-start gap-4"><span class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-slate-900 font-bold flex-shrink-0">2</span>
+          <div>
+           <h3 class="font-semibold mb-2">Garis Tegak Lurus</h3>
+           <p class="text-slate-300 text-sm">Garis yang tegak lurus dengan horizon tetap digambar tegak lurus.</p>
+          </div>
+         </div>
+        </div>
+        <div class="card-glass rounded-2xl p-6 border-l-4 border-blue-500">
+         <div class="flex items-start gap-4"><span class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-slate-900 font-bold flex-shrink-0">3</span>
+          <div>
+           <h3 class="font-semibold mb-2">Garis Proyeksi</h3>
+           <p class="text-slate-300 text-sm">Semua garis proyeksi ditarik menuju dua titik hilang (TH 1 dan TH 2).</p>
+          </div>
+         </div>
+        </div>
+        <div class="card-glass rounded-2xl p-6 border-l-4 border-rose-500">
+         <div class="flex items-start gap-4"><span class="w-10 h-10 rounded-full bg-rose-500 flex items-center justify-center text-slate-900 font-bold flex-shrink-0">4</span>
+          <div>
+           <h3 class="font-semibold mb-2">Fungsi Titik Hilang</h3>
+           <p class="text-slate-300 text-sm">Titik hilang berfungsi sebagai titik proyeksi, bukan titik sentral.</p>
+          </div>
+         </div>
+        </div>
+       </div><!-- Interactive Demo -->
+       <div class="perspective-canvas rounded-2xl p-4">
+        <svg id="rules-demo" viewbox="0 0 400 350" class="w-full h-auto"><defs>
+          <pattern id="grid2" width="20" height="20" patternunits="userSpaceOnUse">
+           <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#cbd5e1" stroke-width="0.5" />
+          </pattern>
+         </defs> <rect width="400" height="350" fill="url(#grid2)" /> <!-- Horizon --> <line x1="0" y1="150" x2="400" y2="150" stroke="#3b82f6" stroke-width="2" class="horizon-line" /> <!-- VPs --> <circle cx="20" cy="150" r="10" fill="#ef4444" /> <text x="20" y="175" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="bold">
+          TH1
+         </text> <circle cx="380" cy="150" r="10" fill="#ef4444" /> <text x="380" y="175" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="bold">
+          TH2
+         </text> <!-- Projection Lines --> <g stroke="#94a3b8" stroke-width="1" stroke-dasharray="5,5">
+          <line x1="20" y1="150" x2="180" y2="80" />
+          <line x1="20" y1="150" x2="180" y2="250" />
+          <line x1="380" y1="150" x2="220" y2="80" />
+          <line x1="380" y1="150" x2="220" y2="250" />
+         </g> <!-- Vertical Lines --> <line x1="180" y1="80" x2="180" y2="250" stroke="#22c55e" stroke-width="2" /> <line x1="220" y1="80" x2="220" y2="250" stroke="#22c55e" stroke-width="2" /> <!-- Cube --> <g fill="none" stroke="#f59e0b" stroke-width="2">
+          <path d="M180,100 L180,230 L220,245 L220,115 Z" />
+          <path d="M180,100 L150,110 L150,240 L180,230" />
+          <path d="M220,115 L250,105 L250,235 L220,245" />
+          <path d="M180,100 L150,110 M220,115 L250,105" />
+          <path d="M150,110 L180,100 L220,115 L250,105" fill="#fbbf24" fill-opacity="0.2" />
+         </g> <!-- Labels --> <text x="200" y="320" text-anchor="middle" fill="#475569" font-size="12">
+          Klik pada aturan di sebelah kiri untuk menyorot
+         </text>
+        </svg>
+       </div>
+      </div>
+     </section><!-- Slide 5: Tahapan Praktik -->
+     <section id="slide-5" class="slide hidden">
+      <div class="text-center mb-8"><span class="inline-block px-4 py-1 rounded-full bg-amber-500/20 text-amber-400 text-sm mb-4">Materi 5</span>
+       <h2 class="font-display text-4xl md:text-5xl mb-4">Tahapan <span class="text-amber-400">Praktik</span></h2>
+       <p class="text-slate-400">Latihan dilakukan secara bertahap (konstruktif)</p>
+      </div><!-- Step Progress -->
+      <div class="flex justify-center mb-8">
+       <div class="flex items-center gap-2"><button onclick="setPracticeStep(1)" class="practice-step-btn w-10 h-10 rounded-full bg-amber-500 text-slate-900 font-bold transition-all">1</button>
+        <div class="w-16 h-1 bg-slate-700 rounded"></div><button onclick="setPracticeStep(2)" class="practice-step-btn w-10 h-10 rounded-full bg-slate-700 text-slate-400 font-bold transition-all hover:bg-slate-600">2</button>
+        <div class="w-16 h-1 bg-slate-700 rounded"></div><button onclick="setPracticeStep(3)" class="practice-step-btn w-10 h-10 rounded-full bg-slate-700 text-slate-400 font-bold transition-all hover:bg-slate-600">3</button>
+        <div class="w-16 h-1 bg-slate-700 rounded"></div><button onclick="setPracticeStep(4)" class="practice-step-btn w-10 h-10 rounded-full bg-slate-700 text-slate-400 font-bold transition-all hover:bg-slate-600">4</button>
+       </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8"><!-- Info Panel -->
+       <div id="practice-info" class="card-glass rounded-2xl p-8">
+        <div id="step-1-info">
+         <div class="flex items-center gap-4 mb-4"><span class="w-14 h-14 rounded-xl bg-amber-500 flex items-center justify-center text-3xl">•</span>
+          <div>
+           <h3 class="font-display text-2xl">Perspektif Titik</h3>
+           <p class="text-slate-400">Langkah 1 dari 4</p>
+          </div>
+         </div>
+         <p class="text-slate-300 leading-relaxed">Menarik titik objek ke dua titik hilang. Ini adalah langkah paling dasar untuk memahami arah perspektif.</p>
+         <div class="mt-6 p-4 bg-emerald-500/10 rounded-xl">
+          <p class="text-emerald-400 text-sm">💡 Tips: Mulai dengan satu titik di tengah, lalu tarik garis ke kedua titik hilang.</p>
+         </div>
+        </div>
+        <div id="step-2-info" class="hidden">
+         <div class="flex items-center gap-4 mb-4"><span class="w-14 h-14 rounded-xl bg-emerald-500 flex items-center justify-center text-3xl">╱</span>
+          <div>
+           <h3 class="font-display text-2xl">Perspektif Garis</h3>
+           <p class="text-slate-400">Langkah 2 dari 4</p>
+          </div>
+         </div>
+         <p class="text-slate-300 leading-relaxed">Melanjutkan titik menjadi garis yang membentuk sudut terhadap horizon. Garis vertikal tetap tegak lurus.</p>
+         <div class="mt-6 p-4 bg-emerald-500/10 rounded-xl">
+          <p class="text-emerald-400 text-sm">💡 Tips: Perhatikan garis vertikal harus tetap tegak, sedangkan garis horizontal mengarah ke TH.</p>
+         </div>
+        </div>
+        <div id="step-3-info" class="hidden">
+         <div class="flex items-center gap-4 mb-4"><span class="w-14 h-14 rounded-xl bg-blue-500 flex items-center justify-center text-3xl">▢</span>
+          <div>
+           <h3 class="font-display text-2xl">Perspektif Bidang</h3>
+           <p class="text-slate-400">Langkah 3 dari 4</p>
+          </div>
+         </div>
+         <p class="text-slate-300 leading-relaxed">Memastikan semua garis datar membentuk sudut terhadap horizon. Bidang mulai terbentuk dari garis-garis perspektif.</p>
+         <div class="mt-6 p-4 bg-emerald-500/10 rounded-xl">
+          <p class="text-emerald-400 text-sm">💡 Tips: Cek apakah semua sisi bidang mengarah ke TH yang benar.</p>
+         </div>
+        </div>
+        <div id="step-4-info" class="hidden">
+         <div class="flex items-center gap-4 mb-4"><span class="w-14 h-14 rounded-xl bg-rose-500 flex items-center justify-center text-3xl">📦</span>
+          <div>
+           <h3 class="font-display text-2xl">Perspektif Bangun</h3>
+           <p class="text-slate-400">Langkah 4 dari 4</p>
+          </div>
+         </div>
+         <p class="text-slate-300 leading-relaxed">Mengembangkan bidang menjadi bentuk tiga dimensi (seperti balok). Objek 3D lengkap tercipta!</p>
+         <div class="mt-6 p-4 bg-emerald-500/10 rounded-xl">
+          <p class="text-emerald-400 text-sm">💡 Tips: Pastikan semua sisi memiliki ketebalan dan volume yang konsisten.</p>
+         </div>
+        </div>
+       </div><!-- Animation Canvas -->
+       <div class="perspective-canvas rounded-2xl p-4">
+        <svg id="practice-demo" viewbox="0 0 400 300" class="w-full h-auto"><defs>
+          <pattern id="grid3" width="20" height="20" patternunits="userSpaceOnUse">
+           <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#cbd5e1" stroke-width="0.5" />
+          </pattern>
+         </defs> <rect width="400" height="300" fill="url(#grid3)" /> <!-- Horizon --> <line x1="0" y1="130" x2="400" y2="130" stroke="#3b82f6" stroke-width="2" class="horizon-line" /> <!-- VPs --> <circle cx="30" cy="130" r="6" fill="#ef4444" /> <circle cx="370" cy="130" r="6" fill="#ef4444" /> <!-- Step 1: Point --> <g id="practice-step-1">
+          <circle cx="200" cy="150" r="8" fill="#f59e0b" />
+          <line x1="200" y1="150" x2="30" y2="130" stroke="#f59e0b" stroke-width="1" stroke-dasharray="5,5" />
+          <line x1="200" y1="150" x2="370" y2="130" stroke="#f59e0b" stroke-width="1" stroke-dasharray="5,5" />
+         </g> <!-- Step 2: Lines (hidden initially) --> <g id="practice-step-2" class="hidden">
+          <line x1="180" y1="120" x2="180" y2="200" stroke="#22c55e" stroke-width="2" />
+          <line x1="220" y1="115" x2="220" y2="195" stroke="#22c55e" stroke-width="2" />
+          <line x1="180" y1="120" x2="30" y2="130" stroke="#f59e0b" stroke-width="1" stroke-dasharray="5,5" />
+          <line x1="220" y1="115" x2="370" y2="130" stroke="#f59e0b" stroke-width="1" stroke-dasharray="5,5" />
+         </g> <!-- Step 3: Plane (hidden initially) --> <g id="practice-step-3" class="hidden">
+          <polygon points="180,120 220,115 220,195 180,200" fill="#3b82f6" fill-opacity="0.3" stroke="#3b82f6" stroke-width="2" />
+         </g> <!-- Step 4: 3D Object (hidden initially) --> <g id="practice-step-4" class="hidden">
+          <polygon points="160,125 180,120 180,200 160,205" fill="#f59e0b" fill-opacity="0.3" stroke="#f59e0b" stroke-width="2" />
+          <polygon points="180,120 220,115 220,195 180,200" fill="#d97706" fill-opacity="0.3" stroke="#d97706" stroke-width="2" />
+          <polygon points="220,115 240,120 240,200 220,195" fill="#b45309" fill-opacity="0.3" stroke="#b45309" stroke-width="2" />
+          <polygon points="160,125 180,120 220,115 240,120 200,105" fill="#fbbf24" fill-opacity="0.3" stroke="#fbbf24" stroke-width="2" />
+         </g>
+        </svg>
+       </div>
+      </div>
+     </section><!-- Slide 6: Bangun Majemuk -->
+     <section id="slide-6" class="slide hidden">
+      <div class="text-center mb-8"><span class="inline-block px-4 py-1 rounded-full bg-amber-500/20 text-amber-400 text-sm mb-4">Materi 6</span>
+       <h2 class="font-display text-4xl md:text-5xl mb-4">Perspektif <span class="text-amber-400">Bangun Majemuk</span></h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+       <div class="space-y-6">
+        <div class="card-glass rounded-2xl p-6">
+         <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center flex-shrink-0"><span class="text-2xl">📦📦</span>
+          </div>
+          <div>
+           <h3 class="font-semibold text-lg mb-2">Definisi</h3>
+           <p class="text-slate-300 text-sm">Menggambar <strong class="text-amber-400">dua atau lebih bangun</strong> dalam satu bidang gambar.</p>
+          </div>
+         </div>
+        </div>
+        <div class="card-glass rounded-2xl p-6">
+         <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0"><span class="text-2xl">🎯</span>
+          </div>
+          <div>
+           <h3 class="font-semibold text-lg mb-2">Prinsip</h3>
+           <p class="text-slate-300 text-sm">Setiap bangun memiliki perspektifnya sendiri namun tetap mengacu pada <strong class="text-emerald-400">dua titik hilang yang sama</strong>.</p>
+          </div>
+         </div>
+        </div>
+        <div class="card-glass rounded-2xl p-6 border-2 border-amber-500/30">
+         <h3 class="font-semibold text-lg mb-3 flex items-center gap-2"><span class="text-amber-400">💡</span> Tips Mencari Titik Tengah</h3>
+         <p class="text-slate-300 text-sm mb-4">Untuk mencari titik tengah bidang:</p>
+         <ol class="space-y-2 text-sm text-slate-400">
+          <li class="flex items-start gap-2"><span class="w-5 h-5 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-400 text-xs flex-shrink-0">1</span> <span>Buatlah garis diagonal dari sudut-sudut bidang</span></li>
+          <li class="flex items-start gap-2"><span class="w-5 h-5 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-400 text-xs flex-shrink-0">2</span> <span>Titik perpotongan diagonal adalah titik tengah</span></li>
+         </ol>
+        </div>
+       </div><!-- Interactive Multiple Objects -->
+       <div class="perspective-canvas rounded-2xl p-4">
+        <svg id="compound-demo" viewbox="0 0 450 350" class="w-full h-auto"><defs>
+          <pattern id="grid4" width="20" height="20" patternunits="userSpaceOnUse">
+           <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#cbd5e1" stroke-width="0.5" />
+          </pattern>
+         </defs> <rect width="450" height="350" fill="url(#grid4)" /> <!-- Horizon --> <line x1="0" y1="150" x2="450" y2="150" stroke="#3b82f6" stroke-width="2" class="horizon-line" /> <!-- VPs --> <circle cx="20" cy="150" r="8" fill="#ef4444" /> <text x="20" y="135" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="bold">
+          TH1
+         </text> <circle cx="430" cy="150" r="8" fill="#ef4444" /> <text x="430" y="135" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="bold">
+          TH2
+         </text> <!-- First Box --> <g id="box-compound-1" class="cursor-pointer">
+          <polygon points="120,130 160,125 160,200 120,195" fill="#f59e0b" fill-opacity="0.4" stroke="#f59e0b" stroke-width="2" />
+          <polygon points="160,125 200,130 200,205 160,200" fill="#d97706" fill-opacity="0.4" stroke="#d97706" stroke-width="2" />
+          <polygon points="120,130 160,125 200,130 160,115" fill="#fbbf24" fill-opacity="0.4" stroke="#fbbf24" stroke-width="2" /> <!-- Center point diagonal -->
+          <line x1="120" y1="130" x2="200" y2="205" stroke="#22c55e" stroke-width="1" stroke-dasharray="3,3" opacity="0.5" />
+          <line x1="200" y1="130" x2="120" y2="195" stroke="#22c55e" stroke-width="1" stroke-dasharray="3,3" opacity="0.5" />
+          <circle cx="160" cy="165" r="4" fill="#22c55e" />
+         </g> <!-- Second Box --> <g id="box-compound-2" class="cursor-pointer">
+          <polygon points="250,140 290,135 290,220 250,215" fill="#3b82f6" fill-opacity="0.4" stroke="#3b82f6" stroke-width="2" />
+          <polygon points="290,135 330,140 330,225 290,220" fill="#1d4ed8" fill-opacity="0.4" stroke="#1d4ed8" stroke-width="2" />
+          <polygon points="250,140 290,135 330,140 290,120" fill="#60a5fa" fill-opacity="0.4" stroke="#60a5fa" stroke-width="2" />
+         </g> <!-- Third Box (smaller) --> <g id="box-compound-3" class="cursor-pointer">
+          <polygon points="350,155 375,152 375,200 350,197" fill="#22c55e" fill-opacity="0.4" stroke="#22c55e" stroke-width="2" />
+          <polygon points="375,152 400,155 400,203 375,200" fill="#16a34a" fill-opacity="0.4" stroke="#16a34a" stroke-width="2" />
+          <polygon points="350,155 375,152 400,155 375,145" fill="#4ade80" fill-opacity="0.4" stroke="#4ade80" stroke-width="2" />
+         </g> <!-- Projection lines (subtle) --> <g stroke="#94a3b8" stroke-width="0.5" opacity="0.3">
+          <line x1="20" y1="150" x2="160" y2="115" />
+          <line x1="430" y1="150" x2="160" y2="115" />
+          <line x1="20" y1="150" x2="290" y2="120" />
+          <line x1="430" y1="150" x2="290" y2="120" />
+         </g> <text x="225" y="330" text-anchor="middle" fill="#475569" font-size="12">
+          Klik pada bangun untuk menyorot
+         </text>
+        </svg>
+       </div>
+      </div>
+     </section><!-- Slide 7: Evaluasi -->
+     <section id="slide-7" class="slide hidden">
+      <div class="text-center mb-8"><span class="inline-block px-4 py-1 rounded-full bg-amber-500/20 text-amber-400 text-sm mb-4">Materi 7</span>
+       <h2 class="font-display text-4xl md:text-5xl mb-4">Evaluasi dan <span class="text-amber-400">Kriteria Penilaian</span></h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8"><!-- Kualitas Teknis -->
+       <div class="card-glass rounded-2xl p-8">
+        <div class="flex items-center gap-4 mb-6">
+         <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center"><span class="text-3xl">⚙️</span>
+         </div>
+         <div>
+          <h3 class="font-display text-2xl">Kualitas Teknis</h3>
+          <p class="text-slate-400 text-sm">Aspek persiapan dan proses</p>
+         </div>
+        </div>
+        <div class="space-y-4">
+         <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg"><span class="text-slate-300">Kesiapan Alat</span>
+          <div class="flex gap-1"><span class="w-3 h-3 rounded-full bg-amber-500"></span> <span class="w-3 h-3 rounded-full bg-amber-500"></span> <span class="w-3 h-3 rounded-full bg-amber-500"></span> <span class="w-3 h-3 rounded-full bg-slate-600"></span> <span class="w-3 h-3 rounded-full bg-slate-600"></span>
+          </div>
+         </div>
+         <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg"><span class="text-slate-300">Kebersihan</span>
+          <div class="flex gap-1"><span class="w-3 h-3 rounded-full bg-amber-500"></span> <span class="w-3 h-3 rounded-full bg-amber-500"></span> <span class="w-3 h-3 rounded-full bg-amber-500"></span> <span class="w-3 h-3 rounded-full bg-amber-500"></span> <span class="w-3 h-3 rounded-full bg-slate-600"></span>
+          </div>
+         </div>
+         <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg"><span class="text-slate-300">Keseriusan</span>
+          <div class="flex gap-1"><span class="w-3 h-3 rounded-full bg-amber-500"></span> <span class="w-3 h-3 rounded-full bg-amber-500"></span> <span class="w-3 h-3 rounded-full bg-amber-500"></span> <span class="w-3 h-3 rounded-full bg-amber-500"></span> <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+          </div>
+         </div>
+         <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg"><span class="text-slate-300">Kemandirian</span>
+          <div class="flex gap-1"><span class="w-3 h-3 rounded-full bg-amber-500"></span> <span class="w-3 h-3 rounded-full bg-amber-500"></span> <span class="w-3 h-3 rounded-full bg-amber-500"></span> <span class="w-3 h-3 rounded-full bg-slate-600"></span> <span class="w-3 h-3 rounded-full bg-slate-600"></span>
+          </div>
+         </div>
+        </div>
+       </div><!-- Kualitas Estetis -->
+       <div class="card-glass rounded-2xl p-8">
+        <div class="flex items-center gap-4 mb-6">
+         <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center"><span class="text-3xl">🎨</span>
+         </div>
+         <div>
+          <h3 class="font-display text-2xl">Kualitas Estetis</h3>
+          <p class="text-slate-400 text-sm">Aspek keindahan hasil karya</p>
+         </div>
+        </div>
+        <div class="space-y-4">
+         <div class="p-4 bg-slate-800/50 rounded-lg">
+          <div class="flex items-center gap-3 mb-2"><span class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">✓</span> <span class="font-semibold">Kelengkapan Unsur</span>
+          </div>
+          <ul class="text-sm text-slate-400 ml-11 space-y-1">
+           <li>• Garis horizon</li>
+           <li>• Titik hilang</li>
+           <li>• Garis bantu</li>
+          </ul>
+         </div>
+         <div class="p-4 bg-slate-800/50 rounded-lg">
+          <div class="flex items-center gap-3 mb-2"><span class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">✓</span> <span class="font-semibold">Penerapan Kaidah</span>
+          </div>
+          <p class="text-sm text-slate-400 ml-11">Kaidah perspektif diterapkan dengan benar</p>
+         </div>
+         <div class="p-4 bg-slate-800/50 rounded-lg">
+          <div class="flex items-center gap-3 mb-2"><span class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">✓</span> <span class="font-semibold">Kesan Ruang</span>
+          </div>
+          <p class="text-sm text-slate-400 ml-11">Gambar menunjukkan kedalaman dan dimensi 3D</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 8: Quiz -->
+     <section id="slide-8" class="slide hidden">
+      <div class="text-center mb-8"><span class="inline-block px-4 py-1 rounded-full bg-amber-500/20 text-amber-400 text-sm mb-4">Evaluasi</span>
+       <h2 class="font-display text-4xl md:text-5xl mb-4">Kuis <span class="text-amber-400">HOTS</span></h2>
+       <p class="text-slate-400">10 Soal Pilihan Ganda - Higher Order Thinking Skills</p>
+      </div><!-- Quiz Progress -->
+      <div class="max-w-3xl mx-auto mb-6">
+       <div class="flex justify-between items-center mb-2"><span id="quiz-progress-text" class="text-sm text-slate-400">Soal 1 dari 10</span> <span id="quiz-score" class="text-sm text-amber-400 font-semibold">Skor: 0/10</span>
+       </div>
+       <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+        <div id="quiz-progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-500" style="width: 10%"></div>
+       </div>
+      </div><!-- Quiz Container -->
+      <div id="quiz-container" class="max-w-3xl mx-auto">
+       <div class="card-glass rounded-2xl p-8">
+        <div id="question-container"><!-- Question will be inserted here -->
+        </div>
+        <div id="options-container" class="space-y-3 mt-6"><!-- Options will be inserted here -->
+        </div>
+        <div id="feedback-container" class="hidden mt-6 p-4 rounded-xl"><!-- Feedback will be inserted here -->
+        </div>
+        <div class="flex justify-between mt-8"><button id="prev-question-btn" onclick="prevQuestion()" class="px-6 py-3 rounded-xl bg-slate-700 text-slate-300 font-semibold hover:bg-slate-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled> ← Sebelumnya </button> <button id="next-question-btn" onclick="nextQuestion()" class="px-6 py-3 rounded-xl bg-amber-500 text-slate-900 font-semibold hover:bg-amber-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed"> Selanjutnya → </button>
+        </div>
+       </div>
+      </div><!-- Quiz Results (hidden initially) -->
+      <div id="quiz-results" class="hidden max-w-3xl mx-auto">
+       <div class="card-glass rounded-2xl p-8 text-center">
+        <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center"><span id="final-score-icon" class="text-5xl">🏆</span>
+        </div>
+        <h3 class="font-display text-3xl mb-2">Hasil Kuis</h3>
+        <p id="final-score-text" class="text-5xl font-bold text-amber-400 mb-4">0/10</p>
+        <p id="final-message" class="text-slate-300 mb-6">Pesan hasil</p><button onclick="restartQuiz()" class="px-8 py-4 rounded-xl bg-amber-500 text-slate-900 font-semibold hover:bg-amber-400 transition-all"> Ulangi Kuis 🔄 </button>
+       </div>
+      </div>
+     </section>
+    </div>
+   </main><!-- Navigation -->
+   <nav class="fixed bottom-0 left-0 right-0 z-50 px-6 py-4 bg-gradient-to-t from-slate-900 to-transparent">
+    <div class="max-w-7xl mx-auto"><!-- Slide Indicators -->
+     <div class="flex justify-center gap-2 mb-4"><button onclick="goToSlide(1)" class="slide-indicator w-2 h-2 rounded-full bg-slate-600 active"></button> <button onclick="goToSlide(2)" class="slide-indicator w-2 h-2 rounded-full bg-slate-600"></button> <button onclick="goToSlide(3)" class="slide-indicator w-2 h-2 rounded-full bg-slate-600"></button> <button onclick="goToSlide(4)" class="slide-indicator w-2 h-2 rounded-full bg-slate-600"></button> <button onclick="goToSlide(5)" class="slide-indicator w-2 h-2 rounded-full bg-slate-600"></button> <button onclick="goToSlide(6)" class="slide-indicator w-2 h-2 rounded-full bg-slate-600"></button> <button onclick="goToSlide(7)" class="slide-indicator w-2 h-2 rounded-full bg-slate-600"></button> <button onclick="goToSlide(8)" class="slide-indicator w-2 h-2 rounded-full bg-slate-600"></button>
+     </div><!-- Nav Buttons -->
+     <div class="flex justify-center gap-4"><button id="prev-btn" onclick="prevSlide()" class="nav-btn px-6 py-3 rounded-xl bg-slate-800 text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed" disabled> ← Sebelumnya </button> <button id="next-btn" onclick="nextSlide()" class="nav-btn px-6 py-3 rounded-xl bg-amber-500 text-slate-900 font-semibold"> Selanjutnya → </button>
+     </div>
+    </div>
+   </nav>
+  </div>
+  <script>
+    // Config & State
+    const defaultConfig = {
+      main_title: 'Perspektif Dua Titik Hilang',
+      subtitle: 'Seni Rupa Kelas XI',
+      primary_color: '#f59e0b',
+      secondary_color: '#1e293b',
+      text_color: '#f1f5f9',
+      accent_color: '#22c55e',
+      surface_color: '#0f172a'
+    };
+
+    let config = { ...defaultConfig };
+    let currentSlide = 1;
+    const totalSlides = 8;
+    let currentPracticeStep = 1;
+
+    // Quiz State
+    let currentQuestion = 0;
+    let score = 0;
+    let answers = [];
+    
+    const questions = [
+      {
+        question: "Seorang arsitek ingin menggambar gedung dari sudut jalan. Mengapa teknik perspektif dua titik hilang lebih tepat digunakan dibanding satu titik hilang?",
+        options: [
+          "Karena gedung memiliki banyak jendela",
+          "Karena bidang datar gedung membentuk sudut terhadap garis horizon sehingga terlihat lebih dinamis dan realistis",
+          "Karena teknik dua titik hilang lebih mudah digambar",
+          "Karena arsitek membutuhkan dua penggaris"
+        ],
+        correct: 1,
+        explanation: "Perspektif dua titik hilang digunakan ketika objek tidak sejajar dengan garis horizon, menghasilkan tampilan yang lebih dinamis dan realistis seperti yang terlihat dalam kehidupan nyata."
+      },
+      {
+        question: "Dalam sebuah ilustrasi kota, fotografer mengambil gambar gedung pencakar langit dari trotoar. Sudut pandang apa yang digunakan dan mengapa?",
+        options: [
+          "Mata burung, karena gedung terlihat dari atas",
+          "Mata normal, karena fotografer berdiri tegak",
+          "Mata katak, karena objek berada di atas garis horizon dan pengamat melihat dari bawah",
+          "Mata elang, karena gedung sangat tinggi"
+        ],
+        correct: 2,
+        explanation: "Sudut pandang mata katak (worm's eye view) terjadi ketika objek berada di atas garis horizon, memberikan kesan objek yang menjulang tinggi."
+      },
+      {
+        question: "Mengapa pensil jenis H atau HB direkomendasikan untuk menggambar garis bantu dalam perspektif?",
+        options: [
+          "Karena menghasilkan garis yang pekat dan tebal",
+          "Karena harganya lebih murah",
+          "Karena menghasilkan garis tipis yang mudah dihapus tanpa meninggalkan bekas yang mencolok",
+          "Karena tahan lama dan tidak mudah patah"
+        ],
+        correct: 2,
+        explanation: "Pensil H-HB (keras-sedang) menghasilkan garis tipis yang ideal untuk garis bantu karena mudah dihapus dan tidak mengganggu hasil akhir gambar."
+      },
+      {
+        question: "Saat menggambar kubus dalam perspektif dua titik hilang, seorang siswa menggambar semua garis vertikal miring ke titik hilang. Apa kesalahan yang dilakukan?",
+        options: [
+          "Seharusnya garis vertikal tetap tegak lurus karena hanya garis horizontal yang mengarah ke titik hilang",
+          "Seharusnya menggunakan tiga titik hilang",
+          "Seharusnya garis vertikal dibuat melengkung",
+          "Tidak ada kesalahan, semua garis memang harus mengarah ke titik hilang"
+        ],
+        correct: 0,
+        explanation: "Dalam perspektif dua titik hilang, garis yang tegak lurus dengan horizon (vertikal) tetap digambar tegak lurus, sedangkan garis horizontal mengarah ke dua titik hilang."
+      },
+      {
+        question: "Dalam menggambar kompleks perumahan dengan perspektif dua titik hilang, mengapa semua rumah harus mengacu pada titik hilang yang sama?",
+        options: [
+          "Agar lebih mudah digambar",
+          "Agar tercipta konsistensi perspektif dan kesan ruang yang menyatu",
+          "Agar menghemat waktu menggambar",
+          "Agar semua rumah terlihat sama besar"
+        ],
+        correct: 1,
+        explanation: "Dalam bangun majemuk, semua objek harus mengacu pada titik hilang yang sama untuk menjaga konsistensi perspektif dan menciptakan kesan ruang yang realistis."
+      },
+      {
+        question: "Bagaimana cara paling akurat untuk menemukan titik tengah sebuah bidang dalam perspektif?",
+        options: [
+          "Mengukur dengan penggaris dan membagi dua",
+          "Memperkirakan secara visual",
+          "Menggambar diagonal dari sudut-sudut bidang, titik perpotongannya adalah titik tengah",
+          "Menggunakan jangka untuk membuat lingkaran"
+        ],
+        correct: 2,
+        explanation: "Teknik diagonal adalah cara paling akurat karena mempertahankan proporsi perspektif. Titik perpotongan dua diagonal bidang adalah titik tengah yang tepat dalam perspektif."
+      },
+      {
+        question: "Seorang desainer interior ingin menunjukkan ruangan yang luas dan megah. Sudut pandang mana yang paling efektif?",
+        options: [
+          "Mata katak, agar langit-langit terlihat tinggi",
+          "Mata burung, agar seluruh ruangan terlihat dari atas",
+          "Mata normal dengan posisi rendah, agar proporsi ruangan terlihat lebih luas",
+          "Sudut pandang tidak mempengaruhi kesan ruangan"
+        ],
+        correct: 0,
+        explanation: "Sudut pandang mata katak membuat langit-langit dan dinding terlihat menjulang, menciptakan kesan ruangan yang megah dan luas."
+      },
+      {
+        question: "Mengapa hasil gambar perspektif dua titik hilang dianggap lebih 'wajar' dibanding satu titik hilang?",
+        options: [
+          "Karena menggunakan lebih banyak garis",
+          "Karena sesuai dengan cara mata manusia melihat objek dari sudut, bukan frontal",
+          "Karena lebih sulit digambar sehingga terlihat profesional",
+          "Karena menggunakan dua warna berbeda"
+        ],
+        correct: 1,
+        explanation: "Perspektif dua titik hilang mencerminkan cara alami mata manusia melihat objek dari sudut, menghasilkan gambar yang tidak statis dan lebih sesuai pengalaman visual sehari-hari."
+      },
+      {
+        question: "Dalam menilai karya perspektif, aspek 'kesan ruang' termasuk kualitas estetis. Apa yang dimaksud dengan kesan ruang yang baik?",
+        options: [
+          "Gambar yang menggunakan banyak warna",
+          "Gambar yang menunjukkan kedalaman dan dimensi tiga dengan garis perspektif yang konsisten",
+          "Gambar yang memiliki banyak objek",
+          "Gambar yang ukurannya besar"
+        ],
+        correct: 1,
+        explanation: "Kesan ruang yang baik ditunjukkan melalui kedalaman dan dimensi 3D yang tercipta dari penerapan kaidah perspektif yang konsisten dan benar."
+      },
+      {
+        question: "Seorang ilustrator membuat gambar jalan raya dengan gedung-gedung di kanan-kiri. Ia menempatkan garis horizon setinggi mata orang dewasa yang berdiri. Apa implikasi artistik dari pilihan ini?",
+        options: [
+          "Pengamat akan merasa seperti terbang di atas jalan",
+          "Pengamat akan merasa seperti berjalan di jalan tersebut, menciptakan imersi dan keterlibatan emosional",
+          "Gedung-gedung akan terlihat sangat kecil",
+          "Jalan akan terlihat menanjak tajam"
+        ],
+        correct: 1,
+        explanation: "Garis horizon setinggi mata normal menciptakan perspektif yang relatable, membuat pengamat merasa berada di dalam adegan dan meningkatkan keterlibatan emosional dengan gambar."
+      }
+    ];
+
+    // Element SDK Integration
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...config, ...newConfig };
+          updateUI();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.surface_color || defaultConfig.surface_color,
+              set: (value) => window.elementSdk.setConfig({ surface_color: value })
+            },
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (value) => window.elementSdk.setConfig({ secondary_color: value })
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (value) => window.elementSdk.setConfig({ text_color: value })
+            },
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (value) => window.elementSdk.setConfig({ primary_color: value })
+            },
+            {
+              get: () => cfg.accent_color || defaultConfig.accent_color,
+              set: (value) => window.elementSdk.setConfig({ accent_color: value })
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['main_title', cfg.main_title || defaultConfig.main_title],
+          ['subtitle', cfg.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
+
+    function updateUI() {
+      document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+      document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+    }
+
+    // Slide Navigation
+    function showSlide(num) {
+      document.querySelectorAll('.slide').forEach(s => s.classList.add('hidden'));
+      const slide = document.getElementById(`slide-${num}`);
+      if (slide) {
+        slide.classList.remove('hidden');
+        slide.classList.add('animate-fade-in');
+      }
+      
+      // Update indicators
+      document.querySelectorAll('.slide-indicator').forEach((ind, i) => {
+        ind.classList.toggle('active', i === num - 1);
+      });
+      
+      // Update progress
+      document.getElementById('progress-bar').style.width = `${(num / totalSlides) * 100}%`;
+      document.getElementById('slide-counter').textContent = `${num} / ${totalSlides}`;
+      
+      // Update nav buttons
+      document.getElementById('prev-btn').disabled = num === 1;
+      document.getElementById('next-btn').textContent = num === totalSlides ? 'Selesai ✓' : 'Selanjutnya →';
+      
+      currentSlide = num;
+      
+      // Init quiz if on quiz slide
+      if (num === 8 && currentQuestion === 0) {
+        renderQuestion();
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        showSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        showSlide(currentSlide - 1);
+      }
+    }
+
+    function goToSlide(num) {
+      showSlide(num);
+    }
+
+    // View Mode Demo (Slide 2)
+    function setViewMode(mode) {
+      const sky = document.getElementById('sky');
+      const ground = document.getElementById('ground');
+      const horizon = document.getElementById('horizon-view');
+      const horizonLabel = document.getElementById('horizon-label');
+      const building = document.getElementById('building');
+      const observer = document.getElementById('observer');
+      const viewLabel = document.getElementById('view-label');
+      
+      if (mode === 'bird') {
+        horizon.setAttribute('y1', '100');
+        horizon.setAttribute('y2', '100');
+        horizonLabel.setAttribute('y', '90');
+        sky.setAttribute('height', '100');
+        ground.setAttribute('y', '100');
+        ground.setAttribute('height', '250');
+        building.innerHTML = `
+          <rect x="180" y="120" width="140" height="180" fill="#475569" stroke="#334155" stroke-width="2"/>
+          <rect x="190" y="140" width="40" height="50" fill="#0ea5e9" opacity="0.5"/>
+          <rect x="250" y="140" width="40" height="50" fill="#0ea5e9" opacity="0.5"/>
+          <rect x="190" y="210" width="40" height="50" fill="#0ea5e9" opacity="0.5"/>
+          <rect x="250" y="210" width="40" height="50" fill="#0ea5e9" opacity="0.5"/>
+          <polygon points="180,120 250,70 320,120" fill="#94a3b8"/>
+        `;
+        observer.innerHTML = `
+          <circle cx="80" cy="100" r="15" fill="#ef4444"/>
+          <text x="80" y="105" text-anchor="middle" fill="white" font-size="14">🦅</text>
+          <text x="80" y="85" text-anchor="middle" fill="#334155" font-size="11" font-weight="600">Pengamat</text>
+        `;
+        viewLabel.textContent = 'Mata Burung - Melihat dari atas (Bird\'s Eye View)';
+      } else if (mode === 'normal') {
+        horizon.setAttribute('y1', '175');
+        horizon.setAttribute('y2', '175');
+        horizonLabel.setAttribute('y', '165');
+        sky.setAttribute('height', '175');
+        ground.setAttribute('y', '175');
+        ground.setAttribute('height', '175');
+        building.innerHTML = `
+          <rect x="200" y="100" width="100" height="150" fill="#475569" stroke="#334155" stroke-width="2"/>
+          <rect x="210" y="120" width="30" height="40" fill="#0ea5e9" opacity="0.5"/>
+          <rect x="260" y="120" width="30" height="40" fill="#0ea5e9" opacity="0.5"/>
+          <rect x="210" y="180" width="30" height="40" fill="#0ea5e9" opacity="0.5"/>
+          <rect x="260" y="180" width="30" height="40" fill="#0ea5e9" opacity="0.5"/>
+          <polygon points="200,100 250,60 300,100" fill="#94a3b8"/>
+        `;
+        observer.innerHTML = `
+          <circle cx="80" cy="175" r="15" fill="#ef4444"/>
+          <text x="80" y="180" text-anchor="middle" fill="white" font-size="14">👁️</text>
+          <text x="80" y="210" text-anchor="middle" fill="#334155" font-size="11" font-weight="600">Pengamat</text>
+        `;
+        viewLabel.textContent = 'Mata Normal - Sejajar dengan objek (Eye Level View)';
+      } else if (mode === 'frog') {
+        horizon.setAttribute('y1', '280');
+        horizon.setAttribute('y2', '280');
+        horizonLabel.setAttribute('y', '295');
+        sky.setAttribute('height', '280');
+        ground.setAttribute('y', '280');
+        ground.setAttribute('height', '70');
+        building.innerHTML = `
+          <rect x="180" y="50" width="140" height="220" fill="#475569" stroke="#334155" stroke-width="2"/>
+          <rect x="190" y="70" width="40" height="60" fill="#0ea5e9" opacity="0.5"/>
+          <rect x="250" y="70" width="40" height="60" fill="#0ea5e9" opacity="0.5"/>
+          <rect x="190" y="150" width="40" height="60" fill="#0ea5e9" opacity="0.5"/>
+          <rect x="250" y="150" width="40" height="60" fill="#0ea5e9" opacity="0.5"/>
+          <polygon points="180,50 250,10 320,50" fill="#94a3b8"/>
+        `;
+        observer.innerHTML = `
+          <circle cx="80" cy="280" r="15" fill="#ef4444"/>
+          <text x="80" y="285" text-anchor="middle" fill="white" font-size="14">🐸</text>
+          <text x="80" y="310" text-anchor="middle" fill="#334155" font-size="11" font-weight="600">Pengamat</text>
+        `;
+        viewLabel.textContent = 'Mata Katak - Melihat dari bawah (Worm\'s Eye View)';
+      }
+    }
+
+    // Practice Steps (Slide 5)
+    function setPracticeStep(step) {
+      currentPracticeStep = step;
+      
+      // Update buttons
+      document.querySelectorAll('.practice-step-btn').forEach((btn, i) => {
+        if (i + 1 <= step) {
+          btn.classList.remove('bg-slate-700', 'text-slate-400');
+          btn.classList.add('bg-amber-500', 'text-slate-900');
+        } else {
+          btn.classList.add('bg-slate-700', 'text-slate-400');
+          btn.classList.remove('bg-amber-500', 'text-slate-900');
+        }
+      });
+      
+      // Update info panels
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`step-${i}-info`).classList.toggle('hidden', i !== step);
+      }
+      
+      // Update SVG visualization
+      for (let i = 1; i <= 4; i++) {
+        const stepEl = document.getElementById(`practice-step-${i}`);
+        if (stepEl) {
+          stepEl.classList.toggle('hidden', i > step);
+        }
+      }
+    }
+
+    // Quiz Functions
+    function renderQuestion() {
+      const q = questions[currentQuestion];
+      
+      document.getElementById('question-container').innerHTML = `
+        <div class="flex items-start gap-4">
+          <span class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-slate-900 font-bold flex-shrink-0">${currentQuestion + 1}</span>
+          <p class="text-lg leading-relaxed">${q.question}</p>
+        </div>
+      `;
+      
+      const optionsHtml = q.options.map((opt, i) => `
+        <button onclick="selectAnswer(${i})" class="quiz-option w-full p-4 text-left rounded-xl border-2 border-slate-600 hover:border-amber-500 transition-all ${answers[currentQuestion] === i ? 'selected' : ''}">
+          <div class="flex items-start gap-3">
+            <span class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-sm font-semibold flex-shrink-0">${String.fromCharCode(65 + i)}</span>
+            <span class="text-slate-300">${opt}</span>
+          </div>
+        </button>
+      `).join('');
+      
+      document.getElementById('options-container').innerHTML = optionsHtml;
+      document.getElementById('feedback-container').classList.add('hidden');
+      
+      // Update progress
+      document.getElementById('quiz-progress-text').textContent = `Soal ${currentQuestion + 1} dari 10`;
+      document.getElementById('quiz-progress-bar').style.width = `${((currentQuestion + 1) / 10) * 100}%`;
+      
+      // Update navigation
+      document.getElementById('prev-question-btn').disabled = currentQuestion === 0;
+      document.getElementById('next-question-btn').textContent = currentQuestion === 9 ? 'Selesai' : 'Selanjutnya →';
+    }
+
+    function selectAnswer(index) {
+      const q = questions[currentQuestion];
+      const wasAlreadyAnswered = answers[currentQuestion] !== undefined;
+      const previousAnswer = answers[currentQuestion];
+      
+      answers[currentQuestion] = index;
+      
+      // Update score
+      if (!wasAlreadyAnswered) {
+        if (index === q.correct) score++;
+      } else if (previousAnswer !== index) {
+        if (previousAnswer === q.correct) score--;
+        if (index === q.correct) score++;
+      }
+      
+      document.getElementById('quiz-score').textContent = `Skor: ${score}/10`;
+      
+      // Show feedback
+      const feedback = document.getElementById('feedback-container');
+      feedback.classList.remove('hidden');
+      
+      if (index === q.correct) {
+        feedback.className = 'mt-6 p-4 rounded-xl bg-emerald-500/20 border border-emerald-500';
+        feedback.innerHTML = `
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">✅</span>
+            <div>
+              <p class="font-semibold text-emerald-400 mb-1">Benar!</p>
+              <p class="text-sm text-slate-300">${q.explanation}</p>
+            </div>
+          </div>
+        `;
+      } else {
+        feedback.className = 'mt-6 p-4 rounded-xl bg-red-500/20 border border-red-500';
+        feedback.innerHTML = `
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">❌</span>
+            <div>
+              <p class="font-semibold text-red-400 mb-1">Kurang Tepat</p>
+              <p class="text-sm text-slate-300">${q.explanation}</p>
+            </div>
+          </div>
+        `;
+      }
+      
+      // Update option styling
+      document.querySelectorAll('.quiz-option').forEach((opt, i) => {
+        opt.classList.remove('selected', 'correct', 'incorrect');
+        if (i === q.correct) {
+          opt.classList.add('correct');
+        } else if (i === index && i !== q.correct) {
+          opt.classList.add('incorrect');
+        }
+      });
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < 9) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-results').classList.remove('hidden');
+      
+      const percentage = (score / 10) * 100;
+      let icon, message;
+      
+      if (percentage >= 80) {
+        icon = '🏆';
+        message = 'Luar biasa! Kamu sangat menguasai materi perspektif dua titik hilang!';
+      } else if (percentage >= 60) {
+        icon = '🌟';
+        message = 'Bagus! Pemahaman kamu sudah baik, terus tingkatkan!';
+      } else if (percentage >= 40) {
+        icon = '📚';
+        message = 'Cukup baik. Pelajari kembali materi untuk hasil yang lebih baik.';
+      } else {
+        icon = '💪';
+        message = 'Jangan menyerah! Ulangi materi dan coba lagi.';
+      }
+      
+      document.getElementById('final-score-icon').textContent = icon;
+      document.getElementById('final-score-text').textContent = `${score}/10`;
+      document.getElementById('final-message').textContent = message;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answers = [];
+      
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('quiz-results').classList.add('hidden');
+      document.getElementById('quiz-score').textContent = 'Skor: 0/10';
+      
+      renderQuestion();
+    }
+
+    // Initialize
+    showSlide(1);
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c86e7bf26454083',t:'MTc3MDE3Mzg5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

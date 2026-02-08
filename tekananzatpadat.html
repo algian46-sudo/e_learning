@@ -1,0 +1,1133 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pembelajaran Tekanan Zat Padat</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    .title-font {
+      font-family: 'Playfair Display', serif;
+    }
+    .slide {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    .slide.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    .pulse-animation {
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .submarine-bg {
+      background: linear-gradient(180deg, #0c4a6e 0%, #0f172a 50%, #020617 100%);
+    }
+    .card-glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+    .progress-bar {
+      transition: width 0.3s ease;
+    }
+    .option-btn {
+      transition: all 0.3s ease;
+    }
+    .option-btn:hover {
+      transform: translateX(5px);
+    }
+    .option-btn.correct {
+      background: linear-gradient(135deg, #10b981, #059669) !important;
+      color: white !important;
+    }
+    .option-btn.incorrect {
+      background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+      color: white !important;
+    }
+    .bubble {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: rise 4s infinite ease-in;
+    }
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 0.5; }
+      100% { transform: translateY(-100px) scale(0); opacity: 0; }
+    }
+    .katex { font-size: 1.1em; }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-slate-900 text-white overflow-auto">
+  <div id="app-wrapper" class="w-full h-full"><!-- Progress Bar -->
+   <div class="fixed top-0 left-0 w-full h-2 bg-slate-800 z-50">
+    <div id="progress" class="progress-bar h-full bg-gradient-to-r from-cyan-400 to-blue-500" style="width: 0%"></div>
+   </div><!-- Navigation -->
+   <nav class="fixed top-2 right-4 z-50 flex gap-2"><button onclick="prevSlide()" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-sm transition-all flex items-center gap-2">
+     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+     </svg><span class="hidden sm:inline">Sebelumnya</span> </button> <span id="slideCounter" class="px-4 py-2 bg-cyan-500/20 rounded-full backdrop-blur-sm">1/12</span> <button onclick="nextSlide()" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-sm transition-all flex items-center gap-2"> <span class="hidden sm:inline">Selanjutnya</span>
+     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+     </svg></button>
+   </nav><!-- Slide 1: Judul & Pembuka -->
+   <section id="slide1" class="slide active min-h-full submarine-bg relative overflow-hidden"><!-- Animated Bubbles -->
+    <div class="bubble" style="left: 10%; bottom: 20%; width: 20px; height: 20px; animation-delay: 0s;"></div>
+    <div class="bubble" style="left: 30%; bottom: 10%; width: 15px; height: 15px; animation-delay: 1s;"></div>
+    <div class="bubble" style="left: 70%; bottom: 15%; width: 25px; height: 25px; animation-delay: 2s;"></div>
+    <div class="bubble" style="left: 85%; bottom: 25%; width: 18px; height: 18px; animation-delay: 0.5s;"></div>
+    <div class="container mx-auto px-4 py-16 flex flex-col items-center justify-center min-h-full relative z-10">
+     <div class="text-center max-w-4xl"><span class="inline-block px-4 py-2 bg-cyan-500/20 rounded-full text-cyan-300 text-sm mb-6">📚 Fisika Kelas 8 - Tekanan</span>
+      <h1 id="mainTitle" class="title-font text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400 bg-clip-text text-transparent">Memahami Tekanan: Mengapa Hal Kecil Bisa Terasa Sakit?</h1><!-- Submarine Illustration -->
+      <div class="my-8 float-animation">
+       <svg class="w-64 h-40 mx-auto" viewbox="0 0 300 150"><!-- Ocean Background --> <defs>
+         <lineargradient id="submarineBody" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#374151" />
+          <stop offset="50%" style="stop-color:#1f2937" />
+          <stop offset="100%" style="stop-color:#111827" />
+         </lineargradient>
+         <lineargradient id="window" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#67e8f9" />
+          <stop offset="100%" style="stop-color:#0891b2" />
+         </lineargradient>
+        </defs> <!-- Submarine Body --> <ellipse cx="150" cy="75" rx="120" ry="45" fill="url(#submarineBody)" stroke="#4b5563" stroke-width="3" /> <!-- Conning Tower --> <rect x="130" y="25" width="40" height="30" rx="5" fill="#374151" stroke="#4b5563" stroke-width="2" /> <rect x="145" y="10" width="10" height="20" fill="#4b5563" /> <!-- Windows --> <circle cx="80" cy="75" r="15" fill="url(#window)" stroke="#0e7490" stroke-width="2" /> <circle cx="150" cy="75" r="15" fill="url(#window)" stroke="#0e7490" stroke-width="2" /> <circle cx="220" cy="75" r="15" fill="url(#window)" stroke="#0e7490" stroke-width="2" /> <!-- Propeller --> <ellipse cx="275" cy="75" rx="8" ry="20" fill="#6b7280" /> <!-- Details --> <line x1="30" y1="75" x2="45" y2="75" stroke="#9ca3af" stroke-width="2" /> <circle cx="50" cy="75" r="3" fill="#ef4444" />
+       </svg>
+       <p class="text-cyan-300 mt-2">🐋 "Paus Besi" - Kapal Selam</p>
+      </div>
+      <div class="card-glass rounded-2xl p-6 text-slate-800 max-w-2xl mx-auto">
+       <h3 class="text-xl font-semibold text-cyan-600 mb-3">🤔 Pertanyaan Pemantik</h3>
+       <p class="text-lg">Mengapa kapal selam yang beratnya <strong class="text-cyan-600">50 ton</strong> tidak tenggelam ke dasar laut yang paling dalam?</p>
+      </div><button onclick="nextSlide()" class="mt-8 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full text-lg font-semibold hover:shadow-lg hover:shadow-cyan-500/30 transition-all pulse-animation"> Mulai Belajar → </button>
+     </div>
+    </div>
+   </section><!-- Slide 2: Apa itu Tekanan? -->
+   <section id="slide2" class="slide min-h-full bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 relative">
+    <div class="container mx-auto px-4 py-16 min-h-full">
+     <div class="max-w-5xl mx-auto"><span class="inline-block px-4 py-2 bg-purple-500/20 rounded-full text-purple-300 text-sm mb-4">Slide 2</span>
+      <h2 class="title-font text-4xl md:text-5xl font-bold mb-8 text-white">Apa itu Tekanan?</h2>
+      <div class="grid md:grid-cols-2 gap-8"><!-- Definition Card -->
+       <div class="card-glass rounded-2xl p-8 text-slate-800">
+        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-4"><span class="text-3xl">📖</span>
+        </div>
+        <h3 class="text-2xl font-bold text-purple-600 mb-4">Definisi</h3>
+        <p class="text-lg leading-relaxed">Tekanan adalah <strong class="text-purple-600">besarnya gaya</strong> yang bekerja pada <strong class="text-purple-600">setiap satuan luas</strong> permukaan benda.</p>
+        <div class="mt-4 p-4 bg-purple-50 rounded-xl">
+         <p class="text-purple-700 font-medium">💡 Kesimpulan:</p>
+         <p class="text-purple-600">Tekanan adalah <strong>penyebaran gaya</strong></p>
+        </div>
+       </div><!-- Analogy Card -->
+       <div class="card-glass rounded-2xl p-8 text-slate-800">
+        <div class="w-16 h-16 bg-gradient-to-br from-rose-500 to-orange-500 rounded-2xl flex items-center justify-center mb-4"><span class="text-3xl">🎯</span>
+        </div>
+        <h3 class="text-2xl font-bold text-rose-600 mb-4">Analogi Sederhana</h3><!-- Thorn vs Stone Comparison -->
+        <div class="flex items-center justify-around my-6">
+         <div class="text-center">
+          <div class="w-20 h-20 mx-auto mb-2 relative">
+           <svg viewbox="0 0 80 80" class="w-full h-full"><ellipse cx="40" cy="70" rx="30" ry="8" fill="#8b5cf6" opacity="0.3" /> <path d="M40 10 L42 65 L38 65 Z" fill="#854d0e" /> <circle cx="40" cy="8" r="3" fill="#dc2626" />
+           </svg>
+          </div>
+          <p class="font-semibold text-rose-600">Duri 🌵</p>
+          <p class="text-sm text-slate-500">Luas kecil = Sakit!</p>
+         </div>
+         <div class="text-3xl">
+          VS
+         </div>
+         <div class="text-center">
+          <div class="w-20 h-20 mx-auto mb-2 relative">
+           <svg viewbox="0 0 80 80" class="w-full h-full"><ellipse cx="40" cy="70" rx="30" ry="8" fill="#8b5cf6" opacity="0.3" /> <ellipse cx="40" cy="55" rx="25" ry="18" fill="#6b7280" /> <ellipse cx="40" cy="50" rx="20" ry="12" fill="#9ca3af" />
+           </svg>
+          </div>
+          <p class="font-semibold text-slate-600">Batu 🪨</p>
+          <p class="text-sm text-slate-500">Luas besar = Tidak sakit</p>
+         </div>
+        </div>
+        <div class="p-4 bg-rose-50 rounded-xl">
+         <p class="text-rose-700">Ujung duri yang <strong>kecil</strong> memberikan tekanan <strong>lebih besar</strong> sehingga terasa lebih sakit!</p>
+        </div>
+       </div>
+      </div><!-- Interactive Demo -->
+      <div class="mt-8 card-glass rounded-2xl p-6 text-slate-800">
+       <h3 class="text-xl font-bold text-indigo-600 mb-4">🔬 Simulasi Interaktif</h3>
+       <p class="mb-4">Geser slider untuk melihat hubungan gaya dan luas terhadap tekanan:</p>
+       <div class="grid md:grid-cols-3 gap-6">
+        <div><label class="block text-sm font-medium mb-2">Gaya (F): <span id="forceValue">100</span> N</label> <input type="range" id="forceSlider" min="10" max="500" value="100" class="w-full accent-indigo-600" oninput="updatePressureDemo()">
+        </div>
+        <div><label class="block text-sm font-medium mb-2">Luas (A): <span id="areaValue">0.01</span> m²</label> <input type="range" id="areaSlider" min="1" max="100" value="10" class="w-full accent-indigo-600" oninput="updatePressureDemo()">
+        </div>
+        <div class="flex items-center justify-center">
+         <div class="text-center p-4 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl text-white">
+          <p class="text-sm">Tekanan (p)</p>
+          <p id="pressureResult" class="text-3xl font-bold">10,000</p>
+          <p class="text-sm">Pascal</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Slide 3: Rumus Matematis -->
+   <section id="slide3" class="slide min-h-full bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900">
+    <div class="container mx-auto px-4 py-16 min-h-full">
+     <div class="max-w-5xl mx-auto"><span class="inline-block px-4 py-2 bg-emerald-500/20 rounded-full text-emerald-300 text-sm mb-4">Slide 3</span>
+      <h2 class="title-font text-4xl md:text-5xl font-bold mb-8 text-white">Rumus Matematis Tekanan</h2><!-- Main Formula Card -->
+      <div class="card-glass rounded-3xl p-8 md:p-12 text-slate-800 text-center mb-8">
+       <div class="inline-block p-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl mb-6">
+        <div id="formula1" class="text-4xl md:text-6xl text-white font-bold"></div>
+       </div>
+       <div class="grid md:grid-cols-3 gap-6 mt-8">
+        <div class="p-6 bg-emerald-50 rounded-xl">
+         <div class="w-16 h-16 mx-auto bg-emerald-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-3">
+          p
+         </div>
+         <h4 class="font-bold text-emerald-700">Tekanan</h4>
+         <p class="text-sm text-slate-600">Satuan: N/m² atau Pascal (Pa)</p>
+         <p class="text-xs text-slate-500 mt-2">1 Pa = 1 N/m²</p>
+        </div>
+        <div class="p-6 bg-blue-50 rounded-xl">
+         <div class="w-16 h-16 mx-auto bg-blue-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-3">
+          F
+         </div>
+         <h4 class="font-bold text-blue-700">Gaya</h4>
+         <p class="text-sm text-slate-600">Satuan: Newton (N)</p>
+         <p class="text-xs text-slate-500 mt-2">Dorongan atau tarikan</p>
+        </div>
+        <div class="p-6 bg-purple-50 rounded-xl">
+         <div class="w-16 h-16 mx-auto bg-purple-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-3">
+          A
+         </div>
+         <h4 class="font-bold text-purple-700">Luas Bidang Tekan</h4>
+         <p class="text-sm text-slate-600">Satuan: m² (meter persegi)</p>
+         <p class="text-xs text-slate-500 mt-2">Area permukaan sentuh</p>
+        </div>
+       </div>
+      </div><!-- Derived Formulas -->
+      <div class="grid md:grid-cols-2 gap-6">
+       <div class="card-glass rounded-2xl p-6 text-slate-800">
+        <h4 class="font-bold text-lg text-teal-600 mb-4">🔄 Rumus Turunan</h4>
+        <div class="space-y-4">
+         <div class="flex items-center gap-4 p-3 bg-teal-50 rounded-lg"><span class="text-teal-600 font-medium">Mencari Gaya:</span> <span id="formula2" class="text-xl"></span>
+         </div>
+         <div class="flex items-center gap-4 p-3 bg-teal-50 rounded-lg"><span class="text-teal-600 font-medium">Mencari Luas:</span> <span id="formula3" class="text-xl"></span>
+         </div>
+        </div>
+       </div>
+       <div class="card-glass rounded-2xl p-6 text-slate-800">
+        <h4 class="font-bold text-lg text-orange-600 mb-4">📏 Konversi Satuan</h4>
+        <div class="space-y-3 text-sm">
+         <div class="flex justify-between p-2 bg-orange-50 rounded-lg"><span>1 kPa (kilopascal)</span> <span class="font-mono">= 1,000 Pa</span>
+         </div>
+         <div class="flex justify-between p-2 bg-orange-50 rounded-lg"><span>1 atm (atmosfer)</span> <span class="font-mono">= 101,325 Pa</span>
+         </div>
+         <div class="flex justify-between p-2 bg-orange-50 rounded-lg"><span>1 cm²</span> <span class="font-mono">= 0.0001 m²</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Slide 4: Faktor yang Mempengaruhi -->
+   <section id="slide4" class="slide min-h-full bg-gradient-to-br from-amber-900 via-orange-900 to-slate-900">
+    <div class="container mx-auto px-4 py-16 min-h-full">
+     <div class="max-w-5xl mx-auto"><span class="inline-block px-4 py-2 bg-amber-500/20 rounded-full text-amber-300 text-sm mb-4">Slide 4</span>
+      <h2 class="title-font text-4xl md:text-5xl font-bold mb-8 text-white">Faktor yang Mempengaruhi Tekanan</h2>
+      <div class="grid md:grid-cols-2 gap-8"><!-- Factor 1: Force -->
+       <div class="card-glass rounded-2xl p-8 text-slate-800 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-500/20 to-orange-500/20 rounded-bl-full"></div>
+        <div class="relative">
+         <div class="flex items-center gap-4 mb-6">
+          <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl flex items-center justify-center"><span class="text-3xl">💪</span>
+          </div>
+          <div>
+           <h3 class="text-2xl font-bold text-red-600">Besar Gaya (F)</h3>
+           <p class="text-sm text-slate-500">Berbanding Lurus</p>
+          </div>
+         </div>
+         <p class="text-lg mb-4">Semakin <strong class="text-red-600">besar</strong> gaya yang diberikan, semakin <strong class="text-red-600">besar</strong> tekanan yang dihasilkan.</p><!-- Visual Demo -->
+         <div class="bg-red-50 rounded-xl p-4 mt-4">
+          <div class="flex items-center justify-around">
+           <div class="text-center">
+            <div class="w-12 h-12 bg-red-200 rounded-lg flex items-center justify-center mb-2">
+             <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+             </svg>
+            </div>
+            <p class="text-sm">Gaya Kecil</p>
+            <p class="font-bold text-red-600">Tekanan Kecil</p>
+           </div>
+           <div class="text-2xl">
+            →
+           </div>
+           <div class="text-center">
+            <div class="w-16 h-16 bg-red-400 rounded-lg flex items-center justify-center mb-2">
+             <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+             </svg>
+            </div>
+            <p class="text-sm">Gaya Besar</p>
+            <p class="font-bold text-red-600">Tekanan Besar</p>
+           </div>
+          </div>
+         </div>
+         <div class="mt-4 p-3 bg-slate-100 rounded-lg">
+          <p class="text-sm text-slate-600">📌 <strong>Contoh:</strong> Menekan meja dengan jari vs. menekan dengan seluruh telapak tangan (gaya sama, tapi jari terasa lebih sakit)</p>
+         </div>
+        </div>
+       </div><!-- Factor 2: Area -->
+       <div class="card-glass rounded-2xl p-8 text-slate-800 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-bl-full"></div>
+        <div class="relative">
+         <div class="flex items-center gap-4 mb-6">
+          <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center"><span class="text-3xl">📐</span>
+          </div>
+          <div>
+           <h3 class="text-2xl font-bold text-blue-600">Luas Permukaan (A)</h3>
+           <p class="text-sm text-slate-500">Berbanding Terbalik</p>
+          </div>
+         </div>
+         <p class="text-lg mb-4">Semakin <strong class="text-blue-600">luas</strong> permukaan sentuh, tekanan yang dihasilkan justru semakin <strong class="text-blue-600">kecil</strong>.</p><!-- Visual Demo -->
+         <div class="bg-blue-50 rounded-xl p-4 mt-4">
+          <div class="flex items-center justify-around">
+           <div class="text-center">
+            <div class="w-8 h-8 bg-blue-400 rounded mb-2 mx-auto"></div>
+            <p class="text-sm">Luas Kecil</p>
+            <p class="font-bold text-blue-600">Tekanan Besar</p>
+           </div>
+           <div class="text-2xl">
+            →
+           </div>
+           <div class="text-center">
+            <div class="w-16 h-8 bg-blue-200 rounded mb-2 mx-auto"></div>
+            <p class="text-sm">Luas Besar</p>
+            <p class="font-bold text-blue-600">Tekanan Kecil</p>
+           </div>
+          </div>
+         </div>
+         <div class="mt-4 p-3 bg-slate-100 rounded-lg">
+          <p class="text-sm text-slate-600">📌 <strong>Contoh:</strong> Sepatu ski yang lebar agar tidak tenggelam di salju</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Summary Box -->
+      <div class="mt-8 card-glass rounded-2xl p-6 text-slate-800">
+       <h4 class="text-xl font-bold text-amber-600 mb-4 text-center">📊 Ringkasan Hubungan</h4>
+       <div class="flex flex-wrap justify-center gap-4">
+        <div class="px-6 py-3 bg-gradient-to-r from-red-500 to-orange-500 rounded-full text-white font-medium">
+         F ↑ maka p ↑
+        </div>
+        <div class="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full text-white font-medium">
+         A ↑ maka p ↓
+        </div>
+        <div class="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-white font-medium">
+         A ↓ maka p ↑
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Slide 5: High Heels Challenge -->
+   <section id="slide5" class="slide min-h-full bg-gradient-to-br from-pink-900 via-rose-900 to-slate-900">
+    <div class="container mx-auto px-4 py-16 min-h-full">
+     <div class="max-w-5xl mx-auto"><span class="inline-block px-4 py-2 bg-pink-500/20 rounded-full text-pink-300 text-sm mb-4">Slide 5 - Aktivitas 3.1</span>
+      <h2 class="title-font text-4xl md:text-5xl font-bold mb-8 text-white">🎯 The High Heels Challenge</h2>
+      <div class="card-glass rounded-3xl p-8 text-slate-800">
+       <h3 class="text-2xl font-bold text-rose-600 mb-6 text-center">Diskusi Interaktif</h3><!-- Shoe Comparison -->
+       <div class="grid md:grid-cols-2 gap-8 mb-8"><!-- Stiletto -->
+        <div class="text-center p-6 bg-rose-50 rounded-2xl border-4 border-transparent hover:border-rose-400 cursor-pointer transition-all" onclick="selectShoe('stiletto')">
+         <div class="w-40 h-32 mx-auto mb-4">
+          <svg viewbox="0 0 160 100" class="w-full h-full"><!-- Stiletto Shoe --> <path d="M20 40 Q40 30 80 35 Q120 40 140 50 L140 55 L130 85 L128 85 L126 55 L40 50 Q25 48 20 40 Z" fill="#ec4899" stroke="#be185d" stroke-width="2" /> <path d="M126 55 L128 85" stroke="#9d174d" stroke-width="3" /> <circle cx="127" cy="88" r="3" fill="#9d174d" /> <!-- Heel highlight --> <path d="M127 58 L127 82" stroke="#f472b6" stroke-width="1" />
+          </svg>
+         </div>
+         <h4 class="text-xl font-bold text-rose-600">Sepatu Hak Tinggi</h4>
+         <p class="text-sm text-slate-500">(Stiletto)</p>
+         <div class="mt-2 text-xs text-slate-400">
+          Luas hak: ~1 cm²
+         </div>
+        </div><!-- Running Shoe -->
+        <div class="text-center p-6 bg-blue-50 rounded-2xl border-4 border-transparent hover:border-blue-400 cursor-pointer transition-all" onclick="selectShoe('running')">
+         <div class="w-40 h-32 mx-auto mb-4">
+          <svg viewbox="0 0 160 100" class="w-full h-full"><!-- Running Shoe --> <path d="M10 50 Q30 35 80 40 Q130 45 150 55 L150 65 Q140 75 80 75 Q20 75 10 65 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2" /> <!-- Sole --> <path d="M15 65 Q80 80 145 65 L145 70 Q80 85 15 70 Z" fill="#1e3a8a" /> <!-- Laces --> <path d="M50 48 L70 45 M55 52 L75 49 M60 56 L80 53" stroke="white" stroke-width="2" /> <!-- Details --> <circle cx="100" cy="55" r="8" fill="#60a5fa" />
+          </svg>
+         </div>
+         <h4 class="text-xl font-bold text-blue-600">Sepatu Lari</h4>
+         <p class="text-sm text-slate-500">(Running Shoes)</p>
+         <div class="mt-2 text-xs text-slate-400">
+          Luas sol: ~200 cm²
+         </div>
+        </div>
+       </div><!-- Question -->
+       <div class="bg-gradient-to-r from-rose-100 to-pink-100 rounded-2xl p-6 mb-6">
+        <h4 class="text-xl font-bold text-rose-700 mb-3">❓ Pertanyaan:</h4>
+        <p class="text-lg text-slate-700">Mana yang lebih <strong>dalam membekas</strong> jika menginjak tanah berlumpur?</p>
+       </div><!-- Answer Reveal -->
+       <div id="shoeAnswer" class="hidden">
+        <div class="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl p-6 text-white">
+         <h4 class="text-xl font-bold mb-3">✅ Jawaban:</h4>
+         <p class="text-lg mb-4"><strong>Sepatu hak tinggi!</strong></p>
+         <p>Karena seluruh berat tubuh bertumpu pada luas permukaan yang <strong>sangat kecil</strong> (~1 cm²), sehingga tekanannya <strong>sangat besar</strong>.</p>
+         <div class="mt-4 p-4 bg-white/20 rounded-xl">
+          <p class="font-mono text-sm">Jika berat = 500 N:<br>
+            • Stiletto: p = 500 N ÷ 0.0001 m² = <strong>5,000,000 Pa</strong><br>
+            • Sepatu Lari: p = 500 N ÷ 0.02 m² = <strong>25,000 Pa</strong></p>
+          <p class="mt-2 text-emerald-100">Tekanan stiletto <strong>200x lebih besar!</strong></p>
+         </div>
+        </div>
+       </div><button id="revealBtn" onclick="revealShoeAnswer()" class="mt-6 w-full py-4 bg-gradient-to-r from-rose-500 to-pink-600 text-white rounded-xl font-bold text-lg hover:shadow-lg transition-all"> 🔍 Lihat Jawaban </button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Slide 6: Aplikasi di Dunia Nyata -->
+   <section id="slide6" class="slide min-h-full bg-gradient-to-br from-slate-800 via-zinc-900 to-slate-900">
+    <div class="container mx-auto px-4 py-16 min-h-full">
+     <div class="max-w-5xl mx-auto"><span class="inline-block px-4 py-2 bg-zinc-500/20 rounded-full text-zinc-300 text-sm mb-4">Slide 6</span>
+      <h2 class="title-font text-4xl md:text-5xl font-bold mb-8 text-white">🌍 Aplikasi di Dunia Nyata</h2>
+      <div class="grid gap-6"><!-- Truck Example -->
+       <div class="card-glass rounded-2xl p-6 text-slate-800">
+        <div class="flex flex-col md:flex-row gap-6 items-center">
+         <div class="w-48 h-32 flex-shrink-0">
+          <svg viewbox="0 0 200 100" class="w-full h-full"><!-- Truck Body --> <rect x="60" y="25" width="120" height="45" rx="5" fill="#374151" /> <rect x="10" y="40" width="55" height="30" rx="5" fill="#4b5563" /> <!-- Windows --> <rect x="15" y="45" width="20" height="15" rx="2" fill="#67e8f9" /> <rect x="38" y="45" width="20" height="15" rx="2" fill="#67e8f9" /> <!-- Wheels (Multiple) --> <circle cx="40" cy="75" r="12" fill="#1f2937" stroke="#6b7280" stroke-width="3" /> <circle cx="85" cy="75" r="12" fill="#1f2937" stroke="#6b7280" stroke-width="3" /> <circle cx="115" cy="75" r="12" fill="#1f2937" stroke="#6b7280" stroke-width="3" /> <circle cx="145" cy="75" r="12" fill="#1f2937" stroke="#6b7280" stroke-width="3" /> <!-- Wheel details --> <circle cx="40" cy="75" r="4" fill="#9ca3af" /> <circle cx="85" cy="75" r="4" fill="#9ca3af" /> <circle cx="115" cy="75" r="4" fill="#9ca3af" /> <circle cx="145" cy="75" r="4" fill="#9ca3af" />
+          </svg>
+         </div>
+         <div class="flex-1">
+          <h3 class="text-2xl font-bold text-slate-700 mb-2">🚛 Truk Besar dengan Banyak Roda</h3>
+          <p class="text-slate-600 mb-4">Mengapa truk pengangkut alat berat punya banyak roda (lebih dari empat)?</p>
+          <div class="p-4 bg-blue-50 rounded-xl">
+           <p class="font-semibold text-blue-700">📊 Analisis:</p>
+           <ul class="mt-2 space-y-2 text-slate-600">
+            <li>✓ Menambah jumlah roda = memperluas permukaan sentuh (A)</li>
+            <li>✓ Dengan luas yang besar, tekanan ke jalan menjadi lebih kecil</li>
+            <li>✓ Jalan tidak mudah rusak meski beban sangat berat</li>
+           </ul>
+          </div>
+         </div>
+        </div>
+       </div><!-- More Real-World Examples -->
+       <div class="grid md:grid-cols-3 gap-4"><!-- Knife -->
+        <div class="card-glass rounded-xl p-5 text-slate-800 hover:scale-105 transition-transform">
+         <div class="text-4xl mb-3">
+          🔪
+         </div>
+         <h4 class="font-bold text-lg">Pisau Tajam</h4>
+         <p class="text-sm text-slate-600 mt-2">Mata pisau yang tipis (luas kecil) menghasilkan tekanan besar sehingga mudah memotong.</p>
+        </div><!-- Ski -->
+        <div class="card-glass rounded-xl p-5 text-slate-800 hover:scale-105 transition-transform">
+         <div class="text-4xl mb-3">
+          ⛷️
+         </div>
+         <h4 class="font-bold text-lg">Sepatu Ski</h4>
+         <p class="text-sm text-slate-600 mt-2">Permukaan lebar agar tekanan kecil dan tidak tenggelam di salju.</p>
+        </div><!-- Tank -->
+        <div class="card-glass rounded-xl p-5 text-slate-800 hover:scale-105 transition-transform">
+         <div class="text-4xl mb-3">
+          🪖
+         </div>
+         <h4 class="font-bold text-lg">Rantai Tank</h4>
+         <p class="text-sm text-slate-600 mt-2">Luas permukaan besar agar tank berat tidak amblas di tanah lunak.</p>
+        </div><!-- Nail -->
+        <div class="card-glass rounded-xl p-5 text-slate-800 hover:scale-105 transition-transform">
+         <div class="text-4xl mb-3">
+          📌
+         </div>
+         <h4 class="font-bold text-lg">Paku Payung</h4>
+         <p class="text-sm text-slate-600 mt-2">Ujung runcing menghasilkan tekanan sangat besar untuk menembus papan.</p>
+        </div><!-- Snowshoe -->
+        <div class="card-glass rounded-xl p-5 text-slate-800 hover:scale-105 transition-transform">
+         <div class="text-4xl mb-3">
+          👟
+         </div>
+         <h4 class="font-bold text-lg">Sepatu Salju</h4>
+         <p class="text-sm text-slate-600 mt-2">Permukaan sangat lebar untuk berjalan di atas salju tanpa tenggelam.</p>
+        </div><!-- Camel -->
+        <div class="card-glass rounded-xl p-5 text-slate-800 hover:scale-105 transition-transform">
+         <div class="text-4xl mb-3">
+          🐪
+         </div>
+         <h4 class="font-bold text-lg">Kaki Unta</h4>
+         <p class="text-sm text-slate-600 mt-2">Telapak kaki lebar agar tidak tenggelam di pasir gurun.</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Slide 7: Contoh Soal -->
+   <section id="slide7" class="slide min-h-full bg-gradient-to-br from-violet-900 via-purple-900 to-slate-900">
+    <div class="container mx-auto px-4 py-16 min-h-full">
+     <div class="max-w-5xl mx-auto"><span class="inline-block px-4 py-2 bg-violet-500/20 rounded-full text-violet-300 text-sm mb-4">Slide 7</span>
+      <h2 class="title-font text-4xl md:text-5xl font-bold mb-8 text-white">📝 Contoh Soal</h2>
+      <div class="card-glass rounded-3xl p-8 text-slate-800">
+       <div class="bg-gradient-to-r from-violet-100 to-purple-100 rounded-2xl p-6 mb-6">
+        <h3 class="text-xl font-bold text-violet-700 mb-4">🚗 Soal:</h3>
+        <p class="text-lg text-slate-700">Mobil bak beratnya <strong>100.000 N</strong> dengan <strong>4 roda</strong>. Luas kontak tiap roda <strong>0,1 m²</strong>. Berapa tekanan tiap roda?</p>
+       </div><!-- Step by Step Solution -->
+       <div class="space-y-4">
+        <div class="p-4 bg-blue-50 rounded-xl">
+         <h4 class="font-bold text-blue-700 mb-2">📋 Diketahui:</h4>
+         <ul class="space-y-1 text-slate-600">
+          <li>• F total = 100.000 N</li>
+          <li>• Jumlah roda = 4</li>
+          <li>• A (luas tiap roda) = 0,1 m²</li>
+         </ul>
+        </div>
+        <div class="p-4 bg-amber-50 rounded-xl">
+         <h4 class="font-bold text-amber-700 mb-2">❓ Ditanya:</h4>
+         <p class="text-slate-600">Tekanan tiap roda (p) = ...?</p>
+        </div>
+        <div class="p-4 bg-emerald-50 rounded-xl">
+         <h4 class="font-bold text-emerald-700 mb-2">✏️ Penyelesaian:</h4>
+         <div class="space-y-3 text-slate-700">
+          <div class="p-3 bg-white rounded-lg">
+           <p><strong>Langkah 1:</strong> Hitung gaya per roda</p>
+           <p class="font-mono mt-1">F per roda = F total ÷ 4 = 100.000 ÷ 4 = <strong>25.000 N</strong></p>
+          </div>
+          <div class="p-3 bg-white rounded-lg">
+           <p><strong>Langkah 2:</strong> Gunakan rumus tekanan</p>
+           <p class="font-mono mt-1" id="solutionFormula"></p>
+          </div>
+          <div class="p-3 bg-white rounded-lg">
+           <p><strong>Langkah 3:</strong> Substitusi nilai</p>
+           <p class="font-mono mt-1">p = 25.000 N ÷ 0,1 m² = <strong>250.000 Pa</strong></p>
+          </div>
+         </div>
+        </div>
+        <div class="p-4 bg-gradient-to-r from-violet-500 to-purple-600 rounded-xl text-white text-center">
+         <h4 class="font-bold text-xl mb-2">🎯 Jawaban:</h4>
+         <p class="text-3xl font-bold">p = 250.000 Pa</p>
+         <p class="text-sm mt-2 text-violet-200">atau 250 kPa (kilopascal)</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Slide 8: Latihan Interaktif -->
+   <section id="slide8" class="slide min-h-full bg-gradient-to-br from-cyan-900 via-teal-900 to-slate-900">
+    <div class="container mx-auto px-4 py-16 min-h-full">
+     <div class="max-w-5xl mx-auto"><span class="inline-block px-4 py-2 bg-cyan-500/20 rounded-full text-cyan-300 text-sm mb-4">Slide 8</span>
+      <h2 class="title-font text-4xl md:text-5xl font-bold mb-8 text-white">🧮 Kalkulator Tekanan</h2>
+      <div class="card-glass rounded-3xl p-8 text-slate-800">
+       <p class="text-center text-slate-600 mb-6">Masukkan nilai untuk menghitung tekanan!</p>
+       <div class="grid md:grid-cols-3 gap-6">
+        <div><label class="block text-sm font-bold text-cyan-700 mb-2">Gaya (F)</label>
+         <div class="relative"><input type="number" id="calcForce" value="1000" class="w-full p-4 border-2 border-cyan-200 rounded-xl text-lg focus:border-cyan-500 focus:outline-none" oninput="calculatePressure()"> <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">N</span>
+         </div>
+        </div>
+        <div><label class="block text-sm font-bold text-cyan-700 mb-2">Luas (A)</label>
+         <div class="relative"><input type="number" id="calcArea" value="0.1" step="0.01" class="w-full p-4 border-2 border-cyan-200 rounded-xl text-lg focus:border-cyan-500 focus:outline-none" oninput="calculatePressure()"> <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">m²</span>
+         </div>
+        </div>
+        <div><label class="block text-sm font-bold text-cyan-700 mb-2">Tekanan (p)</label>
+         <div id="calcResult" class="w-full p-4 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-xl text-lg text-white font-bold text-center">
+          10,000 Pa
+         </div>
+        </div>
+       </div><!-- Practice Problems -->
+       <div class="mt-8">
+        <h4 class="font-bold text-lg text-cyan-700 mb-4">📚 Soal Latihan:</h4>
+        <div class="space-y-4">
+         <div id="practice1" class="p-4 bg-cyan-50 rounded-xl">
+          <p class="font-medium">1. Sebuah balok memberikan gaya 500 N pada permukaan seluas 0,05 m². Berapa tekanannya?</p>
+          <div class="mt-3 flex gap-2"><input type="number" id="answer1" class="flex-1 p-2 border rounded-lg" placeholder="Masukkan jawaban (Pa)"> <button onclick="checkAnswer(1, 10000)" class="px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600">Cek</button>
+          </div>
+          <p id="feedback1" class="mt-2 text-sm hidden"></p>
+         </div>
+         <div id="practice2" class="p-4 bg-teal-50 rounded-xl">
+          <p class="font-medium">2. Gajah bermassa 4000 kg berdiri dengan 4 kaki. Tiap kaki memiliki luas 0,1 m². Berapa tekanan tiap kaki? (g = 10 m/s²)</p>
+          <div class="mt-3 flex gap-2"><input type="number" id="answer2" class="flex-1 p-2 border rounded-lg" placeholder="Masukkan jawaban (Pa)"> <button onclick="checkAnswer(2, 100000)" class="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600">Cek</button>
+          </div>
+          <p id="feedback2" class="mt-2 text-sm hidden"></p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Slide 9: Tekanan Hidrostatis (Bonus Material) -->
+   <section id="slide9" class="slide min-h-full bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-900">
+    <div class="container mx-auto px-4 py-16 min-h-full">
+     <div class="max-w-5xl mx-auto"><span class="inline-block px-4 py-2 bg-blue-500/20 rounded-full text-blue-300 text-sm mb-4">Slide 9 - Materi Tambahan</span>
+      <h2 class="title-font text-4xl md:text-5xl font-bold mb-8 text-white">🌊 Tekanan Hidrostatis</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+       <div class="card-glass rounded-2xl p-8 text-slate-800">
+        <h3 class="text-2xl font-bold text-blue-600 mb-4">Definisi</h3>
+        <p class="text-lg mb-4">Tekanan hidrostatis adalah tekanan yang dialami oleh benda di dalam zat cair akibat <strong>kedalaman</strong> benda tersebut.</p>
+        <div class="p-4 bg-blue-50 rounded-xl mb-4">
+         <div id="hydroFormula" class="text-2xl text-center text-blue-700 font-bold"></div>
+        </div>
+        <div class="space-y-2 text-sm">
+         <p><strong>p</strong> = tekanan hidrostatis (Pa)</p>
+         <p><strong>ρ</strong> = massa jenis zat cair (kg/m³)</p>
+         <p><strong>g</strong> = percepatan gravitasi (m/s²)</p>
+         <p><strong>h</strong> = kedalaman (m)</p>
+        </div>
+       </div>
+       <div class="card-glass rounded-2xl p-8 text-slate-800">
+        <h3 class="text-2xl font-bold text-indigo-600 mb-4">🐋 Jawaban Pertanyaan Pembuka!</h3>
+        <p class="mb-4">Mengapa kapal selam tidak hancur di kedalaman laut?</p>
+        <div class="space-y-3">
+         <div class="p-3 bg-indigo-50 rounded-lg">
+          <p class="font-medium text-indigo-700">1. Struktur Kuat</p>
+          <p class="text-sm text-slate-600">Lambung kapal selam terbuat dari baja tebal yang mampu menahan tekanan besar</p>
+         </div>
+         <div class="p-3 bg-indigo-50 rounded-lg">
+          <p class="font-medium text-indigo-700">2. Bentuk Silinder</p>
+          <p class="text-sm text-slate-600">Bentuk silinder menyebarkan tekanan secara merata ke seluruh permukaan</p>
+         </div>
+         <div class="p-3 bg-indigo-50 rounded-lg">
+          <p class="font-medium text-indigo-700">3. Batas Kedalaman</p>
+          <p class="text-sm text-slate-600">Setiap kapal selam memiliki batas kedalaman maksimum yang aman</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Depth Visualization -->
+      <div class="mt-8 card-glass rounded-2xl p-6 text-slate-800">
+       <h4 class="font-bold text-lg text-blue-700 mb-4 text-center">📊 Simulasi Kedalaman</h4>
+       <div class="flex flex-col md:flex-row items-center gap-6">
+        <div class="w-full md:w-1/3"><label class="block text-sm font-medium mb-2">Kedalaman: <span id="depthValue">100</span> m</label> <input type="range" id="depthSlider" min="10" max="1000" value="100" class="w-full accent-blue-600" oninput="updateDepthDemo()">
+        </div>
+        <div class="flex-1 h-40 bg-gradient-to-b from-cyan-300 via-blue-500 to-slate-900 rounded-xl relative overflow-hidden">
+         <div id="submarine" class="absolute left-1/2 -translate-x-1/2 transition-all duration-300" style="top: 10%;">
+          <svg class="w-16 h-10" viewbox="0 0 80 40"><ellipse cx="40" cy="20" rx="35" ry="15" fill="#374151" stroke="#6b7280" stroke-width="2" /> <circle cx="25" cy="20" r="5" fill="#67e8f9" /> <circle cx="55" cy="20" r="5" fill="#67e8f9" />
+          </svg>
+         </div>
+         <div class="absolute bottom-2 left-2 text-white text-xs">
+          Dasar: 1000m
+         </div>
+        </div>
+        <div class="w-full md:w-1/3 text-center p-4 bg-blue-100 rounded-xl">
+         <p class="text-sm text-blue-600">Tekanan Hidrostatis</p>
+         <p id="hydroPressure" class="text-3xl font-bold text-blue-700">1,030,000 Pa</p>
+         <p class="text-xs text-slate-500">ρ air laut = 1030 kg/m³</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Slide 10: Ringkasan -->
+   <section id="slide10" class="slide min-h-full bg-gradient-to-br from-emerald-900 via-green-900 to-slate-900">
+    <div class="container mx-auto px-4 py-16 min-h-full">
+     <div class="max-w-5xl mx-auto"><span class="inline-block px-4 py-2 bg-emerald-500/20 rounded-full text-emerald-300 text-sm mb-4">Slide 10</span>
+      <h2 class="title-font text-4xl md:text-5xl font-bold mb-8 text-white">📋 Ringkasan Materi</h2>
+      <div class="card-glass rounded-3xl p-8 text-slate-800">
+       <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+         <div class="p-4 bg-emerald-50 rounded-xl border-l-4 border-emerald-500">
+          <h4 class="font-bold text-emerald-700">1️⃣ Definisi Tekanan</h4>
+          <p class="text-sm text-slate-600 mt-1">Tekanan adalah besarnya gaya yang bekerja pada setiap satuan luas permukaan</p>
+         </div>
+         <div class="p-4 bg-blue-50 rounded-xl border-l-4 border-blue-500">
+          <h4 class="font-bold text-blue-700">2️⃣ Rumus Tekanan</h4>
+          <p class="font-mono text-lg text-center mt-2">p = F / A</p>
+         </div>
+         <div class="p-4 bg-purple-50 rounded-xl border-l-4 border-purple-500">
+          <h4 class="font-bold text-purple-700">3️⃣ Satuan Tekanan</h4>
+          <p class="text-sm text-slate-600 mt-1">Pascal (Pa) = N/m²</p>
+         </div>
+        </div>
+        <div class="space-y-4">
+         <div class="p-4 bg-amber-50 rounded-xl border-l-4 border-amber-500">
+          <h4 class="font-bold text-amber-700">4️⃣ Faktor yang Mempengaruhi</h4>
+          <ul class="text-sm text-slate-600 mt-2 space-y-1">
+           <li>• Gaya (F) - berbanding lurus</li>
+           <li>• Luas (A) - berbanding terbalik</li>
+          </ul>
+         </div>
+         <div class="p-4 bg-rose-50 rounded-xl border-l-4 border-rose-500">
+          <h4 class="font-bold text-rose-700">5️⃣ Aplikasi</h4>
+          <ul class="text-sm text-slate-600 mt-2 space-y-1">
+           <li>• Pisau tajam, paku runcing</li>
+           <li>• Sepatu ski, ban lebar</li>
+           <li>• Rantai tank, kaki gajah</li>
+          </ul>
+         </div>
+         <div class="p-4 bg-cyan-50 rounded-xl border-l-4 border-cyan-500">
+          <h4 class="font-bold text-cyan-700">6️⃣ Tekanan Hidrostatis</h4>
+          <p class="font-mono text-center mt-2">p = ρ × g × h</p>
+         </div>
+        </div>
+       </div>
+       <div class="mt-6 p-4 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl text-white text-center">
+        <p class="font-bold text-lg">🎯 Ingat: Semakin kecil luas, semakin besar tekanan!</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Slide 11: Quiz HOTS -->
+   <section id="slide11" class="slide min-h-full bg-gradient-to-br from-rose-900 via-pink-900 to-slate-900">
+    <div class="container mx-auto px-4 py-16 min-h-full">
+     <div class="max-w-4xl mx-auto"><span class="inline-block px-4 py-2 bg-rose-500/20 rounded-full text-rose-300 text-sm mb-4">Slide 11</span>
+      <h2 class="title-font text-4xl md:text-5xl font-bold mb-4 text-white">🎯 Quiz HOTS</h2>
+      <p class="text-rose-200 mb-8">10 Soal Higher Order Thinking Skills</p><!-- Quiz Container -->
+      <div id="quizContainer" class="card-glass rounded-3xl p-8 text-slate-800"><!-- Quiz Progress -->
+       <div class="flex items-center justify-between mb-6"><span id="quizProgress" class="text-sm font-medium text-slate-500">Soal 1 dari 10</span> <span id="quizScore" class="px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-bold">Skor: 0</span>
+       </div><!-- Question Display -->
+       <div id="questionDisplay" class="mb-6"><!-- Question will be rendered here -->
+       </div><!-- Options -->
+       <div id="optionsDisplay" class="space-y-3"><!-- Options will be rendered here -->
+       </div><!-- Feedback -->
+       <div id="quizFeedback" class="mt-6 hidden"><!-- Feedback will be shown here -->
+       </div><!-- Navigation -->
+       <div class="mt-6 flex justify-between"><button id="prevQuizBtn" onclick="prevQuestion()" class="px-6 py-3 bg-slate-200 text-slate-700 rounded-xl font-medium hover:bg-slate-300 transition-all disabled:opacity-50" disabled> ← Sebelumnya </button> <button id="nextQuizBtn" onclick="nextQuestion()" class="px-6 py-3 bg-gradient-to-r from-rose-500 to-pink-600 text-white rounded-xl font-medium hover:shadow-lg transition-all"> Selanjutnya → </button>
+       </div>
+      </div><!-- Quiz Results (Hidden initially) -->
+      <div id="quizResults" class="card-glass rounded-3xl p-8 text-slate-800 hidden">
+       <div class="text-center">
+        <div class="w-24 h-24 mx-auto bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center mb-6"><span class="text-4xl">🏆</span>
+        </div>
+        <h3 class="text-3xl font-bold text-slate-800 mb-2">Quiz Selesai!</h3>
+        <p id="finalScore" class="text-xl text-slate-600 mb-6">Skor Anda: 0/10</p>
+        <div id="scoreMessage" class="p-4 rounded-xl mb-6"></div><button onclick="restartQuiz()" class="px-8 py-4 bg-gradient-to-r from-rose-500 to-pink-600 text-white rounded-xl font-bold text-lg hover:shadow-lg transition-all"> 🔄 Ulangi Quiz </button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Slide 12: Penutup -->
+   <section id="slide12" class="slide min-h-full bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+     <div class="absolute top-20 left-20 w-40 h-40 bg-purple-500 rounded-full blur-3xl"></div>
+     <div class="absolute bottom-20 right-20 w-60 h-60 bg-blue-500 rounded-full blur-3xl"></div>
+    </div>
+    <div class="container mx-auto px-4 py-16 min-h-full flex items-center justify-center relative z-10">
+     <div class="text-center max-w-3xl">
+      <div class="text-8xl mb-6">
+       🎉
+      </div>
+      <h2 class="title-font text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400 bg-clip-text text-transparent">Selamat!</h2>
+      <p class="text-xl text-slate-300 mb-8">Kamu telah menyelesaikan pembelajaran tentang <strong class="text-cyan-300">Tekanan Zat Padat</strong></p>
+      <div class="card-glass rounded-2xl p-6 text-slate-800 mb-8">
+       <h3 class="font-bold text-lg text-purple-600 mb-4">🌟 Apa yang sudah kamu pelajari:</h3>
+       <div class="flex flex-wrap justify-center gap-2"><span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">Definisi Tekanan</span> <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">Rumus p = F/A</span> <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">Faktor-faktor Tekanan</span> <span class="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm">Aplikasi Nyata</span> <span class="px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full text-sm">Tekanan Hidrostatis</span>
+       </div>
+      </div>
+      <p id="teacherName" class="text-slate-400 text-sm">Dibuat oleh Guru Fisika</p>
+      <div class="mt-8 flex justify-center gap-4"><button onclick="goToSlide(1)" class="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white transition-all"> ← Mulai Lagi </button> <button onclick="goToSlide(11)" class="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl text-white font-medium hover:shadow-lg transition-all"> Ulangi Quiz → </button>
+      </div>
+     </div>
+    </div>
+   </section>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_title: "Memahami Tekanan: Mengapa Hal Kecil Bisa Terasa Sakit?",
+      teacher_name: "Guru Fisika",
+      primary_color: "#0891b2",
+      secondary_color: "#7c3aed",
+      background_color: "#0f172a"
+    };
+
+    let config = { ...defaultConfig };
+
+    // Element SDK Integration
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ["main_title", cfg.main_title || defaultConfig.main_title],
+          ["teacher_name", cfg.teacher_name || defaultConfig.teacher_name]
+        ])
+      });
+    }
+
+    function applyConfig() {
+      const titleEl = document.getElementById('mainTitle');
+      if (titleEl) titleEl.textContent = config.main_title || defaultConfig.main_title;
+      
+      const teacherEl = document.getElementById('teacherName');
+      if (teacherEl) teacherEl.textContent = `Dibuat oleh ${config.teacher_name || defaultConfig.teacher_name}`;
+    }
+
+    // Slide Navigation
+    let currentSlide = 1;
+    const totalSlides = 12;
+
+    function showSlide(n) {
+      const slides = document.querySelectorAll('.slide');
+      slides.forEach((slide, index) => {
+        slide.classList.remove('active');
+        if (index + 1 === n) {
+          slide.classList.add('active');
+        }
+      });
+      
+      document.getElementById('slideCounter').textContent = `${n}/${totalSlides}`;
+      document.getElementById('progress').style.width = `${(n / totalSlides) * 100}%`;
+      currentSlide = n;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        showSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        showSlide(currentSlide - 1);
+      }
+    }
+
+    function goToSlide(n) {
+      showSlide(n);
+    }
+
+    // Pressure Demo (Slide 2)
+    function updatePressureDemo() {
+      const force = parseFloat(document.getElementById('forceSlider').value);
+      const areaValue = parseFloat(document.getElementById('areaSlider').value) / 1000;
+      const pressure = force / areaValue;
+      
+      document.getElementById('forceValue').textContent = force;
+      document.getElementById('areaValue').textContent = areaValue.toFixed(3);
+      document.getElementById('pressureResult').textContent = pressure.toLocaleString('id-ID', {maximumFractionDigits: 0});
+    }
+
+    // Shoe Challenge (Slide 5)
+    function selectShoe(type) {
+      // Visual feedback can be added here
+    }
+
+    function revealShoeAnswer() {
+      document.getElementById('shoeAnswer').classList.remove('hidden');
+      document.getElementById('revealBtn').classList.add('hidden');
+    }
+
+    // Calculator (Slide 8)
+    function calculatePressure() {
+      const force = parseFloat(document.getElementById('calcForce').value) || 0;
+      const area = parseFloat(document.getElementById('calcArea').value) || 0.001;
+      
+      if (area > 0) {
+        const pressure = force / area;
+        document.getElementById('calcResult').textContent = pressure.toLocaleString('id-ID', {maximumFractionDigits: 0}) + ' Pa';
+      }
+    }
+
+    function checkAnswer(num, correctAnswer) {
+      const input = document.getElementById(`answer${num}`);
+      const feedback = document.getElementById(`feedback${num}`);
+      const userAnswer = parseFloat(input.value);
+      
+      feedback.classList.remove('hidden');
+      
+      if (Math.abs(userAnswer - correctAnswer) < correctAnswer * 0.05) {
+        feedback.textContent = '✅ Benar! Hebat!';
+        feedback.className = 'mt-2 text-sm text-emerald-600 font-medium';
+      } else {
+        feedback.textContent = `❌ Kurang tepat. Jawaban yang benar adalah ${correctAnswer.toLocaleString('id-ID')} Pa`;
+        feedback.className = 'mt-2 text-sm text-red-600 font-medium';
+      }
+    }
+
+    // Depth Demo (Slide 9)
+    function updateDepthDemo() {
+      const depth = parseFloat(document.getElementById('depthSlider').value);
+      const pressure = 1030 * 10 * depth; // ρ × g × h
+      
+      document.getElementById('depthValue').textContent = depth;
+      document.getElementById('hydroPressure').textContent = pressure.toLocaleString('id-ID') + ' Pa';
+      
+      const submarine = document.getElementById('submarine');
+      const percentage = (depth / 1000) * 80 + 5;
+      submarine.style.top = `${percentage}%`;
+    }
+
+    // Quiz System
+    const quizQuestions = [
+      {
+        question: "Seorang penebang pohon menggunakan kapak. Mengapa mata kapak dibuat sangat tipis?",
+        options: [
+          "Agar kapak lebih ringan",
+          "Agar luas bidang tekan kecil sehingga tekanan besar",
+          "Agar kapak lebih mudah dibuat",
+          "Agar kapak lebih murah"
+        ],
+        correct: 1,
+        explanation: "Mata kapak yang tipis memiliki luas bidang tekan yang kecil, sehingga menghasilkan tekanan yang sangat besar untuk memotong kayu."
+      },
+      {
+        question: "Seekor bebek dapat berjalan di atas lumpur tanpa tenggelam, sedangkan ayam tenggelam. Faktor utama yang menyebabkan hal ini adalah...",
+        options: [
+          "Bebek lebih ringan dari ayam",
+          "Bebek memiliki selaput kaki yang memperluas bidang tekan",
+          "Lumpur tidak suka dengan ayam",
+          "Bebek memiliki bulu yang lebih tebal"
+        ],
+        correct: 1,
+        explanation: "Selaput pada kaki bebek memperbesar luas bidang tekan, sehingga tekanan yang dihasilkan menjadi lebih kecil dan bebek tidak tenggelam."
+      },
+      {
+        question: "Jika tekanan yang dialami suatu benda adalah 5000 Pa dan luas bidang tekannya 0,02 m², berapa gaya yang bekerja pada benda tersebut?",
+        options: [
+          "100 N",
+          "250.000 N",
+          "0,000004 N",
+          "100.000 N"
+        ],
+        correct: 0,
+        explanation: "Menggunakan rumus F = p × A = 5000 × 0,02 = 100 N"
+      },
+      {
+        question: "Mengapa fondasi gedung bertingkat dibuat lebih lebar daripada gedung itu sendiri?",
+        options: [
+          "Agar gedung terlihat lebih bagus",
+          "Untuk menampung air hujan",
+          "Untuk memperluas bidang tekan sehingga tekanan ke tanah lebih kecil",
+          "Karena bahan fondasi lebih murah"
+        ],
+        correct: 2,
+        explanation: "Fondasi yang lebar memperluas bidang tekan, sehingga tekanan gedung ke tanah menjadi lebih kecil dan tanah tidak amblas."
+      },
+      {
+        question: "Dua balok A dan B memiliki berat yang sama. Balok A memiliki luas alas 100 cm² dan balok B memiliki luas alas 200 cm². Perbandingan tekanan balok A dan B adalah...",
+        options: [
+          "1 : 2",
+          "2 : 1",
+          "1 : 1",
+          "4 : 1"
+        ],
+        correct: 1,
+        explanation: "Karena p = F/A dan F sama, maka pA/pB = AB/AA = 200/100 = 2:1. Jadi tekanan A dua kali tekanan B."
+      },
+      {
+        question: "Seorang atlet ski menggunakan papan ski yang panjang. Jika berat atlet 600 N dan luas total papan ski 0,3 m², tekanan yang diberikan ke salju adalah...",
+        options: [
+          "200 Pa",
+          "2000 Pa",
+          "180 Pa",
+          "1800 Pa"
+        ],
+        correct: 1,
+        explanation: "p = F/A = 600/0,3 = 2000 Pa"
+      },
+      {
+        question: "Mengapa jarum suntik dibuat dengan ujung yang sangat runcing?",
+        options: [
+          "Agar lebih mudah disterilkan",
+          "Agar lebih mudah disimpan",
+          "Agar tekanan besar sehingga mudah menembus kulit dengan gaya kecil",
+          "Agar terlihat lebih modern"
+        ],
+        correct: 2,
+        explanation: "Ujung yang sangat runcing memiliki luas bidang tekan yang sangat kecil, sehingga tekanan yang dihasilkan sangat besar dan dapat menembus kulit dengan mudah."
+      },
+      {
+        question: "Sebuah meja bermassa 20 kg memiliki 4 kaki dengan luas tiap kaki 5 cm². Jika g = 10 m/s², tekanan tiap kaki meja ke lantai adalah...",
+        options: [
+          "10.000 Pa",
+          "100.000 Pa",
+          "1.000.000 Pa",
+          "40.000 Pa"
+        ],
+        correct: 1,
+        explanation: "F total = 20 × 10 = 200 N. F per kaki = 50 N. A = 5 cm² = 0,0005 m². p = 50/0,0005 = 100.000 Pa"
+      },
+      {
+        question: "Mengapa ban traktor dibuat besar dan lebar?",
+        options: [
+          "Agar traktor terlihat gagah",
+          "Agar memperbesar luas bidang tekan sehingga traktor tidak amblas di tanah lunak",
+          "Agar ban lebih awet",
+          "Agar traktor lebih cepat"
+        ],
+        correct: 1,
+        explanation: "Ban yang besar dan lebar memperbesar luas bidang tekan, sehingga tekanan ke tanah lebih kecil dan traktor tidak amblas di sawah yang lunak."
+      },
+      {
+        question: "Seorang penyelam berada di kedalaman 20 m di bawah permukaan laut (ρ = 1030 kg/m³, g = 10 m/s²). Tekanan hidrostatis yang dialami penyelam adalah...",
+        options: [
+          "20.600 Pa",
+          "206.000 Pa",
+          "2.060 Pa",
+          "2.060.000 Pa"
+        ],
+        correct: 1,
+        explanation: "p = ρ × g × h = 1030 × 10 × 20 = 206.000 Pa"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = new Array(quizQuestions.length).fill(false);
+    let userAnswers = new Array(quizQuestions.length).fill(null);
+
+    function renderQuestion() {
+      const q = quizQuestions[currentQuestion];
+      
+      document.getElementById('quizProgress').textContent = `Soal ${currentQuestion + 1} dari ${quizQuestions.length}`;
+      document.getElementById('quizScore').textContent = `Skor: ${score}`;
+      
+      document.getElementById('questionDisplay').innerHTML = `
+        <div class="p-4 bg-gradient-to-r from-rose-100 to-pink-100 rounded-xl">
+          <span class="text-rose-600 font-bold">Soal ${currentQuestion + 1}</span>
+          <p class="text-lg text-slate-800 mt-2">${q.question}</p>
+        </div>
+      `;
+      
+      const optionsHtml = q.options.map((opt, i) => {
+        let extraClass = '';
+        if (answered[currentQuestion]) {
+          if (i === q.correct) {
+            extraClass = 'correct';
+          } else if (userAnswers[currentQuestion] === i && i !== q.correct) {
+            extraClass = 'incorrect';
+          }
+        }
+        return `
+          <button onclick="selectAnswer(${i})" class="option-btn w-full p-4 text-left rounded-xl border-2 border-slate-200 hover:border-rose-400 hover:bg-rose-50 transition-all ${extraClass}" ${answered[currentQuestion] ? 'disabled' : ''}>
+            <span class="font-bold text-rose-600">${String.fromCharCode(65 + i)}.</span> ${opt}
+          </button>
+        `;
+      }).join('');
+      
+      document.getElementById('optionsDisplay').innerHTML = optionsHtml;
+      
+      // Show feedback if answered
+      const feedbackEl = document.getElementById('quizFeedback');
+      if (answered[currentQuestion]) {
+        const isCorrect = userAnswers[currentQuestion] === q.correct;
+        feedbackEl.classList.remove('hidden');
+        feedbackEl.innerHTML = `
+          <div class="p-4 rounded-xl ${isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}">
+            <p class="font-bold">${isCorrect ? '✅ Benar!' : '❌ Kurang Tepat'}</p>
+            <p class="mt-2 text-sm">${q.explanation}</p>
+          </div>
+        `;
+      } else {
+        feedbackEl.classList.add('hidden');
+      }
+      
+      // Update navigation buttons
+      document.getElementById('prevQuizBtn').disabled = currentQuestion === 0;
+      document.getElementById('nextQuizBtn').textContent = currentQuestion === quizQuestions.length - 1 ? 'Lihat Hasil' : 'Selanjutnya →';
+    }
+
+    function selectAnswer(index) {
+      if (answered[currentQuestion]) return;
+      
+      userAnswers[currentQuestion] = index;
+      answered[currentQuestion] = true;
+      
+      if (index === quizQuestions[currentQuestion].correct) {
+        score++;
+      }
+      
+      renderQuestion();
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('quizContainer').classList.add('hidden');
+      document.getElementById('quizResults').classList.remove('hidden');
+      
+      document.getElementById('finalScore').textContent = `Skor Anda: ${score}/${quizQuestions.length}`;
+      
+      const messageEl = document.getElementById('scoreMessage');
+      const percentage = (score / quizQuestions.length) * 100;
+      
+      if (percentage >= 80) {
+        messageEl.className = 'p-4 rounded-xl bg-emerald-100 text-emerald-800';
+        messageEl.innerHTML = '<p class="font-bold">🌟 Luar Biasa!</p><p>Kamu sangat memahami materi tekanan!</p>';
+      } else if (percentage >= 60) {
+        messageEl.className = 'p-4 rounded-xl bg-amber-100 text-amber-800';
+        messageEl.innerHTML = '<p class="font-bold">👍 Bagus!</p><p>Terus tingkatkan pemahamanmu!</p>';
+      } else {
+        messageEl.className = 'p-4 rounded-xl bg-red-100 text-red-800';
+        messageEl.innerHTML = '<p class="font-bold">💪 Semangat!</p><p>Coba pelajari lagi materinya dan ulangi quiz!</p>';
+      }
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answered = new Array(quizQuestions.length).fill(false);
+      userAnswers = new Array(quizQuestions.length).fill(null);
+      
+      document.getElementById('quizContainer').classList.remove('hidden');
+      document.getElementById('quizResults').classList.add('hidden');
+      
+      renderQuestion();
+    }
+
+    // Render KaTeX formulas
+    function renderFormulas() {
+      try {
+        katex.render("p = \\frac{F}{A}", document.getElementById('formula1'), { displayMode: true });
+        katex.render("F = p \\times A", document.getElementById('formula2'));
+        katex.render("A = \\frac{F}{p}", document.getElementById('formula3'));
+        katex.render("p = \\frac{F}{A}", document.getElementById('solutionFormula'));
+        katex.render("p = \\rho \\cdot g \\cdot h", document.getElementById('hydroFormula'));
+      } catch (e) {
+        console.error('KaTeX rendering error:', e);
+      }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      showSlide(1);
+      updatePressureDemo();
+      calculatePressure();
+      updateDepthDemo();
+      renderQuestion();
+      applyConfig();
+      
+      // Delay formula rendering to ensure KaTeX is loaded
+      setTimeout(renderFormulas, 500);
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      }
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9caa29a4d662a2a7',t:'MTc3MDU0MzU5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

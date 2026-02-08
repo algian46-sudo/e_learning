@@ -1,0 +1,1182 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Melukis Suasana dengan Medium Pilihan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Nunito:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    .font-display { font-family: 'Playfair Display', serif; }
+    .font-body { font-family: 'Nunito', sans-serif; }
+    
+    .slide-container {
+      scroll-snap-type: y mandatory;
+    }
+    
+    .slide {
+      scroll-snap-align: start;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-8px);
+    }
+    
+    .pulse-animation {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .paint-splash {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.6;
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    
+    .quiz-option:hover {
+      transform: scale(1.02);
+    }
+    
+    .quiz-option.selected {
+      border-color: #667eea;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    }
+    
+    .quiz-option.correct {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.1);
+    }
+    
+    .quiz-option.incorrect {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+    }
+    
+    .nav-dot {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-dot.active {
+      width: 24px;
+      border-radius: 9999px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ </a>          
+<a href="index.html" class="btn-close-white">
+<i class="fas fa-home me-2"></i> Menu
+</a>
+ <body class="h-full font-body bg-slate-50 text-slate-800 overflow-auto"><!-- Navigation Dots -->
+  <nav class="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col gap-3"><button onclick="scrollToSlide(0)" class="nav-dot active w-3 h-3 bg-indigo-500 rounded-full" data-slide="0"></button> <button onclick="scrollToSlide(1)" class="nav-dot w-3 h-3 bg-slate-300 rounded-full" data-slide="1"></button> <button onclick="scrollToSlide(2)" class="nav-dot w-3 h-3 bg-slate-300 rounded-full" data-slide="2"></button> <button onclick="scrollToSlide(3)" class="nav-dot w-3 h-3 bg-slate-300 rounded-full" data-slide="3"></button> <button onclick="scrollToSlide(4)" class="nav-dot w-3 h-3 bg-slate-300 rounded-full" data-slide="4"></button> <button onclick="scrollToSlide(5)" class="nav-dot w-3 h-3 bg-slate-300 rounded-full" data-slide="5"></button> <button onclick="scrollToSlide(6)" class="nav-dot w-3 h-3 bg-slate-300 rounded-full" data-slide="6"></button> <button onclick="scrollToSlide(7)" class="nav-dot w-3 h-3 bg-slate-300 rounded-full" data-slide="7"></button> <button onclick="scrollToSlide(8)" class="nav-dot w-3 h-3 bg-slate-300 rounded-full" data-slide="8"></button>
+  </nav>
+  <main class="slide-container h-full w-full"><!-- Slide 1: Judul Utama -->
+   <section id="slide-0" class="slide min-h-full w-full relative overflow-hidden flex items-center justify-center px-6 py-12">
+    <div class="paint-splash w-96 h-96 bg-purple-400 -top-20 -left-20"></div>
+    <div class="paint-splash w-80 h-80 bg-indigo-400 bottom-10 right-10"></div>
+    <div class="paint-splash w-64 h-64 bg-pink-400 top-1/2 left-1/3"></div>
+    <div class="relative z-10 text-center max-w-4xl mx-auto"><!-- Palette Icon -->
+     <div class="float-animation mb-8">
+      <svg class="w-24 h-24 mx-auto" viewbox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" fill="url(#paletteGrad)" stroke="#4f46e5" stroke-width="3" /> <circle cx="30" cy="35" r="8" fill="#ef4444" /> <circle cx="50" cy="25" r="8" fill="#f97316" /> <circle cx="70" cy="35" r="8" fill="#eab308" /> <circle cx="75" cy="55" r="8" fill="#22c55e" /> <circle cx="65" cy="75" r="8" fill="#3b82f6" /> <circle cx="40" cy="70" r="8" fill="#8b5cf6" /> <ellipse cx="50" cy="55" rx="12" ry="8" fill="#fef3c7" /> <defs>
+        <lineargradient id="paletteGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+         <stop offset="0%" style="stop-color:#fef3c7" />
+         <stop offset="100%" style="stop-color:#fde68a" />
+        </lineargradient>
+       </defs>
+      </svg>
+     </div>
+     <h1 id="main-title" class="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6 gradient-text">Melukis Suasana dengan Medium Pilihan</h1>
+     <p id="subtitle" class="text-xl md:text-2xl text-slate-600 mb-8">Subunit 1.5 – Seni Rupa SMP Kelas VIII</p>
+     <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-xl border border-white/50 max-w-2xl mx-auto">
+      <div class="flex items-center gap-3 mb-4">
+       <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
+        <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+       </div>
+       <h3 class="font-semibold text-lg text-indigo-900">Tujuan Belajar</h3>
+      </div>
+      <p class="text-slate-700 text-lg leading-relaxed">Memahami konsep melukis suasana dan mampu mengekspresikannya melalui karya seni kreatif dengan berbagai medium pilihan.</p>
+     </div><button onclick="scrollToSlide(1)" class="mt-10 inline-flex items-center gap-2 bg-indigo-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-indigo-700 transition-all shadow-lg hover:shadow-xl"> Mulai Belajar 
+      <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg></button>
+    </div>
+   </section><!-- Slide 2: Apa itu Melukis Suasana? -->
+   <section id="slide-1" class="slide min-h-full w-full bg-gradient-to-br from-amber-50 via-white to-orange-50 px-6 py-12">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-amber-100 text-amber-700 rounded-full text-sm font-medium mb-4">Slide 2</span>
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-slate-800 mb-4">Apa itu Melukis Suasana? 🎨</h2>
+      <p class="text-slate-600 max-w-2xl mx-auto">Memahami definisi dan konsep dasar melukis suasana menurut para ahli</p>
+     </div><!-- Quote Box -->
+     <div class="bg-white rounded-3xl p-8 shadow-xl border-l-4 border-amber-500 mb-10 max-w-3xl mx-auto">
+      <div class="flex items-start gap-4">
+       <div class="text-6xl text-amber-300">
+        "
+       </div>
+       <div>
+        <p class="text-xl text-slate-700 italic mb-4">Bandi Sobandi (2014) mendefinisikan melukis sebagai kegiatan menggambar yang bersifat individu dan tidak terikat ketentuan kaku.</p>
+        <p class="text-sm text-slate-500">— Referensi Akademis Seni Rupa</p>
+       </div>
+      </div>
+     </div>
+     <div class="grid md:grid-cols-3 gap-6 mb-10"><!-- Card 1 -->
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+       <div class="w-16 h-16 bg-gradient-to-br from-red-400 to-orange-500 rounded-2xl flex items-center justify-center mb-4">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+       </div>
+       <h3 class="font-bold text-xl mb-2 text-slate-800">Ekspresi Bebas</h3>
+       <p class="text-slate-600">Kegiatan menggambar yang bersifat individu dan tidak terikat ketentuan kaku. Bebas mengekspresikan diri!</p>
+      </div><!-- Card 2 -->
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+       <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-2xl flex items-center justify-center mb-4">
+        <svg class="w-8 h-8 text-white" viewbox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+        </svg>
+       </div>
+       <h3 class="font-bold text-xl mb-2 text-slate-800">Warna &amp; Perasaan</h3>
+       <p class="text-slate-600">Mengungkapkan gagasan pada kanvas menggunakan unsur warna yang menggambarkan emosi dan suasana.</p>
+      </div><!-- Card 3 -->
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+       <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-2xl flex items-center justify-center mb-4">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+        </svg>
+       </div>
+       <h3 class="font-bold text-xl mb-2 text-slate-800">Definisi Lengkap</h3>
+       <p class="text-slate-600">Melukis suasana adalah menuangkan ide dan perasaan tentang suasana tertentu ke dalam bentuk visual.</p>
+      </div>
+     </div><!-- Visual Illustration -->
+     <div class="bg-gradient-to-r from-amber-100 to-orange-100 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-8">
+      <div class="flex-1">
+       <svg class="w-full max-w-sm mx-auto" viewbox="0 0 300 200" fill="none"><!-- Canvas/Frame --> <rect x="50" y="20" width="200" height="160" rx="8" fill="white" stroke="#d97706" stroke-width="3" /> <!-- Sunset scene --> <rect x="55" y="25" width="190" height="100" fill="url(#sunset)" /> <!-- Mountains --> <path d="M55 125 L100 80 L140 110 L180 70 L220 100 L245 85 L245 125 Z" fill="#4b5563" /> <!-- Sun --> <circle cx="150" cy="60" r="25" fill="#fbbf24" /> <!-- Water reflection --> <rect x="55" y="125" width="190" height="50" fill="url(#water)" /> <!-- Trees silhouette --> <path d="M70 125 L75 100 L80 125 M90 125 L97 95 L104 125 M115 125 L120 105 L125 125" stroke="#1f2937" stroke-width="3" /> <defs>
+         <lineargradient id="sunset" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#fcd34d" />
+          <stop offset="50%" style="stop-color:#fb923c" />
+          <stop offset="100%" style="stop-color:#f472b6" />
+         </lineargradient>
+         <lineargradient id="water" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#93c5fd" />
+          <stop offset="100%" style="stop-color:#3b82f6" />
+         </lineargradient>
+        </defs>
+       </svg>
+      </div>
+      <div class="flex-1 text-center md:text-left">
+       <h4 class="font-display text-2xl font-bold text-amber-800 mb-3">Contoh: Suasana Senja 🌅</h4>
+       <p class="text-amber-700">Lukisan suasana senja menangkap momen transisi hari dengan warna hangat oranye, kuning, dan merah muda yang menciptakan perasaan damai dan nostalgia.</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Slide 3: Kriteria Utama -->
+   <section id="slide-2" class="slide min-h-full w-full bg-gradient-to-br from-emerald-50 via-white to-teal-50 px-6 py-12">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium mb-4">Slide 3</span>
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-slate-800 mb-4">Kriteria Utama Lukisan Suasana ✨</h2>
+      <p class="text-slate-600 max-w-2xl mx-auto">Tiga kriteria penting yang harus dipenuhi agar lukisan suasana berhasil</p>
+     </div>
+     <div class="grid md:grid-cols-3 gap-8 mb-12"><!-- Informatif -->
+      <div class="card-hover bg-white rounded-3xl overflow-hidden shadow-xl">
+       <div class="h-48 bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center">
+        <svg class="w-24 h-24 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+       </div>
+       <div class="p-6">
+        <div class="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium mb-3">
+         01
+        </div>
+        <h3 class="font-display text-2xl font-bold mb-3">Informatif</h3>
+        <p class="text-slate-600 mb-4">Memberikan informasi yang jelas mengenai isi lukisan sehingga pesan tersampaikan dengan baik.</p>
+        <div class="bg-emerald-50 rounded-xl p-4">
+         <p class="text-sm text-emerald-700"><strong>Contoh:</strong> Lukisan pasar tradisional menampilkan pedagang, pembeli, dan barang dagangan dengan jelas.</p>
+        </div>
+       </div>
+      </div><!-- Realistik -->
+      <div class="card-hover bg-white rounded-3xl overflow-hidden shadow-xl">
+       <div class="h-48 bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center">
+        <svg class="w-24 h-24 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        </svg>
+       </div>
+       <div class="p-6">
+        <div class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-3">
+         02
+        </div>
+        <h3 class="font-display text-2xl font-bold mb-3">Realistik</h3>
+        <p class="text-slate-600 mb-4">Sesuai dengan kenyataan agar penonton memahami suasana yang digambarkan dengan mudah.</p>
+        <div class="bg-blue-50 rounded-xl p-4">
+         <p class="text-sm text-blue-700"><strong>Contoh:</strong> Proporsi manusia, bangunan, dan objek lain sesuai dengan ukuran sebenarnya.</p>
+        </div>
+       </div>
+      </div><!-- Representatif -->
+      <div class="card-hover bg-white rounded-3xl overflow-hidden shadow-xl">
+       <div class="h-48 bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center">
+        <svg class="w-24 h-24 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+       </div>
+       <div class="p-6">
+        <div class="inline-block px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium mb-3">
+         03
+        </div>
+        <h3 class="font-display text-2xl font-bold mb-3">Representatif</h3>
+        <p class="text-slate-600 mb-4">Menghadirkan kembali secara visual keadaan yang diamati dengan karakteristik khas.</p>
+        <div class="bg-purple-50 rounded-xl p-4">
+         <p class="text-sm text-purple-700"><strong>Contoh:</strong> Suasana pedesaan dengan sawah, petani, dan suasana damai terasa nyata.</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Visual Diagram -->
+     <div class="bg-white rounded-3xl p-8 shadow-xl">
+      <h4 class="font-display text-xl font-bold text-center mb-6">Diagram Hubungan Kriteria</h4>
+      <svg class="w-full max-w-lg mx-auto" viewbox="0 0 400 250" fill="none"><!-- Center circle --> <circle cx="200" cy="125" r="40" fill="url(#centerGrad)" stroke="#6366f1" stroke-width="2" /> <text x="200" y="120" text-anchor="middle" fill="white" font-size="10" font-weight="bold">
+        LUKISAN
+       </text> <text x="200" y="135" text-anchor="middle" fill="white" font-size="10" font-weight="bold">
+        SUASANA
+       </text> <!-- Informatif --> <circle cx="100" cy="70" r="35" fill="#10b981" opacity="0.9" /> <text x="100" y="75" text-anchor="middle" fill="white" font-size="11" font-weight="bold">
+        Informatif
+       </text> <line x1="135" y1="90" x2="165" y2="105" stroke="#10b981" stroke-width="2" /> <!-- Realistik --> <circle cx="300" cy="70" r="35" fill="#3b82f6" opacity="0.9" /> <text x="300" y="75" text-anchor="middle" fill="white" font-size="11" font-weight="bold">
+        Realistik
+       </text> <line x1="265" y1="90" x2="235" y2="105" stroke="#3b82f6" stroke-width="2" /> <!-- Representatif --> <circle cx="200" cy="210" r="35" fill="#a855f7" opacity="0.9" /> <text x="200" y="208" text-anchor="middle" fill="white" font-size="10" font-weight="bold">
+        Represen-
+       </text> <text x="200" y="220" text-anchor="middle" fill="white" font-size="10" font-weight="bold">
+        tatif
+       </text> <line x1="200" y1="165" x2="200" y2="175" stroke="#a855f7" stroke-width="2" /> <defs>
+        <lineargradient id="centerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+         <stop offset="0%" style="stop-color:#6366f1" />
+         <stop offset="100%" style="stop-color:#8b5cf6" />
+        </lineargradient>
+       </defs>
+      </svg>
+      <p class="text-center text-slate-500 mt-4 text-sm">Ketiga kriteria saling melengkapi untuk menghasilkan lukisan suasana yang berkualitas</p>
+     </div>
+    </div>
+   </section><!-- Slide 4: Unsur Penting -->
+   <section id="slide-3" class="slide min-h-full w-full bg-gradient-to-br from-rose-50 via-white to-pink-50 px-6 py-12">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-rose-100 text-rose-700 rounded-full text-sm font-medium mb-4">Slide 4</span>
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-slate-800 mb-4">Unsur Penting dalam Gambar Suasana 🖼️</h2>
+      <p class="text-slate-600 max-w-2xl mx-auto">Empat aspek teknis yang harus diperhatikan dalam melukis suasana</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8"><!-- Kepadatan Gambar -->
+      <div class="card-hover bg-white rounded-3xl p-8 shadow-xl border border-rose-100">
+       <div class="flex items-start gap-4 mb-6">
+        <div class="w-14 h-14 bg-gradient-to-br from-rose-400 to-pink-500 rounded-2xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">📐</span>
+        </div>
+        <div>
+         <h3 class="font-display text-xl font-bold text-slate-800">Kepadatan Gambar</h3>
+         <p class="text-rose-600 text-sm">Penataan objek dalam komposisi</p>
+        </div>
+       </div>
+       <p class="text-slate-600 mb-4">Penataan objek agar tidak terlihat kosong atau terlalu penuh. Keseimbangan adalah kunci!</p>
+       <div class="grid grid-cols-3 gap-2">
+        <div class="bg-red-100 rounded-lg p-3 text-center">
+         <svg class="w-12 h-12 mx-auto mb-1" viewbox="0 0 50 50"><rect x="5" y="5" width="40" height="40" fill="none" stroke="#ef4444" stroke-width="2" /> <circle cx="25" cy="25" r="5" fill="#ef4444" />
+         </svg><span class="text-xs text-red-600">Terlalu Kosong</span>
+        </div>
+        <div class="bg-green-100 rounded-lg p-3 text-center">
+         <svg class="w-12 h-12 mx-auto mb-1" viewbox="0 0 50 50"><rect x="5" y="5" width="40" height="40" fill="none" stroke="#22c55e" stroke-width="2" /> <circle cx="15" cy="20" r="4" fill="#22c55e" /> <circle cx="35" cy="18" r="5" fill="#22c55e" /> <circle cx="25" cy="35" r="6" fill="#22c55e" />
+         </svg><span class="text-xs text-green-600">Seimbang ✓</span>
+        </div>
+        <div class="bg-red-100 rounded-lg p-3 text-center">
+         <svg class="w-12 h-12 mx-auto mb-1" viewbox="0 0 50 50"><rect x="5" y="5" width="40" height="40" fill="none" stroke="#ef4444" stroke-width="2" /> <circle cx="12" cy="12" r="4" fill="#ef4444" /> <circle cx="25" cy="15" r="4" fill="#ef4444" /> <circle cx="38" cy="12" r="4" fill="#ef4444" /> <circle cx="15" cy="28" r="4" fill="#ef4444" /> <circle cx="30" cy="30" r="4" fill="#ef4444" /> <circle cx="20" cy="42" r="4" fill="#ef4444" /> <circle cx="38" cy="38" r="4" fill="#ef4444" />
+         </svg><span class="text-xs text-red-600">Terlalu Penuh</span>
+        </div>
+       </div>
+      </div><!-- Perspektif -->
+      <div class="card-hover bg-white rounded-3xl p-8 shadow-xl border border-rose-100">
+       <div class="flex items-start gap-4 mb-6">
+        <div class="w-14 h-14 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-2xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">👁️</span>
+        </div>
+        <div>
+         <h3 class="font-display text-xl font-bold text-slate-800">Perspektif</h3>
+         <p class="text-blue-600 text-sm">Sudut pandang ruang dan kedalaman</p>
+        </div>
+       </div>
+       <p class="text-slate-600 mb-4">Menciptakan ilusi kedalaman dan jarak dalam lukisan dua dimensi.</p>
+       <svg class="w-full" viewbox="0 0 200 120" fill="none"><!-- Horizon line --> <line x1="0" y1="60" x2="200" y2="60" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4" /> <!-- Vanishing point --> <circle cx="100" cy="60" r="4" fill="#3b82f6" /> <!-- Road/perspective lines --> <line x1="100" y1="60" x2="40" y2="120" stroke="#3b82f6" stroke-width="2" /> <line x1="100" y1="60" x2="160" y2="120" stroke="#3b82f6" stroke-width="2" /> <!-- Buildings getting smaller --> <rect x="60" y="50" width="15" height="30" fill="#60a5fa" /> <rect x="80" y="55" width="10" height="20" fill="#60a5fa" /> <rect x="110" y="55" width="10" height="20" fill="#60a5fa" /> <rect x="125" y="50" width="15" height="30" fill="#60a5fa" /> <!-- Labels --> <text x="100" y="50" text-anchor="middle" fill="#3b82f6" font-size="8">
+         Titik Hilang
+        </text> <text x="190" y="65" text-anchor="end" fill="#94a3b8" font-size="8">
+         Horizon
+        </text>
+       </svg>
+      </div><!-- Anatomi -->
+      <div class="card-hover bg-white rounded-3xl p-8 shadow-xl border border-rose-100">
+       <div class="flex items-start gap-4 mb-6">
+        <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">🧍</span>
+        </div>
+        <div>
+         <h3 class="font-display text-xl font-bold text-slate-800">Anatomi</h3>
+         <p class="text-amber-600 text-sm">Proporsi dan letak bagian tubuh</p>
+        </div>
+       </div>
+       <p class="text-slate-600 mb-4">Memahami proporsi tubuh manusia dan hewan untuk hasil yang realistis.</p>
+       <svg class="w-full max-w-xs mx-auto" viewbox="0 0 100 180" fill="none"><!-- Human figure proportions --> <circle cx="50" cy="15" r="12" fill="#fcd34d" stroke="#f59e0b" stroke-width="2" /> <line x1="50" y1="27" x2="50" y2="90" stroke="#f59e0b" stroke-width="3" /> <line x1="50" y1="45" x2="25" y2="70" stroke="#f59e0b" stroke-width="3" /> <line x1="50" y1="45" x2="75" y2="70" stroke="#f59e0b" stroke-width="3" /> <line x1="50" y1="90" x2="30" y2="140" stroke="#f59e0b" stroke-width="3" /> <line x1="50" y1="90" x2="70" y2="140" stroke="#f59e0b" stroke-width="3" /> <!-- Proportion guides --> <line x1="85" y1="3" x2="85" y2="27" stroke="#94a3b8" stroke-width="1" /> <text x="90" y="18" fill="#94a3b8" font-size="6">
+         1 Kepala
+        </text> <line x1="85" y1="27" x2="85" y2="90" stroke="#94a3b8" stroke-width="1" /> <text x="90" y="60" fill="#94a3b8" font-size="6">
+         3 Kepala
+        </text> <line x1="85" y1="90" x2="85" y2="140" stroke="#94a3b8" stroke-width="1" /> <text x="90" y="115" fill="#94a3b8" font-size="6">
+         2 Kepala
+        </text>
+       </svg>
+      </div><!-- Background -->
+      <div class="card-hover bg-white rounded-3xl p-8 shadow-xl border border-rose-100">
+       <div class="flex items-start gap-4 mb-6">
+        <div class="w-14 h-14 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">🏞️</span>
+        </div>
+        <div>
+         <h3 class="font-display text-xl font-bold text-slate-800">Latar Belakang</h3>
+         <p class="text-green-600 text-sm">Memperkuat kesan lokasi atau waktu</p>
+        </div>
+       </div>
+       <p class="text-slate-600 mb-4">Background yang tepat akan memperkuat suasana yang ingin disampaikan.</p>
+       <div class="grid grid-cols-2 gap-3">
+        <div class="bg-gradient-to-b from-orange-200 to-orange-400 rounded-xl p-3 text-center">
+         <svg class="w-12 h-12 mx-auto mb-1" viewbox="0 0 50 50"><circle cx="25" cy="35" r="8" fill="#fbbf24" /> <path d="M10 40 Q25 30 40 40" fill="#22c55e" />
+         </svg><span class="text-xs text-orange-800">Pagi ☀️</span>
+        </div>
+        <div class="bg-gradient-to-b from-indigo-300 to-indigo-600 rounded-xl p-3 text-center">
+         <svg class="w-12 h-12 mx-auto mb-1" viewbox="0 0 50 50"><circle cx="30" cy="15" r="8" fill="#fef3c7" /> <circle cx="12" cy="12" r="1" fill="white" /> <circle cx="40" cy="20" r="1" fill="white" /> <circle cx="20" cy="25" r="1" fill="white" />
+         </svg><span class="text-xs text-indigo-100">Malam 🌙</span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Slide 5: Tema dan Simbol -->
+   <section id="slide-4" class="slide min-h-full w-full bg-gradient-to-br from-violet-50 via-white to-purple-50 px-6 py-12">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-violet-100 text-violet-700 rounded-full text-sm font-medium mb-4">Slide 5</span>
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-slate-800 mb-4">Tema dan Simbol dalam Lukisan 🎭</h2>
+      <p class="text-slate-600 max-w-2xl mx-auto">Membangun suasana melalui pemilihan tema dan penggunaan simbol yang tepat</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8 mb-12"><!-- Tema -->
+      <div class="bg-white rounded-3xl p-8 shadow-xl">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-16 h-16 bg-gradient-to-br from-violet-400 to-purple-500 rounded-2xl flex items-center justify-center">
+         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="font-display text-2xl font-bold">Tema</h3>
+         <p class="text-violet-600">Pokok pikiran utama lukisan</p>
+        </div>
+       </div>
+       <div class="space-y-4">
+        <div class="flex items-center gap-3 bg-violet-50 rounded-xl p-4"><span class="text-3xl">⏰</span>
+         <div>
+          <h4 class="font-semibold">Waktu</h4>
+          <p class="text-sm text-slate-600">Pagi, siang, sore, malam, musim hujan, kemarau</p>
+         </div>
+        </div>
+        <div class="flex items-center gap-3 bg-purple-50 rounded-xl p-4"><span class="text-3xl">📍</span>
+         <div>
+          <h4 class="font-semibold">Tempat</h4>
+          <p class="text-sm text-slate-600">Pasar, sekolah, sawah, pantai, kota, desa</p>
+         </div>
+        </div>
+        <div class="flex items-center gap-3 bg-fuchsia-50 rounded-xl p-4"><span class="text-3xl">🎉</span>
+         <div>
+          <h4 class="font-semibold">Peristiwa</h4>
+          <p class="text-sm text-slate-600">Perayaan, upacara, bencana, aktivitas sehari-hari</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Simbol -->
+      <div class="bg-white rounded-3xl p-8 shadow-xl">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-16 h-16 bg-gradient-to-br from-pink-400 to-rose-500 rounded-2xl flex items-center justify-center">
+         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="font-display text-2xl font-bold">Simbol</h3>
+         <p class="text-pink-600">Penanda khusus dalam lukisan</p>
+        </div>
+       </div>
+       <p class="text-slate-600 mb-4">Simbol adalah elemen visual yang mewakili makna tertentu dan memperkuat kesan suasana.</p>
+       <div class="bg-gradient-to-r from-pink-50 to-rose-50 rounded-xl p-5">
+        <h4 class="font-semibold mb-3 flex items-center gap-2"><span class="text-xl">🏝️</span> Contoh: Suasana Bali</h4>
+        <div class="grid grid-cols-2 gap-3">
+         <div class="bg-white rounded-lg p-3 text-center shadow-sm">
+          <svg class="w-12 h-12 mx-auto mb-2" viewbox="0 0 50 50"><path d="M25 5 L28 20 L45 20 L30 30 L35 45 L25 35 L15 45 L20 30 L5 20 L22 20 Z" fill="#f59e0b" stroke="#d97706" stroke-width="1" /> <rect x="22" y="35" width="6" height="12" fill="#92400e" />
+          </svg><span class="text-xs font-medium">Pura</span>
+         </div>
+         <div class="bg-white rounded-lg p-3 text-center shadow-sm">
+          <svg class="w-12 h-12 mx-auto mb-2" viewbox="0 0 50 50"><circle cx="25" cy="12" r="8" fill="#fcd34d" /> <path d="M25 20 L25 35 M25 25 L15 30 M25 25 L35 30 M25 35 L18 50 M25 35 L32 50" stroke="#92400e" stroke-width="2" /> <ellipse cx="25" cy="28" rx="12" ry="5" fill="#f59e0b" />
+          </svg><span class="text-xs font-medium">Pakaian Adat</span>
+         </div>
+         <div class="bg-white rounded-lg p-3 text-center shadow-sm">
+          <svg class="w-12 h-12 mx-auto mb-2" viewbox="0 0 50 50"><ellipse cx="25" cy="40" rx="20" ry="8" fill="#22c55e" /> <path d="M25 10 C10 20 10 35 25 40 C40 35 40 20 25 10" fill="#16a34a" /> <line x1="25" y1="10" x2="25" y2="40" stroke="#15803d" stroke-width="1" />
+          </svg><span class="text-xs font-medium">Sawah Terasering</span>
+         </div>
+         <div class="bg-white rounded-lg p-3 text-center shadow-sm">
+          <svg class="w-12 h-12 mx-auto mb-2" viewbox="0 0 50 50"><circle cx="25" cy="25" r="15" fill="#fef3c7" /> <circle cx="25" cy="25" r="10" fill="#fcd34d" /> <circle cx="25" cy="25" r="5" fill="#f59e0b" />
+          </svg><span class="text-xs font-medium">Canang Sari</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Example Illustration -->
+     <div class="bg-white rounded-3xl p-8 shadow-xl">
+      <h4 class="font-display text-xl font-bold text-center mb-6">Ilustrasi: Lukisan Suasana Bali</h4>
+      <svg class="w-full max-w-2xl mx-auto" viewbox="0 0 500 250" fill="none"><!-- Sky gradient --> <rect width="500" height="250" fill="url(#baliSky)" /> <!-- Sun --> <circle cx="420" cy="50" r="30" fill="#fbbf24" /> <!-- Mountains --> <path d="M0 180 L80 100 L160 150 L250 80 L340 130 L420 90 L500 150 L500 250 L0 250 Z" fill="#1e3a5f" /> <!-- Rice terraces --> <path d="M0 200 Q125 170 250 200 Q375 230 500 200 L500 250 L0 250 Z" fill="#22c55e" /> <path d="M0 220 Q125 190 250 220 Q375 250 500 220 L500 250 L0 250 Z" fill="#16a34a" /> <!-- Temple --> <g transform="translate(200, 100)">
+        <rect x="20" y="50" width="60" height="40" fill="#d97706" />
+        <path d="M50 0 L80 50 L20 50 Z" fill="#f59e0b" />
+        <path d="M50 10 L70 45 L30 45 Z" fill="#fbbf24" />
+        <rect x="45" y="60" width="10" height="30" fill="#92400e" />
+       </g> <!-- Palm trees --> <g transform="translate(50, 130)">
+        <rect x="8" y="30" width="4" height="50" fill="#92400e" />
+        <ellipse cx="10" cy="30" rx="20" ry="8" fill="#16a34a" />
+        <ellipse cx="10" cy="25" rx="18" ry="6" fill="#22c55e" />
+       </g> <g transform="translate(400, 110)">
+        <rect x="8" y="30" width="4" height="60" fill="#92400e" />
+        <ellipse cx="10" cy="30" rx="25" ry="10" fill="#16a34a" />
+        <ellipse cx="10" cy="24" rx="22" ry="8" fill="#22c55e" />
+       </g> <!-- People in traditional dress --> <g transform="translate(300, 180)">
+        <circle cx="10" cy="5" r="5" fill="#fcd34d" />
+        <path d="M10 10 L10 35 M10 15 L0 25 M10 15 L20 25 M10 35 L3 55 M10 35 L17 55" stroke="#f59e0b" stroke-width="2" />
+        <ellipse cx="10" cy="22" rx="8" ry="4" fill="#f59e0b" />
+       </g> <defs>
+        <lineargradient id="baliSky" x1="0%" y1="0%" x2="0%" y2="100%">
+         <stop offset="0%" style="stop-color:#87ceeb" />
+         <stop offset="100%" style="stop-color:#f0f9ff" />
+        </lineargradient>
+       </defs>
+      </svg>
+      <div class="flex flex-wrap justify-center gap-4 mt-6"><span class="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm">🏛️ Pura</span> <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">🌾 Sawah</span> <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm">👘 Pakaian Adat</span> <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">🌴 Pohon Kelapa</span>
+      </div>
+     </div>
+    </div>
+   </section><!-- Slide 6: Prosedur Berkarya -->
+   <section id="slide-5" class="slide min-h-full w-full bg-gradient-to-br from-cyan-50 via-white to-sky-50 px-6 py-12">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-cyan-100 text-cyan-700 rounded-full text-sm font-medium mb-4">Slide 6</span>
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-slate-800 mb-4">Prosedur Berkarya (Step-by-Step) 📝</h2>
+      <p class="text-slate-600 max-w-2xl mx-auto">Langkah-langkah sistematis dalam membuat lukisan suasana</p>
+     </div><!-- Timeline Steps -->
+     <div class="relative"><!-- Connecting line -->
+      <div class="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-300 via-blue-400 to-indigo-500 hidden md:block transform -translate-x-1/2"></div>
+      <div class="space-y-12"><!-- Step 1 -->
+       <div class="flex flex-col md:flex-row items-center gap-8">
+        <div class="w-full md:w-1/2 md:text-right">
+         <div class="card-hover bg-white rounded-3xl p-6 shadow-xl inline-block max-w-md">
+          <div class="flex items-center gap-4 mb-4 md:flex-row-reverse">
+           <div class="w-14 h-14 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-2xl flex items-center justify-center text-white font-bold text-xl">
+            1
+           </div>
+           <h3 class="font-display text-xl font-bold">Pengamatan</h3>
+          </div>
+          <p class="text-slate-600 mb-4">Mengamati langsung objek atau suasana yang akan dilukis. Perhatikan detail waktu, tempat, dan aktivitas.</p>
+          <div class="bg-cyan-50 rounded-xl p-3">
+           <p class="text-sm text-cyan-700">💡 <strong>Tips:</strong> Bawa buku sketsa kecil saat observasi untuk mencatat hal-hal penting!</p>
+          </div>
+         </div>
+        </div>
+        <div class="w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center z-10 border-4 border-cyan-400"><span class="text-3xl">👁️</span>
+        </div>
+        <div class="w-full md:w-1/2">
+         <svg class="w-48 h-48 mx-auto md:mx-0" viewbox="0 0 150 150"><circle cx="75" cy="75" r="60" fill="#e0f2fe" stroke="#06b6d4" stroke-width="2" /> <circle cx="75" cy="75" r="35" fill="#0ea5e9" /> <circle cx="75" cy="75" r="15" fill="#0c4a6e" /> <circle cx="82" cy="68" r="5" fill="white" /> <!-- Eye looking around --> <path d="M20 75 Q75 30 130 75 Q75 120 20 75" fill="none" stroke="#06b6d4" stroke-width="2" />
+         </svg>
+        </div>
+       </div><!-- Step 2 -->
+       <div class="flex flex-col md:flex-row-reverse items-center gap-8">
+        <div class="w-full md:w-1/2 md:text-left">
+         <div class="card-hover bg-white rounded-3xl p-6 shadow-xl inline-block max-w-md">
+          <div class="flex items-center gap-4 mb-4">
+           <div class="w-14 h-14 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-xl">
+            2
+           </div>
+           <h3 class="font-display text-xl font-bold">Sketsa</h3>
+          </div>
+          <p class="text-slate-600 mb-4">Membuat rancangan kasar garis-garis utama. Tentukan komposisi dan posisi objek utama.</p>
+          <div class="bg-blue-50 rounded-xl p-3">
+           <p class="text-sm text-blue-700">💡 <strong>Tips:</strong> Gunakan pensil 2B atau lebih lunak agar mudah dihapus!</p>
+          </div>
+         </div>
+        </div>
+        <div class="w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center z-10 border-4 border-blue-400"><span class="text-3xl">✏️</span>
+        </div>
+        <div class="w-full md:w-1/2 md:text-right">
+         <svg class="w-48 h-48 mx-auto md:ml-auto md:mr-0" viewbox="0 0 150 150"><rect x="20" y="20" width="110" height="110" fill="white" stroke="#3b82f6" stroke-width="2" rx="5" /> <!-- Sketch lines --> <line x1="40" y1="50" x2="110" y2="50" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4" /> <line x1="40" y1="80" x2="90" y2="80" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4" /> <circle cx="75" cy="70" r="20" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4" /> <rect x="50" y="90" width="50" height="25" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4" /> <!-- Pencil --> <g transform="translate(100, 100) rotate(-45)">
+           <rect x="0" y="0" width="8" height="40" fill="#fcd34d" />
+           <polygon points="0,40 8,40 4,50" fill="#f4d4a4" />
+           <rect x="0" y="0" width="8" height="5" fill="#f87171" />
+          </g>
+         </svg>
+        </div>
+       </div><!-- Step 3 -->
+       <div class="flex flex-col md:flex-row items-center gap-8">
+        <div class="w-full md:w-1/2 md:text-right">
+         <div class="card-hover bg-white rounded-3xl p-6 shadow-xl inline-block max-w-md">
+          <div class="flex items-center gap-4 mb-4 md:flex-row-reverse">
+           <div class="w-14 h-14 bg-gradient-to-br from-violet-400 to-violet-600 rounded-2xl flex items-center justify-center text-white font-bold text-xl">
+            3
+           </div>
+           <h3 class="font-display text-xl font-bold">Detail</h3>
+          </div>
+          <p class="text-slate-600 mb-4">Melengkapi bagian-bagian kecil agar lebih hidup. Tambahkan tekstur, bayangan, dan elemen pendukung.</p>
+          <div class="bg-violet-50 rounded-xl p-3">
+           <p class="text-sm text-violet-700">💡 <strong>Tips:</strong> Mulai dari objek utama, lalu ke objek pendukung!</p>
+          </div>
+         </div>
+        </div>
+        <div class="w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center z-10 border-4 border-violet-400"><span class="text-3xl">🔍</span>
+        </div>
+        <div class="w-full md:w-1/2">
+         <svg class="w-48 h-48 mx-auto md:mx-0" viewbox="0 0 150 150"><rect x="20" y="20" width="110" height="110" fill="white" stroke="#8b5cf6" stroke-width="2" rx="5" /> <!-- More detailed drawing --> <circle cx="75" cy="55" r="15" fill="#ddd6fe" stroke="#8b5cf6" stroke-width="1.5" /> <rect x="55" y="75" width="40" height="35" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5" /> <!-- Adding details --> <circle cx="70" cy="52" r="2" fill="#4c1d95" /> <circle cx="80" cy="52" r="2" fill="#4c1d95" /> <path d="M72 60 Q75 63 78 60" fill="none" stroke="#4c1d95" stroke-width="1" /> <line x1="60" y1="85" x2="90" y2="85" stroke="#8b5cf6" stroke-width="1" /> <line x1="60" y1="95" x2="85" y2="95" stroke="#8b5cf6" stroke-width="1" />
+         </svg>
+        </div>
+       </div><!-- Step 4 -->
+       <div class="flex flex-col md:flex-row-reverse items-center gap-8">
+        <div class="w-full md:w-1/2 md:text-left">
+         <div class="card-hover bg-white rounded-3xl p-6 shadow-xl inline-block max-w-md">
+          <div class="flex items-center gap-4 mb-4">
+           <div class="w-14 h-14 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-2xl flex items-center justify-center text-white font-bold text-xl">
+            4
+           </div>
+           <h3 class="font-display text-xl font-bold">Pewarnaan (Finishing)</h3>
+          </div>
+          <p class="text-slate-600 mb-4">Menyelesaikan lukisan dengan medium pilihan. Bisa menggunakan cat air, pensil warna, arang, dan lainnya.</p>
+          <div class="bg-indigo-50 rounded-xl p-3">
+           <p class="text-sm text-indigo-700">💡 <strong>Tips:</strong> Mulai dari warna terang ke warna gelap untuk hasil terbaik!</p>
+          </div>
+         </div>
+        </div>
+        <div class="w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center z-10 border-4 border-indigo-400"><span class="text-3xl">🎨</span>
+        </div>
+        <div class="w-full md:w-1/2 md:text-right">
+         <svg class="w-48 h-48 mx-auto md:ml-auto md:mr-0" viewbox="0 0 150 150"><rect x="20" y="20" width="110" height="110" fill="url(#coloredBg)" stroke="#6366f1" stroke-width="2" rx="5" /> <!-- Colored artwork --> <circle cx="75" cy="55" r="15" fill="#fbbf24" /> <circle cx="70" cy="52" r="2" fill="#1e1b4b" /> <circle cx="80" cy="52" r="2" fill="#1e1b4b" /> <path d="M72 60 Q75 63 78 60" fill="none" stroke="#1e1b4b" stroke-width="1.5" /> <rect x="55" y="75" width="40" height="35" fill="#a78bfa" /> <line x1="60" y1="85" x2="90" y2="85" stroke="#7c3aed" stroke-width="1.5" /> <line x1="60" y1="95" x2="85" y2="95" stroke="#7c3aed" stroke-width="1.5" /> <!-- Paint brush --> <g transform="translate(110, 35)">
+           <rect x="0" y="0" width="6" height="25" fill="#92400e" />
+           <rect x="-2" y="25" width="10" height="15" fill="#4b5563" rx="2" />
+           <rect x="-2" y="38" width="10" height="5" fill="#ef4444" />
+          </g> <defs>
+           <lineargradient id="coloredBg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#c7d2fe" />
+            <stop offset="100%" style="stop-color:#e0e7ff" />
+           </lineargradient>
+          </defs>
+         </svg>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Slide 7: Eksplorasi Medium -->
+   <section id="slide-6" class="slide min-h-full w-full bg-gradient-to-br from-lime-50 via-white to-green-50 px-6 py-12">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-lime-100 text-lime-700 rounded-full text-sm font-medium mb-4">Slide 7</span>
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-slate-800 mb-4">Eksplorasi Medium (Alat &amp; Bahan) 🛠️</h2>
+      <p class="text-slate-600 max-w-2xl mx-auto">Jangan terpaku pada alat yang mahal. Gunakan apa yang tersedia di sekitarmu!</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8 mb-12"><!-- Konvensional -->
+      <div class="bg-white rounded-3xl p-8 shadow-xl">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-2xl flex items-center justify-center">
+         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="font-display text-2xl font-bold">Medium Konvensional</h3>
+         <p class="text-blue-600">Alat dan bahan yang umum digunakan</p>
+        </div>
+       </div>
+       <div class="grid grid-cols-2 gap-4">
+        <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-4 text-center card-hover">
+         <svg class="w-16 h-16 mx-auto mb-2" viewbox="0 0 60 60"><rect x="10" y="5" width="40" height="50" fill="white" stroke="#64748b" stroke-width="2" rx="2" /> <line x1="15" y1="15" x2="45" y2="15" stroke="#e2e8f0" stroke-width="1" /> <line x1="15" y1="25" x2="45" y2="25" stroke="#e2e8f0" stroke-width="1" /> <line x1="15" y1="35" x2="45" y2="35" stroke="#e2e8f0" stroke-width="1" /> <line x1="15" y1="45" x2="45" y2="45" stroke="#e2e8f0" stroke-width="1" />
+         </svg><span class="font-medium text-slate-700">Kertas Gambar</span>
+        </div>
+        <div class="bg-gradient-to-br from-yellow-50 to-amber-100 rounded-xl p-4 text-center card-hover">
+         <svg class="w-16 h-16 mx-auto mb-2" viewbox="0 0 60 60"><rect x="15" y="10" width="8" height="40" fill="#fcd34d" rx="1" /> <polygon points="15,50 23,50 19,58" fill="#fde68a" /> <rect x="15" y="10" width="8" height="6" fill="#f87171" rx="1" />
+         </svg><span class="font-medium text-amber-700">Pensil</span>
+        </div>
+        <div class="bg-gradient-to-br from-pink-50 to-rose-100 rounded-xl p-4 text-center card-hover">
+         <svg class="w-16 h-16 mx-auto mb-2" viewbox="0 0 60 60"><rect x="12" y="15" width="36" height="30" fill="white" stroke="#f43f5e" stroke-width="2" rx="3" /> <rect x="18" y="22" width="6" height="6" fill="#ef4444" rx="1" /> <rect x="27" y="22" width="6" height="6" fill="#f97316" rx="1" /> <rect x="36" y="22" width="6" height="6" fill="#eab308" rx="1" /> <rect x="18" y="32" width="6" height="6" fill="#22c55e" rx="1" /> <rect x="27" y="32" width="6" height="6" fill="#3b82f6" rx="1" /> <rect x="36" y="32" width="6" height="6" fill="#a855f7" rx="1" />
+         </svg><span class="font-medium text-rose-700">Cat Air</span>
+        </div>
+        <div class="bg-gradient-to-br from-orange-50 to-amber-100 rounded-xl p-4 text-center card-hover">
+         <svg class="w-16 h-16 mx-auto mb-2" viewbox="0 0 60 60"><rect x="10" y="25" width="40" height="20" fill="#f97316" rx="3" /> <text x="30" y="38" text-anchor="middle" fill="white" font-size="8" font-weight="bold">
+           ACRYLIC
+          </text>
+         </svg><span class="font-medium text-orange-700">Cat Akrilik</span>
+        </div>
+       </div>
+      </div><!-- Alternatif -->
+      <div class="bg-white rounded-3xl p-8 shadow-xl">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center">
+         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="font-display text-2xl font-bold">Medium Alternatif</h3>
+         <p class="text-green-600">Kreativitas dari bahan sekitar</p>
+        </div>
+       </div>
+       <div class="grid grid-cols-2 gap-4">
+        <div class="bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl p-4 text-center card-hover">
+         <svg class="w-16 h-16 mx-auto mb-2" viewbox="0 0 60 60"><ellipse cx="30" cy="45" rx="15" ry="5" fill="#1f2937" /> <rect x="27" y="15" width="6" height="30" fill="#374151" /> <polygon points="30,5 35,15 25,15" fill="#1f2937" />
+         </svg><span class="font-medium text-slate-700">Arang</span>
+        </div>
+        <div class="bg-gradient-to-br from-red-50 to-orange-100 rounded-xl p-4 text-center card-hover">
+         <svg class="w-16 h-16 mx-auto mb-2" viewbox="0 0 60 60"><rect x="15" y="20" width="30" height="25" fill="white" stroke="#f97316" stroke-width="2" rx="2" /> <circle cx="22" cy="28" r="3" fill="#ef4444" /> <circle cx="30" cy="28" r="3" fill="#22c55e" /> <circle cx="38" cy="28" r="3" fill="#3b82f6" /> <circle cx="26" cy="38" r="3" fill="#eab308" /> <circle cx="34" cy="38" r="3" fill="#a855f7" />
+         </svg><span class="font-medium text-orange-700">Pewarna Makanan</span>
+        </div>
+        <div class="bg-gradient-to-br from-amber-50 to-yellow-100 rounded-xl p-4 text-center card-hover">
+         <svg class="w-16 h-16 mx-auto mb-2" viewbox="0 0 60 60"><path d="M30 15 Q15 25 20 40 Q25 50 30 45 Q35 50 40 40 Q45 25 30 15" fill="#92400e" /> <ellipse cx="30" cy="50" rx="12" ry="4" fill="#78350f" />
+         </svg><span class="font-medium text-amber-700">Kopi/Teh</span>
+        </div>
+        <div class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl p-4 text-center card-hover">
+         <svg class="w-16 h-16 mx-auto mb-2" viewbox="0 0 60 60"><ellipse cx="30" cy="45" rx="8" ry="3" fill="#65a30d" /> <path d="M30 45 L30 25 M30 30 L22 35 M30 35 L38 28" stroke="#22c55e" stroke-width="2" /> <ellipse cx="30" cy="20" rx="10" ry="5" fill="#22c55e" />
+         </svg><span class="font-medium text-green-700">Daun/Bunga</span>
+        </div>
+       </div>
+      </div>
+     </div><!-- Key Message -->
+     <div class="bg-gradient-to-r from-lime-400 to-green-500 rounded-3xl p-8 text-white text-center">
+      <div class="max-w-2xl mx-auto"><span class="text-5xl mb-4 block">💫</span>
+       <h3 class="font-display text-2xl md:text-3xl font-bold mb-4">Poin Utama</h3>
+       <p class="text-xl md:text-2xl opacity-95">"Yang terpenting adalah <span class="underline decoration-wavy">pengalaman proses kreatif</span>, bukan seberapa mahal alat yang digunakan!"</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Slide 8: Tugas Praktik -->
+   <section id="slide-7" class="slide min-h-full w-full bg-gradient-to-br from-orange-50 via-white to-red-50 px-6 py-12">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-orange-100 text-orange-700 rounded-full text-sm font-medium mb-4">Slide 8</span>
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-slate-800 mb-4">Tugas Praktik 📋</h2>
+      <p class="text-slate-600 max-w-2xl mx-auto">Saatnya mengaplikasikan ilmu yang telah dipelajari!</p>
+     </div>
+     <div class="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-4xl mx-auto"><!-- Header -->
+      <div class="bg-gradient-to-r from-orange-500 to-red-500 p-8 text-white">
+       <div class="flex items-center gap-4">
+        <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center"><span class="text-3xl">🏫</span>
+        </div>
+        <div>
+         <h3 class="font-display text-2xl md:text-3xl font-bold">"Melukis Suasana Sekolah"</h3>
+         <p class="opacity-90">Tugas Individu Seni Rupa</p>
+        </div>
+       </div>
+      </div><!-- Content -->
+      <div class="p-8"><!-- Instructions -->
+       <div class="bg-orange-50 rounded-2xl p-6 mb-6">
+        <h4 class="font-bold text-lg mb-3 flex items-center gap-2"><span class="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm">1</span> Instruksi</h4>
+        <p class="text-slate-700">Buatlah sebuah lukisan suasana di sekitar lingkungan sekolahmu. Pilih momen yang menurutmu menarik dan bermakna.</p>
+       </div><!-- Suggestions -->
+       <div class="mb-6">
+        <h4 class="font-bold text-lg mb-4 flex items-center gap-2"><span class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm">2</span> Ide Suasana yang Bisa Dipilih</h4>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+         <div class="bg-blue-50 rounded-xl p-4 text-center"><span class="text-2xl block mb-2">🌅</span> <span class="text-sm text-blue-700">Pagi hari di halaman</span>
+         </div>
+         <div class="bg-green-50 rounded-xl p-4 text-center"><span class="text-2xl block mb-2">📚</span> <span class="text-sm text-green-700">Suasana perpustakaan</span>
+         </div>
+         <div class="bg-yellow-50 rounded-xl p-4 text-center"><span class="text-2xl block mb-2">🏃</span> <span class="text-sm text-yellow-700">Jam istirahat</span>
+         </div>
+         <div class="bg-purple-50 rounded-xl p-4 text-center"><span class="text-2xl block mb-2">🎭</span> <span class="text-sm text-purple-700">Upacara bendera</span>
+         </div>
+        </div>
+       </div><!-- Medium Choice -->
+       <div class="bg-green-50 rounded-2xl p-6 mb-6">
+        <h4 class="font-bold text-lg mb-3 flex items-center gap-2"><span class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm">3</span> Pilihan Medium</h4>
+        <p class="text-slate-700 mb-3">Gunakan medium yang paling kamu sukai atau kuasai:</p>
+        <div class="flex flex-wrap gap-2"><span class="px-3 py-1 bg-white rounded-full text-sm border border-green-200">✏️ Pensil</span> <span class="px-3 py-1 bg-white rounded-full text-sm border border-green-200">🎨 Cat Air</span> <span class="px-3 py-1 bg-white rounded-full text-sm border border-green-200">🖍️ Pensil Warna</span> <span class="px-3 py-1 bg-white rounded-full text-sm border border-green-200">🪵 Arang</span> <span class="px-3 py-1 bg-white rounded-full text-sm border border-green-200">🎭 Pastel</span> <span class="px-3 py-1 bg-white rounded-full text-sm border border-green-200">🍃 Bahan Alam</span>
+        </div>
+       </div><!-- Assessment Criteria -->
+       <div class="bg-purple-50 rounded-2xl p-6">
+        <h4 class="font-bold text-lg mb-4 flex items-center gap-2"><span class="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm">4</span> Kriteria Penilaian</h4>
+        <div class="grid md:grid-cols-3 gap-4">
+         <div class="bg-white rounded-xl p-4 shadow-sm">
+          <div class="text-3xl mb-2">
+           💡
+          </div>
+          <h5 class="font-semibold mb-1">Kreativitas Gagasan</h5>
+          <p class="text-sm text-slate-600">Orisinalitas dan keunikan ide yang ditampilkan</p>
+          <div class="mt-2 text-purple-600 font-medium">
+           30%
+          </div>
+         </div>
+         <div class="bg-white rounded-xl p-4 shadow-sm">
+          <div class="text-3xl mb-2">
+           ⚖️
+          </div>
+          <h5 class="font-semibold mb-1">Keharmonisan Komposisi</h5>
+          <p class="text-sm text-slate-600">Keseimbangan dan penataan elemen visual</p>
+          <div class="mt-2 text-purple-600 font-medium">
+           35%
+          </div>
+         </div>
+         <div class="bg-white rounded-xl p-4 shadow-sm">
+          <div class="text-3xl mb-2">
+           🎯
+          </div>
+          <h5 class="font-semibold mb-1">Penguasaan Teknik</h5>
+          <p class="text-sm text-slate-600">Keterampilan menggunakan medium pilihan</p>
+          <div class="mt-2 text-purple-600 font-medium">
+           35%
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Slide 9: Quiz HOTS -->
+   <section id="slide-8" class="slide min-h-full w-full bg-gradient-to-br from-indigo-50 via-white to-purple-50 px-6 py-12">
+    <div class="max-w-4xl mx-auto">
+     <div class="text-center mb-8"><span class="inline-block px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium mb-4">Evaluasi</span>
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-slate-800 mb-4">Soal HOTS Pilihan Ganda 🧠</h2>
+      <p class="text-slate-600">10 soal untuk menguji pemahamanmu tentang melukis suasana</p>
+     </div>
+     <div id="quiz-container"><!-- Quiz Progress -->
+      <div class="bg-white rounded-2xl p-4 shadow-lg mb-6">
+       <div class="flex items-center justify-between mb-2"><span class="text-sm font-medium text-slate-600">Progres</span> <span id="progress-text" class="text-sm font-medium text-indigo-600">0/10</span>
+       </div>
+       <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+       </div>
+      </div><!-- Question Card -->
+      <div id="question-card" class="bg-white rounded-3xl shadow-xl overflow-hidden">
+       <div class="bg-gradient-to-r from-indigo-500 to-purple-600 p-6">
+        <div class="flex items-center gap-3"><span id="question-number" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white font-bold">1</span> <span class="text-white/80 text-sm">Pilih jawaban yang paling tepat</span>
+        </div>
+       </div>
+       <div class="p-6">
+        <p id="question-text" class="text-lg font-medium text-slate-800 mb-6"></p>
+        <div id="options-container" class="space-y-3"><!-- Options will be inserted here -->
+        </div>
+        <div id="feedback-container" class="hidden mt-6 p-4 rounded-xl">
+         <p id="feedback-text" class="font-medium"></p>
+         <p id="explanation-text" class="text-sm mt-2 opacity-80"></p>
+        </div>
+        <div class="mt-6 flex justify-between"><button id="prev-btn" onclick="prevQuestion()" class="px-6 py-3 bg-slate-100 text-slate-700 rounded-xl font-medium hover:bg-slate-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled> ← Sebelumnya </button> <button id="next-btn" onclick="nextQuestion()" class="px-6 py-3 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled> Selanjutnya → </button>
+        </div>
+       </div>
+      </div><!-- Results Card (Hidden initially) -->
+      <div id="results-card" class="hidden bg-white rounded-3xl shadow-xl p-8 text-center">
+       <div class="w-24 h-24 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6"><span class="text-4xl">🏆</span>
+       </div>
+       <h3 class="font-display text-2xl font-bold text-slate-800 mb-2">Kuis Selesai!</h3>
+       <p class="text-slate-600 mb-6">Kamu telah menyelesaikan semua soal</p>
+       <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6 mb-6">
+        <p class="text-sm text-slate-600 mb-2">Skor Kamu</p>
+        <p id="final-score" class="text-5xl font-bold gradient-text">0/10</p>
+        <p id="score-message" class="text-slate-600 mt-2"></p>
+       </div><button onclick="restartQuiz()" class="px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-semibold hover:from-indigo-600 hover:to-purple-700 transition-all shadow-lg"> Ulangi Kuis 🔄 </button>
+      </div>
+     </div>
+    </div>
+   </section>
+  </main>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: "Melukis Suasana dengan Medium Pilihan",
+      subtitle: "Subunit 1.5 – Seni Rupa SMP Kelas VIII",
+      background_color: "#f8fafc",
+      primary_color: "#6366f1",
+      text_color: "#1e293b",
+      accent_color: "#8b5cf6",
+      secondary_color: "#f1f5f9",
+      font_family: "Nunito",
+      font_size: 16
+    };
+
+    let config = { ...defaultConfig };
+
+    // Quiz Data - 10 HOTS Questions
+    const quizData = [
+      {
+        question: "Seorang seniman ingin melukis suasana pasar tradisional yang ramai. Ia menempatkan banyak objek pedagang, pembeli, dan barang dagangan tanpa memperhatikan jarak antar objek. Berdasarkan kriteria lukisan suasana yang baik, aspek apa yang kurang diperhatikan seniman tersebut?",
+        options: [
+          "Perspektif dan titik hilang",
+          "Kepadatan gambar dan komposisi",
+          "Anatomi figur manusia",
+          "Pemilihan warna kontras"
+        ],
+        correct: 1,
+        explanation: "Menempatkan banyak objek tanpa memperhatikan jarak antar objek menunjukkan kurangnya perhatian pada kepadatan gambar. Kepadatan yang baik memerlukan keseimbangan agar tidak terlalu kosong atau terlalu penuh."
+      },
+      {
+        question: "Dalam sebuah lukisan suasana senja di pantai, seorang siswa menggunakan warna biru cerah untuk langit dan hijau terang untuk air laut. Mengapa pilihan warna tersebut kurang tepat untuk menggambarkan suasana senja?",
+        options: [
+          "Warna biru dan hijau tidak cocok dikombinasikan",
+          "Suasana senja identik dengan warna hangat seperti oranye, merah, dan kuning",
+          "Warna cerah hanya boleh digunakan untuk suasana pagi",
+          "Air laut tidak boleh berwarna hijau"
+        ],
+        correct: 1,
+        explanation: "Suasana senja secara realistis ditandai dengan warna-warna hangat karena posisi matahari yang rendah menciptakan spektrum warna oranye, merah, dan kuning. Penggunaan warna biru cerah tidak representatif dengan suasana senja."
+      },
+      {
+        question: "Bandi Sobandi (2014) menyatakan bahwa melukis adalah 'ekspresi bebas yang tidak terikat ketentuan kaku.' Namun dalam konteks melukis suasana untuk tugas sekolah, bagaimana sebaiknya siswa menyeimbangkan kebebasan ekspresi dengan tuntutan representasi suasana?",
+        options: [
+          "Mengabaikan kebebasan ekspresi dan hanya fokus pada realisme",
+          "Menyeimbangkan ekspresi personal dengan tetap mempertahankan esensi suasana yang dapat dikenali",
+          "Mengutamakan kebebasan penuh tanpa mempertimbangkan suasana",
+          "Meniru persis lukisan yang sudah ada"
+        ],
+        correct: 1,
+        explanation: "Keseimbangan antara ekspresi personal dan representasi suasana adalah kunci. Seniman tetap dapat mengekspresikan gaya personalnya sambil memastikan esensi suasana (waktu, tempat, peristiwa) tetap dapat dikenali dan dirasakan oleh penonton."
+      },
+      {
+        question: "Perhatikan ilustrasi berikut: Sebuah lukisan menampilkan sawah dengan petani di latar depan tampak sangat besar, sedangkan gunung di latar belakang tampak sangat kecil. Prinsip apa yang sedang diterapkan dalam lukisan tersebut?",
+        options: [
+          "Kepadatan gambar",
+          "Anatomi proporsional",
+          "Perspektif dan kedalaman ruang",
+          "Simetri dan keseimbangan"
+        ],
+        correct: 2,
+        explanation: "Objek di latar depan yang tampak besar dan objek di latar belakang yang tampak kecil menunjukkan penerapan perspektif. Teknik ini menciptakan ilusi kedalaman ruang pada bidang dua dimensi."
+      },
+      {
+        question: "Seorang siswa ingin membuat lukisan suasana dengan tema 'Kehidupan di Desa' namun hanya memiliki arang dan kertas bekas. Berdasarkan konsep eksplorasi medium, langkah apa yang paling tepat dilakukan?",
+        options: [
+          "Menunda proyek sampai mendapat cat air",
+          "Meminjam alat dari teman yang lebih lengkap",
+          "Memanfaatkan arang untuk menciptakan gradasi dan tekstur unik yang sesuai suasana desa",
+          "Mengubah tema menjadi yang lebih sederhana"
+        ],
+        correct: 2,
+        explanation: "Sesuai dengan prinsip eksplorasi medium, yang terpenting adalah pengalaman proses kreatif, bukan seberapa mahal alat. Arang justru dapat menciptakan efek artistik unik dengan gradasi dan tekstur yang menarik untuk menggambarkan suasana desa."
+      },
+      {
+        question: "Dalam lukisan suasana Bali, seorang seniman memasukkan simbol Pura, pakaian adat, dan sawah terasering. Mengapa penggunaan simbol-simbol tersebut penting dalam konteks lukisan suasana?",
+        options: [
+          "Simbol hanya berfungsi sebagai dekorasi tambahan",
+          "Simbol membantu memperkuat identitas lokasi dan memperjelas pesan suasana yang ingin disampaikan",
+          "Simbol wajib ada dalam setiap lukisan",
+          "Simbol membuat lukisan terlihat lebih rumit"
+        ],
+        correct: 1,
+        explanation: "Simbol berfungsi sebagai penanda khusus yang memperkuat kesan suasana. Simbol-simbol khas Bali membantu penonton langsung mengidentifikasi lokasi dan memahami konteks budaya yang ingin disampaikan seniman."
+      },
+      {
+        question: "Dalam prosedur berkarya, tahap 'pengamatan' ditempatkan di urutan pertama. Apa konsekuensi jika seorang siswa langsung melompat ke tahap sketsa tanpa melakukan pengamatan terlebih dahulu?",
+        options: [
+          "Tidak ada konsekuensi, karena sketsa lebih penting",
+          "Lukisan akan lebih kreatif karena tidak terbatas realitas",
+          "Detail suasana mungkin tidak akurat dan kurang meyakinkan karena tidak berdasarkan observasi langsung",
+          "Proses berkarya menjadi lebih cepat dan efisien"
+        ],
+        correct: 2,
+        explanation: "Pengamatan adalah fondasi untuk menciptakan lukisan suasana yang informatif dan representatif. Tanpa observasi langsung, seniman mungkin melewatkan detail penting yang membuat suasana terasa otentik dan meyakinkan."
+      },
+      {
+        question: "Seorang guru menilai lukisan suasana sekolah dari dua siswa. Siswa A menggunakan cat air mahal dengan teknik sederhana. Siswa B menggunakan pewarna makanan dengan teknik yang sangat kreatif dan detail. Berdasarkan kriteria penilaian yang tepat, siapa yang seharusnya mendapat nilai lebih tinggi?",
+        options: [
+          "Siswa A karena menggunakan medium yang lebih profesional",
+          "Siswa B karena menunjukkan kreativitas gagasan dan penguasaan teknik yang lebih baik",
+          "Keduanya sama karena medium tidak mempengaruhi penilaian",
+          "Tidak bisa ditentukan tanpa melihat hasil akhir"
+        ],
+        correct: 1,
+        explanation: "Berdasarkan kriteria penilaian (kreativitas gagasan 30%, keharmonisan komposisi 35%, penguasaan teknik 35%), Siswa B yang menunjukkan kreativitas dan penguasaan teknik yang baik seharusnya mendapat nilai lebih tinggi, terlepas dari jenis medium yang digunakan."
+      },
+      {
+        question: "Lukisan suasana harus memenuhi kriteria 'informatif, realistik, dan representatif.' Jika sebuah lukisan hanya memenuhi kriteria 'realistik' namun gagal pada aspek 'informatif', apa yang mungkin menjadi masalahnya?",
+        options: [
+          "Objek-objek digambar terlalu kecil",
+          "Warna yang digunakan terlalu gelap",
+          "Pesan atau cerita suasana tidak tersampaikan dengan jelas meskipun bentuk objek sudah proporsional",
+          "Terlalu banyak ruang kosong dalam komposisi"
+        ],
+        correct: 2,
+        explanation: "Lukisan yang realistik namun tidak informatif berarti bentuk objek sudah sesuai kenyataan, tetapi gagal menyampaikan informasi atau pesan suasana dengan jelas. Penonton mungkin tidak memahami konteks waktu, tempat, atau peristiwa yang digambarkan."
+      },
+      {
+        question: "Dalam konteks pembelajaran seni rupa abad ke-21, mengapa kemampuan melukis suasana dengan berbagai medium pilihan dianggap sebagai keterampilan yang relevan?",
+        options: [
+          "Karena lukisan manual lebih berharga dibanding seni digital",
+          "Karena keterampilan ini melatih kreativitas, kemampuan observasi, dan fleksibilitas dalam memecahkan masalah visual dengan sumber daya yang tersedia",
+          "Karena semua pekerjaan masa depan membutuhkan kemampuan melukis",
+          "Karena ujian nasional selalu menguji kemampuan melukis"
+        ],
+        correct: 1,
+        explanation: "Melukis suasana dengan berbagai medium melatih soft skills penting abad ke-21: kreativitas (berpikir out-of-the-box), kemampuan observasi (analisis visual), dan fleksibilitas (adaptasi dengan sumber daya terbatas). Keterampilan ini transferable ke berbagai bidang kehidupan dan karir."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answers = new Array(10).fill(null);
+    let answered = new Array(10).fill(false);
+
+    // Initialize Quiz
+    function initQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answers = new Array(10).fill(null);
+      answered = new Array(10).fill(false);
+      showQuestion(0);
+      document.getElementById('results-card').classList.add('hidden');
+      document.getElementById('question-card').classList.remove('hidden');
+    }
+
+    function showQuestion(index) {
+      const q = quizData[index];
+      document.getElementById('question-number').textContent = index + 1;
+      document.getElementById('question-text').textContent = q.question;
+      
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+      
+      const labels = ['A', 'B', 'C', 'D'];
+      q.options.forEach((option, i) => {
+        const div = document.createElement('div');
+        div.className = `quiz-option p-4 border-2 border-slate-200 rounded-xl cursor-pointer flex items-start gap-3 ${answers[index] === i ? 'selected' : ''} ${answered[index] && i === q.correct ? 'correct' : ''} ${answered[index] && answers[index] === i && i !== q.correct ? 'incorrect' : ''}`;
+        div.onclick = () => selectOption(i);
+        
+        if (answered[index]) {
+          div.style.pointerEvents = 'none';
+        }
+        
+        div.innerHTML = `
+          <span class="w-8 h-8 ${answered[index] && i === q.correct ? 'bg-green-500 text-white' : answered[index] && answers[index] === i && i !== q.correct ? 'bg-red-500 text-white' : 'bg-slate-100 text-slate-700'} rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">${labels[i]}</span>
+          <span class="text-slate-700">${option}</span>
+        `;
+        optionsContainer.appendChild(div);
+      });
+      
+      // Update feedback
+      const feedbackContainer = document.getElementById('feedback-container');
+      if (answered[index]) {
+        feedbackContainer.classList.remove('hidden');
+        if (answers[index] === q.correct) {
+          feedbackContainer.className = 'mt-6 p-4 rounded-xl bg-green-50 border border-green-200';
+          document.getElementById('feedback-text').textContent = '✅ Jawaban Benar!';
+          document.getElementById('feedback-text').className = 'font-medium text-green-700';
+        } else {
+          feedbackContainer.className = 'mt-6 p-4 rounded-xl bg-red-50 border border-red-200';
+          document.getElementById('feedback-text').textContent = '❌ Jawaban Kurang Tepat';
+          document.getElementById('feedback-text').className = 'font-medium text-red-700';
+        }
+        document.getElementById('explanation-text').textContent = q.explanation;
+        document.getElementById('explanation-text').className = 'text-sm mt-2 text-slate-600';
+      } else {
+        feedbackContainer.classList.add('hidden');
+      }
+      
+      // Update navigation
+      document.getElementById('prev-btn').disabled = index === 0;
+      document.getElementById('next-btn').disabled = !answered[index];
+      document.getElementById('next-btn').textContent = index === 9 ? 'Lihat Hasil' : 'Selanjutnya →';
+      
+      // Update progress
+      const answeredCount = answered.filter(a => a).length;
+      document.getElementById('progress-text').textContent = `${answeredCount}/10`;
+      document.getElementById('progress-bar').style.width = `${answeredCount * 10}%`;
+    }
+
+    function selectOption(index) {
+      if (answered[currentQuestion]) return;
+      
+      answers[currentQuestion] = index;
+      answered[currentQuestion] = true;
+      
+      if (index === quizData[currentQuestion].correct) {
+        score++;
+      }
+      
+      showQuestion(currentQuestion);
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < 9) {
+        currentQuestion++;
+        showQuestion(currentQuestion);
+      } else {
+        showResults();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        showQuestion(currentQuestion);
+      }
+    }
+
+    function showResults() {
+      document.getElementById('question-card').classList.add('hidden');
+      document.getElementById('results-card').classList.remove('hidden');
+      document.getElementById('final-score').textContent = `${score}/10`;
+      
+      let message = '';
+      if (score >= 9) {
+        message = '🌟 Luar Biasa! Kamu sangat memahami materi melukis suasana!';
+      } else if (score >= 7) {
+        message = '👏 Bagus! Pemahaman kamu sudah baik, terus berlatih!';
+      } else if (score >= 5) {
+        message = '💪 Cukup baik! Pelajari lagi materi yang belum dikuasai.';
+      } else {
+        message = '📚 Jangan menyerah! Baca kembali materi dan coba lagi.';
+      }
+      document.getElementById('score-message').textContent = message;
+    }
+
+    function restartQuiz() {
+      initQuiz();
+    }
+
+    // Scroll Functions
+    function scrollToSlide(index) {
+      const slide = document.getElementById(`slide-${index}`);
+      if (slide) {
+        slide.scrollIntoView({ behavior: 'smooth' });
+        updateNavDots(index);
+      }
+    }
+
+    function updateNavDots(activeIndex) {
+      const dots = document.querySelectorAll('.nav-dot');
+      dots.forEach((dot, i) => {
+        if (i === activeIndex) {
+          dot.classList.add('active', 'bg-indigo-500');
+          dot.classList.remove('bg-slate-300');
+        } else {
+          dot.classList.remove('active', 'bg-indigo-500');
+          dot.classList.add('bg-slate-300');
+        }
+      });
+    }
+
+    // Observe slide visibility for nav dots
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const slideIndex = parseInt(entry.target.id.split('-')[1]);
+          updateNavDots(slideIndex);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    // Element SDK Integration
+    async function onConfigChange(cfg) {
+      config = { ...defaultConfig, ...cfg };
+      
+      document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+      document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+      
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'Nunito, sans-serif';
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      
+      const baseSize = config.font_size || defaultConfig.font_size;
+      document.documentElement.style.fontSize = `${baseSize}px`;
+    }
+
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [
+          {
+            get: () => cfg.background_color || defaultConfig.background_color,
+            set: (value) => {
+              cfg.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => cfg.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              cfg.secondary_color = value;
+              window.elementSdk.setConfig({ secondary_color: value });
+            }
+          },
+          {
+            get: () => cfg.text_color || defaultConfig.text_color,
+            set: (value) => {
+              cfg.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => cfg.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              cfg.primary_color = value;
+              window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => cfg.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              cfg.accent_color = value;
+              window.elementSdk.setConfig({ accent_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => cfg.font_family || defaultConfig.font_family,
+          set: (value) => {
+            cfg.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => cfg.font_size || defaultConfig.font_size,
+          set: (value) => {
+            cfg.font_size = value;
+            window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ["main_title", cfg.main_title || defaultConfig.main_title],
+        ["subtitle", cfg.subtitle || defaultConfig.subtitle]
+      ]);
+    }
+
+    // Initialize
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    // Initialize quiz and observers on load
+    initQuiz();
+    
+    document.querySelectorAll('.slide').forEach(slide => {
+      observer.observe(slide);
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c8a11e593d2e78f',t:'MTc3MDIwNzA3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

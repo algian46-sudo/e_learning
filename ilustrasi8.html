@@ -1,0 +1,867 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menggambar Ilustrasi - Seni Rupa SMP Kelas VIII</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=Source+Sans+3:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    .font-display { font-family: 'Playfair Display', serif; }
+    .font-body { font-family: 'Source Sans 3', sans-serif; }
+    
+    .slide-card {
+      transform: translateY(20px);
+      opacity: 0;
+      animation: slideUp 0.6s ease forwards;
+    }
+    
+    @keyframes slideUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    .nav-dot {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-dot.active {
+      transform: scale(1.3);
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      transform: translateX(8px);
+    }
+    
+    .progress-fill {
+      transition: width 0.5s ease;
+    }
+    
+    .floating-icon {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .illustration-bg {
+      background: radial-gradient(ellipse at top right, rgba(255,183,77,0.15) 0%, transparent 50%),
+                  radial-gradient(ellipse at bottom left, rgba(129,199,132,0.15) 0%, transparent 50%);
+    }
+  </style>
+  
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ </a>          
+<a href="index.html" class="btn-close-white">
+<i class="fas fa-home me-2"></i> Menu
+</a>
+ <body class="h-full font-body">
+  <div id="app" class="h-full overflow-auto illustration-bg" style="background-color: #faf8f5;"><!-- Header Navigation -->
+   <header class="sticky top-0 z-50 backdrop-blur-md border-b" style="background-color: rgba(250,248,245,0.95); border-color: #e8e4df;">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background-color: #ff7043;"><span class="text-xl">🎨</span>
+      </div>
+      <div>
+       <h1 id="header-title" class="font-display text-lg font-bold" style="color: #3e2723;">Ilustrasi</h1>
+       <p id="header-subtitle" class="text-xs" style="color: #8d6e63;">Seni Rupa Kelas VIII</p>
+      </div>
+     </div><!-- Navigation Dots -->
+     <div class="flex gap-2" id="nav-dots"></div><!-- Progress -->
+     <div class="hidden sm:flex items-center gap-2"><span class="text-sm font-medium" style="color: #8d6e63;" id="progress-text">Slide 1/9</span>
+      <div class="w-24 h-2 rounded-full" style="background-color: #e8e4df;">
+       <div id="progress-bar" class="h-full rounded-full progress-fill" style="background-color: #ff7043; width: 11.11%;"></div>
+      </div>
+     </div>
+    </div>
+   </header><!-- Main Content -->
+   <main class="max-w-4xl mx-auto px-4 py-8"><!-- Slides Container -->
+    <div id="slides-container"><!-- Slide 1: Judul -->
+     <section id="slide-1" class="slide-card">
+      <div class="text-center py-12 px-6 rounded-3xl mb-8" style="background: linear-gradient(135deg, #ff7043 0%, #ff9800 100%);">
+       <div class="floating-icon text-6xl mb-6">
+        🖼️
+       </div>
+       <h1 id="main-title" class="font-display text-3xl sm:text-4xl font-bold text-white mb-4">Menggambar Ilustrasi untuk Mata Pelajaran Lain</h1>
+       <p id="main-subtitle" class="text-lg text-white/90 mb-2">Subunit 1.4 - Seni Rupa SMP Kelas VIII</p>
+       <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full mt-4" style="background-color: rgba(255,255,255,0.2);"><span class="text-white/80 text-sm">📚 Materi Pembelajaran Interaktif</span>
+       </div>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-4">
+       <div class="p-5 rounded-2xl text-center" style="background-color: #fff8e1;"><span class="text-3xl mb-2 block">📖</span>
+        <p class="font-semibold" style="color: #3e2723;">8 Materi</p>
+        <p class="text-sm" style="color: #8d6e63;">Pembelajaran</p>
+       </div>
+       <div class="p-5 rounded-2xl text-center" style="background-color: #e8f5e9;"><span class="text-3xl mb-2 block">✏️</span>
+        <p class="font-semibold" style="color: #3e2723;">10 Soal</p>
+        <p class="text-sm" style="color: #8d6e63;">Latihan HOTS</p>
+       </div>
+       <div class="p-5 rounded-2xl text-center" style="background-color: #fce4ec;"><span class="text-3xl mb-2 block">🎯</span>
+        <p class="font-semibold" style="color: #3e2723;">Interaktif</p>
+        <p class="text-sm" style="color: #8d6e63;">&amp; Menyenangkan</p>
+       </div>
+      </div>
+     </section><!-- Slide 2: Apa itu Ilustrasi? -->
+     <section id="slide-2" class="slide-card hidden">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style="background-color: #e3f2fd;">
+        ❓
+       </div>
+       <h2 class="font-display text-2xl font-bold" style="color: #3e2723;">Apa itu Ilustrasi?</h2>
+      </div>
+      <div class="space-y-4">
+       <div class="p-6 rounded-2xl border-l-4" style="background-color: #ffffff; border-color: #ff7043;">
+        <div class="flex items-start gap-4"><span class="text-2xl">📜</span>
+         <div>
+          <h3 class="font-semibold mb-1" style="color: #3e2723;">Etimologi</h3>
+          <p style="color: #5d4037;">Berasal dari bahasa Latin <strong>illustrate</strong> atau <strong>illustrare</strong> yang berarti <em>menerangkan sesuatu</em>.</p>
+         </div>
+        </div>
+       </div>
+       <div class="p-6 rounded-2xl border-l-4" style="background-color: #ffffff; border-color: #4caf50;">
+        <div class="flex items-start gap-4"><span class="text-2xl">📝</span>
+         <div>
+          <h3 class="font-semibold mb-1" style="color: #3e2723;">Definisi</h3>
+          <p style="color: #5d4037;">Kegiatan menggambar yang hasilnya <strong>berfungsi untuk menerangkan sesuatu</strong>.</p>
+         </div>
+        </div>
+       </div>
+       <div class="p-6 rounded-2xl border-l-4" style="background-color: #ffffff; border-color: #2196f3;">
+        <div class="flex items-start gap-4"><span class="text-2xl">🎯</span>
+         <div>
+          <h3 class="font-semibold mb-1" style="color: #3e2723;">Fokus Utama</h3>
+          <p style="color: #5d4037;">Penekanan gambar ilustrasi terletak pada <strong>fungsinya untuk menerangkan</strong>.</p>
+         </div>
+        </div>
+       </div>
+       <div class="p-6 rounded-2xl" style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);">
+        <div class="flex items-start gap-4"><span class="text-2xl">👨‍🏫</span>
+         <div>
+          <h3 class="font-semibold mb-1" style="color: #3e2723;">Menurut Ahli</h3>
+          <p style="color: #5d4037;"><strong>Soedarso SP. (1990)</strong> menyatakan ilustrasi adalah seni yang diabdikan untuk kepentingan hal lain, memberikan penjelasan, atau mengiringi suatu pengertian.</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 3: Sejarah Singkat Ilustrasi -->
+     <section id="slide-3" class="slide-card hidden">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style="background-color: #fce4ec;">
+        🏛️
+       </div>
+       <h2 class="font-display text-2xl font-bold" style="color: #3e2723;">Sejarah Singkat Ilustrasi</h2>
+      </div>
+      <div class="relative"><!-- Timeline Line -->
+       <div class="absolute left-6 top-0 bottom-0 w-1 rounded-full" style="background: linear-gradient(to bottom, #ff7043, #4caf50, #2196f3, #9c27b0);"></div>
+       <div class="space-y-6 pl-16">
+        <div class="relative">
+         <div class="absolute -left-12 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background-color: #ff7043;">
+          1
+         </div>
+         <div class="p-5 rounded-2xl" style="background-color: #ffffff;">
+          <h3 class="font-semibold mb-2" style="color: #3e2723;">🦣 Jejak Awal</h3>
+          <p style="color: #5d4037;">Terlihat pada catatan visual di <strong>dinding gua</strong> sejak zaman prasejarah.</p>
+         </div>
+        </div>
+        <div class="relative">
+         <div class="absolute -left-12 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background-color: #4caf50;">
+          2
+         </div>
+         <div class="p-5 rounded-2xl" style="background-color: #ffffff;">
+          <h3 class="font-semibold mb-2" style="color: #3e2723;">📚 Abad Pertengahan</h3>
+          <p style="color: #5d4037;">Ditemukan pada <strong>manuskrip-manuskrip lama</strong> yang dihiasi ilustrasi indah.</p>
+         </div>
+        </div>
+        <div class="relative">
+         <div class="absolute -left-12 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background-color: #2196f3;">
+          3
+         </div>
+         <div class="p-5 rounded-2xl" style="background-color: #ffffff;">
+          <h3 class="font-semibold mb-2" style="color: #3e2723;">📰 Abad 15 - 18</h3>
+          <p style="color: #5d4037;">Digunakan pada buku dan koran dengan teknik <strong>cukil kayu, etsa, dan litografi</strong>.</p>
+         </div>
+        </div>
+        <div class="relative">
+         <div class="absolute -left-12 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background-color: #9c27b0;">
+          4
+         </div>
+         <div class="p-5 rounded-2xl" style="background-color: #ffffff;">
+          <h3 class="font-semibold mb-2" style="color: #3e2723;">🌴 Nusantara</h3>
+          <p style="color: #5d4037;">Digunakan pada <strong>daun lontar</strong> untuk menyertai teks ajaran tertentu.</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 4: Objek dan Media Ilustrasi -->
+     <section id="slide-4" class="slide-card hidden">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style="background-color: #e8f5e9;">
+        🎨
+       </div>
+       <h2 class="font-display text-2xl font-bold" style="color: #3e2723;">Objek dan Media Ilustrasi</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+       <div class="p-6 rounded-2xl" style="background-color: #ffffff;">
+        <div class="flex items-center gap-3 mb-4"><span class="text-3xl">🤔</span>
+         <h3 class="font-display text-xl font-semibold" style="color: #3e2723;">Apa yang diterangkan?</h3>
+        </div>
+        <ul class="space-y-3">
+         <li class="flex items-start gap-3"><span class="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style="background-color: #ff7043;">1</span> <span style="color: #5d4037;">Keadaan atau benda</span></li>
+         <li class="flex items-start gap-3"><span class="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style="background-color: #ff7043;">2</span> <span style="color: #5d4037;">Cerita, ide, atau gagasan</span></li>
+         <li class="flex items-start gap-3"><span class="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style="background-color: #ff7043;">3</span> <span style="color: #5d4037;">Adegan tertentu dalam teks/narasi</span></li>
+        </ul>
+       </div>
+       <div class="p-6 rounded-2xl" style="background-color: #ffffff;">
+        <div class="flex items-center gap-3 mb-4"><span class="text-3xl">📍</span>
+         <h3 class="font-display text-xl font-semibold" style="color: #3e2723;">Di mana kita menemukannya?</h3>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+         <div class="p-3 rounded-xl text-center" style="background-color: #fff3e0;"><span class="text-2xl block mb-1">📰</span> <span class="text-sm" style="color: #5d4037;">Majalah &amp; Koran</span>
+         </div>
+         <div class="p-3 rounded-xl text-center" style="background-color: #e3f2fd;"><span class="text-2xl block mb-1">📖</span> <span class="text-sm" style="color: #5d4037;">Buku Pelajaran</span>
+         </div>
+         <div class="p-3 rounded-xl text-center" style="background-color: #f3e5f5;"><span class="text-2xl block mb-1">🔬</span> <span class="text-sm" style="color: #5d4037;">Karya Ilmiah</span>
+         </div>
+         <div class="p-3 rounded-xl text-center" style="background-color: #e8f5e9;"><span class="text-2xl block mb-1">📝</span> <span class="text-sm" style="color: #5d4037;">Cerpen</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 5: Jenis-Jenis Gambar Ilustrasi -->
+     <section id="slide-5" class="slide-card hidden">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style="background-color: #fff3e0;">
+        📋
+       </div>
+       <h2 class="font-display text-2xl font-bold" style="color: #3e2723;">Jenis-Jenis Gambar Ilustrasi</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+       <div class="p-5 rounded-2xl border-2 hover:shadow-lg transition-shadow cursor-pointer" style="background-color: #ffffff; border-color: #e8e4df;">
+        <div class="text-4xl mb-3">
+         🌿
+        </div>
+        <h3 class="font-semibold mb-2" style="color: #3e2723;">Naturalis</h3>
+        <p class="text-sm" style="color: #8d6e63;">Gambar objek mirip dengan benda sesungguhnya</p>
+       </div>
+       <div class="p-5 rounded-2xl border-2 hover:shadow-lg transition-shadow cursor-pointer" style="background-color: #ffffff; border-color: #e8e4df;">
+        <div class="text-4xl mb-3">
+         🎭
+        </div>
+        <h3 class="font-semibold mb-2" style="color: #3e2723;">Dekoratif</h3>
+        <p class="text-sm" style="color: #8d6e63;">Objek disederhanakan menjadi bentuk hiasan</p>
+       </div>
+       <div class="p-5 rounded-2xl border-2 hover:shadow-lg transition-shadow cursor-pointer" style="background-color: #ffffff; border-color: #e8e4df;">
+        <div class="text-4xl mb-3">
+         😄
+        </div>
+        <h3 class="font-semibold mb-2" style="color: #3e2723;">Kartun</h3>
+        <p class="text-sm" style="color: #8d6e63;">Objek dibuat lucu dan menghibur</p>
+       </div>
+       <div class="p-5 rounded-2xl border-2 hover:shadow-lg transition-shadow cursor-pointer" style="background-color: #ffffff; border-color: #e8e4df;">
+        <div class="text-4xl mb-3">
+         🤪
+        </div>
+        <h3 class="font-semibold mb-2" style="color: #3e2723;">Karikatur</h3>
+        <p class="text-sm" style="color: #8d6e63;">Objek dengan ciri fisik yang dilebih-lebihkan</p>
+       </div>
+       <div class="p-5 rounded-2xl border-2 hover:shadow-lg transition-shadow cursor-pointer" style="background-color: #ffffff; border-color: #e8e4df;">
+        <div class="text-4xl mb-3">
+         📚
+        </div>
+        <h3 class="font-semibold mb-2" style="color: #3e2723;">Cerita Bergambar</h3>
+        <p class="text-sm" style="color: #8d6e63;">Gambar serial dengan alur cerita</p>
+       </div>
+       <div class="p-5 rounded-2xl border-2 hover:shadow-lg transition-shadow cursor-pointer" style="background-color: #ffffff; border-color: #e8e4df;">
+        <div class="text-4xl mb-3">
+         📖
+        </div>
+        <h3 class="font-semibold mb-2" style="color: #3e2723;">Ilustrasi Buku</h3>
+        <p class="text-sm" style="color: #8d6e63;">Gambar yang terdapat di dalam buku</p>
+       </div>
+      </div>
+     </section><!-- Slide 6: Contoh Ilustrasi Lintas Mata Pelajaran -->
+     <section id="slide-6" class="slide-card hidden">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style="background-color: #e3f2fd;">
+        🔗
+       </div>
+       <h2 class="font-display text-2xl font-bold" style="color: #3e2723;">Contoh Ilustrasi Lintas Mata Pelajaran</h2>
+      </div>
+      <p class="mb-6 text-lg" style="color: #5d4037;">Gambar ilustrasi membantu memperjelas materi di luar seni rupa:</p>
+      <div class="space-y-4">
+       <div class="p-6 rounded-2xl flex items-center gap-5 hover:shadow-lg transition-shadow" style="background-color: #ffffff;">
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0" style="background-color: #ffebee;">
+         🏀
+        </div>
+        <div>
+         <h3 class="font-semibold text-lg" style="color: #3e2723;">PJOK</h3>
+         <p style="color: #5d4037;">Mengilustrasikan gerakan olahraga seperti teknik bermain basket, senam, atau renang.</p>
+        </div>
+       </div>
+       <div class="p-6 rounded-2xl flex items-center gap-5 hover:shadow-lg transition-shadow" style="background-color: #ffffff;">
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0" style="background-color: #e8f5e9;">
+         🐟
+        </div>
+        <div>
+         <h3 class="font-semibold text-lg" style="color: #3e2723;">Biologi/IPA</h3>
+         <p style="color: #5d4037;">Menjelaskan anatomi tubuh makhluk hidup seperti organ dalam ikan, struktur sel, atau sistem pencernaan.</p>
+        </div>
+       </div>
+       <div class="p-6 rounded-2xl flex items-center gap-5 hover:shadow-lg transition-shadow" style="background-color: #ffffff;">
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0" style="background-color: #f3e5f5;">
+         🖼️
+        </div>
+        <div>
+         <h3 class="font-semibold text-lg" style="color: #3e2723;">Seni Rupa</h3>
+         <p style="color: #5d4037;">Menggambarkan situasi di galeri pameran, proses berkarya, atau teknik menggambar.</p>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 7: Langkah-Langkah Menggambar Ilustrasi -->
+     <section id="slide-7" class="slide-card hidden">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style="background-color: #f3e5f5;">
+        📝
+       </div>
+       <h2 class="font-display text-2xl font-bold" style="color: #3e2723;">Langkah-Langkah Menggambar Ilustrasi</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4">
+       <div class="p-5 rounded-2xl flex items-start gap-4" style="background-color: #ffffff;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold flex-shrink-0" style="background-color: #ff7043;">
+         1
+        </div>
+        <div>
+         <h3 class="font-semibold" style="color: #3e2723;">Persiapan Bahan</h3>
+         <p class="text-sm" style="color: #8d6e63;">Menentukan cerita atau narasi yang akan diilustrasikan</p>
+        </div>
+       </div>
+       <div class="p-5 rounded-2xl flex items-start gap-4" style="background-color: #ffffff;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold flex-shrink-0" style="background-color: #ff9800;">
+         2
+        </div>
+        <div>
+         <h3 class="font-semibold" style="color: #3e2723;">Gagasan</h3>
+         <p class="text-sm" style="color: #8d6e63;">Menyiapkan ide yang relevan dengan bahan tersebut</p>
+        </div>
+       </div>
+       <div class="p-5 rounded-2xl flex items-start gap-4" style="background-color: #ffffff;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold flex-shrink-0" style="background-color: #4caf50;">
+         3
+        </div>
+        <div>
+         <h3 class="font-semibold" style="color: #3e2723;">Alat &amp; Media</h3>
+         <p class="text-sm" style="color: #8d6e63;">Menyiapkan kertas, pensil, penghapus, atau pewarna</p>
+        </div>
+       </div>
+       <div class="p-5 rounded-2xl flex items-start gap-4" style="background-color: #ffffff;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold flex-shrink-0" style="background-color: #2196f3;">
+         4
+        </div>
+        <div>
+         <h3 class="font-semibold" style="color: #3e2723;">Sketsa</h3>
+         <p class="text-sm" style="color: #8d6e63;">Membuat draf gambar dengan komposisi yang diinginkan</p>
+        </div>
+       </div>
+       <div class="p-5 rounded-2xl flex items-start gap-4" style="background-color: #ffffff;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold flex-shrink-0" style="background-color: #9c27b0;">
+         5
+        </div>
+        <div>
+         <h3 class="font-semibold" style="color: #3e2723;">Detail</h3>
+         <p class="text-sm" style="color: #8d6e63;">Melengkapi detail-detail pada gambar</p>
+        </div>
+       </div>
+       <div class="p-5 rounded-2xl flex items-start gap-4" style="background-color: #ffffff;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold flex-shrink-0" style="background-color: #e91e63;">
+         6
+        </div>
+        <div>
+         <h3 class="font-semibold" style="color: #3e2723;">Penyelesaian</h3>
+         <p class="text-sm" style="color: #8d6e63;">Tahap akhir (finishing) karya</p>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 8: Kriteria Penilaian Karya -->
+     <section id="slide-8" class="slide-card hidden">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style="background-color: #ffebee;">
+        ⭐
+       </div>
+       <h2 class="font-display text-2xl font-bold" style="color: #3e2723;">Kriteria Penilaian Karya (Aspek Estetis)</h2>
+      </div>
+      <p class="mb-6" style="color: #5d4037;">Untuk menghasilkan karya yang baik, perhatikan poin berikut:</p>
+      <div class="space-y-4">
+       <div class="p-6 rounded-2xl" style="background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style="background-color: #ffffff;">
+          ✅
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg mb-2" style="color: #3e2723;">Kesesuaian</h3>
+          <p style="color: #5d4037;">Apakah gambar sesuai dengan tujuan materi yang diilustrasikan?</p>
+         </div>
+        </div>
+       </div>
+       <div class="p-6 rounded-2xl" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style="background-color: #ffffff;">
+          💡
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg mb-2" style="color: #3e2723;">Kreativitas</h3>
+          <p style="color: #5d4037;">Sejauh mana gagasan orisinal tercermin dalam unsur gambar?</p>
+         </div>
+        </div>
+       </div>
+       <div class="p-6 rounded-2xl" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style="background-color: #ffffff;">
+          ⚖️
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg mb-2" style="color: #3e2723;">Komposisi</h3>
+          <p style="color: #5d4037;">Apakah hubungan antar unsur dalam gambar terlihat harmonis?</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 9: Quiz -->
+     <section id="slide-9" class="slide-card hidden">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style="background-color: #e1f5fe;">
+        🧠
+       </div>
+       <h2 class="font-display text-2xl font-bold" style="color: #3e2723;">Latihan Soal HOTS</h2>
+      </div><!-- Quiz Progress -->
+      <div class="mb-6 p-4 rounded-xl" style="background-color: #ffffff;">
+       <div class="flex justify-between items-center mb-2"><span class="font-medium" style="color: #3e2723;">Soal <span id="current-question">1</span> dari 10</span> <span class="font-medium" style="color: #ff7043;">Skor: <span id="quiz-score">0</span></span>
+       </div>
+       <div class="w-full h-3 rounded-full" style="background-color: #e8e4df;">
+        <div id="quiz-progress" class="h-full rounded-full progress-fill" style="background-color: #4caf50; width: 10%;"></div>
+       </div>
+      </div><!-- Question Container -->
+      <div id="quiz-container">
+       <div id="question-card" class="p-6 rounded-2xl mb-4" style="background-color: #ffffff;">
+        <p id="question-text" class="text-lg font-medium mb-6" style="color: #3e2723;"></p>
+        <div id="options-container" class="space-y-3"></div>
+       </div><!-- Feedback -->
+       <div id="feedback-container" class="hidden p-4 rounded-xl mb-4">
+        <p id="feedback-text" class="font-medium"></p>
+        <p id="feedback-explanation" class="text-sm mt-2" style="color: #5d4037;"></p>
+       </div><!-- Next Button --> <button id="next-btn" class="hidden w-full py-3 rounded-xl font-semibold text-white transition-all hover:shadow-lg" style="background-color: #ff7043;"> Soal Berikutnya → </button>
+      </div><!-- Quiz Result -->
+      <div id="quiz-result" class="hidden text-center py-8">
+       <div class="text-6xl mb-4">
+        🎉
+       </div>
+       <h3 class="font-display text-2xl font-bold mb-2" style="color: #3e2723;">Kuis Selesai!</h3>
+       <p class="text-lg mb-4" style="color: #5d4037;">Skor Akhir Kamu:</p>
+       <div class="inline-flex items-center justify-center w-24 h-24 rounded-full text-3xl font-bold text-white mb-6" style="background: linear-gradient(135deg, #ff7043 0%, #ff9800 100%);"><span id="final-score">0</span>/10
+       </div>
+       <p id="result-message" class="text-lg mb-6" style="color: #5d4037;"></p><button id="restart-quiz-btn" class="px-8 py-3 rounded-xl font-semibold text-white transition-all hover:shadow-lg" style="background-color: #4caf50;"> 🔄 Ulangi Kuis </button>
+      </div>
+     </section>
+    </div><!-- Navigation Buttons -->
+    <div class="flex justify-between items-center mt-8 pt-6 border-t" style="border-color: #e8e4df;"><button id="prev-btn" class="flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed" style="background-color: #ffffff; color: #3e2723;"> ← Sebelumnya </button> <button id="next-slide-btn" class="flex items-center gap-2 px-6 py-3 rounded-xl font-medium text-white transition-all hover:shadow-md" style="background-color: #ff7043;"> Selanjutnya → </button>
+    </div>
+   </main><!-- Footer -->
+   <footer class="text-center py-6 border-t" style="border-color: #e8e4df;">
+    <p class="text-sm" style="color: #8d6e63;">© 2024 Materi Seni Rupa SMP Kelas VIII</p>
+   </footer>
+  </div>
+  <script>
+    // Default Configuration
+    const defaultConfig = {
+      main_title: 'Menggambar Ilustrasi untuk Mata Pelajaran Lain',
+      subtitle: 'Subunit 1.4 - Seni Rupa SMP Kelas VIII',
+      background_color: '#faf8f5',
+      primary_color: '#ff7043',
+      text_color: '#3e2723',
+      secondary_text_color: '#8d6e63',
+      surface_color: '#ffffff',
+      font_family: 'Source Sans 3',
+      font_size: 16
+    };
+
+    let config = { ...defaultConfig };
+    let currentSlide = 1;
+    const totalSlides = 9;
+
+    // Quiz Data
+    const quizData = [
+      {
+        question: "Seorang siswa diminta membuat ilustrasi untuk buku IPA tentang metamorfosis kupu-kupu. Manakah pendekatan yang PALING tepat agar ilustrasi tersebut efektif sebagai media pembelajaran?",
+        options: [
+          "Membuat gambar kartun kupu-kupu yang lucu agar menarik perhatian",
+          "Menggambar tahapan metamorfosis secara naturalis dengan urutan dan label yang jelas",
+          "Menggunakan teknik karikatur untuk melebih-lebihkan bagian tubuh kupu-kupu",
+          "Membuat ilustrasi dekoratif kupu-kupu dengan warna-warna cerah"
+        ],
+        correct: 1,
+        explanation: "Ilustrasi untuk buku IPA memerlukan ketepatan informasi. Gambar naturalis dengan urutan dan label yang jelas akan membantu siswa memahami proses metamorfosis secara ilmiah."
+      },
+      {
+        question: "Berdasarkan definisi Soedarso SP., mengapa ilustrasi disebut sebagai 'seni yang diabdikan untuk kepentingan hal lain'?",
+        options: [
+          "Karena ilustrasi selalu menggunakan teknik seni yang rumit",
+          "Karena fungsi utama ilustrasi adalah menjelaskan atau mendukung suatu pengertian, bukan sekadar keindahan",
+          "Karena ilustrasi hanya boleh dibuat oleh seniman profesional",
+          "Karena ilustrasi tidak memiliki nilai estetis tersendiri"
+        ],
+        correct: 1,
+        explanation: "Soedarso SP. menekankan bahwa ilustrasi memiliki fungsi untuk menerangkan atau mengiringi pengertian tertentu. Fokusnya adalah pada kegunaan, bukan semata-mata nilai estetis."
+      },
+      {
+        question: "Andi membuat ilustrasi gerakan lay-up basket untuk materi PJOK. Namun, pembaca sulit memahami urutan gerakannya. Aspek penilaian manakah yang perlu diperbaiki?",
+        options: [
+          "Kreativitas - karena gambarnya kurang menarik",
+          "Kesesuaian - karena gambar tidak sesuai dengan materi basket",
+          "Komposisi - karena hubungan antar unsur gambar tidak harmonis dalam menunjukkan urutan",
+          "Teknik - karena goresan pensilnya kurang rapi"
+        ],
+        correct: 2,
+        explanation: "Komposisi berkaitan dengan pengaturan unsur-unsur gambar agar terlihat harmonis dan mudah dipahami. Jika urutan gerakan sulit dipahami, berarti komposisi gambarnya perlu diperbaiki."
+      },
+      {
+        question: "Mengapa ilustrasi pada daun lontar di Nusantara dianggap penting dalam sejarah seni ilustrasi Indonesia?",
+        options: [
+          "Karena tekniknya lebih canggih dibanding ilustrasi Eropa",
+          "Karena menunjukkan bahwa tradisi mengilustrasikan teks sudah ada lama di Indonesia",
+          "Karena daun lontar lebih tahan lama dibanding kertas",
+          "Karena ilustrasi lontar selalu berwarna-warni"
+        ],
+        correct: 1,
+        explanation: "Ilustrasi pada daun lontar menunjukkan bahwa budaya mengilustrasikan teks untuk memperjelas ajaran sudah ada sejak lama di Nusantara, menjadi bagian dari warisan budaya Indonesia."
+      },
+      {
+        question: "Sebuah majalah anak membutuhkan ilustrasi untuk cerpen tentang petualangan seekor kelinci. Jenis ilustrasi apa yang PALING sesuai dengan konteks dan target pembaca?",
+        options: [
+          "Karikatur dengan ciri fisik kelinci yang dilebih-lebihkan secara kritis",
+          "Naturalis dengan detail anatomi kelinci yang sangat akurat",
+          "Kartun dengan karakter kelinci yang lucu dan ekspresif",
+          "Dekoratif dengan bentuk kelinci yang disederhanakan menjadi pola"
+        ],
+        correct: 2,
+        explanation: "Untuk majalah anak dengan cerpen petualangan, ilustrasi kartun yang lucu dan ekspresif akan lebih menarik dan sesuai dengan target pembaca anak-anak."
+      },
+      {
+        question: "Dalam membuat ilustrasi untuk buku pelajaran, mengapa tahap 'Gagasan' harus dilakukan setelah 'Persiapan Bahan'?",
+        options: [
+          "Agar ilustrator bisa meniru gambar dari buku lain",
+          "Agar ide yang muncul relevan dan sesuai dengan materi yang akan diilustrasikan",
+          "Agar proses menggambar lebih cepat selesai",
+          "Agar tidak perlu membuat sketsa terlebih dahulu"
+        ],
+        correct: 1,
+        explanation: "Tahap gagasan harus mengikuti persiapan bahan karena ide yang dikembangkan harus relevan dengan cerita atau narasi yang sudah ditentukan, sehingga ilustrasi dapat menerangkan materi dengan tepat."
+      },
+      {
+        question: "Seorang kartunis politik membuat gambar seorang pejabat dengan hidung sangat panjang. Teknik ini menunjukkan jenis ilustrasi apa dan apa tujuannya?",
+        options: [
+          "Kartun, untuk menghibur pembaca dengan gambar lucu",
+          "Karikatur, untuk menyampaikan kritik melalui penggambaran fisik yang dilebihkan",
+          "Naturalis, untuk menggambarkan wajah pejabat secara akurat",
+          "Dekoratif, untuk memperindah halaman koran"
+        ],
+        correct: 1,
+        explanation: "Karikatur ditandai dengan ciri fisik yang dilebih-lebihkan. Hidung panjang dalam konteks politik sering digunakan untuk menyimbolkan ketidakjujuran, menjadikannya kritik visual."
+      },
+      {
+        question: "Perhatikan pernyataan berikut: 'Ilustrasi pertama kali ditemukan pada abad pertengahan dalam bentuk manuskrip.' Bagaimana Anda mengevaluasi pernyataan tersebut?",
+        options: [
+          "Benar, karena sebelumnya tidak ada tradisi visual",
+          "Salah, karena jejak ilustrasi sudah ada pada lukisan dinding gua sejak zaman prasejarah",
+          "Benar, karena manuskrip adalah media pertama yang menggunakan gambar",
+          "Salah, karena ilustrasi pertama kali muncul pada abad ke-15"
+        ],
+        correct: 1,
+        explanation: "Pernyataan tersebut tidak akurat. Jejak awal ilustrasi sudah terlihat pada catatan visual di dinding gua sejak zaman prasejarah, jauh sebelum abad pertengahan."
+      },
+      {
+        question: "Dua siswa berdebat tentang ilustrasi yang baik. Siswa A: 'Ilustrasi harus selalu naturalis agar akurat.' Siswa B: 'Jenis ilustrasi harus disesuaikan dengan tujuan dan konteksnya.' Siapa yang benar dan mengapa?",
+        options: [
+          "Siswa A, karena akurasi adalah hal terpenting dalam ilustrasi",
+          "Siswa B, karena setiap jenis ilustrasi memiliki fungsi berbeda sesuai kebutuhan",
+          "Keduanya salah, karena ilustrasi bebas dibuat sesuka hati",
+          "Keduanya benar, tergantung selera ilustratornya"
+        ],
+        correct: 1,
+        explanation: "Siswa B benar karena jenis ilustrasi (naturalis, kartun, karikatur, dll.) harus dipilih berdasarkan tujuan dan konteks penggunaannya. Tidak semua materi membutuhkan ilustrasi naturalis."
+      },
+      {
+        question: "Sekolah Anda akan membuat buku kenangan dengan ilustrasi. Jika Anda ditugaskan sebagai koordinator, langkah manakah yang PALING tepat untuk memastikan kualitas hasil akhir?",
+        options: [
+          "Langsung meminta semua siswa menggambar tanpa arahan agar lebih kreatif",
+          "Menyusun kriteria penilaian (kesesuaian, kreativitas, komposisi) sebagai panduan bagi ilustrator",
+          "Memilih hanya siswa yang pandai menggambar naturalis",
+          "Menggunakan gambar dari internet agar hasilnya lebih bagus"
+        ],
+        correct: 1,
+        explanation: "Menyusun kriteria penilaian berdasarkan aspek estetis (kesesuaian, kreativitas, komposisi) akan memberikan panduan yang jelas bagi ilustrator dan memastikan kualitas hasil akhir yang konsisten."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+
+    // Initialize Element SDK
+    async function initializeApp() {
+      if (window.elementSdk) {
+        await window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (newConfig) => {
+            config = { ...defaultConfig, ...newConfig };
+            applyConfig();
+          },
+          mapToCapabilities: (cfg) => ({
+            recolorables: [
+              {
+                get: () => cfg.background_color || defaultConfig.background_color,
+                set: (value) => window.elementSdk.setConfig({ background_color: value })
+              },
+              {
+                get: () => cfg.surface_color || defaultConfig.surface_color,
+                set: (value) => window.elementSdk.setConfig({ surface_color: value })
+              },
+              {
+                get: () => cfg.text_color || defaultConfig.text_color,
+                set: (value) => window.elementSdk.setConfig({ text_color: value })
+              },
+              {
+                get: () => cfg.primary_color || defaultConfig.primary_color,
+                set: (value) => window.elementSdk.setConfig({ primary_color: value })
+              },
+              {
+                get: () => cfg.secondary_text_color || defaultConfig.secondary_text_color,
+                set: (value) => window.elementSdk.setConfig({ secondary_text_color: value })
+              }
+            ],
+            borderables: [],
+            fontEditable: {
+              get: () => cfg.font_family || defaultConfig.font_family,
+              set: (value) => window.elementSdk.setConfig({ font_family: value })
+            },
+            fontSizeable: {
+              get: () => cfg.font_size || defaultConfig.font_size,
+              set: (value) => window.elementSdk.setConfig({ font_size: value })
+            }
+          }),
+          mapToEditPanelValues: (cfg) => new Map([
+            ['main_title', cfg.main_title || defaultConfig.main_title],
+            ['subtitle', cfg.subtitle || defaultConfig.subtitle]
+          ])
+        });
+      }
+      
+      initializeNavigation();
+      initializeQuiz();
+      applyConfig();
+    }
+
+    function applyConfig() {
+      const app = document.getElementById('app');
+      const baseFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = `${baseFont}, 'Source Sans 3', sans-serif`;
+      const baseSize = config.font_size || defaultConfig.font_size;
+      
+      app.style.backgroundColor = config.background_color || defaultConfig.background_color;
+      app.style.fontFamily = baseFontStack;
+      app.style.fontSize = `${baseSize}px`;
+      
+      // Update titles
+      const mainTitle = document.getElementById('main-title');
+      const mainSubtitle = document.getElementById('main-subtitle');
+      if (mainTitle) mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      if (mainSubtitle) mainSubtitle.textContent = config.subtitle || defaultConfig.subtitle;
+      
+      // Apply colors to elements
+      document.querySelectorAll('[style*="color: #3e2723"]').forEach(el => {
+        el.style.color = config.text_color || defaultConfig.text_color;
+      });
+      
+      document.querySelectorAll('[style*="color: #8d6e63"]').forEach(el => {
+        el.style.color = config.secondary_text_color || defaultConfig.secondary_text_color;
+      });
+      
+      document.querySelectorAll('[style*="background-color: #ff7043"]').forEach(el => {
+        el.style.backgroundColor = config.primary_color || defaultConfig.primary_color;
+      });
+    }
+
+    function initializeNavigation() {
+      const navDotsContainer = document.getElementById('nav-dots');
+      navDotsContainer.innerHTML = '';
+      
+      for (let i = 1; i <= totalSlides; i++) {
+        const dot = document.createElement('button');
+        dot.className = `nav-dot w-3 h-3 rounded-full transition-all ${i === 1 ? 'active' : ''}`;
+        dot.style.backgroundColor = i === 1 ? (config.primary_color || '#ff7043') : '#e8e4df';
+        dot.onclick = () => goToSlide(i);
+        navDotsContainer.appendChild(dot);
+      }
+      
+      document.getElementById('prev-btn').onclick = () => goToSlide(currentSlide - 1);
+      document.getElementById('next-slide-btn').onclick = () => goToSlide(currentSlide + 1);
+      
+      updateNavigation();
+    }
+
+    function goToSlide(slideNum) {
+      if (slideNum < 1 || slideNum > totalSlides) return;
+      
+      document.getElementById(`slide-${currentSlide}`).classList.add('hidden');
+      currentSlide = slideNum;
+      
+      const newSlide = document.getElementById(`slide-${currentSlide}`);
+      newSlide.classList.remove('hidden');
+      newSlide.style.animation = 'none';
+      newSlide.offsetHeight;
+      newSlide.style.animation = 'slideUp 0.6s ease forwards';
+      
+      updateNavigation();
+    }
+
+    function updateNavigation() {
+      const dots = document.querySelectorAll('.nav-dot');
+      dots.forEach((dot, index) => {
+        const isActive = index + 1 === currentSlide;
+        dot.classList.toggle('active', isActive);
+        dot.style.backgroundColor = isActive ? (config.primary_color || '#ff7043') : '#e8e4df';
+      });
+      
+      document.getElementById('prev-btn').disabled = currentSlide === 1;
+      document.getElementById('next-slide-btn').style.display = currentSlide === totalSlides ? 'none' : 'flex';
+      
+      document.getElementById('progress-text').textContent = `Slide ${currentSlide}/${totalSlides}`;
+      document.getElementById('progress-bar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+    }
+
+    function initializeQuiz() {
+      loadQuestion();
+      
+      document.getElementById('next-btn').onclick = () => {
+        currentQuestion++;
+        if (currentQuestion < quizData.length) {
+          loadQuestion();
+        } else {
+          showResult();
+        }
+      };
+      
+      document.getElementById('restart-quiz-btn').onclick = resetQuiz;
+    }
+
+    function loadQuestion() {
+      const question = quizData[currentQuestion];
+      answered = false;
+      
+      document.getElementById('current-question').textContent = currentQuestion + 1;
+      document.getElementById('quiz-progress').style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
+      document.getElementById('question-text').textContent = question.question;
+      
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+      
+      question.options.forEach((option, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option w-full text-left p-4 rounded-xl border-2 transition-all';
+        btn.style.borderColor = '#e8e4df';
+        btn.style.backgroundColor = '#faf8f5';
+        btn.innerHTML = `
+          <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold mr-3" style="background-color: #e8e4df; color: #3e2723;">
+            ${String.fromCharCode(65 + index)}
+          </span>
+          <span style="color: #3e2723;">${option}</span>
+        `;
+        btn.onclick = () => selectAnswer(index, btn);
+        optionsContainer.appendChild(btn);
+      });
+      
+      document.getElementById('feedback-container').classList.add('hidden');
+      document.getElementById('next-btn').classList.add('hidden');
+    }
+
+    function selectAnswer(index, btn) {
+      if (answered) return;
+      answered = true;
+      
+      const question = quizData[currentQuestion];
+      const isCorrect = index === question.correct;
+      
+      if (isCorrect) {
+        score++;
+        document.getElementById('quiz-score').textContent = score;
+      }
+      
+      // Style selected answer
+      btn.style.borderColor = isCorrect ? '#4caf50' : '#f44336';
+      btn.style.backgroundColor = isCorrect ? '#e8f5e9' : '#ffebee';
+      
+      // Highlight correct answer if wrong
+      if (!isCorrect) {
+        const options = document.querySelectorAll('.quiz-option');
+        options[question.correct].style.borderColor = '#4caf50';
+        options[question.correct].style.backgroundColor = '#e8f5e9';
+      }
+      
+      // Show feedback
+      const feedbackContainer = document.getElementById('feedback-container');
+      feedbackContainer.classList.remove('hidden');
+      feedbackContainer.style.backgroundColor = isCorrect ? '#e8f5e9' : '#ffebee';
+      
+      document.getElementById('feedback-text').textContent = isCorrect ? '✅ Jawaban Benar!' : '❌ Jawaban Salah';
+      document.getElementById('feedback-text').style.color = isCorrect ? '#2e7d32' : '#c62828';
+      document.getElementById('feedback-explanation').textContent = question.explanation;
+      
+      document.getElementById('next-btn').classList.remove('hidden');
+      document.getElementById('next-btn').textContent = currentQuestion < quizData.length - 1 ? 'Soal Berikutnya →' : 'Lihat Hasil →';
+    }
+
+    function showResult() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      document.getElementById('final-score').textContent = score;
+      
+      let message = '';
+      if (score === 10) message = '🌟 Sempurna! Kamu menguasai materi dengan sangat baik!';
+      else if (score >= 8) message = '👏 Hebat! Pemahaman kamu sangat bagus!';
+      else if (score >= 6) message = '👍 Bagus! Terus tingkatkan pemahamanmu!';
+      else if (score >= 4) message = '📚 Cukup baik. Pelajari lagi materi yang belum dipahami.';
+      else message = '💪 Jangan menyerah! Baca ulang materi dan coba lagi.';
+      
+      document.getElementById('result-message').textContent = message;
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answered = false;
+      
+      document.getElementById('quiz-score').textContent = '0';
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('quiz-result').classList.add('hidden');
+      
+      loadQuestion();
+    }
+
+    // Initialize app
+    initializeApp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c88d0e955476cfe',t:'MTc3MDE5MzkzMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

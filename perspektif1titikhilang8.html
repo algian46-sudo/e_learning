@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menggambar Perspektif Satu Titik Hilang</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Outfit', sans-serif;
+    }
+    
+    .slide-container {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .slide-container.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .nav-dot {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-dot.active {
+      transform: scale(1.3);
+    }
+    
+    .concept-card {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .concept-card:hover {
+      transform: translateY(-8px) scale(1.02);
+    }
+    
+    .perspective-line {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: drawLine 2s ease forwards;
+    }
+    
+    @keyframes drawLine {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.8; }
+    }
+    
+    .pulse-dot {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .fade-in-up {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    
+    .step-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .step-card:hover {
+      transform: scale(1.02);
+    }
+    
+    .step-card.expanded {
+      background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+    }
+    
+    .interactive-canvas {
+      cursor: crosshair;
+    }
+    
+    .tool-btn {
+      transition: all 0.2s ease;
+    }
+    
+    .tool-btn:hover {
+      transform: scale(1.1);
+    }
+    
+    .tool-btn.active {
+      box-shadow: 0 0 0 3px rgba(255,200,87,0.5);
+    }
+
+    .progress-ring {
+      transition: stroke-dashoffset 0.5s ease;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #ffc857 0%, #ff6b6b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  </style>
+</head>
+<body class="h-full bg-slate-900 text-white overflow-auto">
+  <div id="app-wrapper" class="w-full h-full min-h-full overflow-auto">
+    
+    <!-- Header Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          </a>          
+<a href="index.html" class="btn-close-white">
+<i class="fas fa-home me-2"></i> Menu
+</a>
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
+            <span class="text-xl">🎨</span>
+          </div>
+          <div>
+            <h1 id="header-title" class="text-sm font-semibold text-amber-400">Manggambar - Perspektif Satu Titik Hilang</h1>
+            <p class="text-xs text-slate-400">SMP Kelas VIII</p>
+          </div>
+        </div>
+        
+        <!-- Progress Indicator -->
+        <div class="flex items-center gap-4">
+          <div class="hidden sm:flex items-center gap-2">
+            <span class="text-xs text-slate-400">Progress:</span>
+            <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
+              <div id="progress-bar" class="h-full bg-gradient-to-r from-amber-400 to-orange-500 transition-all duration-500" style="width: 10%"></div>
+            </div>
+            <span id="progress-text" class="text-xs text-amber-400 font-medium">1/10</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-20 pb-24 px-4">
+      <div class="max-w-5xl mx-auto">
+        
+        <!-- Slide 1: Title -->
+        <section id="slide-1" class="slide-container active min-h-[80%] flex flex-col items-center justify-center py-12">
+          <div class="text-center space-y-6">
+            <div class="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-400/30 rounded-full px-4 py-2 mb-4">
+              <span class="text-amber-400">📐</span>
+              <span class="text-amber-400 text-sm font-medium">Unit 1.1 - Seni Rupa SMP Kelas VIII</span>
+            </div>
+            
+            <h1 id="main-title" class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+              Menggambar <span class="gradient-text">Perspektif</span><br>
+              dengan Satu Titik Hilang
+            </h1>
+            
+            <p id="main-subtitle" class="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto">
+              Memahami cara pandang objek secara proporsional dan realistis
+            </p>
+            
+            <!-- Interactive Perspective Preview -->
+            <div class="mt-8 relative">
+              <svg viewBox="0 0 400 200" class="w-full max-w-lg mx-auto">
+                <!-- Background grid -->
+                <defs>
+                  <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                  </pattern>
+                </defs>
+                <rect width="400" height="200" fill="url(#grid)"/>
+                
+                <!-- Horizon line -->
+                <line x1="0" y1="100" x2="400" y2="100" stroke="#ffc857" stroke-width="2" stroke-dasharray="5,5" class="perspective-line"/>
+                
+                <!-- Vanishing point -->
+                <circle cx="200" cy="100" r="8" fill="#ff6b6b" class="pulse-dot"/>
+                <circle cx="200" cy="100" r="16" fill="none" stroke="#ff6b6b" stroke-width="1" opacity="0.5" class="pulse-dot"/>
+                
+                <!-- Perspective lines -->
+                <line x1="200" y1="100" x2="50" y2="180" stroke="rgba(255,200,87,0.4)" stroke-width="1" class="perspective-line" style="animation-delay: 0.3s"/>
+                <line x1="200" y1="100" x2="350" y2="180" stroke="rgba(255,200,87,0.4)" stroke-width="1" class="perspective-line" style="animation-delay: 0.4s"/>
+                <line x1="200" y1="100" x2="80" y2="20" stroke="rgba(255,200,87,0.4)" stroke-width="1" class="perspective-line" style="animation-delay: 0.5s"/>
+                <line x1="200" y1="100" x2="320" y2="20" stroke="rgba(255,200,87,0.4)" stroke-width="1" class="perspective-line" style="animation-delay: 0.6s"/>
+                
+                <!-- Box shape -->
+                <rect x="140" y="120" width="120" height="60" fill="none" stroke="#4ade80" stroke-width="2" class="perspective-line" style="animation-delay: 0.8s"/>
+                
+                <!-- Labels -->
+                <text x="200" y="85" fill="#ffc857" font-size="10" text-anchor="middle" class="fade-in-up" style="animation-delay: 1s">Titik Hilang</text>
+                <text x="380" y="95" fill="#ffc857" font-size="10" text-anchor="end" class="fade-in-up" style="animation-delay: 1.2s">Garis Horizon</text>
+              </svg>
+            </div>
+            
+            <button onclick="goToSlide(2)" class="mt-8 inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 px-8 py-4 rounded-full font-semibold hover:shadow-lg hover:shadow-amber-400/25 transition-all duration-300 hover:scale-105">
+              Mulai Belajar
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+              </svg>
+            </button>
+          </div>
+        </section>
+
+        <!-- Slide 2: What is Perspective -->
+        <section id="slide-2" class="slide-container hidden min-h-[80%] py-12">
+          <div class="space-y-8">
+            <div class="text-center">
+              <span class="inline-block bg-blue-500/20 text-blue-400 text-sm font-medium px-4 py-1 rounded-full mb-4">Slide 2</span>
+              <h2 class="text-3xl sm:text-4xl font-bold mb-4">Apa itu <span class="text-amber-400">Perspektif</span>?</h2>
+            </div>
+            
+            <div class="grid sm:grid-cols-2 gap-6 mt-8">
+              <!-- Etymology Card -->
+              <div class="concept-card bg-gradient-to-br from-slate-800 to-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-4">
+                  <span class="text-2xl">📜</span>
+                </div>
+                <h3 class="text-lg font-semibold text-purple-400 mb-2">Etimologi</h3>
+                <p class="text-slate-300">Berasal dari bahasa Italia <strong class="text-white">"Prospettiva"</strong> yang berarti gambar pandangan.</p>
+              </div>
+              
+              <!-- Definition Card -->
+              <div class="concept-card bg-gradient-to-br from-slate-800 to-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center mb-4">
+                  <span class="text-2xl">📖</span>
+                </div>
+                <h3 class="text-lg font-semibold text-green-400 mb-2">Definisi</h3>
+                <p class="text-slate-300">Teknik menggambar berdasarkan <strong class="text-white">kemampuan jarak pandang mata manusia</strong>.</p>
+              </div>
+              
+              <!-- Alias Card -->
+              <div class="concept-card bg-gradient-to-br from-slate-800 to-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                <div class="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center mb-4">
+                  <span class="text-2xl">🏷️</span>
+                </div>
+                <h3 class="text-lg font-semibold text-amber-400 mb-2">Nama Lain</h3>
+                <p class="text-slate-300">Disebut juga sebagai <strong class="text-white">"Proyeksi Sentral"</strong>.</p>
+              </div>
+              
+              <!-- Function Card -->
+              <div class="concept-card bg-gradient-to-br from-slate-800 to-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+                <div class="w-12 h-12 rounded-xl bg-rose-500/20 flex items-center justify-center mb-4">
+                  <span class="text-2xl">🎯</span>
+                </div>
+                <h3 class="text-lg font-semibold text-rose-400 mb-2">Fungsi</h3>
+                <p class="text-slate-300">Menentukan kedudukan <strong class="text-white">jauh-dekat</strong> suatu benda agar terlihat realistis dan tidak distorsi.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 3: Concept Map -->
+        <section id="slide-3" class="slide-container hidden min-h-[80%] py-12">
+          <div class="space-y-8">
+            <div class="text-center">
+              <span class="inline-block bg-emerald-500/20 text-emerald-400 text-sm font-medium px-4 py-1 rounded-full mb-4">Slide 3</span>
+              <h2 class="text-3xl sm:text-4xl font-bold mb-4">Konsep Utama <span class="text-amber-400">(Peta Konsep)</span></h2>
+              <p class="text-slate-400">Tiga elemen kunci dalam gambar perspektif satu titik hilang</p>
+            </div>
+            
+            <!-- Interactive Concept Map -->
+            <div class="relative mt-12">
+              <!-- Central Hub -->
+              <div class="flex justify-center mb-8">
+                <div class="bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl p-6 text-center shadow-xl shadow-amber-400/20">
+                  <span class="text-3xl mb-2 block">🎨</span>
+                  <h3 class="text-slate-900 font-bold text-lg">Perspektif<br>Satu Titik Hilang</h3>
+                </div>
+              </div>
+              
+              <!-- Three Elements -->
+              <div class="grid sm:grid-cols-3 gap-6">
+                <!-- Horizon Line -->
+                <div id="concept-1" class="concept-card bg-gradient-to-br from-cyan-900/50 to-cyan-800/30 rounded-2xl p-6 border-2 border-cyan-500/30 cursor-pointer" onclick="toggleConcept(1)">
+                  <div class="text-center">
+                    <div class="w-16 h-16 rounded-full bg-cyan-500/20 flex items-center justify-center mx-auto mb-4">
+                      <span class="text-3xl">➖</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-cyan-400 mb-2">Garis Horizon</h3>
+                    <p class="text-sm text-slate-400">(Cakrawala)</p>
+                    <div id="concept-1-detail" class="hidden mt-4 pt-4 border-t border-cyan-500/30">
+                      <p class="text-slate-300 text-sm">Batas kemampuan pandang mata. Garis mendatar yang muncul karena keterbatasan mata dalam menangkap benda di kejauhan.</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Vanishing Point -->
+                <div id="concept-2" class="concept-card bg-gradient-to-br from-rose-900/50 to-rose-800/30 rounded-2xl p-6 border-2 border-rose-500/30 cursor-pointer" onclick="toggleConcept(2)">
+                  <div class="text-center">
+                    <div class="w-16 h-16 rounded-full bg-rose-500/20 flex items-center justify-center mx-auto mb-4">
+                      <span class="text-3xl">⬤</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-rose-400 mb-2">Titik Hilang</h3>
+                    <p class="text-sm text-slate-400">(Central Point)</p>
+                    <div id="concept-2-detail" class="hidden mt-4 pt-4 border-t border-rose-500/30">
+                      <p class="text-slate-300 text-sm">Titik pusat di mana garis-garis proyeksi bertemu. Titik batas kemampuan mata melihat.</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Projection Lines -->
+                <div id="concept-3" class="concept-card bg-gradient-to-br from-violet-900/50 to-violet-800/30 rounded-2xl p-6 border-2 border-violet-500/30 cursor-pointer" onclick="toggleConcept(3)">
+                  <div class="text-center">
+                    <div class="w-16 h-16 rounded-full bg-violet-500/20 flex items-center justify-center mx-auto mb-4">
+                      <span class="text-3xl">╲</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-violet-400 mb-2">Garis Proyeksi</h3>
+                    <p class="text-sm text-slate-400">(Garis Bantu)</p>
+                    <div id="concept-3-detail" class="hidden mt-4 pt-4 border-t border-violet-500/30">
+                      <p class="text-slate-300 text-sm">Garis yang menghubungkan objek ke titik pusat. Membantu menciptakan ilusi kedalaman.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <p class="text-center text-slate-500 text-sm mt-6">💡 Klik kartu untuk melihat detail</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 4: Rules -->
+        <section id="slide-4" class="slide-container hidden min-h-[80%] py-12">
+          <div class="space-y-8">
+            <div class="text-center">
+              <span class="inline-block bg-orange-500/20 text-orange-400 text-sm font-medium px-4 py-1 rounded-full mb-4">Slide 4</span>
+              <h2 class="text-3xl sm:text-4xl font-bold mb-4">Kaidah Perspektif <span class="text-amber-400">Satu Titik Hilang</span></h2>
+            </div>
+            
+            <div class="bg-gradient-to-br from-slate-800/80 to-slate-900/80 rounded-3xl p-8 border border-slate-700/50">
+              <div class="space-y-6">
+                <div class="flex items-start gap-4 p-4 bg-slate-700/30 rounded-xl">
+                  <div class="w-10 h-10 rounded-full bg-amber-400 flex items-center justify-center flex-shrink-0">
+                    <span class="text-slate-900 font-bold">1</span>
+                  </div>
+                  <div>
+                    <p class="text-slate-200">Digunakan untuk benda dengan <strong class="text-amber-400">bidang datar yang sejajar</strong> dengan garis horizon.</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start gap-4 p-4 bg-slate-700/30 rounded-xl">
+                  <div class="w-10 h-10 rounded-full bg-amber-400 flex items-center justify-center flex-shrink-0">
+                    <span class="text-slate-900 font-bold">2</span>
+                  </div>
+                  <div>
+                    <p class="text-slate-200">Semua garis yang <strong class="text-amber-400">tidak sejajar atau tidak tegak lurus</strong> dengan horizon akan bertemu di <strong class="text-amber-400">satu titik hilang</strong>.</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start gap-4 p-4 bg-slate-700/30 rounded-xl">
+                  <div class="w-10 h-10 rounded-full bg-amber-400 flex items-center justify-center flex-shrink-0">
+                    <span class="text-slate-900 font-bold">3</span>
+                  </div>
+                  <div>
+                    <p class="text-slate-200">Garis yang <strong class="text-amber-400">tegak lurus</strong> dengan horizon tetap digambar tegak lurus.</p>
+                  </div>
+                </div>
+                
+                <div class="mt-6 p-4 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl border border-blue-500/30">
+                  <p class="text-center text-slate-300">
+                    <span class="text-blue-400">💡</span> Disebut juga sebagai <strong class="text-blue-400">One Point Perspective</strong> atau <strong class="text-purple-400">Linear Perspective</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 5: Horizon & Vanishing Point -->
+        <section id="slide-5" class="slide-container hidden min-h-[80%] py-12">
+          <div class="space-y-8">
+            <div class="text-center">
+              <span class="inline-block bg-cyan-500/20 text-cyan-400 text-sm font-medium px-4 py-1 rounded-full mb-4">Slide 5</span>
+              <h2 class="text-3xl sm:text-4xl font-bold mb-4">Mengenal <span class="text-cyan-400">Garis Horizon</span> & <span class="text-rose-400">Titik Hilang</span></h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+              <!-- Horizon Line -->
+              <div class="bg-gradient-to-br from-cyan-900/30 to-cyan-800/20 rounded-2xl p-6 border border-cyan-500/30">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center">
+                    <span class="text-2xl">🌅</span>
+                  </div>
+                  <h3 class="text-xl font-bold text-cyan-400">Garis Horizon</h3>
+                </div>
+                <p class="text-slate-300 leading-relaxed">
+                  Garis mendatar yang muncul karena <strong class="text-cyan-400">keterbatasan mata/lensa</strong> dalam menangkap benda di kejauhan. Merepresentasikan tinggi mata pengamat.
+                </p>
+              </div>
+              
+              <!-- Vanishing Point -->
+              <div class="bg-gradient-to-br from-rose-900/30 to-rose-800/20 rounded-2xl p-6 border border-rose-500/30">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-12 h-12 rounded-xl bg-rose-500/20 flex items-center justify-center">
+                    <span class="text-2xl">🎯</span>
+                  </div>
+                  <h3 class="text-xl font-bold text-rose-400">Titik Hilang (TH)</h3>
+                </div>
+                <p class="text-slate-300 leading-relaxed">
+                  <strong class="text-rose-400">Titik batas</strong> kemampuan mata melihat; titik-titik ini saling berhimpitan membentuk garis horizon.
+                </p>
+              </div>
+            </div>
+            
+            <!-- Real World Example -->
+            <div class="bg-gradient-to-br from-slate-800/80 to-slate-900/80 rounded-3xl p-6 border border-slate-700/50">
+              <h4 class="text-lg font-semibold text-amber-400 mb-4 flex items-center gap-2">
+                <span>🌍</span> Gejala Alam
+              </h4>
+              <p class="text-slate-300 mb-4">
+                Contoh nyata terlihat pada <strong class="text-white">rel kereta api</strong> atau <strong class="text-white">jalan tol</strong> yang tampak menyempit dan menghilang di satu titik di kejauhan.
+              </p>
+              
+              <!-- Visual Example -->
+              <svg viewBox="0 0 400 150" class="w-full max-w-md mx-auto">
+                <!-- Sky gradient -->
+                <defs>
+                  <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#1e3a5f"/>
+                    <stop offset="100%" style="stop-color:#0f172a"/>
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="150" fill="url(#sky)"/>
+                
+                <!-- Horizon -->
+                <line x1="0" y1="75" x2="400" y2="75" stroke="#ffc857" stroke-width="2" stroke-dasharray="5,5"/>
+                
+                <!-- Railroad tracks -->
+                <line x1="200" y1="75" x2="100" y2="150" stroke="#64748b" stroke-width="3"/>
+                <line x1="200" y1="75" x2="300" y2="150" stroke="#64748b" stroke-width="3"/>
+                
+                <!-- Cross ties -->
+                <line x1="120" y1="130" x2="280" y2="130" stroke="#475569" stroke-width="2"/>
+                <line x1="140" y1="115" x2="260" y2="115" stroke="#475569" stroke-width="2"/>
+                <line x1="155" y1="100" x2="245" y2="100" stroke="#475569" stroke-width="2"/>
+                <line x1="170" y1="88" x2="230" y2="88" stroke="#475569" stroke-width="2"/>
+                
+                <!-- Vanishing point -->
+                <circle cx="200" cy="75" r="6" fill="#ff6b6b" class="pulse-dot"/>
+                
+                <!-- Sun/Moon -->
+                <circle cx="200" cy="45" r="15" fill="#ffc857" opacity="0.8"/>
+                
+                <!-- Labels -->
+                <text x="200" y="68" fill="#ffc857" font-size="9" text-anchor="middle">Titik Hilang</text>
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 6: Drawing Stages 1 -->
+        <section id="slide-6" class="slide-container hidden min-h-[80%] py-12">
+          <div class="space-y-8">
+            <div class="text-center">
+              <span class="inline-block bg-green-500/20 text-green-400 text-sm font-medium px-4 py-1 rounded-full mb-4">Slide 6</span>
+              <h2 class="text-3xl sm:text-4xl font-bold mb-4">Tahapan Menggambar <span class="text-green-400">(1)</span></h2>
+              <p class="text-slate-400">Perspektif Titik & Garis</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+              <!-- Point Perspective -->
+              <div class="bg-gradient-to-br from-green-900/30 to-green-800/20 rounded-2xl p-6 border border-green-500/30">
+                <h3 class="text-xl font-bold text-green-400 mb-4 flex items-center gap-2">
+                  <span class="w-8 h-8 rounded-full bg-green-500/30 flex items-center justify-center text-sm">1</span>
+                  Perspektif Titik
+                </h3>
+                <p class="text-slate-300 mb-4">Keterampilan <strong class="text-green-400">paling dasar</strong> dalam perspektif.</p>
+                
+                <svg viewBox="0 0 200 100" class="w-full">
+                  <rect width="200" height="100" fill="#0f172a"/>
+                  <line x1="0" y1="50" x2="200" y2="50" stroke="#ffc857" stroke-width="1" stroke-dasharray="3,3"/>
+                  <circle cx="100" cy="50" r="8" fill="#4ade80"/>
+                  <text x="100" y="75" fill="#94a3b8" font-size="10" text-anchor="middle">Titik pada horizon</text>
+                </svg>
+              </div>
+              
+              <!-- Line Perspective -->
+              <div class="bg-gradient-to-br from-blue-900/30 to-blue-800/20 rounded-2xl p-6 border border-blue-500/30">
+                <h3 class="text-xl font-bold text-blue-400 mb-4 flex items-center gap-2">
+                  <span class="w-8 h-8 rounded-full bg-blue-500/30 flex items-center justify-center text-sm">2</span>
+                  Perspektif Garis
+                </h3>
+                <div class="text-slate-300 space-y-2 mb-4 text-sm">
+                  <p>• Buat garis objek (misal: garis AB) sejajar dengan horizon</p>
+                  <p>• Tarik garis proyeksi dari A dan B menuju TH</p>
+                  <p>• Hasilnya, garis tampak menuju satu pusat</p>
+                </div>
+                
+                <svg viewBox="0 0 200 100" class="w-full">
+                  <rect width="200" height="100" fill="#0f172a"/>
+                  <line x1="0" y1="40" x2="200" y2="40" stroke="#ffc857" stroke-width="1" stroke-dasharray="3,3"/>
+                  <circle cx="100" cy="40" r="5" fill="#ff6b6b"/>
+                  
+                  <!-- Object line AB -->
+                  <line x1="40" y1="80" x2="120" y2="80" stroke="#60a5fa" stroke-width="2"/>
+                  <text x="40" y="95" fill="#60a5fa" font-size="9">A</text>
+                  <text x="120" y="95" fill="#60a5fa" font-size="9">B</text>
+                  
+                  <!-- Projection lines -->
+                  <line x1="40" y1="80" x2="100" y2="40" stroke="#60a5fa" stroke-width="1" opacity="0.5"/>
+                  <line x1="120" y1="80" x2="100" y2="40" stroke="#60a5fa" stroke-width="1" opacity="0.5"/>
+                  
+                  <text x="100" y="30" fill="#ffc857" font-size="8" text-anchor="middle">TH</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 7: Drawing Stages 2 -->
+        <section id="slide-7" class="slide-container hidden min-h-[80%] py-12">
+          <div class="space-y-8">
+            <div class="text-center">
+              <span class="inline-block bg-purple-500/20 text-purple-400 text-sm font-medium px-4 py-1 rounded-full mb-4">Slide 7</span>
+              <h2 class="text-3xl sm:text-4xl font-bold mb-4">Tahapan Menggambar <span class="text-purple-400">(2)</span></h2>
+              <p class="text-slate-400">Perspektif Bidang</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 rounded-2xl p-8 border border-purple-500/30">
+              <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-6">
+                  <div>
+                    <h3 class="text-xl font-bold text-purple-400 mb-3 flex items-center gap-2">
+                      <span>📐</span> Dasar
+                    </h3>
+                    <p class="text-slate-300">Bidang dibentuk oleh <strong class="text-purple-400">kumpulan garis</strong>.</p>
+                  </div>
+                  
+                  <div>
+                    <h3 class="text-xl font-bold text-amber-400 mb-3 flex items-center gap-2">
+                      <span>🔗</span> Korelasi Antar Ilmu
+                    </h3>
+                    <p class="text-slate-300 mb-4">Teknik ini menggabungkan prinsip:</p>
+                    <div class="space-y-2">
+                      <div class="flex items-center gap-2 bg-slate-700/30 rounded-lg p-3">
+                        <span class="text-xl">🎨</span>
+                        <span class="text-slate-200">Seni Rupa</span>
+                      </div>
+                      <div class="flex items-center gap-2 bg-slate-700/30 rounded-lg p-3">
+                        <span class="text-xl">🔬</span>
+                        <span class="text-slate-200">Fisika (Pengindraan Mata)</span>
+                      </div>
+                      <div class="flex items-center gap-2 bg-slate-700/30 rounded-lg p-3">
+                        <span class="text-xl">📊</span>
+                        <span class="text-slate-200">Matematika (Geometri)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Visual -->
+                <div>
+                  <svg viewBox="0 0 200 150" class="w-full">
+                    <rect width="200" height="150" fill="#0f172a"/>
+                    
+                    <!-- Horizon -->
+                    <line x1="0" y1="60" x2="200" y2="60" stroke="#ffc857" stroke-width="1" stroke-dasharray="3,3"/>
+                    <circle cx="100" cy="60" r="5" fill="#ff6b6b"/>
+                    
+                    <!-- Front face -->
+                    <rect x="50" y="90" width="60" height="40" fill="none" stroke="#a855f7" stroke-width="2"/>
+                    
+                    <!-- Back face projection -->
+                    <rect x="70" y="70" width="40" height="27" fill="none" stroke="#a855f7" stroke-width="1" opacity="0.5"/>
+                    
+                    <!-- Connecting lines -->
+                    <line x1="50" y1="90" x2="70" y2="70" stroke="#a855f7" stroke-width="1" opacity="0.5"/>
+                    <line x1="110" y1="90" x2="110" y2="70" stroke="#a855f7" stroke-width="1" opacity="0.5"/>
+                    <line x1="50" y1="130" x2="70" y2="97" stroke="#a855f7" stroke-width="1" opacity="0.5"/>
+                    <line x1="110" y1="130" x2="110" y2="97" stroke="#a855f7" stroke-width="1" opacity="0.5"/>
+                    
+                    <!-- Labels -->
+                    <text x="80" y="115" fill="#a855f7" font-size="10" text-anchor="middle">Bidang</text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 8: Tools -->
+        <section id="slide-8" class="slide-container hidden min-h-[80%] py-12">
+          <div class="space-y-8">
+            <div class="text-center">
+              <span class="inline-block bg-teal-500/20 text-teal-400 text-sm font-medium px-4 py-1 rounded-full mb-4">Slide 8</span>
+              <h2 class="text-3xl sm:text-4xl font-bold mb-4">Alat dan <span class="text-teal-400">Bahan</span></h2>
+              <p class="text-slate-400">Siapkan peralatan berikut untuk memulai latihan</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <!-- Paper -->
+              <div class="concept-card bg-gradient-to-br from-slate-800 to-slate-800/50 rounded-2xl p-6 border border-slate-700/50 text-center">
+                <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-slate-600 to-slate-700 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <span class="text-4xl">📄</span>
+                </div>
+                <h3 class="font-semibold text-white">Kertas Gambar</h3>
+                <p class="text-xs text-slate-400 mt-1">A4 atau A3</p>
+              </div>
+              
+              <!-- Pencil -->
+              <div class="concept-card bg-gradient-to-br from-slate-800 to-slate-800/50 rounded-2xl p-6 border border-slate-700/50 text-center">
+                <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <span class="text-4xl">✏️</span>
+                </div>
+                <h3 class="font-semibold text-white">Pensil</h3>
+                <p class="text-xs text-slate-400 mt-1">2B atau HB</p>
+              </div>
+              
+              <!-- Eraser -->
+              <div class="concept-card bg-gradient-to-br from-slate-800 to-slate-800/50 rounded-2xl p-6 border border-slate-700/50 text-center">
+                <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-pink-600 to-pink-700 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <span class="text-4xl">🧽</span>
+                </div>
+                <h3 class="font-semibold text-white">Penghapus</h3>
+                <p class="text-xs text-slate-400 mt-1">Putih lembut</p>
+              </div>
+              
+              <!-- Ruler -->
+              <div class="concept-card bg-gradient-to-br from-slate-800 to-slate-800/50 rounded-2xl p-6 border border-slate-700/50 text-center">
+                <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <span class="text-4xl">📏</span>
+                </div>
+                <h3 class="font-semibold text-white">Penggaris</h3>
+                <p class="text-xs text-slate-400 mt-1">30 cm</p>
+              </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-teal-500/20 to-cyan-500/20 rounded-xl p-4 border border-teal-500/30">
+              <p class="text-center text-slate-300">
+                <span class="text-teal-400">💡</span> Tips: Gunakan kertas yang tidak terlalu tipis agar tahan terhadap penghapusan berulang
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 9: Step by Step Guide -->
+        <section id="slide-9" class="slide-container hidden min-h-[80%] py-12">
+          <div class="space-y-8">
+            <div class="text-center">
+              <span class="inline-block bg-amber-500/20 text-amber-400 text-sm font-medium px-4 py-1 rounded-full mb-4">Slide 9</span>
+              <h2 class="text-3xl sm:text-4xl font-bold mb-4">Langkah <span class="text-amber-400">Praktis</span> Menggambar</h2>
+              <p class="text-slate-400">Klik setiap langkah untuk melihat detail</p>
+            </div>
+            
+            <div class="space-y-4">
+              <!-- Step 1 -->
+              <div class="step-card bg-gradient-to-r from-slate-800 to-slate-800/50 rounded-xl p-4 border border-slate-700/50" onclick="toggleStep(1)">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center flex-shrink-0">
+                    <span class="text-slate-900 font-bold text-lg">1</span>
+                  </div>
+                  <div class="flex-grow">
+                    <h3 class="font-semibold text-white">Persiapan Bidang Gambar dan Garis Horizon</h3>
+                    <p class="text-sm text-slate-400">Tentukan dan gambar Garis Horizon (GH)</p>
+                  </div>
+                  <svg id="step-arrow-1" class="w-6 h-6 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </div>
+                <div id="step-detail-1" class="hidden mt-4 pt-4 border-t border-slate-700">
+                  <ul class="space-y-2 text-slate-300 text-sm">
+                    <li class="flex items-start gap-2"><span class="text-amber-400">•</span> Gunakan kertas gambar, pensil, dan penggaris</li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">•</span> Gambar Garis Horizon (GH) secara mendatar di tengah bidang gambar</li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">•</span> Garis ini merepresentasikan tinggi mata pengamat</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <!-- Step 2 -->
+              <div class="step-card bg-gradient-to-r from-slate-800 to-slate-800/50 rounded-xl p-4 border border-slate-700/50" onclick="toggleStep(2)">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center flex-shrink-0">
+                    <span class="text-slate-900 font-bold text-lg">2</span>
+                  </div>
+                  <div class="flex-grow">
+                    <h3 class="font-semibold text-white">Menentukan Titik Hilang (TH)</h3>
+                    <p class="text-sm text-slate-400">Letakkan titik pusat pada Garis Horizon</p>
+                  </div>
+                  <svg id="step-arrow-2" class="w-6 h-6 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </div>
+                <div id="step-detail-2" class="hidden mt-4 pt-4 border-t border-slate-700">
+                  <ul class="space-y-2 text-slate-300 text-sm">
+                    <li class="flex items-start gap-2"><span class="text-amber-400">•</span> Letakkan satu titik di mana saja pada Garis Horizon</li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">•</span> Titik ini disebut Titik Hilang (TH) atau Central Point</li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">•</span> Berfungsi sebagai pusat semua garis bantu</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <!-- Step 3 -->
+              <div class="step-card bg-gradient-to-r from-slate-800 to-slate-800/50 rounded-xl p-4 border border-slate-700/50" onclick="toggleStep(3)">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center flex-shrink-0">
+                    <span class="text-slate-900 font-bold text-lg">3</span>
+                  </div>
+                  <div class="flex-grow">
+                    <h3 class="font-semibold text-white">Membuat Bidang Objek (Tampak Depan)</h3>
+                    <p class="text-sm text-slate-400">Gambar bidang datar sejajar dengan horizon</p>
+                  </div>
+                  <svg id="step-arrow-3" class="w-6 h-6 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </div>
+                <div id="step-detail-3" class="hidden mt-4 pt-4 border-t border-slate-700">
+                  <ul class="space-y-2 text-slate-300 text-sm">
+                    <li class="flex items-start gap-2"><span class="text-amber-400">•</span> Gambar bidang datar (persegi/persegi panjang) di area bawah atau samping TH</li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">•</span> <strong class="text-amber-400">Penting:</strong> Pastikan bidang sejajar dengan garis horizon</li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">•</span> Ini mencegah terjadinya distorsi</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <!-- Step 4 -->
+              <div class="step-card bg-gradient-to-r from-slate-800 to-slate-800/50 rounded-xl p-4 border border-slate-700/50" onclick="toggleStep(4)">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center flex-shrink-0">
+                    <span class="text-slate-900 font-bold text-lg">4</span>
+                  </div>
+                  <div class="flex-grow">
+                    <h3 class="font-semibold text-white">Menarik Garis Proyeksi (Garis Bantu)</h3>
+                    <p class="text-sm text-slate-400">Hubungkan sudut objek ke Titik Hilang</p>
+                  </div>
+                  <svg id="step-arrow-4" class="w-6 h-6 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </div>
+                <div id="step-detail-4" class="hidden mt-4 pt-4 border-t border-slate-700">
+                  <ul class="space-y-2 text-slate-300 text-sm">
+                    <li class="flex items-start gap-2"><span class="text-amber-400">•</span> Gunakan penggaris untuk menarik garis dari setiap sudut bidang objek menuju ke TH</li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">•</span> Garis-garis ini disebut Garis Proyeksi</li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">•</span> Membantu menciptakan ilusi kedalaman (jarak jauh-dekat)</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <!-- Step 5 -->
+              <div class="step-card bg-gradient-to-r from-slate-800 to-slate-800/50 rounded-xl p-4 border border-slate-700/50" onclick="toggleStep(5)">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center flex-shrink-0">
+                    <span class="text-slate-900 font-bold text-lg">5</span>
+                  </div>
+                  <div class="flex-grow">
+                    <h3 class="font-semibold text-white">Menentukan Kedalaman dan Menyelesaikan Bangun</h3>
+                    <p class="text-sm text-slate-400">Buat garis penutup dan bentuk akhir</p>
+                  </div>
+                  <svg id="step-arrow-5" class="w-6 h-6 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </div>
+                <div id="step-detail-5" class="hidden mt-4 pt-4 border-t border-slate-700">
+                  <ul class="space-y-2 text-slate-300 text-sm">
+                    <li class="flex items-start gap-2"><span class="text-amber-400">•</span> Tentukan seberapa tebal/jauh objek dengan garis penutup sejajar bidang depan</li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">•</span> Hubungkan garis hingga membentuk bangun ruang utuh (kubus/balok)</li>
+                    <li class="flex items-start gap-2"><span class="text-amber-400">•</span> Hapus garis proyeksi yang tidak diperlukan</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 10: Interactive Practice -->
+        <section id="slide-10" class="slide-container hidden min-h-[80%] py-12">
+          <div class="space-y-8">
+            <div class="text-center">
+              <span class="inline-block bg-rose-500/20 text-rose-400 text-sm font-medium px-4 py-1 rounded-full mb-4">Slide 10</span>
+              <h2 class="text-3xl sm:text-4xl font-bold mb-4">Latihan <span class="text-rose-400">Interaktif</span></h2>
+              <p class="text-slate-400">Praktekkan langsung di kanvas di bawah ini!</p>
+            </div>
+            
+            <!-- Interactive Canvas -->
+            <div class="bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden">
+              <!-- Toolbar -->
+              <div class="bg-slate-900 p-4 flex flex-wrap items-center gap-4 border-b border-slate-700">
+                <div class="flex items-center gap-2">
+                  <button onclick="setTool('horizon')" id="tool-horizon" class="tool-btn active bg-cyan-500/20 text-cyan-400 px-4 py-2 rounded-lg text-sm font-medium border border-cyan-500/30 flex items-center gap-2">
+                    <span>➖</span> Garis Horizon
+                  </button>
+                  <button onclick="setTool('point')" id="tool-point" class="tool-btn bg-rose-500/20 text-rose-400 px-4 py-2 rounded-lg text-sm font-medium border border-rose-500/30 flex items-center gap-2">
+                    <span>⬤</span> Titik Hilang
+                  </button>
+                  <button onclick="setTool('box')" id="tool-box" class="tool-btn bg-green-500/20 text-green-400 px-4 py-2 rounded-lg text-sm font-medium border border-green-500/30 flex items-center gap-2">
+                    <span>▢</span> Kotak
+                  </button>
+                  <button onclick="setTool('line')" id="tool-line" class="tool-btn bg-violet-500/20 text-violet-400 px-4 py-2 rounded-lg text-sm font-medium border border-violet-500/30 flex items-center gap-2">
+                    <span>╲</span> Garis
+                  </button>
+                </div>
+                <button onclick="clearCanvas()" class="ml-auto bg-slate-700 text-slate-300 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-600 transition-colors flex items-center gap-2">
+                  <span>🗑️</span> Hapus Semua
+                </button>
+              </div>
+              
+              <!-- Canvas Area -->
+              <div class="relative">
+                <svg id="practice-canvas" class="interactive-canvas w-full" viewBox="0 0 800 400" style="background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);">
+                  <!-- Grid pattern -->
+                  <defs>
+                    <pattern id="practice-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                    </pattern>
+                  </defs>
+                  <rect width="800" height="400" fill="url(#practice-grid)"/>
+                  
+                  <!-- Dynamic elements will be added here -->
+                  <g id="canvas-elements"></g>
+                </svg>
+                
+                <!-- Instructions overlay -->
+                <div id="canvas-instructions" class="absolute bottom-4 left-4 right-4 bg-slate-900/90 backdrop-blur-sm rounded-xl p-4 border border-slate-700">
+                  <p class="text-slate-300 text-sm text-center">
+                    <span class="text-cyan-400 font-medium">💡 Petunjuk:</span> 
+                    <span id="tool-instruction">Klik pada kanvas untuk menggambar garis horizon</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Completion Message -->
+            <div class="text-center mt-8">
+              <div class="inline-flex items-center gap-3 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl px-6 py-4 border border-green-500/30">
+                <span class="text-3xl">🎉</span>
+                <div class="text-left">
+                  <h3 class="font-semibold text-green-400">Selamat!</h3>
+                  <p class="text-sm text-slate-300">Anda telah menyelesaikan materi Perspektif Satu Titik Hilang</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+      </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <footer class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-t border-slate-700/50">
+      <div class="max-w-5xl mx-auto px-4 py-4">
+        <div class="flex items-center justify-between">
+          <button id="prev-btn" onclick="prevSlide()" class="flex items-center gap-2 bg-slate-800 text-slate-300 px-4 py-2 rounded-lg hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            <span class="hidden sm:inline">Sebelumnya</span>
+          </button>
+          
+          <!-- Navigation Dots -->
+          <div class="flex items-center gap-2">
+            <div id="nav-dots" class="flex items-center gap-1">
+              <!-- Dots will be generated by JavaScript -->
+            </div>
+          </div>
+          
+          <button id="next-btn" onclick="nextSlide()" class="flex items-center gap-2 bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 px-4 py-2 rounded-lg hover:shadow-lg hover:shadow-amber-400/25 transition-all font-medium">
+            <span class="hidden sm:inline">Selanjutnya</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </footer>
+    
+  </div>
+
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Menggambar Perspektif dengan Satu Titik Hilang',
+      subtitle: 'Memahami cara pandang objek secara proporsional dan realistis',
+      primary_color: '#ffc857',
+      secondary_color: '#1e293b',
+      text_color: '#f1f5f9',
+      accent_color: '#ff6b6b',
+      surface_color: '#334155'
+    };
+
+    let config = { ...defaultConfig };
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (v) => { cfg.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); }
+            },
+            {
+              get: () => cfg.surface_color || defaultConfig.surface_color,
+              set: (v) => { cfg.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+            },
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (v) => { cfg.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); }
+            },
+            {
+              get: () => cfg.accent_color || defaultConfig.accent_color,
+              set: (v) => { cfg.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['main_title', cfg.main_title || defaultConfig.main_title],
+          ['subtitle', cfg.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
+
+    function applyConfig() {
+      const mainTitle = document.getElementById('main-title');
+      const mainSubtitle = document.getElementById('main-subtitle');
+      
+      if (mainTitle) {
+        mainTitle.innerHTML = (config.main_title || defaultConfig.main_title).replace('Perspektif', '<span class="gradient-text">Perspektif</span>').replace('Satu Titik Hilang', '<br>dengan Satu Titik Hilang');
+      }
+      if (mainSubtitle) {
+        mainSubtitle.textContent = config.subtitle || defaultConfig.subtitle;
+      }
+
+      // Apply colors
+      document.documentElement.style.setProperty('--primary-color', config.primary_color || defaultConfig.primary_color);
+      document.documentElement.style.setProperty('--accent-color', config.accent_color || defaultConfig.accent_color);
+    }
+
+    // Slide Navigation
+    let currentSlide = 1;
+    const totalSlides = 10;
+
+    function initNavDots() {
+      const dotsContainer = document.getElementById('nav-dots');
+      dotsContainer.innerHTML = '';
+      
+      for (let i = 1; i <= totalSlides; i++) {
+        const dot = document.createElement('button');
+        dot.className = `nav-dot w-2 h-2 rounded-full transition-all ${i === currentSlide ? 'bg-amber-400 active' : 'bg-slate-600 hover:bg-slate-500'}`;
+        dot.onclick = () => goToSlide(i);
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    function updateNavigation() {
+      // Update dots
+      const dots = document.querySelectorAll('.nav-dot');
+      dots.forEach((dot, index) => {
+        if (index + 1 === currentSlide) {
+          dot.className = 'nav-dot w-2 h-2 rounded-full transition-all bg-amber-400 active';
+        } else {
+          dot.className = 'nav-dot w-2 h-2 rounded-full transition-all bg-slate-600 hover:bg-slate-500';
+        }
+      });
+
+      // Update buttons
+      document.getElementById('prev-btn').disabled = currentSlide === 1;
+      document.getElementById('next-btn').style.display = currentSlide === totalSlides ? 'none' : 'flex';
+
+      // Update progress
+      const progress = (currentSlide / totalSlides) * 100;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+      document.getElementById('progress-text').textContent = `${currentSlide}/${totalSlides}`;
+    }
+
+    function goToSlide(slideNum) {
+      if (slideNum < 1 || slideNum > totalSlides) return;
+
+      // Hide current slide
+      const currentEl = document.getElementById(`slide-${currentSlide}`);
+      if (currentEl) {
+        currentEl.classList.remove('active');
+        currentEl.classList.add('hidden');
+      }
+
+      // Show new slide
+      currentSlide = slideNum;
+      const newEl = document.getElementById(`slide-${currentSlide}`);
+      if (newEl) {
+        newEl.classList.remove('hidden');
+        setTimeout(() => newEl.classList.add('active'), 50);
+      }
+
+      updateNavigation();
+      
+      // Scroll to top
+      document.getElementById('app-wrapper').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function nextSlide() {
+      goToSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      goToSlide(currentSlide - 1);
+    }
+
+    // Concept Card Toggle
+    function toggleConcept(num) {
+      const detail = document.getElementById(`concept-${num}-detail`);
+      if (detail) {
+        detail.classList.toggle('hidden');
+      }
+    }
+
+    // Step Card Toggle
+    function toggleStep(num) {
+      const detail = document.getElementById(`step-detail-${num}`);
+      const arrow = document.getElementById(`step-arrow-${num}`);
+      
+      if (detail) {
+        const isHidden = detail.classList.contains('hidden');
+        detail.classList.toggle('hidden');
+        
+        if (arrow) {
+          arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+      }
+    }
+
+    // Interactive Canvas
+    let currentTool = 'horizon';
+    let canvasState = {
+      horizon: null,
+      vanishingPoint: null,
+      boxes: [],
+      lines: []
+    };
+
+    const toolInstructions = {
+      horizon: 'Klik pada kanvas untuk menggambar garis horizon',
+      point: 'Klik pada garis horizon untuk menentukan titik hilang',
+      box: 'Klik dan seret untuk menggambar kotak',
+      line: 'Klik untuk memulai garis, klik lagi untuk mengakhiri'
+    };
+
+    function setTool(tool) {
+      currentTool = tool;
+      
+      // Update tool buttons
+      document.querySelectorAll('.tool-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.getElementById(`tool-${tool}`).classList.add('active');
+      
+      // Update instruction
+      document.getElementById('tool-instruction').textContent = toolInstructions[tool];
+    }
+
+    function clearCanvas() {
+      canvasState = {
+        horizon: null,
+        vanishingPoint: null,
+        boxes: [],
+        lines: []
+      };
+      renderCanvas();
+    }
+
+    function renderCanvas() {
+      const elementsGroup = document.getElementById('canvas-elements');
+      elementsGroup.innerHTML = '';
+      
+      // Draw horizon line
+      if (canvasState.horizon !== null) {
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', '0');
+        line.setAttribute('y1', canvasState.horizon);
+        line.setAttribute('x2', '800');
+        line.setAttribute('y2', canvasState.horizon);
+        line.setAttribute('stroke', '#ffc857');
+        line.setAttribute('stroke-width', '2');
+        line.setAttribute('stroke-dasharray', '8,4');
+        elementsGroup.appendChild(line);
+        
+        // Label
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', '750');
+        text.setAttribute('y', canvasState.horizon - 10);
+        text.setAttribute('fill', '#ffc857');
+        text.setAttribute('font-size', '12');
+        text.textContent = 'Garis Horizon';
+        elementsGroup.appendChild(text);
+      }
+      
+      // Draw vanishing point
+      if (canvasState.vanishingPoint) {
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', canvasState.vanishingPoint.x);
+        circle.setAttribute('cy', canvasState.vanishingPoint.y);
+        circle.setAttribute('r', '8');
+        circle.setAttribute('fill', '#ff6b6b');
+        elementsGroup.appendChild(circle);
+        
+        const outerCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        outerCircle.setAttribute('cx', canvasState.vanishingPoint.x);
+        outerCircle.setAttribute('cy', canvasState.vanishingPoint.y);
+        outerCircle.setAttribute('r', '16');
+        outerCircle.setAttribute('fill', 'none');
+        outerCircle.setAttribute('stroke', '#ff6b6b');
+        outerCircle.setAttribute('stroke-width', '1');
+        outerCircle.setAttribute('opacity', '0.5');
+        elementsGroup.appendChild(outerCircle);
+        
+        // Label
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', canvasState.vanishingPoint.x);
+        text.setAttribute('y', canvasState.vanishingPoint.y - 25);
+        text.setAttribute('fill', '#ff6b6b');
+        text.setAttribute('font-size', '12');
+        text.setAttribute('text-anchor', 'middle');
+        text.textContent = 'Titik Hilang';
+        elementsGroup.appendChild(text);
+      }
+      
+      // Draw boxes with projection lines
+      canvasState.boxes.forEach(box => {
+        // Draw projection lines to vanishing point if it exists
+        if (canvasState.vanishingPoint) {
+          const corners = [
+            { x: box.x, y: box.y },
+            { x: box.x + box.width, y: box.y },
+            { x: box.x, y: box.y + box.height },
+            { x: box.x + box.width, y: box.y + box.height }
+          ];
+          
+          corners.forEach(corner => {
+            const projLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            projLine.setAttribute('x1', corner.x);
+            projLine.setAttribute('y1', corner.y);
+            projLine.setAttribute('x2', canvasState.vanishingPoint.x);
+            projLine.setAttribute('y2', canvasState.vanishingPoint.y);
+            projLine.setAttribute('stroke', 'rgba(139, 92, 246, 0.4)');
+            projLine.setAttribute('stroke-width', '1');
+            projLine.setAttribute('stroke-dasharray', '4,4');
+            elementsGroup.appendChild(projLine);
+          });
+        }
+        
+        // Draw box
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', box.x);
+        rect.setAttribute('y', box.y);
+        rect.setAttribute('width', box.width);
+        rect.setAttribute('height', box.height);
+        rect.setAttribute('fill', 'rgba(74, 222, 128, 0.1)');
+        rect.setAttribute('stroke', '#4ade80');
+        rect.setAttribute('stroke-width', '2');
+        elementsGroup.appendChild(rect);
+      });
+      
+      // Draw custom lines
+      canvasState.lines.forEach(line => {
+        const lineEl = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        lineEl.setAttribute('x1', line.x1);
+        lineEl.setAttribute('y1', line.y1);
+        lineEl.setAttribute('x2', line.x2);
+        lineEl.setAttribute('y2', line.y2);
+        lineEl.setAttribute('stroke', '#8b5cf6');
+        lineEl.setAttribute('stroke-width', '2');
+        elementsGroup.appendChild(lineEl);
+      });
+    }
+
+    // Canvas interaction
+    let isDrawing = false;
+    let startPoint = null;
+    let tempLine = null;
+
+    const canvas = document.getElementById('practice-canvas');
+    
+    function getCanvasCoordinates(e) {
+      const rect = canvas.getBoundingClientRect();
+      const viewBox = canvas.viewBox.baseVal;
+      const scaleX = viewBox.width / rect.width;
+      const scaleY = viewBox.height / rect.height;
+      
+      return {
+        x: (e.clientX - rect.left) * scaleX,
+        y: (e.clientY - rect.top) * scaleY
+      };
+    }
+
+    canvas.addEventListener('click', (e) => {
+      const coords = getCanvasCoordinates(e);
+      
+      switch (currentTool) {
+        case 'horizon':
+          canvasState.horizon = coords.y;
+          renderCanvas();
+          break;
+          
+        case 'point':
+          if (canvasState.horizon !== null) {
+            canvasState.vanishingPoint = { x: coords.x, y: canvasState.horizon };
+          } else {
+            canvasState.vanishingPoint = { x: coords.x, y: coords.y };
+          }
+          renderCanvas();
+          break;
+          
+        case 'line':
+          if (!startPoint) {
+            startPoint = coords;
+          } else {
+            canvasState.lines.push({
+              x1: startPoint.x,
+              y1: startPoint.y,
+              x2: coords.x,
+              y2: coords.y
+            });
+            startPoint = null;
+            renderCanvas();
+          }
+          break;
+      }
+    });
+
+    canvas.addEventListener('mousedown', (e) => {
+      if (currentTool === 'box') {
+        isDrawing = true;
+        startPoint = getCanvasCoordinates(e);
+      }
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      if (isDrawing && currentTool === 'box' && startPoint) {
+        const coords = getCanvasCoordinates(e);
+        const elementsGroup = document.getElementById('canvas-elements');
+        
+        // Remove temp box if exists
+        const tempBox = document.getElementById('temp-box');
+        if (tempBox) tempBox.remove();
+        
+        // Draw temp box
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.id = 'temp-box';
+        rect.setAttribute('x', Math.min(startPoint.x, coords.x));
+        rect.setAttribute('y', Math.min(startPoint.y, coords.y));
+        rect.setAttribute('width', Math.abs(coords.x - startPoint.x));
+        rect.setAttribute('height', Math.abs(coords.y - startPoint.y));
+        rect.setAttribute('fill', 'rgba(74, 222, 128, 0.1)');
+        rect.setAttribute('stroke', '#4ade80');
+        rect.setAttribute('stroke-width', '2');
+        rect.setAttribute('stroke-dasharray', '4,4');
+        elementsGroup.appendChild(rect);
+      }
+    });
+
+    canvas.addEventListener('mouseup', (e) => {
+      if (isDrawing && currentTool === 'box' && startPoint) {
+        const coords = getCanvasCoordinates(e);
+        
+        // Remove temp box
+        const tempBox = document.getElementById('temp-box');
+        if (tempBox) tempBox.remove();
+        
+        // Add permanent box
+        const width = Math.abs(coords.x - startPoint.x);
+        const height = Math.abs(coords.y - startPoint.y);
+        
+        if (width > 10 && height > 10) {
+          canvasState.boxes.push({
+            x: Math.min(startPoint.x, coords.x),
+            y: Math.min(startPoint.y, coords.y),
+            width: width,
+            height: height
+          });
+          renderCanvas();
+        }
+        
+        isDrawing = false;
+        startPoint = null;
+      }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+      }
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      initNavDots();
+      updateNavigation();
+      applyConfig();
+    });
+  </script>
+</body>
+</html>

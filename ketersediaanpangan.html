@@ -1,0 +1,1911 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ketahanan dan Ketersediaan Pangan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .heading-font {
+      font-family: 'Merriweather', serif;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .card-hover {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    
+    .nav-item {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #059669, #10b981);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+    
+    .nav-item:hover::after,
+    .nav-item.active::after {
+      width: 100%;
+    }
+    
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    .animate-pulse-slow {
+      animation: pulse-slow 3s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    .progress-bar {
+      transition: width 1s ease-out;
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.wrong) {
+      background: #f0fdf4;
+      border-color: #059669;
+      transform: translateX(8px);
+    }
+    
+    .quiz-option.selected {
+      background: #dbeafe;
+      border-color: #3b82f6;
+    }
+    
+    .quiz-option.correct {
+      background: #dcfce7;
+      border-color: #22c55e;
+    }
+    
+    .quiz-option.wrong {
+      background: #fee2e2;
+      border-color: #ef4444;
+    }
+    
+    .section-indicator {
+      transition: all 0.3s ease;
+    }
+    
+    .section-indicator.active {
+      background: #059669;
+      transform: scale(1.3);
+    }
+    
+    .image-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    
+    .image-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .image-container:hover::before {
+      left: 100%;
+    }
+    
+    .stat-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+    }
+    
+    .interactive-map {
+      position: relative;
+    }
+    
+    .tooltip-custom {
+      position: absolute;
+      background: rgba(0,0,0,0.9);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 100;
+    }
+    
+    .scroll-indicator {
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+    
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .mastery-ring {
+      stroke-dasharray: 283;
+      stroke-dashoffset: 283;
+      transition: stroke-dashoffset 1s ease;
+    }
+    
+    .activity-card {
+      background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    }
+    
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #059669, #10b981);
+      border-radius: 4px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-emerald-50 via-white to-teal-50">
+  <div id="app-container" class="h-full overflow-auto"><!-- Navigation Header -->
+   <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-lg shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg"><span class="text-2xl">🌾</span>
+       </div>
+       <div>
+        <h1 id="main-title" class="text-lg font-bold text-gray-800">Ketahanan Pangan</h1>
+        <p id="teacher-display" class="text-xs text-gray-500">Materi Pembelajaran Interaktif</p>
+       </div>
+      </div>
+      <div class="hidden md:flex items-center gap-1"><button onclick="scrollToSection('hero')" class="nav-item px-4 py-2 text-sm font-medium text-gray-600 hover:text-emerald-600">Beranda</button> <button onclick="scrollToSection('materi')" class="nav-item px-4 py-2 text-sm font-medium text-gray-600 hover:text-emerald-600">Materi</button> <button onclick="scrollToSection('aktivitas')" class="nav-item px-4 py-2 text-sm font-medium text-gray-600 hover:text-emerald-600">Aktivitas</button> <button onclick="scrollToSection('quiz')" class="nav-item px-4 py-2 text-sm font-medium text-gray-600 hover:text-emerald-600">Kuis HOTS</button>
+      </div>
+      <div class="flex items-center gap-2">
+       <div class="hidden sm:flex items-center gap-2 bg-emerald-50 px-3 py-1.5 rounded-full"><span class="text-xs text-emerald-700">Progress:</span>
+        <div class="w-20 h-2 bg-emerald-200 rounded-full overflow-hidden">
+         <div id="overall-progress" class="h-full bg-gradient-to-r from-emerald-500 to-teal-500 progress-bar" style="width: 0%"></div>
+        </div><span id="progress-percent" class="text-xs font-bold text-emerald-700">0%</span>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav><!-- Hero Section -->
+   <section id="hero" class="relative py-16 md:py-24 overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+     <div class="absolute top-20 left-10 w-72 h-72 bg-emerald-500 rounded-full blur-3xl animate-pulse-slow"></div>
+     <div class="absolute bottom-20 right-10 w-96 h-96 bg-teal-500 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 1s;"></div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 relative z-10">
+     <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="space-y-6">
+       <div class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium"><span>📚</span> Materi Pembelajaran Geografi
+       </div>
+       <h1 class="heading-font text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 leading-tight">Ketahanan &amp; <span class="gradient-text">Ketersediaan Pangan</span></h1>
+       <p class="text-lg text-gray-600 leading-relaxed">Pelajari bagaimana Indonesia menghadapi tantangan ketahanan pangan dan bagaimana kamu dapat berkontribusi untuk masa depan pangan yang lebih baik.</p>
+       <div class="flex flex-wrap gap-4"><button onclick="scrollToSection('materi')" class="px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all flex items-center gap-2"> <span>Mulai Belajar</span>
+         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+         </svg></button> <button onclick="scrollToSection('quiz')" class="px-8 py-4 bg-white text-emerald-600 font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all border-2 border-emerald-200"> Langsung ke Kuis </button>
+       </div>
+       <div class="grid grid-cols-3 gap-4 pt-6">
+        <div class="text-center p-4 bg-white/70 rounded-xl shadow-md">
+         <div class="text-3xl font-bold text-emerald-600">
+          6
+         </div>
+         <div class="text-xs text-gray-500">
+          Materi Utama
+         </div>
+        </div>
+        <div class="text-center p-4 bg-white/70 rounded-xl shadow-md">
+         <div class="text-3xl font-bold text-teal-600">
+          3
+         </div>
+         <div class="text-xs text-gray-500">
+          Aktivitas
+         </div>
+        </div>
+        <div class="text-center p-4 bg-white/70 rounded-xl shadow-md">
+         <div class="text-3xl font-bold text-cyan-600">
+          10
+         </div>
+         <div class="text-xs text-gray-500">
+          Soal HOTS
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="relative">
+       <div class="animate-float"><!-- Ilustrasi Pertanian -->
+        <svg viewbox="0 0 400 400" class="w-full max-w-md mx-auto"><!-- Background Circle --> <circle cx="200" cy="200" r="180" fill="url(#grad1)" opacity="0.1" /> <!-- Rice Field --> <ellipse cx="200" cy="320" rx="150" ry="40" fill="#86efac" /> <ellipse cx="200" cy="310" rx="140" ry="35" fill="#4ade80" /> <!-- Rice Plants --> <g fill="#15803d">
+          <path d="M120 280 Q125 250 130 280 Q135 250 140 280" stroke="#15803d" stroke-width="2" fill="none" />
+          <path d="M160 275 Q165 245 170 275 Q175 245 180 275" stroke="#15803d" stroke-width="2" fill="none" />
+          <path d="M200 270 Q205 240 210 270 Q215 240 220 270" stroke="#15803d" stroke-width="2" fill="none" />
+          <path d="M240 275 Q245 245 250 275 Q255 245 260 275" stroke="#15803d" stroke-width="2" fill="none" />
+          <path d="M280 280 Q285 250 290 280 Q295 250 300 280" stroke="#15803d" stroke-width="2" fill="none" />
+         </g> <!-- Sun --> <circle cx="320" cy="80" r="40" fill="#fbbf24" /> <g stroke="#fbbf24" stroke-width="3">
+          <line x1="320" y1="20" x2="320" y2="35" />
+          <line x1="320" y1="125" x2="320" y2="140" />
+          <line x1="260" y1="80" x2="275" y2="80" />
+          <line x1="365" y1="80" x2="380" y2="80" />
+          <line x1="278" y1="38" x2="288" y2="48" />
+          <line x1="352" y1="112" x2="362" y2="122" />
+          <line x1="278" y1="122" x2="288" y2="112" />
+          <line x1="352" y1="48" x2="362" y2="38" />
+         </g> <!-- Farmer --> <g transform="translate(100, 180)"><!-- Hat -->
+          <ellipse cx="40" cy="0" rx="35" ry="10" fill="#a16207" />
+          <ellipse cx="40" cy="-5" rx="20" ry="15" fill="#ca8a04" /> <!-- Face -->
+          <circle cx="40" cy="25" r="18" fill="#fcd34d" />
+          <circle cx="34" cy="22" r="3" fill="#1f2937" />
+          <circle cx="46" cy="22" r="3" fill="#1f2937" />
+          <path d="M35 32 Q40 37 45 32" stroke="#1f2937" stroke-width="2" fill="none" /> <!-- Body -->
+          <rect x="25" y="43" width="30" height="40" rx="5" fill="#3b82f6" /> <!-- Arms -->
+          <rect x="5" y="48" width="20" height="8" rx="4" fill="#fcd34d" />
+          <rect x="55" y="48" width="20" height="8" rx="4" fill="#fcd34d" /> <!-- Tool -->
+          <rect x="72" y="30" width="4" height="60" fill="#78716c" />
+          <path d="M68 30 L84 30 L76 15 Z" fill="#6b7280" />
+         </g> <!-- Clouds --> <g fill="white" opacity="0.9">
+          <ellipse cx="80" cy="60" rx="30" ry="20" />
+          <ellipse cx="100" cy="55" rx="25" ry="18" />
+          <ellipse cx="60" cy="55" rx="20" ry="15" />
+         </g> <!-- Birds --> <g stroke="#374151" stroke-width="2" fill="none">
+          <path d="M150 100 Q155 95 160 100 Q165 95 170 100" />
+          <path d="M180 120 Q185 115 190 120 Q195 115 200 120" />
+         </g> <!-- Vegetables basket --> <g transform="translate(260, 200)">
+          <ellipse cx="30" cy="50" rx="35" ry="15" fill="#a16207" />
+          <path d="M0 35 L60 35 L55 50 L5 50 Z" fill="#ca8a04" />
+          <circle cx="20" cy="30" r="12" fill="#ef4444" />
+          <circle cx="40" cy="28" r="10" fill="#f97316" />
+          <ellipse cx="30" cy="22" rx="8" ry="12" fill="#22c55e" />
+          <circle cx="15" cy="20" r="8" fill="#eab308" />
+         </g> <defs>
+          <lineargradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+           <stop offset="0%" style="stop-color:#10b981" />
+           <stop offset="100%" style="stop-color:#0d9488" />
+          </lineargradient>
+         </defs>
+        </svg>
+       </div>
+      </div>
+     </div>
+    </div><!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 scroll-indicator">
+     <svg class="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+     </svg>
+    </div>
+   </section><!-- Materi Section -->
+   <section id="materi" class="py-16 bg-gradient-to-b from-white to-emerald-50">
+    <div class="max-w-7xl mx-auto px-4">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium mb-4">📖 Materi Pembelajaran</span>
+      <h2 class="heading-font text-3xl md:text-4xl font-bold text-gray-800 mb-4">Pelajari Materi Berikut</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">Klik setiap kartu untuk mempelajari materi secara mendalam</p>
+     </div><!-- Section Tabs -->
+     <div class="flex flex-wrap justify-center gap-2 mb-8"><button onclick="showMateriTab(1)" class="materi-tab px-4 py-2 rounded-full text-sm font-medium transition-all bg-emerald-600 text-white" data-tab="1"> 1. Kondisi Kelaparan </button> <button onclick="showMateriTab(2)" class="materi-tab px-4 py-2 rounded-full text-sm font-medium transition-all bg-gray-200 text-gray-700 hover:bg-emerald-100" data-tab="2"> 2. Ketahanan Pangan </button> <button onclick="showMateriTab(3)" class="materi-tab px-4 py-2 rounded-full text-sm font-medium transition-all bg-gray-200 text-gray-700 hover:bg-emerald-100" data-tab="3"> 3. Faktor Ketersediaan </button> <button onclick="showMateriTab(4)" class="materi-tab px-4 py-2 rounded-full text-sm font-medium transition-all bg-gray-200 text-gray-700 hover:bg-emerald-100" data-tab="4"> 4. Tantangan Produksi </button> <button onclick="showMateriTab(5)" class="materi-tab px-4 py-2 rounded-full text-sm font-medium transition-all bg-gray-200 text-gray-700 hover:bg-emerald-100" data-tab="5"> 5. Upaya Peningkatan </button> <button onclick="showMateriTab(6)" class="materi-tab px-4 py-2 rounded-full text-sm font-medium transition-all bg-gray-200 text-gray-700 hover:bg-emerald-100" data-tab="6"> 6. Aksi Nyata </button>
+     </div><!-- Materi Content 1: Kondisi Kelaparan -->
+     <div id="materi-1" class="materi-content tab-content active">
+      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+       <div class="bg-gradient-to-r from-red-500 to-orange-500 p-6 text-white">
+        <div class="flex items-center gap-3">
+         <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center text-3xl">
+          📊
+         </div>
+         <div>
+          <h3 class="text-2xl font-bold">Kondisi Kelaparan di Indonesia</h3>
+          <p class="opacity-90">Global Hunger Index 2020</p>
+         </div>
+        </div>
+       </div>
+       <div class="p-6 md:p-8">
+        <div class="grid md:grid-cols-2 gap-8"><!-- Left: Info Cards -->
+         <div class="space-y-4">
+          <div class="stat-card p-5 rounded-xl border-l-4 border-red-500 shadow-md">
+           <div class="flex items-center gap-4">
+            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center"><span class="text-2xl font-bold text-red-600">70</span>
+            </div>
+            <div>
+             <p class="text-sm text-gray-500">Peringkat Dunia</p>
+             <p class="font-semibold text-gray-800">dari 107 Negara</p>
+            </div>
+           </div>
+          </div>
+          <div class="stat-card p-5 rounded-xl border-l-4 border-orange-500 shadow-md">
+           <div class="flex items-center gap-4">
+            <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center"><span class="text-2xl font-bold text-orange-600">19.1</span>
+            </div>
+            <div>
+             <p class="text-sm text-gray-500">Skor GHI Indonesia</p>
+             <p class="font-semibold text-gray-800">Level Moderat</p>
+            </div>
+           </div>
+          </div>
+          <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+           <div class="flex items-start gap-3"><span class="text-2xl">⚠️</span>
+            <div>
+             <p class="font-semibold text-yellow-800">Peringatan Penting!</p>
+             <p class="text-sm text-yellow-700">Skor 19.1 berada di ambang kategori serius (20+). Indonesia perlu waspada!</p>
+            </div>
+           </div>
+          </div>
+         </div><!-- Right: Visual GHI Scale -->
+         <div>
+          <h4 class="font-semibold text-gray-800 mb-4">Skala Global Hunger Index</h4>
+          <div class="space-y-3">
+           <div class="relative">
+            <div class="flex rounded-lg overflow-hidden h-12">
+             <div class="w-1/5 bg-green-400 flex items-center justify-center text-white text-xs font-medium">
+              Rendah
+             </div>
+             <div class="w-1/5 bg-yellow-400 flex items-center justify-center text-white text-xs font-medium relative">
+              Moderat 
+              <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2">
+               <div class="w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-red-500"></div>
+              </div>
+             </div>
+             <div class="w-1/5 bg-orange-400 flex items-center justify-center text-white text-xs font-medium">
+              Serius
+             </div>
+             <div class="w-1/5 bg-red-400 flex items-center justify-center text-white text-xs font-medium">
+              Mengkhaw.
+             </div>
+             <div class="w-1/5 bg-red-700 flex items-center justify-center text-white text-xs font-medium">
+              Ekstrem
+             </div>
+            </div>
+            <div class="flex justify-between mt-2 text-xs text-gray-500"><span>0-9.9</span> <span>10-19.9</span> <span>20-34.9</span> <span>35-49.9</span> <span>50+</span>
+            </div>
+            <div class="text-center mt-4"><span class="inline-flex items-center gap-1 bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-medium"> <span>📍</span> Indonesia: 19.1 </span>
+            </div>
+           </div>
+          </div><!-- World Map Illustration -->
+          <div class="mt-6 p-4 bg-gray-50 rounded-xl">
+           <h5 class="text-sm font-medium text-gray-700 mb-3">Peta Sebaran Kelaparan Dunia</h5>
+           <svg viewbox="0 0 400 200" class="w-full"><!-- Simplified World Map --> <rect x="0" y="0" width="400" height="200" fill="#e0f2fe" rx="8" /> <!-- Continents simplified --> <!-- Americas --> <ellipse cx="80" cy="80" rx="40" ry="60" fill="#86efac" /> <ellipse cx="70" cy="140" rx="25" ry="40" fill="#fde047" /> <!-- Europe --> <ellipse cx="190" cy="60" rx="30" ry="25" fill="#86efac" /> <!-- Africa --> <ellipse cx="200" cy="120" rx="35" ry="50" fill="#fb923c" /> <!-- Asia --> <ellipse cx="300" cy="80" rx="60" ry="45" fill="#fde047" /> <!-- Indonesia marker --> <circle cx="320" cy="130" r="8" fill="#ef4444" stroke="white" stroke-width="2" /> <text x="330" y="135" font-size="10" fill="#1f2937" font-weight="bold">
+             ID
+            </text> <!-- Australia --> <ellipse cx="340" cy="160" rx="25" ry="20" fill="#86efac" /> <!-- Legend --> <g transform="translate(10, 170)">
+             <rect x="0" y="0" width="12" height="12" fill="#86efac" rx="2" />
+             <text x="16" y="10" font-size="8" fill="#374151">
+              Rendah
+             </text>
+             <rect x="55" y="0" width="12" height="12" fill="#fde047" rx="2" />
+             <text x="71" y="10" font-size="8" fill="#374151">
+              Moderat
+             </text>
+             <rect x="120" y="0" width="12" height="12" fill="#fb923c" rx="2" />
+             <text x="136" y="10" font-size="8" fill="#374151">
+              Serius
+             </text>
+            </g>
+           </svg>
+          </div>
+         </div>
+        </div><!-- Key Points -->
+        <div class="mt-8 p-6 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl">
+         <h4 class="font-semibold text-gray-800 mb-4 flex items-center gap-2"><span>💡</span> Poin Penting untuk Dipahami</h4>
+         <div class="grid md:grid-cols-2 gap-4">
+          <div class="flex items-start gap-3">
+           <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0">
+            1
+           </div>
+           <p class="text-gray-700">GHI mengukur tingkat kelaparan berdasarkan 4 indikator: kekurangan gizi, wasting, stunting, dan kematian anak.</p>
+          </div>
+          <div class="flex items-start gap-3">
+           <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0">
+            2
+           </div>
+           <p class="text-gray-700">Indonesia masih memiliki PR besar untuk menurunkan angka stunting dan meningkatkan akses pangan.</p>
+          </div>
+         </div>
+        </div>
+        <div class="mt-6 flex justify-end"><button onclick="markMateriComplete(1); showMateriTab(2)" class="px-6 py-3 bg-emerald-600 text-white font-medium rounded-xl hover:bg-emerald-700 transition-all flex items-center gap-2"> <span>Lanjut ke Materi 2</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg></button>
+        </div>
+       </div>
+      </div>
+     </div><!-- Materi Content 2: Ketahanan Pangan -->
+     <div id="materi-2" class="materi-content tab-content">
+      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+       <div class="bg-gradient-to-r from-emerald-500 to-teal-500 p-6 text-white">
+        <div class="flex items-center gap-3">
+         <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center text-3xl">
+          🛡️
+         </div>
+         <div>
+          <h3 class="text-2xl font-bold">Apa itu Ketahanan Pangan?</h3>
+          <p class="opacity-90">Definisi dan Konsep Dasar</p>
+         </div>
+        </div>
+       </div>
+       <div class="p-6 md:p-8">
+        <div class="grid md:grid-cols-2 gap-8">
+         <div>
+          <div class="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-6 mb-6">
+           <h4 class="font-bold text-emerald-800 text-lg mb-3">📖 Definisi</h4>
+           <p class="text-gray-700 leading-relaxed"><strong>Ketahanan pangan</strong> adalah kondisi terpenuhinya pangan bagi negara sampai dengan perseorangan, yang tercermin dari tersedianya pangan yang cukup, baik jumlah maupun mutunya, aman, beragam, bergizi, merata, dan terjangkau.</p>
+          </div>
+          <h4 class="font-semibold text-gray-800 mb-4">Dua Pilar Utama:</h4>
+          <div class="space-y-4">
+           <div class="flex items-start gap-4 p-4 bg-blue-50 rounded-xl">
+            <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-2xl">
+             📦
+            </div>
+            <div>
+             <h5 class="font-semibold text-blue-800">Ketersediaan Pangan</h5>
+             <p class="text-sm text-gray-600">Pangan tersedia cukup di suatu wilayah secara berkelanjutan</p>
+            </div>
+           </div>
+           <div class="flex items-start gap-4 p-4 bg-purple-50 rounded-xl">
+            <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center text-2xl">
+             🔑
+            </div>
+            <div>
+             <h5 class="font-semibold text-purple-800">Akses Pangan</h5>
+             <p class="text-sm text-gray-600">Kemampuan individu untuk memperoleh pangan yang dibutuhkan</p>
+            </div>
+           </div>
+          </div>
+         </div>
+         <div><!-- Illustration -->
+          <div class="bg-gradient-to-br from-emerald-100 to-teal-100 rounded-xl p-6">
+           <svg viewbox="0 0 300 250" class="w-full"><!-- House representing food security --> <path d="M150 30 L250 100 L250 220 L50 220 L50 100 Z" fill="#ffffff" stroke="#059669" stroke-width="3" /> <path d="M150 30 L50 100 L250 100 Z" fill="#10b981" /> <!-- Door --> <rect x="125" y="150" width="50" height="70" fill="#0d9488" rx="5" /> <circle cx="165" cy="185" r="5" fill="#fbbf24" /> <!-- Windows --> <rect x="70" y="120" width="40" height="35" fill="#7dd3fc" rx="3" /> <rect x="190" y="120" width="40" height="35" fill="#7dd3fc" rx="3" /> <line x1="90" y1="120" x2="90" y2="155" stroke="white" stroke-width="2" /> <line x1="70" y1="137" x2="110" y2="137" stroke="white" stroke-width="2" /> <line x1="210" y1="120" x2="210" y2="155" stroke="white" stroke-width="2" /> <line x1="190" y1="137" x2="230" y2="137" stroke="white" stroke-width="2" /> <!-- Food icons on roof --> <text x="110" y="80" font-size="25">
+             🌾
+            </text> <text x="150" y="75" font-size="25">
+             🍚
+            </text> <text x="190" y="80" font-size="25">
+             🥬
+            </text> <!-- Family silhouette --> <g transform="translate(115, 175)">
+             <circle cx="15" cy="0" r="8" fill="#374151" />
+             <circle cx="35" cy="0" r="8" fill="#374151" />
+             <circle cx="55" cy="5" r="6" fill="#374151" />
+            </g> <!-- Label --> <text x="150" y="245" text-anchor="middle" font-size="12" fill="#374151" font-weight="bold">
+             Ketahanan Pangan = Keluarga Sejahtera
+            </text>
+           </svg>
+          </div>
+          <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
+           <h5 class="font-semibold text-yellow-800 flex items-center gap-2 mb-2"><span>✅</span> Indikator Keberhasilan</h5>
+           <p class="text-sm text-gray-700">Sebuah negara dikatakan memiliki ketahanan pangan yang baik jika <strong>masyarakatnya tidak kelaparan atau terancam kelaparan</strong>.</p>
+          </div>
+         </div>
+        </div><!-- Interactive Check -->
+        <div class="mt-8 p-6 bg-gray-50 rounded-xl">
+         <h4 class="font-semibold text-gray-800 mb-4">🎯 Cek Pemahaman</h4>
+         <div id="check-2" class="space-y-3">
+          <p class="text-gray-700">Manakah yang BUKAN merupakan bagian dari konsep ketahanan pangan?</p><button onclick="checkAnswer(2, 'a', false)" class="check-option w-full text-left p-3 bg-white border-2 border-gray-200 rounded-lg hover:border-emerald-500 transition-all"> A. Pangan tersedia cukup dan merata </button> <button onclick="checkAnswer(2, 'b', false)" class="check-option w-full text-left p-3 bg-white border-2 border-gray-200 rounded-lg hover:border-emerald-500 transition-all"> B. Pangan dapat diakses oleh semua lapisan masyarakat </button> <button onclick="checkAnswer(2, 'c', true)" class="check-option w-full text-left p-3 bg-white border-2 border-gray-200 rounded-lg hover:border-emerald-500 transition-all"> C. Pangan harus diimpor dari luar negeri </button> <button onclick="checkAnswer(2, 'd', false)" class="check-option w-full text-left p-3 bg-white border-2 border-gray-200 rounded-lg hover:border-emerald-500 transition-all"> D. Pangan harus aman dan bergizi </button>
+         </div>
+         <div id="feedback-2" class="mt-4 hidden"></div>
+        </div>
+        <div class="mt-6 flex justify-between"><button onclick="showMateriTab(1)" class="px-6 py-3 bg-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-300 transition-all flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg><span>Kembali</span> </button> <button onclick="markMateriComplete(2); showMateriTab(3)" class="px-6 py-3 bg-emerald-600 text-white font-medium rounded-xl hover:bg-emerald-700 transition-all flex items-center gap-2"> <span>Lanjut ke Materi 3</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg></button>
+        </div>
+       </div>
+      </div>
+     </div><!-- Materi Content 3: Faktor Ketersediaan -->
+     <div id="materi-3" class="materi-content tab-content">
+      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+       <div class="bg-gradient-to-r from-blue-500 to-indigo-500 p-6 text-white">
+        <div class="flex items-center gap-3">
+         <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center text-3xl">
+          ⚙️
+         </div>
+         <div>
+          <h3 class="text-2xl font-bold">Faktor Penentu Ketersediaan Pangan</h3>
+          <p class="opacity-90">Produksi dan Distribusi</p>
+         </div>
+        </div>
+       </div>
+       <div class="p-6 md:p-8">
+        <p class="text-lg text-gray-700 mb-8">Ketersediaan pangan tidak hanya soal memproduksi sebanyak-banyaknya, melainkan kombinasi dari <strong>faktor produksi</strong> dan <strong>faktor distribusi</strong>.</p>
+        <div class="grid md:grid-cols-2 gap-8"><!-- Faktor Produksi -->
+         <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-4">
+           <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center text-2xl">
+            🌱
+           </div>
+           <h4 class="font-bold text-green-800 text-lg">Faktor Produksi</h4>
+          </div>
+          <svg viewbox="0 0 280 180" class="w-full mb-4"><!-- Farm scene --> <rect x="0" y="0" width="280" height="180" fill="#ecfdf5" rx="8" /> <!-- Fields --> <rect x="20" y="100" width="80" height="60" fill="#86efac" rx="4" /> <rect x="110" y="100" width="80" height="60" fill="#4ade80" rx="4" /> <rect x="200" y="100" width="60" height="60" fill="#22c55e" rx="4" /> <!-- Crops --> <g fill="#15803d">
+            <rect x="30" y="110" width="4" height="30" />
+            <rect x="45" y="115" width="4" height="25" />
+            <rect x="60" y="108" width="4" height="32" />
+            <rect x="75" y="112" width="4" height="28" />
+            <rect x="120" y="112" width="4" height="28" />
+            <rect x="140" y="108" width="4" height="32" />
+            <rect x="160" y="115" width="4" height="25" />
+            <rect x="175" y="110" width="4" height="30" />
+            <rect x="210" y="115" width="4" height="25" />
+            <rect x="230" y="110" width="4" height="30" />
+            <rect x="245" y="112" width="4" height="28" />
+           </g> <!-- Tractor --> <g transform="translate(30, 50)">
+            <rect x="0" y="15" width="40" height="25" fill="#ef4444" rx="3" />
+            <rect x="35" y="10" width="15" height="20" fill="#1f2937" />
+            <circle cx="10" cy="42" r="10" fill="#374151" />
+            <circle cx="35" cy="42" r="7" fill="#374151" />
+           </g> <!-- Sun --> <circle cx="240" cy="35" r="20" fill="#fbbf24" /> <!-- Arrow up --> <path d="M140 80 L140 50 M130 60 L140 50 L150 60" stroke="#059669" stroke-width="3" fill="none" /> <text x="140" y="95" text-anchor="middle" font-size="10" fill="#059669" font-weight="bold">
+            Hasil Panen ↑
+           </text>
+          </svg>
+          <ul class="space-y-2 text-gray-700">
+           <li class="flex items-start gap-2"><span class="text-green-500">✓</span> <span>Tingginya hasil panen mendukung ketahanan pangan</span></li>
+           <li class="flex items-start gap-2"><span class="text-green-500">✓</span> <span>Kualitas bibit dan teknik bertani mempengaruhi produksi</span></li>
+           <li class="flex items-start gap-2"><span class="text-green-500">✓</span> <span>Ketersediaan lahan pertanian yang memadai</span></li>
+          </ul>
+         </div><!-- Faktor Distribusi -->
+         <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-4">
+           <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-2xl">
+            🚚
+           </div>
+           <h4 class="font-bold text-blue-800 text-lg">Faktor Distribusi</h4>
+          </div>
+          <svg viewbox="0 0 280 180" class="w-full mb-4"><rect x="0" y="0" width="280" height="180" fill="#eff6ff" rx="8" /> <!-- Map/Network --> <circle cx="50" cy="90" r="20" fill="#93c5fd" /> <circle cx="140" cy="50" r="25" fill="#60a5fa" /> <circle cx="230" cy="90" r="20" fill="#93c5fd" /> <circle cx="140" cy="130" r="22" fill="#3b82f6" /> <!-- Connections --> <line x1="68" y1="82" x2="117" y2="58" stroke="#2563eb" stroke-width="2" stroke-dasharray="5,3" /> <line x1="163" y1="58" x2="212" y2="82" stroke="#2563eb" stroke-width="2" stroke-dasharray="5,3" /> <line x1="50" y1="108" x2="120" y2="125" stroke="#2563eb" stroke-width="2" stroke-dasharray="5,3" /> <line x1="160" y1="125" x2="230" y2="108" stroke="#2563eb" stroke-width="2" stroke-dasharray="5,3" /> <!-- Icons --> <text x="50" y="95" text-anchor="middle" font-size="20">
+            🏭
+           </text> <text x="140" y="55" text-anchor="middle" font-size="22">
+            🏪
+           </text> <text x="230" y="95" text-anchor="middle" font-size="20">
+            🏠
+           </text> <text x="140" y="135" text-anchor="middle" font-size="20">
+            🚛
+           </text> <!-- Labels --> <text x="50" y="125" text-anchor="middle" font-size="8" fill="#1e40af">
+            Produsen
+           </text> <text x="140" y="165" text-anchor="middle" font-size="8" fill="#1e40af">
+            Distributor
+           </text> <text x="230" y="125" text-anchor="middle" font-size="8" fill="#1e40af">
+            Konsumen
+           </text>
+          </svg>
+          <ul class="space-y-2 text-gray-700">
+           <li class="flex items-start gap-2"><span class="text-blue-500">✓</span> <span>Sistem penyaluran yang baik sangat krusial</span></li>
+           <li class="flex items-start gap-2"><span class="text-blue-500">✓</span> <span>Infrastruktur transportasi memadai</span></li>
+           <li class="flex items-start gap-2"><span class="text-blue-500">✓</span> <span>Akses pasar yang merata ke seluruh wilayah</span></li>
+          </ul>
+         </div>
+        </div><!-- Case Study: Singapore -->
+        <div class="mt-8 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-6 border-2 border-amber-200">
+         <div class="flex items-start gap-4">
+          <div class="text-4xl">
+           🇸🇬
+          </div>
+          <div>
+           <h4 class="font-bold text-amber-800 text-lg mb-2">Studi Kasus: Singapura</h4>
+           <p class="text-gray-700 mb-4">Singapura memiliki <strong>sumber daya alam terbatas</strong> namun ketahanan pangannya tinggi. Mengapa?</p>
+           <div class="grid md:grid-cols-3 gap-4">
+            <div class="bg-white/80 rounded-lg p-4 text-center">
+             <div class="text-3xl mb-2">
+              📊
+             </div>
+             <p class="text-sm font-medium text-gray-800">Sistem Distribusi Efisien</p>
+            </div>
+            <div class="bg-white/80 rounded-lg p-4 text-center">
+             <div class="text-3xl mb-2">
+              🤝
+             </div>
+             <p class="text-sm font-medium text-gray-800">Kerjasama Impor Strategis</p>
+            </div>
+            <div class="bg-white/80 rounded-lg p-4 text-center">
+             <div class="text-3xl mb-2">
+              🏗️
+             </div>
+             <p class="text-sm font-medium text-gray-800">Infrastruktur Modern</p>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="mt-6 flex justify-between"><button onclick="showMateriTab(2)" class="px-6 py-3 bg-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-300 transition-all flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg><span>Kembali</span> </button> <button onclick="markMateriComplete(3); showMateriTab(4)" class="px-6 py-3 bg-emerald-600 text-white font-medium rounded-xl hover:bg-emerald-700 transition-all flex items-center gap-2"> <span>Lanjut ke Materi 4</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg></button>
+        </div>
+       </div>
+      </div>
+     </div><!-- Materi Content 4: Tantangan Produksi -->
+     <div id="materi-4" class="materi-content tab-content">
+      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+       <div class="bg-gradient-to-r from-red-500 to-pink-500 p-6 text-white">
+        <div class="flex items-center gap-3">
+         <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center text-3xl">
+          ⚠️
+         </div>
+         <div>
+          <h3 class="text-2xl font-bold">Tantangan dalam Produksi Pangan</h3>
+          <p class="opacity-90">Mengapa masih ada kelaparan?</p>
+         </div>
+        </div>
+       </div>
+       <div class="p-6 md:p-8">
+        <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-xl mb-8">
+         <p class="text-red-800 font-medium">❓ Pertanyaan Kritis: Mengapa masih ada kelaparan meski produksi pangan dunia terus meningkat?</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6 mb-8"><!-- Challenge 1: Degradasi Tanah -->
+         <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-6 card-hover">
+          <div class="flex items-center gap-3 mb-4">
+           <div class="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center text-2xl">
+            🏜️
+           </div>
+           <h4 class="font-bold text-amber-800">Degradasi Tanah</h4>
+          </div>
+          <svg viewbox="0 0 250 150" class="w-full mb-4"><rect x="0" y="0" width="250" height="150" fill="#fef3c7" rx="8" /> <!-- Healthy soil vs degraded --> <rect x="20" y="80" width="90" height="50" fill="#84cc16" rx="4" /> <rect x="140" y="80" width="90" height="50" fill="#d97706" rx="4" /> <!-- Plants --> <g fill="#15803d">
+            <rect x="35" y="50" width="6" height="30" />
+            <ellipse cx="38" cy="45" rx="12" ry="10" />
+            <rect x="65" y="55" width="6" height="25" />
+            <ellipse cx="68" cy="50" rx="10" ry="8" />
+            <rect x="90" y="52" width="6" height="28" />
+            <ellipse cx="93" cy="47" rx="11" ry="9" />
+           </g> <!-- Wilted plants --> <g fill="#a16207" opacity="0.7">
+            <rect x="155" y="65" width="4" height="15" />
+            <ellipse cx="157" cy="62" rx="6" ry="5" />
+            <rect x="185" y="68" width="4" height="12" />
+            <ellipse cx="187" cy="66" rx="5" ry="4" />
+            <rect x="210" y="70" width="4" height="10" />
+           </g> <!-- Labels --> <text x="65" y="145" text-anchor="middle" font-size="9" fill="#15803d" font-weight="bold">
+            Tanah Subur
+           </text> <text x="185" y="145" text-anchor="middle" font-size="9" fill="#d97706" font-weight="bold">
+            Tanah Terdegradasi
+           </text> <!-- Chemical icons on degraded side --> <text x="160" y="100" font-size="12">
+            ⚗️
+           </text> <text x="200" y="95" font-size="12">
+            🧪
+           </text>
+          </svg>
+          <p class="text-sm text-gray-700"><strong>95% pangan</strong> tumbuh di tanah, namun penggunaan pupuk kimia dan pestisida berlebihan menurunkan kesuburannya.</p>
+         </div><!-- Challenge 2: Masalah Lingkungan -->
+         <div class="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-xl p-6 card-hover">
+          <div class="flex items-center gap-3 mb-4">
+           <div class="w-12 h-12 bg-teal-500 rounded-xl flex items-center justify-center text-2xl">
+            🌿
+           </div>
+           <h4 class="font-bold text-teal-800">Masalah Lingkungan</h4>
+          </div>
+          <svg viewbox="0 0 250 150" class="w-full mb-4"><rect x="0" y="0" width="250" height="150" fill="#ccfbf1" rx="8" /> <!-- Bug/pest --> <g transform="translate(40, 60)">
+            <ellipse cx="20" cy="15" rx="20" ry="12" fill="#15803d" />
+            <circle cx="5" cy="10" r="8" fill="#15803d" />
+            <circle cx="2" cy="6" r="2" fill="white" />
+            <circle cx="8" cy="6" r="2" fill="white" />
+            <line x1="0" y1="18" x2="-10" y2="25" stroke="#15803d" stroke-width="2" />
+            <line x1="5" y1="20" x2="0" y2="30" stroke="#15803d" stroke-width="2" />
+            <line x1="15" y1="22" x2="12" y2="32" stroke="#15803d" stroke-width="2" />
+           </g> <text x="55" y="110" text-anchor="middle" font-size="9" fill="#374151">
+            Hama
+           </text> <!-- Disease icon --> <g transform="translate(100, 50)">
+            <ellipse cx="25" cy="30" rx="18" ry="25" fill="#22c55e" />
+            <circle cx="20" cy="25" r="5" fill="#854d0e" />
+            <circle cx="30" cy="35" r="4" fill="#854d0e" />
+            <circle cx="25" cy="45" r="3" fill="#854d0e" />
+           </g> <text x="125" y="110" text-anchor="middle" font-size="9" fill="#374151">
+            Penyakit
+           </text> <!-- Water crisis --> <g transform="translate(175, 50)">
+            <path d="M25 0 Q40 25 25 50 Q10 25 25 0" fill="#60a5fa" opacity="0.3" />
+            <line x1="15" y1="25" x2="35" y2="25" stroke="#ef4444" stroke-width="3" />
+           </g> <text x="200" y="110" text-anchor="middle" font-size="9" fill="#374151">
+            Krisis Air
+           </text>
+          </svg>
+          <p class="text-sm text-gray-700">Hama, penyakit tanaman, dan krisis air mengancam produktivitas pertanian global.</p>
+         </div><!-- Challenge 3: Faktor Eksternal -->
+         <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 card-hover">
+          <div class="flex items-center gap-3 mb-4">
+           <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center text-2xl">
+            🏗️
+           </div>
+           <h4 class="font-bold text-purple-800">Faktor Eksternal</h4>
+          </div>
+          <svg viewbox="0 0 250 150" class="w-full mb-4"><rect x="0" y="0" width="250" height="150" fill="#faf5ff" rx="8" /> <!-- Land conversion illustration --> <!-- Original farm --> <g opacity="0.4">
+            <rect x="20" y="70" width="60" height="60" fill="#86efac" rx="4" />
+            <rect x="30" y="80" width="4" height="25" fill="#15803d" />
+            <rect x="45" y="85" width="4" height="20" fill="#15803d" />
+            <rect x="60" y="82" width="4" height="23" fill="#15803d" />
+           </g> <!-- Arrow --> <path d="M95 100 L120 100 M110 90 L120 100 L110 110" stroke="#7c3aed" stroke-width="3" fill="none" /> <!-- Buildings --> <rect x="135" y="60" width="30" height="70" fill="#6b7280" rx="2" /> <rect x="175" y="80" width="25" height="50" fill="#9ca3af" rx="2" /> <rect x="210" y="70" width="20" height="60" fill="#6b7280" rx="2" /> <!-- Windows --> <g fill="#fbbf24">
+            <rect x="140" y="70" width="8" height="8" />
+            <rect x="152" y="70" width="8" height="8" />
+            <rect x="140" y="85" width="8" height="8" />
+            <rect x="152" y="85" width="8" height="8" />
+            <rect x="180" y="90" width="6" height="6" />
+            <rect x="190" y="90" width="6" height="6" />
+           </g> <text x="125" y="145" text-anchor="middle" font-size="9" fill="#7c3aed" font-weight="bold">
+            Alih Fungsi Lahan
+           </text>
+          </svg>
+          <p class="text-sm text-gray-700"><strong>Alih fungsi lahan</strong> pertanian menjadi permukiman dan industri mengurangi area produktif.</p>
+         </div><!-- Challenge 4: Perubahan Iklim -->
+         <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 card-hover">
+          <div class="flex items-center gap-3 mb-4">
+           <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-2xl">
+            🌡️
+           </div>
+           <h4 class="font-bold text-blue-800">Perubahan Iklim</h4>
+          </div>
+          <svg viewbox="0 0 250 150" class="w-full mb-4"><rect x="0" y="0" width="250" height="150" fill="#eff6ff" rx="8" /> <!-- Temperature graph --> <line x1="40" y1="120" x2="210" y2="120" stroke="#94a3b8" stroke-width="2" /> <line x1="40" y1="120" x2="40" y2="30" stroke="#94a3b8" stroke-width="2" /> <!-- Rising line --> <path d="M50 100 Q80 95 100 85 Q130 70 160 55 Q190 40 200 35" stroke="#ef4444" stroke-width="3" fill="none" /> <!-- Data points --> <circle cx="50" cy="100" r="4" fill="#ef4444" /> <circle cx="100" cy="85" r="4" fill="#ef4444" /> <circle cx="160" cy="55" r="4" fill="#ef4444" /> <circle cx="200" cy="35" r="4" fill="#ef4444" /> <!-- Thermometer icon --> <g transform="translate(215, 40)">
+            <rect x="0" y="0" width="10" height="40" fill="white" stroke="#ef4444" stroke-width="2" rx="5" />
+            <rect x="2" y="25" width="6" height="13" fill="#ef4444" rx="3" />
+            <circle cx="5" cy="45" r="8" fill="#ef4444" />
+           </g> <text x="125" y="145" text-anchor="middle" font-size="9" fill="#3b82f6" font-weight="bold">
+            Suhu Global Meningkat
+           </text>
+          </svg>
+          <p class="text-sm text-gray-700"><strong>Perubahan iklim</strong> menyebabkan cuaca ekstrem, kekeringan, dan banjir yang merusak pertanian.</p>
+         </div>
+        </div><!-- Teori Malthus -->
+        <div class="bg-gradient-to-r from-gray-800 to-gray-900 rounded-xl p-6 text-white">
+         <div class="flex items-start gap-4">
+          <div class="text-4xl">
+           📈
+          </div>
+          <div class="flex-1">
+           <h4 class="font-bold text-xl mb-3">Teori Malthus</h4>
+           <p class="text-gray-300 mb-4">Thomas Robert Malthus (1798) mengemukakan bahwa:</p>
+           <div class="grid md:grid-cols-2 gap-4 mb-4">
+            <div class="bg-white/10 rounded-lg p-4">
+             <div class="text-2xl mb-2">
+              👨‍👩‍👧‍👦
+             </div>
+             <p class="text-sm">Pertumbuhan penduduk mengikuti <strong class="text-red-400">deret ukur</strong> (1, 2, 4, 8, 16...)</p>
+            </div>
+            <div class="bg-white/10 rounded-lg p-4">
+             <div class="text-2xl mb-2">
+              🌾
+             </div>
+             <p class="text-sm">Pertambahan pangan mengikuti <strong class="text-green-400">deret hitung</strong> (1, 2, 3, 4, 5...)</p>
+            </div>
+           </div><!-- Interactive Malthus Chart -->
+           <div class="bg-white/5 rounded-lg p-4">
+            <div class="flex justify-between items-end h-32 gap-2">
+             <div class="flex flex-col items-center gap-1">
+              <div class="w-8 bg-red-500 rounded-t" style="height: 20px"></div>
+              <div class="w-8 bg-green-500 rounded-t" style="height: 20px"></div><span class="text-xs">T1</span>
+             </div>
+             <div class="flex flex-col items-center gap-1">
+              <div class="w-8 bg-red-500 rounded-t" style="height: 40px"></div>
+              <div class="w-8 bg-green-500 rounded-t" style="height: 30px"></div><span class="text-xs">T2</span>
+             </div>
+             <div class="flex flex-col items-center gap-1">
+              <div class="w-8 bg-red-500 rounded-t" style="height: 60px"></div>
+              <div class="w-8 bg-green-500 rounded-t" style="height: 40px"></div><span class="text-xs">T3</span>
+             </div>
+             <div class="flex flex-col items-center gap-1">
+              <div class="w-8 bg-red-500 rounded-t" style="height: 90px"></div>
+              <div class="w-8 bg-green-500 rounded-t" style="height: 50px"></div><span class="text-xs">T4</span>
+             </div>
+             <div class="flex flex-col items-center gap-1">
+              <div class="w-8 bg-red-500 rounded-t" style="height: 120px"></div>
+              <div class="w-8 bg-green-500 rounded-t" style="height: 60px"></div><span class="text-xs">T5</span>
+             </div>
+            </div>
+            <div class="flex justify-center gap-6 mt-4 text-sm"><span class="flex items-center gap-2"><span class="w-4 h-4 bg-red-500 rounded"></span> Populasi</span> <span class="flex items-center gap-2"><span class="w-4 h-4 bg-green-500 rounded"></span> Pangan</span>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="mt-6 flex justify-between"><button onclick="showMateriTab(3)" class="px-6 py-3 bg-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-300 transition-all flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg><span>Kembali</span> </button> <button onclick="markMateriComplete(4); showMateriTab(5)" class="px-6 py-3 bg-emerald-600 text-white font-medium rounded-xl hover:bg-emerald-700 transition-all flex items-center gap-2"> <span>Lanjut ke Materi 5</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg></button>
+        </div>
+       </div>
+      </div>
+     </div><!-- Materi Content 5: Upaya Peningkatan -->
+     <div id="materi-5" class="materi-content tab-content">
+      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+       <div class="bg-gradient-to-r from-green-500 to-emerald-500 p-6 text-white">
+        <div class="flex items-center gap-3">
+         <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center text-3xl">
+          📈
+         </div>
+         <div>
+          <h3 class="text-2xl font-bold">Upaya Meningkatkan Ketersediaan Pangan</h3>
+          <p class="opacity-90">Intensifikasi &amp; Ekstensifikasi</p>
+         </div>
+        </div>
+       </div>
+       <div class="p-6 md:p-8">
+        <p class="text-lg text-gray-700 mb-8">Ada dua pendekatan utama dalam meningkatkan produksi pangan untuk menjamin ketahanan pangan nasional.</p>
+        <div class="grid md:grid-cols-2 gap-8"><!-- Intensifikasi -->
+         <div class="bg-gradient-to-br from-emerald-50 to-green-100 rounded-xl overflow-hidden shadow-lg">
+          <div class="bg-emerald-600 p-4 text-white">
+           <h4 class="font-bold text-xl flex items-center gap-2"><span>🔬</span> Intensifikasi Pertanian</h4>
+           <p class="text-sm opacity-90">Meningkatkan KUALITAS</p>
+          </div>
+          <div class="p-6">
+           <svg viewbox="0 0 280 200" class="w-full mb-4"><rect x="0" y="0" width="280" height="200" fill="#ecfdf5" rx="8" /> <!-- Lab/Science setting --> <rect x="100" y="20" width="80" height="60" fill="#ffffff" stroke="#059669" stroke-width="2" rx="4" /> <!-- Microscope --> <g transform="translate(115, 30)">
+             <rect x="15" y="40" width="20" height="5" fill="#374151" />
+             <rect x="20" y="10" width="10" height="35" fill="#6b7280" />
+             <circle cx="25" cy="8" r="8" fill="#374151" />
+             <ellipse cx="25" cy="48" rx="15" ry="5" fill="#374151" />
+            </g> <!-- Seeds improvement --> <g transform="translate(30, 100)">
+             <circle cx="25" cy="25" r="20" fill="#fbbf24" opacity="0.3" />
+             <ellipse cx="25" cy="25" rx="8" ry="12" fill="#84cc16" />
+             <text x="25" y="70" text-anchor="middle" font-size="9" fill="#374151">
+              Bibit Unggul
+             </text>
+            </g> <!-- Fertilizer --> <g transform="translate(100, 100)">
+             <rect x="10" y="10" width="30" height="40" fill="#f59e0b" rx="4" />
+             <text x="25" y="35" text-anchor="middle" font-size="12" fill="white" font-weight="bold">
+              NPK
+             </text>
+             <text x="25" y="70" text-anchor="middle" font-size="9" fill="#374151">
+              Pupuk Tepat
+             </text>
+            </g> <!-- Technique --> <g transform="translate(175, 100)">
+             <rect x="5" y="15" width="50" height="35" fill="#22c55e" rx="4" />
+             <g fill="#15803d">
+              <rect x="15" y="5" width="3" height="15" />
+              <rect x="25" y="8" width="3" height="12" />
+              <rect x="35" y="3" width="3" height="17" />
+              <rect x="45" y="6" width="3" height="14" />
+             </g>
+             <text x="30" y="70" text-anchor="middle" font-size="9" fill="#374151">
+              Teknik Modern
+             </text>
+            </g>
+           </svg>
+           <ul class="space-y-3">
+            <li class="flex items-start gap-3 p-3 bg-white rounded-lg shadow-sm"><span class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold shrink-0">1</span>
+             <div>
+              <p class="font-medium text-gray-800">Bibit Unggul</p>
+              <p class="text-sm text-gray-600">Menggunakan varietas dengan produktivitas tinggi</p>
+             </div></li>
+            <li class="flex items-start gap-3 p-3 bg-white rounded-lg shadow-sm"><span class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold shrink-0">2</span>
+             <div>
+              <p class="font-medium text-gray-800">Pupuk Tepat</p>
+              <p class="text-sm text-gray-600">Pemupukan sesuai kebutuhan tanaman</p>
+             </div></li>
+            <li class="flex items-start gap-3 p-3 bg-white rounded-lg shadow-sm"><span class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold shrink-0">3</span>
+             <div>
+              <p class="font-medium text-gray-800">Teknik Modern</p>
+              <p class="text-sm text-gray-600">Penerapan teknologi pertanian terkini</p>
+             </div></li>
+           </ul>
+          </div>
+         </div><!-- Ekstensifikasi -->
+         <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl overflow-hidden shadow-lg">
+          <div class="bg-blue-600 p-4 text-white">
+           <h4 class="font-bold text-xl flex items-center gap-2"><span>🗺️</span> Ekstensifikasi Pertanian</h4>
+           <p class="text-sm opacity-90">Memperluas KUANTITAS</p>
+          </div>
+          <div class="p-6">
+           <svg viewbox="0 0 280 200" class="w-full mb-4"><rect x="0" y="0" width="280" height="200" fill="#eff6ff" rx="8" /> <!-- Before: Small farm --> <g transform="translate(20, 30)">
+             <text x="50" y="0" text-anchor="middle" font-size="10" fill="#374151" font-weight="bold">
+              Sebelum
+             </text>
+             <rect x="20" y="10" width="60" height="50" fill="#86efac" rx="4" stroke="#22c55e" stroke-width="2" />
+             <g fill="#15803d">
+              <rect x="30" y="20" width="4" height="20" />
+              <rect x="45" y="25" width="4" height="15" />
+              <rect x="60" y="22" width="4" height="18" />
+             </g>
+            </g> <!-- Arrow --> <path d="M130 70 L150 70 M145 60 L155 70 L145 80" stroke="#3b82f6" stroke-width="3" fill="none" /> <!-- After: Larger farm --> <g transform="translate(160, 20)">
+             <text x="50" y="0" text-anchor="middle" font-size="10" fill="#374151" font-weight="bold">
+              Sesudah
+             </text>
+             <rect x="0" y="10" width="100" height="70" fill="#86efac" rx="4" stroke="#22c55e" stroke-width="2" />
+             <g fill="#15803d">
+              <rect x="10" y="20" width="4" height="25" />
+              <rect x="25" y="25" width="4" height="20" />
+              <rect x="40" y="18" width="4" height="27" />
+              <rect x="55" y="22" width="4" height="23" />
+              <rect x="70" y="20" width="4" height="25" />
+              <rect x="85" y="24" width="4" height="21" />
+             </g>
+            </g> <!-- Land conversion examples --> <g transform="translate(20, 110)">
+             <rect x="0" y="10" width="70" height="50" fill="#d4d4d4" rx="4" />
+             <text x="35" y="40" text-anchor="middle" font-size="20">
+              🏚️
+             </text>
+             <text x="35" y="75" text-anchor="middle" font-size="8" fill="#374151">
+              Lahan Tidur
+             </text>
+            </g> <path d="M100 145 L120 145" stroke="#3b82f6" stroke-width="2" /> <text x="110" y="140" font-size="12">
+             →
+            </text> <g transform="translate(130, 110)">
+             <rect x="0" y="10" width="70" height="50" fill="#86efac" rx="4" />
+             <g fill="#15803d">
+              <rect x="15" y="20" width="4" height="20" />
+              <rect x="35" y="25" width="4" height="15" />
+              <rect x="55" y="22" width="4" height="18" />
+             </g>
+             <text x="35" y="75" text-anchor="middle" font-size="8" fill="#374151">
+              Lahan Produktif
+             </text>
+            </g>
+           </svg>
+           <ul class="space-y-3">
+            <li class="flex items-start gap-3 p-3 bg-white rounded-lg shadow-sm"><span class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold shrink-0">1</span>
+             <div>
+              <p class="font-medium text-gray-800">Pembukaan Lahan Baru</p>
+              <p class="text-sm text-gray-600">Mengkonversi lahan tidur menjadi produktif</p>
+             </div></li>
+            <li class="flex items-start gap-3 p-3 bg-white rounded-lg shadow-sm"><span class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold shrink-0">2</span>
+             <div>
+              <p class="font-medium text-gray-800">Rehabilitasi Lahan</p>
+              <p class="text-sm text-gray-600">Memulihkan lahan yang rusak atau terdegradasi</p>
+             </div></li>
+            <li class="flex items-start gap-3 p-3 bg-white rounded-lg shadow-sm"><span class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold shrink-0">3</span>
+             <div>
+              <p class="font-medium text-gray-800">Optimasi Lahan Marginal</p>
+              <p class="text-sm text-gray-600">Memanfaatkan lahan yang kurang optimal</p>
+             </div></li>
+           </ul>
+          </div>
+         </div>
+        </div><!-- Comparison Table -->
+        <div class="mt-8 overflow-x-auto">
+         <table class="w-full border-collapse">
+          <thead>
+           <tr class="bg-gray-100">
+            <th class="p-4 text-left font-semibold text-gray-800 border-b-2 border-gray-200">Aspek</th>
+            <th class="p-4 text-left font-semibold text-emerald-700 border-b-2 border-gray-200">Intensifikasi</th>
+            <th class="p-4 text-left font-semibold text-blue-700 border-b-2 border-gray-200">Ekstensifikasi</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="border-b">
+            <td class="p-4 font-medium">Fokus</td>
+            <td class="p-4">Kualitas &amp; efisiensi</td>
+            <td class="p-4">Kuantitas &amp; perluasan</td>
+           </tr>
+           <tr class="border-b bg-gray-50">
+            <td class="p-4 font-medium">Biaya</td>
+            <td class="p-4">Tinggi (teknologi)</td>
+            <td class="p-4">Tinggi (pembukaan lahan)</td>
+           </tr>
+           <tr class="border-b">
+            <td class="p-4 font-medium">Dampak Lingkungan</td>
+            <td class="p-4">Perlu pengawasan ketat</td>
+            <td class="p-4">Risiko deforestasi</td>
+           </tr>
+           <tr class="border-b bg-gray-50">
+            <td class="p-4 font-medium">Waktu Hasil</td>
+            <td class="p-4">Relatif cepat</td>
+            <td class="p-4">Membutuhkan waktu</td>
+           </tr>
+          </tbody>
+         </table>
+        </div>
+        <div class="mt-6 flex justify-between"><button onclick="showMateriTab(4)" class="px-6 py-3 bg-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-300 transition-all flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg><span>Kembali</span> </button> <button onclick="markMateriComplete(5); showMateriTab(6)" class="px-6 py-3 bg-emerald-600 text-white font-medium rounded-xl hover:bg-emerald-700 transition-all flex items-center gap-2"> <span>Lanjut ke Materi 6</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg></button>
+        </div>
+       </div>
+      </div>
+     </div><!-- Materi Content 6: Aksi Nyata -->
+     <div id="materi-6" class="materi-content tab-content">
+      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+       <div class="bg-gradient-to-r from-amber-500 to-orange-500 p-6 text-white">
+        <div class="flex items-center gap-3">
+         <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center text-3xl">
+          🌱
+         </div>
+         <div>
+          <h3 class="text-2xl font-bold">Aksi Nyata Siswa</h3>
+          <p class="opacity-90">Menjadi Petani Mandiri</p>
+         </div>
+        </div>
+       </div>
+       <div class="p-6 md:p-8">
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-6 mb-8">
+         <div class="flex items-start gap-4">
+          <div class="text-4xl">
+           💡
+          </div>
+          <div>
+           <h4 class="font-bold text-green-800 text-lg mb-2">Kamu Bisa Berkontribusi!</h4>
+           <p class="text-gray-700">Siswa dapat berkontribusi langsung untuk ketahanan pangan dengan memanfaatkan lahan di sekitar rumah untuk menanam tanaman pangan.</p>
+          </div>
+         </div>
+        </div><!-- Tanaman yang Bisa Ditanam -->
+        <h4 class="font-bold text-gray-800 text-lg mb-4">🥬 Tanaman yang Cocok untuk Rumah Tangga</h4>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+         <div class="bg-red-50 rounded-xl p-4 text-center card-hover">
+          <div class="text-4xl mb-2">
+           🌶️
+          </div>
+          <h5 class="font-semibold text-red-800">Cabai</h5>
+          <p class="text-xs text-gray-600 mt-1">Mudah ditanam di pot</p>
+         </div>
+         <div class="bg-green-50 rounded-xl p-4 text-center card-hover">
+          <div class="text-4xl mb-2">
+           🥬
+          </div>
+          <h5 class="font-semibold text-green-800">Sawi/Kangkung</h5>
+          <p class="text-xs text-gray-600 mt-1">Panen cepat 3-4 minggu</p>
+         </div>
+         <div class="bg-orange-50 rounded-xl p-4 text-center card-hover">
+          <div class="text-4xl mb-2">
+           🍅
+          </div>
+          <h5 class="font-semibold text-orange-800">Tomat</h5>
+          <p class="text-xs text-gray-600 mt-1">Cocok untuk kebun vertikal</p>
+         </div>
+         <div class="bg-yellow-50 rounded-xl p-4 text-center card-hover">
+          <div class="text-4xl mb-2">
+           🧄
+          </div>
+          <h5 class="font-semibold text-yellow-800">Bawang</h5>
+          <p class="text-xs text-gray-600 mt-1">Bisa dari sisa dapur</p>
+         </div>
+        </div><!-- Step by Step Guide -->
+        <h4 class="font-bold text-gray-800 text-lg mb-4">📝 Langkah-Langkah Menanam</h4>
+        <div class="relative">
+         <div class="absolute left-6 top-0 bottom-0 w-1 bg-emerald-200"></div>
+         <div class="space-y-6">
+          <div class="relative flex gap-4">
+           <div class="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold z-10 shrink-0">
+            1
+           </div>
+           <div class="bg-white rounded-xl p-4 shadow-md flex-1">
+            <h5 class="font-semibold text-gray-800">Siapkan Media Tanam</h5>
+            <p class="text-sm text-gray-600">Gunakan pot, polybag, atau wadah bekas. Isi dengan tanah dan kompos.</p>
+           </div>
+          </div>
+          <div class="relative flex gap-4">
+           <div class="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold z-10 shrink-0">
+            2
+           </div>
+           <div class="bg-white rounded-xl p-4 shadow-md flex-1">
+            <h5 class="font-semibold text-gray-800">Pilih Bibit Berkualitas</h5>
+            <p class="text-sm text-gray-600">Beli bibit di toko pertanian atau gunakan biji dari sayuran yang ada.</p>
+           </div>
+          </div>
+          <div class="relative flex gap-4">
+           <div class="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold z-10 shrink-0">
+            3
+           </div>
+           <div class="bg-white rounded-xl p-4 shadow-md flex-1">
+            <h5 class="font-semibold text-gray-800">Tanam dan Rawat</h5>
+            <p class="text-sm text-gray-600">Siram secara teratur, berikan pupuk organik, dan pastikan cukup sinar matahari.</p>
+           </div>
+          </div>
+          <div class="relative flex gap-4">
+           <div class="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold z-10 shrink-0">
+            4
+           </div>
+           <div class="bg-white rounded-xl p-4 shadow-md flex-1">
+            <h5 class="font-semibold text-gray-800">Dokumentasikan Perkembangan</h5>
+            <p class="text-sm text-gray-600">Foto dan catat perkembangan tanaman setiap minggu.</p>
+           </div>
+          </div>
+          <div class="relative flex gap-4">
+           <div class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center text-white font-bold z-10 shrink-0">
+            5
+           </div>
+           <div class="bg-amber-50 rounded-xl p-4 shadow-md flex-1 border-2 border-amber-200">
+            <h5 class="font-semibold text-amber-800">Bagikan ke Media Sosial! 📱</h5>
+            <p class="text-sm text-gray-600">Ajak teman-teman untuk ikut menanam dengan membagikan pengalamanmu.</p>
+           </div>
+          </div>
+         </div>
+        </div><!-- Social Media Campaign -->
+        <div class="mt-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl p-6 text-white">
+         <h4 class="font-bold text-xl mb-4 flex items-center gap-2"><span>📲</span> Kampanye Digital #PetaniMudaIndonesia</h4>
+         <p class="mb-4 opacity-90">Dokumentasikan proses menanammu dari awal hingga panen dan bagikan ke media sosial dengan hashtag:</p>
+         <div class="flex flex-wrap gap-2"><span class="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">#PetaniMudaIndonesia</span> <span class="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">#KetahananPangan</span> <span class="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">#TanamSendiri</span> <span class="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">#UrbanFarming</span>
+         </div>
+        </div>
+        <div class="mt-6 flex justify-between"><button onclick="showMateriTab(5)" class="px-6 py-3 bg-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-300 transition-all flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg><span>Kembali</span> </button> <button onclick="markMateriComplete(6); scrollToSection('aktivitas')" class="px-6 py-3 bg-emerald-600 text-white font-medium rounded-xl hover:bg-emerald-700 transition-all flex items-center gap-2"> <span>Lanjut ke Aktivitas</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg></button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Aktivitas Section -->
+   <section id="aktivitas" class="py-16 bg-gradient-to-b from-emerald-50 to-white">
+    <div class="max-w-7xl mx-auto px-4">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-1 bg-amber-100 text-amber-700 rounded-full text-sm font-medium mb-4">🎯 Aktivitas Interaktif</span>
+      <h2 class="heading-font text-3xl md:text-4xl font-bold text-gray-800 mb-4">Uji Pemahamanmu!</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">Selesaikan aktivitas-aktivitas berikut untuk memperdalam pemahaman</p>
+     </div>
+     <div class="grid md:grid-cols-3 gap-6"><!-- Activity 1: Matching Game -->
+      <div class="activity-card rounded-2xl shadow-lg overflow-hidden card-hover">
+       <div class="bg-gradient-to-r from-purple-500 to-indigo-500 p-4 text-white">
+        <div class="flex items-center gap-3">
+         <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center text-xl">
+          🎮
+         </div>
+         <div>
+          <h3 class="font-bold">Aktivitas 1</h3>
+          <p class="text-sm opacity-90">Mencocokkan Konsep</p>
+         </div>
+        </div>
+       </div>
+       <div class="p-6">
+        <p class="text-gray-600 mb-4 text-sm">Cocokkan istilah dengan definisi yang tepat!</p>
+        <div id="matching-game" class="space-y-3">
+         <div class="matching-item p-3 bg-purple-50 rounded-lg cursor-pointer hover:bg-purple-100 transition-all" data-term="intensifikasi" onclick="selectMatching(this, 'term')"><span class="font-medium text-purple-800">Intensifikasi</span>
+         </div>
+         <div class="matching-item p-3 bg-purple-50 rounded-lg cursor-pointer hover:bg-purple-100 transition-all" data-term="ekstensifikasi" onclick="selectMatching(this, 'term')"><span class="font-medium text-purple-800">Ekstensifikasi</span>
+         </div>
+         <div class="matching-item p-3 bg-purple-50 rounded-lg cursor-pointer hover:bg-purple-100 transition-all" data-term="ghi" onclick="selectMatching(this, 'term')"><span class="font-medium text-purple-800">GHI</span>
+         </div>
+         <div class="border-t border-gray-200 my-4"></div>
+         <div class="matching-item p-3 bg-indigo-50 rounded-lg cursor-pointer hover:bg-indigo-100 transition-all" data-def="intensifikasi" onclick="selectMatching(this, 'def')"><span class="text-sm text-indigo-800">Meningkatkan kualitas produksi</span>
+         </div>
+         <div class="matching-item p-3 bg-indigo-50 rounded-lg cursor-pointer hover:bg-indigo-100 transition-all" data-def="ekstensifikasi" onclick="selectMatching(this, 'def')"><span class="text-sm text-indigo-800">Memperluas area lahan</span>
+         </div>
+         <div class="matching-item p-3 bg-indigo-50 rounded-lg cursor-pointer hover:bg-indigo-100 transition-all" data-def="ghi" onclick="selectMatching(this, 'def')"><span class="text-sm text-indigo-800">Indeks kelaparan global</span>
+         </div>
+        </div>
+        <div id="matching-result" class="mt-4 hidden">
+         <div class="flex items-center gap-2 text-green-600"><span>✅</span> <span class="font-medium">Benar! <span id="matching-score">0</span>/3</span>
+         </div>
+        </div>
+       </div>
+      </div><!-- Activity 2: Drag & Drop Sorting -->
+      <div class="activity-card rounded-2xl shadow-lg overflow-hidden card-hover">
+       <div class="bg-gradient-to-r from-teal-500 to-cyan-500 p-4 text-white">
+        <div class="flex items-center gap-3">
+         <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center text-xl">
+          📊
+         </div>
+         <div>
+          <h3 class="font-bold">Aktivitas 2</h3>
+          <p class="text-sm opacity-90">Urutkan Skor GHI</p>
+         </div>
+        </div>
+       </div>
+       <div class="p-6">
+        <p class="text-gray-600 mb-4 text-sm">Urutkan kategori GHI dari rendah ke tinggi!</p>
+        <div id="sorting-area" class="space-y-2">
+         <div class="sorting-item p-3 bg-gray-100 rounded-lg cursor-move flex items-center gap-2" draggable="true" data-order="3"><span class="text-gray-400">≡</span> <span class="font-medium">Serius (20-34.9)</span>
+         </div>
+         <div class="sorting-item p-3 bg-gray-100 rounded-lg cursor-move flex items-center gap-2" draggable="true" data-order="1"><span class="text-gray-400">≡</span> <span class="font-medium">Rendah (0-9.9)</span>
+         </div>
+         <div class="sorting-item p-3 bg-gray-100 rounded-lg cursor-move flex items-center gap-2" draggable="true" data-order="5"><span class="text-gray-400">≡</span> <span class="font-medium">Sangat Mengkhawatirkan (50+)</span>
+         </div>
+         <div class="sorting-item p-3 bg-gray-100 rounded-lg cursor-move flex items-center gap-2" draggable="true" data-order="2"><span class="text-gray-400">≡</span> <span class="font-medium">Moderat (10-19.9)</span>
+         </div>
+         <div class="sorting-item p-3 bg-gray-100 rounded-lg cursor-move flex items-center gap-2" draggable="true" data-order="4"><span class="text-gray-400">≡</span> <span class="font-medium">Mengkhawatirkan (35-49.9)</span>
+         </div>
+        </div><button onclick="checkSorting()" class="mt-4 w-full py-2 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition-all"> Periksa Jawaban </button>
+        <div id="sorting-result" class="mt-4 hidden"></div>
+       </div>
+      </div><!-- Activity 3: Calculator -->
+      <div class="activity-card rounded-2xl shadow-lg overflow-hidden card-hover">
+       <div class="bg-gradient-to-r from-amber-500 to-orange-500 p-4 text-white">
+        <div class="flex items-center gap-3">
+         <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center text-xl">
+          🧮
+         </div>
+         <div>
+          <h3 class="font-bold">Aktivitas 3</h3>
+          <p class="text-sm opacity-90">Kalkulator Pertumbuhan</p>
+         </div>
+        </div>
+       </div>
+       <div class="p-6">
+        <p class="text-gray-600 mb-4 text-sm">Hitung pertumbuhan menurut Teori Malthus!</p>
+        <div class="space-y-4">
+         <div><label class="block text-sm font-medium text-gray-700 mb-1">Populasi Awal</label> <input type="number" id="pop-initial" value="100" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+         </div>
+         <div><label class="block text-sm font-medium text-gray-700 mb-1">Pangan Awal</label> <input type="number" id="food-initial" value="100" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+         </div>
+         <div><label class="block text-sm font-medium text-gray-700 mb-1">Jumlah Periode</label> <input type="number" id="periods" value="5" min="1" max="10" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+         </div><button onclick="calculateMalthus()" class="w-full py-2 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-all"> Hitung </button>
+         <div id="malthus-result" class="mt-4 p-4 bg-amber-50 rounded-lg hidden">
+          <h5 class="font-semibold text-amber-800 mb-2">Hasil Perhitungan:</h5>
+          <div id="malthus-table"></div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Quiz Section -->
+   <section id="quiz" class="py-16 bg-gradient-to-b from-white to-indigo-50">
+    <div class="max-w-4xl mx-auto px-4">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium mb-4">📝 Evaluasi HOTS</span>
+      <h2 class="heading-font text-3xl md:text-4xl font-bold text-gray-800 mb-4">Soal Higher Order Thinking Skills</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">10 soal untuk menguji kemampuan berpikir tingkat tinggi (C4-C6)</p>
+     </div>
+     <div class="bg-white rounded-3xl shadow-xl overflow-hidden"><!-- Quiz Header -->
+      <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white">
+       <div class="flex items-center justify-between">
+        <div>
+         <h3 class="text-xl font-bold">Kuis Ketahanan Pangan</h3>
+         <p class="text-sm opacity-90">Soal <span id="current-q">1</span> dari 10</p>
+        </div>
+        <div class="text-right">
+         <p class="text-sm opacity-90">Skor Anda</p>
+         <p class="text-2xl font-bold"><span id="quiz-score">0</span>/10</p>
+        </div>
+       </div>
+       <div class="mt-4 h-2 bg-white/20 rounded-full overflow-hidden">
+        <div id="quiz-progress" class="h-full bg-white progress-bar" style="width: 10%"></div>
+       </div>
+      </div><!-- Quiz Content -->
+      <div id="quiz-container" class="p-6 md:p-8"><!-- Questions will be rendered here -->
+      </div><!-- Quiz Result -->
+      <div id="quiz-result" class="p-6 md:p-8 hidden">
+       <div class="text-center">
+        <div id="result-icon" class="text-6xl mb-4">
+         🎉
+        </div>
+        <h3 id="result-title" class="text-2xl font-bold text-gray-800 mb-2">Selamat!</h3>
+        <p id="result-message" class="text-gray-600 mb-6">Anda telah menyelesaikan kuis</p>
+        <div class="inline-flex items-center gap-4 bg-indigo-50 px-8 py-4 rounded-xl mb-6">
+         <div class="text-center">
+          <p class="text-4xl font-bold text-indigo-600"><span id="final-score">0</span></p>
+          <p class="text-sm text-gray-500">dari 10</p>
+         </div>
+         <div class="w-px h-12 bg-indigo-200"></div>
+         <div class="text-center">
+          <p class="text-4xl font-bold text-indigo-600"><span id="percentage">0</span>%</p>
+          <p class="text-sm text-gray-500">persentase</p>
+         </div>
+        </div>
+        <div id="result-feedback" class="text-left bg-gray-50 rounded-xl p-6 mb-6"><!-- Feedback will be shown here -->
+        </div><button onclick="restartQuiz()" class="px-8 py-3 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition-all"> Ulangi Kuis </button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4">
+     <div class="text-center">
+      <div class="flex items-center justify-center gap-3 mb-4">
+       <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center text-2xl">
+        🌾
+       </div>
+       <div class="text-left">
+        <h3 class="font-bold text-lg">Ketahanan Pangan Indonesia</h3>
+        <p class="text-sm text-gray-400">Media Pembelajaran Interaktif</p>
+       </div>
+      </div>
+      <p class="text-gray-400 text-sm mb-4">Dibuat untuk mendukung pembelajaran materi Geografi tentang Ketahanan dan Ketersediaan Pangan</p>
+      <div class="flex justify-center gap-4 text-2xl mb-6"><span>🌾</span> <span>🌱</span> <span>🍚</span> <span>🥬</span> <span>🌽</span>
+      </div>
+      <p class="text-gray-500 text-xs">© 2024 - Selamat Belajar!</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Ketahanan Pangan',
+      teacher_name: 'Materi Pembelajaran Interaktif'
+    };
+
+    let config = { ...defaultConfig };
+
+    // Quiz Questions (HOTS - C4, C5, C6)
+    const quizQuestions = [
+      {
+        id: 1,
+        level: "C4 - Menganalisis",
+        question: "Indonesia memiliki skor GHI 19.1 yang termasuk kategori moderat. Berdasarkan analisis data, jika skor ini naik menjadi 20.5, apa implikasi utama bagi kebijakan pangan nasional?",
+        options: [
+          "Tidak ada perubahan kebijakan yang diperlukan",
+          "Indonesia akan masuk kategori 'Serius' sehingga perlu intervensi darurat pangan",
+          "Cukup dengan meningkatkan impor pangan",
+          "Hanya perlu perbaikan sistem distribusi"
+        ],
+        correct: 1,
+        explanation: "Skor GHI 20+ memasukkan suatu negara ke kategori 'Serius', yang memerlukan respons kebijakan darurat seperti program bantuan pangan, subsidi, dan peningkatan produksi secara masif."
+      },
+      {
+        id: 2,
+        level: "C5 - Mengevaluasi",
+        question: "Singapura dengan sumber daya alam terbatas memiliki ketahanan pangan tinggi, sementara beberapa negara agraris justru mengalami kelaparan. Evaluasilah faktor apa yang paling menentukan perbedaan ini?",
+        options: [
+          "Luas wilayah geografis negara tersebut",
+          "Kualitas sistem distribusi dan manajemen rantai pasok pangan",
+          "Jumlah penduduk yang lebih sedikit",
+          "Kondisi iklim yang lebih stabil"
+        ],
+        correct: 1,
+        explanation: "Studi kasus Singapura menunjukkan bahwa sistem distribusi dan manajemen rantai pasok yang efisien dapat mengkompensasi keterbatasan produksi domestik, berbeda dengan negara agraris yang sering mengalami masalah distribusi."
+      },
+      {
+        id: 3,
+        level: "C6 - Mencipta",
+        question: "Jika kamu diminta merancang program ketahanan pangan untuk desa terpencil dengan akses transportasi buruk, strategi mana yang paling komprehensif dan berkelanjutan?",
+        options: [
+          "Membangun gudang penyimpanan dan menunggu bantuan pemerintah",
+          "Mengembangkan pertanian lokal terintegrasi dengan lumbung pangan komunitas dan pelatihan teknik tanam",
+          "Meningkatkan impor bahan pangan dari kota terdekat",
+          "Fokus hanya pada satu jenis tanaman unggulan"
+        ],
+        correct: 1,
+        explanation: "Program komprehensif harus mencakup produksi lokal (intensifikasi), diversifikasi tanaman, sistem penyimpanan komunitas, dan transfer pengetahuan untuk keberlanjutan jangka panjang."
+      },
+      {
+        id: 4,
+        level: "C4 - Menganalisis",
+        question: "Teori Malthus menyatakan pertumbuhan penduduk mengikuti deret ukur sementara pangan deret hitung. Analisis mengapa teori ini tidak sepenuhnya terbukti di era modern?",
+        options: [
+          "Karena penduduk dunia sudah tidak bertambah lagi",
+          "Revolusi hijau dan teknologi pertanian telah meningkatkan produksi pangan secara eksponensial",
+          "Masyarakat modern tidak lagi membutuhkan banyak pangan",
+          "Distribusi pangan sudah merata di seluruh dunia"
+        ],
+        correct: 1,
+        explanation: "Revolusi hijau dengan pengembangan bibit unggul, teknik irigasi modern, pupuk, dan mekanisasi pertanian telah memungkinkan produksi pangan tumbuh lebih cepat dari prediksi Malthus."
+      },
+      {
+        id: 5,
+        level: "C5 - Mengevaluasi",
+        question: "Pemerintah berencana membuka 100.000 hektar hutan untuk lahan pertanian baru. Evaluasi dampak dan pertimbangan utama dari kebijakan ekstensifikasi ini:",
+        options: [
+          "Kebijakan sangat tepat karena akan meningkatkan produksi pangan secara signifikan",
+          "Perlu analisis trade-off antara peningkatan produksi dengan hilangnya ekosistem hutan dan potensi dampak iklim",
+          "Lebih baik impor pangan daripada membuka lahan baru",
+          "Hutan tidak memiliki nilai ekonomi sehingga dapat dikonversi"
+        ],
+        correct: 1,
+        explanation: "Kebijakan ekstensifikasi memerlukan analisis dampak lingkungan komprehensif karena melibatkan trade-off antara ketahanan pangan dan kelestarian ekosistem yang juga berperan dalam stabilitas iklim."
+      },
+      {
+        id: 6,
+        level: "C6 - Mencipta",
+        question: "Sebagai siswa, kamu ingin memulai gerakan urban farming di sekolahmu. Rancangan program mana yang paling efektif untuk dampak jangka panjang?",
+        options: [
+          "Menanam sayuran di pot dan menjualnya satu kali",
+          "Membuat kebun percontohan, pelatihan berkala, dokumentasi digital, dan jejaring antar-sekolah",
+          "Mengundang ahli pertanian untuk ceramah tanpa praktik",
+          "Membeli sayuran organik dari pasar untuk dijual kembali"
+        ],
+        correct: 1,
+        explanation: "Program yang berkelanjutan membutuhkan kombinasi praktik langsung (learning by doing), transfer pengetahuan, dokumentasi untuk replikasi, dan jejaring untuk memperluas dampak."
+      },
+      {
+        id: 7,
+        level: "C4 - Menganalisis",
+        question: "Data menunjukkan 95% pangan dunia berasal dari tanah, namun degradasi tanah meningkat. Analisis hubungan sebab-akibat antara penggunaan pupuk kimia berlebihan dengan ketahanan pangan jangka panjang:",
+        options: [
+          "Pupuk kimia selalu meningkatkan hasil panen tanpa efek samping",
+          "Penggunaan berlebihan merusak mikroorganisme tanah, menurunkan kesuburan alami, dan mengancam produktivitas masa depan",
+          "Degradasi tanah hanya mempengaruhi tanaman tertentu",
+          "Solusinya adalah menambah dosis pupuk kimia"
+        ],
+        correct: 1,
+        explanation: "Pupuk kimia berlebihan mengganggu keseimbangan ekosistem tanah, membunuh mikroorganisme bermanfaat, dan menyebabkan tanah bergantung pada input kimia, mengancam keberlanjutan produksi pangan."
+      },
+      {
+        id: 8,
+        level: "C5 - Mengevaluasi",
+        question: "Perubahan iklim menyebabkan pola cuaca ekstrem yang merusak pertanian. Evaluasi strategi adaptasi mana yang paling efektif untuk petani kecil:",
+        options: [
+          "Menunggu bantuan pemerintah saat terjadi gagal panen",
+          "Diversifikasi tanaman, sistem irigasi hemat air, dan asuransi pertanian mikro",
+          "Beralih sepenuhnya ke pertanian berbasis teknologi tinggi",
+          "Meninggalkan pertanian dan migrasi ke kota"
+        ],
+        correct: 1,
+        explanation: "Strategi adaptasi untuk petani kecil harus sesuai kapasitas: diversifikasi mengurangi risiko, irigasi hemat air menghadapi kekeringan, dan asuransi mikro memberikan jaring pengaman finansial."
+      },
+      {
+        id: 9,
+        level: "C6 - Mencipta",
+        question: "Kamu diminta membuat proposal untuk mengatasi masalah distribusi pangan di daerah kepulauan Indonesia. Solusi inovatif apa yang paling tepat?",
+        options: [
+          "Membangun jembatan ke semua pulau",
+          "Mengembangkan lumbung pangan pulau dengan cold storage tenaga surya dan sistem informasi stok real-time",
+          "Merelokasi penduduk ke pulau-pulau besar",
+          "Melarang perdagangan antar pulau"
+        ],
+        correct: 1,
+        explanation: "Solusi untuk daerah kepulauan memerlukan inovasi: penyimpanan lokal (mengurangi ketergantungan pengiriman), energi terbarukan (mandiri), dan sistem informasi (koordinasi distribusi efisien)."
+      },
+      {
+        id: 10,
+        level: "C4 - Menganalisis",
+        question: "Analisis mengapa alih fungsi lahan pertanian menjadi perumahan di pinggiran kota besar menjadi ancaman serius bagi ketahanan pangan Indonesia:",
+        options: [
+          "Karena perumahan tidak menghasilkan pajak",
+          "Karena mengurangi lahan produktif dekat pusat konsumsi, meningkatkan jarak distribusi, dan menghilangkan pertanian periurban",
+          "Karena perumahan tidak membutuhkan infrastruktur",
+          "Karena petani tidak mau bertani di dekat kota"
+        ],
+        correct: 1,
+        explanation: "Alih fungsi lahan periurban berdampak sistemik: menghilangkan area produksi strategis dekat konsumen, menambah biaya dan waktu distribusi, serta menghapus potensi pertanian urban yang berkembang."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answeredQuestions = [];
+    let completedMateri = [false, false, false, false, false, false];
+    let matchingState = { term: null, def: null, matched: 0 };
+
+    // Initialize SDK
+    async function initializeApp() {
+      if (window.elementSdk) {
+        await window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: handleConfigChange,
+          mapToCapabilities: (cfg) => ({
+            recolorables: [],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (cfg) => new Map([
+            ['main_title', cfg.main_title || defaultConfig.main_title],
+            ['teacher_name', cfg.teacher_name || defaultConfig.teacher_name]
+          ])
+        });
+        config = window.elementSdk.config || defaultConfig;
+      }
+      
+      handleConfigChange(config);
+      renderQuizQuestion();
+      initDragAndDrop();
+    }
+
+    async function handleConfigChange(cfg) {
+      config = { ...defaultConfig, ...cfg };
+      
+      document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+      document.getElementById('teacher-display').textContent = config.teacher_name || defaultConfig.teacher_name;
+    }
+
+    // Navigation
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // Materi Tabs
+    function showMateriTab(tabNum) {
+      document.querySelectorAll('.materi-tab').forEach(tab => {
+        tab.classList.remove('bg-emerald-600', 'text-white');
+        tab.classList.add('bg-gray-200', 'text-gray-700');
+      });
+      
+      document.querySelector(`.materi-tab[data-tab="${tabNum}"]`).classList.remove('bg-gray-200', 'text-gray-700');
+      document.querySelector(`.materi-tab[data-tab="${tabNum}"]`).classList.add('bg-emerald-600', 'text-white');
+      
+      document.querySelectorAll('.materi-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      
+      document.getElementById(`materi-${tabNum}`).classList.add('active');
+    }
+
+    function markMateriComplete(materiNum) {
+      completedMateri[materiNum - 1] = true;
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const completed = completedMateri.filter(Boolean).length;
+      const totalMateri = 6;
+      const quizProgress = answeredQuestions.length > 0 ? 1 : 0;
+      
+      const overallProgress = ((completed / totalMateri) * 70) + (quizProgress * 30);
+      
+      document.getElementById('overall-progress').style.width = `${overallProgress}%`;
+      document.getElementById('progress-percent').textContent = `${Math.round(overallProgress)}%`;
+    }
+
+    // Check Answer for inline questions
+    function checkAnswer(checkId, answer, isCorrect) {
+      const container = document.getElementById(`check-${checkId}`);
+      const feedback = document.getElementById(`feedback-${checkId}`);
+      
+      container.querySelectorAll('.check-option').forEach(btn => {
+        btn.disabled = true;
+        btn.classList.add('opacity-50');
+      });
+      
+      const selectedBtn = event.target;
+      selectedBtn.classList.remove('opacity-50');
+      
+      if (isCorrect) {
+        selectedBtn.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+        feedback.innerHTML = '<div class="p-3 bg-green-100 text-green-800 rounded-lg flex items-center gap-2"><span>✅</span><span>Benar! Ketahanan pangan tidak mengharuskan pangan diimpor, yang penting adalah ketersediaan dan akses.</span></div>';
+      } else {
+        selectedBtn.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
+        feedback.innerHTML = '<div class="p-3 bg-red-100 text-red-800 rounded-lg flex items-center gap-2"><span>❌</span><span>Kurang tepat. Jawaban yang benar adalah C karena impor bukan syarat ketahanan pangan.</span></div>';
+      }
+      
+      feedback.classList.remove('hidden');
+    }
+
+    // Matching Game
+    function selectMatching(element, type) {
+      if (element.classList.contains('matched')) return;
+      
+      document.querySelectorAll(`.matching-item[data-${type}]`).forEach(item => {
+        if (!item.classList.contains('matched')) {
+          item.classList.remove('ring-2', 'ring-purple-500');
+        }
+      });
+      
+      element.classList.add('ring-2', 'ring-purple-500');
+      
+      if (type === 'term') {
+        matchingState.term = element.dataset.term;
+      } else {
+        matchingState.def = element.dataset.def;
+      }
+      
+      if (matchingState.term && matchingState.def) {
+        if (matchingState.term === matchingState.def) {
+          document.querySelector(`[data-term="${matchingState.term}"]`).classList.add('matched', 'bg-green-100', 'border-green-500');
+          document.querySelector(`[data-def="${matchingState.def}"]`).classList.add('matched', 'bg-green-100', 'border-green-500');
+          matchingState.matched++;
+          document.getElementById('matching-score').textContent = matchingState.matched;
+          
+          if (matchingState.matched === 3) {
+            document.getElementById('matching-result').classList.remove('hidden');
+          }
+        }
+        
+        matchingState.term = null;
+        matchingState.def = null;
+        
+        document.querySelectorAll('.matching-item').forEach(item => {
+          if (!item.classList.contains('matched')) {
+            item.classList.remove('ring-2', 'ring-purple-500');
+          }
+        });
+      }
+    }
+
+    // Drag and Drop Sorting
+    function initDragAndDrop() {
+      const sortingArea = document.getElementById('sorting-area');
+      const items = sortingArea.querySelectorAll('.sorting-item');
+      
+      items.forEach(item => {
+        item.addEventListener('dragstart', handleDragStart);
+        item.addEventListener('dragend', handleDragEnd);
+        item.addEventListener('dragover', handleDragOver);
+        item.addEventListener('drop', handleDrop);
+      });
+    }
+
+    let draggedItem = null;
+
+    function handleDragStart(e) {
+      draggedItem = this;
+      this.classList.add('opacity-50');
+    }
+
+    function handleDragEnd(e) {
+      this.classList.remove('opacity-50');
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      if (this !== draggedItem) {
+        const allItems = [...document.querySelectorAll('.sorting-item')];
+        const draggedIndex = allItems.indexOf(draggedItem);
+        const droppedIndex = allItems.indexOf(this);
+        
+        if (draggedIndex < droppedIndex) {
+          this.parentNode.insertBefore(draggedItem, this.nextSibling);
+        } else {
+          this.parentNode.insertBefore(draggedItem, this);
+        }
+      }
+    }
+
+    function checkSorting() {
+      const items = document.querySelectorAll('.sorting-item');
+      let correct = true;
+      
+      items.forEach((item, index) => {
+        const expectedOrder = index + 1;
+        const actualOrder = parseInt(item.dataset.order);
+        
+        if (expectedOrder === actualOrder) {
+          item.classList.add('bg-green-100', 'border-green-500');
+          item.classList.remove('bg-gray-100');
+        } else {
+          item.classList.add('bg-red-100', 'border-red-500');
+          item.classList.remove('bg-gray-100');
+          correct = false;
+        }
+      });
+      
+      const resultDiv = document.getElementById('sorting-result');
+      resultDiv.classList.remove('hidden');
+      
+      if (correct) {
+        resultDiv.innerHTML = '<div class="p-3 bg-green-100 text-green-800 rounded-lg flex items-center gap-2"><span>✅</span><span>Sempurna! Urutan kamu benar!</span></div>';
+      } else {
+        resultDiv.innerHTML = '<div class="p-3 bg-orange-100 text-orange-800 rounded-lg flex items-center gap-2"><span>⚠️</span><span>Beberapa masih belum tepat. Urutan benar: Rendah → Moderat → Serius → Mengkhawatirkan → Sangat Mengkhawatirkan</span></div>';
+      }
+    }
+
+    // Malthus Calculator
+    function calculateMalthus() {
+      const popInitial = parseInt(document.getElementById('pop-initial').value) || 100;
+      const foodInitial = parseInt(document.getElementById('food-initial').value) || 100;
+      const periods = parseInt(document.getElementById('periods').value) || 5;
+      
+      let tableHTML = '<table class="w-full text-sm"><thead><tr class="border-b"><th class="p-2 text-left">Periode</th><th class="p-2 text-left">Populasi</th><th class="p-2 text-left">Pangan</th><th class="p-2 text-left">Selisih</th></tr></thead><tbody>';
+      
+      for (let i = 0; i <= periods; i++) {
+        const pop = popInitial * Math.pow(2, i);
+        const food = foodInitial + (foodInitial * i);
+        const diff = pop - food;
+        const diffClass = diff > 0 ? 'text-red-600' : 'text-green-600';
+        
+        tableHTML += `<tr class="border-b"><td class="p-2">T${i}</td><td class="p-2 text-red-600">${pop.toLocaleString()}</td><td class="p-2 text-green-600">${food.toLocaleString()}</td><td class="p-2 ${diffClass}">${diff > 0 ? '+' : ''}${diff.toLocaleString()}</td></tr>`;
+      }
+      
+      tableHTML += '</tbody></table>';
+      tableHTML += '<p class="mt-3 text-xs text-gray-600">Populasi: deret ukur (×2) | Pangan: deret hitung (+awal)</p>';
+      
+      document.getElementById('malthus-table').innerHTML = tableHTML;
+      document.getElementById('malthus-result').classList.remove('hidden');
+    }
+
+    // Quiz Functions
+    function renderQuizQuestion() {
+      const container = document.getElementById('quiz-container');
+      const q = quizQuestions[currentQuestion];
+      
+      const answeredIndex = answeredQuestions.find(a => a.questionId === q.id);
+      const isAnswered = answeredIndex !== undefined;
+      
+      let html = `
+        <div class="mb-4">
+          <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-medium mb-3">${q.level}</span>
+          <h4 class="text-lg font-semibold text-gray-800 leading-relaxed">${q.question}</h4>
+        </div>
+        <div class="space-y-3">
+      `;
+      
+      q.options.forEach((option, index) => {
+        let btnClass = 'quiz-option w-full text-left p-4 border-2 border-gray-200 rounded-xl transition-all';
+        let disabled = '';
+        
+        if (isAnswered) {
+          const answered = answeredQuestions.find(a => a.questionId === q.id);
+          disabled = 'pointer-events-none';
+          if (index === q.correct) {
+            btnClass += ' correct';
+          } else if (index === answered.selected) {
+            btnClass += ' wrong';
+          }
+        }
+        
+        html += `
+          <button onclick="selectAnswer(${index})" class="${btnClass} ${disabled}">
+            <div class="flex items-start gap-3">
+              <span class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-lg font-semibold text-gray-600 shrink-0">${String.fromCharCode(65 + index)}</span>
+              <span class="text-gray-700">${option}</span>
+            </div>
+          </button>
+        `;
+      });
+      
+      html += '</div>';
+      
+      if (isAnswered) {
+        const answered = answeredQuestions.find(a => a.questionId === q.id);
+        const isCorrect = answered.selected === q.correct;
+        html += `
+          <div class="mt-6 p-4 ${isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'} border rounded-xl">
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">${isCorrect ? '✅' : '❌'}</span>
+              <div>
+                <p class="font-semibold ${isCorrect ? 'text-green-800' : 'text-red-800'}">${isCorrect ? 'Benar!' : 'Kurang Tepat'}</p>
+                <p class="text-sm text-gray-700 mt-1">${q.explanation}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+      
+      html += `
+        <div class="mt-6 flex justify-between">
+          <button onclick="prevQuestion()" class="px-6 py-3 bg-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-300 transition-all flex items-center gap-2 ${currentQuestion === 0 ? 'invisible' : ''}">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            <span>Sebelumnya</span>
+          </button>
+          <button onclick="nextQuestion()" class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition-all flex items-center gap-2">
+            <span>${currentQuestion === quizQuestions.length - 1 ? 'Lihat Hasil' : 'Selanjutnya'}</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      `;
+      
+      container.innerHTML = html;
+      
+      document.getElementById('current-q').textContent = currentQuestion + 1;
+      document.getElementById('quiz-progress').style.width = `${((currentQuestion + 1) / quizQuestions.length) * 100}%`;
+    }
+
+    function selectAnswer(index) {
+      const q = quizQuestions[currentQuestion];
+      const isCorrect = index === q.correct;
+      
+      if (isCorrect) score++;
+      
+      answeredQuestions.push({
+        questionId: q.id,
+        selected: index,
+        correct: isCorrect
+      });
+      
+      document.getElementById('quiz-score').textContent = score;
+      
+      renderQuizQuestion();
+      updateProgress();
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        renderQuizQuestion();
+      } else {
+        showQuizResult();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuizQuestion();
+      }
+    }
+
+    function showQuizResult() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      
+      document.getElementById('final-score').textContent = score;
+      const percentage = Math.round((score / quizQuestions.length) * 100);
+      document.getElementById('percentage').textContent = percentage;
+      
+      let icon, title, message, feedbackHTML;
+      
+      if (percentage >= 80) {
+        icon = '🏆';
+        title = 'Luar Biasa!';
+        message = 'Kamu sangat memahami materi ketahanan pangan!';
+        feedbackHTML = `
+          <div class="flex items-start gap-3 text-green-700">
+            <span class="text-2xl">⭐</span>
+            <div>
+              <p class="font-semibold">Prestasi Hebat!</p>
+              <p class="text-sm">Kamu telah menguasai konsep ketahanan pangan dengan sangat baik. Kemampuan berpikir kritis dan analisismu sangat bagus!</p>
+            </div>
+          </div>
+        `;
+      } else if (percentage >= 60) {
+        icon = '👍';
+        title = 'Bagus!';
+        message = 'Pemahamanmu cukup baik, terus tingkatkan!';
+        feedbackHTML = `
+          <div class="flex items-start gap-3 text-blue-700">
+            <span class="text-2xl">📚</span>
+            <div>
+              <p class="font-semibold">Terus Berkembang!</p>
+              <p class="text-sm">Kamu sudah memahami konsep dasar dengan baik. Pelajari kembali materi tentang tantangan produksi dan upaya peningkatan untuk hasil lebih baik.</p>
+            </div>
+          </div>
+        `;
+      } else {
+        icon = '💪';
+        title = 'Jangan Menyerah!';
+        message = 'Pelajari kembali materinya dan coba lagi!';
+        feedbackHTML = `
+          <div class="flex items-start gap-3 text-amber-700">
+            <span class="text-2xl">📖</span>
+            <div>
+              <p class="font-semibold">Kesempatan untuk Belajar</p>
+              <p class="text-sm">Jangan khawatir! Baca kembali semua materi dengan seksama, terutama bagian definisi, faktor penentu, dan tantangan. Kamu pasti bisa!</p>
+            </div>
+          </div>
+        `;
+      }
+      
+      document.getElementById('result-icon').textContent = icon;
+      document.getElementById('result-title').textContent = title;
+      document.getElementById('result-message').textContent = message;
+      document.getElementById('result-feedback').innerHTML = feedbackHTML;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answeredQuestions = [];
+      
+      document.getElementById('quiz-score').textContent = '0';
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('quiz-result').classList.add('hidden');
+      
+      renderQuizQuestion();
+    }
+
+    // Initialize
+    initializeApp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cab83096597ea83',t:'MTc3MDU1Nzc0My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,1436 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pembelajaran Energi dan Laju Reaksi Kimia</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --primary-bg: #0f172a;
+      --surface-color: #1e293b;
+      --text-color: #f1f5f9;
+      --primary-action: #06b6d4;
+      --secondary-action: #8b5cf6;
+    }
+    
+    * {
+      scroll-behavior: smooth;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, var(--primary-action), var(--secondary-action));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(6, 182, 212, 0.15);
+    }
+    
+    .nav-item {
+      transition: all 0.2s ease;
+    }
+    
+    .nav-item:hover {
+      background: rgba(6, 182, 212, 0.1);
+    }
+    
+    .nav-item.active {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.2));
+      border-left: 3px solid var(--primary-action);
+    }
+    
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(6, 182, 212, 0.6); }
+    }
+    
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+    
+    @keyframes flame {
+      0%, 100% { transform: scaleY(1) scaleX(1); }
+      50% { transform: scaleY(1.1) scaleX(0.9); }
+    }
+    
+    .flame-animation {
+      animation: flame 0.5s ease-in-out infinite;
+    }
+    
+    @keyframes ice {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
+    }
+    
+    .ice-animation {
+      animation: ice 1.5s ease-in-out infinite;
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      background: rgba(6, 182, 212, 0.1);
+      border-color: var(--primary-action);
+    }
+    
+    .quiz-option.selected {
+      background: rgba(6, 182, 212, 0.2);
+      border-color: var(--primary-action);
+    }
+    
+    .quiz-option.correct {
+      background: rgba(34, 197, 94, 0.2);
+      border-color: #22c55e;
+    }
+    
+    .quiz-option.incorrect {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #ef4444;
+    }
+    
+    .section-indicator {
+      transition: all 0.3s ease;
+    }
+    
+    .section-indicator.active {
+      width: 24px;
+      background: var(--primary-action);
+    }
+    
+    .interactive-demo {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.05), rgba(139, 92, 246, 0.05));
+      border: 1px solid rgba(6, 182, 212, 0.2);
+    }
+    
+    .particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      animation: particle-move 2s linear infinite;
+    }
+    
+    @keyframes particle-move {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(30px, -20px); }
+      50% { transform: translate(60px, 10px); }
+      75% { transform: translate(30px, 30px); }
+      100% { transform: translate(0, 0); }
+    }
+    
+    .collision-effect {
+      animation: collision 0.3s ease-out;
+    }
+    
+    @keyframes collision {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.5); opacity: 0.5; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-slate-900 text-slate-100 overflow-auto" style="font-family: 'Nunito', sans-serif;">
+  <div class="h-full w-full flex flex-col lg:flex-row"><!-- Sidebar Navigation -->
+   <nav id="sidebar" class="w-full lg:w-72 bg-slate-800/50 backdrop-blur-sm border-b lg:border-b-0 lg:border-r border-slate-700 flex-shrink-0 lg:h-full lg:overflow-y-auto">
+    <div class="p-4 lg:p-6"><!-- Logo -->
+     <div class="flex items-center gap-3 mb-6">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center">
+       <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+       </svg>
+      </div>
+      <div>
+       <h1 id="app-title" class="font-bold text-lg text-white" style="font-family: 'Poppins', sans-serif;">Kimia Interaktif</h1>
+       <p id="teacher-display" class="text-xs text-slate-400">Pembelajaran Digital</p>
+      </div>
+     </div><!-- Navigation Menu -->
+     <div class="space-y-1 overflow-x-auto lg:overflow-x-visible">
+      <div class="flex lg:flex-col gap-1 pb-2 lg:pb-0"><button onclick="navigateTo('intro')" class="nav-item flex-shrink-0 lg:flex-shrink flex items-center gap-3 px-3 py-2.5 rounded-lg text-left w-auto lg:w-full active" data-section="intro"> <span class="text-lg">🏠</span> <span class="text-sm font-medium whitespace-nowrap">Pendahuluan</span> </button> <button onclick="navigateTo('energy')" class="nav-item flex-shrink-0 lg:flex-shrink flex items-center gap-3 px-3 py-2.5 rounded-lg text-left w-auto lg:w-full" data-section="energy"> <span class="text-lg">⚡</span> <span class="text-sm font-medium whitespace-nowrap">Energi Reaksi</span> </button> <button onclick="navigateTo('exothermic')" class="nav-item flex-shrink-0 lg:flex-shrink flex items-center gap-3 px-3 py-2.5 rounded-lg text-left w-auto lg:w-full" data-section="exothermic"> <span class="text-lg">🔥</span> <span class="text-sm font-medium whitespace-nowrap">Eksotermik</span> </button> <button onclick="navigateTo('endothermic')" class="nav-item flex-shrink-0 lg:flex-shrink flex items-center gap-3 px-3 py-2.5 rounded-lg text-left w-auto lg:w-full" data-section="endothermic"> <span class="text-lg">❄️</span> <span class="text-sm font-medium whitespace-nowrap">Endotermik</span> </button> <button onclick="navigateTo('rate')" class="nav-item flex-shrink-0 lg:flex-shrink flex items-center gap-3 px-3 py-2.5 rounded-lg text-left w-auto lg:w-full" data-section="rate"> <span class="text-lg">⏱️</span> <span class="text-sm font-medium whitespace-nowrap">Laju Reaksi</span> </button> <button onclick="navigateTo('factors')" class="nav-item flex-shrink-0 lg:flex-shrink flex items-center gap-3 px-3 py-2.5 rounded-lg text-left w-auto lg:w-full" data-section="factors"> <span class="text-lg">🔬</span> <span class="text-sm font-medium whitespace-nowrap">Faktor-Faktor</span> </button> <button onclick="navigateTo('application')" class="nav-item flex-shrink-0 lg:flex-shrink flex items-center gap-3 px-3 py-2.5 rounded-lg text-left w-auto lg:w-full" data-section="application"> <span class="text-lg">🌍</span> <span class="text-sm font-medium whitespace-nowrap">Penerapan</span> </button> <button onclick="navigateTo('quiz')" class="nav-item flex-shrink-0 lg:flex-shrink flex items-center gap-3 px-3 py-2.5 rounded-lg text-left w-auto lg:w-full" data-section="quiz"> <span class="text-lg">📝</span> <span class="text-sm font-medium whitespace-nowrap">Soal HOTS</span> </button>
+      </div>
+     </div><!-- Progress -->
+     <div class="mt-6 p-4 bg-slate-700/30 rounded-xl hidden lg:block">
+      <div class="flex justify-between text-xs mb-2"><span class="text-slate-400">Progress Belajar</span> <span id="progress-text" class="text-cyan-400 font-semibold">0%</span>
+      </div>
+      <div class="h-2 bg-slate-600 rounded-full overflow-hidden">
+       <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-cyan-500 to-violet-500 rounded-full" style="width: 0%"></div>
+      </div>
+     </div>
+    </div>
+   </nav><!-- Main Content -->
+   <main class="flex-1 overflow-y-auto">
+    <div class="max-w-4xl mx-auto p-4 lg:p-8"><!-- Section: Intro -->
+     <section id="section-intro" class="section mb-12">
+      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-cyan-500/20 via-violet-500/20 to-pink-500/20 p-6 lg:p-10 mb-8"><!-- Decorative bubbles -->
+       <div class="bubble w-16 h-16 bg-cyan-500/20 top-4 right-4" style="animation-delay: 0s;"></div>
+       <div class="bubble w-10 h-10 bg-violet-500/20 bottom-8 right-20" style="animation-delay: 1s;"></div>
+       <div class="bubble w-8 h-8 bg-pink-500/20 top-20 left-10" style="animation-delay: 2s;"></div>
+       <div class="relative z-10"><span class="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-400 text-xs font-semibold rounded-full mb-4">PEMBELAJARAN INTERAKTIF</span>
+        <h1 id="main-title" class="text-2xl lg:text-4xl font-bold mb-4 leading-tight" style="font-family: 'Poppins', sans-serif;">Memahami <span class="gradient-text">Energi</span> dan <span class="gradient-text">Laju Reaksi</span> Kimia</h1>
+        <p class="text-slate-300 text-sm lg:text-base max-w-2xl mb-6">Pelajari bagaimana energi berperan dalam reaksi kimia dan faktor-faktor apa saja yang mempengaruhi kecepatan suatu reaksi. Materi ini akan membantu kalian memahami fenomena kimia dalam kehidupan sehari-hari.</p>
+        <div class="flex flex-wrap gap-3">
+         <div class="flex items-center gap-2 px-4 py-2 bg-slate-800/50 rounded-lg">
+          <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg><span class="text-sm">8 Materi</span>
+         </div>
+         <div class="flex items-center gap-2 px-4 py-2 bg-slate-800/50 rounded-lg">
+          <svg class="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          </svg><span class="text-sm">Aktivitas Interaktif</span>
+         </div>
+         <div class="flex items-center gap-2 px-4 py-2 bg-slate-800/50 rounded-lg">
+          <svg class="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+          </svg><span class="text-sm">10 Soal HOTS</span>
+         </div>
+        </div>
+       </div>
+      </div><!-- Learning Objectives -->
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+       <h3 class="font-bold text-lg mb-4 flex items-center gap-2" style="font-family: 'Poppins', sans-serif;"><span class="w-8 h-8 bg-cyan-500/20 rounded-lg flex items-center justify-center">🎯</span> Tujuan Pembelajaran</h3>
+       <ul class="space-y-3">
+        <li class="flex items-start gap-3"><span class="w-6 h-6 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center flex-shrink-0 text-xs">✓</span> <span class="text-slate-300 text-sm">Menjelaskan perbedaan antara reaksi eksotermik dan endotermik beserta contohnya</span></li>
+        <li class="flex items-start gap-3"><span class="w-6 h-6 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center flex-shrink-0 text-xs">✓</span> <span class="text-slate-300 text-sm">Mengidentifikasi faktor-faktor yang memengaruhi laju reaksi kimia</span></li>
+        <li class="flex items-start gap-3"><span class="w-6 h-6 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center flex-shrink-0 text-xs">✓</span> <span class="text-slate-300 text-sm">Menerapkan konsep laju reaksi dalam kehidupan sehari-hari</span></li>
+        <li class="flex items-start gap-3"><span class="w-6 h-6 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center flex-shrink-0 text-xs">✓</span> <span class="text-slate-300 text-sm">Menganalisis hubungan antara energi aktivasi dan kecepatan reaksi</span></li>
+       </ul>
+      </div>
+     </section><!-- Section: Energy in Reactions -->
+     <section id="section-energy" class="section mb-12 hidden">
+      <div class="mb-6"><span class="inline-block px-3 py-1 bg-yellow-500/20 text-yellow-400 text-xs font-semibold rounded-full mb-3">MATERI 1</span>
+       <h2 class="text-2xl lg:text-3xl font-bold mb-4" style="font-family: 'Poppins', sans-serif;">⚡ Energi dalam Reaksi Kimia</h2>
+      </div>
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 mb-6">
+       <p class="text-slate-300 mb-6 leading-relaxed">Setiap reaksi kimia melibatkan <strong class="text-cyan-400">perubahan energi</strong>. Energi ini dapat berupa berbagai bentuk seperti panas (kalor), cahaya, listrik, atau bahkan bunyi. Perubahan energi inilah yang membedakan reaksi kimia dari perubahan fisika biasa.</p><!-- Energy Types Illustration -->
+       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-xl p-4 text-center border border-orange-500/30">
+         <div class="text-4xl mb-2">
+          🔥
+         </div>
+         <h4 class="font-semibold text-sm text-orange-300">Energi Panas</h4>
+         <p class="text-xs text-slate-400 mt-1">Pembakaran, reaksi netralisasi</p>
+        </div>
+        <div class="bg-gradient-to-br from-yellow-500/20 to-amber-500/20 rounded-xl p-4 text-center border border-yellow-500/30">
+         <div class="text-4xl mb-2">
+          💡
+         </div>
+         <h4 class="font-semibold text-sm text-yellow-300">Energi Cahaya</h4>
+         <p class="text-xs text-slate-400 mt-1">Fotosintesis, chemiluminescence</p>
+        </div>
+        <div class="bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-xl p-4 text-center border border-blue-500/30">
+         <div class="text-4xl mb-2">
+          ⚡
+         </div>
+         <h4 class="font-semibold text-sm text-blue-300">Energi Listrik</h4>
+         <p class="text-xs text-slate-400 mt-1">Baterai, sel elektrolisis</p>
+        </div>
+        <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-xl p-4 text-center border border-purple-500/30">
+         <div class="text-4xl mb-2">
+          🔊
+         </div>
+         <h4 class="font-semibold text-sm text-purple-300">Energi Bunyi</h4>
+         <p class="text-xs text-slate-400 mt-1">Ledakan, kembang api</p>
+        </div>
+       </div><!-- Detection Methods -->
+       <div class="bg-slate-700/30 rounded-xl p-5 border border-slate-600">
+        <h4 class="font-semibold mb-3 flex items-center gap-2"><span class="text-xl">🔍</span> Cara Mendeteksi Perubahan Energi</h4>
+        <div class="grid md:grid-cols-2 gap-4">
+         <div class="flex items-start gap-3">
+          <div class="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center flex-shrink-0"><span class="text-xl">✋</span>
+          </div>
+          <div>
+           <p class="font-medium text-sm">Indra Peraba</p>
+           <p class="text-xs text-slate-400">Merasakan langsung perubahan suhu (hangat/dingin) di sekitar tempat reaksi</p>
+          </div>
+         </div>
+         <div class="flex items-start gap-3">
+          <div class="w-10 h-10 bg-violet-500/20 rounded-lg flex items-center justify-center flex-shrink-0"><span class="text-xl">🌡️</span>
+          </div>
+          <div>
+           <p class="font-medium text-sm">Termometer</p>
+           <p class="text-xs text-slate-400">Mengukur perubahan suhu secara akurat dalam satuan derajat</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Interactive Demo: Energy Detection -->
+      <div class="interactive-demo rounded-xl p-6">
+       <h4 class="font-semibold mb-4 flex items-center gap-2"><span class="text-xl">🧪</span> Aktivitas Interaktif: Deteksi Perubahan Energi</h4>
+       <p class="text-sm text-slate-400 mb-4">Klik pada setiap reaksi untuk melihat jenis energi yang dihasilkan!</p>
+       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3" id="energy-demo"><button onclick="showEnergyResult('Pembakaran Lilin', 'Panas &amp; Cahaya', '🕯️', 'orange')" class="bg-slate-700/50 hover:bg-slate-700 rounded-lg p-4 text-center transition-all">
+         <div class="text-3xl mb-2">
+          🕯️
+         </div><p class="text-xs">Pembakaran Lilin</p></button> <button onclick="showEnergyResult('Baterai Bekerja', 'Listrik &amp; Panas', '🔋', 'blue')" class="bg-slate-700/50 hover:bg-slate-700 rounded-lg p-4 text-center transition-all">
+         <div class="text-3xl mb-2">
+          🔋
+         </div><p class="text-xs">Baterai</p></button> <button onclick="showEnergyResult('Kembang Api', 'Cahaya, Panas &amp; Bunyi', '🎆', 'purple')" class="bg-slate-700/50 hover:bg-slate-700 rounded-lg p-4 text-center transition-all">
+         <div class="text-3xl mb-2">
+          🎆
+         </div><p class="text-xs">Kembang Api</p></button> <button onclick="showEnergyResult('Cold Pack', 'Menyerap Panas', '🧊', 'cyan')" class="bg-slate-700/50 hover:bg-slate-700 rounded-lg p-4 text-center transition-all">
+         <div class="text-3xl mb-2">
+          🧊
+         </div><p class="text-xs">Cold Pack</p></button>
+       </div>
+       <div id="energy-result" class="mt-4 p-4 bg-slate-700/50 rounded-lg hidden">
+        <p id="energy-result-text" class="text-center font-medium"></p>
+       </div>
+      </div>
+     </section><!-- Section: Exothermic -->
+     <section id="section-exothermic" class="section mb-12 hidden">
+      <div class="mb-6"><span class="inline-block px-3 py-1 bg-orange-500/20 text-orange-400 text-xs font-semibold rounded-full mb-3">MATERI 2</span>
+       <h2 class="text-2xl lg:text-3xl font-bold mb-4" style="font-family: 'Poppins', sans-serif;">🔥 Reaksi Eksotermik</h2>
+      </div><!-- Definition Card -->
+      <div class="bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-xl p-6 border border-orange-500/30 mb-6">
+       <div class="flex items-start gap-4">
+        <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center flex-shrink-0 flame-animation"><span class="text-3xl">🔥</span>
+        </div>
+        <div>
+         <h3 class="font-bold text-xl text-orange-300 mb-2">Definisi</h3>
+         <p class="text-slate-300 leading-relaxed">Reaksi eksotermik adalah reaksi kimia yang <strong class="text-orange-400">menghasilkan atau melepaskan energi panas</strong> ke lingkungan sekitarnya. Kata "ekso" berasal dari bahasa Yunani yang berarti "keluar".</p>
+        </div>
+       </div>
+      </div><!-- Characteristics -->
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 mb-6">
+       <h4 class="font-semibold mb-4 flex items-center gap-2"><span class="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center">📋</span> Ciri-ciri Reaksi Eksotermik</h4>
+       <ul class="space-y-3">
+        <li class="flex items-center gap-3"><span class="w-2 h-2 bg-orange-400 rounded-full"></span> <span class="text-slate-300">Suhu lingkungan <strong class="text-orange-400">meningkat</strong> (terasa hangat atau panas)</span></li>
+        <li class="flex items-center gap-3"><span class="w-2 h-2 bg-orange-400 rounded-full"></span> <span class="text-slate-300">Energi produk <strong class="text-orange-400">lebih rendah</strong> daripada energi reaktan</span></li>
+        <li class="flex items-center gap-3"><span class="w-2 h-2 bg-orange-400 rounded-full"></span> <span class="text-slate-300">Perubahan entalpi (ΔH) bernilai <strong class="text-orange-400">negatif</strong></span></li>
+       </ul>
+      </div><!-- Examples with Images -->
+      <h4 class="font-semibold mb-4 flex items-center gap-2"><span class="text-xl">📸</span> Contoh Reaksi Eksotermik dalam Kehidupan</h4>
+      <div class="grid md:grid-cols-2 gap-4 mb-6"><!-- Example 1: Burning -->
+       <div class="card-hover bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700">
+        <div class="h-40 bg-gradient-to-br from-orange-600/30 to-red-600/30 flex items-center justify-center relative overflow-hidden">
+         <svg class="w-full h-full absolute opacity-20" viewbox="0 0 200 160"><defs>
+           <lineargradient id="flameGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+            <stop offset="0%" style="stop-color:#f97316" />
+            <stop offset="50%" style="stop-color:#ef4444" />
+            <stop offset="100%" style="stop-color:#fbbf24" />
+           </lineargradient>
+          </defs> <ellipse cx="100" cy="150" rx="30" ry="10" fill="#1e293b" /> <path d="M100 140 Q85 100 90 70 Q95 40 100 20 Q105 40 110 70 Q115 100 100 140" fill="url(#flameGrad)" class="flame-animation" /> <path d="M100 140 Q90 110 95 85 Q100 60 100 45 Q100 60 105 85 Q110 110 100 140" fill="#fbbf24" class="flame-animation" style="animation-delay: 0.2s" />
+         </svg>
+         <div class="relative z-10 text-center"><span class="text-6xl">🔥</span>
+          <p class="text-sm font-medium mt-2 text-orange-300">Reaksi Pembakaran</p>
+         </div>
+        </div>
+        <div class="p-4">
+         <h5 class="font-semibold text-orange-300 mb-2">Pembakaran Bahan Bakar</h5>
+         <p class="text-sm text-slate-400">Pembakaran gas LPG, bensin, atau kayu menghasilkan panas yang digunakan untuk memasak, menghangatkan ruangan, atau menggerakkan mesin.</p>
+         <div class="mt-3 p-2 bg-slate-700/50 rounded-lg">
+          <p class="text-xs font-mono text-cyan-400">CH₄ + 2O₂ → CO₂ + 2H₂O + Energi</p>
+         </div>
+        </div>
+       </div><!-- Example 2: Neutralization -->
+       <div class="card-hover bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700">
+        <div class="h-40 bg-gradient-to-br from-blue-600/30 to-purple-600/30 flex items-center justify-center relative overflow-hidden">
+         <svg class="w-full h-full absolute opacity-30" viewbox="0 0 200 160"><rect x="70" y="60" width="60" height="80" rx="5" fill="#3b82f6" opacity="0.5" /> <ellipse cx="100" cy="60" rx="30" ry="8" fill="#3b82f6" /> <path d="M75 80 Q85 90 100 85 Q115 90 125 80" stroke="#60a5fa" stroke-width="2" fill="none" /> <path d="M80 100 Q90 105 100 100 Q110 105 120 100" stroke="#60a5fa" stroke-width="2" fill="none" /> <circle cx="85" cy="75" r="3" fill="#fbbf24" class="flame-animation" /> <circle cx="100" cy="70" r="4" fill="#fb923c" class="flame-animation" style="animation-delay: 0.3s" /> <circle cx="115" cy="75" r="3" fill="#fbbf24" class="flame-animation" style="animation-delay: 0.6s" />
+         </svg>
+         <div class="relative z-10 text-center"><span class="text-6xl">⚗️</span>
+          <p class="text-sm font-medium mt-2 text-blue-300">Reaksi Netralisasi</p>
+         </div>
+        </div>
+        <div class="p-4">
+         <h5 class="font-semibold text-blue-300 mb-2">Netralisasi Asam-Basa</h5>
+         <p class="text-sm text-slate-400">Ketika asam dan basa dicampur, terjadi reaksi yang menghasilkan garam dan air, sekaligus melepaskan panas.</p>
+         <div class="mt-3 p-2 bg-slate-700/50 rounded-lg">
+          <p class="text-xs font-mono text-cyan-400">HCl + NaOH → NaCl + H₂O + Panas</p>
+         </div>
+        </div>
+       </div><!-- Example 3: Respiration -->
+       <div class="card-hover bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700">
+        <div class="h-40 bg-gradient-to-br from-green-600/30 to-teal-600/30 flex items-center justify-center relative overflow-hidden">
+         <svg class="w-full h-full absolute opacity-30" viewbox="0 0 200 160"><ellipse cx="100" cy="80" rx="50" ry="60" fill="none" stroke="#10b981" stroke-width="2" /> <path d="M60 60 Q80 40 100 50 Q120 40 140 60" fill="#10b981" opacity="0.3" /> <path d="M60 100 Q80 120 100 110 Q120 120 140 100" fill="#10b981" opacity="0.3" /> <circle cx="80" cy="70" r="8" fill="#fbbf24" opacity="0.6" /> <circle cx="120" cy="70" r="8" fill="#fbbf24" opacity="0.6" /> <circle cx="100" cy="90" r="6" fill="#fb923c" opacity="0.6" />
+         </svg>
+         <div class="relative z-10 text-center"><span class="text-6xl">🫁</span>
+          <p class="text-sm font-medium mt-2 text-green-300">Respirasi Sel</p>
+         </div>
+        </div>
+        <div class="p-4">
+         <h5 class="font-semibold text-green-300 mb-2">Respirasi Sel</h5>
+         <p class="text-sm text-slate-400">Proses perombakan glukosa dalam sel tubuh makhluk hidup yang menghasilkan energi untuk menjaga suhu tubuh tetap hangat.</p>
+         <div class="mt-3 p-2 bg-slate-700/50 rounded-lg">
+          <p class="text-xs font-mono text-cyan-400">C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP</p>
+         </div>
+        </div>
+       </div><!-- Example 4: Hand Warmer -->
+       <div class="card-hover bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700">
+        <div class="h-40 bg-gradient-to-br from-rose-600/30 to-pink-600/30 flex items-center justify-center relative overflow-hidden">
+         <svg class="w-full h-full absolute opacity-30" viewbox="0 0 200 160"><rect x="60" y="40" width="80" height="100" rx="10" fill="#f43f5e" opacity="0.3" /> <path d="M80 60 L80 120 M100 60 L100 120 M120 60 L120 120" stroke="#fda4af" stroke-width="3" stroke-dasharray="5,5" /> <circle cx="100" cy="80" r="15" fill="#fbbf24" opacity="0.5" class="flame-animation" />
+         </svg>
+         <div class="relative z-10 text-center"><span class="text-6xl">🤲</span>
+          <p class="text-sm font-medium mt-2 text-rose-300">Hand Warmer</p>
+         </div>
+        </div>
+        <div class="p-4">
+         <h5 class="font-semibold text-rose-300 mb-2">Penghangat Tangan</h5>
+         <p class="text-sm text-slate-400">Hand warmer menggunakan reaksi oksidasi besi dengan udara untuk menghasilkan panas yang dapat menghangatkan tangan di cuaca dingin.</p>
+         <div class="mt-3 p-2 bg-slate-700/50 rounded-lg">
+          <p class="text-xs font-mono text-cyan-400">4Fe + 3O₂ → 2Fe₂O₃ + Panas</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Interactive Demo -->
+      <div class="interactive-demo rounded-xl p-6">
+       <h4 class="font-semibold mb-4 flex items-center gap-2"><span class="text-xl">🧪</span> Simulasi: Diagram Energi Reaksi Eksotermik</h4>
+       <div class="bg-slate-800 rounded-lg p-4">
+        <svg viewbox="0 0 400 250" class="w-full max-w-md mx-auto"><!-- Axes --> <line x1="50" y1="200" x2="350" y2="200" stroke="#64748b" stroke-width="2" /> <line x1="50" y1="200" x2="50" y2="30" stroke="#64748b" stroke-width="2" /> <!-- Labels --> <text x="200" y="230" fill="#94a3b8" font-size="12" text-anchor="middle">
+          Jalannya Reaksi →
+         </text> <text x="30" y="120" fill="#94a3b8" font-size="12" text-anchor="middle" transform="rotate(-90, 30, 120)">
+          Energi →
+         </text> <!-- Reactant level --> <line x1="70" y1="70" x2="140" y2="70" stroke="#f97316" stroke-width="3" /> <text x="105" y="60" fill="#f97316" font-size="11" text-anchor="middle">
+          Reaktan
+         </text> <!-- Activation energy curve --> <path d="M140 70 Q200 20 260 120" stroke="#06b6d4" stroke-width="2" fill="none" stroke-dasharray="5,5" /> <!-- Transition state --> <circle cx="200" cy="40" r="5" fill="#06b6d4" /> <text x="200" y="25" fill="#06b6d4" font-size="10" text-anchor="middle">
+          Ea
+         </text> <!-- Product level --> <line x1="260" y1="120" x2="330" y2="120" stroke="#22c55e" stroke-width="3" /> <text x="295" y="110" fill="#22c55e" font-size="11" text-anchor="middle">
+          Produk
+         </text> <!-- Energy released arrow --> <line x1="360" y1="70" x2="360" y2="120" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowhead)" /> <defs>
+          <marker id="arrowhead" markerwidth="10" markerheight="7" refx="9" refy="3.5" orient="auto">
+           <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444" />
+          </marker>
+         </defs> <text x="370" y="100" fill="#ef4444" font-size="10" text-anchor="start">
+          ΔH &lt; 0
+         </text> <text x="370" y="115" fill="#ef4444" font-size="9" text-anchor="start">
+          (Panas keluar)
+         </text>
+        </svg>
+        <p class="text-center text-sm text-slate-400 mt-4">Pada reaksi eksotermik, energi produk lebih rendah dari reaktan sehingga energi dilepaskan ke lingkungan</p>
+       </div>
+      </div>
+     </section><!-- Section: Endothermic -->
+     <section id="section-endothermic" class="section mb-12 hidden">
+      <div class="mb-6"><span class="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-400 text-xs font-semibold rounded-full mb-3">MATERI 3</span>
+       <h2 class="text-2xl lg:text-3xl font-bold mb-4" style="font-family: 'Poppins', sans-serif;">❄️ Reaksi Endotermik</h2>
+      </div><!-- Definition Card -->
+      <div class="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-xl p-6 border border-cyan-500/30 mb-6">
+       <div class="flex items-start gap-4">
+        <div class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center flex-shrink-0 ice-animation"><span class="text-3xl">❄️</span>
+        </div>
+        <div>
+         <h3 class="font-bold text-xl text-cyan-300 mb-2">Definisi</h3>
+         <p class="text-slate-300 leading-relaxed">Reaksi endotermik adalah reaksi kimia yang <strong class="text-cyan-400">membutuhkan atau menyerap energi panas</strong> dari lingkungan sekitarnya. Kata "endo" berasal dari bahasa Yunani yang berarti "ke dalam".</p>
+        </div>
+       </div>
+      </div><!-- Characteristics -->
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 mb-6">
+       <h4 class="font-semibold mb-4 flex items-center gap-2"><span class="w-8 h-8 bg-cyan-500/20 rounded-lg flex items-center justify-center">📋</span> Ciri-ciri Reaksi Endotermik</h4>
+       <ul class="space-y-3">
+        <li class="flex items-center gap-3"><span class="w-2 h-2 bg-cyan-400 rounded-full"></span> <span class="text-slate-300">Suhu lingkungan <strong class="text-cyan-400">menurun</strong> (terasa dingin)</span></li>
+        <li class="flex items-center gap-3"><span class="w-2 h-2 bg-cyan-400 rounded-full"></span> <span class="text-slate-300">Energi produk <strong class="text-cyan-400">lebih tinggi</strong> daripada energi reaktan</span></li>
+        <li class="flex items-center gap-3"><span class="w-2 h-2 bg-cyan-400 rounded-full"></span> <span class="text-slate-300">Perubahan entalpi (ΔH) bernilai <strong class="text-cyan-400">positif</strong></span></li>
+       </ul>
+      </div><!-- Examples with Images -->
+      <h4 class="font-semibold mb-4 flex items-center gap-2"><span class="text-xl">📸</span> Contoh Reaksi Endotermik dalam Kehidupan</h4>
+      <div class="grid md:grid-cols-2 gap-4 mb-6"><!-- Example 1: Cold Pack -->
+       <div class="card-hover bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700">
+        <div class="h-40 bg-gradient-to-br from-cyan-600/30 to-blue-600/30 flex items-center justify-center relative overflow-hidden">
+         <svg class="w-full h-full absolute opacity-30" viewbox="0 0 200 160"><rect x="60" y="30" width="80" height="100" rx="10" fill="#0ea5e9" opacity="0.3" /> <text x="100" y="80" fill="#7dd3fc" font-size="14" text-anchor="middle" font-weight="bold">
+           COLD
+          </text> <text x="100" y="95" fill="#7dd3fc" font-size="14" text-anchor="middle" font-weight="bold">
+           PACK
+          </text> <!-- Ice crystals --> <polygon points="75,50 80,40 85,50" fill="#e0f2fe" /> <polygon points="115,45 120,35 125,45" fill="#e0f2fe" /> <polygon points="90,110 95,100 100,110" fill="#e0f2fe" />
+         </svg>
+         <div class="relative z-10 text-center"><span class="text-6xl">🧊</span>
+          <p class="text-sm font-medium mt-2 text-cyan-300">Cold Pack</p>
+         </div>
+        </div>
+        <div class="p-4">
+         <h5 class="font-semibold text-cyan-300 mb-2">Kompres Dingin Instan</h5>
+         <p class="text-sm text-slate-400">Cold pack menggunakan reaksi amonium nitrat dengan air. Saat kantong dalam dipecah, terjadi reaksi yang menyerap panas sehingga pack menjadi sangat dingin.</p>
+         <div class="mt-3 p-2 bg-slate-700/50 rounded-lg">
+          <p class="text-xs font-mono text-cyan-400">NH₄NO₃ + H₂O → NH₄⁺ + NO₃⁻ - Panas</p>
+         </div>
+        </div>
+       </div><!-- Example 2: Photosynthesis -->
+       <div class="card-hover bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700">
+        <div class="h-40 bg-gradient-to-br from-green-600/30 to-emerald-600/30 flex items-center justify-center relative overflow-hidden">
+         <svg class="w-full h-full absolute opacity-30" viewbox="0 0 200 160"><!-- Sun --> <circle cx="160" cy="40" r="20" fill="#fbbf24" /> <line x1="160" y1="10" x2="160" y2="0" stroke="#fbbf24" stroke-width="2" /> <line x1="190" y1="40" x2="200" y2="40" stroke="#fbbf24" stroke-width="2" /> <line x1="180" y1="20" x2="190" y2="10" stroke="#fbbf24" stroke-width="2" /> <!-- Sun rays to leaf --> <path d="M145 50 L100 80" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,3" /> <!-- Leaf --> <ellipse cx="80" cy="90" rx="40" ry="25" fill="#22c55e" transform="rotate(-20, 80, 90)" /> <path d="M50 95 Q80 80 110 95" stroke="#166534" stroke-width="2" fill="none" /> <!-- Stem --> <path d="M80 110 L80 150" stroke="#166534" stroke-width="4" />
+         </svg>
+         <div class="relative z-10 text-center"><span class="text-6xl">🌿</span>
+          <p class="text-sm font-medium mt-2 text-green-300">Fotosintesis</p>
+         </div>
+        </div>
+        <div class="p-4">
+         <h5 class="font-semibold text-green-300 mb-2">Fotosintesis Tumbuhan</h5>
+         <p class="text-sm text-slate-400">Tumbuhan menyerap energi cahaya matahari untuk mengubah CO₂ dan H₂O menjadi glukosa dan oksigen. Ini adalah contoh klasik reaksi endotermik.</p>
+         <div class="mt-3 p-2 bg-slate-700/50 rounded-lg">
+          <p class="text-xs font-mono text-cyan-400">6CO₂ + 6H₂O + Cahaya → C₆H₁₂O₆ + 6O₂</p>
+         </div>
+        </div>
+       </div><!-- Example 3: Cooking -->
+       <div class="card-hover bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700">
+        <div class="h-40 bg-gradient-to-br from-amber-600/30 to-yellow-600/30 flex items-center justify-center relative overflow-hidden">
+         <svg class="w-full h-full absolute opacity-30" viewbox="0 0 200 160"><!-- Egg --> <ellipse cx="100" cy="80" rx="45" ry="35" fill="#fef3c7" /> <ellipse cx="100" cy="80" rx="20" ry="18" fill="#fbbf24" /> <!-- Pan --> <ellipse cx="100" cy="120" rx="60" ry="15" fill="#374151" /> <rect x="155" y="110" width="40" height="10" rx="3" fill="#374151" /> <!-- Heat waves --> <path d="M60 140 Q65 135 60 130" stroke="#ef4444" stroke-width="2" fill="none" opacity="0.6" /> <path d="M100 145 Q105 138 100 132" stroke="#ef4444" stroke-width="2" fill="none" opacity="0.6" /> <path d="M140 140 Q145 135 140 130" stroke="#ef4444" stroke-width="2" fill="none" opacity="0.6" />
+         </svg>
+         <div class="relative z-10 text-center"><span class="text-6xl">🍳</span>
+          <p class="text-sm font-medium mt-2 text-amber-300">Memasak Telur</p>
+         </div>
+        </div>
+        <div class="p-4">
+         <h5 class="font-semibold text-amber-300 mb-2">Memasak Telur</h5>
+         <p class="text-sm text-slate-400">Proses memasak telur membutuhkan panas dari kompor. Protein dalam telur menyerap energi panas untuk mengalami denaturasi (perubahan struktur).</p>
+         <div class="mt-3 p-2 bg-slate-700/50 rounded-lg">
+          <p class="text-xs font-mono text-cyan-400">Protein (mentah) + Panas → Protein (matang)</p>
+         </div>
+        </div>
+       </div><!-- Example 4: Electrolysis -->
+       <div class="card-hover bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700">
+        <div class="h-40 bg-gradient-to-br from-violet-600/30 to-purple-600/30 flex items-center justify-center relative overflow-hidden">
+         <svg class="w-full h-full absolute opacity-30" viewbox="0 0 200 160"><!-- Container --> <rect x="50" y="50" width="100" height="80" rx="5" fill="none" stroke="#8b5cf6" stroke-width="2" /> <!-- Electrodes --> <rect x="70" y="30" width="10" height="50" fill="#64748b" /> <rect x="120" y="30" width="10" height="50" fill="#64748b" /> <!-- Bubbles --> <circle cx="75" cy="90" r="3" fill="#60a5fa" /> <circle cx="75" cy="100" r="4" fill="#60a5fa" /> <circle cx="125" cy="85" r="4" fill="#60a5fa" /> <circle cx="125" cy="95" r="3" fill="#60a5fa" /> <!-- Wires --> <path d="M75 30 L75 20 L125 20 L125 30" stroke="#fbbf24" stroke-width="2" fill="none" /> <!-- Battery --> <rect x="90" y="10" width="20" height="15" fill="#fbbf24" rx="2" />
+         </svg>
+         <div class="relative z-10 text-center"><span class="text-6xl">⚡</span>
+          <p class="text-sm font-medium mt-2 text-violet-300">Elektrolisis</p>
+         </div>
+        </div>
+        <div class="p-4">
+         <h5 class="font-semibold text-violet-300 mb-2">Elektrolisis Air</h5>
+         <p class="text-sm text-slate-400">Pemecahan air menjadi hidrogen dan oksigen menggunakan energi listrik. Proses ini membutuhkan energi dari luar untuk berlangsung.</p>
+         <div class="mt-3 p-2 bg-slate-700/50 rounded-lg">
+          <p class="text-xs font-mono text-cyan-400">2H₂O + Energi → 2H₂ + O₂</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Interactive Demo -->
+      <div class="interactive-demo rounded-xl p-6">
+       <h4 class="font-semibold mb-4 flex items-center gap-2"><span class="text-xl">🧪</span> Simulasi: Diagram Energi Reaksi Endotermik</h4>
+       <div class="bg-slate-800 rounded-lg p-4">
+        <svg viewbox="0 0 400 250" class="w-full max-w-md mx-auto"><!-- Axes --> <line x1="50" y1="200" x2="350" y2="200" stroke="#64748b" stroke-width="2" /> <line x1="50" y1="200" x2="50" y2="30" stroke="#64748b" stroke-width="2" /> <!-- Labels --> <text x="200" y="230" fill="#94a3b8" font-size="12" text-anchor="middle">
+          Jalannya Reaksi →
+         </text> <text x="30" y="120" fill="#94a3b8" font-size="12" text-anchor="middle" transform="rotate(-90, 30, 120)">
+          Energi →
+         </text> <!-- Reactant level --> <line x1="70" y1="140" x2="140" y2="140" stroke="#f97316" stroke-width="3" /> <text x="105" y="155" fill="#f97316" font-size="11" text-anchor="middle">
+          Reaktan
+         </text> <!-- Activation energy curve --> <path d="M140 140 Q200 20 260 70" stroke="#06b6d4" stroke-width="2" fill="none" stroke-dasharray="5,5" /> <!-- Transition state --> <circle cx="200" cy="40" r="5" fill="#06b6d4" /> <text x="200" y="25" fill="#06b6d4" font-size="10" text-anchor="middle">
+          Ea
+         </text> <!-- Product level --> <line x1="260" y1="70" x2="330" y2="70" stroke="#22c55e" stroke-width="3" /> <text x="295" y="60" fill="#22c55e" font-size="11" text-anchor="middle">
+          Produk
+         </text> <!-- Energy absorbed arrow --> <line x1="360" y1="140" x2="360" y2="70" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowhead2)" /> <defs>
+          <marker id="arrowhead2" markerwidth="10" markerheight="7" refx="9" refy="3.5" orient="auto">
+           <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6" />
+          </marker>
+         </defs> <text x="370" y="100" fill="#3b82f6" font-size="10" text-anchor="start">
+          ΔH &gt; 0
+         </text> <text x="370" y="115" fill="#3b82f6" font-size="9" text-anchor="start">
+          (Panas masuk)
+         </text>
+        </svg>
+        <p class="text-center text-sm text-slate-400 mt-4">Pada reaksi endotermik, energi produk lebih tinggi dari reaktan sehingga energi diserap dari lingkungan</p>
+       </div>
+      </div><!-- Comparison Table -->
+      <div class="mt-6 bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+       <h4 class="font-semibold mb-4 flex items-center gap-2"><span class="text-xl">⚖️</span> Perbandingan Eksotermik vs Endotermik</h4>
+       <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+         <thead>
+          <tr class="border-b border-slate-600">
+           <th class="text-left py-3 px-4 text-slate-400 font-medium">Aspek</th>
+           <th class="text-left py-3 px-4 text-orange-400 font-medium">🔥 Eksotermik</th>
+           <th class="text-left py-3 px-4 text-cyan-400 font-medium">❄️ Endotermik</th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr class="border-b border-slate-700/50">
+           <td class="py-3 px-4 text-slate-300">Energi</td>
+           <td class="py-3 px-4">Melepaskan panas</td>
+           <td class="py-3 px-4">Menyerap panas</td>
+          </tr>
+          <tr class="border-b border-slate-700/50">
+           <td class="py-3 px-4 text-slate-300">Suhu Lingkungan</td>
+           <td class="py-3 px-4">Naik (hangat)</td>
+           <td class="py-3 px-4">Turun (dingin)</td>
+          </tr>
+          <tr class="border-b border-slate-700/50">
+           <td class="py-3 px-4 text-slate-300">ΔH (Entalpi)</td>
+           <td class="py-3 px-4">Negatif (-)</td>
+           <td class="py-3 px-4">Positif (+)</td>
+          </tr>
+          <tr>
+           <td class="py-3 px-4 text-slate-300">Contoh</td>
+           <td class="py-3 px-4">Pembakaran, respirasi</td>
+           <td class="py-3 px-4">Fotosintesis, cold pack</td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+     </section><!-- Section: Reaction Rate -->
+     <section id="section-rate" class="section mb-12 hidden">
+      <div class="mb-6"><span class="inline-block px-3 py-1 bg-violet-500/20 text-violet-400 text-xs font-semibold rounded-full mb-3">MATERI 4</span>
+       <h2 class="text-2xl lg:text-3xl font-bold mb-4" style="font-family: 'Poppins', sans-serif;">⏱️ Laju Reaksi Kimia</h2>
+      </div><!-- Definition -->
+      <div class="bg-gradient-to-br from-violet-500/10 to-purple-500/10 rounded-xl p-6 border border-violet-500/30 mb-6">
+       <div class="flex items-start gap-4">
+        <div class="w-16 h-16 bg-gradient-to-br from-violet-500 to-purple-500 rounded-xl flex items-center justify-center flex-shrink-0 pulse-glow"><span class="text-3xl">⏱️</span>
+        </div>
+        <div>
+         <h3 class="font-bold text-xl text-violet-300 mb-2">Definisi Laju Reaksi</h3>
+         <p class="text-slate-300 leading-relaxed">Laju reaksi adalah <strong class="text-violet-400">kecepatan berkurangnya jumlah pereaksi</strong> atau <strong class="text-violet-400">bertambahnya jumlah produk</strong> dalam satuan waktu tertentu.</p>
+        </div>
+       </div>
+      </div><!-- Collision Theory -->
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 mb-6">
+       <h4 class="font-semibold mb-4 flex items-center gap-2"><span class="w-8 h-8 bg-violet-500/20 rounded-lg flex items-center justify-center">💥</span> Teori Tumbukan</h4>
+       <p class="text-slate-300 mb-4">Reaksi kimia terjadi karena adanya <strong class="text-violet-400">tumbukan antar partikel</strong> dengan energi yang cukup. Energi minimum yang diperlukan agar tumbukan menghasilkan reaksi disebut <strong class="text-cyan-400">Energi Aktivasi (Ea)</strong>.</p>
+       <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
+         <h5 class="font-medium text-green-400 mb-2 flex items-center gap-2"><span>✅</span> Tumbukan Efektif</h5>
+         <p class="text-sm text-slate-400">Tumbukan dengan energi ≥ Ea dan orientasi yang tepat → Menghasilkan produk</p>
+        </div>
+        <div class="bg-red-500/10 rounded-lg p-4 border border-red-500/30">
+         <h5 class="font-medium text-red-400 mb-2 flex items-center gap-2"><span>❌</span> Tumbukan Tidak Efektif</h5>
+         <p class="text-sm text-slate-400">Tumbukan dengan energi &lt; Ea atau orientasi salah → Tidak menghasilkan produk</p>
+        </div>
+       </div>
+      </div><!-- Speed Variation -->
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 mb-6">
+       <h4 class="font-semibold mb-4 flex items-center gap-2"><span class="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">⚡</span> Variasi Kecepatan Reaksi</h4>
+       <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 rounded-lg p-4 border border-yellow-500/30">
+         <div class="text-3xl mb-2">
+          💥
+         </div>
+         <h5 class="font-semibold text-yellow-300 mb-2">Reaksi Sangat Cepat</h5>
+         <ul class="text-sm text-slate-400 space-y-1">
+          <li>• Ledakan kembang api</li>
+          <li>• Pembakaran bahan peledak</li>
+          <li>• Reaksi asam kuat + logam</li>
+         </ul>
+        </div>
+        <div class="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-lg p-4 border border-blue-500/30">
+         <div class="text-3xl mb-2">
+          🐌
+         </div>
+         <h5 class="font-semibold text-blue-300 mb-2">Reaksi Sangat Lambat</h5>
+         <ul class="text-sm text-slate-400 space-y-1">
+          <li>• Perkaratan besi (bertahun-tahun)</li>
+          <li>• Pembusukan kayu</li>
+          <li>• Pembentukan stalaktit</li>
+         </ul>
+        </div>
+       </div>
+      </div><!-- Interactive: Collision Simulation -->
+      <div class="interactive-demo rounded-xl p-6">
+       <h4 class="font-semibold mb-4 flex items-center gap-2"><span class="text-xl">🧪</span> Simulasi Interaktif: Tumbukan Partikel</h4>
+       <p class="text-sm text-slate-400 mb-4">Klik tombol untuk melihat bagaimana partikel bertumbukan!</p>
+       <div class="bg-slate-800 rounded-lg p-4 relative h-48 overflow-hidden" id="collision-box"><!-- Particles will be animated here -->
+        <div id="particle-container" class="relative w-full h-full">
+         <div class="absolute w-6 h-6 bg-cyan-500 rounded-full flex items-center justify-center text-xs font-bold" style="left: 20%; top: 30%;" id="particle-a">
+          A
+         </div>
+         <div class="absolute w-6 h-6 bg-violet-500 rounded-full flex items-center justify-center text-xs font-bold" style="left: 70%; top: 60%;" id="particle-b">
+          B
+         </div>
+        </div>
+        <div id="collision-result" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-lg text-sm font-medium hidden"></div>
+       </div>
+       <div class="flex gap-3 mt-4 justify-center"><button onclick="simulateCollision('effective')" class="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 text-green-400 rounded-lg transition-all text-sm font-medium"> Tumbukan Efektif ✓ </button> <button onclick="simulateCollision('ineffective')" class="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition-all text-sm font-medium"> Tumbukan Tidak Efektif ✗ </button>
+       </div>
+      </div>
+     </section><!-- Section: Factors -->
+     <section id="section-factors" class="section mb-12 hidden">
+      <div class="mb-6"><span class="inline-block px-3 py-1 bg-green-500/20 text-green-400 text-xs font-semibold rounded-full mb-3">MATERI 5</span>
+       <h2 class="text-2xl lg:text-3xl font-bold mb-4" style="font-family: 'Poppins', sans-serif;">🔬 Faktor-Faktor yang Mempengaruhi Laju Reaksi</h2>
+      </div><!-- Factor 1: Temperature -->
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 mb-4">
+       <div class="flex items-start gap-4">
+        <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">🌡️</span>
+        </div>
+        <div class="flex-1">
+         <h3 class="font-bold text-xl text-orange-300 mb-2">1. Suhu</h3>
+         <p class="text-slate-300 mb-4">Suhu yang lebih tinggi memberikan <strong class="text-orange-400">energi kinetik lebih besar</strong> pada partikel sehingga bergerak lebih cepat. Dampaknya:</p>
+         <ul class="space-y-2 text-sm text-slate-400">
+          <li class="flex items-center gap-2"><span class="text-orange-400">→</span> Frekuensi tumbukan meningkat</li>
+          <li class="flex items-center gap-2"><span class="text-orange-400">→</span> Energi tumbukan lebih besar (melebihi Ea)</li>
+          <li class="flex items-center gap-2"><span class="text-orange-400">→</span> Produk lebih cepat terbentuk</li>
+         </ul><!-- Temperature Demo -->
+         <div class="mt-4 p-4 bg-slate-700/30 rounded-lg">
+          <p class="text-xs text-slate-400 mb-3">Simulasi pengaruh suhu:</p>
+          <div class="flex items-center gap-4"><button onclick="setTemperature('low')" class="flex-1 py-2 px-3 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg text-sm transition-all" id="temp-low"> ❄️ Suhu Rendah </button> <button onclick="setTemperature('high')" class="flex-1 py-2 px-3 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-sm transition-all" id="temp-high"> 🔥 Suhu Tinggi </button>
+          </div>
+          <div class="mt-3 h-16 bg-slate-800 rounded-lg overflow-hidden relative" id="temp-demo-box">
+           <div class="absolute w-3 h-3 bg-cyan-400 rounded-full particle-demo" style="left: 10%; top: 40%;"></div>
+           <div class="absolute w-3 h-3 bg-violet-400 rounded-full particle-demo" style="left: 30%; top: 60%;"></div>
+           <div class="absolute w-3 h-3 bg-pink-400 rounded-full particle-demo" style="left: 50%; top: 30%;"></div>
+           <div class="absolute w-3 h-3 bg-green-400 rounded-full particle-demo" style="left: 70%; top: 50%;"></div>
+           <div class="absolute w-3 h-3 bg-yellow-400 rounded-full particle-demo" style="left: 90%; top: 45%;"></div>
+          </div>
+          <p id="temp-result" class="text-center text-xs text-slate-400 mt-2">Klik tombol untuk melihat simulasi</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Factor 2: Concentration -->
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 mb-4">
+       <div class="flex items-start gap-4">
+        <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">⚗️</span>
+        </div>
+        <div class="flex-1">
+         <h3 class="font-bold text-xl text-cyan-300 mb-2">2. Konsentrasi (Jumlah Zat Pereaksi)</h3>
+         <p class="text-slate-300 mb-4">Semakin banyak partikel dalam suatu ruang (<strong class="text-cyan-400">konsentrasi tinggi</strong>), semakin besar peluang terjadinya tumbukan antar partikel.</p><!-- Concentration Demo -->
+         <div class="grid grid-cols-2 gap-4 mt-4">
+          <div class="bg-slate-700/30 rounded-lg p-4 text-center">
+           <div class="h-20 bg-slate-800 rounded-lg mb-2 flex items-center justify-center gap-1 flex-wrap p-2"><span class="w-2 h-2 bg-cyan-400 rounded-full"></span> <span class="w-2 h-2 bg-cyan-400 rounded-full"></span> <span class="w-2 h-2 bg-cyan-400 rounded-full"></span>
+           </div>
+           <p class="text-xs text-slate-400">Konsentrasi Rendah</p>
+           <p class="text-xs text-cyan-400">Tumbukan jarang</p>
+          </div>
+          <div class="bg-slate-700/30 rounded-lg p-4 text-center">
+           <div class="h-20 bg-slate-800 rounded-lg mb-2 flex items-center justify-center gap-1 flex-wrap p-2"><span class="w-2 h-2 bg-cyan-400 rounded-full"></span> <span class="w-2 h-2 bg-cyan-400 rounded-full"></span> <span class="w-2 h-2 bg-cyan-400 rounded-full"></span> <span class="w-2 h-2 bg-cyan-400 rounded-full"></span> <span class="w-2 h-2 bg-cyan-400 rounded-full"></span> <span class="w-2 h-2 bg-cyan-400 rounded-full"></span> <span class="w-2 h-2 bg-cyan-400 rounded-full"></span> <span class="w-2 h-2 bg-cyan-400 rounded-full"></span> <span class="w-2 h-2 bg-cyan-400 rounded-full"></span>
+           </div>
+           <p class="text-xs text-slate-400">Konsentrasi Tinggi</p>
+           <p class="text-xs text-green-400">Tumbukan sering</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Factor 3: Surface Area -->
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 mb-4">
+       <div class="flex items-start gap-4">
+        <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">📐</span>
+        </div>
+        <div class="flex-1">
+         <h3 class="font-bold text-xl text-purple-300 mb-2">3. Luas Permukaan</h3>
+         <p class="text-slate-300 mb-4">Memperkecil ukuran partikel akan <strong class="text-purple-400">memperbesar luas permukaan bidang sentuh</strong>. Semakin luas permukaan, semakin banyak sisi yang tersedia untuk bertumbukan.</p><!-- Surface Area Demo -->
+         <div class="grid grid-cols-2 gap-4 mt-4">
+          <div class="bg-slate-700/30 rounded-lg p-4 text-center">
+           <div class="h-24 flex items-center justify-center">
+            <div class="w-16 h-16 bg-gradient-to-br from-purple-500/50 to-pink-500/50 rounded-lg border-2 border-purple-400"></div>
+           </div>
+           <p class="text-sm font-medium text-purple-300">Gula Bongkahan</p>
+           <p class="text-xs text-slate-400 mt-1">Luas permukaan kecil</p>
+           <p class="text-xs text-red-400">🐌 Larut lambat</p>
+          </div>
+          <div class="bg-slate-700/30 rounded-lg p-4 text-center">
+           <div class="h-24 flex items-center justify-center gap-1 flex-wrap"><span class="w-3 h-3 bg-purple-400/50 rounded-sm"></span> <span class="w-3 h-3 bg-purple-400/50 rounded-sm"></span> <span class="w-3 h-3 bg-purple-400/50 rounded-sm"></span> <span class="w-3 h-3 bg-purple-400/50 rounded-sm"></span> <span class="w-3 h-3 bg-pink-400/50 rounded-sm"></span> <span class="w-3 h-3 bg-pink-400/50 rounded-sm"></span> <span class="w-3 h-3 bg-pink-400/50 rounded-sm"></span> <span class="w-3 h-3 bg-pink-400/50 rounded-sm"></span> <span class="w-3 h-3 bg-purple-400/50 rounded-sm"></span> <span class="w-3 h-3 bg-purple-400/50 rounded-sm"></span> <span class="w-3 h-3 bg-pink-400/50 rounded-sm"></span> <span class="w-3 h-3 bg-pink-400/50 rounded-sm"></span>
+           </div>
+           <p class="text-sm font-medium text-purple-300">Gula Pasir/Bubuk</p>
+           <p class="text-xs text-slate-400 mt-1">Luas permukaan besar</p>
+           <p class="text-xs text-green-400">⚡ Larut cepat</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Factor 4: Catalyst -->
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+       <div class="flex items-start gap-4">
+        <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">🧬</span>
+        </div>
+        <div class="flex-1">
+         <h3 class="font-bold text-xl text-green-300 mb-2">4. Katalis</h3>
+         <p class="text-slate-300 mb-4">Katalis menyediakan <strong class="text-green-400">"jalan pintas"</strong> dengan energi aktivasi (Ea) yang lebih rendah. Keunikannya, katalis tidak ikut habis bereaksi dan dapat diperoleh kembali di akhir reaksi.</p><!-- Catalyst Diagram -->
+         <div class="bg-slate-700/30 rounded-lg p-4">
+          <svg viewbox="0 0 400 200" class="w-full max-w-md mx-auto"><!-- Axes --> <line x1="50" y1="170" x2="350" y2="170" stroke="#64748b" stroke-width="2" /> <line x1="50" y1="170" x2="50" y2="20" stroke="#64748b" stroke-width="2" /> <!-- Without catalyst curve --> <path d="M70 130 Q200 20 330 130" stroke="#ef4444" stroke-width="2" fill="none" /> <text x="200" y="45" fill="#ef4444" font-size="10" text-anchor="middle">
+            Tanpa Katalis
+           </text> <!-- With catalyst curve --> <path d="M70 130 Q200 70 330 130" stroke="#22c55e" stroke-width="2" fill="none" /> <text x="200" y="95" fill="#22c55e" font-size="10" text-anchor="middle">
+            Dengan Katalis
+           </text> <!-- Labels --> <text x="70" y="145" fill="#f97316" font-size="10">
+            Reaktan
+           </text> <text x="300" y="145" fill="#f97316" font-size="10">
+            Produk
+           </text> <!-- Ea arrows --> <line x1="130" y1="130" x2="130" y2="55" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,3" /> <line x1="270" y1="130" x2="270" y2="90" stroke="#22c55e" stroke-width="1" stroke-dasharray="3,3" /> <text x="115" y="90" fill="#ef4444" font-size="9">
+            Ea↑
+           </text> <text x="275" y="110" fill="#22c55e" font-size="9">
+            Ea↓
+           </text>
+          </svg>
+         </div><!-- Enzyme Example -->
+         <div class="mt-4 bg-emerald-500/10 rounded-lg p-4 border border-emerald-500/30">
+          <h5 class="font-medium text-emerald-300 mb-2 flex items-center gap-2"><span>🧬</span> Contoh: Enzim dalam Tubuh</h5>
+          <p class="text-sm text-slate-400">Enzim adalah katalis biologis yang mempercepat proses biokimia dalam tubuh. Tanpa enzim, pembentukan DNA/RNA bisa memakan waktu <strong class="text-emerald-400">jutaan tahun</strong>! Contoh: enzim amilase untuk mencerna karbohidrat, enzim lipase untuk mencerna lemak.</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section: Applications -->
+     <section id="section-application" class="section mb-12 hidden">
+      <div class="mb-6"><span class="inline-block px-3 py-1 bg-pink-500/20 text-pink-400 text-xs font-semibold rounded-full mb-3">MATERI 6</span>
+       <h2 class="text-2xl lg:text-3xl font-bold mb-4" style="font-family: 'Poppins', sans-serif;">🌍 Penerapan Laju Reaksi dalam Kehidupan</h2>
+      </div><!-- Application 1: Industry -->
+      <div class="card-hover bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-xl p-6 border border-blue-500/30 mb-4">
+       <div class="flex items-start gap-4">
+        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-3xl">🏭</span>
+        </div>
+        <div>
+         <h3 class="font-bold text-xl text-blue-300 mb-2">Industri Kimia</h3>
+         <p class="text-slate-300 mb-3">Industri memanfaatkan pemahaman laju reaksi untuk <strong class="text-blue-400">mempercepat produksi</strong> agar biaya lebih rendah dan harga produk bisa bersaing di pasaran.</p>
+         <div class="bg-slate-800/50 rounded-lg p-3">
+          <p class="text-sm text-slate-400"><strong class="text-cyan-400">Contoh:</strong> Proses Haber-Bosch untuk membuat amonia menggunakan suhu tinggi (~450°C), tekanan tinggi (~200 atm), dan katalis besi untuk mempercepat reaksi.</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Application 2: Environment -->
+      <div class="card-hover bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-xl p-6 border border-green-500/30 mb-4">
+       <div class="flex items-start gap-4">
+        <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-3xl">🚗</span>
+        </div>
+        <div>
+         <h3 class="font-bold text-xl text-green-300 mb-2">Perlindungan Lingkungan</h3>
+         <p class="text-slate-300 mb-3">Catalytic converter (konverter katalitik) pada mobil menggunakan katalis platinum dan palladium untuk <strong class="text-green-400">mengubah gas beracun menjadi tidak beracun</strong> secara cepat.</p>
+         <div class="bg-slate-800/50 rounded-lg p-3">
+          <div class="flex items-center gap-2 text-sm"><span class="text-red-400">CO, NOx, HC</span> <span class="text-slate-500">→</span> <span class="text-yellow-400">Katalis</span> <span class="text-slate-500">→</span> <span class="text-green-400">CO₂, N₂, H₂O</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Application 3: Daily Life -->
+      <div class="card-hover bg-gradient-to-br from-orange-500/10 to-amber-500/10 rounded-xl p-6 border border-orange-500/30 mb-4">
+       <div class="flex items-start gap-4">
+        <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-3xl">🍎</span>
+        </div>
+        <div>
+         <h3 class="font-bold text-xl text-orange-300 mb-2">Penyimpanan Makanan</h3>
+         <p class="text-slate-300 mb-3">Menyimpan makanan di kulkas menggunakan prinsip <strong class="text-orange-400">suhu rendah untuk memperlambat laju reaksi</strong> pembusukan oleh bakteri.</p>
+         <div class="grid grid-cols-2 gap-3 mt-3">
+          <div class="bg-slate-800/50 rounded-lg p-3 text-center"><span class="text-2xl">🌡️</span>
+           <p class="text-xs text-slate-400 mt-1">Suhu Ruang</p>
+           <p class="text-xs text-red-400">Cepat Busuk</p>
+          </div>
+          <div class="bg-slate-800/50 rounded-lg p-3 text-center"><span class="text-2xl">❄️</span>
+           <p class="text-xs text-slate-400 mt-1">Dalam Kulkas</p>
+           <p class="text-xs text-green-400">Tahan Lama</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Application 4: Medicine -->
+      <div class="card-hover bg-gradient-to-br from-violet-500/10 to-purple-500/10 rounded-xl p-6 border border-violet-500/30">
+       <div class="flex items-start gap-4">
+        <div class="w-16 h-16 bg-gradient-to-br from-violet-500 to-purple-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-3xl">💊</span>
+        </div>
+        <div>
+         <h3 class="font-bold text-xl text-violet-300 mb-2">Farmasi &amp; Kedokteran</h3>
+         <p class="text-slate-300 mb-3">Obat dibuat dalam bentuk tablet, kapsul, atau sirup dengan mempertimbangkan <strong class="text-violet-400">laju pelepasan zat aktif</strong> dalam tubuh.</p>
+         <div class="bg-slate-800/50 rounded-lg p-3">
+          <p class="text-sm text-slate-400"><strong class="text-violet-400">Contoh:</strong> Obat sustained-release dirancang untuk melepaskan zat aktif secara perlahan agar efeknya bertahan lebih lama.</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section: Quiz HOTS -->
+     <section id="section-quiz" class="section mb-12 hidden">
+      <div class="mb-6"><span class="inline-block px-3 py-1 bg-red-500/20 text-red-400 text-xs font-semibold rounded-full mb-3">EVALUASI</span>
+       <h2 class="text-2xl lg:text-3xl font-bold mb-4" style="font-family: 'Poppins', sans-serif;">📝 Soal HOTS (Higher Order Thinking Skills)</h2>
+       <p class="text-slate-400 text-sm">Jawab 10 soal berikut untuk menguji pemahaman Anda tentang energi dan laju reaksi kimia!</p>
+      </div><!-- Quiz Container -->
+      <div id="quiz-container"><!-- Quiz Start Screen -->
+       <div id="quiz-start" class="bg-gradient-to-br from-cyan-500/10 to-violet-500/10 rounded-xl p-8 border border-cyan-500/30 text-center">
+        <div class="text-6xl mb-4">
+         🎯
+        </div>
+        <h3 class="text-2xl font-bold mb-4">Siap Menguji Pemahaman?</h3>
+        <p class="text-slate-400 mb-6">10 soal HOTS akan menguji kemampuan analisis, evaluasi, dan penerapan konsep yang telah dipelajari.</p>
+        <div class="flex justify-center gap-4 flex-wrap mb-6">
+         <div class="px-4 py-2 bg-slate-800/50 rounded-lg">
+          <p class="text-xs text-slate-400">Jumlah Soal</p>
+          <p class="text-lg font-bold text-cyan-400">10</p>
+         </div>
+         <div class="px-4 py-2 bg-slate-800/50 rounded-lg">
+          <p class="text-xs text-slate-400">Tipe Soal</p>
+          <p class="text-lg font-bold text-violet-400">Pilihan Ganda</p>
+         </div>
+         <div class="px-4 py-2 bg-slate-800/50 rounded-lg">
+          <p class="text-xs text-slate-400">Level</p>
+          <p class="text-lg font-bold text-pink-400">HOTS</p>
+         </div>
+        </div><button onclick="startQuiz()" class="px-8 py-3 bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-600 hover:to-violet-600 rounded-xl font-semibold transition-all transform hover:scale-105"> Mulai Kuis 🚀 </button>
+       </div><!-- Quiz Questions -->
+       <div id="quiz-questions" class="hidden">
+        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 mb-4">
+         <div class="flex justify-between items-center mb-4"><span id="quiz-progress" class="text-sm text-slate-400">Soal 1 dari 10</span> <span id="quiz-score" class="px-3 py-1 bg-cyan-500/20 text-cyan-400 text-sm rounded-full">Skor: 0</span>
+         </div>
+         <div class="h-2 bg-slate-700 rounded-full mb-6">
+          <div id="quiz-progress-bar" class="h-full bg-gradient-to-r from-cyan-500 to-violet-500 rounded-full transition-all" style="width: 10%"></div>
+         </div>
+         <div id="question-container">
+          <h3 id="question-text" class="text-lg font-medium mb-6"></h3>
+          <div id="options-container" class="space-y-3"></div>
+         </div>
+         <div id="feedback-container" class="hidden mt-6 p-4 rounded-lg">
+          <p id="feedback-text" class="font-medium mb-2"></p>
+          <p id="explanation-text" class="text-sm text-slate-400"></p>
+         </div>
+         <div class="mt-6 flex justify-end"><button id="next-btn" onclick="nextQuestion()" class="px-6 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 rounded-lg transition-all hidden"> Selanjutnya → </button>
+         </div>
+        </div>
+       </div><!-- Quiz Result -->
+       <div id="quiz-result" class="hidden">
+        <div class="bg-gradient-to-br from-cyan-500/10 to-violet-500/10 rounded-xl p-8 border border-cyan-500/30 text-center">
+         <div id="result-emoji" class="text-6xl mb-4">
+          🎉
+         </div>
+         <h3 id="result-title" class="text-2xl font-bold mb-2">Hasil Kuis</h3>
+         <p id="result-score" class="text-4xl font-bold gradient-text mb-4">0/10</p>
+         <p id="result-message" class="text-slate-400 mb-6"></p>
+         <div class="grid grid-cols-2 gap-4 mb-6 max-w-xs mx-auto">
+          <div class="p-4 bg-green-500/10 rounded-lg border border-green-500/30">
+           <p class="text-2xl font-bold text-green-400" id="correct-count">0</p>
+           <p class="text-xs text-slate-400">Benar</p>
+          </div>
+          <div class="p-4 bg-red-500/10 rounded-lg border border-red-500/30">
+           <p class="text-2xl font-bold text-red-400" id="wrong-count">0</p>
+           <p class="text-xs text-slate-400">Salah</p>
+          </div>
+         </div><button onclick="restartQuiz()" class="px-8 py-3 bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-600 hover:to-violet-600 rounded-xl font-semibold transition-all transform hover:scale-105"> Ulangi Kuis 🔄 </button>
+        </div>
+       </div>
+      </div>
+     </section><!-- Navigation Buttons -->
+     <div class="flex justify-between items-center mt-8 pb-8"><button id="prev-section-btn" onclick="prevSection()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg transition-all flex items-center gap-2 text-sm hidden"> ← Sebelumnya </button>
+      <div></div><button id="next-section-btn" onclick="nextSection()" class="px-4 py-2 bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-600 hover:to-violet-600 rounded-lg transition-all flex items-center gap-2 text-sm"> Selanjutnya → </button>
+     </div>
+    </div>
+   </main>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_title: "Memahami Energi dan Laju Reaksi Kimia",
+      teacher_name: "Pembelajaran Digital",
+      primary_color: "#06b6d4",
+      secondary_color: "#8b5cf6",
+      background_color: "#0f172a",
+      surface_color: "#1e293b",
+      text_color: "#f1f5f9"
+    };
+    
+    let config = { ...defaultConfig };
+    
+    // Sections management
+    const sections = ['intro', 'energy', 'exothermic', 'endothermic', 'rate', 'factors', 'application', 'quiz'];
+    let currentSectionIndex = 0;
+    let visitedSections = new Set(['intro']);
+    
+    // Quiz data - 10 HOTS Questions
+    const quizData = [
+      {
+        question: "Seorang peneliti mengamati bahwa ketika larutan NaOH dicampurkan dengan larutan HCl, suhu larutan meningkat dari 25°C menjadi 32°C. Berdasarkan data tersebut, kesimpulan yang paling tepat adalah...",
+        options: [
+          "Reaksi tersebut bersifat endotermik karena suhu meningkat",
+          "Reaksi tersebut bersifat eksotermik karena melepaskan panas ke lingkungan",
+          "Reaksi tersebut membutuhkan energi aktivasi yang sangat tinggi",
+          "Reaksi tersebut tidak melibatkan perubahan energi"
+        ],
+        correct: 1,
+        explanation: "Peningkatan suhu menunjukkan bahwa energi panas dilepaskan ke lingkungan, yang merupakan ciri khas reaksi eksotermik. Pada reaksi netralisasi asam-basa, ikatan kimia yang terbentuk melepaskan energi."
+      },
+      {
+        question: "Perhatikan diagram energi berikut: Reaktan berada pada level energi 100 kJ, kompleks teraktivasi pada 150 kJ, dan produk pada 120 kJ. Manakah pernyataan yang BENAR tentang reaksi ini?",
+        options: [
+          "Reaksi bersifat eksotermik dengan ΔH = -20 kJ",
+          "Reaksi bersifat endotermik dengan ΔH = +20 kJ",
+          "Energi aktivasi reaksi adalah 30 kJ",
+          "Katalis akan meningkatkan nilai ΔH"
+        ],
+        correct: 1,
+        explanation: "Karena energi produk (120 kJ) lebih tinggi dari reaktan (100 kJ), maka ΔH = 120 - 100 = +20 kJ. Nilai ΔH positif menunjukkan reaksi endotermik. Energi aktivasi adalah 150 - 100 = 50 kJ, bukan 30 kJ."
+      },
+      {
+        question: "Dalam industri makanan, kentang goreng akan lebih cepat matang jika dipotong tipis-tipis dibandingkan dipotong tebal. Konsep laju reaksi yang menjelaskan fenomena ini adalah...",
+        options: [
+          "Pengaruh suhu terhadap laju reaksi",
+          "Pengaruh konsentrasi terhadap laju reaksi",
+          "Pengaruh luas permukaan terhadap laju reaksi",
+          "Pengaruh katalis terhadap laju reaksi"
+        ],
+        correct: 2,
+        explanation: "Pemotongan tipis memperbesar luas permukaan kentang yang bersentuhan dengan minyak panas, sehingga perpindahan panas terjadi lebih cepat dan merata, mempercepat proses pemasakan."
+      },
+      {
+        question: "Seorang siswa melakukan eksperimen melarutkan tablet effervescent dalam air dengan suhu berbeda. Pada air 50°C, tablet larut dalam 15 detik, sedangkan pada air 25°C, tablet larut dalam 45 detik. Analisis yang tepat adalah...",
+        options: [
+          "Suhu tidak berpengaruh signifikan terhadap laju reaksi",
+          "Kenaikan suhu 25°C mempercepat laju reaksi sekitar 3 kali lipat",
+          "Air dingin memiliki konsentrasi lebih tinggi sehingga reaksi lebih lambat",
+          "Tablet effervescent mengalami reaksi endotermik"
+        ],
+        correct: 1,
+        explanation: "Laju reaksi meningkat dari 45 detik menjadi 15 detik (3 kali lebih cepat) dengan kenaikan suhu 25°C. Ini sesuai dengan teori bahwa kenaikan suhu meningkatkan energi kinetik partikel, memperbanyak tumbukan efektif."
+      },
+      {
+        question: "Enzim katalase dalam hati dapat menguraikan 5 juta molekul H₂O₂ per detik. Tanpa enzim, reaksi yang sama membutuhkan waktu ratusan tahun. Kesimpulan yang dapat diambil adalah...",
+        options: [
+          "Enzim mengubah nilai ΔH reaksi menjadi lebih negatif",
+          "Enzim meningkatkan energi aktivasi reaksi",
+          "Enzim menurunkan energi aktivasi sehingga reaksi lebih cepat",
+          "Enzim ikut habis bereaksi dalam proses tersebut"
+        ],
+        correct: 2,
+        explanation: "Enzim sebagai katalis biologis bekerja dengan menurunkan energi aktivasi, menyediakan 'jalan pintas' untuk reaksi. Enzim tidak mengubah ΔH dan tidak ikut habis dalam reaksi."
+      },
+      {
+        question: "Cold pack instan yang digunakan untuk mengompres cedera mengandung amonium nitrat dan air dalam kompartemen terpisah. Ketika ditekan, kedua zat bercampur dan suhu turun drastis. Berdasarkan fenomena ini...",
+        options: [
+          "Amonium nitrat melepaskan panas saat larut dalam air",
+          "Proses pelarutan membutuhkan energi yang diambil dari lingkungan",
+          "Terjadi reaksi eksotermik yang menyerap panas dari lingkungan",
+          "Energi aktivasi reaksi sangat rendah sehingga tidak membutuhkan panas"
+        ],
+        correct: 1,
+        explanation: "Pelarutan amonium nitrat dalam air adalah proses endotermik. Energi yang dibutuhkan untuk memisahkan ion-ion dari kristal diambil dari lingkungan (air dan sekitarnya), menyebabkan suhu turun."
+      },
+      {
+        question: "Dua tabung reaksi berisi larutan HCl dengan konsentrasi sama. Tabung A ditambahkan serbuk CaCO₃, tabung B ditambahkan keping CaCO₃ dengan massa yang sama. Prediksi yang tepat adalah...",
+        options: [
+          "Tabung A bereaksi lebih lambat karena partikelnya kecil",
+          "Tabung B bereaksi lebih cepat karena kepingan lebih mudah berinteraksi",
+          "Tabung A bereaksi lebih cepat karena luas permukaan lebih besar",
+          "Kedua tabung memiliki laju reaksi yang sama karena massa sama"
+        ],
+        correct: 2,
+        explanation: "Serbuk memiliki luas permukaan total yang jauh lebih besar dibanding keping, sehingga lebih banyak permukaan yang dapat berinteraksi dengan larutan HCl secara bersamaan, mempercepat laju reaksi."
+      },
+      {
+        question: "Proses Haber-Bosch untuk sintesis amonia menggunakan suhu 450°C, tekanan 200 atm, dan katalis besi. Jika suhu diturunkan menjadi 200°C dengan kondisi lain tetap, yang akan terjadi adalah...",
+        options: [
+          "Laju reaksi meningkat karena reaksi eksotermik lebih diuntungkan",
+          "Laju reaksi menurun karena energi kinetik partikel berkurang",
+          "Kesetimbangan bergeser ke kanan menghasilkan lebih banyak amonia",
+          "Katalis besi tidak lagi berfungsi pada suhu rendah"
+        ],
+        correct: 1,
+        explanation: "Penurunan suhu akan menurunkan energi kinetik partikel, mengurangi frekuensi tumbukan dan jumlah tumbukan yang mencapai energi aktivasi. Meskipun reaksi eksotermik diuntungkan kesetimbangannya pada suhu rendah, laju reaksinya tetap menurun."
+      },
+      {
+        question: "Seorang peneliti menemukan bahwa reaksi A + B → C berlangsung sangat lambat. Ia kemudian menambahkan zat X yang mempercepat reaksi. Setelah reaksi selesai, zat X ditemukan dalam jumlah yang sama. Kesimpulan yang TIDAK tepat adalah...",
+        options: [
+          "Zat X berperan sebagai katalis dalam reaksi tersebut",
+          "Zat X menurunkan energi aktivasi reaksi",
+          "Zat X mengubah mekanisme reaksi menjadi lebih sederhana",
+          "Zat X meningkatkan perubahan entalpi (ΔH) reaksi"
+        ],
+        correct: 3,
+        explanation: "Katalis TIDAK mengubah nilai ΔH reaksi. Katalis hanya menurunkan energi aktivasi dan menyediakan jalur reaksi alternatif. Perubahan entalpi (ΔH) ditentukan oleh selisih energi antara produk dan reaktan, bukan oleh katalis."
+      },
+      {
+        question: "Makanan yang disimpan dalam freezer (-18°C) dapat bertahan berbulan-bulan, sedangkan di suhu ruang (25°C) hanya bertahan beberapa hari. Penjelasan yang paling komprehensif adalah...",
+        options: [
+          "Suhu rendah membunuh semua bakteri pembusuk",
+          "Suhu rendah menurunkan energi kinetik molekul, memperlambat laju reaksi enzimatis dan aktivitas mikroba",
+          "Air dalam makanan membeku sehingga tidak terjadi reaksi kimia sama sekali",
+          "Freezer menghilangkan oksigen yang diperlukan untuk pembusukan"
+        ],
+        correct: 1,
+        explanation: "Suhu rendah memperlambat (bukan menghentikan) semua reaksi kimia termasuk aktivitas enzim dan metabolisme mikroba. Partikel bergerak lebih lambat, tumbukan berkurang, sehingga laju reaksi pembusukan sangat lambat. Bakteri tidak mati, hanya 'tidur' (dormant)."
+      }
+    ];
+    
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+    
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                config.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (value) => {
+                config.secondary_color = value;
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            },
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => cfg.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ["main_title", cfg.main_title || defaultConfig.main_title],
+          ["teacher_name", cfg.teacher_name || defaultConfig.teacher_name]
+        ])
+      });
+    }
+    
+    function applyConfig() {
+      const mainTitle = document.getElementById('main-title');
+      const teacherDisplay = document.getElementById('teacher-display');
+      
+      if (mainTitle) {
+        const title = config.main_title || defaultConfig.main_title;
+        mainTitle.innerHTML = title.replace('Energi', '<span class="gradient-text">Energi</span>').replace('Laju Reaksi', '<span class="gradient-text">Laju Reaksi</span>');
+      }
+      
+      if (teacherDisplay) {
+        teacherDisplay.textContent = config.teacher_name || defaultConfig.teacher_name;
+      }
+      
+      // Apply colors
+      document.documentElement.style.setProperty('--primary-action', config.primary_color || defaultConfig.primary_color);
+      document.documentElement.style.setProperty('--secondary-action', config.secondary_color || defaultConfig.secondary_color);
+      document.documentElement.style.setProperty('--primary-bg', config.background_color || defaultConfig.background_color);
+      document.documentElement.style.setProperty('--surface-color', config.surface_color || defaultConfig.surface_color);
+      document.documentElement.style.setProperty('--text-color', config.text_color || defaultConfig.text_color);
+    }
+    
+    // Navigation functions
+    function navigateTo(sectionId) {
+      const sectionIndex = sections.indexOf(sectionId);
+      if (sectionIndex !== -1) {
+        currentSectionIndex = sectionIndex;
+        showSection(sectionId);
+        updateNavigation();
+        updateProgress();
+      }
+    }
+    
+    function showSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+      
+      // Show target section
+      const targetSection = document.getElementById(`section-${sectionId}`);
+      if (targetSection) {
+        targetSection.classList.remove('hidden');
+      }
+      
+      // Update nav items
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.dataset.section === sectionId) {
+          item.classList.add('active');
+        }
+      });
+      
+      // Track visited sections
+      visitedSections.add(sectionId);
+      
+      // Scroll to top
+      document.querySelector('main').scrollTop = 0;
+    }
+    
+    function updateNavigation() {
+      const prevBtn = document.getElementById('prev-section-btn');
+      const nextBtn = document.getElementById('next-section-btn');
+      
+      if (prevBtn) {
+        prevBtn.classList.toggle('hidden', currentSectionIndex === 0);
+      }
+      
+      if (nextBtn) {
+        if (currentSectionIndex === sections.length - 1) {
+          nextBtn.classList.add('hidden');
+        } else {
+          nextBtn.classList.remove('hidden');
+        }
+      }
+    }
+    
+    function updateProgress() {
+      const progress = (visitedSections.size / sections.length) * 100;
+      const progressBar = document.getElementById('progress-bar');
+      const progressText = document.getElementById('progress-text');
+      
+      if (progressBar) progressBar.style.width = `${progress}%`;
+      if (progressText) progressText.textContent = `${Math.round(progress)}%`;
+    }
+    
+    function nextSection() {
+      if (currentSectionIndex < sections.length - 1) {
+        currentSectionIndex++;
+        navigateTo(sections[currentSectionIndex]);
+      }
+    }
+    
+    function prevSection() {
+      if (currentSectionIndex > 0) {
+        currentSectionIndex--;
+        navigateTo(sections[currentSectionIndex]);
+      }
+    }
+    
+    // Interactive demos
+    function showEnergyResult(reaction, energy, emoji, color) {
+      const result = document.getElementById('energy-result');
+      const text = document.getElementById('energy-result-text');
+      
+      result.classList.remove('hidden');
+      text.innerHTML = `<span class="text-2xl mr-2">${emoji}</span> <strong>${reaction}</strong>: Menghasilkan <span class="text-${color}-400">${energy}</span>`;
+    }
+    
+    function simulateCollision(type) {
+      const particleA = document.getElementById('particle-a');
+      const particleB = document.getElementById('particle-b');
+      const result = document.getElementById('collision-result');
+      
+      // Reset positions
+      particleA.style.transition = 'all 0.5s ease';
+      particleB.style.transition = 'all 0.5s ease';
+      
+      // Move particles toward each other
+      particleA.style.left = '45%';
+      particleA.style.top = '45%';
+      particleB.style.left = '55%';
+      particleB.style.top = '45%';
+      
+      setTimeout(() => {
+        if (type === 'effective') {
+          // Show collision effect
+          particleA.classList.add('collision-effect');
+          particleB.classList.add('collision-effect');
+          result.className = 'absolute bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-lg text-sm font-medium bg-green-500/20 text-green-400';
+          result.textContent = '✓ Tumbukan Efektif! Produk terbentuk!';
+          
+          // Transform to product
+          setTimeout(() => {
+            particleA.textContent = 'AB';
+            particleA.classList.remove('bg-cyan-500');
+            particleA.classList.add('bg-green-500');
+            particleB.style.opacity = '0';
+          }, 300);
+        } else {
+          result.className = 'absolute bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-lg text-sm font-medium bg-red-500/20 text-red-400';
+          result.textContent = '✗ Tumbukan Tidak Efektif! Partikel memantul.';
+          
+          // Bounce back
+          setTimeout(() => {
+            particleA.style.left = '20%';
+            particleA.style.top = '30%';
+            particleB.style.left = '70%';
+            particleB.style.top = '60%';
+          }, 300);
+        }
+        result.classList.remove('hidden');
+      }, 500);
+      
+      // Reset after 3 seconds
+      setTimeout(() => {
+        particleA.style.left = '20%';
+        particleA.style.top = '30%';
+        particleA.textContent = 'A';
+        particleA.classList.remove('bg-green-500', 'collision-effect');
+        particleA.classList.add('bg-cyan-500');
+        particleB.style.left = '70%';
+        particleB.style.top = '60%';
+        particleB.style.opacity = '1';
+        particleB.classList.remove('collision-effect');
+        result.classList.add('hidden');
+      }, 3000);
+    }
+    
+    let tempAnimation = null;
+    
+    function setTemperature(level) {
+      const particles = document.querySelectorAll('.particle-demo');
+      const resultText = document.getElementById('temp-result');
+      
+      // Clear any existing animation
+      if (tempAnimation) {
+        clearInterval(tempAnimation);
+      }
+      
+      const speed = level === 'high' ? 50 : 200;
+      const message = level === 'high' 
+        ? '🔥 Suhu Tinggi: Partikel bergerak cepat, tumbukan sering!' 
+        : '❄️ Suhu Rendah: Partikel bergerak lambat, tumbukan jarang.';
+      
+      resultText.textContent = message;
+      resultText.className = level === 'high' ? 'text-center text-xs text-red-400 mt-2' : 'text-center text-xs text-blue-400 mt-2';
+      
+      // Update button states
+      document.getElementById('temp-low').classList.toggle('ring-2', level === 'low');
+      document.getElementById('temp-low').classList.toggle('ring-blue-400', level === 'low');
+      document.getElementById('temp-high').classList.toggle('ring-2', level === 'high');
+      document.getElementById('temp-high').classList.toggle('ring-red-400', level === 'high');
+      
+      // Animate particles
+      particles.forEach(p => {
+        p.style.transition = `all ${speed}ms linear`;
+      });
+      
+      tempAnimation = setInterval(() => {
+        particles.forEach(p => {
+          const x = Math.random() * 90;
+          const y = Math.random() * 80;
+          p.style.left = `${x}%`;
+          p.style.top = `${y}%`;
+        });
+      }, speed);
+    }
+    
+    // Quiz functions
+    function startQuiz() {
+      document.getElementById('quiz-start').classList.add('hidden');
+      document.getElementById('quiz-questions').classList.remove('hidden');
+      currentQuestion = 0;
+      score = 0;
+      displayQuestion();
+    }
+    
+    function displayQuestion() {
+      const q = quizData[currentQuestion];
+      document.getElementById('question-text').textContent = `${currentQuestion + 1}. ${q.question}`;
+      document.getElementById('quiz-progress').textContent = `Soal ${currentQuestion + 1} dari ${quizData.length}`;
+      document.getElementById('quiz-score').textContent = `Skor: ${score}`;
+      document.getElementById('quiz-progress-bar').style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
+      
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+      
+      q.options.forEach((option, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option w-full p-4 text-left rounded-lg border border-slate-600 hover:border-cyan-500 transition-all';
+        btn.innerHTML = `<span class="font-medium text-slate-400 mr-2">${String.fromCharCode(65 + index)}.</span> ${option}`;
+        btn.onclick = () => selectAnswer(index);
+        optionsContainer.appendChild(btn);
+      });
+      
+      document.getElementById('feedback-container').classList.add('hidden');
+      document.getElementById('next-btn').classList.add('hidden');
+      answered = false;
+    }
+    
+    function selectAnswer(index) {
+      if (answered) return;
+      answered = true;
+      
+      const q = quizData[currentQuestion];
+      const options = document.querySelectorAll('.quiz-option');
+      const feedback = document.getElementById('feedback-container');
+      const feedbackText = document.getElementById('feedback-text');
+      const explanationText = document.getElementById('explanation-text');
+      
+      options.forEach((opt, i) => {
+        opt.classList.add('pointer-events-none');
+        if (i === q.correct) {
+          opt.classList.add('correct');
+        } else if (i === index && i !== q.correct) {
+          opt.classList.add('incorrect');
+        }
+      });
+      
+      if (index === q.correct) {
+        score++;
+        feedbackText.textContent = '✓ Benar!';
+        feedbackText.className = 'font-medium mb-2 text-green-400';
+        feedback.className = 'mt-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30';
+      } else {
+        feedbackText.textContent = '✗ Salah!';
+        feedbackText.className = 'font-medium mb-2 text-red-400';
+        feedback.className = 'mt-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30';
+      }
+      
+      explanationText.textContent = q.explanation;
+      feedback.classList.remove('hidden');
+      document.getElementById('next-btn').classList.remove('hidden');
+      document.getElementById('quiz-score').textContent = `Skor: ${score}`;
+    }
+    
+    function nextQuestion() {
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        displayQuestion();
+      } else {
+        showResults();
+      }
+    }
+    
+    function showResults() {
+      document.getElementById('quiz-questions').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      
+      document.getElementById('result-score').textContent = `${score}/${quizData.length}`;
+      document.getElementById('correct-count').textContent = score;
+      document.getElementById('wrong-count').textContent = quizData.length - score;
+      
+      const percentage = (score / quizData.length) * 100;
+      let emoji, title, message;
+      
+      if (percentage >= 90) {
+        emoji = '🏆';
+        title = 'Luar Biasa!';
+        message = 'Kamu menguasai materi dengan sangat baik! Terus pertahankan!';
+      } else if (percentage >= 70) {
+        emoji = '🎉';
+        title = 'Bagus Sekali!';
+        message = 'Pemahaman kamu sudah baik. Sedikit lagi menuju sempurna!';
+      } else if (percentage >= 50) {
+        emoji = '💪';
+        title = 'Cukup Baik!';
+        message = 'Terus belajar, kamu pasti bisa lebih baik lagi!';
+      } else {
+        emoji = '📚';
+        title = 'Tetap Semangat!';
+        message = 'Jangan menyerah! Pelajari kembali materinya dan coba lagi.';
+      }
+      
+      document.getElementById('result-emoji').textContent = emoji;
+      document.getElementById('result-title').textContent = title;
+      document.getElementById('result-message').textContent = message;
+    }
+    
+    function restartQuiz() {
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('quiz-start').classList.remove('hidden');
+      currentQuestion = 0;
+      score = 0;
+    }
+    
+    // Initialize
+    applyConfig();
+    updateNavigation();
+    updateProgress();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9caabeac95c79a10',t:'MTc3MDU0OTcwMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

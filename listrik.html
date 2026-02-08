@@ -1,0 +1,1292 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pembelajaran Listrik Statis</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Nunito', sans-serif;
+    }
+    
+    .heading-font {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+    
+    .card-glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+    
+    .electric-glow {
+      box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+    }
+    
+    .pulse-animation {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes spark {
+      0%, 100% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+    
+    .spark {
+      animation: spark 0.5s ease-out;
+    }
+    
+    .electron {
+      animation: orbit 2s linear infinite;
+    }
+    
+    @keyframes orbit {
+      from { transform: rotate(0deg) translateX(30px) rotate(0deg); }
+      to { transform: rotate(360deg) translateX(30px) rotate(-360deg); }
+    }
+    
+    .slide-enter {
+      animation: slideIn 0.5s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease-out;
+    }
+    
+    .btn-electric {
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      transition: all 0.3s ease;
+    }
+    
+    .btn-electric:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+    }
+    
+    .charge-positive {
+      background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+    }
+    
+    .charge-negative {
+      background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+    }
+    
+    .formula-box {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      border-left: 4px solid #3b82f6;
+    }
+    
+    .interactive-zone {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 2px dashed #f59e0b;
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+    }
+    
+    .quiz-option:hover {
+      transform: translateX(5px);
+      background: #eff6ff;
+    }
+    
+    .quiz-option.selected {
+      background: #dbeafe;
+      border-color: #3b82f6;
+    }
+    
+    .quiz-option.correct {
+      background: #dcfce7;
+      border-color: #22c55e;
+    }
+    
+    .quiz-option.incorrect {
+      background: #fee2e2;
+      border-color: #ef4444;
+    }
+    
+    .nav-dot {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-dot.active {
+      background: #3b82f6;
+      transform: scale(1.3);
+    }
+    
+    .image-container {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .image-container img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full gradient-bg overflow-auto">
+  <div id="app" class="min-h-full w-full"><!-- Header -->
+   <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50 px-4 py-3">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center"><span class="text-xl">⚡</span>
+      </div>
+      <h1 id="main-title" class="heading-font text-lg md:text-xl font-bold text-white">Listrik Statis</h1>
+     </div>
+     <div class="flex items-center gap-2"><span class="text-sm text-slate-400">Progress:</span>
+      <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
+       <div id="progress-bar" class="h-full bg-gradient-to-r from-blue-500 to-purple-500 progress-bar" style="width: 0%"></div>
+      </div><span id="progress-text" class="text-sm text-blue-400 font-semibold">0%</span>
+     </div>
+    </div>
+   </header><!-- Navigation Dots -->
+   <nav class="fixed right-4 top-1/2 transform -translate-y-1/2 z-40 hidden md:flex flex-col gap-2">
+    <div class="nav-dot w-3 h-3 rounded-full bg-slate-500 cursor-pointer active" data-slide="0" title="Pendahuluan"></div>
+    <div class="nav-dot w-3 h-3 rounded-full bg-slate-500 cursor-pointer" data-slide="1" title="Listrik Statis"></div>
+    <div class="nav-dot w-3 h-3 rounded-full bg-slate-500 cursor-pointer" data-slide="2" title="Muatan Listrik"></div>
+    <div class="nav-dot w-3 h-3 rounded-full bg-slate-500 cursor-pointer" data-slide="3" title="Elektroskop"></div>
+    <div class="nav-dot w-3 h-3 rounded-full bg-slate-500 cursor-pointer" data-slide="4" title="Gaya Coulomb"></div>
+    <div class="nav-dot w-3 h-3 rounded-full bg-slate-500 cursor-pointer" data-slide="5" title="Medan Listrik"></div>
+    <div class="nav-dot w-3 h-3 rounded-full bg-slate-500 cursor-pointer" data-slide="6" title="Beda Potensial"></div>
+    <div class="nav-dot w-3 h-3 rounded-full bg-slate-500 cursor-pointer" data-slide="7" title="Aktivitas"></div>
+    <div class="nav-dot w-3 h-3 rounded-full bg-slate-500 cursor-pointer" data-slide="8" title="Quiz HOTS"></div>
+   </nav><!-- Main Content -->
+   <main class="max-w-5xl mx-auto px-4 py-6"><!-- Slide 0: Welcome -->
+    <section id="slide-0" class="slide-content slide-enter">
+     <div class="card-glass rounded-2xl p-6 md:p-8 electric-glow">
+      <div class="text-center mb-8">
+       <div class="inline-block p-4 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full mb-4 float-animation"><span class="text-5xl">⚡</span>
+       </div>
+       <h2 class="heading-font text-3xl md:text-4xl font-bold text-slate-800 mb-3">Selamat Datang!</h2>
+       <p id="welcome-text" class="text-lg text-slate-600">Modul Pembelajaran Interaktif: Listrik Statis</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+       <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl p-5">
+        <h3 class="heading-font font-bold text-blue-800 mb-3 flex items-center gap-2"><span>🎯</span> Tujuan Pembelajaran</h3>
+        <ul class="space-y-2 text-slate-700">
+         <li class="flex items-start gap-2"><span class="text-blue-500">✓</span> Memahami konsep listrik statis</li>
+         <li class="flex items-start gap-2"><span class="text-blue-500">✓</span> Menjelaskan muatan listrik dan interaksinya</li>
+         <li class="flex items-start gap-2"><span class="text-blue-500">✓</span> Menghitung gaya Coulomb</li>
+         <li class="flex items-start gap-2"><span class="text-blue-500">✓</span> Memahami medan listrik dan beda potensial</li>
+        </ul>
+       </div>
+       <div class="image-container"><img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=600&amp;h=400&amp;fit=crop" alt="Tesla Electric Car - Contoh penerapan listrik dalam kehidupan modern" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #3b82f6, #8b5cf6)'; this.alt='Gambar tidak tersedia'; this.parentElement.innerHTML='<div class=\'w-full h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-lg\'>🚗⚡ Mobil Listrik Modern</div>';">
+        <p class="text-sm text-slate-500 mt-2 text-center">Mobil listrik Tesla - Inovasi transportasi ramah lingkungan</p>
+       </div>
+      </div>
+      <div class="bg-amber-50 border-l-4 border-amber-400 rounded-r-xl p-4 mb-6">
+       <p class="text-amber-800"><strong>💡 Tahukah kamu?</strong> Mobil listrik seperti Tesla tidak menghasilkan emisi gas buang sama sekali! Mereka menggunakan motor listrik dan baterai yang dapat diisi ulang.</p>
+      </div>
+      <div class="text-center"><button onclick="nextSlide()" class="btn-electric text-white font-bold py-3 px-8 rounded-full text-lg"> Mulai Belajar → </button>
+      </div>
+     </div>
+    </section><!-- Slide 1: Apa itu Listrik Statis -->
+    <section id="slide-1" class="slide-content hidden">
+     <div class="card-glass rounded-2xl p-6 md:p-8 electric-glow slide-enter">
+      <div class="flex items-center gap-3 mb-6"><span class="bg-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">1</span>
+       <h2 class="heading-font text-2xl md:text-3xl font-bold text-slate-800">Apa itu Listrik Statis?</h2>
+      </div>
+      <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-5 mb-6">
+       <h3 class="heading-font font-bold text-blue-800 mb-2">📖 Definisi</h3>
+       <p class="text-slate-700 text-lg"><strong>Listrik statis</strong> adalah peristiwa berpindahnya muatan listrik dari satu benda ke benda lain <span class="bg-yellow-200 px-1 rounded">tanpa memerlukan sumber listrik eksternal</span> (seperti stop kontak).</p>
+      </div>
+      <h3 class="heading-font font-bold text-slate-800 mb-4">🔬 Contoh Fenomena Listrik Statis</h3>
+      <div class="grid md:grid-cols-3 gap-4 mb-6">
+       <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="image-container"><img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&amp;h=250&amp;fit=crop" alt="Rambut berdiri karena listrik statis" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.parentElement.innerHTML='<div class=\'w-full h-32 bg-gradient-to-br from-pink-400 to-purple-500 flex items-center justify-center text-4xl\'>💇‍♀️⚡</div>';">
+        </div>
+        <div class="p-4">
+         <h4 class="font-bold text-slate-800 mb-1">Rambut Berdiri</h4>
+         <p class="text-sm text-slate-600">Saat disisir dengan sisir plastik, elektron berpindah membuat rambut bermuatan sama dan tolak-menolak</p>
+        </div>
+       </div>
+       <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="image-container"><img src="https://images.unsplash.com/photo-1586075574206-345c8f8e7f51?w=400&amp;h=250&amp;fit=crop" alt="Kertas menempel pada penggaris" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.parentElement.innerHTML='<div class=\'w-full h-32 bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-4xl\'>📄✨</div>';">
+        </div>
+        <div class="p-4">
+         <h4 class="font-bold text-slate-800 mb-1">Kertas Menari</h4>
+         <p class="text-sm text-slate-600">Potongan kertas kecil tertarik ke penggaris/mika yang telah digosok ke rambut</p>
+        </div>
+       </div>
+       <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="image-container"><img src="https://images.unsplash.com/photo-1461511669078-d46bf351cd6e?w=400&amp;h=250&amp;fit=crop" alt="Petir - fenomena listrik statis skala besar" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.parentElement.innerHTML='<div class=\'w-full h-32 bg-gradient-to-br from-slate-700 to-blue-900 flex items-center justify-center text-4xl\'>⚡🌩️</div>';">
+        </div>
+        <div class="p-4">
+         <h4 class="font-bold text-slate-800 mb-1">Petir &amp; Percikan Api</h4>
+         <p class="text-sm text-slate-600">Percikan listrik pada rel kereta atau petir saat hujan akibat perbedaan muatan besar</p>
+        </div>
+       </div>
+      </div><!-- Interactive Demo -->
+      <div class="interactive-zone rounded-xl p-5 mb-6">
+       <h4 class="heading-font font-bold text-amber-800 mb-3">🧪 Simulasi Interaktif: Gosok Balon!</h4>
+       <div class="flex flex-col md:flex-row items-center gap-6">
+        <div id="balloon-demo" class="relative w-48 h-48 flex items-center justify-center">
+         <div id="balloon" class="text-8xl cursor-pointer transition-transform hover:scale-110" onclick="rubBalloon()">
+          🎈
+         </div>
+         <div id="sparks" class="absolute inset-0 pointer-events-none"></div>
+        </div>
+        <div class="flex-1">
+         <p class="text-slate-700 mb-2"><strong>Instruksi:</strong> Klik balon berkali-kali untuk "menggosoknya"!</p>
+         <div class="flex items-center gap-2 mb-2"><span class="text-sm text-slate-600">Muatan:</span>
+          <div class="flex-1 h-4 bg-slate-200 rounded-full overflow-hidden">
+           <div id="charge-bar" class="h-full bg-gradient-to-r from-blue-400 to-purple-500 transition-all" style="width: 0%"></div>
+          </div><span id="charge-level" class="text-sm font-bold text-blue-600">0%</span>
+         </div>
+         <p id="balloon-status" class="text-sm text-slate-500">Balon masih netral. Klik untuk menggosok!</p>
+        </div>
+       </div>
+      </div>
+      <div class="flex justify-between mt-6"><button onclick="prevSlide()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 px-6 rounded-full transition"> ← Kembali </button> <button onclick="nextSlide()" class="btn-electric text-white font-bold py-2 px-6 rounded-full"> Lanjut → </button>
+      </div>
+     </div>
+    </section><!-- Slide 2: Muatan Listrik -->
+    <section id="slide-2" class="slide-content hidden">
+     <div class="card-glass rounded-2xl p-6 md:p-8 electric-glow slide-enter">
+      <div class="flex items-center gap-3 mb-6"><span class="bg-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">2</span>
+       <h2 class="heading-font text-2xl md:text-3xl font-bold text-slate-800">Muatan Listrik &amp; Interaksinya</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+       <div>
+        <h3 class="heading-font font-bold text-slate-800 mb-4">⚛️ Jenis Muatan</h3>
+        <div class="space-y-4">
+         <div class="flex items-center gap-4 bg-red-50 p-4 rounded-xl">
+          <div class="charge-positive w-16 h-16 rounded-full flex items-center justify-center text-white text-3xl font-bold shadow-lg">
+           +
+          </div>
+          <div>
+           <h4 class="font-bold text-red-700">Muatan Positif (Proton)</h4>
+           <p class="text-sm text-slate-600">Partikel bermuatan positif dalam inti atom</p>
+          </div>
+         </div>
+         <div class="flex items-center gap-4 bg-blue-50 p-4 rounded-xl">
+          <div class="charge-negative w-16 h-16 rounded-full flex items-center justify-center text-white text-3xl font-bold shadow-lg">
+           −
+          </div>
+          <div>
+           <h4 class="font-bold text-blue-700">Muatan Negatif (Elektron)</h4>
+           <p class="text-sm text-slate-600">Partikel bermuatan negatif yang mengelilingi inti</p>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="image-container"><img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=500&amp;h=350&amp;fit=crop" alt="Struktur atom dengan elektron dan proton" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.parentElement.innerHTML='<div class=\'w-full h-64 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center\'><div class=\'text-center text-white\'><div class=\'text-6xl mb-2\'>⚛️</div><p>Model Atom</p></div></div>';">
+        <p class="text-sm text-slate-500 mt-2 text-center">Ilustrasi struktur atom dengan proton dan elektron</p>
+       </div>
+      </div>
+      <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-5 mb-6">
+       <h3 class="heading-font font-bold text-purple-800 mb-4">📏 Hukum Interaksi Muatan</h3><!-- Interactive Charge Demo -->
+       <div id="charge-interaction-demo" class="bg-white rounded-xl p-6 mb-4">
+        <div class="flex flex-wrap justify-center gap-8 mb-4">
+         <div class="text-center">
+          <p class="text-sm text-slate-600 mb-2">Muatan Sejenis</p>
+          <div class="flex items-center gap-2">
+           <div class="charge-positive w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-bold animate-pulse">
+            +
+           </div><span class="text-2xl">↔️</span>
+           <div class="charge-positive w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-bold animate-pulse">
+            +
+           </div>
+          </div>
+          <p class="text-red-600 font-bold mt-2">TOLAK-MENOLAK</p>
+         </div>
+         <div class="text-center">
+          <p class="text-sm text-slate-600 mb-2">Muatan Berbeda</p>
+          <div class="flex items-center gap-2">
+           <div class="charge-positive w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-bold">
+            +
+           </div><span class="text-2xl">↔️</span>
+           <div class="charge-negative w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-bold">
+            −
+           </div>
+          </div>
+          <p class="text-green-600 font-bold mt-2">TARIK-MENARIK</p>
+         </div>
+        </div>
+       </div>
+       <div class="grid md:grid-cols-3 gap-4">
+        <div class="bg-white rounded-lg p-4 text-center shadow">
+         <div class="flex justify-center gap-1 mb-2"><span class="charge-positive w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold">+</span> <span class="charge-positive w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold">+</span>
+         </div>
+         <p class="text-sm font-semibold text-red-600">Tolak-menolak ❌</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 text-center shadow">
+         <div class="flex justify-center gap-1 mb-2"><span class="charge-negative w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold">−</span> <span class="charge-negative w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold">−</span>
+         </div>
+         <p class="text-sm font-semibold text-red-600">Tolak-menolak ❌</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 text-center shadow">
+         <div class="flex justify-center gap-1 mb-2"><span class="charge-positive w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold">+</span> <span class="charge-negative w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold">−</span>
+         </div>
+         <p class="text-sm font-semibold text-green-600">Tarik-menarik ✓</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-slate-100 rounded-xl p-5 mb-6">
+       <h4 class="heading-font font-bold text-slate-800 mb-2">⚖️ Benda Netral</h4>
+       <p class="text-slate-700">Benda dikatakan <strong>netral</strong> jika memiliki jumlah proton (+) dan elektron (−) yang <strong>sama</strong>. Ketika benda digosok, elektron dapat berpindah sehingga benda menjadi bermuatan.</p>
+      </div>
+      <div class="flex justify-between mt-6"><button onclick="prevSlide()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 px-6 rounded-full transition"> ← Kembali </button> <button onclick="nextSlide()" class="btn-electric text-white font-bold py-2 px-6 rounded-full"> Lanjut → </button>
+      </div>
+     </div>
+    </section><!-- Slide 3: Elektroskop -->
+    <section id="slide-3" class="slide-content hidden">
+     <div class="card-glass rounded-2xl p-6 md:p-8 electric-glow slide-enter">
+      <div class="flex items-center gap-3 mb-6"><span class="bg-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">3</span>
+       <h2 class="heading-font text-2xl md:text-3xl font-bold text-slate-800">Mengenal Elektroskop</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+       <div>
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-5 mb-4">
+         <h3 class="heading-font font-bold text-green-800 mb-2">🔍 Fungsi Elektroskop</h3>
+         <p class="text-slate-700">Elektroskop adalah alat untuk <strong>mendeteksi keberadaan muatan listrik</strong> pada suatu benda. Alat ini penting untuk menghindari bahaya listrik statis.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg p-5">
+         <h4 class="heading-font font-bold text-slate-800 mb-3">🧰 Komponen Elektroskop Sederhana</h4>
+         <ul class="space-y-2">
+          <li class="flex items-center gap-2"><span class="w-6 h-6 bg-amber-100 rounded-full flex items-center justify-center text-sm">1</span> <span>Botol kaca/plastik</span></li>
+          <li class="flex items-center gap-2"><span class="w-6 h-6 bg-amber-100 rounded-full flex items-center justify-center text-sm">2</span> <span>Kawat atau penggaris logam</span></li>
+          <li class="flex items-center gap-2"><span class="w-6 h-6 bg-amber-100 rounded-full flex items-center justify-center text-sm">3</span> <span>Aluminium foil (2 lembar tipis)</span></li>
+          <li class="flex items-center gap-2"><span class="w-6 h-6 bg-amber-100 rounded-full flex items-center justify-center text-sm">4</span> <span>Gabus penutup</span></li>
+         </ul>
+        </div>
+       </div><!-- Interactive Electroscope -->
+       <div class="bg-slate-100 rounded-xl p-5">
+        <h4 class="heading-font font-bold text-slate-800 mb-3 text-center">⚡ Simulasi Elektroskop</h4>
+        <div id="electroscope-demo" class="relative mx-auto w-48"><!-- Electroscope SVG -->
+         <svg viewbox="0 0 200 300" class="w-full"><!-- Bottle --> <ellipse cx="100" cy="250" rx="60" ry="20" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2" /> <rect x="40" y="100" width="120" height="150" rx="10" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2" /> <rect x="50" y="110" width="100" height="130" rx="5" fill="#ffffff" opacity="0.5" /> <!-- Cork --> <rect x="70" y="85" width="60" height="20" rx="3" fill="#d4a574" stroke="#a67c52" stroke-width="1" /> <!-- Metal rod --> <rect x="95" y="40" width="10" height="80" fill="#9ca3af" /> <!-- Metal ball --> <circle cx="100" cy="35" r="15" fill="#6b7280" stroke="#4b5563" stroke-width="2" /> <!-- Foil leaves --> <g id="foil-leaves">
+           <rect id="left-leaf" x="85" y="120" width="15" height="60" rx="2" fill="#d4d4d8" stroke="#a1a1aa" transform="rotate(0, 92, 120)" />
+           <rect id="right-leaf" x="100" y="120" width="15" height="60" rx="2" fill="#d4d4d8" stroke="#a1a1aa" transform="rotate(0, 108, 120)" />
+          </g>
+         </svg>
+         <div class="text-center mt-4"><button onclick="testElectroscope()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-lg transition text-sm"> 🧲 Dekatkan Benda Bermuatan </button> <button onclick="resetElectroscope()" class="bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded-lg transition text-sm ml-2"> 🔄 Reset </button>
+         </div>
+         <p id="electroscope-status" class="text-center text-sm text-slate-600 mt-2">Elektroskop dalam keadaan netral</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-blue-50 border-l-4 border-blue-400 rounded-r-xl p-4 mb-6">
+       <p class="text-blue-800"><strong>💡 Cara Kerja:</strong> Ketika benda bermuatan didekatkan ke kepala elektroskop, muatan akan menginduksi daun aluminium foil. Kedua daun mendapat muatan sejenis sehingga <strong>saling tolak-menolak</strong> dan membuka!</p>
+      </div>
+      <div class="flex justify-between mt-6"><button onclick="prevSlide()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 px-6 rounded-full transition"> ← Kembali </button> <button onclick="nextSlide()" class="btn-electric text-white font-bold py-2 px-6 rounded-full"> Lanjut → </button>
+      </div>
+     </div>
+    </section><!-- Slide 4: Gaya Coulomb -->
+    <section id="slide-4" class="slide-content hidden">
+     <div class="card-glass rounded-2xl p-6 md:p-8 electric-glow slide-enter">
+      <div class="flex items-center gap-3 mb-6"><span class="bg-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">4</span>
+       <h2 class="heading-font text-2xl md:text-3xl font-bold text-slate-800">Gaya Coulomb (Gaya Listrik)</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+       <div>
+        <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-5 mb-4">
+         <h3 class="heading-font font-bold text-indigo-800 mb-2">👨‍🔬 Penemu</h3>
+         <p class="text-slate-700"><strong>Charles Augustin Coulomb</strong> (1736-1806) adalah fisikawan Prancis yang menemukan hukum tentang gaya listrik antara dua muatan.</p>
+        </div>
+        <div class="formula-box rounded-xl p-5 mb-4">
+         <h4 class="heading-font font-bold text-slate-800 mb-3">📐 Rumus Gaya Coulomb</h4>
+         <div class="bg-white rounded-lg p-4 text-center text-2xl font-mono mb-3">
+          F<sub>c</sub> = k × (q₁ × q₂) / r²
+         </div>
+         <div class="text-sm text-slate-600 space-y-1">
+          <p><strong>F<sub>c</sub></strong> = Gaya Coulomb (Newton)</p>
+          <p><strong>k</strong> = Konstanta = 9 × 10⁹ N·m²/C²</p>
+          <p><strong>q₁, q₂</strong> = Muatan listrik (Coulomb)</p>
+          <p><strong>r</strong> = Jarak antar muatan (meter)</p>
+         </div>
+        </div>
+       </div>
+       <div class="image-container"><img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=500&amp;h=300&amp;fit=crop" alt="Ilustrasi gaya listrik antar muatan" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.parentElement.innerHTML='<div class=\'w-full h-48 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-center p-4\'><div><div class=\'text-4xl mb-2\'>⚡↔️⚡</div><p>Gaya Coulomb antara dua muatan</p></div></div>';">
+       </div>
+      </div><!-- Interactive Calculator -->
+      <div class="interactive-zone rounded-xl p-5 mb-6">
+       <h4 class="heading-font font-bold text-amber-800 mb-4">🧮 Kalkulator Gaya Coulomb</h4>
+       <div class="grid md:grid-cols-4 gap-4 mb-4">
+        <div><label class="block text-sm font-semibold text-slate-700 mb-1">Muatan 1 (q₁) μC</label> <input type="number" id="q1-input" value="2" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="μC">
+        </div>
+        <div><label class="block text-sm font-semibold text-slate-700 mb-1">Muatan 2 (q₂) μC</label> <input type="number" id="q2-input" value="3" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="μC">
+        </div>
+        <div><label class="block text-sm font-semibold text-slate-700 mb-1">Jarak (r) cm</label> <input type="number" id="r-input" value="10" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="cm">
+        </div>
+        <div class="flex items-end"><button onclick="calculateCoulomb()" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition"> Hitung! 🔢 </button>
+        </div>
+       </div>
+       <div id="coulomb-result" class="bg-white rounded-lg p-4 text-center">
+        <p class="text-slate-500">Masukkan nilai dan klik "Hitung!" untuk melihat hasil</p>
+       </div>
+      </div>
+      <div class="bg-green-50 border-l-4 border-green-400 rounded-r-xl p-4 mb-6">
+       <p class="text-green-800"><strong>📌 Kesimpulan Penting:</strong><br>
+         • Semakin <strong>besar muatan</strong>, semakin <strong>besar gaya</strong> yang dihasilkan<br>
+         • Semakin <strong>jauh jarak</strong>, semakin <strong>kecil gaya</strong> yang dirasakan (berbanding terbalik dengan kuadrat jarak)</p>
+      </div>
+      <div class="flex justify-between mt-6"><button onclick="prevSlide()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 px-6 rounded-full transition"> ← Kembali </button> <button onclick="nextSlide()" class="btn-electric text-white font-bold py-2 px-6 rounded-full"> Lanjut → </button>
+      </div>
+     </div>
+    </section><!-- Slide 5: Medan Listrik -->
+    <section id="slide-5" class="slide-content hidden">
+     <div class="card-glass rounded-2xl p-6 md:p-8 electric-glow slide-enter">
+      <div class="flex items-center gap-3 mb-6"><span class="bg-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">5</span>
+       <h2 class="heading-font text-2xl md:text-3xl font-bold text-slate-800">Medan Listrik</h2>
+      </div>
+      <div class="bg-gradient-to-r from-cyan-50 to-blue-50 rounded-xl p-5 mb-6">
+       <h3 class="heading-font font-bold text-cyan-800 mb-2">📖 Definisi</h3>
+       <p class="text-slate-700 text-lg"><strong>Medan listrik</strong> adalah daerah di sekitar benda bermuatan yang masih dipengaruhi oleh gaya listrik. Medan listrik digambarkan dengan <strong>garis-garis gaya listrik</strong>.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-6"><!-- Electric Field Lines Visualization -->
+       <div class="bg-white rounded-xl shadow-lg p-5">
+        <h4 class="heading-font font-bold text-slate-800 mb-3 text-center">🔄 Arah Garis Gaya Listrik</h4>
+        <div class="flex justify-center gap-8 mb-4">
+         <div class="text-center">
+          <svg viewbox="0 0 120 120" class="w-28 h-28 mx-auto"><circle cx="60" cy="60" r="20" fill="#ef4444" /> <text x="60" y="67" text-anchor="middle" fill="white" font-weight="bold" font-size="20">
+            +
+           </text> <!-- Outward arrows --> <line x1="60" y1="35" x2="60" y2="10" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowhead)" /> <line x1="60" y1="85" x2="60" y2="110" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowhead)" /> <line x1="35" y1="60" x2="10" y2="60" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowhead)" /> <line x1="85" y1="60" x2="110" y2="60" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowhead)" /> <defs>
+            <marker id="arrowhead" markerwidth="10" markerheight="7" refx="9" refy="3.5" orient="auto">
+             <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444" />
+            </marker>
+           </defs>
+          </svg>
+          <p class="text-sm font-semibold text-red-600 mt-2">Muatan Positif</p>
+          <p class="text-xs text-slate-500">Garis gaya KELUAR</p>
+         </div>
+         <div class="text-center">
+          <svg viewbox="0 0 120 120" class="w-28 h-28 mx-auto"><circle cx="60" cy="60" r="20" fill="#3b82f6" /> <text x="60" y="67" text-anchor="middle" fill="white" font-weight="bold" font-size="20">
+            −
+           </text> <!-- Inward arrows --> <line x1="60" y1="10" x2="60" y2="35" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowhead2)" /> <line x1="60" y1="110" x2="60" y2="85" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowhead2)" /> <line x1="10" y1="60" x2="35" y2="60" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowhead2)" /> <line x1="110" y1="60" x2="85" y2="60" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowhead2)" /> <defs>
+            <marker id="arrowhead2" markerwidth="10" markerheight="7" refx="9" refy="3.5" orient="auto">
+             <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6" />
+            </marker>
+           </defs>
+          </svg>
+          <p class="text-sm font-semibold text-blue-600 mt-2">Muatan Negatif</p>
+          <p class="text-xs text-slate-500">Garis gaya MASUK</p>
+         </div>
+        </div>
+       </div>
+       <div>
+        <div class="formula-box rounded-xl p-5 mb-4">
+         <h4 class="heading-font font-bold text-slate-800 mb-3">📐 Rumus Kuat Medan Listrik</h4>
+         <div class="bg-white rounded-lg p-3 text-center text-xl font-mono mb-2">
+          E = F / q₀
+         </div>
+         <p class="text-sm text-slate-600 mb-3">atau</p>
+         <div class="bg-white rounded-lg p-3 text-center text-xl font-mono mb-2">
+          E = k × Q / r²
+         </div>
+         <div class="text-sm text-slate-600 space-y-1 mt-3">
+          <p><strong>E</strong> = Kuat medan listrik (N/C)</p>
+          <p><strong>F</strong> = Gaya listrik (Newton)</p>
+          <p><strong>q₀</strong> = Muatan uji (Coulomb)</p>
+          <p><strong>Q</strong> = Muatan sumber (Coulomb)</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Interactive Field Visualization -->
+      <div class="interactive-zone rounded-xl p-5 mb-6">
+       <h4 class="heading-font font-bold text-amber-800 mb-3">🎮 Visualisasi Interaktif Medan Listrik</h4>
+       <div class="flex flex-wrap justify-center gap-4 mb-4"><button onclick="showFieldPattern('single-pos')" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition text-sm"> + Muatan Tunggal (+) </button> <button onclick="showFieldPattern('single-neg')" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition text-sm"> − Muatan Tunggal (−) </button> <button onclick="showFieldPattern('dipole')" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-lg transition text-sm"> ⚡ Dipol (+ dan −) </button>
+       </div>
+       <div id="field-visualization" class="bg-white rounded-xl p-4 min-h-48 flex items-center justify-center">
+        <p class="text-slate-500">Klik tombol di atas untuk melihat pola medan listrik</p>
+       </div>
+      </div>
+      <div class="flex justify-between mt-6"><button onclick="prevSlide()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 px-6 rounded-full transition"> ← Kembali </button> <button onclick="nextSlide()" class="btn-electric text-white font-bold py-2 px-6 rounded-full"> Lanjut → </button>
+      </div>
+     </div>
+    </section><!-- Slide 6: Beda Potensial -->
+    <section id="slide-6" class="slide-content hidden">
+     <div class="card-glass rounded-2xl p-6 md:p-8 electric-glow slide-enter">
+      <div class="flex items-center gap-3 mb-6"><span class="bg-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">6</span>
+       <h2 class="heading-font text-2xl md:text-3xl font-bold text-slate-800">Beda Potensial &amp; Listrik pada Tubuh</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+       <div>
+        <div class="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl p-5 mb-4">
+         <h3 class="heading-font font-bold text-orange-800 mb-2">⚡ Beda Potensial</h3>
+         <p class="text-slate-700"><strong>Beda potensial</strong> adalah perbedaan tegangan listrik antara dua titik yang menyebabkan elektron berpindah (arus listrik mengalir). Satuan: <strong>Volt (V)</strong></p>
+        </div>
+        <div class="formula-box rounded-xl p-5">
+         <h4 class="heading-font font-bold text-slate-800 mb-3">📐 Rumus Beda Potensial</h4>
+         <div class="bg-white rounded-lg p-4 text-center text-2xl font-mono mb-3">
+          ΔV = W / Q
+         </div>
+         <div class="text-sm text-slate-600 space-y-1">
+          <p><strong>ΔV</strong> = Beda potensial (Volt)</p>
+          <p><strong>W</strong> = Energi/Usaha listrik (Joule)</p>
+          <p><strong>Q</strong> = Muatan listrik (Coulomb)</p>
+         </div>
+        </div>
+       </div>
+       <div class="image-container"><img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?w=500&amp;h=350&amp;fit=crop" alt="Sistem saraf manusia yang menggunakan sinyal listrik" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.parentElement.innerHTML='<div class=\'w-full h-64 bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white text-center p-4\'><div><div class=\'text-6xl mb-2\'>🧠⚡</div><p>Sistem Saraf Manusia</p></div></div>';">
+        <p class="text-sm text-slate-500 mt-2 text-center">Sinyal listrik dalam sistem saraf manusia</p>
+       </div>
+      </div>
+      <div class="bg-purple-50 rounded-xl p-5 mb-6">
+       <h3 class="heading-font font-bold text-purple-800 mb-3">🧠 Listrik dalam Tubuh Manusia</h3>
+       <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-white rounded-lg p-4">
+         <h4 class="font-bold text-slate-800 mb-2">🔬 Jaringan Saraf</h4>
+         <p class="text-sm text-slate-600">Jaringan saraf manusia memproduksi dan merespons beda potensial listrik secara alami. Impuls listrik kecil membawa informasi dari indra ke otak.</p>
+        </div>
+        <div class="bg-white rounded-lg p-4">
+         <h4 class="font-bold text-slate-800 mb-2">❤️ Jantung</h4>
+         <p class="text-sm text-slate-600">Jantung menggunakan sinyal listrik untuk mengatur detak. EKG (Elektrokardiogram) merekam aktivitas listrik jantung.</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-blue-50 border-l-4 border-blue-400 rounded-r-xl p-4 mb-6">
+       <p class="text-blue-800"><strong>💡 Fakta Menarik:</strong> Otak manusia menghasilkan sekitar 10-23 watt listrik saat terjaga - cukup untuk menyalakan lampu LED kecil! Sinyal saraf bergerak dengan kecepatan hingga 120 m/s.</p>
+      </div>
+      <div class="flex justify-between mt-6"><button onclick="prevSlide()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 px-6 rounded-full transition"> ← Kembali </button> <button onclick="nextSlide()" class="btn-electric text-white font-bold py-2 px-6 rounded-full"> Lanjut → </button>
+      </div>
+     </div>
+    </section><!-- Slide 7: Aktivitas Praktikum -->
+    <section id="slide-7" class="slide-content hidden">
+     <div class="card-glass rounded-2xl p-6 md:p-8 electric-glow slide-enter">
+      <div class="flex items-center gap-3 mb-6"><span class="bg-green-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">🔬</span>
+       <h2 class="heading-font text-2xl md:text-3xl font-bold text-slate-800">Aktivitas Praktikum</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-6"><!-- Aktivitas 4.1 -->
+       <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-5 border-2 border-green-200">
+        <div class="flex items-center gap-2 mb-3"><span class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">4.1</span>
+         <h3 class="heading-font font-bold text-green-800">Membuat Elektroskop Sederhana</h3>
+        </div>
+        <div class="mb-4">
+         <h4 class="font-semibold text-slate-700 mb-2">🧰 Alat dan Bahan:</h4>
+         <ul class="text-sm text-slate-600 space-y-1">
+          <li>• Botol plastik bekas</li>
+          <li>• Kawat tembaga/klip kertas</li>
+          <li>• Aluminium foil</li>
+          <li>• Gabus/styrofoam</li>
+          <li>• Sisir plastik</li>
+         </ul>
+        </div>
+        <div class="mb-4">
+         <h4 class="font-semibold text-slate-700 mb-2">📝 Langkah Kerja:</h4>
+         <ol class="text-sm text-slate-600 space-y-1">
+          <li>1. Lubangi gabus, masukkan kawat</li>
+          <li>2. Gantung 2 lembar foil di ujung kawat</li>
+          <li>3. Masukkan ke dalam botol</li>
+          <li>4. Gosok sisir ke rambut</li>
+          <li>5. Dekatkan sisir ke kepala kawat</li>
+          <li>6. Amati pergerakan daun foil!</li>
+         </ol>
+        </div>
+        <div class="image-container"><img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400&amp;h=200&amp;fit=crop" alt="Eksperimen sains sederhana" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.parentElement.innerHTML='<div class=\'w-full h-32 bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-4xl\'>🧪🔬</div>';">
+        </div>
+       </div><!-- Aktivitas 4.2 -->
+       <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-5 border-2 border-amber-200">
+        <div class="flex items-center gap-2 mb-3"><span class="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">4.2</span>
+         <h3 class="heading-font font-bold text-amber-800">Eksperimen Balon &amp; Gaya Listrik</h3>
+        </div>
+        <div class="mb-4">
+         <h4 class="font-semibold text-slate-700 mb-2">🧰 Alat dan Bahan:</h4>
+         <ul class="text-sm text-slate-600 space-y-1">
+          <li>• 2 buah balon</li>
+          <li>• Kain wol/rambut</li>
+          <li>• Benang</li>
+          <li>• Penggaris</li>
+         </ul>
+        </div>
+        <div class="mb-4">
+         <h4 class="font-semibold text-slate-700 mb-2">📝 Langkah Kerja:</h4>
+         <ol class="text-sm text-slate-600 space-y-1">
+          <li>1. Tiup kedua balon</li>
+          <li>2. Gosok balon ke kain wol</li>
+          <li>3. Gantung balon berdekatan</li>
+          <li>4. Amati: Balon saling menjauh!</li>
+          <li>5. Ukur jarak tolakan pada berbagai kondisi</li>
+          <li>6. Catat hubungan jarak &amp; gaya</li>
+         </ol>
+        </div>
+        <div class="bg-white rounded-lg p-3 text-center">
+         <p class="text-sm text-amber-700 font-semibold">🎯 Tujuan: Membuktikan bahwa muatan sejenis tolak-menolak dan pengaruh jarak terhadap gaya listrik</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-slate-100 rounded-xl p-5 mb-6">
+       <h4 class="heading-font font-bold text-slate-800 mb-3">📊 Tabel Pengamatan (Aktivitas 4.2)</h4>
+       <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+         <thead>
+          <tr class="bg-slate-200">
+           <th class="p-2 text-left rounded-tl-lg">Percobaan</th>
+           <th class="p-2 text-center">Jumlah Gosokan</th>
+           <th class="p-2 text-center">Jarak Awal (cm)</th>
+           <th class="p-2 text-center">Jarak Akhir (cm)</th>
+           <th class="p-2 text-left rounded-tr-lg">Kesimpulan</th>
+          </tr>
+         </thead>
+         <tbody class="bg-white">
+          <tr class="border-b">
+           <td class="p-2">1</td>
+           <td class="p-2 text-center">10x</td>
+           <td class="p-2 text-center">5</td>
+           <td class="p-2 text-center">___</td>
+           <td class="p-2">___</td>
+          </tr>
+          <tr class="border-b">
+           <td class="p-2">2</td>
+           <td class="p-2 text-center">20x</td>
+           <td class="p-2 text-center">5</td>
+           <td class="p-2 text-center">___</td>
+           <td class="p-2">___</td>
+          </tr>
+          <tr>
+           <td class="p-2">3</td>
+           <td class="p-2 text-center">30x</td>
+           <td class="p-2 text-center">5</td>
+           <td class="p-2 text-center">___</td>
+           <td class="p-2">___</td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+      <div class="flex justify-between mt-6"><button onclick="prevSlide()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 px-6 rounded-full transition"> ← Kembali </button> <button onclick="nextSlide()" class="btn-electric text-white font-bold py-2 px-6 rounded-full"> Lanjut ke Quiz → </button>
+      </div>
+     </div>
+    </section><!-- Slide 8: Quiz HOTS -->
+    <section id="slide-8" class="slide-content hidden">
+     <div class="card-glass rounded-2xl p-6 md:p-8 electric-glow slide-enter">
+      <div class="flex items-center gap-3 mb-6"><span class="bg-purple-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">📝</span>
+       <h2 class="heading-font text-2xl md:text-3xl font-bold text-slate-800">Quiz HOTS - Listrik Statis</h2>
+      </div>
+      <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4 mb-6">
+       <div class="flex items-center justify-between flex-wrap gap-2">
+        <div><span class="text-sm text-slate-600">Progress Quiz:</span> <span id="quiz-progress" class="font-bold text-purple-700 ml-2">0/10</span>
+        </div>
+        <div><span class="text-sm text-slate-600">Skor:</span> <span id="quiz-score" class="font-bold text-green-600 ml-2">0</span>
+        </div>
+       </div>
+      </div>
+      <div id="quiz-container"><!-- Questions will be loaded here -->
+      </div>
+      <div id="quiz-result" class="hidden">
+       <div class="text-center py-8">
+        <div class="text-6xl mb-4" id="result-emoji">
+         🎉
+        </div>
+        <h3 class="heading-font text-2xl font-bold text-slate-800 mb-2">Quiz Selesai!</h3>
+        <p class="text-lg text-slate-600 mb-4">Skor Akhir Kamu:</p>
+        <div class="text-5xl font-bold text-purple-600 mb-4" id="final-score">
+         0/10
+        </div>
+        <p id="result-message" class="text-slate-600 mb-6"></p>
+        <div class="flex justify-center gap-4"><button onclick="restartQuiz()" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-full transition"> 🔄 Ulangi Quiz </button> <button onclick="goToSlide(0)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-6 rounded-full transition"> 📚 Pelajari Lagi </button>
+        </div>
+       </div>
+      </div>
+      <div id="quiz-navigation" class="flex justify-between mt-6"><button onclick="prevSlide()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 px-6 rounded-full transition"> ← Kembali ke Materi </button>
+      </div>
+     </div>
+    </section>
+   </main><!-- Footer -->
+   <footer class="bg-slate-900/50 border-t border-slate-700/50 py-4 px-4 mt-8">
+    <div class="max-w-5xl mx-auto text-center text-slate-400 text-sm">
+     <p>📚 Modul Pembelajaran Listrik Statis | IPA Fisika</p>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Configuration and State
+    const defaultConfig = {
+      main_title: 'Listrik Statis',
+      welcome_text: 'Modul Pembelajaran Interaktif: Listrik Statis',
+      background_color: '#1a1a2e',
+      surface_color: '#ffffff',
+      text_color: '#1e293b',
+      primary_color: '#3b82f6',
+      secondary_color: '#8b5cf6'
+    };
+
+    let config = { ...defaultConfig };
+    let currentSlide = 0;
+    const totalSlides = 9;
+    let balloonCharge = 0;
+    let currentQuestion = 0;
+    let score = 0;
+    let answeredQuestions = [];
+
+    // HOTS Quiz Questions
+    const quizQuestions = [
+      {
+        id: 1,
+        question: "Seorang siswa menggosok penggaris plastik ke rambutnya, kemudian mendekatkannya ke potongan kertas kecil. Kertas tertarik ke penggaris. Manakah analisis yang PALING TEPAT menjelaskan fenomena ini?",
+        options: [
+          "Kertas memiliki muatan positif dan penggaris memiliki muatan negatif",
+          "Elektron berpindah dari rambut ke penggaris, menyebabkan penggaris bermuatan negatif dan menginduksi kertas",
+          "Proton berpindah dari penggaris ke rambut membuat penggaris bermuatan positif",
+          "Kertas dan penggaris memiliki muatan yang sama sehingga saling tarik"
+        ],
+        correct: 1,
+        explanation: "Saat digosok, elektron berpindah dari rambut ke penggaris plastik (karena plastik lebih elektronegatif). Penggaris menjadi bermuatan negatif dan menginduksi polarisasi pada kertas yang netral, sehingga sisi terdekat kertas bermuatan positif dan tertarik."
+      },
+      {
+        id: 2,
+        question: "Dua muatan q₁ = +4 μC dan q₂ = -2 μC terpisah sejauh 30 cm. Jika jarak dikurangi menjadi 15 cm, bagaimana perubahan gaya Coulomb antara keduanya?",
+        options: [
+          "Gaya menjadi 2 kali lebih besar",
+          "Gaya menjadi 4 kali lebih besar",
+          "Gaya menjadi setengahnya",
+          "Gaya tetap sama karena muatan tidak berubah"
+        ],
+        correct: 1,
+        explanation: "Berdasarkan hukum Coulomb, F ∝ 1/r². Jika jarak menjadi ½ kali semula (30 cm → 15 cm), maka gaya menjadi (1/½)² = 4 kali lebih besar. Ini menunjukkan bahwa gaya Coulomb berbanding terbalik dengan kuadrat jarak."
+      },
+      {
+        id: 3,
+        question: "Dalam sebuah percobaan elektroskop, ketika batang kaca yang telah digosok dengan kain sutera didekatkan (tanpa menyentuh) ke kepala elektroskop, daun-daun elektroskop terbuka. Apa yang terjadi pada muatan di dalam elektroskop?",
+        options: [
+          "Elektron dari daun naik ke kepala elektroskop, membuat kedua daun bermuatan positif",
+          "Proton dari kepala turun ke daun elektroskop",
+          "Muatan dari batang kaca berpindah ke elektroskop",
+          "Tidak ada perpindahan muatan, hanya getaran partikel"
+        ],
+        correct: 0,
+        explanation: "Batang kaca yang digosok kain sutera bermuatan positif. Saat didekatkan ke elektroskop, elektron di dalam elektroskop tertarik ke kepala (induksi), meninggalkan kedua daun dengan kekurangan elektron (bermuatan positif). Karena kedua daun bermuatan sejenis (+), mereka saling tolak dan membuka."
+      },
+      {
+        id: 4,
+        question: "Mengapa burung dapat hinggap di kabel listrik tegangan tinggi tanpa tersengat, sementara manusia yang menyentuh kabel yang sama bisa terluka parah?",
+        options: [
+          "Burung memiliki bulu yang bersifat isolator sempurna",
+          "Tidak ada beda potensial antara kedua kaki burung karena berada di satu kabel yang sama",
+          "Burung memiliki resistansi tubuh yang sangat tinggi",
+          "Tegangan listrik pada kabel berkurang saat burung hinggap"
+        ],
+        correct: 1,
+        explanation: "Arus listrik mengalir karena adanya beda potensial (tegangan). Kedua kaki burung berada pada titik yang sama di satu kabel, sehingga tidak ada beda potensial dan tidak ada arus yang mengalir melalui tubuhnya. Manusia yang menyentuh kabel dan tanah menciptakan beda potensial besar, menyebabkan arus mengalir melalui tubuh."
+      },
+      {
+        id: 5,
+        question: "Sebuah muatan titik Q = +8 μC menghasilkan medan listrik. Pada titik A yang berjarak 20 cm dari muatan, kuat medan listriknya adalah E. Berapakah kuat medan listrik pada titik B yang berjarak 40 cm dari muatan?",
+        options: [
+          "2E",
+          "E/2",
+          "E/4",
+          "4E"
+        ],
+        correct: 2,
+        explanation: "Kuat medan listrik E = kQ/r². Jika jarak menjadi 2 kali lipat (20 cm → 40 cm), maka E menjadi 1/(2)² = 1/4 dari nilai semula. Ini karena medan listrik berbanding terbalik dengan kuadrat jarak dari sumber muatan."
+      },
+      {
+        id: 6,
+        question: "Sebuah defibrillator jantung menyimpan energi 360 Joule dan melepaskan muatan 0,02 Coulomb saat digunakan. Berapa beda potensial yang digunakan untuk mengejutkan jantung?",
+        options: [
+          "7,2 Volt",
+          "720 Volt",
+          "7.200 Volt",
+          "18.000 Volt"
+        ],
+        correct: 3,
+        explanation: "Menggunakan rumus ΔV = W/Q = 360 J / 0,02 C = 18.000 Volt. Tegangan tinggi ini diperlukan untuk membuat arus yang cukup kuat melewati jaringan jantung dan mengembalikan ritme normal detak jantung."
+      },
+      {
+        id: 7,
+        question: "Saat cuaca kering, seseorang sering merasakan kejutan listrik kecil saat menyentuh gagang pintu logam setelah berjalan di karpet. Strategi mana yang PALING EFEKTIF untuk mencegah hal ini?",
+        options: [
+          "Memakai sepatu dengan sol karet tebal",
+          "Menyentuh dinding beton terlebih dahulu sebelum menyentuh logam",
+          "Berjalan lebih cepat di atas karpet",
+          "Menghindari menyentuh benda logam sama sekali"
+        ],
+        correct: 1,
+        explanation: "Menyentuh dinding beton (yang merupakan konduktor lemah dan terhubung ke tanah) memungkinkan muatan statis mengalir secara perlahan dan aman ke tanah, bukan dalam loncatan tajam seperti saat menyentuh logam. Sol karet justru mencegah grounding dan memperburuk masalah."
+      },
+      {
+        id: 8,
+        question: "Tiga muatan identik q diletakkan di tiga sudut segitiga sama sisi. Jika gaya yang dialami salah satu muatan akibat dua muatan lainnya masing-masing adalah F, berapakah resultan gaya total yang dialami muatan tersebut?",
+        options: [
+          "F",
+          "2F",
+          "√3 F",
+          "F√2"
+        ],
+        correct: 2,
+        explanation: "Karena segitiga sama sisi, sudut antara kedua vektor gaya adalah 60°. Menggunakan rumus resultan: R = √(F² + F² + 2F²cos60°) = √(F² + F² + F²) = √(3F²) = F√3. Kedua gaya tolak dengan besar sama membentuk sudut 60° menghasilkan resultan F√3."
+      },
+      {
+        id: 9,
+        question: "Petir terjadi ketika beda potensial antara awan dan tanah mencapai sekitar 100 juta Volt. Jika petir mentransfer muatan 5 Coulomb, berapa energi yang dilepaskan dalam satu sambaran petir?",
+        options: [
+          "5 × 10⁶ Joule",
+          "5 × 10⁷ Joule",
+          "5 × 10⁸ Joule",
+          "2 × 10⁷ Joule"
+        ],
+        correct: 2,
+        explanation: "Menggunakan W = Q × ΔV = 5 C × 100.000.000 V = 5 × 10⁸ Joule. Energi sebesar ini setara dengan sekitar 140 kWh atau cukup untuk menyalakan rumah selama lebih dari sebulan! Namun durasinya sangat singkat (mikrodetik) sehingga sulit ditangkap."
+      },
+      {
+        id: 10,
+        question: "Sebuah laboratorium menggunakan medan listrik untuk memisahkan partikel bermuatan berbeda. Jika partikel A bermassa 2m dan bermuatan +q, sedangkan partikel B bermassa m dan bermuatan +2q, dalam medan listrik yang sama, partikel mana yang akan mengalami percepatan lebih besar dan mengapa?",
+        options: [
+          "Partikel A, karena massanya lebih besar",
+          "Partikel B, karena rasio muatan terhadap massanya (q/m) lebih besar",
+          "Keduanya sama karena medan listriknya sama",
+          "Partikel A, karena muatannya lebih kecil sehingga lebih mudah bergerak"
+        ],
+        correct: 1,
+        explanation: "Gaya pada muatan dalam medan listrik: F = qE. Percepatan: a = F/m = qE/m. Untuk A: a = qE/2m. Untuk B: a = 2qE/m = 4(qE/2m). Partikel B memiliki percepatan 4 kali lebih besar karena rasio q/m nya lebih tinggi. Prinsip ini digunakan dalam spektrometer massa."
+      }
+    ];
+
+    // Initialize SDK
+    async function initializeApp() {
+      // Initialize Element SDK
+      if (window.elementSdk) {
+        await window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (newConfig) => {
+            config = { ...config, ...newConfig };
+            applyConfig();
+          },
+          mapToCapabilities: (cfg) => ({
+            recolorables: [
+              {
+                get: () => cfg.background_color || defaultConfig.background_color,
+                set: (value) => { cfg.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+              },
+              {
+                get: () => cfg.surface_color || defaultConfig.surface_color,
+                set: (value) => { cfg.surface_color = value; window.elementSdk.setConfig({ surface_color: value }); }
+              },
+              {
+                get: () => cfg.text_color || defaultConfig.text_color,
+                set: (value) => { cfg.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+              },
+              {
+                get: () => cfg.primary_color || defaultConfig.primary_color,
+                set: (value) => { cfg.primary_color = value; window.elementSdk.setConfig({ primary_color: value }); }
+              },
+              {
+                get: () => cfg.secondary_color || defaultConfig.secondary_color,
+                set: (value) => { cfg.secondary_color = value; window.elementSdk.setConfig({ secondary_color: value }); }
+              }
+            ],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (cfg) => new Map([
+            ['main_title', cfg.main_title || defaultConfig.main_title],
+            ['welcome_text', cfg.welcome_text || defaultConfig.welcome_text]
+          ])
+        });
+        config = { ...defaultConfig, ...window.elementSdk.config };
+      }
+
+      // Initialize Data SDK
+      if (window.dataSdk) {
+        const dataHandler = {
+          onDataChanged: (data) => {
+            // Store quiz answers for review
+            answeredQuestions = data;
+          }
+        };
+        await window.dataSdk.init(dataHandler);
+      }
+
+      applyConfig();
+      loadQuiz();
+    }
+
+    function applyConfig() {
+      const mainTitle = document.getElementById('main-title');
+      const welcomeText = document.getElementById('welcome-text');
+      
+      if (mainTitle) mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      if (welcomeText) welcomeText.textContent = config.welcome_text || defaultConfig.welcome_text;
+      
+      // Apply colors
+      document.documentElement.style.setProperty('--bg-color', config.background_color || defaultConfig.background_color);
+      document.documentElement.style.setProperty('--primary-color', config.primary_color || defaultConfig.primary_color);
+      document.documentElement.style.setProperty('--secondary-color', config.secondary_color || defaultConfig.secondary_color);
+    }
+
+    // Navigation Functions
+    function goToSlide(index) {
+      document.querySelectorAll('.slide-content').forEach(slide => {
+        slide.classList.add('hidden');
+      });
+      
+      const targetSlide = document.getElementById(`slide-${index}`);
+      if (targetSlide) {
+        targetSlide.classList.remove('hidden');
+        currentSlide = index;
+        updateProgress();
+        updateNavDots();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        goToSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        goToSlide(currentSlide - 1);
+      }
+    }
+
+    function updateProgress() {
+      const progress = ((currentSlide + 1) / totalSlides) * 100;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+      document.getElementById('progress-text').textContent = `${Math.round(progress)}%`;
+    }
+
+    function updateNavDots() {
+      document.querySelectorAll('.nav-dot').forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+      });
+    }
+
+    // Interactive Demos
+    function rubBalloon() {
+      balloonCharge = Math.min(100, balloonCharge + 15);
+      document.getElementById('charge-bar').style.width = `${balloonCharge}%`;
+      document.getElementById('charge-level').textContent = `${balloonCharge}%`;
+      
+      // Add spark effect
+      const sparks = document.getElementById('sparks');
+      const spark = document.createElement('div');
+      spark.className = 'absolute text-2xl spark';
+      spark.textContent = '⚡';
+      spark.style.left = `${Math.random() * 100}%`;
+      spark.style.top = `${Math.random() * 100}%`;
+      sparks.appendChild(spark);
+      setTimeout(() => spark.remove(), 500);
+      
+      // Update status
+      const status = document.getElementById('balloon-status');
+      if (balloonCharge < 30) {
+        status.textContent = 'Balon mulai bermuatan. Terus gosok!';
+      } else if (balloonCharge < 70) {
+        status.textContent = 'Muatan meningkat! Balon bisa menarik kertas kecil.';
+        document.getElementById('balloon').style.filter = 'drop-shadow(0 0 10px rgba(59, 130, 246, 0.5))';
+      } else {
+        status.textContent = '⚡ Balon bermuatan penuh! Bisa menempel di dinding!';
+        document.getElementById('balloon').style.filter = 'drop-shadow(0 0 20px rgba(139, 92, 246, 0.8))';
+      }
+    }
+
+    function testElectroscope() {
+      const leftLeaf = document.getElementById('left-leaf');
+      const rightLeaf = document.getElementById('right-leaf');
+      const status = document.getElementById('electroscope-status');
+      
+      leftLeaf.style.transform = 'rotate(-25deg)';
+      leftLeaf.style.transformOrigin = 'top center';
+      rightLeaf.style.transform = 'rotate(25deg)';
+      rightLeaf.style.transformOrigin = 'top center';
+      leftLeaf.style.transition = 'transform 0.5s ease';
+      rightLeaf.style.transition = 'transform 0.5s ease';
+      
+      status.innerHTML = '⚡ <strong>Terdeteksi muatan!</strong> Daun foil terbuka karena muatan sejenis saling tolak';
+      status.classList.add('text-green-600', 'font-semibold');
+    }
+
+    function resetElectroscope() {
+      const leftLeaf = document.getElementById('left-leaf');
+      const rightLeaf = document.getElementById('right-leaf');
+      const status = document.getElementById('electroscope-status');
+      
+      leftLeaf.style.transform = 'rotate(0deg)';
+      rightLeaf.style.transform = 'rotate(0deg)';
+      
+      status.textContent = 'Elektroskop dalam keadaan netral';
+      status.classList.remove('text-green-600', 'font-semibold');
+    }
+
+    function calculateCoulomb() {
+      const q1 = parseFloat(document.getElementById('q1-input').value) * 1e-6; // μC to C
+      const q2 = parseFloat(document.getElementById('q2-input').value) * 1e-6;
+      const r = parseFloat(document.getElementById('r-input').value) * 0.01; // cm to m
+      const k = 9e9;
+      
+      if (isNaN(q1) || isNaN(q2) || isNaN(r) || r === 0) {
+        document.getElementById('coulomb-result').innerHTML = '<p class="text-red-500">Masukkan nilai yang valid!</p>';
+        return;
+      }
+      
+      const F = k * Math.abs(q1 * q2) / (r * r);
+      const forceType = (q1 * q2 > 0) ? 'tolak-menolak' : 'tarik-menarik';
+      const forceColor = (q1 * q2 > 0) ? 'text-red-600' : 'text-green-600';
+      
+      document.getElementById('coulomb-result').innerHTML = `
+        <div class="space-y-2">
+          <p class="text-lg"><strong>F = k × |q₁ × q₂| / r²</strong></p>
+          <p>F = 9×10⁹ × |${(q1*1e6).toFixed(1)}×10⁻⁶ × ${(q2*1e6).toFixed(1)}×10⁻⁶| / (${(r*100).toFixed(1)}×10⁻²)²</p>
+          <p class="text-2xl font-bold text-blue-600">F = ${F.toExponential(2)} Newton</p>
+          <p class="${forceColor} font-semibold">Jenis gaya: ${forceType.toUpperCase()}</p>
+        </div>
+      `;
+    }
+
+    function showFieldPattern(pattern) {
+      const container = document.getElementById('field-visualization');
+      
+      if (pattern === 'single-pos') {
+        container.innerHTML = `
+          <div class="text-center">
+            <svg viewBox="0 0 200 200" class="w-48 h-48 mx-auto">
+              <circle cx="100" cy="100" r="20" fill="#ef4444"/>
+              <text x="100" y="107" text-anchor="middle" fill="white" font-weight="bold" font-size="20">+</text>
+              ${generateFieldLines(100, 100, 'outward', '#ef4444')}
+            </svg>
+            <p class="mt-2 text-sm text-slate-600">Garis gaya keluar dari muatan positif ke segala arah</p>
+          </div>
+        `;
+      } else if (pattern === 'single-neg') {
+        container.innerHTML = `
+          <div class="text-center">
+            <svg viewBox="0 0 200 200" class="w-48 h-48 mx-auto">
+              <circle cx="100" cy="100" r="20" fill="#3b82f6"/>
+              <text x="100" y="107" text-anchor="middle" fill="white" font-weight="bold" font-size="20">−</text>
+              ${generateFieldLines(100, 100, 'inward', '#3b82f6')}
+            </svg>
+            <p class="mt-2 text-sm text-slate-600">Garis gaya masuk menuju muatan negatif dari segala arah</p>
+          </div>
+        `;
+      } else if (pattern === 'dipole') {
+        container.innerHTML = `
+          <div class="text-center">
+            <svg viewBox="0 0 300 200" class="w-72 h-48 mx-auto">
+              <circle cx="80" cy="100" r="20" fill="#ef4444"/>
+              <text x="80" y="107" text-anchor="middle" fill="white" font-weight="bold" font-size="20">+</text>
+              <circle cx="220" cy="100" r="20" fill="#3b82f6"/>
+              <text x="220" y="107" text-anchor="middle" fill="white" font-weight="bold" font-size="20">−</text>
+              <!-- Field lines from + to - -->
+              <path d="M 100 100 Q 150 50 200 100" stroke="#9333ea" stroke-width="2" fill="none" marker-end="url(#arrow-purple)"/>
+              <path d="M 100 100 Q 150 150 200 100" stroke="#9333ea" stroke-width="2" fill="none" marker-end="url(#arrow-purple)"/>
+              <path d="M 100 100 L 200 100" stroke="#9333ea" stroke-width="2" marker-end="url(#arrow-purple)"/>
+              <path d="M 95 80 Q 150 20 205 80" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arrow-purple)"/>
+              <path d="M 95 120 Q 150 180 205 120" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arrow-purple)"/>
+              <defs>
+                <marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                  <polygon points="0 0, 10 3.5, 0 7" fill="#9333ea"/>
+                </marker>
+              </defs>
+            </svg>
+            <p class="mt-2 text-sm text-slate-600">Garis gaya mengalir dari muatan positif menuju muatan negatif (dipol)</p>
+          </div>
+        `;
+      }
+    }
+
+    function generateFieldLines(cx, cy, direction, color) {
+      const angles = [0, 45, 90, 135, 180, 225, 270, 315];
+      let lines = '';
+      
+      angles.forEach(angle => {
+        const rad = angle * Math.PI / 180;
+        const x1 = cx + 25 * Math.cos(rad);
+        const y1 = cy + 25 * Math.sin(rad);
+        const x2 = cx + 70 * Math.cos(rad);
+        const y2 = cy + 70 * Math.sin(rad);
+        
+        if (direction === 'outward') {
+          lines += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="2" marker-end="url(#arrow-${color.replace('#', '')})"/>`;
+        } else {
+          lines += `<line x1="${x2}" y1="${y2}" x2="${x1}" y2="${y1}" stroke="${color}" stroke-width="2" marker-end="url(#arrow-${color.replace('#', '')})"/>`;
+        }
+      });
+      
+      lines += `<defs><marker id="arrow-${color.replace('#', '')}" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="${color}"/></marker></defs>`;
+      
+      return lines;
+    }
+
+    // Quiz Functions
+    function loadQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      displayQuestion();
+    }
+
+    function displayQuestion() {
+      const container = document.getElementById('quiz-container');
+      const question = quizQuestions[currentQuestion];
+      
+      if (!question) {
+        showQuizResult();
+        return;
+      }
+
+      document.getElementById('quiz-progress').textContent = `${currentQuestion + 1}/10`;
+      
+      container.innerHTML = `
+        <div class="bg-white rounded-xl p-5 shadow-lg">
+          <div class="flex items-start gap-3 mb-4">
+            <span class="bg-purple-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0">${currentQuestion + 1}</span>
+            <p class="text-slate-800 font-medium">${question.question}</p>
+          </div>
+          
+          <div class="space-y-3" id="options-container">
+            ${question.options.map((option, index) => `
+              <button onclick="selectAnswer(${index})" class="quiz-option w-full text-left p-4 border-2 border-slate-200 rounded-lg hover:border-blue-300 transition" data-index="${index}">
+                <span class="inline-block w-6 h-6 rounded-full bg-slate-100 text-center text-sm font-semibold mr-3">${String.fromCharCode(65 + index)}</span>
+                ${option}
+              </button>
+            `).join('')}
+          </div>
+          
+          <div id="feedback-container" class="hidden mt-4"></div>
+          
+          <div id="next-btn-container" class="hidden mt-4 text-right">
+            <button onclick="nextQuestion()" class="btn-electric text-white font-bold py-2 px-6 rounded-full">
+              ${currentQuestion < 9 ? 'Soal Berikutnya →' : 'Lihat Hasil →'}
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    async function selectAnswer(selectedIndex) {
+      const question = quizQuestions[currentQuestion];
+      const options = document.querySelectorAll('.quiz-option');
+      const feedbackContainer = document.getElementById('feedback-container');
+      const nextBtnContainer = document.getElementById('next-btn-container');
+      
+      // Disable all options
+      options.forEach(opt => {
+        opt.disabled = true;
+        opt.classList.add('pointer-events-none');
+      });
+      
+      // Show correct/incorrect
+      options.forEach((opt, index) => {
+        if (index === question.correct) {
+          opt.classList.add('correct');
+        } else if (index === selectedIndex && index !== question.correct) {
+          opt.classList.add('incorrect');
+        }
+      });
+      
+      const isCorrect = selectedIndex === question.correct;
+      if (isCorrect) {
+        score++;
+        document.getElementById('quiz-score').textContent = score;
+      }
+      
+      // Save answer to Data SDK
+      if (window.dataSdk && answeredQuestions.length < 999) {
+        await window.dataSdk.create({
+          question_id: question.id,
+          user_answer: String.fromCharCode(65 + selectedIndex),
+          is_correct: isCorrect,
+          timestamp: new Date().toISOString()
+        });
+      }
+      
+      // Show feedback
+      feedbackContainer.classList.remove('hidden');
+      feedbackContainer.innerHTML = `
+        <div class="p-4 rounded-lg ${isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}">
+          <p class="font-bold ${isCorrect ? 'text-green-700' : 'text-red-700'} mb-2">
+            ${isCorrect ? '✓ Benar!' : '✗ Kurang tepat'}
+          </p>
+          <p class="text-sm text-slate-700">${question.explanation}</p>
+        </div>
+      `;
+      
+      nextBtnContainer.classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < quizQuestions.length) {
+        displayQuestion();
+      } else {
+        showQuizResult();
+      }
+    }
+
+    function showQuizResult() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-navigation').classList.add('hidden');
+      const resultDiv = document.getElementById('quiz-result');
+      resultDiv.classList.remove('hidden');
+      
+      document.getElementById('final-score').textContent = `${score}/10`;
+      
+      let emoji, message;
+      if (score >= 9) {
+        emoji = '🏆';
+        message = 'Luar biasa! Kamu menguasai materi listrik statis dengan sangat baik!';
+      } else if (score >= 7) {
+        emoji = '🌟';
+        message = 'Bagus sekali! Pemahaman kamu tentang listrik statis sudah baik.';
+      } else if (score >= 5) {
+        emoji = '📚';
+        message = 'Cukup baik! Coba pelajari lagi bagian yang masih kurang dipahami.';
+      } else {
+        emoji = '💪';
+        message = 'Jangan menyerah! Pelajari kembali materinya dan coba lagi quiz ini.';
+      }
+      
+      document.getElementById('result-emoji').textContent = emoji;
+      document.getElementById('result-message').textContent = message;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      document.getElementById('quiz-score').textContent = '0';
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('quiz-navigation').classList.remove('hidden');
+      document.getElementById('quiz-result').classList.add('hidden');
+      displayQuestion();
+    }
+
+    // Event Listeners
+    document.querySelectorAll('.nav-dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        const slideIndex = parseInt(dot.dataset.slide);
+        goToSlide(slideIndex);
+      });
+    });
+
+    // Initialize
+    initializeApp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9caa4ef9156e7da9',t:'MTc3MDU0NTEyNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

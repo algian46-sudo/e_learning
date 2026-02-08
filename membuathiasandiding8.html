@@ -1,0 +1,1300 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hiasan Dinding dari Daun Kering</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Nunito:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    .font-display { font-family: 'Playfair Display', serif; }
+    .font-body { font-family: 'Nunito', sans-serif; }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes leafFall {
+      0% { transform: translateY(-100%) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(100%) rotate(360deg); opacity: 0; }
+    }
+    
+    .animate-float { animation: float 3s ease-in-out infinite; }
+    .animate-fadeInUp { animation: fadeInUp 0.6s ease-out forwards; }
+    .animate-leaf { animation: leafFall 8s linear infinite; }
+    
+    .slide-enter { animation: fadeInUp 0.5s ease-out; }
+    
+    .leaf-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cpath d='M40 10c-5 15-20 25-35 30 15 5 30 15 35 30 5-15 20-25 35-30-15-5-30-15-35-30z' fill='%23d4a574' opacity='0.08'/%3E%3C/svg%3E");
+      background-size: 80px 80px;
+    }
+    
+    .progress-ring { transition: stroke-dashoffset 0.5s ease; }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(139, 90, 43, 0.15);
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      background: #fef3e2;
+      border-color: #d4a574;
+    }
+    .quiz-option.selected { background: #fff7ed; border-color: #d4a574; }
+    .quiz-option.correct { background: #d1fae5; border-color: #10b981; }
+    .quiz-option.incorrect { background: #fee2e2; border-color: #ef4444; }
+    
+    .tooltip {
+      position: relative;
+    }
+    .tooltip:hover::after {
+      content: attr(data-tip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #2d1810;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 100;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body">
+  <div id="app" class="h-full overflow-auto bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 leaf-pattern"><!-- Floating Leaves Background -->
+   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <svg class="absolute animate-leaf" style="left: 10%; animation-delay: 0s;" width="40" height="40" viewbox="0 0 40 40"><path d="M20 5c-3 10-12 15-18 18 6 3 15 8 18 17 3-9 12-14 18-17-6-4-15-8-18-18z" fill="#8b5a2b" opacity="0.15" />
+    </svg>
+    <svg class="absolute animate-leaf" style="left: 30%; animation-delay: 2s;" width="30" height="30" viewbox="0 0 40 40"><path d="M20 5c-3 10-12 15-18 18 6 3 15 8 18 17 3-9 12-14 18-17-6-4-15-8-18-18z" fill="#d4a574" opacity="0.12" />
+    </svg>
+    <svg class="absolute animate-leaf" style="left: 60%; animation-delay: 4s;" width="35" height="35" viewbox="0 0 40 40"><path d="M20 5c-3 10-12 15-18 18 6 3 15 8 18 17 3-9 12-14 18-17-6-4-15-8-18-18z" fill="#a67c52" opacity="0.1" />
+    </svg>
+    <svg class="absolute animate-leaf" style="left: 85%; animation-delay: 6s;" width="25" height="25" viewbox="0 0 40 40"><path d="M20 5c-3 10-12 15-18 18 6 3 15 8 18 17 3-9 12-14 18-17-6-4-15-8-18-18z" fill="#8b5a2b" opacity="0.15" />
+    </svg>
+   </div><!-- Progress Bar -->
+   <div class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <svg width="32" height="32" viewbox="0 0 40 40" class="animate-float"><path d="M20 5c-3 10-12 15-18 18 6 3 15 8 18 17 3-9 12-14 18-17-6-4-15-8-18-18z" fill="#8b5a2b" /> <path d="M20 12c-2 6-7 9-11 11 4 2 9 5 11 11 2-6 7-9 11-11-4-2-9-5-11-11z" fill="#d4a574" />
+      </svg><span class="font-display font-semibold text-amber-900">Slide <span id="currentSlideNum">1</span>/12</span>
+     </div>
+     <div class="flex-1 mx-6 h-2 bg-amber-100 rounded-full overflow-hidden">
+      <div id="progressBar" class="h-full bg-gradient-to-r from-amber-600 to-orange-500 rounded-full transition-all duration-500" style="width: 8.33%"></div>
+     </div>
+     <div class="flex gap-2"><button id="prevBtn" class="p-2 rounded-full bg-amber-100 hover:bg-amber-200 text-amber-800 transition-colors disabled:opacity-50" disabled>
+       <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M15 18l-6-6 6-6" />
+       </svg></button> <button id="nextBtn" class="p-2 rounded-full bg-amber-600 hover:bg-amber-700 text-white transition-colors">
+       <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18l6-6-6-6" />
+       </svg></button>
+     </div>
+    </div>
+   </div><!-- Slides Container -->
+   <div id="slidesContainer" class="pt-20 pb-8 px-4 relative z-10"><!-- Slide 1: Title -->
+    <div class="slide active max-w-5xl mx-auto" data-slide="1">
+     <div class="min-h-[80%] flex flex-col items-center justify-center text-center py-12">
+      <div class="mb-8 animate-float">
+       <svg width="120" height="120" viewbox="0 0 120 120"><defs>
+         <lineargradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#8b5a2b" />
+          <stop offset="100%" stop-color="#d4a574" />
+         </lineargradient>
+        </defs> <circle cx="60" cy="60" r="55" fill="#fef3e2" stroke="#d4a574" stroke-width="2" /> <path d="M60 25c-8 25-30 38-45 45 15 7 37 20 45 42 8-22 30-35 45-42-15-10-37-20-45-45z" fill="url(#leafGrad)" /> <path d="M60 40c-5 15-18 23-27 27 9 4 22 12 27 25 5-13 18-21 27-25-9-6-22-12-27-27z" fill="#fef3e2" />
+       </svg>
+      </div>
+      <h1 class="font-display text-4xl md:text-6xl font-bold text-amber-900 mb-4 animate-fadeInUp">Membuat Hiasan Dinding</h1>
+      <h2 class="font-display text-2xl md:text-4xl text-amber-700 mb-6 animate-fadeInUp" style="animation-delay: 0.1s;">dari Bahan Daun Kering</h2>
+      <p class="text-lg md:text-xl text-amber-600 max-w-2xl mb-8 animate-fadeInUp" style="animation-delay: 0.2s;">Mengembangkan Sikap Kreatif dan Berpikir Artistik melalui Bahan Alam</p>
+      <div class="flex flex-wrap gap-4 justify-center animate-fadeInUp" style="animation-delay: 0.3s;">
+       <div class="bg-white/80 backdrop-blur px-6 py-3 rounded-full shadow-lg border border-amber-200"><span class="text-amber-800 font-semibold">🏫 <span id="schoolNameDisplay">SMP Negeri 1 Indonesia</span></span>
+       </div>
+       <div class="bg-white/80 backdrop-blur px-6 py-3 rounded-full shadow-lg border border-amber-200"><span class="text-amber-800 font-semibold">📚 Kelas VIII (Fase D)</span>
+       </div>
+      </div>
+      <div class="mt-8 animate-fadeInUp" style="animation-delay: 0.4s;">
+       <p class="text-amber-600">👨‍🏫 <span id="teacherNameDisplay">Guru Seni Budaya</span></p>
+      </div>
+     </div>
+    </div><!-- Slide 2: Learning Objectives -->
+    <div class="slide hidden max-w-5xl mx-auto" data-slide="2">
+     <div class="py-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-amber-900 text-center mb-4">🎯 Tujuan Pembelajaran</h2>
+      <p class="text-center text-amber-600 mb-10">Setelah mengikuti sesi ini, kalian diharapkan mampu:</p>
+      <div class="grid md:grid-cols-2 gap-6">
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center text-white font-bold text-xl shrink-0">
+          1
+         </div>
+         <div>
+          <h3 class="font-semibold text-amber-900 text-lg mb-2">Mendesain Hiasan</h3>
+          <p class="text-amber-700">Mendesain hiasan dinding dengan bahan utama daun kering secara kreatif dan estetis.</p>
+         </div>
+        </div>
+       </div>
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center text-white font-bold text-xl shrink-0">
+          2
+         </div>
+         <div>
+          <h3 class="font-semibold text-amber-900 text-lg mb-2">Memilih Bahan</h3>
+          <p class="text-amber-700">Memilih jenis daun yang tepat berdasarkan karakteristik warna, tekstur, dan bentuknya.</p>
+         </div>
+        </div>
+       </div>
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center text-white font-bold text-xl shrink-0">
+          3
+         </div>
+         <div>
+          <h3 class="font-semibold text-amber-900 text-lg mb-2">Proses Pengeringan</h3>
+          <p class="text-amber-700">Memahami dan mempraktikkan teknik pengeringan daun yang benar.</p>
+         </div>
+        </div>
+       </div>
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center text-white font-bold text-xl shrink-0">
+          4
+         </div>
+         <div>
+          <h3 class="font-semibold text-amber-900 text-lg mb-2">Mengaplikasikan Desain</h3>
+          <p class="text-amber-700">Mengaplikasikan desain menjadi karya seni rupa (mozaik) yang utuh dan indah.</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Interactive Checklist -->
+      <div class="mt-10 bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl p-6">
+       <h3 class="font-semibold text-amber-900 mb-4">✅ Checklist Kesiapan Belajar</h3>
+       <div class="grid md:grid-cols-2 gap-3"><label class="flex items-center gap-3 cursor-pointer p-3 bg-white rounded-lg hover:shadow transition-shadow"> <input type="checkbox" class="w-5 h-5 accent-amber-600"> <span class="text-amber-800">Saya siap berkreasi dengan bahan alam</span> </label> <label class="flex items-center gap-3 cursor-pointer p-3 bg-white rounded-lg hover:shadow transition-shadow"> <input type="checkbox" class="w-5 h-5 accent-amber-600"> <span class="text-amber-800">Saya akan menjaga kebersihan tempat kerja</span> </label> <label class="flex items-center gap-3 cursor-pointer p-3 bg-white rounded-lg hover:shadow transition-shadow"> <input type="checkbox" class="w-5 h-5 accent-amber-600"> <span class="text-amber-800">Saya akan menghargai karya teman</span> </label> <label class="flex items-center gap-3 cursor-pointer p-3 bg-white rounded-lg hover:shadow transition-shadow"> <input type="checkbox" class="w-5 h-5 accent-amber-600"> <span class="text-amber-800">Saya siap berkolaborasi dalam kelompok</span> </label>
+       </div>
+      </div>
+     </div>
+    </div><!-- Slide 3: Artistic Thinking -->
+    <div class="slide hidden max-w-5xl mx-auto" data-slide="3">
+     <div class="py-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-amber-900 text-center mb-10">🧠 Apa itu Berpikir Artistik?</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+       <div class="card-hover bg-white rounded-2xl p-8 shadow-lg border border-amber-100 text-center">
+        <div class="w-20 h-20 bg-gradient-to-br from-pink-400 to-rose-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+         <svg width="40" height="40" viewbox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+         </svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-amber-900 mb-4">Kreativitas</h3>
+        <p class="text-amber-700">Menemukan hal-hal baru dan alternatif di luar yang sudah ada. Berani bereksperimen!</p>
+        <div class="mt-4 p-3 bg-pink-50 rounded-lg">
+         <p class="text-sm text-pink-700 italic">"Tidak ada jawaban yang salah dalam seni"</p>
+        </div>
+       </div>
+       <div class="card-hover bg-white rounded-2xl p-8 shadow-lg border border-amber-100 text-center">
+        <div class="w-20 h-20 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+         <svg width="40" height="40" viewbox="0 0 24 24" fill="white"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" />
+         </svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-amber-900 mb-4">Eksplorasi Medium</h3>
+        <p class="text-amber-700">Menggunakan bahan alam seperti daun, bunga, dahan sebagai medium berkarya.</p>
+        <div class="mt-4 p-3 bg-emerald-50 rounded-lg">
+         <p class="text-sm text-emerald-700 italic">"Alam menyediakan kanvas tak terbatas"</p>
+        </div>
+       </div>
+       <div class="card-hover bg-white rounded-2xl p-8 shadow-lg border border-amber-100 text-center">
+        <div class="w-20 h-20 bg-gradient-to-br from-violet-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+         <svg width="40" height="40" viewbox="0 0 24 24" fill="white"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" />
+         </svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-amber-900 mb-4">Imajinasi</h3>
+        <p class="text-amber-700">Mengolah bahan alam menjadi komposisi dekoratif yang menarik dan bermakna.</p>
+        <div class="mt-4 p-3 bg-violet-50 rounded-lg">
+         <p class="text-sm text-violet-700 italic">"Imajinasi adalah awal dari karya besar"</p>
+        </div>
+       </div>
+      </div><!-- Interactive Activity -->
+      <div class="mt-10 bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+       <h3 class="font-semibold text-amber-900 mb-4">🎨 Mini Activity: Apa yang Kamu Bayangkan?</h3>
+       <p class="text-amber-700 mb-4">Lihat bentuk daun di bawah ini. Apa yang terlintas di pikiranmu?</p>
+       <div class="flex flex-wrap gap-4 justify-center mb-4">
+        <div class="w-24 h-24 bg-amber-100 rounded-2xl flex items-center justify-center">
+         <svg width="60" height="60" viewbox="0 0 60 60"><ellipse cx="30" cy="30" rx="25" ry="15" fill="#8b5a2b" transform="rotate(-30 30 30)" />
+         </svg>
+        </div>
+        <div class="w-24 h-24 bg-amber-100 rounded-2xl flex items-center justify-center">
+         <svg width="60" height="60" viewbox="0 0 60 60"><path d="M30 5 L45 55 L15 55 Z" fill="#d4a574" />
+         </svg>
+        </div>
+        <div class="w-24 h-24 bg-amber-100 rounded-2xl flex items-center justify-center">
+         <svg width="60" height="60" viewbox="0 0 60 60"><circle cx="30" cy="30" r="20" fill="#a67c52" />
+         </svg>
+        </div>
+       </div><textarea class="w-full p-4 border-2 border-amber-200 rounded-xl focus:border-amber-500 focus:outline-none resize-none" rows="2" placeholder="Tulis imajinasimu di sini... (contoh: daun lonjong bisa jadi sayap kupu-kupu!)"></textarea>
+      </div>
+     </div>
+    </div><!-- Slide 4: Concept Map -->
+    <div class="slide hidden max-w-5xl mx-auto" data-slide="4">
+     <div class="py-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-amber-900 text-center mb-10">🗺️ Peta Konsep Komposisi</h2><!-- Interactive Concept Map -->
+      <div class="relative bg-white rounded-3xl p-8 shadow-xl border border-amber-100">
+       <div class="flex flex-col items-center"><!-- Center Node -->
+        <div class="relative">
+         <div id="centerNode" class="w-40 h-40 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center shadow-2xl cursor-pointer transform hover:scale-105 transition-transform"><span class="text-white font-display font-bold text-xl text-center">KOMPOSISI<br>
+           SENI</span>
+         </div><!-- Connection Lines (SVG) -->
+         <svg class="absolute inset-0 w-full h-full pointer-events-none" style="width: 500px; height: 400px; left: -180px; top: -130px;"><line x1="250" y1="200" x2="100" y2="80" stroke="#d4a574" stroke-width="3" stroke-dasharray="8,4" /> <line x1="250" y1="200" x2="400" y2="80" stroke="#d4a574" stroke-width="3" stroke-dasharray="8,4" /> <line x1="250" y1="200" x2="100" y2="320" stroke="#d4a574" stroke-width="3" stroke-dasharray="8,4" /> <line x1="250" y1="200" x2="400" y2="320" stroke="#d4a574" stroke-width="3" stroke-dasharray="8,4" />
+         </svg>
+        </div><!-- Surrounding Nodes -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
+         <div class="concept-node card-hover bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl p-6 text-center cursor-pointer border-2 border-transparent hover:border-green-400" data-info="daun">
+          <div class="text-4xl mb-3">
+           🍂
+          </div>
+          <h3 class="font-semibold text-green-800">Daun Kering</h3>
+          <p class="text-sm text-green-600 mt-2">Bahan utama mozaik</p>
+         </div>
+         <div class="concept-node card-hover bg-gradient-to-br from-pink-100 to-rose-100 rounded-2xl p-6 text-center cursor-pointer border-2 border-transparent hover:border-pink-400" data-info="bunga">
+          <div class="text-4xl mb-3">
+           🌸
+          </div>
+          <h3 class="font-semibold text-pink-800">Bunga Kering</h3>
+          <p class="text-sm text-pink-600 mt-2">Aksen warna cantik</p>
+         </div>
+         <div class="concept-node card-hover bg-gradient-to-br from-amber-100 to-yellow-100 rounded-2xl p-6 text-center cursor-pointer border-2 border-transparent hover:border-amber-400" data-info="dahan">
+          <div class="text-4xl mb-3">
+           🌿
+          </div>
+          <h3 class="font-semibold text-amber-800">Dahan Kering</h3>
+          <p class="text-sm text-amber-600 mt-2">Struktur &amp; garis</p>
+         </div>
+         <div class="concept-node card-hover bg-gradient-to-br from-orange-100 to-red-100 rounded-2xl p-6 text-center cursor-pointer border-2 border-transparent hover:border-orange-400" data-info="biji">
+          <div class="text-4xl mb-3">
+           🫘
+          </div>
+          <h3 class="font-semibold text-orange-800">Biji-bijian</h3>
+          <p class="text-sm text-orange-600 mt-2">Tekstur &amp; detail</p>
+         </div>
+        </div>
+       </div><!-- Info Panel -->
+       <div id="infoPanel" class="mt-8 p-6 bg-amber-50 rounded-xl hidden">
+        <div id="infoPanelContent"></div>
+       </div>
+      </div><!-- Interactive Drag & Drop Preview -->
+      <div class="mt-8 bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+       <h3 class="font-semibold text-amber-900 mb-4">🎯 Coba Kombinasikan!</h3>
+       <p class="text-amber-700 mb-4">Klik elemen untuk melihat preview kombinasi:</p>
+       <div class="flex flex-wrap gap-3 mb-4" id="comboButtons"><button class="combo-btn px-4 py-2 bg-green-100 text-green-800 rounded-full hover:bg-green-200 transition-colors" data-combo="daun">🍂 Daun</button> <button class="combo-btn px-4 py-2 bg-pink-100 text-pink-800 rounded-full hover:bg-pink-200 transition-colors" data-combo="bunga">🌸 Bunga</button> <button class="combo-btn px-4 py-2 bg-amber-100 text-amber-800 rounded-full hover:bg-amber-200 transition-colors" data-combo="dahan">🌿 Dahan</button> <button class="combo-btn px-4 py-2 bg-orange-100 text-orange-800 rounded-full hover:bg-orange-200 transition-colors" data-combo="biji">🫘 Biji</button>
+       </div>
+       <div id="comboPreview" class="h-32 bg-amber-50 rounded-xl flex items-center justify-center text-amber-400">
+        Pilih elemen untuk melihat kombinasi
+       </div>
+      </div>
+     </div>
+    </div><!-- Slide 5: Tools and Materials -->
+    <div class="slide hidden max-w-5xl mx-auto" data-slide="5">
+     <div class="py-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-amber-900 text-center mb-10">🛠️ Alat dan Bahan</h2>
+      <div class="grid md:grid-cols-2 gap-8"><!-- Tools -->
+       <div class="bg-white rounded-2xl p-8 shadow-lg border border-amber-100">
+        <div class="flex items-center gap-3 mb-6">
+         <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
+          <svg width="24" height="24" viewbox="0 0 24 24" fill="white"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z" />
+          </svg>
+         </div>
+         <h3 class="font-display text-2xl font-semibold text-amber-900">Alat</h3>
+        </div>
+        <div class="space-y-4">
+         <div class="flex items-center gap-4 p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors cursor-pointer tooltip" data-tip="Untuk memotong bahan dengan presisi">
+          <div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center shadow">
+           <svg width="40" height="40" viewbox="0 0 40 40"><rect x="8" y="5" width="8" height="30" rx="2" fill="#64748b" /> <polygon points="16,15 32,5 32,35 16,25" fill="#94a3b8" />
+           </svg>
+          </div>
+          <div>
+           <h4 class="font-semibold text-blue-900">Pisau Cutter</h4>
+           <p class="text-sm text-blue-700">Untuk memotong detail halus</p>
+          </div>
+         </div>
+         <div class="flex items-center gap-4 p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors cursor-pointer tooltip" data-tip="Untuk memotong bahan lebih cepat">
+          <div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center shadow">
+           <svg width="40" height="40" viewbox="0 0 40 40"><ellipse cx="12" cy="28" rx="8" ry="10" fill="#64748b" /> <ellipse cx="28" cy="28" rx="8" ry="10" fill="#64748b" /> <rect x="10" y="5" width="4" height="20" fill="#94a3b8" /> <rect x="26" y="5" width="4" height="20" fill="#94a3b8" />
+           </svg>
+          </div>
+          <div>
+           <h4 class="font-semibold text-blue-900">Gunting</h4>
+           <p class="text-sm text-blue-700">Untuk memotong bentuk dasar</p>
+          </div>
+         </div>
+        </div>
+       </div><!-- Materials -->
+       <div class="bg-white rounded-2xl p-8 shadow-lg border border-amber-100">
+        <div class="flex items-center gap-3 mb-6">
+         <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center">
+          <svg width="24" height="24" viewbox="0 0 24 24" fill="white"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z" />
+          </svg>
+         </div>
+         <h3 class="font-display text-2xl font-semibold text-amber-900">Bahan</h3>
+        </div>
+        <div class="space-y-4">
+         <div class="flex items-center gap-4 p-4 bg-amber-50 rounded-xl hover:bg-amber-100 transition-colors">
+          <div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center shadow overflow-hidden">
+           <svg width="50" height="50" viewbox="0 0 50 50"><path d="M25 5c-5 15-18 22-22 27 4 5 17 8 22 13 5-5 18-8 22-13-4-5-17-12-22-27z" fill="#8b5a2b" /> <path d="M25 12c-3 10-12 15-15 18 3 3 12 5 15 9 3-4 12-6 15-9-3-3-12-8-15-18z" fill="#d4a574" />
+           </svg>
+          </div>
+          <div>
+           <h4 class="font-semibold text-amber-900">Daun Kering</h4>
+           <p class="text-sm text-amber-700">Berbagai ukuran dan warna</p>
+          </div>
+         </div>
+         <div class="flex items-center gap-4 p-4 bg-amber-50 rounded-xl hover:bg-amber-100 transition-colors">
+          <div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center shadow">
+           <svg width="40" height="40" viewbox="0 0 40 40"><rect x="12" y="8" width="16" height="28" rx="3" fill="#f5f5f5" stroke="#e5e5e5" stroke-width="2" /> <circle cx="20" cy="18" r="6" fill="#fef3c7" /> <text x="20" y="34" text-anchor="middle" font-size="6" fill="#666">
+             LEM
+            </text>
+           </svg>
+          </div>
+          <div>
+           <h4 class="font-semibold text-amber-900">Lem</h4>
+           <p class="text-sm text-amber-700">Lem putih, plastik, atau kertas</p>
+          </div>
+         </div>
+         <div class="flex items-center gap-4 p-4 bg-amber-50 rounded-xl hover:bg-amber-100 transition-colors">
+          <div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center shadow">
+           <svg width="40" height="40" viewbox="0 0 40 40"><rect x="5" y="8" width="30" height="24" rx="2" fill="#d4a574" /> <rect x="8" y="11" width="24" height="18" fill="#fef3e2" />
+           </svg>
+          </div>
+          <div>
+           <h4 class="font-semibold text-amber-900">Kertas Karton</h4>
+           <p class="text-sm text-amber-700">Ukuran 30 cm × 45 cm</p>
+          </div>
+         </div>
+         <div class="flex items-center gap-4 p-4 bg-amber-50 rounded-xl hover:bg-amber-100 transition-colors">
+          <div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center shadow">
+           <svg width="40" height="40" viewbox="0 0 40 40"><rect x="5" y="8" width="10" height="24" fill="#ef4444" /> <rect x="15" y="8" width="10" height="24" fill="#22c55e" /> <rect x="25" y="8" width="10" height="24" fill="#3b82f6" />
+           </svg>
+          </div>
+          <div>
+           <h4 class="font-semibold text-amber-900">Kertas Warna</h4>
+           <p class="text-sm text-amber-700">Majalah bekas atau kalender</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Material Checklist -->
+      <div class="mt-8 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl p-6 text-white">
+       <h3 class="font-semibold text-xl mb-4">📋 Checklist Bahan (Centang yang sudah siap!)</h3>
+       <div class="grid md:grid-cols-3 gap-3"><label class="flex items-center gap-3 cursor-pointer p-3 bg-white/20 rounded-lg hover:bg-white/30 transition-colors"> <input type="checkbox" class="w-5 h-5 accent-white"> <span>Daun kering (5+ jenis)</span> </label> <label class="flex items-center gap-3 cursor-pointer p-3 bg-white/20 rounded-lg hover:bg-white/30 transition-colors"> <input type="checkbox" class="w-5 h-5 accent-white"> <span>Lem (minimal 1)</span> </label> <label class="flex items-center gap-3 cursor-pointer p-3 bg-white/20 rounded-lg hover:bg-white/30 transition-colors"> <input type="checkbox" class="w-5 h-5 accent-white"> <span>Karton 30×45 cm</span> </label> <label class="flex items-center gap-3 cursor-pointer p-3 bg-white/20 rounded-lg hover:bg-white/30 transition-colors"> <input type="checkbox" class="w-5 h-5 accent-white"> <span>Gunting</span> </label> <label class="flex items-center gap-3 cursor-pointer p-3 bg-white/20 rounded-lg hover:bg-white/30 transition-colors"> <input type="checkbox" class="w-5 h-5 accent-white"> <span>Cutter</span> </label> <label class="flex items-center gap-3 cursor-pointer p-3 bg-white/20 rounded-lg hover:bg-white/30 transition-colors"> <input type="checkbox" class="w-5 h-5 accent-white"> <span>Kertas warna/majalah</span> </label>
+       </div>
+      </div>
+     </div>
+    </div><!-- Slide 6: Drying Process -->
+    <div class="slide hidden max-w-5xl mx-auto" data-slide="6">
+     <div class="py-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-amber-900 text-center mb-4">🌿 Persiapan Bahan (Pengeringan)</h2>
+      <p class="text-center text-amber-600 mb-10">Tidak semua daun harus diambil dalam keadaan kering dari alam. Kita bisa mengeringkannya sendiri!</p><!-- Drying Methods -->
+      <div class="grid md:grid-cols-3 gap-6 mb-10">
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+        <div class="text-center mb-4">
+         <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto">
+          <svg width="32" height="32" viewbox="0 0 32 32"><circle cx="16" cy="16" r="8" fill="#fbbf24" /> <g stroke="#fbbf24" stroke-width="2">
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="16" y1="26" x2="16" y2="30" />
+            <line x1="2" y1="16" x2="6" y2="16" />
+            <line x1="26" y1="16" x2="30" y2="16" />
+           </g>
+          </svg>
+         </div>
+        </div>
+        <h3 class="font-semibold text-amber-900 text-center text-lg mb-3">Metode Jemur</h3>
+        <ul class="text-amber-700 text-sm space-y-2">
+         <li>• Jemur di bawah sinar matahari</li>
+         <li>• Waktu: 2-3 hari</li>
+         <li>• Balik daun setiap 6 jam</li>
+         <li>• Cocok untuk daun tebal</li>
+        </ul>
+       </div>
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+        <div class="text-center mb-4">
+         <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
+          <svg width="32" height="32" viewbox="0 0 32 32"><rect x="4" y="8" width="24" height="16" rx="2" fill="#3b82f6" /> <rect x="8" y="12" width="16" height="8" fill="#93c5fd" />
+          </svg>
+         </div>
+        </div>
+        <h3 class="font-semibold text-amber-900 text-center text-lg mb-3">Metode Press</h3>
+        <ul class="text-amber-700 text-sm space-y-2">
+         <li>• Tekan dengan buku tebal</li>
+         <li>• Waktu: 1-2 minggu</li>
+         <li>• Ganti kertas setiap 2 hari</li>
+         <li>• Hasil lebih rata dan halus</li>
+        </ul>
+       </div>
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+        <div class="text-center mb-4">
+         <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto">
+          <svg width="32" height="32" viewbox="0 0 32 32"><rect x="6" y="10" width="20" height="14" rx="2" fill="#ef4444" /> <rect x="10" y="14" width="12" height="6" fill="#fca5a5" /> <rect x="8" y="6" width="16" height="4" fill="#dc2626" />
+          </svg>
+         </div>
+        </div>
+        <h3 class="font-semibold text-amber-900 text-center text-lg mb-3">Metode Oven</h3>
+        <ul class="text-amber-700 text-sm space-y-2">
+         <li>• Suhu rendah (50-60°C)</li>
+         <li>• Waktu: 30-60 menit</li>
+         <li>• Awasi agar tidak gosong</li>
+         <li>• Hasil cepat tapi hati-hati</li>
+        </ul>
+       </div>
+      </div><!-- Leaf Categories -->
+      <div class="bg-white rounded-2xl p-8 shadow-lg border border-amber-100">
+       <h3 class="font-display text-2xl font-semibold text-amber-900 mb-6 text-center">📂 Kategori Daun</h3>
+       <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6">
+         <h4 class="font-semibold text-green-800 mb-4 flex items-center gap-2"><span class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">A</span> Daun Kecil &amp; Tipis</h4>
+         <div class="flex flex-wrap gap-3">
+          <div class="bg-white px-4 py-2 rounded-lg shadow-sm flex items-center gap-2">
+           <svg width="24" height="24" viewbox="0 0 24 24"><ellipse cx="12" cy="12" rx="8" ry="4" fill="#22c55e" transform="rotate(-20 12 12)" />
+           </svg><span class="text-sm text-green-700">Daun Mint</span>
+          </div>
+          <div class="bg-white px-4 py-2 rounded-lg shadow-sm flex items-center gap-2">
+           <svg width="24" height="24" viewbox="0 0 24 24"><ellipse cx="12" cy="12" rx="6" ry="3" fill="#16a34a" transform="rotate(10 12 12)" />
+           </svg><span class="text-sm text-green-700">Daun Kemangi</span>
+          </div>
+          <div class="bg-white px-4 py-2 rounded-lg shadow-sm flex items-center gap-2">
+           <svg width="24" height="24" viewbox="0 0 24 24"><ellipse cx="12" cy="12" rx="7" ry="3" fill="#15803d" transform="rotate(-10 12 12)" />
+           </svg><span class="text-sm text-green-700">Daun Seledri</span>
+          </div>
+         </div>
+         <p class="text-sm text-green-600 mt-4 italic">✨ Cocok untuk detail halus dan aksen</p>
+        </div>
+        <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-6">
+         <h4 class="font-semibold text-amber-800 mb-4 flex items-center gap-2"><span class="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center text-white text-sm">B</span> Daun Besar &amp; Bertulang</h4>
+         <div class="flex flex-wrap gap-3">
+          <div class="bg-white px-4 py-2 rounded-lg shadow-sm flex items-center gap-2">
+           <svg width="24" height="24" viewbox="0 0 24 24"><path d="M12 4c-3 6-8 8-10 10 2 2 7 4 10 8 3-4 8-6 10-8-2-2-7-4-10-10z" fill="#d97706" />
+           </svg><span class="text-sm text-amber-700">Daun Mangga</span>
+          </div>
+          <div class="bg-white px-4 py-2 rounded-lg shadow-sm flex items-center gap-2">
+           <svg width="24" height="24" viewbox="0 0 24 24"><path d="M12 3 L4 12 L12 21 L20 12 Z" fill="#b45309" />
+           </svg><span class="text-sm text-amber-700">Daun Jati</span>
+          </div>
+          <div class="bg-white px-4 py-2 rounded-lg shadow-sm flex items-center gap-2">
+           <svg width="24" height="24" viewbox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6" fill="#92400e" />
+           </svg><span class="text-sm text-amber-700">Daun Pisang</span>
+          </div>
+         </div>
+         <p class="text-sm text-amber-600 mt-4 italic">✨ Cocok untuk background dan area luas</p>
+        </div>
+       </div>
+       <div class="mt-6 p-4 bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl">
+        <p class="text-center text-purple-800 font-medium">💡 <strong>Tips:</strong> Pilihlah daun dengan karakter warna berbeda agar komposisi lebih menarik!</p>
+       </div>
+      </div>
+     </div>
+    </div><!-- Slide 7: Steps -->
+    <div class="slide hidden max-w-5xl mx-auto" data-slide="7">
+     <div class="py-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-amber-900 text-center mb-10">📝 Langkah-Langkah Berkarya</h2>
+      <p class="text-center text-amber-600 mb-8">(Teknik Mozaik)</p><!-- Interactive Steps -->
+      <div class="relative"><!-- Progress Line -->
+       <div class="absolute left-8 top-0 bottom-0 w-1 bg-amber-200 hidden md:block"></div>
+       <div class="space-y-6">
+        <div class="step-item flex gap-6 items-start">
+         <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0 shadow-lg z-10">
+          1
+         </div>
+         <div class="card-hover flex-1 bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+          <h3 class="font-display text-xl font-semibold text-amber-900 mb-3">Persiapan Dasar</h3>
+          <p class="text-amber-700 mb-4">Siapkan karton 30 × 45 cm dan lapisi dengan kertas berwarna agar menarik.</p>
+          <div class="bg-amber-50 rounded-xl p-4 flex items-center gap-4">
+           <svg width="80" height="60" viewbox="0 0 80 60"><rect x="5" y="5" width="70" height="50" rx="3" fill="#d4a574" /> <rect x="10" y="10" width="60" height="40" fill="#fef3e2" /> <text x="40" y="35" text-anchor="middle" font-size="8" fill="#92400e">
+             30 × 45 cm
+            </text>
+           </svg>
+           <p class="text-sm text-amber-600">Gunakan warna gelap untuk latar jika daun berwarna terang, dan sebaliknya.</p>
+          </div>
+         </div>
+        </div>
+        <div class="step-item flex gap-6 items-start">
+         <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0 shadow-lg z-10">
+          2
+         </div>
+         <div class="card-hover flex-1 bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+          <h3 class="font-display text-xl font-semibold text-amber-900 mb-3">Membuat Sketsa</h3>
+          <p class="text-amber-700 mb-4">Buat desain rancangan (bisa figuratif atau non-figuratif) dengan pensil.</p>
+          <div class="grid grid-cols-2 gap-4">
+           <div class="bg-blue-50 rounded-xl p-4 text-center">
+            <svg width="60" height="60" viewbox="0 0 60 60" class="mx-auto mb-2"><circle cx="30" cy="25" r="10" fill="none" stroke="#3b82f6" stroke-width="2" stroke-dasharray="4" /> <path d="M30 35 L30 50 M20 55 L30 50 L40 55" fill="none" stroke="#3b82f6" stroke-width="2" stroke-dasharray="4" />
+            </svg>
+            <p class="text-sm text-blue-700 font-medium">Figuratif</p>
+            <p class="text-xs text-blue-600">Bentuk nyata (orang, hewan)</p>
+           </div>
+           <div class="bg-purple-50 rounded-xl p-4 text-center">
+            <svg width="60" height="60" viewbox="0 0 60 60" class="mx-auto mb-2"><circle cx="20" cy="20" r="8" fill="none" stroke="#9333ea" stroke-width="2" stroke-dasharray="4" /> <rect x="32" y="25" width="15" height="15" fill="none" stroke="#9333ea" stroke-width="2" stroke-dasharray="4" /> <polygon points="25,45 35,55 15,55" fill="none" stroke="#9333ea" stroke-width="2" stroke-dasharray="4" />
+            </svg>
+            <p class="text-sm text-purple-700 font-medium">Non-Figuratif</p>
+            <p class="text-xs text-purple-600">Bentuk abstrak (geometris)</p>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="step-item flex gap-6 items-start">
+         <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0 shadow-lg z-10">
+          3
+         </div>
+         <div class="card-hover flex-1 bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+          <h3 class="font-display text-xl font-semibold text-amber-900 mb-3">Menyusun Bahan</h3>
+          <p class="text-amber-700 mb-4">Letakkan daun/bunga kering sesuai sketsa yang telah dibuat. Jangan langsung dilem!</p>
+          <div class="bg-green-50 rounded-xl p-4">
+           <p class="text-sm text-green-700">💡 <strong>Tips:</strong> Susun dulu tanpa lem untuk melihat komposisi. Foto hasilnya sebelum mengelem agar bisa diulang jika salah.</p>
+          </div>
+         </div>
+        </div>
+        <div class="step-item flex gap-6 items-start">
+         <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0 shadow-lg z-10">
+          4
+         </div>
+         <div class="card-hover flex-1 bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+          <h3 class="font-display text-xl font-semibold text-amber-900 mb-3">Penempelan</h3>
+          <p class="text-amber-700 mb-4">Rekatkan bahan menggunakan lem yang sesuai secara teliti.</p>
+          <div class="bg-red-50 rounded-xl p-4">
+           <p class="text-sm text-red-700">⚠️ <strong>Perhatian:</strong> Oleskan lem tipis-tipis. Terlalu banyak lem akan membuat daun basah dan rusak!</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Interactive Timer -->
+      <div class="mt-10 bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+       <h3 class="font-semibold text-amber-900 mb-4 text-center">⏱️ Timer Pengerjaan (Estimasi)</h3>
+       <div class="grid grid-cols-4 gap-4 text-center">
+        <div class="bg-amber-50 rounded-xl p-4">
+         <p class="text-2xl font-bold text-amber-600">15</p>
+         <p class="text-sm text-amber-700">menit</p>
+         <p class="text-xs text-amber-500 mt-1">Persiapan</p>
+        </div>
+        <div class="bg-amber-50 rounded-xl p-4">
+         <p class="text-2xl font-bold text-amber-600">20</p>
+         <p class="text-sm text-amber-700">menit</p>
+         <p class="text-xs text-amber-500 mt-1">Sketsa</p>
+        </div>
+        <div class="bg-amber-50 rounded-xl p-4">
+         <p class="text-2xl font-bold text-amber-600">25</p>
+         <p class="text-sm text-amber-700">menit</p>
+         <p class="text-xs text-amber-500 mt-1">Menyusun</p>
+        </div>
+        <div class="bg-amber-50 rounded-xl p-4">
+         <p class="text-2xl font-bold text-amber-600">30</p>
+         <p class="text-sm text-amber-700">menit</p>
+         <p class="text-xs text-amber-500 mt-1">Mengelem</p>
+        </div>
+       </div>
+       <p class="text-center text-amber-600 mt-4 font-medium">Total: ~90 menit (1,5 jam)</p>
+      </div>
+     </div>
+    </div><!-- Slide 8: Assessment Criteria -->
+    <div class="slide hidden max-w-5xl mx-auto" data-slide="8">
+     <div class="py-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-amber-900 text-center mb-4">📊 Kriteria Penilaian</h2>
+      <p class="text-center text-amber-600 mb-10">Asesmen akan dilakukan berdasarkan proses dan hasil akhir</p>
+      <div class="grid md:grid-cols-2 gap-6">
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-violet-500 rounded-xl flex items-center justify-center">
+          <svg width="28" height="28" viewbox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+          </svg>
+         </div>
+         <div>
+          <h3 class="font-display text-xl font-semibold text-amber-900">Ide/Gagasan</h3>
+          <p class="text-sm text-amber-600">Bobot: 25%</p>
+         </div>
+        </div>
+        <p class="text-amber-700 mb-4">Keaslian atau modifikasi ide yang ditampilkan dalam karya.</p>
+        <div class="space-y-2">
+         <div class="flex items-center gap-2">
+          <div class="w-3 h-3 bg-green-500 rounded-full"></div><span class="text-sm text-amber-700">Sangat Baik: Ide original dan unik</span>
+         </div>
+         <div class="flex items-center gap-2">
+          <div class="w-3 h-3 bg-yellow-500 rounded-full"></div><span class="text-sm text-amber-700">Baik: Modifikasi dari referensi</span>
+         </div>
+         <div class="flex items-center gap-2">
+          <div class="w-3 h-3 bg-orange-500 rounded-full"></div><span class="text-sm text-amber-700">Cukup: Mengikuti contoh dengan sedikit perubahan</span>
+         </div>
+        </div>
+       </div>
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
+          <svg width="28" height="28" viewbox="0 0 24 24" fill="white"><path d="M17 3H7c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7V5h10v14z" />
+          </svg>
+         </div>
+         <div>
+          <h3 class="font-display text-xl font-semibold text-amber-900">Pemilihan Bahan</h3>
+          <p class="text-sm text-amber-600">Bobot: 25%</p>
+         </div>
+        </div>
+        <p class="text-amber-700 mb-4">Variasi jenis daun (semakin banyak semakin baik).</p>
+        <div class="bg-green-50 rounded-lg p-3">
+         <div class="flex items-center justify-between mb-2"><span class="text-sm text-green-700">Minimal 3 jenis</span> <span class="text-sm font-semibold text-green-600">Cukup</span>
+         </div>
+         <div class="flex items-center justify-between mb-2"><span class="text-sm text-green-700">4-5 jenis</span> <span class="text-sm font-semibold text-green-600">Baik</span>
+         </div>
+         <div class="flex items-center justify-between"><span class="text-sm text-green-700">6+ jenis</span> <span class="text-sm font-semibold text-green-600">Sangat Baik</span>
+         </div>
+        </div>
+       </div>
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
+          <svg width="28" height="28" viewbox="0 0 24 24" fill="white"><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z" />
+          </svg>
+         </div>
+         <div>
+          <h3 class="font-display text-xl font-semibold text-amber-900">Komposisi</h3>
+          <p class="text-sm text-amber-600">Bobot: 25%</p>
+         </div>
+        </div>
+        <p class="text-amber-700 mb-4">Penerapan prinsip-prinsip seni rupa.</p>
+        <div class="grid grid-cols-2 gap-2">
+         <div class="bg-blue-50 px-3 py-2 rounded-lg text-center"><span class="text-sm text-blue-700">Keseimbangan</span>
+         </div>
+         <div class="bg-blue-50 px-3 py-2 rounded-lg text-center"><span class="text-sm text-blue-700">Proporsi</span>
+         </div>
+         <div class="bg-blue-50 px-3 py-2 rounded-lg text-center"><span class="text-sm text-blue-700">Irama</span>
+         </div>
+         <div class="bg-blue-50 px-3 py-2 rounded-lg text-center"><span class="text-sm text-blue-700">Kesatuan</span>
+         </div>
+        </div>
+       </div>
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
+          <svg width="28" height="28" viewbox="0 0 24 24" fill="white"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" />
+          </svg>
+         </div>
+         <div>
+          <h3 class="font-display text-xl font-semibold text-amber-900">Performa</h3>
+          <p class="text-sm text-amber-600">Bobot: 25%</p>
+         </div>
+        </div>
+        <p class="text-amber-700 mb-4">Kerapian, kebersihan, dan ketelitian kerja.</p>
+        <div class="space-y-2">
+         <div class="flex items-center gap-2"><span class="text-lg">✨</span> <span class="text-sm text-amber-700">Hasil akhir rapi dan bersih</span>
+         </div>
+         <div class="flex items-center gap-2"><span class="text-lg">🎯</span> <span class="text-sm text-amber-700">Detail dikerjakan dengan teliti</span>
+         </div>
+         <div class="flex items-center gap-2"><span class="text-lg">⏰</span> <span class="text-sm text-amber-700">Selesai tepat waktu</span>
+         </div>
+        </div>
+       </div>
+      </div><!-- Score Calculator -->
+      <div class="mt-10 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl p-6 text-white">
+       <h3 class="font-semibold text-xl mb-4 text-center">🧮 Kalkulator Skor (Self-Assessment)</h3>
+       <div class="grid md:grid-cols-4 gap-4 mb-6">
+        <div><label class="block text-sm mb-2">Ide (1-4)</label> <input type="number" id="scoreIde" min="1" max="4" value="3" class="w-full p-2 rounded-lg text-amber-900 text-center font-bold">
+        </div>
+        <div><label class="block text-sm mb-2">Bahan (1-4)</label> <input type="number" id="scoreBahan" min="1" max="4" value="3" class="w-full p-2 rounded-lg text-amber-900 text-center font-bold">
+        </div>
+        <div><label class="block text-sm mb-2">Komposisi (1-4)</label> <input type="number" id="scoreKomposisi" min="1" max="4" value="3" class="w-full p-2 rounded-lg text-amber-900 text-center font-bold">
+        </div>
+        <div><label class="block text-sm mb-2">Performa (1-4)</label> <input type="number" id="scorePerforma" min="1" max="4" value="3" class="w-full p-2 rounded-lg text-amber-900 text-center font-bold">
+        </div>
+       </div><button onclick="calculateScore()" class="w-full bg-white text-amber-600 font-bold py-3 rounded-xl hover:bg-amber-50 transition-colors"> Hitung Skor </button>
+       <div id="scoreResult" class="mt-4 text-center text-2xl font-bold hidden">
+        Prediksi Nilai: <span id="finalScore">75</span>
+       </div>
+      </div>
+     </div>
+    </div><!-- Slide 9: Example Works -->
+    <div class="slide hidden max-w-5xl mx-auto" data-slide="9">
+     <div class="py-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-amber-900 text-center mb-10">🖼️ Contoh Karya</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Example 1 -->
+       <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-100">
+        <div class="h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center p-4">
+         <svg width="160" height="140" viewbox="0 0 160 140"><!-- Tree made of leaves --> <rect x="75" y="90" width="10" height="40" fill="#8b5a2b" /> <ellipse cx="80" cy="70" rx="40" ry="35" fill="#22c55e" /> <ellipse cx="60" cy="55" rx="20" ry="18" fill="#16a34a" /> <ellipse cx="100" cy="55" rx="20" ry="18" fill="#16a34a" /> <ellipse cx="80" cy="40" rx="15" ry="12" fill="#15803d" /> <!-- Ground --> <ellipse cx="80" cy="130" rx="50" ry="8" fill="#d4a574" /> <!-- Small leaves --> <circle cx="30" cy="120" r="5" fill="#8b5a2b" /> <circle cx="130" cy="115" r="4" fill="#a67c52" />
+         </svg>
+        </div>
+        <div class="p-4">
+         <h3 class="font-semibold text-amber-900">Pohon Kehidupan</h3>
+         <p class="text-sm text-amber-600">Figuratif - Menggunakan daun berbagai ukuran</p>
+         <div class="flex gap-1 mt-2"><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Daun</span> <span class="px-2 py-1 bg-amber-100 text-amber-700 text-xs rounded-full">Ranting</span>
+         </div>
+        </div>
+       </div><!-- Example 2 -->
+       <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-100">
+        <div class="h-48 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center p-4">
+         <svg width="160" height="140" viewbox="0 0 160 140"><!-- Butterfly --> <ellipse cx="80" cy="70" rx="8" ry="25" fill="#8b5a2b" /> <!-- Wings --> <ellipse cx="50" cy="55" rx="30" ry="25" fill="#d4a574" transform="rotate(-20 50 55)" /> <ellipse cx="110" cy="55" rx="30" ry="25" fill="#d4a574" transform="rotate(20 110 55)" /> <ellipse cx="55" cy="85" rx="20" ry="18" fill="#a67c52" transform="rotate(20 55 85)" /> <ellipse cx="105" cy="85" rx="20" ry="18" fill="#a67c52" transform="rotate(-20 105 85)" /> <!-- Decorations --> <circle cx="45" cy="50" r="6" fill="#fbbf24" /> <circle cx="115" cy="50" r="6" fill="#fbbf24" /> <!-- Antennae --> <line x1="75" y1="45" x2="65" y2="30" stroke="#8b5a2b" stroke-width="2" /> <line x1="85" y1="45" x2="95" y2="30" stroke="#8b5a2b" stroke-width="2" />
+         </svg>
+        </div>
+        <div class="p-4">
+         <h3 class="font-semibold text-amber-900">Kupu-Kupu Cantik</h3>
+         <p class="text-sm text-amber-600">Figuratif - Daun berbentuk oval</p>
+         <div class="flex gap-1 mt-2"><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Daun</span> <span class="px-2 py-1 bg-pink-100 text-pink-700 text-xs rounded-full">Bunga</span>
+         </div>
+        </div>
+       </div><!-- Example 3 -->
+       <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-100">
+        <div class="h-48 bg-gradient-to-br from-rose-100 to-pink-100 flex items-center justify-center p-4">
+         <svg width="160" height="140" viewbox="0 0 160 140"><!-- Mandala pattern --> <circle cx="80" cy="70" r="50" fill="none" stroke="#d4a574" stroke-width="2" /> <circle cx="80" cy="70" r="35" fill="none" stroke="#a67c52" stroke-width="2" /> <circle cx="80" cy="70" r="20" fill="#8b5a2b" /> <!-- Petals --> <ellipse cx="80" cy="25" rx="8" ry="15" fill="#d4a574" /> <ellipse cx="80" cy="115" rx="8" ry="15" fill="#d4a574" /> <ellipse cx="35" cy="70" rx="15" ry="8" fill="#d4a574" /> <ellipse cx="125" cy="70" rx="15" ry="8" fill="#d4a574" /> <!-- Diagonal petals --> <ellipse cx="50" cy="40" rx="10" ry="6" fill="#a67c52" transform="rotate(-45 50 40)" /> <ellipse cx="110" cy="40" rx="10" ry="6" fill="#a67c52" transform="rotate(45 110 40)" /> <ellipse cx="50" cy="100" rx="10" ry="6" fill="#a67c52" transform="rotate(45 50 100)" /> <ellipse cx="110" cy="100" rx="10" ry="6" fill="#a67c52" transform="rotate(-45 110 100)" />
+         </svg>
+        </div>
+        <div class="p-4">
+         <h3 class="font-semibold text-amber-900">Mandala Alam</h3>
+         <p class="text-sm text-amber-600">Non-Figuratif - Pola geometris</p>
+         <div class="flex gap-1 mt-2"><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Daun</span> <span class="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">Biji</span>
+         </div>
+        </div>
+       </div>
+      </div><!-- Tips Section -->
+      <div class="mt-10 bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-6">
+       <div class="flex items-start gap-4">
+        <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center shrink-0"><span class="text-2xl">💡</span>
+        </div>
+        <div>
+         <h3 class="font-semibold text-purple-900 text-lg mb-2">Tips Kreatif!</h3>
+         <p class="text-purple-700">Jangan takut untuk mengubah desain di tengah proses jika menemukan bentuk daun yang unik! Kadang inspirasi datang saat kita sudah mulai berkarya. Biarkan kreativitasmu mengalir bebas.</p>
+        </div>
+       </div>
+      </div><!-- Inspiration Gallery -->
+      <div class="mt-8 bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+       <h3 class="font-semibold text-amber-900 mb-4">🎨 Inspirasi Tema Lainnya</h3>
+       <div class="flex flex-wrap gap-3"><span class="px-4 py-2 bg-amber-50 text-amber-700 rounded-full cursor-pointer hover:bg-amber-100 transition-colors">🌺 Bunga</span> <span class="px-4 py-2 bg-amber-50 text-amber-700 rounded-full cursor-pointer hover:bg-amber-100 transition-colors">🦋 Serangga</span> <span class="px-4 py-2 bg-amber-50 text-amber-700 rounded-full cursor-pointer hover:bg-amber-100 transition-colors">🐦 Burung</span> <span class="px-4 py-2 bg-amber-50 text-amber-700 rounded-full cursor-pointer hover:bg-amber-100 transition-colors">🏠 Rumah</span> <span class="px-4 py-2 bg-amber-50 text-amber-700 rounded-full cursor-pointer hover:bg-amber-100 transition-colors">⭐ Bintang</span> <span class="px-4 py-2 bg-amber-50 text-amber-700 rounded-full cursor-pointer hover:bg-amber-100 transition-colors">🌈 Pelangi</span> <span class="px-4 py-2 bg-amber-50 text-amber-700 rounded-full cursor-pointer hover:bg-amber-100 transition-colors">🎭 Wajah</span> <span class="px-4 py-2 bg-amber-50 text-amber-700 rounded-full cursor-pointer hover:bg-amber-100 transition-colors">🔷 Geometris</span>
+       </div>
+      </div>
+     </div>
+    </div><!-- Slide 10: HOTS Questions -->
+    <div class="slide hidden max-w-5xl mx-auto" data-slide="10">
+     <div class="py-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-amber-900 text-center mb-4">🧠 Soal HOTS</h2>
+      <p class="text-center text-amber-600 mb-10">Higher Order Thinking Skills - Berpikir Tingkat Tinggi</p><!-- Quiz Container -->
+      <div id="quizContainer"><!-- Question 1: Analysis -->
+       <div class="quiz-question bg-white rounded-2xl p-6 shadow-lg border border-amber-100 mb-6" data-question="1">
+        <div class="flex items-center gap-3 mb-4"><span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">C4 - Analisis</span> <span class="text-amber-500">Soal 1 dari 5</span>
+        </div>
+        <h3 class="font-semibold text-amber-900 text-lg mb-4">Perhatikan karakteristik daun berikut: daun A memiliki tekstur tipis dan warna hijau muda, sedangkan daun B memiliki tekstur tebal dan warna coklat tua. Bagian manakah dari karya mozaik yang paling tepat untuk masing-masing daun tersebut?</h3>
+        <div class="space-y-3">
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="a" onclick="selectAnswer(this, 1)"><span class="font-medium text-amber-900">A.</span> Daun A untuk background, Daun B untuk detail
+         </div>
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="b" onclick="selectAnswer(this, 1)"><span class="font-medium text-amber-900">B.</span> Daun A untuk detail halus, Daun B untuk area latar/background
+         </div>
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="c" onclick="selectAnswer(this, 1)"><span class="font-medium text-amber-900">C.</span> Keduanya untuk detail halus
+         </div>
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="d" onclick="selectAnswer(this, 1)"><span class="font-medium text-amber-900">D.</span> Keduanya untuk background
+         </div>
+        </div>
+        <div id="feedback1" class="mt-4 p-4 rounded-xl hidden"></div>
+       </div><!-- Question 2: Evaluation -->
+       <div class="quiz-question bg-white rounded-2xl p-6 shadow-lg border border-amber-100 mb-6" data-question="2">
+        <div class="flex items-center gap-3 mb-4"><span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">C5 - Evaluasi</span> <span class="text-amber-500">Soal 2 dari 5</span>
+        </div>
+        <h3 class="font-semibold text-amber-900 text-lg mb-4">Seorang siswa membuat karya mozaik dengan menggunakan hanya 2 jenis daun yang warnanya sangat mirip (keduanya coklat muda). Evaluasilah kelemahan utama dari pendekatan ini dan dampaknya terhadap kualitas visual karya!</h3>
+        <div class="space-y-3">
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="a" onclick="selectAnswer(this, 2)"><span class="font-medium text-amber-900">A.</span> Karya akan lebih mudah dibuat dan hemat waktu
+         </div>
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="b" onclick="selectAnswer(this, 2)"><span class="font-medium text-amber-900">B.</span> Karya akan terlihat monoton, kurang kontras, dan detail tidak terlihat jelas
+         </div>
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="c" onclick="selectAnswer(this, 2)"><span class="font-medium text-amber-900">C.</span> Karya akan lebih artistik karena kesederhanaan
+         </div>
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="d" onclick="selectAnswer(this, 2)"><span class="font-medium text-amber-900">D.</span> Tidak ada kelemahan, ini adalah teknik minimalis
+         </div>
+        </div>
+        <div id="feedback2" class="mt-4 p-4 rounded-xl hidden"></div>
+       </div><!-- Question 3: Creation -->
+       <div class="quiz-question bg-white rounded-2xl p-6 shadow-lg border border-amber-100 mb-6" data-question="3">
+        <div class="flex items-center gap-3 mb-4"><span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">C6 - Mencipta</span> <span class="text-amber-500">Soal 3 dari 5</span>
+        </div>
+        <h3 class="font-semibold text-amber-900 text-lg mb-4">Kamu diminta membuat hiasan dinding dengan tema "Harmoni Alam" menggunakan bahan daun kering. Kombinasi prinsip seni rupa manakah yang PALING TEPAT untuk mewujudkan tema tersebut?</h3>
+        <div class="space-y-3">
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="a" onclick="selectAnswer(this, 3)"><span class="font-medium text-amber-900">A.</span> Keseimbangan simetris dengan pengulangan warna yang kontras
+         </div>
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="b" onclick="selectAnswer(this, 3)"><span class="font-medium text-amber-900">B.</span> Keseimbangan asimetris dengan gradasi warna natural dan irama visual yang mengalir
+         </div>
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="c" onclick="selectAnswer(this, 3)"><span class="font-medium text-amber-900">C.</span> Proporsi tidak seimbang untuk menciptakan ketegangan visual
+         </div>
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="d" onclick="selectAnswer(this, 3)"><span class="font-medium text-amber-900">D.</span> Komposisi acak tanpa pola untuk kesan natural
+         </div>
+        </div>
+        <div id="feedback3" class="mt-4 p-4 rounded-xl hidden"></div>
+       </div><!-- Question 4: Analysis + Evaluation -->
+       <div class="quiz-question bg-white rounded-2xl p-6 shadow-lg border border-amber-100 mb-6" data-question="4">
+        <div class="flex items-center gap-3 mb-4"><span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">C4-C5 - Analisis &amp; Evaluasi</span> <span class="text-amber-500">Soal 4 dari 5</span>
+        </div>
+        <h3 class="font-semibold text-amber-900 text-lg mb-4">Dalam proses pengeringan, daun yang dikeringkan dengan metode press menghasilkan tekstur rata dan halus, sedangkan metode jemur menghasilkan tekstur melengkung. Untuk membuat karya mozaik 3 dimensi dengan efek kedalaman, metode mana yang lebih tepat dan mengapa?</h3>
+        <div class="space-y-3">
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="a" onclick="selectAnswer(this, 4)"><span class="font-medium text-amber-900">A.</span> Metode press, karena daun rata lebih mudah ditempel
+         </div>
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="b" onclick="selectAnswer(this, 4)"><span class="font-medium text-amber-900">B.</span> Metode jemur, karena tekstur melengkung menciptakan dimensi dan bayangan alami
+         </div>
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="c" onclick="selectAnswer(this, 4)"><span class="font-medium text-amber-900">C.</span> Keduanya sama saja untuk karya 3D
+         </div>
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="d" onclick="selectAnswer(this, 4)"><span class="font-medium text-amber-900">D.</span> Metode oven, karena lebih cepat
+         </div>
+        </div>
+        <div id="feedback4" class="mt-4 p-4 rounded-xl hidden"></div>
+       </div><!-- Question 5: Synthesis -->
+       <div class="quiz-question bg-white rounded-2xl p-6 shadow-lg border border-amber-100 mb-6" data-question="5">
+        <div class="flex items-center gap-3 mb-4"><span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium">C6 - Sintesis</span> <span class="text-amber-500">Soal 5 dari 5</span>
+        </div>
+        <h3 class="font-semibold text-amber-900 text-lg mb-4">Sekolahmu akan mengadakan pameran seni dengan tema "Kelestarian Lingkungan". Bagaimana kamu akan mengintegrasikan pesan pelestarian lingkungan ke dalam karya hiasan dinding dari daun kering, baik dari segi konsep maupun eksekusi?</h3>
+        <div class="space-y-3">
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="a" onclick="selectAnswer(this, 5)"><span class="font-medium text-amber-900">A.</span> Membuat karya sebanyak mungkin untuk mengisi ruang pameran
+         </div>
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="b" onclick="selectAnswer(this, 5)"><span class="font-medium text-amber-900">B.</span> Menggunakan daun gugur alami (bukan dipetik), menampilkan siklus hidup alam, dan menambahkan narasi tentang pemanfaatan limbah organik
+         </div>
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="c" onclick="selectAnswer(this, 5)"><span class="font-medium text-amber-900">C.</span> Menggunakan cat warna-warni agar lebih menarik
+         </div>
+         <div class="quiz-option p-4 border-2 border-amber-200 rounded-xl cursor-pointer" data-answer="d" onclick="selectAnswer(this, 5)"><span class="font-medium text-amber-900">D.</span> Membeli daun kering dari toko untuk hasil yang lebih bagus
+         </div>
+        </div>
+        <div id="feedback5" class="mt-4 p-4 rounded-xl hidden"></div>
+       </div>
+      </div><!-- Quiz Results -->
+      <div id="quizResults" class="bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl p-6 text-white mt-6">
+       <h3 class="font-semibold text-xl mb-4 text-center">📊 Hasil Kuis HOTS</h3>
+       <div class="text-center">
+        <p class="text-lg mb-2">Skor Kamu:</p>
+        <p class="text-5xl font-bold mb-4"><span id="quizScore">0</span>/5</p>
+        <div id="quizMessage" class="text-lg"></div>
+       </div><button onclick="resetQuiz()" class="w-full mt-4 bg-white text-amber-600 font-bold py-3 rounded-xl hover:bg-amber-50 transition-colors"> 🔄 Ulangi Kuis </button>
+      </div>
+     </div>
+    </div><!-- Slide 11: Discussion -->
+    <div class="slide hidden max-w-5xl mx-auto" data-slide="11">
+     <div class="py-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-amber-900 text-center mb-10">💬 Diskusi &amp; Refleksi</h2>
+      <div class="grid md:grid-cols-2 gap-6 mb-10">
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+        <div class="flex items-center gap-3 mb-4">
+         <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+          1
+         </div>
+         <h3 class="font-semibold text-amber-900">Pertanyaan Diskusi</h3>
+        </div>
+        <p class="text-amber-700 mb-4">Apakah benda alam lain bisa digunakan untuk membuat hiasan dinding selain daun kering?</p><textarea class="w-full p-4 border-2 border-amber-200 rounded-xl focus:border-amber-500 focus:outline-none resize-none" rows="3" placeholder="Tulis jawabanmu di sini..."></textarea>
+       </div>
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-amber-100">
+        <div class="flex items-center gap-3 mb-4">
+         <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">
+          2
+         </div>
+         <h3 class="font-semibold text-amber-900">Refleksi Kesulitan</h3>
+        </div>
+        <p class="text-amber-700 mb-4">Apa kesulitan utama dalam merekatkan daun kering pada karya mozaik?</p><textarea class="w-full p-4 border-2 border-amber-200 rounded-xl focus:border-amber-500 focus:outline-none resize-none" rows="3" placeholder="Tulis pengalamanmu di sini..."></textarea>
+       </div>
+      </div><!-- Reflection Cards -->
+      <div class="bg-white rounded-2xl p-6 shadow-lg border border-amber-100 mb-8">
+       <h3 class="font-semibold text-amber-900 mb-4">🤔 Refleksi Pembelajaran</h3>
+       <div class="grid md:grid-cols-3 gap-4">
+        <div class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-xl p-4">
+         <p class="text-sm text-pink-700 font-medium mb-2">Apa yang sudah saya pahami?</p><textarea class="w-full p-3 border border-pink-200 rounded-lg resize-none text-sm" rows="2" placeholder="..."></textarea>
+        </div>
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4">
+         <p class="text-sm text-blue-700 font-medium mb-2">Apa yang masih membingungkan?</p><textarea class="w-full p-3 border border-blue-200 rounded-lg resize-none text-sm" rows="2" placeholder="..."></textarea>
+        </div>
+        <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4">
+         <p class="text-sm text-green-700 font-medium mb-2">Apa yang ingin saya coba?</p><textarea class="w-full p-3 border border-green-200 rounded-lg resize-none text-sm" rows="2" placeholder="..."></textarea>
+        </div>
+       </div>
+      </div><!-- Poll Section -->
+      <div class="bg-gradient-to-r from-purple-500 to-violet-500 rounded-2xl p-6 text-white">
+       <h3 class="font-semibold text-xl mb-4">📊 Polling Kelas</h3>
+       <p class="mb-4">Tema apa yang ingin kamu buat untuk proyekmu?</p>
+       <div class="grid grid-cols-2 md:grid-cols-4 gap-3"><button class="poll-btn bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-colors text-center" onclick="vote('figuratif')"> <span class="text-2xl block mb-2">🌳</span> <span class="text-sm">Figuratif (Alam)</span>
+         <div class="mt-2 h-2 bg-white/30 rounded-full overflow-hidden">
+          <div class="poll-bar h-full bg-white rounded-full" style="width: 0%"></div>
+         </div></button> <button class="poll-btn bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-colors text-center" onclick="vote('hewan')"> <span class="text-2xl block mb-2">🦋</span> <span class="text-sm">Figuratif (Hewan)</span>
+         <div class="mt-2 h-2 bg-white/30 rounded-full overflow-hidden">
+          <div class="poll-bar h-full bg-white rounded-full" style="width: 0%"></div>
+         </div></button> <button class="poll-btn bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-colors text-center" onclick="vote('geometris')"> <span class="text-2xl block mb-2">🔷</span> <span class="text-sm">Non-Figuratif</span>
+         <div class="mt-2 h-2 bg-white/30 rounded-full overflow-hidden">
+          <div class="poll-bar h-full bg-white rounded-full" style="width: 0%"></div>
+         </div></button> <button class="poll-btn bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-colors text-center" onclick="vote('bebas')"> <span class="text-2xl block mb-2">🎨</span> <span class="text-sm">Bebas/Campuran</span>
+         <div class="mt-2 h-2 bg-white/30 rounded-full overflow-hidden">
+          <div class="poll-bar h-full bg-white rounded-full" style="width: 0%"></div>
+         </div></button>
+       </div>
+      </div>
+     </div>
+    </div><!-- Slide 12: Task -->
+    <div class="slide hidden max-w-5xl mx-auto" data-slide="12">
+     <div class="py-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-amber-900 text-center mb-10">📋 Tugas Kelompok</h2>
+      <div class="bg-white rounded-2xl p-8 shadow-xl border border-amber-100 mb-8">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center">
+         <svg width="32" height="32" viewbox="0 0 24 24" fill="white"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="font-display text-2xl font-semibold text-amber-900">Membentuk Kelompok</h3>
+         <p class="text-amber-600">3-4 orang per kelompok</p>
+        </div>
+       </div>
+       <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-6 mb-6">
+        <h4 class="font-semibold text-amber-900 mb-4">📝 Instruksi Tugas:</h4>
+        <ol class="space-y-3 text-amber-700">
+         <li class="flex items-start gap-3"><span class="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm shrink-0">1</span> <span>Bentuk kelompok dengan 3-4 anggota</span></li>
+         <li class="flex items-start gap-3"><span class="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm shrink-0">2</span> <span>Diskusikan tema karya yang akan dibuat</span></li>
+         <li class="flex items-start gap-3"><span class="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm shrink-0">3</span> <span>Buat sketsa desain pertama kalian (boleh lebih dari satu alternatif)</span></li>
+         <li class="flex items-start gap-3"><span class="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm shrink-0">4</span> <span>Rencanakan pembagian tugas pengumpulan bahan</span></li>
+         <li class="flex items-start gap-3"><span class="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm shrink-0">5</span> <span>Presentasikan sketsa dan rencana ke kelas</span></li>
+        </ol>
+       </div><!-- Group Formation Tool -->
+       <div class="bg-white border-2 border-amber-200 rounded-xl p-6">
+        <h4 class="font-semibold text-amber-900 mb-4">👥 Form Kelompok</h4>
+        <div class="grid md:grid-cols-2 gap-4 mb-4">
+         <div><label class="block text-sm text-amber-700 mb-2">Nama Kelompok</label> <input type="text" class="w-full p-3 border-2 border-amber-200 rounded-lg focus:border-amber-500 focus:outline-none" placeholder="Contoh: Tim Daun Emas">
+         </div>
+         <div><label class="block text-sm text-amber-700 mb-2">Tema yang Dipilih</label> <select class="w-full p-3 border-2 border-amber-200 rounded-lg focus:border-amber-500 focus:outline-none"> <option>Pilih tema...</option> <option>🌳 Pohon/Tanaman</option> <option>🦋 Serangga/Hewan</option> <option>🔷 Geometris/Abstrak</option> <option>🌺 Bunga/Mandala</option> <option>🎭 Wajah/Figur</option> <option>🏠 Pemandangan</option> </select>
+         </div>
+        </div>
+        <div class="mb-4"><label class="block text-sm text-amber-700 mb-2">Anggota Kelompok</label>
+         <div class="grid grid-cols-2 md:grid-cols-4 gap-2"><input type="text" class="p-2 border border-amber-200 rounded-lg text-sm" placeholder="Anggota 1"> <input type="text" class="p-2 border border-amber-200 rounded-lg text-sm" placeholder="Anggota 2"> <input type="text" class="p-2 border border-amber-200 rounded-lg text-sm" placeholder="Anggota 3"> <input type="text" class="p-2 border border-amber-200 rounded-lg text-sm" placeholder="Anggota 4">
+         </div>
+        </div><button class="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold py-3 rounded-xl hover:from-amber-600 hover:to-orange-600 transition-colors"> ✅ Simpan Data Kelompok </button>
+       </div>
+      </div><!-- Deadline Reminder -->
+      <div class="bg-gradient-to-r from-red-500 to-pink-500 rounded-2xl p-6 text-white text-center">
+       <h3 class="font-semibold text-xl mb-2">⏰ Deadline Pengumpulan Sketsa</h3>
+       <p class="text-3xl font-bold mb-2">Pertemuan Berikutnya</p>
+       <p class="text-white/80">Siapkan minimal 2 alternatif sketsa desain!</p>
+      </div><!-- Thank You Section -->
+      <div class="mt-10 text-center">
+       <div class="inline-block animate-float">
+        <svg width="80" height="80" viewbox="0 0 80 80"><circle cx="40" cy="40" r="35" fill="#fef3e2" stroke="#d4a574" stroke-width="3" /> <path d="M40 15c-5 15-18 22-25 27 7 5 20 12 25 23 5-11 18-18 25-23-7-5-20-12-25-27z" fill="#8b5a2b" />
+        </svg>
+       </div>
+       <h2 class="font-display text-3xl font-bold text-amber-900 mt-6 mb-4">Terima Kasih!</h2>
+       <p class="text-amber-600 text-lg">Selamat berkarya dan bereksplorasi dengan bahan alam! 🌿🎨</p>
+      </div>
+     </div>
+    </div>
+   </div><!-- Slide Navigation Dots -->
+   <div class="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 flex gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg"><button class="nav-dot w-3 h-3 rounded-full bg-amber-500 transition-all" data-slide="1"></button> <button class="nav-dot w-3 h-3 rounded-full bg-amber-200 hover:bg-amber-300 transition-all" data-slide="2"></button> <button class="nav-dot w-3 h-3 rounded-full bg-amber-200 hover:bg-amber-300 transition-all" data-slide="3"></button> <button class="nav-dot w-3 h-3 rounded-full bg-amber-200 hover:bg-amber-300 transition-all" data-slide="4"></button> <button class="nav-dot w-3 h-3 rounded-full bg-amber-200 hover:bg-amber-300 transition-all" data-slide="5"></button> <button class="nav-dot w-3 h-3 rounded-full bg-amber-200 hover:bg-amber-300 transition-all" data-slide="6"></button> <button class="nav-dot w-3 h-3 rounded-full bg-amber-200 hover:bg-amber-300 transition-all" data-slide="7"></button> <button class="nav-dot w-3 h-3 rounded-full bg-amber-200 hover:bg-amber-300 transition-all" data-slide="8"></button> <button class="nav-dot w-3 h-3 rounded-full bg-amber-200 hover:bg-amber-300 transition-all" data-slide="9"></button> <button class="nav-dot w-3 h-3 rounded-full bg-amber-200 hover:bg-amber-300 transition-all" data-slide="10"></button> <button class="nav-dot w-3 h-3 rounded-full bg-amber-200 hover:bg-amber-300 transition-all" data-slide="11"></button> <button class="nav-dot w-3 h-3 rounded-full bg-amber-200 hover:bg-amber-300 transition-all" data-slide="12"></button>
+   </div>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      school_name: "SMP Negeri 1 Indonesia",
+      teacher_name: "Guru Seni Budaya",
+      primary_color: "#d97706",
+      secondary_color: "#fef3e2",
+      text_color: "#78350f"
+    };
+
+    let currentSlide = 1;
+    const totalSlides = 12;
+
+    // Quiz answers
+    const correctAnswers = {
+      1: 'b',
+      2: 'b',
+      3: 'b',
+      4: 'b',
+      5: 'b'
+    };
+
+    const feedbackMessages = {
+      1: {
+        correct: "Benar! Daun tipis cocok untuk detail halus karena fleksibel, sedangkan daun tebal dengan warna gelap cocok untuk background karena memberikan kontras.",
+        incorrect: "Kurang tepat. Daun tipis lebih cocok untuk detail halus karena mudah dibentuk, sedangkan daun tebal berwarna gelap lebih cocok untuk background."
+      },
+      2: {
+        correct: "Tepat! Kurangnya variasi warna membuat karya terlihat monoton dan detail tidak terlihat jelas karena tidak ada kontras visual.",
+        incorrect: "Kurang tepat. Menggunakan warna yang mirip akan membuat karya terlihat monoton dan kurang menarik secara visual."
+      },
+      3: {
+        correct: "Sangat tepat! Keseimbangan asimetris dengan gradasi warna natural menciptakan kesan harmonis yang alami dan irama visual yang mengalir.",
+        incorrect: "Kurang tepat. Untuk tema 'Harmoni Alam', keseimbangan asimetris dengan gradasi warna natural lebih sesuai daripada pilihan tersebut."
+      },
+      4: {
+        correct: "Benar! Tekstur melengkung dari metode jemur menciptakan dimensi dan bayangan alami yang membuat karya terlihat lebih hidup.",
+        incorrect: "Kurang tepat. Untuk efek 3D dan kedalaman, daun dengan tekstur melengkung (dari metode jemur) lebih efektif."
+      },
+      5: {
+        correct: "Sempurna! Menggunakan daun gugur alami dan menambahkan narasi tentang pemanfaatan limbah organik sangat relevan dengan tema kelestarian lingkungan.",
+        incorrect: "Kurang tepat. Untuk tema kelestarian lingkungan, lebih baik menggunakan daun gugur alami dan menyampaikan pesan tentang pemanfaatan limbah organik."
+      }
+    };
+
+    let userAnswers = {};
+    let pollVotes = { figuratif: 0, hewan: 0, geometris: 0, bebas: 0 };
+
+    // Slide navigation
+    function goToSlide(slideNum) {
+      document.querySelectorAll('.slide').forEach(slide => {
+        slide.classList.add('hidden');
+        slide.classList.remove('active');
+      });
+      
+      const targetSlide = document.querySelector(`.slide[data-slide="${slideNum}"]`);
+      if (targetSlide) {
+        targetSlide.classList.remove('hidden');
+        targetSlide.classList.add('active', 'slide-enter');
+        setTimeout(() => targetSlide.classList.remove('slide-enter'), 500);
+      }
+      
+      currentSlide = slideNum;
+      updateNavigation();
+    }
+
+    function updateNavigation() {
+      document.getElementById('currentSlideNum').textContent = currentSlide;
+      document.getElementById('progressBar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+      
+      document.getElementById('prevBtn').disabled = currentSlide === 1;
+      document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+      
+      document.querySelectorAll('.nav-dot').forEach(dot => {
+        const slideNum = parseInt(dot.dataset.slide);
+        if (slideNum === currentSlide) {
+          dot.classList.remove('bg-amber-200');
+          dot.classList.add('bg-amber-500', 'w-6');
+        } else {
+          dot.classList.add('bg-amber-200');
+          dot.classList.remove('bg-amber-500', 'w-6');
+        }
+      });
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      if (currentSlide > 1) goToSlide(currentSlide - 1);
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      if (currentSlide < totalSlides) goToSlide(currentSlide + 1);
+    });
+
+    document.querySelectorAll('.nav-dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        goToSlide(parseInt(dot.dataset.slide));
+      });
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' && currentSlide < totalSlides) {
+        goToSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowLeft' && currentSlide > 1) {
+        goToSlide(currentSlide - 1);
+      }
+    });
+
+    // Concept map info
+    const conceptInfo = {
+      daun: {
+        title: "🍂 Daun Kering",
+        content: "Daun kering adalah bahan utama dalam karya mozaik alam. Pilihlah daun dengan berbagai ukuran (kecil, sedang, besar) dan warna (hijau, kuning, coklat, merah) untuk menciptakan variasi visual yang menarik."
+      },
+      bunga: {
+        title: "🌸 Bunga Kering",
+        content: "Bunga kering memberikan aksen warna yang cantik pada karya. Bunga dengan kelopak kecil seperti lavender atau baby's breath sangat cocok untuk detail, sedangkan bunga besar seperti mawar cocok sebagai focal point."
+      },
+      dahan: {
+        title: "🌿 Dahan Kering",
+        content: "Dahan kering berfungsi sebagai elemen struktural yang memberikan garis dan arah pada komposisi. Ranting tipis cocok untuk membuat outline atau bingkai natural pada karya."
+      },
+      biji: {
+        title: "🫘 Biji-bijian",
+        content: "Biji-bijian menambahkan tekstur dan detail pada karya. Biji kacang, jagung, atau biji bunga matahari bisa digunakan untuk menciptakan pola atau mengisi area tertentu dengan tekstur unik."
+      }
+    };
+
+    document.querySelectorAll('.concept-node').forEach(node => {
+      node.addEventListener('click', () => {
+        const info = conceptInfo[node.dataset.info];
+        const panel = document.getElementById('infoPanel');
+        const content = document.getElementById('infoPanelContent');
+        
+        content.innerHTML = `
+          <h4 class="font-semibold text-amber-900 text-lg mb-2">${info.title}</h4>
+          <p class="text-amber-700">${info.content}</p>
+        `;
+        panel.classList.remove('hidden');
+      });
+    });
+
+    // Combo preview
+    let selectedCombos = [];
+    document.querySelectorAll('.combo-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const combo = btn.dataset.combo;
+        if (selectedCombos.includes(combo)) {
+          selectedCombos = selectedCombos.filter(c => c !== combo);
+          btn.classList.remove('ring-2', 'ring-offset-2');
+        } else {
+          selectedCombos.push(combo);
+          btn.classList.add('ring-2', 'ring-offset-2');
+        }
+        updateComboPreview();
+      });
+    });
+
+    function updateComboPreview() {
+      const preview = document.getElementById('comboPreview');
+      if (selectedCombos.length === 0) {
+        preview.innerHTML = '<span class="text-amber-400">Pilih elemen untuk melihat kombinasi</span>';
+        return;
+      }
+      
+      const icons = {
+        daun: '🍂',
+        bunga: '🌸',
+        dahan: '🌿',
+        biji: '🫘'
+      };
+      
+      preview.innerHTML = `
+        <div class="text-center">
+          <div class="text-4xl mb-2">${selectedCombos.map(c => icons[c]).join(' + ')}</div>
+          <p class="text-amber-700">Kombinasi: ${selectedCombos.length} elemen</p>
+          <p class="text-sm text-amber-500">${getComboDescription(selectedCombos)}</p>
+        </div>
+      `;
+    }
+
+    function getComboDescription(combos) {
+      if (combos.length === 1) return "Tambahkan elemen lain untuk kombinasi lebih menarik!";
+      if (combos.length === 2) return "Kombinasi yang bagus! Coba tambahkan 1 elemen lagi.";
+      if (combos.length === 3) return "Kombinasi yang sangat variatif!";
+      return "Kombinasi lengkap! Karya akan sangat kaya tekstur.";
+    }
+
+    // Score calculator
+    function calculateScore() {
+      const ide = Math.min(4, Math.max(1, parseInt(document.getElementById('scoreIde').value) || 1));
+      const bahan = Math.min(4, Math.max(1, parseInt(document.getElementById('scoreBahan').value) || 1));
+      const komposisi = Math.min(4, Math.max(1, parseInt(document.getElementById('scoreKomposisi').value) || 1));
+      const performa = Math.min(4, Math.max(1, parseInt(document.getElementById('scorePerforma').value) || 1));
+      
+      const total = ((ide + bahan + komposisi + performa) / 16) * 100;
+      document.getElementById('finalScore').textContent = Math.round(total);
+      document.getElementById('scoreResult').classList.remove('hidden');
+    }
+
+    // Quiz functions
+    function selectAnswer(element, questionNum) {
+      const question = element.closest('.quiz-question');
+      question.querySelectorAll('.quiz-option').forEach(opt => {
+        opt.classList.remove('selected', 'correct', 'incorrect');
+      });
+      
+      const selectedAnswer = element.dataset.answer;
+      userAnswers[questionNum] = selectedAnswer;
+      
+      if (selectedAnswer === correctAnswers[questionNum]) {
+        element.classList.add('correct');
+        showFeedback(questionNum, true);
+      } else {
+        element.classList.add('incorrect');
+        question.querySelector(`[data-answer="${correctAnswers[questionNum]}"]`).classList.add('correct');
+        showFeedback(questionNum, false);
+      }
+      
+      updateQuizScore();
+    }
+
+    function showFeedback(questionNum, isCorrect) {
+      const feedback = document.getElementById(`feedback${questionNum}`);
+      feedback.classList.remove('hidden');
+      feedback.className = `mt-4 p-4 rounded-xl ${isCorrect ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`;
+      feedback.innerHTML = `
+        <p class="font-medium">${isCorrect ? '✅ Benar!' : '❌ Kurang Tepat'}</p>
+        <p class="text-sm mt-1">${feedbackMessages[questionNum][isCorrect ? 'correct' : 'incorrect']}</p>
+      `;
+    }
+
+    function updateQuizScore() {
+      let score = 0;
+      for (let i = 1; i <= 5; i++) {
+        if (userAnswers[i] === correctAnswers[i]) score++;
+      }
+      document.getElementById('quizScore').textContent = score;
+      
+      const messages = {
+        0: "Jangan menyerah! Baca kembali materi dan coba lagi.",
+        1: "Terus belajar! Kamu pasti bisa lebih baik.",
+        2: "Lumayan! Tingkatkan pemahamanmu.",
+        3: "Bagus! Kamu sudah memahami sebagian besar materi.",
+        4: "Hebat! Pemahaman yang sangat baik!",
+        5: "Sempurna! Kamu benar-benar menguasai materi!"
+      };
+      document.getElementById('quizMessage').textContent = messages[score];
+    }
+
+    function resetQuiz() {
+      userAnswers = {};
+      document.querySelectorAll('.quiz-option').forEach(opt => {
+        opt.classList.remove('selected', 'correct', 'incorrect');
+      });
+      document.querySelectorAll('[id^="feedback"]').forEach(fb => {
+        fb.classList.add('hidden');
+      });
+      document.getElementById('quizScore').textContent = '0';
+      document.getElementById('quizMessage').textContent = '';
+    }
+
+    // Poll function
+    function vote(option) {
+      pollVotes[option]++;
+      const total = Object.values(pollVotes).reduce((a, b) => a + b, 0);
+      
+      document.querySelectorAll('.poll-btn').forEach(btn => {
+        const opt = btn.onclick.toString().match(/'(\w+)'/)[1];
+        const percentage = total > 0 ? (pollVotes[opt] / total) * 100 : 0;
+        btn.querySelector('.poll-bar').style.width = `${percentage}%`;
+      });
+    }
+
+    // Element SDK initialization
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          const schoolName = config.school_name || defaultConfig.school_name;
+          const teacherName = config.teacher_name || defaultConfig.teacher_name;
+          
+          const schoolDisplay = document.getElementById('schoolNameDisplay');
+          const teacherDisplay = document.getElementById('teacherNameDisplay');
+          
+          if (schoolDisplay) schoolDisplay.textContent = schoolName;
+          if (teacherDisplay) teacherDisplay.textContent = teacherName;
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["school_name", config.school_name || defaultConfig.school_name],
+          ["teacher_name", config.teacher_name || defaultConfig.teacher_name]
+        ])
+      });
+    }
+
+    // Initialize
+    updateNavigation();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c901963c493ea7f',t:'MTc3MDI3MDMwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,1014 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Berkarya dengan Bahan Alam - Seni Rupa Kelas VIII</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=Nunito:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    .font-heading {
+      font-family: 'Playfair Display', serif;
+    }
+    .font-body {
+      font-family: 'Nunito', sans-serif;
+    }
+    .leaf-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5c-5 10-15 15-25 15 10 5 15 15 15 25 5-10 15-15 25-15-10-5-15-15-15-25z' fill='%2322c55e' fill-opacity='0.08'/%3E%3C/svg%3E");
+    }
+    .gradient-earth {
+      background: linear-gradient(135deg, #fef3c7 0%, #d9f99d 50%, #bbf7d0 100%);
+    }
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    .color-swatch {
+      transition: transform 0.3s ease;
+    }
+    .color-swatch:hover {
+      transform: scale(1.1);
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-up {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+    .nav-btn {
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover {
+      background: #166534;
+    }
+    .nav-btn.active {
+      background: #166534;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .quiz-option {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .quiz-option:hover {
+      background: #dcfce7;
+      border-color: #22c55e;
+    }
+    .quiz-option.selected {
+      background: #bbf7d0;
+      border-color: #16a34a;
+    }
+    .quiz-option.correct {
+      background: #bbf7d0;
+      border-color: #16a34a;
+    }
+    .quiz-option.incorrect {
+      background: #fecaca;
+      border-color: #dc2626;
+    }
+    .step-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .step-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, #22c55e, #16a34a);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body bg-stone-50 text-stone-800">
+  <div id="app" class="h-full overflow-auto leaf-pattern"><!-- Navigation -->
+   <nav class="sticky top-0 z-50 bg-green-700 shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 py-3">
+     <div class="flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2"><span class="text-2xl">🌿</span> <span class="text-white font-semibold text-sm md:text-base">Unit IV: Berkarya dengan Bahan Alam</span>
+      </div>
+      <div class="flex flex-wrap gap-1 md:gap-2"><button onclick="showSection('intro')" class="nav-btn active px-2 md:px-3 py-1.5 text-white text-xs md:text-sm rounded-lg" data-section="intro">Pendahuluan</button> <button onclick="showSection('materi')" class="nav-btn px-2 md:px-3 py-1.5 text-white text-xs md:text-sm rounded-lg" data-section="materi">Materi</button> <button onclick="showSection('praktik')" class="nav-btn px-2 md:px-3 py-1.5 text-white text-xs md:text-sm rounded-lg" data-section="praktik">Praktik</button> <button onclick="showSection('interaktif')" class="nav-btn px-2 md:px-3 py-1.5 text-white text-xs md:text-sm rounded-lg" data-section="interaktif">Interaktif</button> <button onclick="showSection('quiz')" class="nav-btn px-2 md:px-3 py-1.5 text-white text-xs md:text-sm rounded-lg" data-section="quiz">Kuis HOTS</button>
+      </div>
+     </div>
+    </div>
+   </nav><!-- Hero Section -->
+   <section id="intro" class="section-content">
+    <div class="gradient-earth py-12 md:py-20">
+     <div class="max-w-6xl mx-auto px-4 text-center">
+      <div class="float-animation mb-6">
+       <svg width="120" height="120" viewbox="0 0 120 120" class="mx-auto"><circle cx="60" cy="60" r="55" fill="#166534" opacity="0.1" /> <path d="M60 20 C40 40, 30 60, 40 80 C50 95, 70 95, 80 80 C90 60, 80 40, 60 20" fill="#22c55e" /> <path d="M60 25 C60 50, 55 70, 60 85" stroke="#166534" stroke-width="2" fill="none" /> <path d="M50 45 C55 50, 60 48, 60 45" stroke="#166534" stroke-width="1.5" fill="none" /> <path d="M70 55 C65 60, 60 58, 60 55" stroke="#166534" stroke-width="1.5" fill="none" />
+       </svg>
+      </div>
+      <h1 id="main-title" class="font-heading text-3xl md:text-5xl text-green-800 mb-4">Berkarya dengan Bahan Alam</h1>
+      <p id="subtitle" class="text-lg md:text-xl text-green-700 mb-2">Mengenal dan Mengolah Bahan Warna dari Alam</p>
+      <p class="text-green-600 mb-8">Seni Rupa SMP Kelas VIII</p>
+      <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur px-4 py-2 rounded-full shadow"><span class="text-sm text-stone-600">🇮🇩 Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi RI</span>
+      </div>
+     </div>
+    </div><!-- Philosophy Section -->
+    <div class="max-w-6xl mx-auto px-4 py-12">
+     <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10 card-hover">
+      <div class="flex flex-col md:flex-row gap-8 items-center">
+       <div class="flex-1">
+        <div class="inline-block bg-green-100 text-green-700 px-4 py-1 rounded-full text-sm font-semibold mb-4">
+         🌱 Filosofi Pembelajaran
+        </div>
+        <h2 class="font-heading text-2xl md:text-3xl text-green-800 mb-4">Back to Nature</h2>
+        <p class="text-stone-600 mb-4 leading-relaxed">Alam adalah sumber inspirasi tak terbatas bagi manusia. Sebagai bagian dari alam, kita memiliki ikatan mendalam dengan segala yang ada di sekitar kita. Unit ini mengajak kita untuk kembali mengeksplorasi kekayaan alam sebagai media berkesenian.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+         <div class="bg-amber-50 rounded-xl p-4 text-center"><span class="text-3xl mb-2 block">🎨</span>
+          <p class="text-sm text-stone-700 font-medium">Eksplorasi Budaya Seni Rupa</p>
+         </div>
+         <div class="bg-green-50 rounded-xl p-4 text-center"><span class="text-3xl mb-2 block">🧪</span>
+          <p class="text-sm text-stone-700 font-medium">Eksperimen Warna Alternatif</p>
+         </div>
+         <div class="bg-blue-50 rounded-xl p-4 text-center"><span class="text-3xl mb-2 block">♻️</span>
+          <p class="text-sm text-stone-700 font-medium">Kurangi Bahan Sintetis</p>
+         </div>
+        </div>
+       </div>
+       <div class="w-full md:w-64 flex-shrink-0">
+        <svg viewbox="0 0 200 200" class="w-full"><defs>
+          <lineargradient id="earthGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+           <stop offset="0%" style="stop-color:#22c55e" />
+           <stop offset="100%" style="stop-color:#166534" />
+          </lineargradient>
+         </defs> <circle cx="100" cy="100" r="80" fill="url(#earthGrad)" opacity="0.2" /> <circle cx="100" cy="100" r="60" fill="url(#earthGrad)" opacity="0.3" /> <circle cx="100" cy="100" r="40" fill="url(#earthGrad)" opacity="0.5" /> <!-- Leaves around --> <g transform="translate(100,100)">
+          <path d="M0,-70 C-15,-50, -10,-30, 0,-35 C10,-30, 15,-50, 0,-70" fill="#22c55e" />
+          <path d="M60,-35 C45,-25, 40,-5, 50,-10 C55,-5, 60,-20, 60,-35" fill="#16a34a" transform="rotate(72)" />
+          <path d="M60,-35 C45,-25, 40,-5, 50,-10 C55,-5, 60,-20, 60,-35" fill="#22c55e" transform="rotate(144)" />
+          <path d="M60,-35 C45,-25, 40,-5, 50,-10 C55,-5, 60,-20, 60,-35" fill="#16a34a" transform="rotate(216)" />
+          <path d="M60,-35 C45,-25, 40,-5, 50,-10 C55,-5, 60,-20, 60,-35" fill="#22c55e" transform="rotate(288)" />
+         </g> <text x="100" y="105" text-anchor="middle" font-size="14" fill="#166534" font-weight="bold">
+          ALAM
+         </text>
+        </svg>
+       </div>
+      </div>
+     </div>
+    </div><!-- Subunit Cards -->
+    <div class="max-w-6xl mx-auto px-4 pb-12">
+     <h3 class="font-heading text-2xl text-center text-green-800 mb-8">📚 Subunit Pembelajaran</h3>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl p-6 card-hover shadow-lg">
+       <div class="w-14 h-14 bg-white rounded-xl flex items-center justify-center shadow mb-4"><span class="text-2xl">🎨</span>
+       </div>
+       <h4 class="font-heading text-xl text-amber-800 mb-2">Subunit 4.1</h4>
+       <p class="text-stone-600 text-sm">Mengenal dan mengolah bahan alam menjadi bahan warna pewarna alami</p>
+      </div>
+      <div class="bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl p-6 card-hover shadow-lg">
+       <div class="w-14 h-14 bg-white rounded-xl flex items-center justify-center shadow mb-4"><span class="text-2xl">🍂</span>
+       </div>
+       <h4 class="font-heading text-xl text-green-800 mb-2">Subunit 4.2</h4>
+       <p class="text-stone-600 text-sm">Membuat hiasan dinding dari daun kering dengan eksplorasi komposisi</p>
+      </div>
+      <div class="bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl p-6 card-hover shadow-lg">
+       <div class="w-14 h-14 bg-white rounded-xl flex items-center justify-center shadow mb-4"><span class="text-2xl">♻️</span>
+       </div>
+       <h4 class="font-heading text-xl text-blue-800 mb-2">Subunit 4.3</h4>
+       <p class="text-stone-600 text-sm">Membuat karya seni rupa sederhana dari bahan daur ulang</p>
+      </div>
+     </div>
+    </div><!-- Profil Pelajar Pancasila -->
+    <div class="bg-green-800 py-12">
+     <div class="max-w-6xl mx-auto px-4">
+      <h3 class="font-heading text-2xl text-center text-white mb-8">🇮🇩 Profil Pelajar Pancasila</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+       <div class="bg-white/10 backdrop-blur rounded-xl p-5 text-center">
+        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-3"><span class="text-3xl">🌍</span>
+        </div>
+        <h5 class="text-white font-semibold mb-1">Akhlak kepada Alam</h5>
+        <p class="text-green-200 text-xs">Menjaga &amp; memanfaatkan alam secara bijak</p>
+       </div>
+       <div class="bg-white/10 backdrop-blur rounded-xl p-5 text-center">
+        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-3"><span class="text-3xl">🤝</span>
+        </div>
+        <h5 class="text-white font-semibold mb-1">Gotong Royong</h5>
+        <p class="text-green-200 text-xs">Kerja kelompok dalam proyek</p>
+       </div>
+       <div class="bg-white/10 backdrop-blur rounded-xl p-5 text-center">
+        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-3"><span class="text-3xl">💡</span>
+        </div>
+        <h5 class="text-white font-semibold mb-1">Kreatif &amp; Mandiri</h5>
+        <p class="text-green-200 text-xs">Berani mencoba ide baru</p>
+       </div>
+       <div class="bg-white/10 backdrop-blur rounded-xl p-5 text-center">
+        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-3"><span class="text-3xl">🔍</span>
+        </div>
+        <h5 class="text-white font-semibold mb-1">Berpikir Kritis</h5>
+        <p class="text-green-200 text-xs">Analisis &amp; eksperimen bahan</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Materi Section -->
+   <section id="materi" class="section-content hidden">
+    <div class="max-w-6xl mx-auto px-4 py-12"><!-- Sejarah Warna Alam -->
+     <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10 mb-8">
+      <div class="flex flex-col md:flex-row gap-8">
+       <div class="flex-1"><span class="inline-block bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-sm font-semibold mb-4">📜 Sejarah</span>
+        <h2 class="font-heading text-2xl md:text-3xl text-stone-800 mb-4">Sejarah &amp; Pengertian Warna Alam</h2>
+        <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg mb-4">
+         <p class="text-stone-700 font-medium"><strong>Definisi:</strong> Warna alam adalah warna yang dihasilkan langsung dari material alam seperti tumbuhan, tanah, dan mineral.</p>
+        </div>
+        <p class="text-stone-600 mb-4 leading-relaxed">Bukti sejarah penggunaan pewarna alam ditemukan pada lukisan dinding gua di <strong>Leang Pattae, Maros, Sulawesi Selatan</strong> dan di berbagai gua di <strong>Kalimantan</strong>. Nenek moyang kita menggunakan bahan alam untuk mewarnai pakaian dan menghias dinding gua sejak ribuan tahun lalu.</p>
+       </div>
+       <div class="w-full md:w-80 flex-shrink-0">
+        <svg viewbox="0 0 300 200" class="w-full rounded-xl bg-stone-100"><!-- Cave wall texture --> <rect x="0" y="0" width="300" height="200" fill="#a8a29e" /> <ellipse cx="150" cy="100" rx="130" ry="80" fill="#78716c" /> <!-- Cave paintings --> <g fill="#dc2626" opacity="0.8"><!-- Hand prints -->
+          <path d="M60 80 L60 65 L63 65 L63 80 M66 80 L66 60 L69 60 L69 80 M72 80 L72 58 L75 58 L75 80 M78 80 L78 62 L81 62 L81 80 M84 80 L84 68 L87 68 L87 80 M60 80 Q73 95 87 80" transform="scale(0.8) translate(20,30)" /> <!-- Animal figure -->
+          <ellipse cx="180" cy="90" rx="35" ry="20" />
+          <circle cx="220" cy="85" r="12" />
+          <line x1="155" y1="105" x2="150" y2="130" stroke="#dc2626" stroke-width="4" />
+          <line x1="170" y1="108" x2="168" y2="133" stroke="#dc2626" stroke-width="4" />
+          <line x1="195" y1="108" x2="197" y2="133" stroke="#dc2626" stroke-width="4" />
+          <line x1="205" y1="105" x2="210" y2="128" stroke="#dc2626" stroke-width="4" />
+         </g> <!-- Labels --> <text x="150" y="180" text-anchor="middle" font-size="11" fill="#57534e">
+          Ilustrasi Lukisan Gua Prasejarah
+         </text>
+        </svg>
+       </div>
+      </div>
+     </div><!-- Jenis Bahan Pewarna -->
+     <h3 class="font-heading text-2xl text-center text-green-800 mb-8">🌿 Jenis Bahan Pewarna Alami</h3>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"><!-- Daun, Bunga, Buah -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+       <div class="h-40 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+        <svg viewbox="0 0 100 100" width="80" height="80"><path d="M50 10 C30 30, 20 50, 30 70 C40 85, 60 85, 70 70 C80 50, 70 30, 50 10" fill="#dcfce7" /> <path d="M50 15 C50 40, 45 60, 50 75" stroke="#166534" stroke-width="2" fill="none" /> <circle cx="30" cy="65" r="8" fill="#f472b6" /> <circle cx="70" cy="55" r="10" fill="#fb923c" />
+        </svg>
+       </div>
+       <div class="p-5">
+        <h4 class="font-heading text-lg text-green-800 mb-2">Daun, Bunga &amp; Buah</h4>
+        <div class="space-y-2">
+         <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-green-600 color-swatch"></span> <span class="text-sm text-stone-600">Daun Suji → Hijau</span>
+         </div>
+         <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-blue-800 color-swatch"></span> <span class="text-sm text-stone-600">Indigofera → Biru Nila</span>
+         </div>
+         <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-purple-600 color-swatch"></span> <span class="text-sm text-stone-600">Bunga Telang → Ungu</span>
+         </div>
+        </div>
+       </div>
+      </div><!-- Akar, Umbi, Rimpang -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+       <div class="h-40 bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
+        <svg viewbox="0 0 100 100" width="80" height="80"><ellipse cx="50" cy="50" rx="30" ry="20" fill="#fef3c7" /> <ellipse cx="35" cy="55" rx="15" ry="10" fill="#fde68a" /> <ellipse cx="65" cy="45" rx="12" ry="8" fill="#fde68a" /> <path d="M50 30 C45 20, 55 15, 50 5" stroke="#166534" stroke-width="2" fill="none" /> <ellipse cx="50" cy="8" rx="8" ry="5" fill="#22c55e" />
+        </svg>
+       </div>
+       <div class="p-5">
+        <h4 class="font-heading text-lg text-amber-800 mb-2">Akar, Umbi &amp; Rimpang</h4>
+        <div class="space-y-2">
+         <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-yellow-500 color-swatch"></span> <span class="text-sm text-stone-600">Kunyit → Kuning</span>
+         </div>
+         <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-orange-600 color-swatch"></span> <span class="text-sm text-stone-600">Wortel → Orange</span>
+         </div>
+         <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-red-700 color-swatch"></span> <span class="text-sm text-stone-600">Bit → Merah Tua</span>
+         </div>
+        </div>
+       </div>
+      </div><!-- Kulit Kayu, Batang, Biji -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+       <div class="h-40 bg-gradient-to-br from-amber-700 to-amber-900 flex items-center justify-center">
+        <svg viewbox="0 0 100 100" width="80" height="80"><rect x="35" y="20" width="30" height="60" rx="5" fill="#a16207" /> <ellipse cx="50" cy="20" rx="20" ry="8" fill="#22c55e" /> <circle cx="40" cy="85" r="6" fill="#451a03" /> <circle cx="55" cy="88" r="5" fill="#451a03" /> <circle cx="65" cy="82" r="4" fill="#451a03" />
+        </svg>
+       </div>
+       <div class="p-5">
+        <h4 class="font-heading text-lg text-amber-900 mb-2">Kulit Kayu, Batang &amp; Biji</h4>
+        <div class="space-y-2">
+         <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-amber-900 color-swatch"></span> <span class="text-sm text-stone-600">Kopi → Coklat Tua</span>
+         </div>
+         <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-red-600 color-swatch"></span> <span class="text-sm text-stone-600">Cabai Merah → Merah</span>
+         </div>
+         <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-amber-600 color-swatch"></span> <span class="text-sm text-stone-600">Kayu Secang → Coklat Kemerahan</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Glosarium -->
+     <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 md:p-8">
+      <h3 class="font-heading text-xl text-green-800 mb-6 flex items-center gap-2"><span class="text-2xl">📖</span> Kosa Kata Penting (Glosarium)</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+       <div class="bg-white rounded-xl p-4 shadow-sm">
+        <h5 class="font-semibold text-green-700 mb-1">Ekstrak</h5>
+        <p class="text-sm text-stone-600">Sari, pati, atau kentalan yang diambil dari bahan alam melalui proses pengolahan</p>
+       </div>
+       <div class="bg-white rounded-xl p-4 shadow-sm">
+        <h5 class="font-semibold text-green-700 mb-1">Sintetis</h5>
+        <p class="text-sm text-stone-600">Bahan buatan atau tiruan yang dihasilkan oleh pabrik (bukan alami)</p>
+       </div>
+       <div class="bg-white rounded-xl p-4 shadow-sm">
+        <h5 class="font-semibold text-green-700 mb-1">Eksperimen</h5>
+        <p class="text-sm text-stone-600">Proses percobaan sistematis untuk menemukan hasil atau pengetahuan baru</p>
+       </div>
+       <div class="bg-white rounded-xl p-4 shadow-sm">
+        <h5 class="font-semibold text-green-700 mb-1">Rimpang</h5>
+        <p class="text-sm text-stone-600">Jenis umbi yang tumbuh mendatar di dalam tanah dan bercabang seperti tangan (contoh: kunyit, jahe)</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Praktik Section -->
+   <section id="praktik" class="section-content hidden">
+    <div class="max-w-6xl mx-auto px-4 py-12"><!-- Alat dan Bahan -->
+     <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10 mb-8">
+      <h2 class="font-heading text-2xl md:text-3xl text-green-800 mb-6 text-center">🛠️ Alat dan Bahan Praktik</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8"><!-- Alat -->
+       <div class="bg-stone-50 rounded-xl p-6">
+        <h4 class="font-heading text-lg text-stone-800 mb-4 flex items-center gap-2"><span class="w-8 h-8 bg-green-600 text-white rounded-lg flex items-center justify-center text-sm font-bold">A</span> Alat yang Diperlukan</h4>
+        <div class="space-y-3">
+         <div class="flex items-center gap-3 bg-white p-3 rounded-lg"><span class="text-2xl">🥣</span> <span class="text-stone-700">Wadah pelumatan (blender/parut)</span>
+         </div>
+         <div class="flex items-center gap-3 bg-white p-3 rounded-lg"><span class="text-2xl">🧺</span> <span class="text-stone-700">Penyaring/saringan halus</span>
+         </div>
+         <div class="flex items-center gap-3 bg-white p-3 rounded-lg"><span class="text-2xl">🫙</span> <span class="text-stone-700">Wadah penyimpanan</span>
+         </div>
+         <div class="flex items-center gap-3 bg-white p-3 rounded-lg"><span class="text-2xl">🖌️</span> <span class="text-stone-700">Kuas berbagai ukuran</span>
+         </div>
+         <div class="flex items-center gap-3 bg-white p-3 rounded-lg"><span class="text-2xl">🎨</span> <span class="text-stone-700">Palet warna</span>
+         </div>
+        </div>
+       </div><!-- Bahan -->
+       <div class="bg-amber-50 rounded-xl p-6">
+        <h4 class="font-heading text-lg text-stone-800 mb-4 flex items-center gap-2"><span class="w-8 h-8 bg-amber-600 text-white rounded-lg flex items-center justify-center text-sm font-bold">B</span> Bahan yang Diperlukan</h4>
+        <div class="mb-4">
+         <p class="text-sm text-amber-800 font-semibold mb-2">Bahan Utama:</p>
+         <div class="flex flex-wrap gap-2"><span class="bg-amber-900 text-white px-3 py-1 rounded-full text-sm">☕ Kopi</span> <span class="bg-red-600 text-white px-3 py-1 rounded-full text-sm">🌶️ Cabai Merah</span> <span class="bg-yellow-500 text-white px-3 py-1 rounded-full text-sm">🫚 Kunyit</span> <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">🌿 Daun Suji</span> <span class="bg-blue-800 text-white px-3 py-1 rounded-full text-sm">🍃 Indigofera</span>
+         </div>
+        </div>
+        <div>
+         <p class="text-sm text-amber-800 font-semibold mb-2">Bahan Pendukung:</p>
+         <div class="flex flex-wrap gap-2"><span class="bg-white text-stone-700 px-3 py-1 rounded-full text-sm border">📄 Kertas Gambar</span> <span class="bg-white text-stone-700 px-3 py-1 rounded-full text-sm border">🫒 Minyak Zaitun</span> <span class="bg-white text-stone-700 px-3 py-1 rounded-full text-sm border">💧 Air Bersih</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Langkah-langkah -->
+     <h3 class="font-heading text-2xl text-center text-green-800 mb-8">📝 Langkah Membuat Ekstrak Warna</h3>
+     <div class="space-y-4 mb-12"><!-- Step 1 -->
+      <div class="step-card bg-white rounded-xl p-6 shadow-lg flex flex-col md:flex-row gap-6 items-center">
+       <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-3xl font-bold text-green-700">1</span>
+       </div>
+       <div class="flex-1">
+        <h4 class="font-heading text-lg text-green-800 mb-2">Pelumatan</h4>
+        <p class="text-stone-600">Bahan alam dihancurkan menggunakan blender atau diparut hingga halus. Semakin halus bahan, semakin mudah pigmen warna keluar.</p>
+       </div>
+       <svg viewbox="0 0 100 80" width="100" class="flex-shrink-0"><rect x="30" y="10" width="40" height="50" rx="5" fill="#d1d5db" /> <rect x="35" y="15" width="30" height="35" fill="#22c55e" opacity="0.5" /> <rect x="45" y="60" width="10" height="15" fill="#9ca3af" /> <path d="M35 55 Q50 65 65 55" stroke="#22c55e" stroke-width="2" fill="none" />
+       </svg>
+      </div><!-- Step 2 -->
+      <div class="step-card bg-white rounded-xl p-6 shadow-lg flex flex-col md:flex-row gap-6 items-center">
+       <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-3xl font-bold text-blue-700">2</span>
+       </div>
+       <div class="flex-1">
+        <h4 class="font-heading text-lg text-blue-800 mb-2">Pencampuran</h4>
+        <p class="text-stone-600">Campur hasil lumatan dengan air secukupnya, lalu remas-remas hingga warna keluar dan air berubah warna sesuai bahan.</p>
+       </div>
+       <svg viewbox="0 0 100 80" width="100" class="flex-shrink-0"><ellipse cx="50" cy="60" rx="35" ry="15" fill="#d1d5db" /> <path d="M15 60 L15 30 Q15 20 25 20 L75 20 Q85 20 85 30 L85 60" fill="#e5e7eb" /> <ellipse cx="50" cy="50" rx="30" ry="12" fill="#3b82f6" opacity="0.4" /> <path d="M30 35 Q50 50 70 35" stroke="#22c55e" stroke-width="3" fill="none" opacity="0.6" />
+       </svg>
+      </div><!-- Step 3 -->
+      <div class="step-card bg-white rounded-xl p-6 shadow-lg flex flex-col md:flex-row gap-6 items-center">
+       <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-3xl font-bold text-purple-700">3</span>
+       </div>
+       <div class="flex-1">
+        <h4 class="font-heading text-lg text-purple-800 mb-2">Pengendapan</h4>
+        <p class="text-stone-600">Diamkan campuran semalaman (±12 jam) hingga pigmen warna mengendap di dasar wadah. Air jernih akan berada di bagian atas.</p>
+       </div>
+       <svg viewbox="0 0 100 80" width="100" class="flex-shrink-0"><rect x="25" y="10" width="50" height="60" rx="3" fill="#e5e7eb" /> <rect x="28" y="50" width="44" height="17" fill="#22c55e" opacity="0.8" /> <rect x="28" y="15" width="44" height="35" fill="#bfdbfe" opacity="0.5" /> <text x="50" y="75" text-anchor="middle" font-size="8" fill="#6b7280">
+         🌙 semalam
+        </text>
+       </svg>
+      </div><!-- Step 4 -->
+      <div class="step-card bg-white rounded-xl p-6 shadow-lg flex flex-col md:flex-row gap-6 items-center">
+       <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-3xl font-bold text-amber-700">4</span>
+       </div>
+       <div class="flex-1">
+        <h4 class="font-heading text-lg text-amber-800 mb-2">Pengeringan</h4>
+        <p class="text-stone-600">Buang air jernih di bagian atas dengan hati-hati, lalu jemur endapan pigmen di bawah sinar matahari hingga kering.</p>
+       </div>
+       <svg viewbox="0 0 100 80" width="100" class="flex-shrink-0"><circle cx="50" cy="15" r="12" fill="#fbbf24" /> <g stroke="#fbbf24" stroke-width="2">
+         <line x1="50" y1="30" x2="50" y2="38" />
+         <line x1="65" y1="20" x2="72" y2="25" />
+         <line x1="35" y1="20" x2="28" y2="25" />
+        </g> <rect x="25" y="45" width="50" height="8" rx="2" fill="#d1d5db" /> <rect x="30" y="47" width="40" height="4" fill="#22c55e" />
+       </svg>
+      </div><!-- Step 5 -->
+      <div class="step-card bg-white rounded-xl p-6 shadow-lg flex flex-col md:flex-row gap-6 items-center">
+       <div class="w-20 h-20 bg-rose-100 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-3xl font-bold text-rose-700">5</span>
+       </div>
+       <div class="flex-1">
+        <h4 class="font-heading text-lg text-rose-800 mb-2">Aplikasi</h4>
+        <p class="text-stone-600">Campurkan endapan kering dengan sedikit minyak zaitun sebagai perekat, lalu gunakan untuk melukis di atas kertas gambar.</p>
+       </div>
+       <svg viewbox="0 0 100 80" width="100" class="flex-shrink-0"><rect x="10" y="40" width="50" height="35" fill="#fafaf9" stroke="#d1d5db" /> <path d="M20 55 Q30 45 40 55 Q50 65 45 70" stroke="#22c55e" stroke-width="3" fill="none" /> <path d="M70 70 L90 20" stroke="#a16207" stroke-width="4" /> <ellipse cx="90" cy="18" rx="4" ry="8" fill="#22c55e" />
+       </svg>
+      </div>
+     </div><!-- Tugas Proyek -->
+     <div class="bg-gradient-to-br from-green-600 to-green-800 rounded-2xl p-6 md:p-10 text-white">
+      <h3 class="font-heading text-2xl mb-6 flex items-center gap-3"><span class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">📋</span> Tugas Proyek (Asesmen Formatif)</h3>
+      <div class="bg-white/10 backdrop-blur rounded-xl p-6 mb-6">
+       <p class="text-lg mb-4"><strong>👥 Kelompok:</strong> 4–5 orang</p>
+       <h4 class="font-semibold text-lg mb-3">Instruksi:</h4>
+       <ol class="space-y-3">
+        <li class="flex items-start gap-3"><span class="w-7 h-7 bg-white text-green-700 rounded-full flex items-center justify-center font-bold flex-shrink-0">1</span> <span>Buatlah ekstrak dari 5 bahan: kopi, cabai merah, kunyit, daun suji, dan indigofera</span></li>
+        <li class="flex items-start gap-3"><span class="w-7 h-7 bg-white text-green-700 rounded-full flex items-center justify-center font-bold flex-shrink-0">2</span> <span>Buat sketsa gambar bebas di atas kertas putih</span></li>
+        <li class="flex items-start gap-3"><span class="w-7 h-7 bg-white text-green-700 rounded-full flex items-center justify-center font-bold flex-shrink-0">3</span> <span>Warnai sketsa menggunakan hasil ekstrak yang telah dibuat</span></li>
+        <li class="flex items-start gap-3"><span class="w-7 h-7 bg-white text-green-700 rounded-full flex items-center justify-center font-bold flex-shrink-0">4</span> <span>Presentasikan hasil karya dan proses pembuatannya di depan kelas</span></li>
+       </ol>
+      </div>
+      <div class="flex flex-wrap gap-3"><span class="bg-white/20 px-4 py-2 rounded-full text-sm">⏱️ Waktu: 2-3 Pertemuan</span> <span class="bg-white/20 px-4 py-2 rounded-full text-sm">📊 Penilaian: Proses + Hasil + Presentasi</span>
+      </div>
+     </div>
+    </div>
+   </section><!-- Interaktif Section -->
+   <section id="interaktif" class="section-content hidden">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+     <h2 class="font-heading text-2xl md:text-3xl text-center text-green-800 mb-8">🎮 Aktivitas Interaktif</h2><!-- Color Mixer -->
+     <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10 mb-8">
+      <h3 class="font-heading text-xl text-green-800 mb-4 flex items-center gap-2"><span class="text-2xl">🎨</span> Simulasi Pencampuran Warna Alam</h3>
+      <p class="text-stone-600 mb-6">Pilih bahan alam dan lihat warna yang dihasilkan! Klik bahan untuk menambahkannya ke palet.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+       <div>
+        <p class="font-semibold text-stone-700 mb-3">Pilih Bahan:</p>
+        <div class="grid grid-cols-3 gap-3" id="ingredient-picker"><button onclick="addIngredient('kopi', '#5D4037')" class="ingredient-btn bg-amber-50 hover:bg-amber-100 rounded-xl p-4 text-center transition-all"> <span class="text-3xl block mb-1">☕</span> <span class="text-xs text-stone-600">Kopi</span> </button> <button onclick="addIngredient('cabai', '#C62828')" class="ingredient-btn bg-red-50 hover:bg-red-100 rounded-xl p-4 text-center transition-all"> <span class="text-3xl block mb-1">🌶️</span> <span class="text-xs text-stone-600">Cabai</span> </button> <button onclick="addIngredient('kunyit', '#F9A825')" class="ingredient-btn bg-yellow-50 hover:bg-yellow-100 rounded-xl p-4 text-center transition-all"> <span class="text-3xl block mb-1">🫚</span> <span class="text-xs text-stone-600">Kunyit</span> </button> <button onclick="addIngredient('suji', '#2E7D32')" class="ingredient-btn bg-green-50 hover:bg-green-100 rounded-xl p-4 text-center transition-all"> <span class="text-3xl block mb-1">🌿</span> <span class="text-xs text-stone-600">Daun Suji</span> </button> <button onclick="addIngredient('indigofera', '#1A237E')" class="ingredient-btn bg-blue-50 hover:bg-blue-100 rounded-xl p-4 text-center transition-all"> <span class="text-3xl block mb-1">🍃</span> <span class="text-xs text-stone-600">Indigofera</span> </button> <button onclick="addIngredient('bit', '#880E4F')" class="ingredient-btn bg-pink-50 hover:bg-pink-100 rounded-xl p-4 text-center transition-all"> <span class="text-3xl block mb-1">🥬</span> <span class="text-xs text-stone-600">Bit</span> </button>
+        </div><button onclick="resetMixer()" class="mt-4 bg-stone-200 hover:bg-stone-300 text-stone-700 px-4 py-2 rounded-lg text-sm transition-all"> 🔄 Reset </button>
+       </div>
+       <div>
+        <p class="font-semibold text-stone-700 mb-3">Hasil Campuran:</p>
+        <div id="color-result" class="w-full h-40 rounded-xl bg-stone-100 flex items-center justify-center transition-all duration-500 shadow-inner"><span class="text-stone-400">Pilih bahan untuk memulai</span>
+        </div>
+        <div id="selected-ingredients" class="mt-3 flex flex-wrap gap-2">
+        </div>
+       </div>
+      </div>
+     </div><!-- Matching Game -->
+     <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10 mb-8">
+      <h3 class="font-heading text-xl text-green-800 mb-4 flex items-center gap-2"><span class="text-2xl">🔗</span> Cocokkan Bahan dengan Warna</h3>
+      <p class="text-stone-600 mb-6">Klik bahan di kiri, lalu klik warna yang sesuai di kanan!</p>
+      <div id="matching-game" class="grid grid-cols-2 gap-8">
+       <div class="space-y-3" id="match-items"><button onclick="selectMatch('kopi')" data-match="kopi" class="match-item w-full bg-stone-50 hover:bg-stone-100 rounded-xl p-4 text-left flex items-center gap-3 transition-all border-2 border-transparent"> <span class="text-2xl">☕</span> <span class="font-medium">Kopi</span> </button> <button onclick="selectMatch('kunyit')" data-match="kunyit" class="match-item w-full bg-stone-50 hover:bg-stone-100 rounded-xl p-4 text-left flex items-center gap-3 transition-all border-2 border-transparent"> <span class="text-2xl">🫚</span> <span class="font-medium">Kunyit</span> </button> <button onclick="selectMatch('indigofera')" data-match="indigofera" class="match-item w-full bg-stone-50 hover:bg-stone-100 rounded-xl p-4 text-left flex items-center gap-3 transition-all border-2 border-transparent"> <span class="text-2xl">🍃</span> <span class="font-medium">Indigofera</span> </button> <button onclick="selectMatch('cabai')" data-match="cabai" class="match-item w-full bg-stone-50 hover:bg-stone-100 rounded-xl p-4 text-left flex items-center gap-3 transition-all border-2 border-transparent"> <span class="text-2xl">🌶️</span> <span class="font-medium">Cabai Merah</span> </button>
+       </div>
+       <div class="space-y-3" id="match-colors"><button onclick="selectColor('kunyit')" data-color="kunyit" class="color-item w-full rounded-xl p-4 text-left flex items-center gap-3 transition-all border-2 border-transparent" style="background: #F9A825;"> <span class="w-8 h-8 rounded-full bg-white/30"></span> <span class="font-medium text-white">Kuning</span> </button> <button onclick="selectColor('indigofera')" data-color="indigofera" class="color-item w-full rounded-xl p-4 text-left flex items-center gap-3 transition-all border-2 border-transparent" style="background: #1A237E;"> <span class="w-8 h-8 rounded-full bg-white/30"></span> <span class="font-medium text-white">Biru Nila</span> </button> <button onclick="selectColor('kopi')" data-color="kopi" class="color-item w-full rounded-xl p-4 text-left flex items-center gap-3 transition-all border-2 border-transparent" style="background: #5D4037;"> <span class="w-8 h-8 rounded-full bg-white/30"></span> <span class="font-medium text-white">Coklat</span> </button> <button onclick="selectColor('cabai')" data-color="cabai" class="color-item w-full rounded-xl p-4 text-left flex items-center gap-3 transition-all border-2 border-transparent" style="background: #C62828;"> <span class="w-8 h-8 rounded-full bg-white/30"></span> <span class="font-medium text-white">Merah</span> </button>
+       </div>
+      </div>
+      <div id="match-feedback" class="mt-4 text-center font-semibold"></div><button onclick="resetMatchGame()" class="mt-4 bg-stone-200 hover:bg-stone-300 text-stone-700 px-4 py-2 rounded-lg text-sm transition-all mx-auto block"> 🔄 Reset Game </button>
+     </div><!-- Process Ordering -->
+     <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10">
+      <h3 class="font-heading text-xl text-green-800 mb-4 flex items-center gap-2"><span class="text-2xl">📝</span> Urutkan Langkah Pembuatan Ekstrak</h3>
+      <p class="text-stone-600 mb-6">Klik langkah-langkah di bawah sesuai urutan yang benar (1-5)!</p>
+      <div id="ordering-game" class="space-y-3"><button onclick="selectOrder(this, 'aplikasi')" data-step="aplikasi" class="order-item w-full bg-stone-50 hover:bg-stone-100 rounded-xl p-4 text-left flex items-center gap-4 transition-all border-2 border-transparent"> <span class="order-number w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center font-bold text-stone-500">?</span>
+        <div><span class="font-medium">Aplikasi</span>
+         <p class="text-sm text-stone-500">Campurkan dengan minyak zaitun dan gunakan untuk melukis</p>
+        </div></button> <button onclick="selectOrder(this, 'pengendapan')" data-step="pengendapan" class="order-item w-full bg-stone-50 hover:bg-stone-100 rounded-xl p-4 text-left flex items-center gap-4 transition-all border-2 border-transparent"> <span class="order-number w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center font-bold text-stone-500">?</span>
+        <div><span class="font-medium">Pengendapan</span>
+         <p class="text-sm text-stone-500">Diamkan semalam hingga pigmen mengendap</p>
+        </div></button> <button onclick="selectOrder(this, 'pelumatan')" data-step="pelumatan" class="order-item w-full bg-stone-50 hover:bg-stone-100 rounded-xl p-4 text-left flex items-center gap-4 transition-all border-2 border-transparent"> <span class="order-number w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center font-bold text-stone-500">?</span>
+        <div><span class="font-medium">Pelumatan</span>
+         <p class="text-sm text-stone-500">Hancurkan bahan dengan blender atau parut</p>
+        </div></button> <button onclick="selectOrder(this, 'pengeringan')" data-step="pengeringan" class="order-item w-full bg-stone-50 hover:bg-stone-100 rounded-xl p-4 text-left flex items-center gap-4 transition-all border-2 border-transparent"> <span class="order-number w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center font-bold text-stone-500">?</span>
+        <div><span class="font-medium">Pengeringan</span>
+         <p class="text-sm text-stone-500">Jemur endapan di bawah sinar matahari</p>
+        </div></button> <button onclick="selectOrder(this, 'pencampuran')" data-step="pencampuran" class="order-item w-full bg-stone-50 hover:bg-stone-100 rounded-xl p-4 text-left flex items-center gap-4 transition-all border-2 border-transparent"> <span class="order-number w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center font-bold text-stone-500">?</span>
+        <div><span class="font-medium">Pencampuran</span>
+         <p class="text-sm text-stone-500">Campur dengan air dan remas hingga warna keluar</p>
+        </div></button>
+      </div>
+      <div id="order-feedback" class="mt-4 text-center font-semibold"></div>
+      <div class="flex gap-3 justify-center mt-4"><button onclick="checkOrder()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-all"> ✓ Cek Jawaban </button> <button onclick="resetOrder()" class="bg-stone-200 hover:bg-stone-300 text-stone-700 px-4 py-2 rounded-lg transition-all"> 🔄 Reset </button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Quiz HOTS Section -->
+   <section id="quiz" class="section-content hidden">
+    <div class="max-w-4xl mx-auto px-4 py-12">
+     <div class="text-center mb-8">
+      <h2 class="font-heading text-2xl md:text-3xl text-green-800 mb-2">🧠 Kuis HOTS</h2>
+      <p class="text-stone-600">Higher Order Thinking Skills - Soal Berpikir Tingkat Tinggi</p>
+     </div>
+     <div id="quiz-container"><!-- Quiz will be rendered here -->
+     </div>
+     <div id="quiz-result" class="hidden bg-white rounded-2xl shadow-xl p-8 text-center">
+      <div id="result-icon" class="text-6xl mb-4"></div>
+      <h3 id="result-title" class="font-heading text-2xl mb-2"></h3>
+      <p id="result-score" class="text-xl text-stone-600 mb-4"></p>
+      <p id="result-message" class="text-stone-500 mb-6"></p><button onclick="restartQuiz()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl transition-all"> 🔄 Ulangi Kuis </button>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="bg-green-900 text-white py-8">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+     <div class="flex items-center justify-center gap-2 mb-4"><span class="text-2xl">🌿</span> <span class="font-heading text-lg">Berkarya dengan Bahan Alam</span>
+     </div>
+     <p class="text-green-300 text-sm mb-2">Unit IV - Seni Rupa SMP Kelas VIII</p>
+     <p class="text-green-400 text-xs">© Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi Republik Indonesia</p>
+     <div class="mt-6 pt-6 border-t border-green-800">
+      <p class="text-green-300 text-sm italic">"Eksperimen warna alam melatih kita berpikir kreatif, menghargai budaya masa lalu, dan lebih peduli terhadap kelestarian lingkungan."</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Config and SDK initialization
+    const defaultConfig = {
+      main_title: "Berkarya dengan Bahan Alam",
+      subtitle: "Mengenal dan Mengolah Bahan Warna dari Alam"
+    };
+
+    let config = { ...defaultConfig };
+
+    // Element SDK initialization
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          document.getElementById('main-title').textContent = config.main_title;
+          document.getElementById('subtitle').textContent = config.subtitle;
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["main_title", config.main_title || defaultConfig.main_title],
+          ["subtitle", config.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
+
+    // Navigation
+    function showSection(sectionId) {
+      document.querySelectorAll('.section-content').forEach(section => {
+        section.classList.add('hidden');
+      });
+      document.getElementById(sectionId).classList.remove('hidden');
+      
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.section === sectionId) {
+          btn.classList.add('active');
+        }
+      });
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      if (sectionId === 'quiz' && !quizInitialized) {
+        initQuiz();
+      }
+    }
+
+    // Color Mixer
+    let selectedIngredients = [];
+    const ingredientColors = {
+      kopi: { color: '#5D4037', name: 'Kopi' },
+      cabai: { color: '#C62828', name: 'Cabai' },
+      kunyit: { color: '#F9A825', name: 'Kunyit' },
+      suji: { color: '#2E7D32', name: 'Daun Suji' },
+      indigofera: { color: '#1A237E', name: 'Indigofera' },
+      bit: { color: '#880E4F', name: 'Bit' }
+    };
+
+    function addIngredient(name, color) {
+      if (selectedIngredients.length >= 3) {
+        return;
+      }
+      if (!selectedIngredients.includes(name)) {
+        selectedIngredients.push(name);
+        updateColorResult();
+      }
+    }
+
+    function updateColorResult() {
+      const resultDiv = document.getElementById('color-result');
+      const selectedDiv = document.getElementById('selected-ingredients');
+      
+      if (selectedIngredients.length === 0) {
+        resultDiv.style.background = '#f5f5f4';
+        resultDiv.innerHTML = '<span class="text-stone-400">Pilih bahan untuk memulai</span>';
+        selectedDiv.innerHTML = '';
+        return;
+      }
+      
+      // Mix colors
+      let r = 0, g = 0, b = 0;
+      selectedIngredients.forEach(ing => {
+        const hex = ingredientColors[ing].color;
+        r += parseInt(hex.slice(1, 3), 16);
+        g += parseInt(hex.slice(3, 5), 16);
+        b += parseInt(hex.slice(5, 7), 16);
+      });
+      
+      r = Math.round(r / selectedIngredients.length);
+      g = Math.round(g / selectedIngredients.length);
+      b = Math.round(b / selectedIngredients.length);
+      
+      const mixedColor = `rgb(${r}, ${g}, ${b})`;
+      resultDiv.style.background = mixedColor;
+      resultDiv.innerHTML = `<span class="text-white font-semibold text-lg drop-shadow">Warna Campuran</span>`;
+      
+      // Update selected list
+      selectedDiv.innerHTML = selectedIngredients.map(ing => 
+        `<span class="inline-flex items-center gap-1 bg-white rounded-full px-3 py-1 text-sm shadow">
+          <span class="w-4 h-4 rounded-full" style="background: ${ingredientColors[ing].color}"></span>
+          ${ingredientColors[ing].name}
+        </span>`
+      ).join('');
+    }
+
+    function resetMixer() {
+      selectedIngredients = [];
+      updateColorResult();
+    }
+
+    // Matching Game
+    let selectedMatch = null;
+    let matchedPairs = [];
+
+    function selectMatch(item) {
+      if (matchedPairs.includes(item)) return;
+      
+      document.querySelectorAll('.match-item').forEach(el => {
+        el.classList.remove('border-green-500', 'bg-green-50');
+      });
+      
+      const btn = document.querySelector(`[data-match="${item}"]`);
+      btn.classList.add('border-green-500', 'bg-green-50');
+      selectedMatch = item;
+    }
+
+    function selectColor(color) {
+      if (!selectedMatch || matchedPairs.includes(selectedMatch)) return;
+      
+      const feedbackDiv = document.getElementById('match-feedback');
+      
+      if (selectedMatch === color) {
+        matchedPairs.push(selectedMatch);
+        
+        const matchBtn = document.querySelector(`[data-match="${selectedMatch}"]`);
+        const colorBtn = document.querySelector(`[data-color="${color}"]`);
+        
+        matchBtn.classList.add('bg-green-100', 'border-green-500');
+        matchBtn.classList.remove('hover:bg-stone-100');
+        colorBtn.classList.add('border-white', 'border-4');
+        
+        feedbackDiv.innerHTML = '<span class="text-green-600">✓ Benar! Pasangan cocok!</span>';
+        
+        if (matchedPairs.length === 4) {
+          feedbackDiv.innerHTML = '<span class="text-green-600 text-lg">🎉 Selamat! Semua pasangan berhasil dicocokkan!</span>';
+        }
+      } else {
+        feedbackDiv.innerHTML = '<span class="text-red-600">✗ Kurang tepat, coba lagi!</span>';
+      }
+      
+      selectedMatch = null;
+      document.querySelectorAll('.match-item').forEach(el => {
+        if (!matchedPairs.includes(el.dataset.match)) {
+          el.classList.remove('border-green-500', 'bg-green-50');
+        }
+      });
+    }
+
+    function resetMatchGame() {
+      selectedMatch = null;
+      matchedPairs = [];
+      
+      document.querySelectorAll('.match-item').forEach(el => {
+        el.classList.remove('bg-green-100', 'border-green-500', 'bg-green-50');
+        el.classList.add('hover:bg-stone-100');
+      });
+      
+      document.querySelectorAll('.color-item').forEach(el => {
+        el.classList.remove('border-white', 'border-4');
+      });
+      
+      document.getElementById('match-feedback').innerHTML = '';
+    }
+
+    // Ordering Game
+    let orderSelections = [];
+    const correctOrder = ['pelumatan', 'pencampuran', 'pengendapan', 'pengeringan', 'aplikasi'];
+
+    function selectOrder(btn, step) {
+      if (orderSelections.includes(step)) return;
+      
+      orderSelections.push(step);
+      const orderNum = orderSelections.length;
+      
+      const numberSpan = btn.querySelector('.order-number');
+      numberSpan.textContent = orderNum;
+      numberSpan.classList.remove('bg-stone-200', 'text-stone-500');
+      numberSpan.classList.add('bg-green-600', 'text-white');
+      
+      btn.classList.add('border-green-500');
+    }
+
+    function checkOrder() {
+      const feedbackDiv = document.getElementById('order-feedback');
+      
+      if (orderSelections.length < 5) {
+        feedbackDiv.innerHTML = '<span class="text-amber-600">⚠️ Pilih semua langkah terlebih dahulu!</span>';
+        return;
+      }
+      
+      let correct = true;
+      for (let i = 0; i < 5; i++) {
+        if (orderSelections[i] !== correctOrder[i]) {
+          correct = false;
+          break;
+        }
+      }
+      
+      if (correct) {
+        feedbackDiv.innerHTML = '<span class="text-green-600 text-lg">🎉 Benar! Urutan sudah tepat!</span>';
+        document.querySelectorAll('.order-item').forEach(btn => {
+          btn.classList.add('bg-green-50');
+        });
+      } else {
+        feedbackDiv.innerHTML = '<span class="text-red-600">✗ Urutan belum tepat. Coba lagi!</span>';
+      }
+    }
+
+    function resetOrder() {
+      orderSelections = [];
+      
+      document.querySelectorAll('.order-item').forEach(btn => {
+        const numberSpan = btn.querySelector('.order-number');
+        numberSpan.textContent = '?';
+        numberSpan.classList.add('bg-stone-200', 'text-stone-500');
+        numberSpan.classList.remove('bg-green-600', 'text-white');
+        btn.classList.remove('border-green-500', 'bg-green-50');
+      });
+      
+      document.getElementById('order-feedback').innerHTML = '';
+    }
+
+    // HOTS Quiz
+    const quizQuestions = [
+      {
+        id: 1,
+        type: 'analysis',
+        question: 'Seorang siswa membuat ekstrak warna dari kunyit, namun setelah diaplikasikan pada kertas, warna yang dihasilkan cepat pudar dalam beberapa hari. Apa yang PALING MUNGKIN menjadi penyebab masalah ini?',
+        options: [
+          'Kunyit yang digunakan sudah tidak segar',
+          'Tidak menggunakan bahan perekat seperti minyak zaitun',
+          'Proses pengendapan terlalu singkat',
+          'Kertas yang digunakan terlalu tebal'
+        ],
+        correct: 1,
+        explanation: 'Minyak zaitun berfungsi sebagai perekat (binder) yang membantu pigmen warna menempel lebih kuat pada kertas dan melindungi dari oksidasi. Tanpa bahan perekat, pigmen akan mudah pudar karena tidak terikat dengan baik pada media.'
+      },
+      {
+        id: 2,
+        type: 'evaluation',
+        question: 'Dalam konteks pelestarian lingkungan, mengapa penggunaan pewarna alami dianggap lebih baik dibandingkan pewarna sintetis? Manakah pernyataan yang PALING TEPAT?',
+        options: [
+          'Pewarna alami lebih mudah didapat di toko',
+          'Pewarna alami menghasilkan warna yang lebih cerah',
+          'Pewarna alami dapat terurai secara alami dan tidak mencemari lingkungan',
+          'Pewarna alami lebih murah harganya'
+        ],
+        correct: 2,
+        explanation: 'Pewarna alami bersifat biodegradable (dapat terurai secara alami) sehingga tidak meninggalkan residu berbahaya di lingkungan. Pewarna sintetis seringkali mengandung bahan kimia yang sulit terurai dan dapat mencemari tanah serta air.'
+      },
+      {
+        id: 3,
+        type: 'synthesis',
+        question: 'Jika kamu ingin membuat lukisan dengan warna-warna yang mewakili suasana senja (oranye, merah, kuning), kombinasi bahan alam apa yang PALING TEPAT digunakan?',
+        options: [
+          'Daun suji, indigofera, dan kopi',
+          'Kunyit, cabai merah, dan wortel',
+          'Kopi, bit, dan daun suji',
+          'Indigofera, kunyit, dan kopi'
+        ],
+        correct: 1,
+        explanation: 'Kunyit menghasilkan warna kuning, cabai merah menghasilkan warna merah, dan wortel menghasilkan warna oranye. Kombinasi ketiganya sempurna untuk menciptakan gradasi warna senja yang hangat.'
+      },
+      {
+        id: 4,
+        type: 'analysis',
+        question: 'Perhatikan proses pembuatan ekstrak warna berikut:\n1. Pelumatan → 2. Pencampuran → 3. Pengendapan → 4. Pengeringan → 5. Aplikasi\n\nMengapa tahap pengendapan (diamkan semalam) sangat penting dan tidak bisa dilewati?',
+        options: [
+          'Agar warna menjadi lebih terang',
+          'Agar pigmen warna terpisah dari air dan menghasilkan konsentrasi warna yang lebih pekat',
+          'Agar bahan menjadi lebih lunak',
+          'Agar bakteri dapat berkembang dan mengubah warna'
+        ],
+        correct: 1,
+        explanation: 'Pengendapan memungkinkan partikel pigmen yang lebih berat turun ke dasar wadah, sementara air naik ke atas. Proses ini menghasilkan ekstrak warna yang lebih pekat dan murni. Tanpa pengendapan, pigmen akan tetap tersebar dalam air dan menghasilkan warna yang pucat.'
+      },
+      {
+        id: 5,
+        type: 'creation',
+        question: 'Seorang seniman ingin menciptakan karya seni yang mengkampanyekan pelestarian lingkungan menggunakan teknik pewarna alami. Pendekatan mana yang PALING EFEKTIF untuk menyampaikan pesan tersebut?',
+        options: [
+          'Membuat lukisan dengan pewarna sintetis lalu menambahkan label "ramah lingkungan"',
+          'Membuat karya menggunakan pewarna alami dan mendokumentasikan seluruh proses pembuatannya dari pengumpulan bahan hingga hasil akhir',
+          'Membeli pewarna alami dari toko dan langsung melukis',
+          'Membuat lukisan dengan tema alam menggunakan cat akrilik'
+        ],
+        correct: 1,
+        explanation: 'Dengan mendokumentasikan seluruh proses, seniman tidak hanya menghasilkan karya, tetapi juga mengedukasi masyarakat tentang proses pembuatan pewarna alami yang ramah lingkungan. Ini menciptakan dampak ganda: karya seni yang indah dan pesan edukasi yang kuat.'
+      },
+      {
+        id: 6,
+        type: 'evaluation',
+        question: 'Dalam proyek kelompok membuat pewarna alami, salah satu anggota mengusulkan untuk menggunakan blender elektrik agar lebih cepat, sementara anggota lain ingin menggunakan cara tradisional dengan diparut. Pertimbangan apa yang PALING PENTING dalam mengambil keputusan ini?',
+        options: [
+          'Memilih yang paling menghemat waktu saja',
+          'Mempertimbangkan ketersediaan alat, hasil yang diinginkan, dan nilai pembelajaran dari proses tradisional',
+          'Selalu memilih cara modern karena lebih efisien',
+          'Memilih berdasarkan pendapat ketua kelompok saja'
+        ],
+        correct: 1,
+        explanation: 'Pengambilan keputusan yang baik mempertimbangkan berbagai aspek: efisiensi waktu, kualitas hasil (blender mungkin menghasilkan tekstur berbeda dengan parutan), dan nilai edukatif (memahami cara tradisional nenek moyang). Keputusan kolektif yang mempertimbangkan semua faktor akan menghasilkan pembelajaran yang lebih bermakna.'
+      }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = [];
+    let quizInitialized = false;
+
+    function initQuiz() {
+      quizInitialized = true;
+      currentQuestion = 0;
+      userAnswers = [];
+      document.getElementById('quiz-result').classList.add('hidden');
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const container = document.getElementById('quiz-container');
+      const q = quizQuestions[currentQuestion];
+      
+      const typeLabels = {
+        analysis: '🔍 Analisis',
+        evaluation: '⚖️ Evaluasi',
+        synthesis: '🔗 Sintesis',
+        creation: '💡 Kreasi'
+      };
+      
+      container.innerHTML = `
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 fade-in-up">
+          <div class="flex items-center justify-between mb-6">
+            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+              ${typeLabels[q.type]}
+            </span>
+            <span class="text-stone-500 text-sm">
+              Soal ${currentQuestion + 1} dari ${quizQuestions.length}
+            </span>
+          </div>
+          
+          <div class="mb-2 bg-stone-100 rounded-full h-2">
+            <div class="bg-green-600 h-2 rounded-full transition-all" style="width: ${((currentQuestion + 1) / quizQuestions.length) * 100}%"></div>
+          </div>
+          
+          <h3 class="text-lg md:text-xl text-stone-800 mb-6 leading-relaxed whitespace-pre-line">${q.question}</h3>
+          
+          <div class="space-y-3 mb-6" id="options-container">
+            ${q.options.map((opt, idx) => `
+              <button onclick="selectAnswer(${idx})" class="quiz-option w-full text-left p-4 rounded-xl border-2 border-stone-200 flex items-start gap-3" data-index="${idx}">
+                <span class="w-8 h-8 bg-stone-100 rounded-full flex items-center justify-center font-semibold flex-shrink-0">${String.fromCharCode(65 + idx)}</span>
+                <span class="text-stone-700">${opt}</span>
+              </button>
+            `).join('')}
+          </div>
+          
+          <div id="answer-feedback" class="hidden mb-6 p-4 rounded-xl"></div>
+          
+          <div class="flex justify-between items-center">
+            <button onclick="prevQuestion()" class="px-4 py-2 text-stone-600 hover:text-stone-800 ${currentQuestion === 0 ? 'invisible' : ''}" ${currentQuestion === 0 ? 'disabled' : ''}>
+              ← Sebelumnya
+            </button>
+            <button id="next-btn" onclick="nextQuestion()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-xl transition-all hidden">
+              ${currentQuestion === quizQuestions.length - 1 ? 'Lihat Hasil' : 'Selanjutnya →'}
+            </button>
+          </div>
+        </div>
+      `;
+      
+      // Restore previous answer if exists
+      if (userAnswers[currentQuestion] !== undefined) {
+        showAnswerFeedback(userAnswers[currentQuestion]);
+      }
+    }
+
+    function selectAnswer(index) {
+      userAnswers[currentQuestion] = index;
+      showAnswerFeedback(index);
+    }
+
+    function showAnswerFeedback(selectedIndex) {
+      const q = quizQuestions[currentQuestion];
+      const options = document.querySelectorAll('.quiz-option');
+      const feedback = document.getElementById('answer-feedback');
+      const nextBtn = document.getElementById('next-btn');
+      
+      options.forEach((opt, idx) => {
+        opt.classList.remove('selected', 'correct', 'incorrect');
+        if (idx === selectedIndex) {
+          opt.classList.add(idx === q.correct ? 'correct' : 'incorrect');
+        }
+        if (idx === q.correct) {
+          opt.classList.add('correct');
+        }
+      });
+      
+      feedback.classList.remove('hidden');
+      if (selectedIndex === q.correct) {
+        feedback.className = 'mb-6 p-4 rounded-xl bg-green-50 border border-green-200';
+        feedback.innerHTML = `
+          <p class="text-green-700 font-semibold mb-2">✓ Benar!</p>
+          <p class="text-green-600 text-sm">${q.explanation}</p>
+        `;
+      } else {
+        feedback.className = 'mb-6 p-4 rounded-xl bg-red-50 border border-red-200';
+        feedback.innerHTML = `
+          <p class="text-red-700 font-semibold mb-2">✗ Kurang Tepat</p>
+          <p class="text-red-600 text-sm">Jawaban yang benar adalah <strong>${String.fromCharCode(65 + q.correct)}</strong>.</p>
+          <p class="text-stone-600 text-sm mt-2">${q.explanation}</p>
+        `;
+      }
+      
+      nextBtn.classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    function showResults() {
+      const container = document.getElementById('quiz-container');
+      const resultDiv = document.getElementById('quiz-result');
+      
+      let correctCount = 0;
+      userAnswers.forEach((answer, idx) => {
+        if (answer === quizQuestions[idx].correct) {
+          correctCount++;
+        }
+      });
+      
+      const percentage = (correctCount / quizQuestions.length) * 100;
+      
+      container.innerHTML = '';
+      resultDiv.classList.remove('hidden');
+      
+      const resultIcon = document.getElementById('result-icon');
+      const resultTitle = document.getElementById('result-title');
+      const resultScore = document.getElementById('result-score');
+      const resultMessage = document.getElementById('result-message');
+      
+      resultScore.textContent = `Skor: ${correctCount}/${quizQuestions.length} (${percentage.toFixed(0)}%)`;
+      
+      if (percentage >= 80) {
+        resultIcon.textContent = '🏆';
+        resultTitle.textContent = 'Luar Biasa!';
+        resultTitle.className = 'font-heading text-2xl mb-2 text-green-700';
+        resultMessage.textContent = 'Kamu menunjukkan pemahaman yang sangat baik tentang pewarna alami dan kemampuan berpikir tingkat tinggi yang luar biasa!';
+      } else if (percentage >= 60) {
+        resultIcon.textContent = '👍';
+        resultTitle.textContent = 'Bagus!';
+        resultTitle.className = 'font-heading text-2xl mb-2 text-blue-700';
+        resultMessage.textContent = 'Pemahamanmu sudah baik! Terus pelajari materi untuk meningkatkan kemampuan analisis dan evaluasi.';
+      } else {
+        resultIcon.textContent = '💪';
+        resultTitle.textContent = 'Terus Semangat!';
+        resultTitle.className = 'font-heading text-2xl mb-2 text-amber-700';
+        resultMessage.textContent = 'Jangan menyerah! Pelajari kembali materi dan coba lagi. Setiap pembelajaran adalah langkah menuju keberhasilan.';
+      }
+    }
+
+    function restartQuiz() {
+      initQuiz();
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c8fef28b71d8093',t:'MTc3MDI2ODU3MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

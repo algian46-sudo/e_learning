@@ -1,0 +1,1581 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pertumbuhan dan Perkembangan Makhluk Hidup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Quicksand:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Nunito', sans-serif;
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:hover {
+      transform: translateX(5px);
+    }
+    
+    .nav-item.active {
+      background: linear-gradient(90deg, #10b981, #059669);
+      color: white;
+      border-radius: 12px;
+    }
+    
+    .content-card {
+      animation: fadeInUp 0.5s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .seed-animation {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .growth-bar {
+      transition: width 1s ease-out;
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    
+    .quiz-option:hover {
+      transform: scale(1.02);
+    }
+    
+    .quiz-option.correct {
+      background: linear-gradient(135deg, #10b981, #059669) !important;
+      color: white;
+    }
+    
+    .quiz-option.incorrect {
+      background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+      color: white;
+    }
+    
+    .interactive-diagram {
+      cursor: pointer;
+    }
+    
+    .interactive-diagram:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .tooltip {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .progress-ring {
+      transition: stroke-dashoffset 0.5s ease;
+    }
+    
+    .leaf-icon {
+      animation: sway 3s ease-in-out infinite;
+    }
+    
+    @keyframes sway {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+    
+    .water-drop {
+      animation: drop 2s ease-in-out infinite;
+    }
+    
+    @keyframes drop {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(10px); opacity: 0.7; }
+    }
+    
+    .sun-rays {
+      animation: rotate 20s linear infinite;
+    }
+    
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 overflow-auto">
+  <div id="app-container" class="w-full h-full flex flex-col lg:flex-row"><!-- Sidebar Navigation -->
+   <nav id="sidebar" class="lg:w-72 bg-white/80 backdrop-blur-lg shadow-xl lg:h-full p-4 lg:p-6 flex-shrink-0">
+    <div class="flex items-center gap-3 mb-6">
+     <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
+      <svg class="w-7 h-7 text-white leaf-icon" fill="currentColor" viewbox="0 0 24 24"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z" />
+      </svg>
+     </div>
+     <div>
+      <h1 id="main-title" class="text-lg font-bold text-gray-800">Biologi Kelas IX</h1>
+      <p id="subtitle" class="text-xs text-emerald-600 font-medium">Pertumbuhan &amp; Perkembangan</p>
+     </div>
+    </div><!-- Progress Indicator -->
+    <div class="bg-emerald-50 rounded-xl p-3 mb-5">
+     <div class="flex items-center justify-between mb-2"><span class="text-xs font-semibold text-emerald-700">Progress Belajar</span> <span id="progress-text" class="text-xs font-bold text-emerald-600">0/8</span>
+     </div>
+     <div class="w-full h-2 bg-emerald-200 rounded-full overflow-hidden">
+      <div id="progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-green-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+     </div>
+    </div><!-- Navigation Menu -->
+    <div class="space-y-2" id="nav-menu"><button onclick="showSection(0)" class="nav-item active w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 text-sm font-semibold"> <span class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-600">🌱</span> <span>Pembuka</span> </button> <button onclick="showSection(1)" class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 text-sm font-semibold text-gray-600 hover:bg-emerald-50"> <span class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">🌰</span> <span>Rahasia dalam Biji</span> </button> <button onclick="showSection(2)" class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 text-sm font-semibold text-gray-600 hover:bg-emerald-50"> <span class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">🌳</span> <span>Pertumbuhan Primer &amp; Sekunder</span> </button> <button onclick="showSection(3)" class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 text-sm font-semibold text-gray-600 hover:bg-emerald-50"> <span class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">🔬</span> <span>Faktor Pertumbuhan</span> </button> <button onclick="showSection(4)" class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 text-sm font-semibold text-gray-600 hover:bg-emerald-50"> <span class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">🦋</span> <span>Metamorfosis</span> </button> <button onclick="showSection(5)" class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 text-sm font-semibold text-gray-600 hover:bg-emerald-50"> <span class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">👶</span> <span>Studi Kasus: Stunting</span> </button> <button onclick="showSection(6)" class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 text-sm font-semibold text-gray-600 hover:bg-emerald-50"> <span class="w-8 h-8 bg-cyan-100 rounded-lg flex items-center justify-center">📊</span> <span>Aktivitas Interaktif</span> </button> <button onclick="showSection(7)" class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 text-sm font-semibold text-gray-600 hover:bg-emerald-50"> <span class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">📝</span> <span>Kuis HOTS (10 Soal)</span> </button>
+    </div>
+   </nav><!-- Main Content Area -->
+   <main class="flex-1 p-4 lg:p-8 overflow-auto">
+    <div id="content-area" class="max-w-4xl mx-auto"><!-- Section 0: Pembuka -->
+     <section id="section-0" class="content-card">
+      <div class="bg-white rounded-3xl shadow-xl overflow-hidden"><!-- Hero Banner -->
+       <div class="relative h-48 lg:h-64 bg-gradient-to-br from-emerald-400 via-green-500 to-teal-600 flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+         <svg class="w-full h-full" viewbox="0 0 100 100" preserveaspectratio="none"><defs>
+           <pattern id="leaves" x="0" y="0" width="20" height="20" patternunits="userSpaceOnUse">
+            <circle cx="10" cy="10" r="8" fill="white" opacity="0.1" />
+           </pattern>
+          </defs> <rect fill="url(#leaves)" width="100" height="100" />
+         </svg>
+        </div>
+        <div class="text-center z-10 px-4">
+         <h2 class="text-2xl lg:text-4xl font-extrabold text-white mb-2 drop-shadow-lg">🌱 Pertumbuhan vs Perkembangan</h2>
+         <p class="text-emerald-100 text-sm lg:text-base">Memahami perbedaan mendasar kedua proses kehidupan</p>
+        </div>
+       </div>
+       <div class="p-6 lg:p-8"><!-- Opening Question -->
+        <div class="bg-gradient-to-r from-amber-50 to-yellow-50 border-l-4 border-amber-400 rounded-r-2xl p-5 mb-8">
+         <p class="text-amber-800 font-semibold flex items-start gap-2"><span class="text-2xl">🤔</span> <span>Pernahkah kamu bertanya-tanya bagaimana biji kecil bisa berubah menjadi pohon raksasa? Mari kita ungkap rahasianya!</span></p>
+        </div><!-- Comparison Cards -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8"><!-- Pertumbuhan Card -->
+         <div class="bg-gradient-to-br from-emerald-50 to-green-100 rounded-2xl p-6 border-2 border-emerald-200 hover:shadow-lg transition-all">
+          <div class="flex items-center gap-3 mb-4">
+           <div class="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center shadow-lg"><span class="text-3xl">📏</span>
+           </div>
+           <h3 class="text-xl font-bold text-emerald-800">PERTUMBUHAN</h3>
+          </div>
+          <p class="text-gray-700 mb-4">Proses bertambahnya <strong>ukuran</strong> (tinggi, lebar, massa) yang bersifat <span class="bg-emerald-200 px-2 py-0.5 rounded font-semibold">KUANTITATIF</span></p><!-- Visual Example -->
+          <div class="bg-white rounded-xl p-4 mt-4">
+           <p class="text-xs text-gray-500 mb-2 font-medium">Contoh Pertumbuhan:</p>
+           <div class="flex items-end justify-around gap-2">
+            <div class="text-center">
+             <div class="w-8 h-12 bg-gradient-to-t from-emerald-600 to-emerald-400 rounded-t-lg mx-auto"></div>
+             <p class="text-xs mt-1">10 cm</p>
+            </div>
+            <div class="text-xl text-gray-400">
+             →
+            </div>
+            <div class="text-center">
+             <div class="w-10 h-20 bg-gradient-to-t from-emerald-600 to-emerald-400 rounded-t-lg mx-auto"></div>
+             <p class="text-xs mt-1">25 cm</p>
+            </div>
+            <div class="text-xl text-gray-400">
+             →
+            </div>
+            <div class="text-center">
+             <div class="w-12 h-28 bg-gradient-to-t from-emerald-600 to-emerald-400 rounded-t-lg mx-auto"></div>
+             <p class="text-xs mt-1">50 cm</p>
+            </div>
+           </div>
+          </div>
+          <div class="mt-4 space-y-2">
+           <div class="flex items-center gap-2 text-sm text-gray-600"><span class="text-emerald-500">✓</span> Dapat diukur dengan angka
+           </div>
+           <div class="flex items-center gap-2 text-sm text-gray-600"><span class="text-emerald-500">✓</span> Bersifat irreversibel (tidak dapat balik)
+           </div>
+          </div>
+         </div><!-- Perkembangan Card -->
+         <div class="bg-gradient-to-br from-purple-50 to-pink-100 rounded-2xl p-6 border-2 border-purple-200 hover:shadow-lg transition-all">
+          <div class="flex items-center gap-3 mb-4">
+           <div class="w-14 h-14 bg-purple-500 rounded-2xl flex items-center justify-center shadow-lg"><span class="text-3xl">🦋</span>
+           </div>
+           <h3 class="text-xl font-bold text-purple-800">PERKEMBANGAN</h3>
+          </div>
+          <p class="text-gray-700 mb-4">Proses menuju <strong>kedewasaan</strong> atau kematangan fungsi organ yang bersifat <span class="bg-purple-200 px-2 py-0.5 rounded font-semibold">KUALITATIF</span></p><!-- Visual Example -->
+          <div class="bg-white rounded-xl p-4 mt-4">
+           <p class="text-xs text-gray-500 mb-2 font-medium">Contoh Perkembangan:</p>
+           <div class="flex items-center justify-around gap-2">
+            <div class="text-center">
+             <div class="text-3xl">
+              🌱
+             </div>
+             <p class="text-xs mt-1">Tunas</p>
+            </div>
+            <div class="text-xl text-gray-400">
+             →
+            </div>
+            <div class="text-center">
+             <div class="text-3xl">
+              🌿
+             </div>
+             <p class="text-xs mt-1">Daun</p>
+            </div>
+            <div class="text-xl text-gray-400">
+             →
+            </div>
+            <div class="text-center">
+             <div class="text-3xl">
+              🌸
+             </div>
+             <p class="text-xs mt-1">Bunga</p>
+            </div>
+            <div class="text-xl text-gray-400">
+             →
+            </div>
+            <div class="text-center">
+             <div class="text-3xl">
+              🍎
+             </div>
+             <p class="text-xs mt-1">Buah</p>
+            </div>
+           </div>
+          </div>
+          <div class="mt-4 space-y-2">
+           <div class="flex items-center gap-2 text-sm text-gray-600"><span class="text-purple-500">✓</span> Perubahan fungsi &amp; bentuk
+           </div>
+           <div class="flex items-center gap-2 text-sm text-gray-600"><span class="text-purple-500">✓</span> Menuju kematangan reproduksi
+           </div>
+          </div>
+         </div>
+        </div><!-- Key Insight -->
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-200">
+         <h4 class="font-bold text-blue-800 mb-3 flex items-center gap-2"><span class="text-xl">💡</span> Poin Penting</h4>
+         <p class="text-gray-700">Pertumbuhan dan perkembangan adalah dua proses yang <strong>berbeda</strong> namun <strong>saling berkaitan</strong>. Keduanya terjadi bersamaan dalam kehidupan makhluk hidup dan tidak dapat dipisahkan!</p>
+        </div><!-- Navigation -->
+        <div class="flex justify-end mt-8"><button onclick="showSection(1)" class="bg-gradient-to-r from-emerald-500 to-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all flex items-center gap-2"> Selanjutnya: Rahasia dalam Biji 
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg></button>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 1: Rahasia dalam Biji -->
+     <section id="section-1" class="content-card hidden">
+      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+       <div class="relative h-48 lg:h-56 bg-gradient-to-br from-amber-400 via-orange-500 to-yellow-600 flex items-center justify-center">
+        <div class="text-center z-10 px-4">
+         <h2 class="text-2xl lg:text-4xl font-extrabold text-white mb-2 drop-shadow-lg">🌰 Rahasia di Dalam Biji</h2>
+         <p class="text-amber-100 text-sm lg:text-base">Struktur kecil yang menyimpan kehidupan</p>
+        </div>
+       </div>
+       <div class="p-6 lg:p-8"><!-- Interactive Seed Diagram -->
+        <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 mb-8">
+         <h3 class="text-lg font-bold text-amber-800 mb-4 text-center">🔍 Anatomi Biji (Klik bagian untuk mempelajari)</h3>
+         <div class="relative max-w-md mx-auto"><!-- Seed SVG Diagram -->
+          <svg viewbox="0 0 300 200" class="w-full"><!-- Outer Seed Coat --> <ellipse cx="150" cy="100" rx="120" ry="80" fill="#8B4513" stroke="#5D3A1A" stroke-width="3" class="cursor-pointer hover:opacity-80 transition-opacity" onclick="showSeedPart('kulit')" /> <!-- Inner Seed Coat --> <ellipse cx="150" cy="100" rx="105" ry="68" fill="#D2691E" class="cursor-pointer hover:opacity-80 transition-opacity" onclick="showSeedPart('kulit')" /> <!-- Cotyledon Left --> <path d="M 50 100 Q 80 50, 145 100 Q 80 150, 50 100" fill="#90EE90" stroke="#228B22" stroke-width="2" class="cursor-pointer hover:opacity-80 transition-opacity" onclick="showSeedPart('kotiledon')" /> <!-- Cotyledon Right --> <path d="M 250 100 Q 220 50, 155 100 Q 220 150, 250 100" fill="#90EE90" stroke="#228B22" stroke-width="2" class="cursor-pointer hover:opacity-80 transition-opacity" onclick="showSeedPart('kotiledon')" /> <!-- Embryo --> <g class="cursor-pointer hover:opacity-80 transition-opacity" onclick="showSeedPart('embrio')"><!-- Embryo Axis -->
+            <rect x="140" y="60" width="20" height="80" rx="5" fill="#32CD32" /> <!-- Plumule (baby leaves) -->
+            <ellipse cx="150" cy="55" rx="15" ry="10" fill="#228B22" />
+            <ellipse cx="145" cy="50" rx="8" ry="6" fill="#2E8B57" />
+            <ellipse cx="155" cy="50" rx="8" ry="6" fill="#2E8B57" /> <!-- Radicle (baby root) -->
+            <path d="M 150 140 L 150 160 L 145 170 M 150 160 L 155 170" stroke="#8B4513" stroke-width="3" fill="none" />
+           </g> <!-- Labels --> <text x="150" y="20" text-anchor="middle" class="text-xs font-bold fill-gray-700">
+            Klik untuk Mempelajari!
+           </text>
+          </svg><!-- Legend -->
+          <div class="flex flex-wrap justify-center gap-4 mt-4 text-sm">
+           <div class="flex items-center gap-2 cursor-pointer" onclick="showSeedPart('kulit')">
+            <div class="w-4 h-4 bg-amber-700 rounded"></div><span>Kulit Biji</span>
+           </div>
+           <div class="flex items-center gap-2 cursor-pointer" onclick="showSeedPart('kotiledon')">
+            <div class="w-4 h-4 bg-green-300 rounded"></div><span>Kotiledon</span>
+           </div>
+           <div class="flex items-center gap-2 cursor-pointer" onclick="showSeedPart('embrio')">
+            <div class="w-4 h-4 bg-green-600 rounded"></div><span>Embrio</span>
+           </div>
+          </div>
+         </div><!-- Info Box -->
+         <div id="seed-info" class="mt-6 bg-white rounded-xl p-5 shadow-inner min-h-32">
+          <p class="text-gray-500 text-center">👆 Klik bagian biji di atas untuk melihat penjelasannya</p>
+         </div>
+        </div><!-- Struktur Biji Cards -->
+        <div class="grid md:grid-cols-3 gap-4 mb-8">
+         <div class="bg-green-50 rounded-xl p-5 border-2 border-green-200">
+          <div class="text-3xl mb-2">
+           🌿
+          </div>
+          <h4 class="font-bold text-green-800 mb-2">Embrio</h4>
+          <p class="text-sm text-gray-600">Calon tumbuhan yang memiliki bakal <strong>akar (radikula)</strong>, <strong>batang (hipokotil)</strong>, dan <strong>daun (plumula)</strong>.</p>
+         </div>
+         <div class="bg-yellow-50 rounded-xl p-5 border-2 border-yellow-200">
+          <div class="text-3xl mb-2">
+           🍃
+          </div>
+          <h4 class="font-bold text-yellow-800 mb-2">Kotiledon</h4>
+          <p class="text-sm text-gray-600">Cadangan makanan untuk pertumbuhan awal embrio. Disebut juga <strong>daun lembaga</strong>.</p>
+         </div>
+         <div class="bg-amber-50 rounded-xl p-5 border-2 border-amber-200">
+          <div class="text-3xl mb-2">
+           🛡️
+          </div>
+          <h4 class="font-bold text-amber-800 mb-2">Kulit Biji</h4>
+          <p class="text-sm text-gray-600">Pelindung keras agar embrio tidak <strong>kering</strong> dan terlindung dari kerusakan mekanis.</p>
+         </div>
+        </div><!-- Proses Imbibisi -->
+        <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-200 mb-8">
+         <h3 class="text-lg font-bold text-blue-800 mb-4 flex items-center gap-2"><span class="text-2xl water-drop">💧</span> Proses Imbibisi</h3>
+         <p class="text-gray-700 mb-4">Imbibisi adalah proses <strong>masuknya air ke dalam biji</strong> yang memicu perkecambahan. Tahapannya:</p>
+         <div class="flex flex-wrap items-center justify-center gap-4">
+          <div class="bg-white rounded-xl p-4 text-center shadow-sm">
+           <div class="text-3xl mb-2">
+            🌰
+           </div>
+           <p class="text-xs font-medium">Biji Kering</p>
+          </div>
+          <div class="text-2xl text-blue-400">
+           →
+          </div>
+          <div class="bg-white rounded-xl p-4 text-center shadow-sm">
+           <div class="text-3xl mb-2">
+            💧
+           </div>
+           <p class="text-xs font-medium">Air Masuk</p>
+          </div>
+          <div class="text-2xl text-blue-400">
+           →
+          </div>
+          <div class="bg-white rounded-xl p-4 text-center shadow-sm">
+           <div class="text-3xl mb-2">
+            🌰💦
+           </div>
+           <p class="text-xs font-medium">Biji Membengkak</p>
+          </div>
+          <div class="text-2xl text-blue-400">
+           →
+          </div>
+          <div class="bg-white rounded-xl p-4 text-center shadow-sm">
+           <div class="text-3xl mb-2">
+            🌱
+           </div>
+           <p class="text-xs font-medium">Berkecambah!</p>
+          </div>
+         </div>
+        </div><!-- Navigation -->
+        <div class="flex justify-between mt-8"><button onclick="showSection(0)" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-300 transition-all flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg> Sebelumnya </button> <button onclick="showSection(2)" class="bg-gradient-to-r from-emerald-500 to-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all flex items-center gap-2"> Selanjutnya 
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg></button>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 2: Pertumbuhan Primer & Sekunder -->
+     <section id="section-2" class="content-card hidden">
+      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+       <div class="relative h-48 lg:h-56 bg-gradient-to-br from-green-500 via-emerald-600 to-teal-700 flex items-center justify-center">
+        <div class="text-center z-10 px-4">
+         <h2 class="text-2xl lg:text-4xl font-extrabold text-white mb-2 drop-shadow-lg">🌳 Pertumbuhan Primer &amp; Sekunder</h2>
+         <p class="text-green-100 text-sm lg:text-base">Bagaimana tumbuhan bertambah tinggi dan lebar</p>
+        </div>
+       </div>
+       <div class="p-6 lg:p-8"><!-- Comparison Table -->
+        <div class="overflow-x-auto mb-8">
+         <table class="w-full border-collapse">
+          <thead>
+           <tr class="bg-gradient-to-r from-emerald-500 to-green-600 text-white">
+            <th class="p-4 text-left rounded-tl-xl">Aspek</th>
+            <th class="p-4 text-left">Pertumbuhan Primer</th>
+            <th class="p-4 text-left rounded-tr-xl">Pertumbuhan Sekunder</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="bg-emerald-50">
+            <td class="p-4 font-semibold border-b border-emerald-200">📍 Lokasi</td>
+            <td class="p-4 border-b border-emerald-200">Meristem Apikal (ujung akar &amp; batang)</td>
+            <td class="p-4 border-b border-emerald-200">Meristem Lateral (Kambium)</td>
+           </tr>
+           <tr class="bg-white">
+            <td class="p-4 font-semibold border-b border-emerald-200">📏 Hasil</td>
+            <td class="p-4 border-b border-emerald-200">Tumbuhan bertambah <strong>tinggi/panjang</strong></td>
+            <td class="p-4 border-b border-emerald-200">Batang bertambah <strong>lebar/diameter</strong></td>
+           </tr>
+           <tr class="bg-emerald-50">
+            <td class="p-4 font-semibold border-b border-emerald-200">🌿 Tumbuhan</td>
+            <td class="p-4 border-b border-emerald-200">Semua tumbuhan</td>
+            <td class="p-4 border-b border-emerald-200">Hanya tumbuhan dikotil &amp; gymnospermae</td>
+           </tr>
+           <tr class="bg-white">
+            <td class="p-4 font-semibold rounded-bl-xl">🎯 Contoh</td>
+            <td class="p-4">Bertambahnya tinggi pohon mangga</td>
+            <td class="p-4 rounded-br-xl">Batang pohon jati yang membesar</td>
+           </tr>
+          </tbody>
+         </table>
+        </div><!-- Interactive Visualization -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8"><!-- Primary Growth -->
+         <div class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-2xl p-6 border-2 border-green-300">
+          <h3 class="text-lg font-bold text-green-800 mb-4 flex items-center gap-2"><span class="text-2xl">⬆️</span> Pertumbuhan Primer</h3>
+          <div class="flex justify-center mb-4">
+           <svg viewbox="0 0 120 200" class="w-32 h-48"><!-- Stem --> <rect x="50" y="50" width="20" height="120" fill="#228B22" rx="3" /> <!-- Roots --> <path d="M 60 170 L 60 190 M 60 175 L 45 195 M 60 175 L 75 195" stroke="#8B4513" stroke-width="4" fill="none" /> <!-- Leaves --> <ellipse cx="35" cy="80" rx="20" ry="10" fill="#32CD32" transform="rotate(-30 35 80)" /> <ellipse cx="85" cy="90" rx="20" ry="10" fill="#32CD32" transform="rotate(30 85 90)" /> <ellipse cx="35" cy="120" rx="18" ry="9" fill="#32CD32" transform="rotate(-30 35 120)" /> <ellipse cx="85" cy="130" rx="18" ry="9" fill="#32CD32" transform="rotate(30 85 130)" /> <!-- Apical Meristem --> <circle cx="60" cy="45" r="12" fill="#90EE90" stroke="#228B22" stroke-width="2" /> <text x="60" y="48" text-anchor="middle" class="text-xs font-bold" fill="#155724">
+             API
+            </text> <!-- Arrow --> <path d="M 60 20 L 60 30 M 55 25 L 60 20 L 65 25" stroke="#228B22" stroke-width="3" fill="none" /> <text x="60" y="15" text-anchor="middle" class="text-xs font-bold" fill="#228B22">
+             ↑ Tinggi
+            </text>
+           </svg>
+          </div>
+          <p class="text-sm text-gray-600 text-center">Meristem apikal aktif membelah → tumbuhan bertambah tinggi</p>
+         </div><!-- Secondary Growth -->
+         <div class="bg-gradient-to-br from-amber-50 to-orange-100 rounded-2xl p-6 border-2 border-amber-300">
+          <h3 class="text-lg font-bold text-amber-800 mb-4 flex items-center gap-2"><span class="text-2xl">↔️</span> Pertumbuhan Sekunder</h3>
+          <div class="flex justify-center mb-4">
+           <svg viewbox="0 0 150 150" class="w-40 h-40"><!-- Cross section of stem --> <!-- Outer bark --> <circle cx="75" cy="75" r="65" fill="#8B4513" /> <!-- Cork cambium --> <circle cx="75" cy="75" r="58" fill="#A0522D" /> <!-- Secondary phloem --> <circle cx="75" cy="75" r="50" fill="#DEB887" /> <!-- Vascular cambium - highlighted --> <circle cx="75" cy="75" r="40" fill="none" stroke="#32CD32" stroke-width="5" stroke-dasharray="5,3" /> <!-- Secondary xylem (wood) --> <circle cx="75" cy="75" r="35" fill="#D2691E" /> <!-- Annual rings --> <circle cx="75" cy="75" r="28" fill="none" stroke="#8B4513" stroke-width="1" /> <circle cx="75" cy="75" r="20" fill="none" stroke="#8B4513" stroke-width="1" /> <circle cx="75" cy="75" r="12" fill="none" stroke="#8B4513" stroke-width="1" /> <!-- Pith --> <circle cx="75" cy="75" r="8" fill="#F5DEB3" /> <!-- Labels --> <text x="75" y="120" text-anchor="middle" class="text-xs font-bold" fill="#228B22">
+             Kambium (hijau)
+            </text>
+           </svg>
+          </div>
+          <p class="text-sm text-gray-600 text-center">Kambium membelah → batang bertambah lebar (lingkaran tahun)</p>
+         </div>
+        </div><!-- Important Note -->
+        <div class="bg-gradient-to-r from-red-50 to-pink-50 rounded-2xl p-6 border border-red-200 mb-8">
+         <h4 class="font-bold text-red-800 mb-3 flex items-center gap-2"><span class="text-xl">⚠️</span> Poin Penting!</h4>
+         <p class="text-gray-700">Jika tanaman <strong>tidak memiliki kambium</strong> (seperti tanaman monokotil: padi, jagung, kelapa), maka ia <strong>tidak dapat melakukan pertumbuhan sekunder</strong>. Itulah mengapa batang padi tidak membesar seperti batang pohon jati!</p>
+         <div class="flex flex-wrap gap-4 mt-4">
+          <div class="bg-white rounded-xl p-3 flex items-center gap-2"><span class="text-2xl">🌾</span>
+           <div>
+            <p class="font-semibold text-sm">Monokotil</p>
+            <p class="text-xs text-gray-500">Tanpa kambium</p>
+           </div>
+          </div>
+          <div class="bg-white rounded-xl p-3 flex items-center gap-2"><span class="text-2xl">🌳</span>
+           <div>
+            <p class="font-semibold text-sm">Dikotil</p>
+            <p class="text-xs text-gray-500">Punya kambium</p>
+           </div>
+          </div>
+         </div>
+        </div><!-- Navigation -->
+        <div class="flex justify-between mt-8"><button onclick="showSection(1)" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-300 transition-all flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg> Sebelumnya </button> <button onclick="showSection(3)" class="bg-gradient-to-r from-emerald-500 to-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all flex items-center gap-2"> Selanjutnya 
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg></button>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 3: Faktor Pertumbuhan -->
+     <section id="section-3" class="content-card hidden">
+      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+       <div class="relative h-48 lg:h-56 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 flex items-center justify-center">
+        <div class="text-center z-10 px-4">
+         <h2 class="text-2xl lg:text-4xl font-extrabold text-white mb-2 drop-shadow-lg">🔬 Faktor yang Memengaruhi Pertumbuhan</h2>
+         <p class="text-blue-100 text-sm lg:text-base">Pengendali dari dalam dan luar tumbuhan</p>
+        </div>
+       </div>
+       <div class="p-6 lg:p-8"><!-- Two Column Layout -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8"><!-- Internal Factors -->
+         <div class="bg-gradient-to-br from-purple-50 to-indigo-100 rounded-2xl p-6 border-2 border-purple-200">
+          <h3 class="text-xl font-bold text-purple-800 mb-4 flex items-center gap-2"><span class="w-10 h-10 bg-purple-500 rounded-xl flex items-center justify-center text-white">🧬</span> Faktor Internal</h3><!-- Genetika -->
+          <div class="bg-white rounded-xl p-4 mb-4 shadow-sm">
+           <h4 class="font-bold text-purple-700 mb-2">1. Genetika (Gen)</h4>
+           <p class="text-sm text-gray-600 mb-2">Menentukan potensi kecepatan tumbuh, ukuran maksimal, dan hasil buah.</p>
+           <div class="flex gap-2"><span class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs">DNA</span> <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs">Hereditas</span>
+           </div>
+          </div><!-- Hormon -->
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+           <h4 class="font-bold text-purple-700 mb-3">2. Hormon Tumbuhan</h4>
+           <div class="space-y-3">
+            <div class="flex items-start gap-3 p-2 bg-green-50 rounded-lg"><span class="text-xl">🌱</span>
+             <div>
+              <p class="font-semibold text-sm text-green-800">Auksin</p>
+              <p class="text-xs text-gray-600">Pemanjangan sel, dominansi apikal</p>
+             </div>
+            </div>
+            <div class="flex items-start gap-3 p-2 bg-blue-50 rounded-lg"><span class="text-xl">🌾</span>
+             <div>
+              <p class="font-semibold text-sm text-blue-800">Giberelin</p>
+              <p class="text-xs text-gray-600">Perkecambahan biji, pemanjangan batang</p>
+             </div>
+            </div>
+            <div class="flex items-start gap-3 p-2 bg-pink-50 rounded-lg"><span class="text-xl">🌸</span>
+             <div>
+              <p class="font-semibold text-sm text-pink-800">Sitokinin</p>
+              <p class="text-xs text-gray-600">Pembelahan sel, penundaan penuaan</p>
+             </div>
+            </div>
+            <div class="flex items-start gap-3 p-2 bg-orange-50 rounded-lg"><span class="text-xl">🍂</span>
+             <div>
+              <p class="font-semibold text-sm text-orange-800">Asam Absisat</p>
+              <p class="text-xs text-gray-600">Dormansi, penutupan stomata</p>
+             </div>
+            </div>
+            <div class="flex items-start gap-3 p-2 bg-yellow-50 rounded-lg"><span class="text-xl">🍎</span>
+             <div>
+              <p class="font-semibold text-sm text-yellow-800">Etilen</p>
+              <p class="text-xs text-gray-600">Pematangan buah, pengguguran daun</p>
+             </div>
+            </div>
+           </div>
+          </div>
+         </div><!-- External Factors -->
+         <div class="bg-gradient-to-br from-cyan-50 to-blue-100 rounded-2xl p-6 border-2 border-cyan-200">
+          <h3 class="text-xl font-bold text-cyan-800 mb-4 flex items-center gap-2"><span class="w-10 h-10 bg-cyan-500 rounded-xl flex items-center justify-center text-white">🌍</span> Faktor Eksternal</h3>
+          <div class="space-y-4"><!-- Cahaya -->
+           <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="flex items-center gap-3 mb-2">
+             <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
+              <svg class="w-8 h-8 text-yellow-500 sun-rays" viewbox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5" /> <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12" />
+              </svg>
+             </div>
+             <div>
+              <h4 class="font-bold text-yellow-700">Sinar Matahari</h4>
+              <p class="text-xs text-gray-600">Sumber energi fotosintesis</p>
+             </div>
+            </div>
+           </div><!-- Air -->
+           <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="flex items-center gap-3 mb-2">
+             <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center"><span class="text-3xl water-drop">💧</span>
+             </div>
+             <div>
+              <h4 class="font-bold text-blue-700">Air &amp; Kelembapan</h4>
+              <p class="text-xs text-gray-600">Media transportasi nutrisi, turgor sel</p>
+             </div>
+            </div>
+           </div><!-- Suhu -->
+           <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="flex items-center gap-3 mb-2">
+             <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center"><span class="text-3xl">🌡️</span>
+             </div>
+             <div>
+              <h4 class="font-bold text-red-700">Suhu</h4>
+              <p class="text-xs text-gray-600">Memengaruhi enzim &amp; metabolisme</p>
+             </div>
+            </div>
+           </div><!-- Nutrisi -->
+           <div class="bg-white rounded-xl p-4 shadow-sm">
+            <div class="flex items-center gap-3 mb-2">
+             <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center"><span class="text-3xl">🪴</span>
+             </div>
+             <div>
+              <h4 class="font-bold text-amber-700">Nutrisi Tanah</h4>
+              <p class="text-xs text-gray-600">N, P, K dan unsur hara lainnya</p>
+             </div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div><!-- Interactive Simulation -->
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-200 mb-8">
+         <h3 class="text-lg font-bold text-green-800 mb-4 flex items-center gap-2"><span class="text-xl">🧪</span> Simulasi: Pengaruh Faktor Terhadap Pertumbuhan</h3>
+         <div class="grid md:grid-cols-4 gap-4 mb-6">
+          <div class="text-center"><label class="block text-sm font-medium text-gray-700 mb-2">☀️ Cahaya</label> <input type="range" id="light-slider" min="0" max="100" value="50" class="w-full accent-yellow-500" onchange="updateSimulation()"> <span id="light-value" class="text-sm text-gray-600">50%</span>
+          </div>
+          <div class="text-center"><label class="block text-sm font-medium text-gray-700 mb-2">💧 Air</label> <input type="range" id="water-slider" min="0" max="100" value="50" class="w-full accent-blue-500" onchange="updateSimulation()"> <span id="water-value" class="text-sm text-gray-600">50%</span>
+          </div>
+          <div class="text-center"><label class="block text-sm font-medium text-gray-700 mb-2">🌡️ Suhu</label> <input type="range" id="temp-slider" min="0" max="100" value="50" class="w-full accent-red-500" onchange="updateSimulation()"> <span id="temp-value" class="text-sm text-gray-600">25°C</span>
+          </div>
+          <div class="text-center"><label class="block text-sm font-medium text-gray-700 mb-2">🪴 Nutrisi</label> <input type="range" id="nutrient-slider" min="0" max="100" value="50" class="w-full accent-amber-500" onchange="updateSimulation()"> <span id="nutrient-value" class="text-sm text-gray-600">50%</span>
+          </div>
+         </div><!-- Plant Visualization -->
+         <div class="bg-white rounded-xl p-6 flex flex-col items-center">
+          <div id="plant-container" class="relative w-32 transition-all duration-500">
+           <svg id="plant-svg" viewbox="0 0 100 150" class="w-full"><!-- Pot --> <path d="M 20 120 L 25 145 L 75 145 L 80 120 Z" fill="#8B4513" /> <ellipse cx="50" cy="120" rx="30" ry="8" fill="#A0522D" /> <!-- Soil --> <ellipse cx="50" cy="120" rx="25" ry="5" fill="#5D4037" /> <!-- Stem --> <rect id="plant-stem" x="47" y="60" width="6" height="60" fill="#228B22" rx="2" /> <!-- Leaves --> <g id="plant-leaves">
+             <ellipse cx="35" cy="80" rx="15" ry="8" fill="#32CD32" transform="rotate(-30 35 80)" />
+             <ellipse cx="65" cy="85" rx="15" ry="8" fill="#32CD32" transform="rotate(30 65 85)" />
+             <ellipse cx="35" cy="95" rx="12" ry="6" fill="#32CD32" transform="rotate(-30 35 95)" />
+             <ellipse cx="65" cy="100" rx="12" ry="6" fill="#32CD32" transform="rotate(30 65 100)" />
+            </g> <!-- Top leaves --> <g id="plant-top">
+             <ellipse cx="45" cy="55" rx="10" ry="6" fill="#228B22" transform="rotate(-20 45 55)" />
+             <ellipse cx="55" cy="55" rx="10" ry="6" fill="#228B22" transform="rotate(20 55 55)" />
+            </g>
+           </svg>
+          </div>
+          <div id="growth-status" class="mt-4 text-center">
+           <p class="font-semibold text-green-700">Pertumbuhan: <span id="growth-percent">Normal</span></p>
+           <p id="growth-message" class="text-sm text-gray-600 mt-1">Kondisi optimal untuk pertumbuhan!</p>
+          </div>
+         </div>
+        </div><!-- Navigation -->
+        <div class="flex justify-between mt-8"><button onclick="showSection(2)" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-300 transition-all flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg> Sebelumnya </button> <button onclick="showSection(4)" class="bg-gradient-to-r from-emerald-500 to-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all flex items-center gap-2"> Selanjutnya 
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg></button>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 4: Metamorfosis -->
+     <section id="section-4" class="content-card hidden">
+      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+       <div class="relative h-48 lg:h-56 bg-gradient-to-br from-purple-500 via-pink-500 to-rose-600 flex items-center justify-center">
+        <div class="text-center z-10 px-4">
+         <h2 class="text-2xl lg:text-4xl font-extrabold text-white mb-2 drop-shadow-lg">🦋 Metamorfosis Hewan</h2>
+         <p class="text-purple-100 text-sm lg:text-base">Perubahan bentuk tubuh dalam siklus hidup</p>
+        </div>
+       </div>
+       <div class="p-6 lg:p-8"><!-- Definition -->
+        <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-200 mb-8">
+         <h3 class="text-lg font-bold text-purple-800 mb-3">📖 Apa itu Metamorfosis?</h3>
+         <p class="text-gray-700">Metamorfosis adalah <strong>perubahan bentuk tubuh</strong> hewan secara bertahap dari fase larva hingga dewasa. Ada dua jenis utama metamorfosis:</p>
+        </div><!-- Two Types -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8"><!-- Sempurna -->
+         <div class="bg-gradient-to-br from-purple-50 to-indigo-100 rounded-2xl p-6 border-2 border-purple-300">
+          <h3 class="text-xl font-bold text-purple-800 mb-4 flex items-center gap-2"><span class="text-3xl">🦋</span> Metamorfosis Sempurna</h3>
+          <p class="text-sm text-gray-600 mb-4">Terjadi perubahan bentuk yang <strong>sangat berbeda</strong> dari tahap ke tahap (4 fase)</p><!-- Lifecycle -->
+          <div class="bg-white rounded-xl p-4 mb-4">
+           <div class="flex items-center justify-around flex-wrap gap-2">
+            <div class="text-center">
+             <div class="text-3xl mb-1">
+              🥚
+             </div>
+             <p class="text-xs font-medium">Telur</p>
+            </div>
+            <div class="text-purple-400">
+             →
+            </div>
+            <div class="text-center">
+             <div class="text-3xl mb-1">
+              🐛
+             </div>
+             <p class="text-xs font-medium">Larva</p>
+            </div>
+            <div class="text-purple-400">
+             →
+            </div>
+            <div class="text-center">
+             <div class="text-3xl mb-1">
+              🫛
+             </div>
+             <p class="text-xs font-medium">Pupa</p>
+            </div>
+            <div class="text-purple-400">
+             →
+            </div>
+            <div class="text-center">
+             <div class="text-3xl mb-1">
+              🦋
+             </div>
+             <p class="text-xs font-medium">Dewasa</p>
+            </div>
+           </div>
+          </div>
+          <div class="space-y-2">
+           <p class="text-sm"><span class="font-semibold">Contoh:</span> Kupu-kupu, Nyamuk, Lalat, Lebah, Kumbang</p>
+           <p class="text-sm text-purple-700"><span class="font-semibold">Ciri khas:</span> Larva dan dewasa sangat berbeda (ulat vs kupu-kupu)</p>
+          </div>
+         </div><!-- Tidak Sempurna -->
+         <div class="bg-gradient-to-br from-green-50 to-teal-100 rounded-2xl p-6 border-2 border-green-300">
+          <h3 class="text-xl font-bold text-green-800 mb-4 flex items-center gap-2"><span class="text-3xl">🦗</span> Metamorfosis Tidak Sempurna</h3>
+          <p class="text-sm text-gray-600 mb-4">Perubahan bentuk <strong>bertahap</strong> dan mirip dewasa (3 fase, tanpa pupa)</p><!-- Lifecycle -->
+          <div class="bg-white rounded-xl p-4 mb-4">
+           <div class="flex items-center justify-around flex-wrap gap-2">
+            <div class="text-center">
+             <div class="text-3xl mb-1">
+              🥚
+             </div>
+             <p class="text-xs font-medium">Telur</p>
+            </div>
+            <div class="text-green-400">
+             →
+            </div>
+            <div class="text-center">
+             <div class="text-3xl mb-1">
+              🦗
+             </div>
+             <p class="text-xs font-medium">Nimfa</p>
+             <p class="text-xs text-gray-500">(muda)</p>
+            </div>
+            <div class="text-green-400">
+             →
+            </div>
+            <div class="text-center">
+             <div class="text-3xl mb-1">
+              🦗
+             </div>
+             <p class="text-xs font-medium">Dewasa</p>
+             <p class="text-xs text-gray-500">(imago)</p>
+            </div>
+           </div>
+          </div>
+          <div class="space-y-2">
+           <p class="text-sm"><span class="font-semibold">Contoh:</span> Belalang, Jangkrik, Capung, Kecoak, Walang Sangit</p>
+           <p class="text-sm text-green-700"><span class="font-semibold">Ciri khas:</span> Nimfa mirip dewasa, hanya ukuran dan sayap berbeda</p>
+          </div>
+         </div>
+        </div><!-- Comparison Table -->
+        <div class="overflow-x-auto mb-8">
+         <table class="w-full border-collapse text-sm">
+          <thead>
+           <tr class="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+            <th class="p-3 text-left rounded-tl-xl">Aspek</th>
+            <th class="p-3 text-left">Sempurna</th>
+            <th class="p-3 text-left rounded-tr-xl">Tidak Sempurna</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="bg-purple-50">
+            <td class="p-3 font-semibold border-b">Fase</td>
+            <td class="p-3 border-b">Telur → Larva → Pupa → Dewasa</td>
+            <td class="p-3 border-b">Telur → Nimfa → Dewasa</td>
+           </tr>
+           <tr class="bg-white">
+            <td class="p-3 font-semibold border-b">Makanan Muda</td>
+            <td class="p-3 border-b">Berbeda dengan dewasa</td>
+            <td class="p-3 border-b">Sama dengan dewasa</td>
+           </tr>
+           <tr class="bg-purple-50">
+            <td class="p-3 font-semibold">Bentuk</td>
+            <td class="p-3">Sangat berbeda tiap fase</td>
+            <td class="p-3">Mirip, bertambah besar</td>
+           </tr>
+          </tbody>
+         </table>
+        </div><!-- Discussion Question -->
+        <div class="bg-gradient-to-r from-amber-50 to-yellow-50 border-l-4 border-amber-400 rounded-r-2xl p-5">
+         <h4 class="font-bold text-amber-800 mb-2 flex items-center gap-2"><span class="text-xl">🤔</span> Pertanyaan Diskusi</h4>
+         <p class="text-gray-700">"Mengapa nimfa (serangga muda) makanannya <strong>mirip</strong> dengan serangga dewasa, sedangkan larva (seperti ulat) makanannya <strong>berbeda</strong>?"</p>
+         <p class="text-sm text-amber-700 mt-2 italic">Petunjuk: Perhatikan perbedaan bentuk mulut dan habitat mereka!</p>
+        </div><!-- Navigation -->
+        <div class="flex justify-between mt-8"><button onclick="showSection(3)" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-300 transition-all flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg> Sebelumnya </button> <button onclick="showSection(5)" class="bg-gradient-to-r from-emerald-500 to-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all flex items-center gap-2"> Selanjutnya 
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg></button>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 5: Stunting -->
+     <section id="section-5" class="content-card hidden">
+      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+       <div class="relative h-48 lg:h-56 bg-gradient-to-br from-red-500 via-rose-600 to-pink-700 flex items-center justify-center">
+        <div class="text-center z-10 px-4">
+         <h2 class="text-2xl lg:text-4xl font-extrabold text-white mb-2 drop-shadow-lg">👶 Studi Kasus: Stunting</h2>
+         <p class="text-red-100 text-sm lg:text-base">Hubungan biologi dengan isu sosial nyata</p>
+        </div>
+       </div>
+       <div class="p-6 lg:p-8"><!-- What is Stunting -->
+        <div class="bg-gradient-to-r from-red-50 to-rose-50 rounded-2xl p-6 border border-red-200 mb-8">
+         <h3 class="text-lg font-bold text-red-800 mb-3 flex items-center gap-2"><span class="text-2xl">❓</span> Apa itu Stunting?</h3>
+         <p class="text-gray-700 mb-4">Stunting adalah <strong>gangguan pertumbuhan</strong> pada bayi dan balita akibat <strong>kekurangan gizi kronis</strong>, terutama dalam 1000 hari pertama kehidupan (sejak dalam kandungan hingga usia 2 tahun).</p>
+         <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-white rounded-xl p-4">
+           <h4 class="font-semibold text-red-700 mb-2">📏 Ciri-ciri Stunting:</h4>
+           <ul class="text-sm text-gray-600 space-y-1">
+            <li>• Tinggi badan di bawah standar usia</li>
+            <li>• Perkembangan otak terhambat</li>
+            <li>• Daya tahan tubuh lemah</li>
+            <li>• Prestasi belajar rendah</li>
+           </ul>
+          </div>
+          <div class="bg-white rounded-xl p-4">
+           <h4 class="font-semibold text-red-700 mb-2">⚠️ Penyebab:</h4>
+           <ul class="text-sm text-gray-600 space-y-1">
+            <li>• Kurang asupan protein &amp; vitamin</li>
+            <li>• Infeksi berulang (diare, ISPA)</li>
+            <li>• Sanitasi buruk</li>
+            <li>• Pola asuh tidak tepat</li>
+           </ul>
+          </div>
+         </div>
+        </div><!-- Statistics -->
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 mb-8">
+         <h3 class="text-lg font-bold text-blue-800 mb-4 flex items-center gap-2"><span class="text-2xl">📊</span> Data Stunting di Indonesia</h3>
+         <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-white rounded-xl p-5 text-center shadow-sm">
+           <div class="text-4xl font-extrabold text-red-500 mb-2">
+            21.6%
+           </div>
+           <p class="text-sm text-gray-600">Prevalensi Stunting 2022</p>
+           <p class="text-xs text-gray-400">(SSGI 2022)</p>
+          </div>
+          <div class="bg-white rounded-xl p-5 text-center shadow-sm">
+           <div class="text-4xl font-extrabold text-blue-500 mb-2">
+            14%
+           </div>
+           <p class="text-sm text-gray-600">Target 2024</p>
+           <p class="text-xs text-gray-400">(RPJMN)</p>
+          </div>
+          <div class="bg-white rounded-xl p-5 text-center shadow-sm">
+           <div class="text-4xl font-extrabold text-amber-500 mb-2">
+            5.3 jt
+           </div>
+           <p class="text-sm text-gray-600">Balita Stunting</p>
+           <p class="text-xs text-gray-400">(Perkiraan)</p>
+          </div>
+         </div><!-- Progress Bar -->
+         <div class="mt-6 bg-white rounded-xl p-4">
+          <p class="text-sm font-medium text-gray-700 mb-2">Penurunan Angka Stunting:</p>
+          <div class="flex items-center gap-2"><span class="text-xs">2019</span>
+           <div class="flex-1 h-4 bg-gray-200 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-red-400 to-red-600 rounded-full" style="width: 70%"></div>
+           </div><span class="text-xs font-bold text-red-600">27.7%</span>
+          </div>
+          <div class="flex items-center gap-2 mt-2"><span class="text-xs">2022</span>
+           <div class="flex-1 h-4 bg-gray-200 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-orange-400 to-orange-600 rounded-full" style="width: 54%"></div>
+           </div><span class="text-xs font-bold text-orange-600">21.6%</span>
+          </div>
+          <div class="flex items-center gap-2 mt-2"><span class="text-xs">Target</span>
+           <div class="flex-1 h-4 bg-gray-200 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full" style="width: 35%"></div>
+           </div><span class="text-xs font-bold text-green-600">14%</span>
+          </div>
+         </div>
+        </div><!-- Student Project -->
+        <div class="bg-gradient-to-r from-emerald-50 to-green-50 rounded-2xl p-6 border-2 border-emerald-300 mb-8">
+         <h3 class="text-lg font-bold text-emerald-800 mb-4 flex items-center gap-2"><span class="text-2xl">🎯</span> Proyek Siswa: Kampanye Anti-Stunting</h3>
+         <p class="text-gray-700 mb-4">Buatlah kampanye edukasi (poster/infografis) untuk ibu-ibu di posyandu mengenai:</p>
+         <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-white rounded-xl p-4 border border-emerald-200">
+           <h4 class="font-semibold text-emerald-700 mb-2">📝 Konten yang harus ada:</h4>
+           <ul class="text-sm text-gray-600 space-y-1">
+            <li>✓ Definisi stunting yang mudah dipahami</li>
+            <li>✓ Makanan bergizi untuk ibu hamil &amp; balita</li>
+            <li>✓ Pentingnya 1000 HPK</li>
+            <li>✓ Tips sanitasi &amp; kebersihan</li>
+           </ul>
+          </div>
+          <div class="bg-white rounded-xl p-4 border border-emerald-200">
+           <h4 class="font-semibold text-emerald-700 mb-2">🎨 Kriteria penilaian:</h4>
+           <ul class="text-sm text-gray-600 space-y-1">
+            <li>• Keakuratan informasi (30%)</li>
+            <li>• Desain menarik &amp; mudah dibaca (30%)</li>
+            <li>• Kreativitas penyampaian (20%)</li>
+            <li>• Relevansi dengan masyarakat (20%)</li>
+           </ul>
+          </div>
+         </div>
+        </div><!-- Relation to Biology -->
+        <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-6 border border-purple-200">
+         <h4 class="font-bold text-purple-800 mb-3 flex items-center gap-2"><span class="text-xl">🔗</span> Hubungan dengan Materi Biologi</h4>
+         <p class="text-gray-700">Stunting adalah contoh nyata bagaimana <strong>faktor eksternal</strong> (nutrisi) memengaruhi <strong>pertumbuhan</strong> makhluk hidup. Sama seperti tumbuhan yang kekurangan unsur hara, manusia juga membutuhkan nutrisi lengkap untuk pertumbuhan optimal!</p>
+        </div><!-- Navigation -->
+        <div class="flex justify-between mt-8"><button onclick="showSection(4)" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-300 transition-all flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg> Sebelumnya </button> <button onclick="showSection(6)" class="bg-gradient-to-r from-emerald-500 to-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all flex items-center gap-2"> Selanjutnya 
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg></button>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 6: Aktivitas Interaktif -->
+     <section id="section-6" class="content-card hidden">
+      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+       <div class="relative h-48 lg:h-56 bg-gradient-to-br from-cyan-500 via-teal-600 to-emerald-700 flex items-center justify-center">
+        <div class="text-center z-10 px-4">
+         <h2 class="text-2xl lg:text-4xl font-extrabold text-white mb-2 drop-shadow-lg">📊 Aktivitas Interaktif</h2>
+         <p class="text-cyan-100 text-sm lg:text-base">Analisis data dan eksperimen virtual</p>
+        </div>
+       </div>
+       <div class="p-6 lg:p-8"><!-- Activity 1: Graph Analysis -->
+        <div class="bg-gradient-to-r from-cyan-50 to-blue-50 rounded-2xl p-6 border border-cyan-200 mb-8">
+         <h3 class="text-lg font-bold text-cyan-800 mb-4 flex items-center gap-2"><span class="text-2xl">📈</span> Aktivitas 1: Analisis Grafik</h3>
+         <p class="text-gray-700 mb-4">Perhatikan grafik "Pengaruh Air terhadap Tinggi Tanaman" berikut:</p><!-- Graph Container -->
+         <div class="bg-white rounded-xl p-4 mb-4">
+          <svg viewbox="0 0 400 250" class="w-full max-w-lg mx-auto"><!-- Grid Lines --> <defs>
+            <pattern id="grid" width="50" height="40" patternunits="userSpaceOnUse">
+             <path d="M 50 0 L 0 0 0 40" fill="none" stroke="#e5e7eb" stroke-width="1" />
+            </pattern>
+           </defs> <rect x="60" y="20" width="320" height="180" fill="url(#grid)" /> <!-- Axes --> <line x1="60" y1="200" x2="380" y2="200" stroke="#374151" stroke-width="2" /> <line x1="60" y1="20" x2="60" y2="200" stroke="#374151" stroke-width="2" /> <!-- Y-axis labels --> <text x="50" y="25" text-anchor="end" class="text-xs fill-gray-600">
+            50
+           </text> <text x="50" y="65" text-anchor="end" class="text-xs fill-gray-600">
+            40
+           </text> <text x="50" y="105" text-anchor="end" class="text-xs fill-gray-600">
+            30
+           </text> <text x="50" y="145" text-anchor="end" class="text-xs fill-gray-600">
+            20
+           </text> <text x="50" y="185" text-anchor="end" class="text-xs fill-gray-600">
+            10
+           </text> <text x="50" y="205" text-anchor="end" class="text-xs fill-gray-600">
+            0
+           </text> <!-- X-axis labels --> <text x="60" y="220" text-anchor="middle" class="text-xs fill-gray-600">
+            0
+           </text> <text x="140" y="220" text-anchor="middle" class="text-xs fill-gray-600">
+            50
+           </text> <text x="220" y="220" text-anchor="middle" class="text-xs fill-gray-600">
+            100
+           </text> <text x="300" y="220" text-anchor="middle" class="text-xs fill-gray-600">
+            150
+           </text> <text x="380" y="220" text-anchor="middle" class="text-xs fill-gray-600">
+            200
+           </text> <!-- Axis Titles --> <text x="220" y="245" text-anchor="middle" class="text-sm font-semibold fill-gray-700">
+            Volume Air (mL)
+           </text> <text x="15" y="110" text-anchor="middle" class="text-sm font-semibold fill-gray-700" transform="rotate(-90, 15, 110)">
+            Tinggi (cm)
+           </text> <!-- Data Points and Line --> <polyline points="60,180 140,140 220,80 300,60 380,55" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /> <!-- Data Points --> <circle cx="60" cy="180" r="6" fill="#10b981" /> <circle cx="140" cy="140" r="6" fill="#10b981" /> <circle cx="220" cy="80" r="6" fill="#10b981" /> <circle cx="300" cy="60" r="6" fill="#10b981" /> <circle cx="380" cy="55" r="6" fill="#10b981" /> <!-- Data Labels --> <text x="60" y="170" text-anchor="middle" class="text-xs fill-emerald-700 font-semibold">
+            5
+           </text> <text x="140" y="130" text-anchor="middle" class="text-xs fill-emerald-700 font-semibold">
+            15
+           </text> <text x="220" y="70" text-anchor="middle" class="text-xs fill-emerald-700 font-semibold">
+            30
+           </text> <text x="300" y="50" text-anchor="middle" class="text-xs fill-emerald-700 font-semibold">
+            35
+           </text> <text x="380" y="45" text-anchor="middle" class="text-xs fill-emerald-700 font-semibold">
+            36
+           </text>
+          </svg>
+         </div><!-- Questions -->
+         <div class="bg-cyan-100 rounded-xl p-4">
+          <h4 class="font-bold text-cyan-800 mb-2">🤔 Pertanyaan Analisis:</h4>
+          <ol class="text-sm text-gray-700 space-y-2 list-decimal list-inside">
+           <li>Bagaimana hubungan antara volume air dengan tinggi tanaman?</li>
+           <li>Pada volume berapa pertumbuhan mulai melambat? Mengapa?</li>
+           <li>Apa yang akan terjadi jika air ditambah lebih dari 200 mL?</li>
+          </ol>
+         </div>
+        </div><!-- Activity 2: Sorting Game -->
+        <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-200 mb-8">
+         <h3 class="text-lg font-bold text-purple-800 mb-4 flex items-center gap-2"><span class="text-2xl">🎮</span> Aktivitas 2: Urutkan Tahapan!</h3>
+         <p class="text-gray-700 mb-4">Klik tombol untuk mengurutkan tahapan metamorfosis kupu-kupu dengan benar:</p>
+         <div id="sorting-game" class="mb-4">
+          <div id="sorting-items" class="flex flex-wrap gap-3 justify-center mb-4"><!-- Items will be dynamically generated -->
+          </div>
+          <div id="sorting-answer" class="flex flex-wrap gap-3 justify-center p-4 bg-white rounded-xl min-h-20 border-2 border-dashed border-purple-300">
+           <p class="text-gray-400 text-sm" id="sorting-placeholder">Klik item di atas untuk menyusun urutan</p>
+          </div>
+         </div>
+         <div class="flex gap-3 justify-center"><button onclick="resetSorting()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-300 transition-all"> 🔄 Reset </button> <button onclick="checkSorting()" class="bg-purple-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-purple-600 transition-all"> ✓ Cek Jawaban </button>
+         </div>
+         <div id="sorting-result" class="mt-4 text-center"></div>
+        </div><!-- Activity 3: Matching -->
+        <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200">
+         <h3 class="text-lg font-bold text-amber-800 mb-4 flex items-center gap-2"><span class="text-2xl">🔗</span> Aktivitas 3: Cocokkan Pasangan!</h3>
+         <p class="text-gray-700 mb-4">Cocokkan hormon tumbuhan dengan fungsinya:</p>
+         <div class="grid md:grid-cols-2 gap-6">
+          <div class="space-y-3">
+           <h4 class="font-semibold text-amber-700">Hormon:</h4><button onclick="selectHormone('auksin')" id="hormone-auksin" class="w-full p-3 bg-white rounded-xl text-left border-2 border-amber-200 hover:border-amber-400 transition-all"> <span class="font-semibold">1. Auksin</span> </button> <button onclick="selectHormone('giberelin')" id="hormone-giberelin" class="w-full p-3 bg-white rounded-xl text-left border-2 border-amber-200 hover:border-amber-400 transition-all"> <span class="font-semibold">2. Giberelin</span> </button> <button onclick="selectHormone('sitokinin')" id="hormone-sitokinin" class="w-full p-3 bg-white rounded-xl text-left border-2 border-amber-200 hover:border-amber-400 transition-all"> <span class="font-semibold">3. Sitokinin</span> </button> <button onclick="selectHormone('etilen')" id="hormone-etilen" class="w-full p-3 bg-white rounded-xl text-left border-2 border-amber-200 hover:border-amber-400 transition-all"> <span class="font-semibold">4. Etilen</span> </button>
+          </div>
+          <div class="space-y-3">
+           <h4 class="font-semibold text-amber-700">Fungsi:</h4><button onclick="selectFunction('pemanjangan')" id="func-pemanjangan" class="w-full p-3 bg-white rounded-xl text-left border-2 border-amber-200 hover:border-amber-400 transition-all"> <span>A. Pemanjangan sel</span> </button> <button onclick="selectFunction('perkecambahan')" id="func-perkecambahan" class="w-full p-3 bg-white rounded-xl text-left border-2 border-amber-200 hover:border-amber-400 transition-all"> <span>B. Perkecambahan biji</span> </button> <button onclick="selectFunction('pembelahan')" id="func-pembelahan" class="w-full p-3 bg-white rounded-xl text-left border-2 border-amber-200 hover:border-amber-400 transition-all"> <span>C. Pembelahan sel</span> </button> <button onclick="selectFunction('pematangan')" id="func-pematangan" class="w-full p-3 bg-white rounded-xl text-left border-2 border-amber-200 hover:border-amber-400 transition-all"> <span>D. Pematangan buah</span> </button>
+          </div>
+         </div>
+         <div id="matching-result" class="mt-4 text-center"></div>
+         <div class="flex justify-center mt-4"><button onclick="resetMatching()" class="bg-amber-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-amber-600 transition-all"> 🔄 Reset Permainan </button>
+         </div>
+        </div><!-- Navigation -->
+        <div class="flex justify-between mt-8"><button onclick="showSection(5)" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-300 transition-all flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg> Sebelumnya </button> <button onclick="showSection(7)" class="bg-gradient-to-r from-emerald-500 to-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all flex items-center gap-2"> Ke Kuis HOTS 
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg></button>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 7: Quiz HOTS -->
+     <section id="section-7" class="content-card hidden">
+      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+       <div class="relative h-48 lg:h-56 bg-gradient-to-br from-orange-500 via-red-500 to-rose-600 flex items-center justify-center">
+        <div class="text-center z-10 px-4">
+         <h2 class="text-2xl lg:text-4xl font-extrabold text-white mb-2 drop-shadow-lg">📝 Kuis HOTS (10 Soal)</h2>
+         <p class="text-orange-100 text-sm lg:text-base">Higher Order Thinking Skills - Analisis &amp; Evaluasi</p>
+        </div>
+       </div>
+       <div class="p-6 lg:p-8"><!-- Quiz Progress -->
+        <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-4 mb-6">
+         <div class="flex items-center justify-between mb-2"><span class="font-semibold text-orange-800">Progress Kuis</span> <span id="quiz-progress" class="font-bold text-orange-600">0/10</span>
+         </div>
+         <div class="w-full h-3 bg-orange-200 rounded-full overflow-hidden">
+          <div id="quiz-progress-bar" class="h-full bg-gradient-to-r from-orange-500 to-red-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+         </div>
+        </div><!-- Quiz Container -->
+        <div id="quiz-container"><!-- Questions will be rendered here -->
+        </div><!-- Quiz Result -->
+        <div id="quiz-result" class="hidden">
+         <div class="bg-gradient-to-br from-emerald-100 to-green-200 rounded-2xl p-8 text-center">
+          <div class="text-6xl mb-4">
+           🎉
+          </div>
+          <h3 class="text-2xl font-bold text-emerald-800 mb-2">Kuis Selesai!</h3>
+          <p class="text-lg text-emerald-700 mb-4">Skor kamu: <span id="final-score" class="font-extrabold text-3xl">0</span>/10</p>
+          <div id="score-message" class="text-emerald-600 mb-6"></div><button onclick="restartQuiz()" class="bg-gradient-to-r from-emerald-500 to-green-600 text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transition-all"> 🔄 Ulangi Kuis </button>
+         </div>
+        </div><!-- Navigation -->
+        <div class="flex justify-between mt-8"><button onclick="showSection(6)" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-300 transition-all flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg> Kembali ke Aktivitas </button>
+        </div>
+       </div>
+      </div>
+     </section>
+    </div>
+   </main>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_title: 'Biologi Kelas IX',
+      subtitle: 'Pertumbuhan & Perkembangan',
+      primary_color: '#10b981',
+      secondary_color: '#059669',
+      background_color: '#ecfdf5',
+      text_color: '#1f2937',
+      accent_color: '#f59e0b'
+    };
+    
+    let config = { ...defaultConfig };
+    
+    // Element SDK Initialization
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (value) => window.elementSdk.setConfig({ primary_color: value })
+            },
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (value) => window.elementSdk.setConfig({ background_color: value })
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (value) => window.elementSdk.setConfig({ text_color: value })
+            },
+            {
+              get: () => cfg.accent_color || defaultConfig.accent_color,
+              set: (value) => window.elementSdk.setConfig({ accent_color: value })
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['main_title', cfg.main_title || defaultConfig.main_title],
+          ['subtitle', cfg.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
+    
+    function applyConfig() {
+      document.getElementById('main-title').textContent = config.main_title;
+      document.getElementById('subtitle').textContent = config.subtitle;
+    }
+    
+    // Navigation State
+    let currentSection = 0;
+    let visitedSections = new Set([0]);
+    
+    function showSection(index) {
+      // Hide all sections
+      for (let i = 0; i < 8; i++) {
+        document.getElementById(`section-${i}`).classList.add('hidden');
+      }
+      
+      // Show selected section
+      document.getElementById(`section-${index}`).classList.remove('hidden');
+      
+      // Update navigation
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach((item, i) => {
+        if (i === index) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+      
+      // Track visited sections
+      visitedSections.add(index);
+      currentSection = index;
+      updateProgress();
+      
+      // Scroll to top of content
+      document.getElementById('content-area').scrollTop = 0;
+      
+      // Initialize quiz if on quiz section
+      if (index === 7 && !quizStarted) {
+        startQuiz();
+      }
+      
+      // Initialize sorting game if on activities section
+      if (index === 6) {
+        initSortingGame();
+      }
+    }
+    
+    function updateProgress() {
+      const progress = visitedSections.size;
+      const progressBar = document.getElementById('progress-bar');
+      const progressText = document.getElementById('progress-text');
+      
+      progressBar.style.width = `${(progress / 8) * 100}%`;
+      progressText.textContent = `${progress}/8`;
+    }
+    
+    // Seed Part Info
+    const seedParts = {
+      embrio: {
+        title: '🌿 Embrio',
+        content: 'Embrio adalah <strong>calon tumbuhan baru</strong> yang terdapat di dalam biji. Terdiri dari:<br><br>• <strong>Plumula</strong>: Bakal daun dan batang<br>• <strong>Radikula</strong>: Bakal akar<br>• <strong>Hipokotil</strong>: Bakal batang bawah daun lembaga<br>• <strong>Epikotil</strong>: Bakal batang atas daun lembaga'
+      },
+      kotiledon: {
+        title: '🍃 Kotiledon (Daun Lembaga)',
+        content: 'Kotiledon adalah <strong>cadangan makanan</strong> untuk pertumbuhan awal embrio. Berdasarkan jumlah kotiledon, tumbuhan dibagi menjadi:<br><br>• <strong>Monokotil</strong>: 1 kotiledon (padi, jagung)<br>• <strong>Dikotil</strong>: 2 kotiledon (kacang, mangga)'
+      },
+      kulit: {
+        title: '🛡️ Kulit Biji (Testa)',
+        content: 'Kulit biji berfungsi sebagai <strong>pelindung</strong> embrio dari:<br><br>• Kekeringan<br>• Kerusakan mekanis<br>• Serangan hama/penyakit<br><br>Kulit biji akan pecah saat proses <strong>imbibisi</strong> (penyerapan air) untuk memulai perkecambahan.'
+      }
+    };
+    
+    function showSeedPart(part) {
+      const info = seedParts[part];
+      document.getElementById('seed-info').innerHTML = `
+        <h4 class="font-bold text-amber-800 mb-2">${info.title}</h4>
+        <p class="text-gray-700">${info.content}</p>
+      `;
+    }
+    
+    // Simulation
+    function updateSimulation() {
+      const light = parseInt(document.getElementById('light-slider').value);
+      const water = parseInt(document.getElementById('water-slider').value);
+      const temp = parseInt(document.getElementById('temp-slider').value);
+      const nutrient = parseInt(document.getElementById('nutrient-slider').value);
+      
+      document.getElementById('light-value').textContent = `${light}%`;
+      document.getElementById('water-value').textContent = `${water}%`;
+      document.getElementById('temp-value').textContent = `${Math.round(10 + (temp / 100) * 30)}°C`;
+      document.getElementById('nutrient-value').textContent = `${nutrient}%`;
+      
+      // Calculate growth score
+      const optimalLight = Math.abs(70 - light) < 30 ? 1 : 0.5;
+      const optimalWater = Math.abs(60 - water) < 30 ? 1 : (water < 20 ? 0.3 : 0.6);
+      const optimalTemp = Math.abs(50 - temp) < 30 ? 1 : 0.5;
+      const optimalNutrient = nutrient > 30 ? 1 : 0.5;
+      
+      const growthScore = (optimalLight + optimalWater + optimalTemp + optimalNutrient) / 4;
+      const scale = 0.6 + (growthScore * 0.6);
+      
+      document.getElementById('plant-container').style.transform = `scale(${scale})`;
+      
+      // Update status
+      const growthPercent = document.getElementById('growth-percent');
+      const growthMessage = document.getElementById('growth-message');
+      
+      if (growthScore > 0.85) {
+        growthPercent.textContent = 'Optimal! 🌟';
+        growthPercent.className = 'text-emerald-600 font-bold';
+        growthMessage.textContent = 'Kondisi sempurna untuk pertumbuhan!';
+      } else if (growthScore > 0.6) {
+        growthPercent.textContent = 'Baik 👍';
+        growthPercent.className = 'text-green-600 font-bold';
+        growthMessage.textContent = 'Pertumbuhan normal, bisa dioptimalkan.';
+      } else if (growthScore > 0.4) {
+        growthPercent.textContent = 'Terhambat ⚠️';
+        growthPercent.className = 'text-amber-600 font-bold';
+        growthMessage.textContent = 'Beberapa faktor kurang optimal.';
+      } else {
+        growthPercent.textContent = 'Kritis! ❌';
+        growthPercent.className = 'text-red-600 font-bold';
+        growthMessage.textContent = 'Kondisi buruk, tumbuhan terancam!';
+      }
+    }
+    
+    // Sorting Game
+    const sortingStages = [
+      { id: 'telur', emoji: '🥚', name: 'Telur' },
+      { id: 'larva', emoji: '🐛', name: 'Larva (Ulat)' },
+      { id: 'pupa', emoji: '🫛', name: 'Pupa (Kepompong)' },
+      { id: 'dewasa', emoji: '🦋', name: 'Dewasa (Imago)' }
+    ];
+    
+    let sortingAnswer = [];
+    
+    function initSortingGame() {
+      const shuffled = [...sortingStages].sort(() => Math.random() - 0.5);
+      const itemsContainer = document.getElementById('sorting-items');
+      itemsContainer.innerHTML = shuffled.map(stage => `
+        <button onclick="addToAnswer('${stage.id}')" id="sort-${stage.id}" class="bg-purple-100 hover:bg-purple-200 px-4 py-3 rounded-xl text-sm font-semibold transition-all flex items-center gap-2">
+          <span class="text-2xl">${stage.emoji}</span>
+          <span>${stage.name}</span>
+        </button>
+      `).join('');
+      
+      sortingAnswer = [];
+      document.getElementById('sorting-answer').innerHTML = '<p class="text-gray-400 text-sm" id="sorting-placeholder">Klik item di atas untuk menyusun urutan</p>';
+      document.getElementById('sorting-result').innerHTML = '';
+    }
+    
+    function addToAnswer(id) {
+      if (sortingAnswer.includes(id)) return;
+      
+      const stage = sortingStages.find(s => s.id === id);
+      sortingAnswer.push(id);
+      
+      // Hide from items
+      document.getElementById(`sort-${id}`).style.display = 'none';
+      
+      // Add to answer
+      const answerContainer = document.getElementById('sorting-answer');
+      const placeholder = document.getElementById('sorting-placeholder');
+      if (placeholder) placeholder.remove();
+      
+      answerContainer.innerHTML += `
+        <div class="bg-purple-200 px-4 py-3 rounded-xl text-sm font-semibold flex items-center gap-2">
+          <span class="text-2xl">${stage.emoji}</span>
+          <span>${stage.name}</span>
+        </div>
+      `;
+    }
+    
+    function resetSorting() {
+      initSortingGame();
+    }
+    
+    function checkSorting() {
+      const correctOrder = ['telur', 'larva', 'pupa', 'dewasa'];
+      const isCorrect = sortingAnswer.length === 4 && sortingAnswer.every((id, i) => id === correctOrder[i]);
+      
+      const resultDiv = document.getElementById('sorting-result');
+      if (isCorrect) {
+        resultDiv.innerHTML = '<p class="text-emerald-600 font-bold">✅ Benar! Urutan metamorfosis sempurna kupu-kupu sudah tepat!</p>';
+      } else if (sortingAnswer.length < 4) {
+        resultDiv.innerHTML = '<p class="text-amber-600 font-bold">⚠️ Lengkapi semua tahapan terlebih dahulu!</p>';
+      } else {
+        resultDiv.innerHTML = '<p class="text-red-600 font-bold">❌ Belum tepat. Coba ingat kembali urutan metamorfosis sempurna!</p>';
+      }
+    }
+    
+    // Matching Game
+    const matchingAnswers = {
+      auksin: 'pemanjangan',
+      giberelin: 'perkecambahan',
+      sitokinin: 'pembelahan',
+      etilen: 'pematangan'
+    };
+    
+    let selectedHormone = null;
+    let matchedPairs = [];
+    
+    function selectHormone(hormone) {
+      if (matchedPairs.includes(hormone)) return;
+      
+      // Reset previous selection
+      document.querySelectorAll('[id^="hormone-"]').forEach(el => {
+        if (!matchedPairs.includes(el.id.replace('hormone-', ''))) {
+          el.classList.remove('ring-2', 'ring-amber-500', 'bg-amber-100');
+        }
+      });
+      
+      selectedHormone = hormone;
+      document.getElementById(`hormone-${hormone}`).classList.add('ring-2', 'ring-amber-500', 'bg-amber-100');
+    }
+    
+    function selectFunction(func) {
+      if (!selectedHormone) {
+        document.getElementById('matching-result').innerHTML = '<p class="text-amber-600">Pilih hormon terlebih dahulu!</p>';
+        return;
+      }
+      
+      const isCorrect = matchingAnswers[selectedHormone] === func;
+      
+      if (isCorrect) {
+        matchedPairs.push(selectedHormone);
+        document.getElementById(`hormone-${selectedHormone}`).classList.add('bg-emerald-200', 'border-emerald-400');
+        document.getElementById(`func-${func}`).classList.add('bg-emerald-200', 'border-emerald-400');
+        document.getElementById('matching-result').innerHTML = '<p class="text-emerald-600 font-bold">✅ Cocok!</p>';
+        
+        if (matchedPairs.length === 4) {
+          document.getElementById('matching-result').innerHTML = '<p class="text-emerald-600 font-bold text-lg">🎉 Sempurna! Semua pasangan benar!</p>';
+        }
+      } else {
+        document.getElementById('matching-result').innerHTML = '<p class="text-red-600 font-bold">❌ Tidak cocok, coba lagi!</p>';
+      }
+      
+      selectedHormone = null;
+    }
+    
+    function resetMatching() {
+      matchedPairs = [];
+      selectedHormone = null;
+      
+      document.querySelectorAll('[id^="hormone-"], [id^="func-"]').forEach(el => {
+        el.classList.remove('ring-2', 'ring-amber-500', 'bg-amber-100', 'bg-emerald-200', 'border-emerald-400');
+      });
+      
+      document.getElementById('matching-result').innerHTML = '';
+    }
+    
+    // HOTS Quiz
+    const quizQuestions = [
+      {
+        question: 'Seorang petani menemukan bahwa tanaman padinya tumbuh lebih tinggi tetapi tidak menghasilkan bulir padi yang banyak. Berdasarkan pemahaman tentang pertumbuhan dan perkembangan, analisis apa yang terjadi?',
+        options: [
+          'Tanaman mengalami pertumbuhan normal',
+          'Tanaman mengalami pertumbuhan tanpa perkembangan yang seimbang',
+          'Tanaman kekurangan cahaya matahari',
+          'Tanaman terlalu banyak air'
+        ],
+        correct: 1,
+        explanation: 'Pertumbuhan (bertambah tinggi) tidak diikuti perkembangan (pembentukan bulir) yang optimal menunjukkan ketidakseimbangan proses biologis.'
+      },
+      {
+        question: 'Mengapa batang kelapa tidak bisa membesar seperti batang pohon jati meskipun keduanya sama-sama tumbuh tinggi?',
+        options: [
+          'Kelapa kurang mendapat nutrisi',
+          'Kelapa tidak memiliki kambium untuk pertumbuhan sekunder',
+          'Kelapa tumbuh di tempat berbeda',
+          'Pohon jati lebih tua dari kelapa'
+        ],
+        correct: 1,
+        explanation: 'Kelapa adalah tumbuhan monokotil yang tidak memiliki kambium, sehingga tidak bisa melakukan pertumbuhan sekunder (membesar).'
+      },
+      {
+        question: 'Petani A memberikan pupuk nitrogen berlebih pada tanamannya. Evaluasi dampak yang mungkin terjadi berdasarkan pengetahuan tentang faktor pertumbuhan!',
+        options: [
+          'Tanaman akan menghasilkan buah lebih banyak',
+          'Pertumbuhan daun berlebih tapi pembungaan terhambat',
+          'Tanaman akan tumbuh lebih cepat dan seimbang',
+          'Tidak ada pengaruh signifikan'
+        ],
+        correct: 1,
+        explanation: 'Kelebihan nitrogen menyebabkan pertumbuhan vegetatif berlebih (daun banyak) tetapi menghambat fase generatif (pembungaan dan pembuahan).'
+      },
+      {
+        question: 'Pada percobaan, tanaman yang diberi cahaya dari satu arah tumbuh membengkok ke arah cahaya. Hormon apa yang berperan dan bagaimana mekanismenya?',
+        options: [
+          'Etilen yang mempercepat pertumbuhan sisi gelap',
+          'Auksin yang terakumulasi di sisi gelap menyebabkan pemanjangan lebih cepat',
+          'Giberelin yang merangsang pembelahan sel',
+          'Sitokinin yang menghambat pertumbuhan sisi terang'
+        ],
+        correct: 1,
+        explanation: 'Auksin bergerak menjauhi cahaya (ke sisi gelap). Konsentrasi auksin lebih tinggi di sisi gelap menyebabkan pemanjangan sel lebih cepat, sehingga batang membengkok ke arah cahaya.'
+      },
+      {
+        question: 'Mengapa ulat (larva kupu-kupu) dan kupu-kupu dewasa memakan makanan yang berbeda? Analisis keuntungan evolusi dari fenomena ini!',
+        options: [
+          'Karena ulat belum memiliki sayap untuk mencari makanan',
+          'Untuk mengurangi kompetisi makanan antara fase muda dan dewasa',
+          'Karena ulat tidak menyukai nektar bunga',
+          'Karena kupu-kupu tidak bisa mengunyah daun'
+        ],
+        correct: 1,
+        explanation: 'Perbedaan makanan mengurangi kompetisi intraspesifik (dalam spesies yang sama), memungkinkan kedua fase hidup berdampingan tanpa bersaing sumber daya.'
+      },
+      {
+        question: 'Seorang siswa ingin mempercepat pematangan buah mangga yang masih hijau. Hormon apa yang sebaiknya digunakan dan mengapa?',
+        options: [
+          'Auksin karena mempercepat pertumbuhan',
+          'Giberelin karena merangsang pembungaan',
+          'Etilen karena berfungsi mempercepat pematangan buah',
+          'Sitokinin karena memperlambat penuaan'
+        ],
+        correct: 2,
+        explanation: 'Etilen adalah hormon gas yang berfungsi mempercepat pematangan buah. Cara tradisional: menyimpan buah dalam wadah tertutup atau bersama buah matang yang menghasilkan etilen.'
+      },
+      {
+        question: 'Data menunjukkan bahwa stunting di daerah A lebih tinggi dibanding daerah B, padahal kedua daerah memiliki akses pangan yang sama. Faktor apa yang mungkin menjadi penyebab perbedaan ini?',
+        options: [
+          'Genetika penduduk daerah A berbeda',
+          'Perbedaan sanitasi dan akses air bersih mempengaruhi penyerapan nutrisi',
+          'Iklim daerah A lebih panas',
+          'Penduduk daerah A kurang olahraga'
+        ],
+        correct: 1,
+        explanation: 'Sanitasi buruk menyebabkan infeksi berulang (diare, cacingan) yang mengganggu penyerapan nutrisi, sehingga meski pangan cukup, nutrisi tidak terserap optimal.'
+      },
+      {
+        question: 'Berdasarkan grafik pertumbuhan tanaman dengan variasi volume air, mengapa pertumbuhan melambat setelah volume air mencapai 150 mL?',
+        options: [
+          'Tanaman sudah mencapai tinggi maksimal genetiknya',
+          'Air berlebih menyebabkan akar kekurangan oksigen (hipoksia)',
+          'Pot tidak cukup besar untuk menampung air',
+          'Fotosintesis terhambat oleh air berlebih'
+        ],
+        correct: 1,
+        explanation: 'Air berlebih mengisi pori-pori tanah sehingga akar kekurangan oksigen untuk respirasi. Ini menyebabkan penyerapan nutrisi terganggu dan pertumbuhan melambat.'
+      },
+      {
+        question: 'Pada metamorfosis tidak sempurna, nimfa belalang memakan makanan yang sama dengan dewasa. Prediksi apa yang akan terjadi jika populasi belalang dewasa sangat banyak?',
+        options: [
+          'Nimfa akan bermetamorfosis lebih cepat',
+          'Terjadi kompetisi makanan yang dapat mengurangi kelangsungan hidup nimfa',
+          'Nimfa akan berubah makanan ke jenis lain',
+          'Tidak ada dampak karena makanan berlimpah'
+        ],
+        correct: 1,
+        explanation: 'Karena nimfa dan dewasa memakan makanan sama, populasi dewasa yang banyak menciptakan kompetisi ketat. Nimfa yang lebih kecil kalah bersaing, mengurangi tingkat kelangsungan hidup.'
+      },
+      {
+        question: 'Sintesis pengetahuan: Mengapa intervensi stunting harus dimulai sejak 1000 Hari Pertama Kehidupan (HPK) dan bukan setelahnya? Hubungkan dengan konsep pertumbuhan yang telah dipelajari!',
+        options: [
+          'Karena setelah 1000 HPK anak sudah bisa memilih makanannya sendiri',
+          'Karena pertumbuhan fisik dan otak paling pesat terjadi pada periode ini dan bersifat irreversibel',
+          'Karena sebelum 1000 HPK biaya intervensi lebih murah',
+          'Karena setelah 1000 HPK anak sudah kebal terhadap penyakit'
+        ],
+        correct: 1,
+        explanation: '1000 HPK adalah periode kritis dimana 80% otak berkembang dan pertumbuhan fisik sangat pesat. Kerusakan pada periode ini bersifat IREVERSIBEL (tidak dapat diperbaiki) karena "window of opportunity" sudah tertutup.'
+      }
+    ];
+    
+    let currentQuestion = 0;
+    let score = 0;
+    let quizStarted = false;
+    let answeredQuestions = new Set();
+    
+    function startQuiz() {
+      quizStarted = true;
+      currentQuestion = 0;
+      score = 0;
+      answeredQuestions.clear();
+      renderQuestion();
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('quiz-container').classList.remove('hidden');
+    }
+    
+    function renderQuestion() {
+      const q = quizQuestions[currentQuestion];
+      const container = document.getElementById('quiz-container');
+      
+      container.innerHTML = `
+        <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-2xl p-6 mb-6">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-bold">Soal ${currentQuestion + 1}</span>
+            <span class="text-orange-600 text-sm font-medium">dari 10</span>
+          </div>
+          <p class="text-gray-800 font-medium text-lg leading-relaxed">${q.question}</p>
+        </div>
+        
+        <div class="space-y-3 mb-6" id="options-container">
+          ${q.options.map((opt, i) => `
+            <button onclick="selectAnswer(${i})" id="option-${i}" class="quiz-option w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-orange-400 hover:bg-orange-50 transition-all">
+              <span class="inline-flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full mr-3 font-bold text-gray-600">${String.fromCharCode(65 + i)}</span>
+              <span class="text-gray-700">${opt}</span>
+            </button>
+          `).join('')}
+        </div>
+        
+        <div id="explanation-box" class="hidden bg-blue-50 rounded-xl p-4 mb-6 border border-blue-200">
+          <h4 class="font-bold text-blue-800 mb-2">💡 Penjelasan:</h4>
+          <p class="text-gray-700">${q.explanation}</p>
+        </div>
+        
+        <div class="flex justify-between">
+          <button onclick="previousQuestion()" class="bg-gray-200 text-gray-700 px-5 py-2 rounded-xl font-semibold hover:bg-gray-300 transition-all ${currentQuestion === 0 ? 'invisible' : ''} flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Sebelumnya
+          </button>
+          <button onclick="nextQuestion()" id="next-btn" class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-5 py-2 rounded-xl font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2" disabled>
+            ${currentQuestion === quizQuestions.length - 1 ? 'Lihat Hasil' : 'Selanjutnya'}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      `;
+      
+      updateQuizProgress();
+    }
+    
+    function selectAnswer(index) {
+      if (answeredQuestions.has(currentQuestion)) return;
+      
+      answeredQuestions.add(currentQuestion);
+      const q = quizQuestions[currentQuestion];
+      const isCorrect = index === q.correct;
+      
+      if (isCorrect) score++;
+      
+      // Visual feedback
+      const options = document.querySelectorAll('.quiz-option');
+      options.forEach((opt, i) => {
+        opt.disabled = true;
+        opt.classList.remove('hover:border-orange-400', 'hover:bg-orange-50');
+        if (i === q.correct) {
+          opt.classList.add('correct');
+        } else if (i === index && !isCorrect) {
+          opt.classList.add('incorrect');
+        }
+      });
+      
+      // Show explanation
+      document.getElementById('explanation-box').classList.remove('hidden');
+      document.getElementById('next-btn').disabled = false;
+      
+      updateQuizProgress();
+    }
+    
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        showQuizResult();
+      }
+    }
+    
+    function previousQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+    
+    function updateQuizProgress() {
+      const progress = answeredQuestions.size;
+      document.getElementById('quiz-progress').textContent = `${progress}/10`;
+      document.getElementById('quiz-progress-bar').style.width = `${(progress / 10) * 100}%`;
+    }
+    
+    function showQuizResult() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      document.getElementById('final-score').textContent = score;
+      
+      const messageEl = document.getElementById('score-message');
+      if (score >= 9) {
+        messageEl.textContent = '🌟 Luar biasa! Kamu menguasai materi dengan sangat baik!';
+      } else if (score >= 7) {
+        messageEl.textContent = '👏 Bagus sekali! Pemahaman kamu sudah baik!';
+      } else if (score >= 5) {
+        messageEl.textContent = '📚 Cukup baik. Ayo pelajari lagi materi yang belum dipahami!';
+      } else {
+        messageEl.textContent = '💪 Semangat! Baca ulang materinya dan coba lagi!';
+      }
+    }
+    
+    function restartQuiz() {
+      quizStarted = false;
+      startQuiz();
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      applyConfig();
+      updateProgress();
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ca9e8d8d532ea83',t:'MTc3MDU0MDk0Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

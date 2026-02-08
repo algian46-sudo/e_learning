@@ -1,0 +1,1987 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memahami Pewarisan Sifat pada Makhluk Hidup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Source+Sans+Pro:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    .font-heading {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+    
+    .font-body {
+      font-family: 'Source Sans Pro', Arial, sans-serif;
+    }
+    
+    .dna-helix {
+      animation: rotate-dna 10s linear infinite;
+    }
+    
+    @keyframes rotate-dna {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 5px rgba(139, 92, 246, 0.3); }
+      50% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.6); }
+    }
+    
+    .slide-in {
+      animation: slideIn 0.5s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    .nav-btn {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-btn:hover {
+      transform: scale(1.05);
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    
+    .quiz-option:hover:not(:disabled) {
+      transform: translateX(5px);
+    }
+    
+    .chromosome-svg {
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    }
+    
+    .mendel-pea {
+      transition: transform 0.3s ease;
+    }
+    
+    .mendel-pea:hover {
+      transform: scale(1.1);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body">
+  <div id="app-container" class="h-full w-full overflow-auto" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);"><!-- Header Navigation -->
+   <header class="sticky top-0 z-50 backdrop-blur-md bg-slate-900/80 border-b border-purple-500/20">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center"><span class="text-xl">🧬</span>
+       </div>
+       <h1 id="main-title" class="font-heading text-lg md:text-xl font-bold text-white">Pewarisan Sifat</h1>
+      </div>
+      <div class="flex items-center gap-2"><span id="slide-indicator" class="text-purple-300 text-sm font-medium">1 / 12</span>
+      </div>
+     </div><!-- Progress Bar -->
+     <div class="mt-2 h-1.5 bg-slate-700 rounded-full overflow-hidden">
+      <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" style="width: 8.33%"></div>
+     </div>
+    </div>
+   </header><!-- Main Content Area -->
+   <main class="max-w-7xl mx-auto px-4 py-6">
+    <div id="content-container" class="slide-in"><!-- Slide content will be rendered here -->
+    </div>
+   </main><!-- Navigation Footer -->
+   <footer class="fixed bottom-0 left-0 right-0 backdrop-blur-md bg-slate-900/90 border-t border-purple-500/20">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+     <div class="flex items-center justify-between"><button id="prev-btn" onclick="navigateSlide(-1)" class="nav-btn px-4 py-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-white font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"> <span>←</span> Sebelumnya </button>
+      <div class="flex gap-1"><span id="nav-dots"></span>
+      </div><button id="next-btn" onclick="navigateSlide(1)" class="nav-btn px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-medium flex items-center gap-2"> Selanjutnya <span>→</span> </button>
+     </div>
+     <p id="footer-text" class="text-center text-slate-400 text-xs mt-2">© 2024 Media Pembelajaran Biologi - Pewarisan Sifat</p>
+    </div>
+   </footer><!-- Quiz Modal -->
+   <div id="quiz-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-800 rounded-2xl max-w-2xl w-full max-h-[90%] overflow-auto border border-purple-500/30">
+     <div class="p-6">
+      <div class="flex items-center justify-between mb-4">
+       <h3 class="font-heading text-xl font-bold text-white">🎯 Quiz HOTS</h3><button onclick="closeQuiz()" class="text-slate-400 hover:text-white text-2xl">×</button>
+      </div>
+      <div id="quiz-content"></div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_title: "Pewarisan Sifat",
+      footer_text: "© 2024 Media Pembelajaran Biologi - Pewarisan Sifat",
+      primary_color: "#8b5cf6",
+      secondary_color: "#1e293b",
+      text_color: "#f8fafc",
+      accent_color: "#ec4899",
+      surface_color: "#334155"
+    };
+
+    let config = { ...defaultConfig };
+    let currentSlide = 0;
+    let quizScore = 0;
+    let currentQuestion = 0;
+    let answeredQuestions = [];
+
+    // Slide Data
+    const slides = [
+      {
+        id: 1,
+        title: "Mengapa Wajah Kita Mirip Orang Tua?",
+        type: "intro",
+        content: `
+          <div class="text-center mb-8">
+            <div class="inline-block p-4 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 mb-6">
+              <span class="text-6xl">👨‍👩‍👧‍👦</span>
+            </div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4">Mengapa Wajah Kita<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">Mirip Orang Tua?</span></h2>
+          </div>
+          
+          <div class="bg-slate-800/50 rounded-2xl p-6 border border-purple-500/20 mb-6">
+            <h3 class="text-purple-300 font-semibold mb-3 flex items-center gap-2">
+              <span class="text-2xl">🤔</span> Apersepsi
+            </h3>
+            <p class="text-slate-300 text-lg leading-relaxed">
+              Perhatikan wajah kakak, adik, atau diri sendiri di depan cermin. 
+              <strong class="text-white">Mengapa ada persamaan dan perbedaan fisik</strong> 
+              meskipun berasal dari orang tua yang sama?
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="card-hover bg-gradient-to-br from-purple-600/30 to-purple-800/30 rounded-xl p-4 border border-purple-500/30 text-center">
+              <div class="text-4xl mb-2">👁️</div>
+              <p class="text-white font-medium">Warna Mata</p>
+              <p class="text-slate-400 text-sm">Diwariskan dari orang tua</p>
+            </div>
+            <div class="card-hover bg-gradient-to-br from-pink-600/30 to-pink-800/30 rounded-xl p-4 border border-pink-500/30 text-center">
+              <div class="text-4xl mb-2">💇</div>
+              <p class="text-white font-medium">Bentuk Rambut</p>
+              <p class="text-slate-400 text-sm">Lurus, bergelombang, keriting</p>
+            </div>
+            <div class="card-hover bg-gradient-to-br from-violet-600/30 to-violet-800/30 rounded-xl p-4 border border-violet-500/30 text-center">
+              <div class="text-4xl mb-2">🩸</div>
+              <p class="text-white font-medium">Golongan Darah</p>
+              <p class="text-slate-400 text-sm">Ditentukan secara genetik</p>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-2xl p-6 border border-green-500/30">
+            <h3 class="text-green-300 font-semibold mb-2 flex items-center gap-2">
+              <span class="text-2xl">💡</span> Jawaban
+            </h3>
+            <p class="text-white text-lg">
+              Setiap makhluk hidup <strong class="text-green-300">mewariskan sifat tertentu</strong> melalui <strong class="text-green-300">materi genetik</strong> yang diturunkan dari generasi ke generasi.
+            </p>
+          </div>
+        `
+      },
+      {
+        id: 2,
+        title: "Komponen Utama Materi Genetik",
+        type: "content",
+        content: `
+          <div class="text-center mb-8">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-2">Komponen Utama</h2>
+            <p class="text-2xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 font-bold">Materi Genetik</p>
+          </div>
+
+          <!-- DNA Helix Illustration -->
+          <div class="flex justify-center mb-8">
+            <svg class="w-48 h-48 dna-helix" viewBox="0 0 200 200">
+              <defs>
+                <linearGradient id="dnaGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#8b5cf6"/>
+                  <stop offset="100%" style="stop-color:#ec4899"/>
+                </linearGradient>
+                <linearGradient id="dnaGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#06b6d4"/>
+                  <stop offset="100%" style="stop-color:#8b5cf6"/>
+                </linearGradient>
+              </defs>
+              <!-- Double Helix Structure -->
+              <path d="M60,20 Q100,50 60,80 Q20,110 60,140 Q100,170 60,200" stroke="url(#dnaGrad1)" stroke-width="8" fill="none" stroke-linecap="round"/>
+              <path d="M140,20 Q100,50 140,80 Q180,110 140,140 Q100,170 140,200" stroke="url(#dnaGrad2)" stroke-width="8" fill="none" stroke-linecap="round"/>
+              <!-- Base Pairs -->
+              <line x1="65" y1="35" x2="135" y2="35" stroke="#fbbf24" stroke-width="4" stroke-linecap="round"/>
+              <line x1="45" y1="65" x2="155" y2="65" stroke="#34d399" stroke-width="4" stroke-linecap="round"/>
+              <line x1="65" y1="95" x2="135" y2="95" stroke="#f472b6" stroke-width="4" stroke-linecap="round"/>
+              <line x1="45" y1="125" x2="155" y2="125" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>
+              <line x1="65" y1="155" x2="135" y2="155" stroke="#fbbf24" stroke-width="4" stroke-linecap="round"/>
+              <line x1="45" y1="185" x2="155" y2="185" stroke="#34d399" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-6 mb-6">
+            <!-- Kromosom -->
+            <div class="card-hover bg-slate-800/70 rounded-2xl p-6 border border-purple-500/30">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center">
+                  <svg class="w-8 h-8 text-white" viewBox="0 0 40 40">
+                    <ellipse cx="15" cy="20" rx="8" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <ellipse cx="25" cy="20" rx="8" ry="18" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="20" cy="20" r="3" fill="currentColor"/>
+                  </svg>
+                </div>
+                <h3 class="text-xl font-bold text-white">Kromosom</h3>
+              </div>
+              <p class="text-slate-300 leading-relaxed mb-4">
+                Struktur berbentuk <strong class="text-purple-300">benang</strong> di dalam inti sel (nukleus) yang terlihat jelas saat sel membelah.
+              </p>
+              <div class="bg-purple-500/20 rounded-lg p-3">
+                <p class="text-purple-200 text-sm">
+                  📊 Manusia memiliki <strong>46 kromosom</strong> (23 pasang)
+                </p>
+              </div>
+            </div>
+
+            <!-- DNA -->
+            <div class="card-hover bg-slate-800/70 rounded-2xl p-6 border border-pink-500/30">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-pink-500 to-pink-700 flex items-center justify-center">
+                  <span class="text-2xl">🧬</span>
+                </div>
+                <h3 class="text-xl font-bold text-white">DNA</h3>
+              </div>
+              <p class="text-slate-300 leading-relaxed mb-4">
+                Benang <strong class="text-pink-300">double helix</strong> yang melilit pada protein histon di dalam kromatid.
+              </p>
+              <div class="bg-pink-500/20 rounded-lg p-3">
+                <p class="text-pink-200 text-sm">
+                  🔬 DNA = Deoxyribonucleic Acid (Asam Deoksiribonukleat)
+                </p>
+              </div>
+            </div>
+
+            <!-- Gen -->
+            <div class="card-hover bg-slate-800/70 rounded-2xl p-6 border border-cyan-500/30">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500 to-cyan-700 flex items-center justify-center">
+                  <span class="text-2xl">🎯</span>
+                </div>
+                <h3 class="text-xl font-bold text-white">Gen</h3>
+              </div>
+              <p class="text-slate-300 leading-relaxed mb-4">
+                Potongan DNA yang <strong class="text-cyan-300">mengkode protein</strong> tertentu dan menentukan sifat individu.
+              </p>
+              <div class="bg-cyan-500/20 rounded-lg p-3">
+                <p class="text-cyan-200 text-sm">
+                  🧪 Manusia memiliki sekitar <strong>20.000-25.000 gen</strong>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hierarchy Diagram -->
+          <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-600/50">
+            <h3 class="text-white font-semibold mb-4 text-center">📊 Hierarki Materi Genetik</h3>
+            <div class="flex items-center justify-center gap-4 flex-wrap">
+              <div class="text-center">
+                <div class="w-16 h-16 rounded-full bg-purple-600 flex items-center justify-center mb-2 mx-auto">
+                  <span class="text-white text-xs font-bold">SEL</span>
+                </div>
+              </div>
+              <span class="text-purple-400 text-2xl">→</span>
+              <div class="text-center">
+                <div class="w-16 h-16 rounded-full bg-pink-600 flex items-center justify-center mb-2 mx-auto">
+                  <span class="text-white text-xs font-bold">NUKLEUS</span>
+                </div>
+              </div>
+              <span class="text-pink-400 text-2xl">→</span>
+              <div class="text-center">
+                <div class="w-16 h-16 rounded-full bg-violet-600 flex items-center justify-center mb-2 mx-auto">
+                  <span class="text-white text-xs font-bold">KROMOSOM</span>
+                </div>
+              </div>
+              <span class="text-violet-400 text-2xl">→</span>
+              <div class="text-center">
+                <div class="w-16 h-16 rounded-full bg-cyan-600 flex items-center justify-center mb-2 mx-auto">
+                  <span class="text-white text-xs font-bold">DNA</span>
+                </div>
+              </div>
+              <span class="text-cyan-400 text-2xl">→</span>
+              <div class="text-center">
+                <div class="w-16 h-16 rounded-full bg-emerald-600 flex items-center justify-center mb-2 mx-auto">
+                  <span class="text-white text-xs font-bold">GEN</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 3,
+        title: "Ekspresi Gen - Bagaimana Sifat Muncul?",
+        type: "content",
+        content: `
+          <div class="text-center mb-8">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-2">Ekspresi Gen</h2>
+            <p class="text-xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 font-semibold">Bagaimana Sifat Muncul?</p>
+          </div>
+
+          <div class="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl p-6 border border-purple-500/30 mb-6">
+            <p class="text-white text-lg text-center">
+              Sifat individu muncul melalui proses <strong class="text-purple-300">Sintesis Protein</strong> yang terdiri dari <strong class="text-pink-300">dua tahap utama</strong>
+            </p>
+          </div>
+
+          <!-- Process Flow -->
+          <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <!-- Transkripsi -->
+            <div class="card-hover bg-slate-800/70 rounded-2xl overflow-hidden border border-cyan-500/30">
+              <div class="bg-gradient-to-r from-cyan-600 to-blue-600 p-4">
+                <div class="flex items-center gap-3">
+                  <span class="text-3xl">1️⃣</span>
+                  <h3 class="text-xl font-bold text-white">TRANSKRIPSI</h3>
+                </div>
+              </div>
+              <div class="p-6">
+                <div class="flex justify-center mb-4">
+                  <svg class="w-32 h-32" viewBox="0 0 120 120">
+                    <!-- Nucleus -->
+                    <circle cx="60" cy="60" r="50" fill="#1e3a5f" stroke="#06b6d4" stroke-width="2"/>
+                    <text x="60" y="15" text-anchor="middle" fill="#94a3b8" font-size="8">INTI SEL</text>
+                    <!-- DNA -->
+                    <path d="M30,45 Q45,35 60,45 Q75,55 90,45" stroke="#8b5cf6" stroke-width="3" fill="none"/>
+                    <path d="M30,55 Q45,65 60,55 Q75,45 90,55" stroke="#ec4899" stroke-width="3" fill="none"/>
+                    <text x="60" y="40" text-anchor="middle" fill="#c4b5fd" font-size="7">DNA</text>
+                    <!-- mRNA being created -->
+                    <path d="M55,70 L90,70" stroke="#fbbf24" stroke-width="3" fill="none" stroke-dasharray="5,3"/>
+                    <text x="75" y="85" text-anchor="middle" fill="#fde047" font-size="8">mRNA</text>
+                    <!-- Arrow -->
+                    <path d="M60,58 L60,68" stroke="#fbbf24" stroke-width="2" marker-end="url(#arrowhead)"/>
+                  </svg>
+                </div>
+                <p class="text-slate-300 leading-relaxed mb-4">
+                  <strong class="text-cyan-300">Penyalinan</strong> kode genetik DNA menjadi <strong class="text-yellow-300">mRNA</strong> (messenger RNA) di dalam inti sel.
+                </p>
+                <div class="bg-cyan-500/20 rounded-lg p-3">
+                  <p class="text-cyan-200 text-sm">
+                    📍 Lokasi: <strong>Di dalam nukleus (inti sel)</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Translasi -->
+            <div class="card-hover bg-slate-800/70 rounded-2xl overflow-hidden border border-green-500/30">
+              <div class="bg-gradient-to-r from-green-600 to-emerald-600 p-4">
+                <div class="flex items-center gap-3">
+                  <span class="text-3xl">2️⃣</span>
+                  <h3 class="text-xl font-bold text-white">TRANSLASI</h3>
+                </div>
+              </div>
+              <div class="p-6">
+                <div class="flex justify-center mb-4">
+                  <svg class="w-32 h-32" viewBox="0 0 120 120">
+                    <!-- Ribosome -->
+                    <ellipse cx="60" cy="60" rx="45" ry="25" fill="#065f46" stroke="#34d399" stroke-width="2"/>
+                    <text x="60" y="50" text-anchor="middle" fill="#d1fae5" font-size="7">RIBOSOM</text>
+                    <!-- mRNA -->
+                    <path d="M10,60 L110,60" stroke="#fbbf24" stroke-width="3" fill="none"/>
+                    <text x="20" y="55" text-anchor="middle" fill="#fde047" font-size="6">mRNA</text>
+                    <!-- Protein chain -->
+                    <circle cx="70" cy="90" r="6" fill="#f472b6"/>
+                    <circle cx="82" cy="90" r="6" fill="#a78bfa"/>
+                    <circle cx="94" cy="90" r="6" fill="#60a5fa"/>
+                    <text x="82" y="108" text-anchor="middle" fill="#e2e8f0" font-size="7">PROTEIN</text>
+                    <!-- Arrow -->
+                    <path d="M60,75 L60,85" stroke="#34d399" stroke-width="2"/>
+                  </svg>
+                </div>
+                <p class="text-slate-300 leading-relaxed mb-4">
+                  <strong class="text-green-300">Penerjemahan</strong> kode mRNA menjadi rangkaian <strong class="text-pink-300">asam amino</strong> (protein) di ribosom.
+                </p>
+                <div class="bg-green-500/20 rounded-lg p-3">
+                  <p class="text-green-200 text-sm">
+                    📍 Lokasi: <strong>Di ribosom (sitoplasma)</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Result -->
+          <div class="bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-2xl p-6 border border-amber-500/30">
+            <h3 class="text-amber-300 font-semibold mb-3 flex items-center gap-2">
+              <span class="text-2xl">⭐</span> Hasil Akhir
+            </h3>
+            <p class="text-white text-lg mb-4">
+              <strong class="text-amber-300">Protein</strong> inilah yang menjadi bahan baku untuk:
+            </p>
+            <div class="grid grid-cols-3 gap-4">
+              <div class="text-center p-3 bg-slate-800/50 rounded-xl">
+                <span class="text-3xl mb-2 block">🧫</span>
+                <p class="text-white font-medium">Enzim</p>
+              </div>
+              <div class="text-center p-3 bg-slate-800/50 rounded-xl">
+                <span class="text-3xl mb-2 block">💉</span>
+                <p class="text-white font-medium">Hormon</p>
+              </div>
+              <div class="text-center p-3 bg-slate-800/50 rounded-xl">
+                <span class="text-3xl mb-2 block">🏗️</span>
+                <p class="text-white font-medium">Struktur Sel</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 4,
+        title: "Mengenal Bapak Genetika: Gregor Mendel",
+        type: "content",
+        content: `
+          <div class="text-center mb-8">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-2">Mengenal Bapak Genetika</h2>
+            <p class="text-2xl text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-400 font-bold">Gregor Johann Mendel</p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <!-- Mendel Portrait -->
+            <div class="bg-slate-800/70 rounded-2xl p-6 border border-green-500/30">
+              <div class="flex justify-center mb-4">
+                <div class="relative">
+                  <div class="w-48 h-48 rounded-full bg-gradient-to-br from-green-600 to-emerald-700 flex items-center justify-center overflow-hidden border-4 border-green-400/50">
+                    <svg viewBox="0 0 200 200" class="w-44 h-44">
+                      <!-- Simplified portrait -->
+                      <ellipse cx="100" cy="85" rx="50" ry="60" fill="#d4a574"/>
+                      <ellipse cx="100" cy="65" rx="45" ry="45" fill="#d4a574"/>
+                      <!-- Hair -->
+                      <path d="M55,50 Q60,20 100,15 Q140,20 145,50 Q140,40 100,35 Q60,40 55,50" fill="#4a3728"/>
+                      <!-- Eyes -->
+                      <ellipse cx="80" cy="60" rx="8" ry="5" fill="#1e3a5f"/>
+                      <ellipse cx="120" cy="60" rx="8" ry="5" fill="#1e3a5f"/>
+                      <!-- Nose -->
+                      <path d="M100,65 L97,80 L103,80 Z" fill="#c49a6c"/>
+                      <!-- Mouth -->
+                      <path d="M90,92 Q100,98 110,92" stroke="#8b5a5a" stroke-width="2" fill="none"/>
+                      <!-- Glasses -->
+                      <circle cx="80" cy="60" r="15" fill="none" stroke="#5a4a3a" stroke-width="2"/>
+                      <circle cx="120" cy="60" r="15" fill="none" stroke="#5a4a3a" stroke-width="2"/>
+                      <line x1="95" y1="60" x2="105" y2="60" stroke="#5a4a3a" stroke-width="2"/>
+                      <!-- Collar -->
+                      <path d="M70,130 L100,145 L130,130 L140,170 L60,170 Z" fill="#1a1a1a"/>
+                      <rect x="95" y="140" width="10" height="25" fill="#ffffff"/>
+                    </svg>
+                  </div>
+                  <div class="absolute -bottom-2 -right-2 w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+                    <span class="text-2xl">🏆</span>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <h3 class="text-xl font-bold text-white mb-1">Gregor Johann Mendel</h3>
+                <p class="text-green-300">(1822 - 1884)</p>
+                <p class="text-slate-400 text-sm mt-2">Biarawan Austria & Ilmuwan</p>
+              </div>
+            </div>
+
+            <!-- Info Cards -->
+            <div class="space-y-4">
+              <div class="card-hover bg-slate-800/70 rounded-xl p-4 border border-green-500/20">
+                <div class="flex items-start gap-3">
+                  <span class="text-2xl">📅</span>
+                  <div>
+                    <h4 class="text-white font-semibold">Periode Percobaan</h4>
+                    <p class="text-slate-300">1856 - 1863 (7 tahun)</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card-hover bg-slate-800/70 rounded-xl p-4 border border-green-500/20">
+                <div class="flex items-start gap-3">
+                  <span class="text-2xl">🌱</span>
+                  <div>
+                    <h4 class="text-white font-semibold">Objek Penelitian</h4>
+                    <p class="text-slate-300">Kacang Ercis (Pisum sativum)</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-hover bg-slate-800/70 rounded-xl p-4 border border-green-500/20">
+                <div class="flex items-start gap-3">
+                  <span class="text-2xl">📊</span>
+                  <div>
+                    <h4 class="text-white font-semibold">Jumlah Tanaman</h4>
+                    <p class="text-slate-300">Lebih dari 28.000 tanaman dipelajari</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Why Peas -->
+          <div class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-2xl p-6 border border-green-500/30">
+            <h3 class="text-green-300 font-semibold mb-4 flex items-center gap-2">
+              <span class="text-2xl">❓</span> Mengapa Kacang Ercis?
+            </h3>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="flex items-start gap-3 bg-slate-800/50 rounded-xl p-4">
+                <div class="w-10 h-10 rounded-lg bg-green-600 flex items-center justify-center flex-shrink-0">
+                  <span class="text-lg">✅</span>
+                </div>
+                <div>
+                  <h4 class="text-white font-medium">Varietas Banyak</h4>
+                  <p class="text-slate-400 text-sm">Memiliki banyak variasi sifat yang jelas berbeda</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 bg-slate-800/50 rounded-xl p-4">
+                <div class="w-10 h-10 rounded-lg bg-green-600 flex items-center justify-center flex-shrink-0">
+                  <span class="text-lg">✅</span>
+                </div>
+                <div>
+                  <h4 class="text-white font-medium">Menyerbuk Sendiri</h4>
+                  <p class="text-slate-400 text-sm">Dapat melakukan penyerbukan sendiri secara alami</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 bg-slate-800/50 rounded-xl p-4">
+                <div class="w-10 h-10 rounded-lg bg-green-600 flex items-center justify-center flex-shrink-0">
+                  <span class="text-lg">✅</span>
+                </div>
+                <div>
+                  <h4 class="text-white font-medium">Mudah Dikawinsilangkan</h4>
+                  <p class="text-slate-400 text-sm">Mudah dilakukan persilangan buatan</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 bg-slate-800/50 rounded-xl p-4">
+                <div class="w-10 h-10 rounded-lg bg-green-600 flex items-center justify-center flex-shrink-0">
+                  <span class="text-lg">✅</span>
+                </div>
+                <div>
+                  <h4 class="text-white font-medium">Berumur Pendek</h4>
+                  <p class="text-slate-400 text-sm">Siklus hidup singkat, hasil cepat terlihat</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 5,
+        title: "Istilah Penting dalam Pewarisan Sifat",
+        type: "content",
+        content: `
+          <div class="text-center mb-8">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-2">Istilah Penting</h2>
+            <p class="text-xl text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-400 font-semibold">dalam Pewarisan Sifat</p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4 mb-6">
+            <!-- Parental & Filial -->
+            <div class="card-hover bg-slate-800/70 rounded-2xl p-5 border border-violet-500/30">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+                  <span class="text-2xl">👨‍👩‍👧</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-white">Parental (P)</h3>
+                  <p class="text-violet-300 text-sm">Induk / Orang Tua</p>
+                </div>
+              </div>
+              <p class="text-slate-300 text-sm">Generasi awal dalam persilangan yang memiliki sifat murni (homozigot)</p>
+            </div>
+
+            <div class="card-hover bg-slate-800/70 rounded-2xl p-5 border border-pink-500/30">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center">
+                  <span class="text-2xl">👶</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-white">Filial (F)</h3>
+                  <p class="text-pink-300 text-sm">Keturunan</p>
+                </div>
+              </div>
+              <div class="flex gap-2 mt-2">
+                <span class="px-2 py-1 bg-pink-500/20 rounded text-pink-200 text-xs">F1 = Anak</span>
+                <span class="px-2 py-1 bg-pink-500/20 rounded text-pink-200 text-xs">F2 = Cucu</span>
+              </div>
+            </div>
+
+            <!-- Genotip & Fenotip -->
+            <div class="card-hover bg-slate-800/70 rounded-2xl p-5 border border-cyan-500/30">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                  <span class="text-2xl">🔬</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-white">Genotip</h3>
+                  <p class="text-cyan-300 text-sm">Susunan Gen</p>
+                </div>
+              </div>
+              <p class="text-slate-300 text-sm mb-2">Komposisi genetik yang dimiliki individu</p>
+              <div class="flex gap-2">
+                <span class="px-2 py-1 bg-cyan-500/20 rounded text-cyan-200 text-xs font-mono">MM</span>
+                <span class="px-2 py-1 bg-cyan-500/20 rounded text-cyan-200 text-xs font-mono">Mm</span>
+                <span class="px-2 py-1 bg-cyan-500/20 rounded text-cyan-200 text-xs font-mono">mm</span>
+              </div>
+            </div>
+
+            <div class="card-hover bg-slate-800/70 rounded-2xl p-5 border border-amber-500/30">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
+                  <span class="text-2xl">👁️</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-white">Fenotip</h3>
+                  <p class="text-amber-300 text-sm">Sifat yang Tampak</p>
+                </div>
+              </div>
+              <p class="text-slate-300 text-sm mb-2">Sifat yang dapat diamati secara fisik</p>
+              <div class="flex gap-2 flex-wrap">
+                <span class="px-2 py-1 bg-amber-500/20 rounded text-amber-200 text-xs">Rasa Manis</span>
+                <span class="px-2 py-1 bg-amber-500/20 rounded text-amber-200 text-xs">Bunga Ungu</span>
+              </div>
+            </div>
+
+            <!-- Dominan & Resesif -->
+            <div class="card-hover bg-slate-800/70 rounded-2xl p-5 border border-green-500/30">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                  <span class="text-2xl font-bold text-white">A</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-white">Dominan</h3>
+                  <p class="text-green-300 text-sm">Sifat Kuat</p>
+                </div>
+              </div>
+              <p class="text-slate-300 text-sm mb-2">Sifat yang kuat dan menutupi sifat lainnya</p>
+              <div class="bg-green-500/20 rounded-lg p-2 text-center">
+                <span class="text-green-200 text-sm">Ditulis dengan <strong>HURUF KAPITAL</strong></span>
+              </div>
+            </div>
+
+            <div class="card-hover bg-slate-800/70 rounded-2xl p-5 border border-rose-500/30">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-rose-500 to-red-600 flex items-center justify-center">
+                  <span class="text-2xl font-bold text-white">a</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-white">Resesif</h3>
+                  <p class="text-rose-300 text-sm">Sifat Lemah</p>
+                </div>
+              </div>
+              <p class="text-slate-300 text-sm mb-2">Sifat yang lemah dan tertutupi oleh dominan</p>
+              <div class="bg-rose-500/20 rounded-lg p-2 text-center">
+                <span class="text-rose-200 text-sm">Ditulis dengan <strong>huruf kecil</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Reference -->
+          <div class="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl p-6 border border-purple-500/30">
+            <h3 class="text-white font-semibold mb-4 flex items-center gap-2">
+              <span class="text-2xl">📝</span> Ringkasan Cepat
+            </h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-slate-600">
+                    <th class="text-left text-purple-300 py-2 px-3">Istilah</th>
+                    <th class="text-left text-purple-300 py-2 px-3">Arti</th>
+                    <th class="text-left text-purple-300 py-2 px-3">Contoh</th>
+                  </tr>
+                </thead>
+                <tbody class="text-slate-300">
+                  <tr class="border-b border-slate-700/50">
+                    <td class="py-2 px-3 text-white">Homozigot</td>
+                    <td class="py-2 px-3">Pasangan alel sama</td>
+                    <td class="py-2 px-3 font-mono">MM atau mm</td>
+                  </tr>
+                  <tr class="border-b border-slate-700/50">
+                    <td class="py-2 px-3 text-white">Heterozigot</td>
+                    <td class="py-2 px-3">Pasangan alel berbeda</td>
+                    <td class="py-2 px-3 font-mono">Mm</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 px-3 text-white">Alel</td>
+                    <td class="py-2 px-3">Bentuk alternatif gen</td>
+                    <td class="py-2 px-3 font-mono">M dan m</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 6,
+        title: "Hukum Mendel I - Persilangan Monohibrid",
+        type: "content",
+        content: `
+          <div class="text-center mb-8">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-2">Hukum Mendel I</h2>
+            <p class="text-xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 font-semibold">Persilangan Monohibrid</p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <!-- Definition -->
+            <div class="bg-slate-800/70 rounded-2xl p-6 border border-purple-500/30">
+              <h3 class="text-purple-300 font-semibold mb-3 flex items-center gap-2">
+                <span class="text-xl">📖</span> Definisi
+              </h3>
+              <p class="text-white text-lg mb-4">
+                Persilangan dengan <strong class="text-purple-300">satu sifat beda</strong>
+              </p>
+              <div class="bg-purple-500/20 rounded-lg p-4">
+                <h4 class="text-purple-200 font-medium mb-2">🔬 Hukum Segregasi</h4>
+                <p class="text-slate-300 text-sm">
+                  Pasangan alel <strong class="text-white">berpisah secara bebas</strong> saat pembentukan gamet (sel kelamin)
+                </p>
+              </div>
+            </div>
+
+            <!-- Example -->
+            <div class="bg-slate-800/70 rounded-2xl p-6 border border-pink-500/30">
+              <h3 class="text-pink-300 font-semibold mb-3 flex items-center gap-2">
+                <span class="text-xl">🌸</span> Contoh
+              </h3>
+              <div class="flex items-center justify-center gap-4 mb-4">
+                <div class="text-center">
+                  <div class="w-16 h-16 rounded-full bg-gradient-to-br from-purple-600 to-violet-700 flex items-center justify-center mb-2 mx-auto">
+                    <span class="text-2xl">🌺</span>
+                  </div>
+                  <p class="text-white font-medium">Ungu</p>
+                  <p class="text-purple-300 text-sm font-mono">UU</p>
+                </div>
+                <span class="text-3xl text-pink-400">×</span>
+                <div class="text-center">
+                  <div class="w-16 h-16 rounded-full bg-gradient-to-br from-slate-400 to-slate-500 flex items-center justify-center mb-2 mx-auto">
+                    <span class="text-2xl">🌸</span>
+                  </div>
+                  <p class="text-white font-medium">Putih</p>
+                  <p class="text-slate-300 text-sm font-mono">uu</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Punnett Square F1 -->
+          <div class="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl p-6 border border-cyan-500/30 mb-6">
+            <h3 class="text-cyan-300 font-semibold mb-4 flex items-center gap-2">
+              <span class="text-xl">📊</span> Hasil F1 (Keturunan Pertama)
+            </h3>
+            <div class="flex items-center justify-center gap-8 flex-wrap">
+              <div class="text-center">
+                <p class="text-slate-400 text-sm mb-2">P: UU × uu</p>
+                <p class="text-slate-400 text-sm mb-2">Gamet: U × u</p>
+              </div>
+              <div class="text-center">
+                <div class="w-20 h-20 rounded-full bg-gradient-to-br from-purple-600 to-violet-700 flex items-center justify-center mb-2 mx-auto pulse-glow">
+                  <span class="text-3xl">🌺</span>
+                </div>
+                <p class="text-white font-bold text-lg">F1: 100% Ungu</p>
+                <p class="text-cyan-300 font-mono">Uu (Heterozigot)</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Punnett Square F2 -->
+          <div class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-2xl p-6 border border-green-500/30 mb-6">
+            <h3 class="text-green-300 font-semibold mb-4 flex items-center gap-2">
+              <span class="text-xl">📊</span> Hasil F2 (F1 × F1)
+            </h3>
+            
+            <!-- Interactive Punnett Square -->
+            <div class="flex justify-center mb-4">
+              <div class="bg-slate-800 rounded-xl p-4">
+                <table class="text-center">
+                  <tr>
+                    <td class="w-16 h-12"></td>
+                    <td class="w-16 h-12 text-purple-300 font-bold">U</td>
+                    <td class="w-16 h-12 text-slate-400 font-bold">u</td>
+                  </tr>
+                  <tr>
+                    <td class="h-16 text-purple-300 font-bold">U</td>
+                    <td class="h-16 bg-purple-600/40 rounded-lg border-2 border-purple-500">
+                      <span class="text-white font-mono">UU</span>
+                    </td>
+                    <td class="h-16 bg-purple-600/40 rounded-lg border-2 border-purple-500">
+                      <span class="text-white font-mono">Uu</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="h-16 text-slate-400 font-bold">u</td>
+                    <td class="h-16 bg-purple-600/40 rounded-lg border-2 border-purple-500">
+                      <span class="text-white font-mono">Uu</span>
+                    </td>
+                    <td class="h-16 bg-slate-500/40 rounded-lg border-2 border-slate-400">
+                      <span class="text-white font-mono">uu</span>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- Results -->
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="bg-slate-800/50 rounded-xl p-4">
+                <h4 class="text-white font-medium mb-2">📈 Rasio Genotip</h4>
+                <div class="flex items-center gap-2">
+                  <span class="px-3 py-1 bg-purple-600 rounded text-white text-sm font-mono">1 UU</span>
+                  <span class="text-slate-400">:</span>
+                  <span class="px-3 py-1 bg-purple-500 rounded text-white text-sm font-mono">2 Uu</span>
+                  <span class="text-slate-400">:</span>
+                  <span class="px-3 py-1 bg-slate-500 rounded text-white text-sm font-mono">1 uu</span>
+                </div>
+                <p class="text-slate-400 text-sm mt-2">= <strong class="text-white">1 : 2 : 1</strong></p>
+              </div>
+              <div class="bg-slate-800/50 rounded-xl p-4">
+                <h4 class="text-white font-medium mb-2">🌸 Rasio Fenotip</h4>
+                <div class="flex items-center gap-2">
+                  <span class="px-3 py-1 bg-purple-600 rounded text-white text-sm">3 Ungu</span>
+                  <span class="text-slate-400">:</span>
+                  <span class="px-3 py-1 bg-slate-500 rounded text-white text-sm">1 Putih</span>
+                </div>
+                <p class="text-slate-400 text-sm mt-2">= <strong class="text-white">75% Ungu : 25% Putih</strong></p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 7,
+        title: "Hukum Mendel II - Persilangan Dihibrid",
+        type: "content",
+        content: `
+          <div class="text-center mb-8">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-2">Hukum Mendel II</h2>
+            <p class="text-xl text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400 font-semibold">Persilangan Dihibrid</p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <!-- Definition -->
+            <div class="bg-slate-800/70 rounded-2xl p-6 border border-amber-500/30">
+              <h3 class="text-amber-300 font-semibold mb-3 flex items-center gap-2">
+                <span class="text-xl">📖</span> Definisi
+              </h3>
+              <p class="text-white text-lg mb-4">
+                Persilangan dengan <strong class="text-amber-300">dua sifat beda</strong>
+              </p>
+              <div class="bg-amber-500/20 rounded-lg p-4">
+                <h4 class="text-amber-200 font-medium mb-2">🔀 Hukum Asortasi Bebas</h4>
+                <p class="text-slate-300 text-sm">
+                  Setiap alel dapat <strong class="text-white">berpasangan secara bebas</strong> dengan alel lain saat pembentukan gamet
+                </p>
+              </div>
+            </div>
+
+            <!-- Two Traits -->
+            <div class="bg-slate-800/70 rounded-2xl p-6 border border-orange-500/30">
+              <h3 class="text-orange-300 font-semibold mb-3 flex items-center gap-2">
+                <span class="text-xl">🎨</span> Dua Sifat yang Diamati
+              </h3>
+              <div class="space-y-3">
+                <div class="flex items-center gap-3 bg-slate-700/50 rounded-lg p-3">
+                  <div class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center">
+                    <span class="text-lg">🎨</span>
+                  </div>
+                  <div>
+                    <p class="text-white font-medium">Warna Bunga</p>
+                    <p class="text-slate-400 text-sm">U = Ungu (dominan), u = putih (resesif)</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 bg-slate-700/50 rounded-lg p-3">
+                  <div class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center">
+                    <span class="text-lg">📏</span>
+                  </div>
+                  <div>
+                    <p class="text-white font-medium">Tinggi Batang</p>
+                    <p class="text-slate-400 text-sm">T = Tinggi (dominan), t = pendek (resesif)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Crossing Example -->
+          <div class="bg-gradient-to-r from-purple-500/20 to-green-500/20 rounded-2xl p-6 border border-purple-500/30 mb-6">
+            <h3 class="text-white font-semibold mb-4 flex items-center gap-2">
+              <span class="text-xl">🧪</span> Contoh Persilangan
+            </h3>
+            
+            <div class="flex items-center justify-center gap-6 flex-wrap mb-6">
+              <div class="text-center">
+                <div class="w-24 h-32 bg-gradient-to-b from-purple-600 to-purple-800 rounded-xl flex flex-col items-center justify-center mb-2">
+                  <span class="text-3xl mb-1">🌺</span>
+                  <div class="w-1 h-8 bg-green-500"></div>
+                </div>
+                <p class="text-white font-medium">Ungu Tinggi</p>
+                <p class="text-purple-300 font-mono text-sm">UUTT</p>
+              </div>
+              <span class="text-4xl text-pink-400">×</span>
+              <div class="text-center">
+                <div class="w-24 h-20 bg-gradient-to-b from-slate-400 to-slate-600 rounded-xl flex flex-col items-center justify-center mb-2">
+                  <span class="text-2xl mb-1">🌸</span>
+                  <div class="w-1 h-4 bg-green-700"></div>
+                </div>
+                <p class="text-white font-medium">Putih Pendek</p>
+                <p class="text-slate-300 font-mono text-sm">uutt</p>
+              </div>
+            </div>
+
+            <!-- F1 Result -->
+            <div class="bg-slate-800/50 rounded-xl p-4 text-center">
+              <p class="text-cyan-300 font-medium mb-2">Hasil F1</p>
+              <p class="text-white text-xl font-bold">100% Ungu Tinggi</p>
+              <p class="text-cyan-200 font-mono">UuTt (Heterozigot ganda)</p>
+            </div>
+          </div>
+
+          <!-- F2 Results -->
+          <div class="bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-2xl p-6 border border-amber-500/30">
+            <h3 class="text-amber-300 font-semibold mb-4 flex items-center gap-2">
+              <span class="text-xl">📊</span> Hasil F2 (F1 × F1) - Rasio 9:3:3:1
+            </h3>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="card-hover bg-slate-800/70 rounded-xl p-4 text-center border border-purple-500/30">
+                <div class="text-3xl mb-2">🌺📏</div>
+                <p class="text-white font-bold text-2xl text-purple-300">9</p>
+                <p class="text-white text-sm">Ungu Tinggi</p>
+                <p class="text-slate-400 text-xs mt-1">U_T_</p>
+              </div>
+              <div class="card-hover bg-slate-800/70 rounded-xl p-4 text-center border border-purple-500/30">
+                <div class="text-3xl mb-2">🌺</div>
+                <p class="text-white font-bold text-2xl text-purple-300">3</p>
+                <p class="text-white text-sm">Ungu Pendek</p>
+                <p class="text-slate-400 text-xs mt-1">U_tt</p>
+              </div>
+              <div class="card-hover bg-slate-800/70 rounded-xl p-4 text-center border border-slate-400/30">
+                <div class="text-3xl mb-2">🌸📏</div>
+                <p class="text-white font-bold text-2xl text-slate-300">3</p>
+                <p class="text-white text-sm">Putih Tinggi</p>
+                <p class="text-slate-400 text-xs mt-1">uuT_</p>
+              </div>
+              <div class="card-hover bg-slate-800/70 rounded-xl p-4 text-center border border-slate-400/30">
+                <div class="text-3xl mb-2">🌸</div>
+                <p class="text-white font-bold text-2xl text-slate-300">1</p>
+                <p class="text-white text-sm">Putih Pendek</p>
+                <p class="text-slate-400 text-xs mt-1">uutt</p>
+              </div>
+            </div>
+            
+            <div class="mt-4 text-center">
+              <p class="text-amber-200 text-lg">
+                Rasio Fenotip F2 = <strong class="text-white">9 : 3 : 3 : 1</strong>
+              </p>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 8,
+        title: "Kelainan Sifat pada Manusia - Albino",
+        type: "content",
+        content: `
+          <div class="text-center mb-8">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-2">Kelainan Sifat pada Manusia</h2>
+            <p class="text-xl text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-400 font-semibold">Studi Kasus: Albino</p>
+          </div>
+
+          <!-- Albino Info -->
+          <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-800/70 rounded-2xl p-6 border border-rose-500/30">
+              <div class="flex justify-center mb-4">
+                <svg class="w-32 h-32" viewBox="0 0 120 120">
+                  <!-- Face outline -->
+                  <ellipse cx="60" cy="55" rx="40" ry="45" fill="#fef3c7"/>
+                  <!-- Hair -->
+                  <path d="M25,45 Q30,15 60,10 Q90,15 95,45 Q85,35 60,30 Q35,35 25,45" fill="#fef9c3"/>
+                  <!-- Eyes (light colored) -->
+                  <ellipse cx="45" cy="50" rx="8" ry="6" fill="#fecaca"/>
+                  <ellipse cx="75" cy="50" rx="8" ry="6" fill="#fecaca"/>
+                  <circle cx="45" cy="50" r="3" fill="#fee2e2"/>
+                  <circle cx="75" cy="50" r="3" fill="#fee2e2"/>
+                  <!-- Eyebrows -->
+                  <path d="M35,40 Q45,38 52,42" stroke="#fde68a" stroke-width="2" fill="none"/>
+                  <path d="M68,42 Q75,38 85,40" stroke="#fde68a" stroke-width="2" fill="none"/>
+                  <!-- Nose -->
+                  <path d="M60,52 L58,65 L62,65 Z" fill="#fde68a"/>
+                  <!-- Mouth -->
+                  <path d="M50,75 Q60,82 70,75" stroke="#fca5a5" stroke-width="2" fill="none"/>
+                  <!-- Label -->
+                  <text x="60" y="115" text-anchor="middle" fill="#f8fafc" font-size="10">Albino</text>
+                </svg>
+              </div>
+              <h3 class="text-rose-300 font-semibold mb-3 text-center">Apa itu Albino?</h3>
+              <p class="text-slate-300 leading-relaxed">
+                Kelainan genetik di mana kulit, rambut, dan mata <strong class="text-rose-200">tidak memiliki pigmen melanin</strong> atau memiliki sangat sedikit melanin.
+              </p>
+            </div>
+
+            <div class="bg-slate-800/70 rounded-2xl p-6 border border-amber-500/30">
+              <h3 class="text-amber-300 font-semibold mb-4 flex items-center gap-2">
+                <span class="text-xl">📋</span> Karakteristik
+              </h3>
+              <div class="space-y-3">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-amber-500/30 flex items-center justify-center">
+                    <span>🧑</span>
+                  </div>
+                  <p class="text-slate-300">Kulit sangat pucat/putih</p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-amber-500/30 flex items-center justify-center">
+                    <span>👱</span>
+                  </div>
+                  <p class="text-slate-300">Rambut putih atau sangat pirang</p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-amber-500/30 flex items-center justify-center">
+                    <span>👁️</span>
+                  </div>
+                  <p class="text-slate-300">Mata merah/pink atau biru muda</p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-amber-500/30 flex items-center justify-center">
+                    <span>☀️</span>
+                  </div>
+                  <p class="text-slate-300">Sensitif terhadap cahaya matahari</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Inheritance Pattern -->
+          <div class="bg-gradient-to-r from-violet-500/20 to-purple-500/20 rounded-2xl p-6 border border-violet-500/30 mb-6">
+            <h3 class="text-violet-300 font-semibold mb-4 flex items-center gap-2">
+              <span class="text-xl">🧬</span> Pola Pewarisan Albino
+            </h3>
+            
+            <div class="bg-slate-800/50 rounded-xl p-4 mb-4">
+              <p class="text-white text-center mb-2">
+                Albino bersifat <strong class="text-rose-300">RESESIF</strong>
+              </p>
+              <div class="flex justify-center gap-4">
+                <span class="px-4 py-2 bg-violet-600 rounded-lg text-white font-mono">A = Normal</span>
+                <span class="px-4 py-2 bg-rose-600 rounded-lg text-white font-mono">a = Albino</span>
+              </div>
+            </div>
+
+            <!-- Carrier Parents Example -->
+            <div class="bg-slate-800/50 rounded-xl p-4">
+              <p class="text-center text-slate-300 mb-4">
+                <strong class="text-white">Contoh:</strong> Kedua orang tua normal tetapi <strong class="text-violet-300">pembawa (carrier)</strong>
+              </p>
+              
+              <div class="flex items-center justify-center gap-6 mb-4">
+                <div class="text-center">
+                  <div class="w-16 h-16 rounded-full bg-violet-600 flex items-center justify-center mb-2 mx-auto">
+                    <span class="text-2xl">👨</span>
+                  </div>
+                  <p class="text-white text-sm">Ayah Normal</p>
+                  <p class="text-violet-300 font-mono text-sm">Aa</p>
+                </div>
+                <span class="text-3xl text-pink-400">×</span>
+                <div class="text-center">
+                  <div class="w-16 h-16 rounded-full bg-violet-600 flex items-center justify-center mb-2 mx-auto">
+                    <span class="text-2xl">👩</span>
+                  </div>
+                  <p class="text-white text-sm">Ibu Normal</p>
+                  <p class="text-violet-300 font-mono text-sm">Aa</p>
+                </div>
+              </div>
+
+              <!-- Punnett Square -->
+              <div class="flex justify-center mb-4">
+                <table class="text-center text-sm">
+                  <tr>
+                    <td class="w-14 h-10"></td>
+                    <td class="w-14 h-10 text-violet-300 font-bold">A</td>
+                    <td class="w-14 h-10 text-rose-300 font-bold">a</td>
+                  </tr>
+                  <tr>
+                    <td class="h-14 text-violet-300 font-bold">A</td>
+                    <td class="h-14 bg-violet-600/40 rounded border border-violet-500">
+                      <span class="text-white font-mono text-xs">AA</span>
+                    </td>
+                    <td class="h-14 bg-violet-600/40 rounded border border-violet-500">
+                      <span class="text-white font-mono text-xs">Aa</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="h-14 text-rose-300 font-bold">a</td>
+                    <td class="h-14 bg-violet-600/40 rounded border border-violet-500">
+                      <span class="text-white font-mono text-xs">Aa</span>
+                    </td>
+                    <td class="h-14 bg-rose-600/40 rounded border border-rose-500">
+                      <span class="text-white font-mono text-xs">aa</span>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- Results -->
+              <div class="grid grid-cols-2 gap-4 text-center">
+                <div class="bg-violet-500/20 rounded-lg p-3">
+                  <p class="text-violet-200 font-bold text-2xl">75%</p>
+                  <p class="text-slate-300 text-sm">Normal (AA, Aa)</p>
+                </div>
+                <div class="bg-rose-500/20 rounded-lg p-3">
+                  <p class="text-rose-200 font-bold text-2xl">25%</p>
+                  <p class="text-slate-300 text-sm">Albino (aa)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-2xl p-6 border border-blue-500/30">
+            <h3 class="text-blue-300 font-semibold mb-2 flex items-center gap-2">
+              <span class="text-xl">💡</span> Poin Penting
+            </h3>
+            <p class="text-slate-300">
+              Orang tua yang <strong class="text-white">tampak normal</strong> (tidak albino) bisa memiliki anak albino jika keduanya adalah <strong class="text-blue-300">pembawa/carrier</strong> (heterozigot Aa) yang menyumbangkan gen resesif.
+            </p>
+          </div>
+        `
+      },
+      {
+        id: 9,
+        title: "Aktivitas Interaktif - Simulasi Genetika",
+        type: "activity",
+        content: `
+          <div class="text-center mb-8">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-2">🎮 Aktivitas Interaktif</h2>
+            <p class="text-xl text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-400 font-semibold">Simulasi Persilangan Monohibrid</p>
+          </div>
+
+          <div class="bg-slate-800/70 rounded-2xl p-6 border border-green-500/30 mb-6">
+            <h3 class="text-green-300 font-semibold mb-4 flex items-center gap-2">
+              <span class="text-xl">🎯</span> Simulasi Kancing Genetika
+            </h3>
+            <p class="text-slate-300 mb-4">
+              Klik tombol "Acak Gamet" untuk mensimulasikan persilangan Aa × Aa dan lihat hasilnya!
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+              <!-- Parent 1 -->
+              <div class="bg-slate-700/50 rounded-xl p-4 text-center">
+                <p class="text-white font-medium mb-2">👨 Induk 1 (Aa)</p>
+                <div class="flex justify-center gap-2 mb-2">
+                  <div id="parent1-allele1" class="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center text-white font-bold text-xl">A</div>
+                  <div id="parent1-allele2" class="w-12 h-12 rounded-full bg-slate-500 flex items-center justify-center text-white font-bold text-xl">a</div>
+                </div>
+                <p class="text-slate-400 text-sm">Gamet: A atau a</p>
+              </div>
+              
+              <!-- Parent 2 -->
+              <div class="bg-slate-700/50 rounded-xl p-4 text-center">
+                <p class="text-white font-medium mb-2">👩 Induk 2 (Aa)</p>
+                <div class="flex justify-center gap-2 mb-2">
+                  <div id="parent2-allele1" class="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center text-white font-bold text-xl">A</div>
+                  <div id="parent2-allele2" class="w-12 h-12 rounded-full bg-slate-500 flex items-center justify-center text-white font-bold text-xl">a</div>
+                </div>
+                <p class="text-slate-400 text-sm">Gamet: A atau a</p>
+              </div>
+            </div>
+
+            <!-- Simulation Button -->
+            <div class="text-center mb-6">
+              <button id="simulate-btn" onclick="simulateCrossing()" class="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white font-bold text-lg rounded-xl transition-all transform hover:scale-105 shadow-lg">
+                🎲 Acak Gamet
+              </button>
+            </div>
+
+            <!-- Result Display -->
+            <div id="simulation-result" class="bg-slate-700/50 rounded-xl p-6 text-center">
+              <p class="text-slate-400 mb-2">Hasil Keturunan:</p>
+              <div class="flex justify-center gap-4 mb-4">
+                <div id="offspring-allele1" class="w-16 h-16 rounded-full bg-slate-600 flex items-center justify-center text-white font-bold text-2xl">?</div>
+                <div id="offspring-allele2" class="w-16 h-16 rounded-full bg-slate-600 flex items-center justify-center text-white font-bold text-2xl">?</div>
+              </div>
+              <p id="offspring-genotype" class="text-white text-xl font-bold mb-1">Genotip: --</p>
+              <p id="offspring-phenotype" class="text-lg text-purple-300">Fenotip: --</p>
+            </div>
+
+            <!-- Statistics -->
+            <div class="mt-6 bg-slate-700/30 rounded-xl p-4">
+              <h4 class="text-white font-medium mb-3 text-center">📊 Statistik Simulasi</h4>
+              <div class="grid grid-cols-4 gap-2 text-center text-sm">
+                <div class="bg-purple-600/30 rounded-lg p-2">
+                  <p id="stat-AA" class="text-white font-bold text-lg">0</p>
+                  <p class="text-purple-300">AA</p>
+                </div>
+                <div class="bg-purple-500/30 rounded-lg p-2">
+                  <p id="stat-Aa" class="text-white font-bold text-lg">0</p>
+                  <p class="text-purple-300">Aa</p>
+                </div>
+                <div class="bg-slate-500/30 rounded-lg p-2">
+                  <p id="stat-aa" class="text-white font-bold text-lg">0</p>
+                  <p class="text-slate-300">aa</p>
+                </div>
+                <div class="bg-emerald-500/30 rounded-lg p-2">
+                  <p id="stat-total" class="text-white font-bold text-lg">0</p>
+                  <p class="text-emerald-300">Total</p>
+                </div>
+              </div>
+              <button onclick="resetStats()" class="mt-3 w-full py-2 bg-slate-600 hover:bg-slate-500 text-white rounded-lg text-sm transition-colors">
+                🔄 Reset Statistik
+              </button>
+            </div>
+          </div>
+
+          <!-- Discussion Activity -->
+          <div class="bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-2xl p-6 border border-amber-500/30">
+            <h3 class="text-amber-300 font-semibold mb-4 flex items-center gap-2">
+              <span class="text-xl">💬</span> Aktivitas Diskusi
+            </h3>
+            <div class="bg-slate-800/50 rounded-xl p-4 mb-4">
+              <h4 class="text-white font-medium mb-2">Pertanyaan untuk Diskusi:</h4>
+              <p class="text-slate-300">
+                Jika kedua orang tua memiliki rambut keriting (Kk × Kk), berapa <strong class="text-amber-300">persentase kemungkinan</strong> anak mereka memiliki rambut lurus?
+              </p>
+            </div>
+            <div class="bg-amber-500/10 rounded-lg p-4 border border-amber-500/30">
+              <p class="text-amber-200 text-sm">
+                <strong>Petunjuk:</strong> Rambut keriting (K) dominan terhadap rambut lurus (k). 
+                Buatlah papan Punnett untuk menemukan jawabannya!
+              </p>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 10,
+        title: "Aktivitas - Menghitung Peluang Genetik",
+        type: "activity",
+        content: `
+          <div class="text-center mb-8">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-2">🧮 Aktivitas Perhitungan</h2>
+            <p class="text-xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 font-semibold">Menghitung Peluang Genetik</p>
+          </div>
+
+          <div class="bg-slate-800/70 rounded-2xl p-6 border border-cyan-500/30 mb-6">
+            <h3 class="text-cyan-300 font-semibold mb-4 flex items-center gap-2">
+              <span class="text-xl">📝</span> Latihan: Rambut Keriting vs Lurus
+            </h3>
+            
+            <div class="bg-slate-700/50 rounded-xl p-4 mb-4">
+              <p class="text-white mb-2"><strong>Soal:</strong></p>
+              <p class="text-slate-300">
+                Ayah berambut keriting heterozigot (Kk) menikah dengan ibu berambut lurus (kk). 
+                Tentukan peluang anak mereka memiliki rambut lurus!
+              </p>
+            </div>
+
+            <!-- Interactive Punnett Square Builder -->
+            <div class="bg-slate-700/30 rounded-xl p-4 mb-4">
+              <p class="text-white font-medium mb-3 text-center">Langkah 1: Identifikasi Gamet</p>
+              <div class="grid md:grid-cols-2 gap-4 mb-4">
+                <div class="text-center">
+                  <p class="text-cyan-300 mb-2">👨 Ayah (Kk)</p>
+                  <div class="flex justify-center gap-2">
+                    <span class="px-4 py-2 bg-cyan-600 rounded-lg text-white font-mono">K</span>
+                    <span class="px-4 py-2 bg-slate-500 rounded-lg text-white font-mono">k</span>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <p class="text-pink-300 mb-2">👩 Ibu (kk)</p>
+                  <div class="flex justify-center gap-2">
+                    <span class="px-4 py-2 bg-slate-500 rounded-lg text-white font-mono">k</span>
+                    <span class="px-4 py-2 bg-slate-500 rounded-lg text-white font-mono">k</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-slate-700/30 rounded-xl p-4 mb-4">
+              <p class="text-white font-medium mb-3 text-center">Langkah 2: Buat Papan Punnett</p>
+              <div class="flex justify-center">
+                <table class="text-center">
+                  <tr>
+                    <td class="w-20 h-12 text-slate-400">Ayah →<br>Ibu ↓</td>
+                    <td class="w-16 h-12 text-cyan-300 font-bold text-lg">K</td>
+                    <td class="w-16 h-12 text-slate-300 font-bold text-lg">k</td>
+                  </tr>
+                  <tr>
+                    <td class="h-16 text-slate-300 font-bold text-lg">k</td>
+                    <td class="h-16 bg-cyan-600/40 rounded-lg border-2 border-cyan-500">
+                      <span class="text-white font-mono text-lg">Kk</span>
+                      <br><span class="text-cyan-200 text-xs">Keriting</span>
+                    </td>
+                    <td class="h-16 bg-slate-500/40 rounded-lg border-2 border-slate-400">
+                      <span class="text-white font-mono text-lg">kk</span>
+                      <br><span class="text-slate-200 text-xs">Lurus</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="h-16 text-slate-300 font-bold text-lg">k</td>
+                    <td class="h-16 bg-cyan-600/40 rounded-lg border-2 border-cyan-500">
+                      <span class="text-white font-mono text-lg">Kk</span>
+                      <br><span class="text-cyan-200 text-xs">Keriting</span>
+                    </td>
+                    <td class="h-16 bg-slate-500/40 rounded-lg border-2 border-slate-400">
+                      <span class="text-white font-mono text-lg">kk</span>
+                      <br><span class="text-slate-200 text-xs">Lurus</span>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- Answer -->
+            <div class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl p-4 border border-green-500/30">
+              <p class="text-white font-medium mb-2 text-center">Langkah 3: Hitung Peluang</p>
+              <div class="grid md:grid-cols-2 gap-4 text-center">
+                <div class="bg-cyan-500/20 rounded-lg p-3">
+                  <p class="text-cyan-200 font-bold text-2xl">50%</p>
+                  <p class="text-white">Rambut Keriting (Kk)</p>
+                  <p class="text-slate-400 text-sm">2 dari 4 kotak</p>
+                </div>
+                <div class="bg-slate-500/20 rounded-lg p-3">
+                  <p class="text-slate-200 font-bold text-2xl">50%</p>
+                  <p class="text-white">Rambut Lurus (kk)</p>
+                  <p class="text-slate-400 text-sm">2 dari 4 kotak</p>
+                </div>
+              </div>
+              <p class="text-green-300 text-center mt-4 font-medium">
+                ✅ Jawaban: Peluang anak berambut lurus adalah <strong class="text-white">50%</strong> atau <strong class="text-white">1/2</strong>
+              </p>
+            </div>
+          </div>
+
+          <!-- Try It Yourself -->
+          <div class="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl p-6 border border-purple-500/30">
+            <h3 class="text-purple-300 font-semibold mb-4 flex items-center gap-2">
+              <span class="text-xl">✏️</span> Coba Sendiri!
+            </h3>
+            <div class="bg-slate-800/50 rounded-xl p-4">
+              <p class="text-white mb-3">
+                <strong>Latihan:</strong> Jika ayah berambut keriting heterozigot (Kk) menikah dengan ibu berambut keriting heterozigot (Kk), berapa peluang anak mereka:
+              </p>
+              <ol class="list-decimal list-inside text-slate-300 space-y-2">
+                <li>Berambut keriting?</li>
+                <li>Berambut lurus?</li>
+                <li>Heterozigot (Kk)?</li>
+              </ol>
+              <div class="mt-4 p-3 bg-purple-500/10 rounded-lg border border-purple-500/30">
+                <p class="text-purple-200 text-sm">
+                  💡 <strong>Tips:</strong> Buat papan Punnett 2×2 dan hitung jumlah kotak untuk setiap genotip!
+                </p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 11,
+        title: "Rangkuman Materi",
+        type: "summary",
+        content: `
+          <div class="text-center mb-8">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-2">📚 Rangkuman Materi</h2>
+            <p class="text-xl text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 font-semibold">Pewarisan Sifat pada Makhluk Hidup</p>
+          </div>
+
+          <div class="space-y-4 mb-6">
+            <!-- Point 1 -->
+            <div class="card-hover bg-slate-800/70 rounded-xl p-4 border border-purple-500/30">
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-lg bg-purple-600 flex items-center justify-center flex-shrink-0">
+                  <span class="text-white font-bold">1</span>
+                </div>
+                <div>
+                  <h3 class="text-white font-medium mb-1">Materi Genetik</h3>
+                  <p class="text-slate-300 text-sm">
+                    Terdiri dari <strong class="text-purple-300">Kromosom → DNA → Gen</strong>. Gen adalah unit pewarisan sifat yang mengkode protein.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Point 2 -->
+            <div class="card-hover bg-slate-800/70 rounded-xl p-4 border border-pink-500/30">
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-lg bg-pink-600 flex items-center justify-center flex-shrink-0">
+                  <span class="text-white font-bold">2</span>
+                </div>
+                <div>
+                  <h3 class="text-white font-medium mb-1">Sintesis Protein</h3>
+                  <p class="text-slate-300 text-sm">
+                    Sifat muncul melalui <strong class="text-pink-300">Transkripsi</strong> (DNA → mRNA) dan <strong class="text-pink-300">Translasi</strong> (mRNA → Protein).
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Point 3 -->
+            <div class="card-hover bg-slate-800/70 rounded-xl p-4 border border-green-500/30">
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-lg bg-green-600 flex items-center justify-center flex-shrink-0">
+                  <span class="text-white font-bold">3</span>
+                </div>
+                <div>
+                  <h3 class="text-white font-medium mb-1">Hukum Mendel I</h3>
+                  <p class="text-slate-300 text-sm">
+                    <strong class="text-green-300">Persilangan Monohibrid</strong> (1 sifat beda). Rasio fenotip F2 = <strong class="text-white">3:1</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Point 4 -->
+            <div class="card-hover bg-slate-800/70 rounded-xl p-4 border border-amber-500/30">
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-lg bg-amber-600 flex items-center justify-center flex-shrink-0">
+                  <span class="text-white font-bold">4</span>
+                </div>
+                <div>
+                  <h3 class="text-white font-medium mb-1">Hukum Mendel II</h3>
+                  <p class="text-slate-300 text-sm">
+                    <strong class="text-amber-300">Persilangan Dihibrid</strong> (2 sifat beda). Rasio fenotip F2 = <strong class="text-white">9:3:3:1</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Point 5 -->
+            <div class="card-hover bg-slate-800/70 rounded-xl p-4 border border-cyan-500/30">
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-lg bg-cyan-600 flex items-center justify-center flex-shrink-0">
+                  <span class="text-white font-bold">5</span>
+                </div>
+                <div>
+                  <h3 class="text-white font-medium mb-1">Istilah Penting</h3>
+                  <p class="text-slate-300 text-sm">
+                    <strong class="text-cyan-300">Dominan</strong> (huruf besar) menutupi <strong class="text-cyan-300">Resesif</strong> (huruf kecil). Genotip = susunan gen, Fenotip = sifat tampak.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Key Formulas -->
+          <div class="bg-gradient-to-r from-violet-500/20 to-purple-500/20 rounded-2xl p-6 border border-violet-500/30 mb-6">
+            <h3 class="text-violet-300 font-semibold mb-4 flex items-center gap-2">
+              <span class="text-xl">📐</span> Rumus Penting
+            </h3>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="bg-slate-800/50 rounded-lg p-4">
+                <p class="text-white font-medium mb-2">Monohibrid (Aa × Aa)</p>
+                <p class="text-slate-300 text-sm">Genotip: 1 AA : 2 Aa : 1 aa</p>
+                <p class="text-slate-300 text-sm">Fenotip: 3 Dominan : 1 Resesif</p>
+              </div>
+              <div class="bg-slate-800/50 rounded-lg p-4">
+                <p class="text-white font-medium mb-2">Dihibrid (AaBb × AaBb)</p>
+                <p class="text-slate-300 text-sm">Fenotip: 9:3:3:1</p>
+                <p class="text-slate-300 text-sm">Total 16 kombinasi gamet</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Start Quiz Button -->
+          <div class="text-center">
+            <button onclick="openQuiz()" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold text-lg rounded-xl transition-all transform hover:scale-105 shadow-lg">
+              🎯 Mulai Quiz HOTS (10 Soal)
+            </button>
+          </div>
+        `
+      },
+      {
+        id: 12,
+        title: "Quiz HOTS",
+        type: "quiz",
+        content: `
+          <div class="text-center mb-8">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-2">🎯 Quiz HOTS</h2>
+            <p class="text-xl text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-400 font-semibold">Uji Pemahamanmu!</p>
+          </div>
+
+          <div class="bg-slate-800/70 rounded-2xl p-6 border border-rose-500/30 text-center">
+            <div class="mb-6">
+              <span class="text-6xl">📝</span>
+            </div>
+            <h3 class="text-white text-xl font-bold mb-4">10 Soal Higher Order Thinking Skills</h3>
+            <p class="text-slate-300 mb-6">
+              Quiz ini berisi soal-soal analisis, evaluasi, dan penerapan konsep pewarisan sifat. 
+              Siap menguji pemahamanmu?
+            </p>
+            <button onclick="openQuiz()" class="px-8 py-4 bg-gradient-to-r from-rose-600 to-orange-600 hover:from-rose-500 hover:to-orange-500 text-white font-bold text-lg rounded-xl transition-all transform hover:scale-105 shadow-lg">
+              🚀 Mulai Quiz
+            </button>
+          </div>
+        `
+      }
+    ];
+
+    // Quiz Questions (HOTS)
+    const quizQuestions = [
+      {
+        question: "Seorang anak memiliki golongan darah O, sedangkan ayahnya bergolongan darah A dan ibunya bergolongan darah B. Genotip kedua orang tua tersebut adalah...",
+        options: [
+          "A. Ayah I^A I^A dan Ibu I^B I^B",
+          "B. Ayah I^A i dan Ibu I^B i",
+          "C. Ayah I^A I^B dan Ibu I^B I^B",
+          "D. Ayah I^A i dan Ibu I^B I^B"
+        ],
+        correct: 1,
+        explanation: "Anak bergolongan O memiliki genotip ii. Artinya, anak mewarisi alel i dari kedua orang tua. Ayah bergolongan A harus memiliki genotip I^A i (bukan I^A I^A) agar bisa menyumbangkan alel i. Begitu pula ibu bergolongan B harus memiliki genotip I^B i."
+      },
+      {
+        question: "Pada percobaan Mendel, jika F1 heterozigot (Bb) disilangkan dengan induk homozigot resesif (bb), maka perbandingan fenotip keturunan yang diharapkan adalah...",
+        options: [
+          "A. 3 : 1",
+          "B. 1 : 1",
+          "C. 1 : 2 : 1",
+          "D. 9 : 3 : 3 : 1"
+        ],
+        correct: 1,
+        explanation: "Persilangan Bb × bb menghasilkan keturunan: Bb dan bb dengan perbandingan 1:1. Ini disebut persilangan uji (test cross) untuk mengetahui genotip individu yang menunjukkan sifat dominan."
+      },
+      {
+        question: "Mengapa Mendel menggunakan kacang ercis sebagai objek penelitiannya? Alasan yang PALING tepat adalah...",
+        options: [
+          "A. Kacang ercis mudah didapat dan murah",
+          "B. Kacang ercis memiliki siklus hidup pendek dan banyak variasi sifat yang kontras",
+          "C. Kacang ercis adalah tanaman yang cantik",
+          "D. Kacang ercis dapat dimakan setelah percobaan"
+        ],
+        correct: 1,
+        explanation: "Mendel memilih kacang ercis karena memiliki siklus hidup pendek (hasil cepat terlihat), banyak variasi sifat yang kontras dan mudah diamati, dapat menyerbuk sendiri maupun dikawinsilangkan, dan menghasilkan banyak keturunan dalam satu generasi."
+      },
+      {
+        question: "Dalam sintesis protein, proses transkripsi berbeda dengan translasi karena...",
+        options: [
+          "A. Transkripsi terjadi di ribosom, translasi terjadi di nukleus",
+          "B. Transkripsi menghasilkan protein, translasi menghasilkan mRNA",
+          "C. Transkripsi menyalin DNA menjadi mRNA di nukleus, translasi menerjemahkan mRNA menjadi protein di ribosom",
+          "D. Keduanya adalah proses yang sama dengan nama berbeda"
+        ],
+        correct: 2,
+        explanation: "Transkripsi adalah proses penyalinan kode genetik dari DNA menjadi mRNA yang terjadi di dalam nukleus. Translasi adalah proses penerjemahan kode mRNA menjadi rangkaian asam amino (protein) yang terjadi di ribosom."
+      },
+      {
+        question: "Sepasang suami istri normal (tidak albino) memiliki anak albino. Probabilitas anak kedua mereka juga albino adalah...",
+        options: [
+          "A. 0%",
+          "B. 25%",
+          "C. 50%",
+          "D. 100%"
+        ],
+        correct: 1,
+        explanation: "Karena memiliki anak albino (aa), kedua orang tua pasti carrier (Aa). Persilangan Aa × Aa menghasilkan: 1 AA : 2 Aa : 1 aa. Probabilitas anak albino (aa) adalah 1/4 atau 25%. Setiap kehamilan memiliki probabilitas yang sama."
+      },
+      {
+        question: "Persilangan dihibrid AaBb × AaBb menghasilkan keturunan dengan rasio fenotip 9:3:3:1. Berapa proporsi keturunan yang memiliki genotip homozigot untuk KEDUA sifat?",
+        options: [
+          "A. 1/16",
+          "B. 2/16",
+          "C. 4/16",
+          "D. 8/16"
+        ],
+        correct: 2,
+        explanation: "Genotip homozigot untuk kedua sifat adalah: AABB, AAbb, aaBB, dan aabb. Dari 16 kombinasi: AABB (1) + AAbb (1) + aaBB (1) + aabb (1) = 4/16 atau 1/4. Ini mencakup individu dengan kedua pasang alel yang sama (baik dominan maupun resesif)."
+      },
+      {
+        question: "Seorang peneliti melakukan persilangan tanaman bunga merah (MM) dengan bunga putih (mm) dan mendapatkan F1 semuanya berbunga merah muda (Mm). Pola pewarisan ini menunjukkan...",
+        options: [
+          "A. Dominansi penuh",
+          "B. Kodominansi",
+          "C. Dominansi tidak penuh (intermediate)",
+          "D. Epistasis"
+        ],
+        correct: 2,
+        explanation: "Pada dominansi tidak penuh (intermediate), fenotip heterozigot berada di antara kedua fenotip homozigot. Bunga merah (MM) × putih (mm) = merah muda (Mm). Alel M tidak sepenuhnya dominan terhadap m, sehingga menghasilkan warna campuran."
+      },
+      {
+        question: "Jika gen A dan gen B terletak pada kromosom yang berbeda, bagaimana kedua gen tersebut akan diwariskan menurut Hukum Mendel II?",
+        options: [
+          "A. Selalu diwariskan bersama-sama",
+          "B. Tidak pernah diwariskan ke keturunan",
+          "C. Diwariskan secara independen/bebas satu sama lain",
+          "D. Hanya salah satu gen yang diwariskan"
+        ],
+        correct: 2,
+        explanation: "Hukum Mendel II (Asortasi Bebas) menyatakan bahwa gen-gen yang terletak pada kromosom berbeda akan memisah dan bergabung secara bebas selama pembentukan gamet. Setiap kombinasi alel memiliki peluang yang sama untuk terbentuk."
+      },
+      {
+        question: "Dalam pedigree keluarga, sifat buta warna lebih sering muncul pada laki-laki dibandingkan perempuan. Hal ini disebabkan karena...",
+        options: [
+          "A. Gen buta warna terikat pada kromosom Y",
+          "B. Gen buta warna bersifat resesif dan terikat pada kromosom X",
+          "C. Laki-laki lebih rentan terhadap penyakit",
+          "D. Perempuan kebal terhadap buta warna"
+        ],
+        correct: 1,
+        explanation: "Buta warna adalah sifat resesif terpaut kromosom X. Laki-laki (XY) hanya perlu satu alel resesif (X^b Y) untuk menunjukkan buta warna. Perempuan (XX) membutuhkan dua alel resesif (X^b X^b), sehingga lebih jarang terjadi karena perempuan bisa menjadi carrier (X^B X^b) tanpa menunjukkan gejala."
+      },
+      {
+        question: "Evaluasi pernyataan berikut: 'Semua sifat yang tampak (fenotip) sepenuhnya ditentukan oleh genotip.' Pernyataan ini...",
+        options: [
+          "A. Benar, karena genotip adalah satu-satunya faktor penentu fenotip",
+          "B. Salah, karena fenotip juga dipengaruhi oleh faktor lingkungan",
+          "C. Benar, karena lingkungan tidak berpengaruh terhadap ekspresi gen",
+          "D. Salah, karena fenotip tidak ada hubungannya dengan genotip"
+        ],
+        correct: 1,
+        explanation: "Pernyataan tersebut SALAH. Fenotip ditentukan oleh interaksi antara genotip DAN lingkungan. Contohnya: tanaman dengan genotip tinggi bisa tumbuh pendek jika kekurangan nutrisi, atau warna bulu kelinci Himalaya berubah sesuai suhu lingkungan. Rumus: Fenotip = Genotip + Lingkungan."
+      }
+    ];
+
+    // Statistics for simulation
+    let simStats = { AA: 0, Aa: 0, aa: 0, total: 0 };
+
+    // Simulation function
+    function simulateCrossing() {
+      const parent1Alleles = ['A', 'a'];
+      const parent2Alleles = ['A', 'a'];
+      
+      const gamete1 = parent1Alleles[Math.floor(Math.random() * 2)];
+      const gamete2 = parent2Alleles[Math.floor(Math.random() * 2)];
+      
+      // Highlight selected alleles
+      document.getElementById('parent1-allele1').classList.toggle('ring-4', gamete1 === 'A');
+      document.getElementById('parent1-allele1').classList.toggle('ring-yellow-400', gamete1 === 'A');
+      document.getElementById('parent1-allele2').classList.toggle('ring-4', gamete1 === 'a');
+      document.getElementById('parent1-allele2').classList.toggle('ring-yellow-400', gamete1 === 'a');
+      
+      document.getElementById('parent2-allele1').classList.toggle('ring-4', gamete2 === 'A');
+      document.getElementById('parent2-allele1').classList.toggle('ring-yellow-400', gamete2 === 'A');
+      document.getElementById('parent2-allele2').classList.toggle('ring-4', gamete2 === 'a');
+      document.getElementById('parent2-allele2').classList.toggle('ring-yellow-400', gamete2 === 'a');
+      
+      // Determine offspring
+      let genotype, phenotype;
+      const allele1 = gamete1;
+      const allele2 = gamete2;
+      
+      if (allele1 === 'A' && allele2 === 'A') {
+        genotype = 'AA';
+        phenotype = 'Dominan (Normal)';
+        simStats.AA++;
+      } else if ((allele1 === 'A' && allele2 === 'a') || (allele1 === 'a' && allele2 === 'A')) {
+        genotype = 'Aa';
+        phenotype = 'Dominan (Carrier)';
+        simStats.Aa++;
+      } else {
+        genotype = 'aa';
+        phenotype = 'Resesif';
+        simStats.aa++;
+      }
+      simStats.total++;
+      
+      // Update display
+      const off1 = document.getElementById('offspring-allele1');
+      const off2 = document.getElementById('offspring-allele2');
+      
+      off1.textContent = allele1;
+      off2.textContent = allele2;
+      
+      off1.className = 'w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-2xl transition-all ' + 
+        (allele1 === 'A' ? 'bg-purple-600' : 'bg-slate-500');
+      off2.className = 'w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-2xl transition-all ' + 
+        (allele2 === 'A' ? 'bg-purple-600' : 'bg-slate-500');
+      
+      document.getElementById('offspring-genotype').textContent = 'Genotip: ' + genotype;
+      document.getElementById('offspring-phenotype').textContent = 'Fenotip: ' + phenotype;
+      document.getElementById('offspring-phenotype').className = 'text-lg ' + 
+        (genotype === 'aa' ? 'text-slate-300' : 'text-purple-300');
+      
+      // Update stats
+      document.getElementById('stat-AA').textContent = simStats.AA;
+      document.getElementById('stat-Aa').textContent = simStats.Aa;
+      document.getElementById('stat-aa').textContent = simStats.aa;
+      document.getElementById('stat-total').textContent = simStats.total;
+    }
+
+    function resetStats() {
+      simStats = { AA: 0, Aa: 0, aa: 0, total: 0 };
+      document.getElementById('stat-AA').textContent = '0';
+      document.getElementById('stat-Aa').textContent = '0';
+      document.getElementById('stat-aa').textContent = '0';
+      document.getElementById('stat-total').textContent = '0';
+      
+      document.getElementById('offspring-allele1').textContent = '?';
+      document.getElementById('offspring-allele2').textContent = '?';
+      document.getElementById('offspring-allele1').className = 'w-16 h-16 rounded-full bg-slate-600 flex items-center justify-center text-white font-bold text-2xl';
+      document.getElementById('offspring-allele2').className = 'w-16 h-16 rounded-full bg-slate-600 flex items-center justify-center text-white font-bold text-2xl';
+      document.getElementById('offspring-genotype').textContent = 'Genotip: --';
+      document.getElementById('offspring-phenotype').textContent = 'Fenotip: --';
+    }
+
+    // Quiz functions
+    function openQuiz() {
+      currentQuestion = 0;
+      quizScore = 0;
+      answeredQuestions = [];
+      document.getElementById('quiz-modal').classList.remove('hidden');
+      renderQuizQuestion();
+    }
+
+    function closeQuiz() {
+      document.getElementById('quiz-modal').classList.add('hidden');
+    }
+
+    function renderQuizQuestion() {
+      const q = quizQuestions[currentQuestion];
+      const answered = answeredQuestions[currentQuestion];
+      
+      let html = `
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-purple-300 text-sm">Soal ${currentQuestion + 1} dari ${quizQuestions.length}</span>
+            <span class="text-emerald-300 text-sm">Skor: ${quizScore}/${quizQuestions.length}</span>
+          </div>
+          <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all" style="width: ${((currentQuestion + 1) / quizQuestions.length) * 100}%"></div>
+          </div>
+        </div>
+        
+        <div class="bg-slate-700/50 rounded-xl p-4 mb-4">
+          <p class="text-white leading-relaxed">${q.question}</p>
+        </div>
+        
+        <div class="space-y-2 mb-4">
+      `;
+      
+      q.options.forEach((option, idx) => {
+        let btnClass = 'quiz-option w-full text-left p-4 rounded-xl border transition-all ';
+        let disabled = answered !== undefined ? 'disabled' : '';
+        
+        if (answered !== undefined) {
+          if (idx === q.correct) {
+            btnClass += 'bg-green-600/30 border-green-500 text-green-200';
+          } else if (idx === answered && idx !== q.correct) {
+            btnClass += 'bg-red-600/30 border-red-500 text-red-200';
+          } else {
+            btnClass += 'bg-slate-700/50 border-slate-600 text-slate-400';
+          }
+        } else {
+          btnClass += 'bg-slate-700/50 border-slate-600 text-white hover:bg-slate-600/50 hover:border-purple-500';
+        }
+        
+        html += `<button class="${btnClass}" onclick="selectAnswer(${idx})" ${disabled}>${option}</button>`;
+      });
+      
+      html += '</div>';
+      
+      if (answered !== undefined) {
+        html += `
+          <div class="bg-slate-700/50 rounded-xl p-4 mb-4 border border-slate-600">
+            <p class="text-amber-300 font-medium mb-2">💡 Penjelasan:</p>
+            <p class="text-slate-300 text-sm">${q.explanation}</p>
+          </div>
+        `;
+      }
+      
+      html += '<div class="flex gap-3">';
+      
+      if (currentQuestion > 0) {
+        html += `<button onclick="prevQuestion()" class="flex-1 py-3 bg-slate-600 hover:bg-slate-500 text-white rounded-xl transition-colors">← Sebelumnya</button>`;
+      }
+      
+      if (answered !== undefined) {
+        if (currentQuestion < quizQuestions.length - 1) {
+          html += `<button onclick="nextQuestion()" class="flex-1 py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-xl transition-colors">Selanjutnya →</button>`;
+        } else {
+          html += `<button onclick="showQuizResult()" class="flex-1 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white rounded-xl transition-colors">Lihat Hasil 🎉</button>`;
+        }
+      }
+      
+      html += '</div>';
+      
+      document.getElementById('quiz-content').innerHTML = html;
+    }
+
+    function selectAnswer(idx) {
+      if (answeredQuestions[currentQuestion] !== undefined) return;
+      
+      answeredQuestions[currentQuestion] = idx;
+      if (idx === quizQuestions[currentQuestion].correct) {
+        quizScore++;
+      }
+      renderQuizQuestion();
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        renderQuizQuestion();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuizQuestion();
+      }
+    }
+
+    function showQuizResult() {
+      const percentage = (quizScore / quizQuestions.length) * 100;
+      let message, emoji;
+      
+      if (percentage >= 80) {
+        message = "Luar biasa! Kamu menguasai materi dengan sangat baik!";
+        emoji = "🏆";
+      } else if (percentage >= 60) {
+        message = "Bagus! Pemahaman kamu sudah cukup baik!";
+        emoji = "👍";
+      } else if (percentage >= 40) {
+        message = "Lumayan! Tapi masih perlu belajar lagi ya!";
+        emoji = "📚";
+      } else {
+        message = "Jangan menyerah! Coba pelajari lagi materinya!";
+        emoji = "💪";
+      }
+      
+      document.getElementById('quiz-content').innerHTML = `
+        <div class="text-center">
+          <div class="text-8xl mb-4">${emoji}</div>
+          <h3 class="text-2xl font-bold text-white mb-2">Quiz Selesai!</h3>
+          <div class="bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-2xl p-6 mb-4">
+            <p class="text-5xl font-bold text-white mb-2">${quizScore} / ${quizQuestions.length}</p>
+            <p class="text-purple-200">Skor: ${percentage}%</p>
+          </div>
+          <p class="text-slate-300 mb-6">${message}</p>
+          <div class="flex gap-3">
+            <button onclick="openQuiz()" class="flex-1 py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-xl transition-colors">🔄 Ulangi Quiz</button>
+            <button onclick="closeQuiz()" class="flex-1 py-3 bg-slate-600 hover:bg-slate-500 text-white rounded-xl transition-colors">✓ Selesai</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Navigation
+    function renderSlide() {
+      const slide = slides[currentSlide];
+      document.getElementById('content-container').innerHTML = slide.content;
+      document.getElementById('content-container').className = 'slide-in';
+      
+      // Update indicators
+      document.getElementById('slide-indicator').textContent = `${currentSlide + 1} / ${slides.length}`;
+      document.getElementById('progress-bar').style.width = `${((currentSlide + 1) / slides.length) * 100}%`;
+      
+      // Update nav buttons
+      document.getElementById('prev-btn').disabled = currentSlide === 0;
+      document.getElementById('next-btn').disabled = currentSlide === slides.length - 1;
+      
+      // Update dots
+      let dotsHtml = '';
+      slides.forEach((_, idx) => {
+        const isActive = idx === currentSlide;
+        dotsHtml += `<button onclick="goToSlide(${idx})" class="w-2 h-2 rounded-full transition-all ${isActive ? 'bg-purple-400 w-4' : 'bg-slate-600 hover:bg-slate-500'}"></button>`;
+      });
+      document.getElementById('nav-dots').innerHTML = `<div class="flex gap-1">${dotsHtml}</div>`;
+    }
+
+    function navigateSlide(direction) {
+      const newSlide = currentSlide + direction;
+      if (newSlide >= 0 && newSlide < slides.length) {
+        currentSlide = newSlide;
+        renderSlide();
+      }
+    }
+
+    function goToSlide(idx) {
+      currentSlide = idx;
+      renderSlide();
+    }
+
+    // Element SDK Integration
+    function onConfigChange(newConfig) {
+      // Update title
+      const titleEl = document.getElementById('main-title');
+      if (titleEl) {
+        titleEl.textContent = newConfig.main_title || defaultConfig.main_title;
+        titleEl.style.fontFamily = newConfig.font_family ? `${newConfig.font_family}, Georgia, serif` : "'Playfair Display', Georgia, serif";
+      }
+      
+      // Update footer
+      const footerEl = document.getElementById('footer-text');
+      if (footerEl) {
+        footerEl.textContent = newConfig.footer_text || defaultConfig.footer_text;
+      }
+      
+      // Apply colors
+      if (newConfig.primary_color) {
+        document.documentElement.style.setProperty('--primary-color', newConfig.primary_color);
+      }
+    }
+
+    // Initialize
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          onConfigChange(config);
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (value) => { cfg.primary_color = value; window.elementSdk.setConfig({ primary_color: value }); }
+            },
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (value) => { cfg.secondary_color = value; window.elementSdk.setConfig({ secondary_color: value }); }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (value) => { cfg.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+            },
+            {
+              get: () => cfg.accent_color || defaultConfig.accent_color,
+              set: (value) => { cfg.accent_color = value; window.elementSdk.setConfig({ accent_color: value }); }
+            },
+            {
+              get: () => cfg.surface_color || defaultConfig.surface_color,
+              set: (value) => { cfg.surface_color = value; window.elementSdk.setConfig({ surface_color: value }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => cfg.font_family || defaultConfig.font_family,
+            set: (value) => { cfg.font_family = value; window.elementSdk.setConfig({ font_family: value }); }
+          },
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ["main_title", cfg.main_title || defaultConfig.main_title],
+          ["footer_text", cfg.footer_text || defaultConfig.footer_text]
+        ])
+      });
+    }
+
+    // Initial render
+    renderSlide();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cab0d6d04fb3541',t:'MTc3MDU1MjkyNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

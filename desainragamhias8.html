@@ -1,0 +1,1593 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mendesain Ragam Hias Daerah</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Nunito:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    .font-display { font-family: 'Playfair Display', serif; }
+    .font-body { font-family: 'Nunito', sans-serif; }
+    
+    .batik-pattern {
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(196, 130, 76, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(139, 90, 43, 0.08) 0%, transparent 50%),
+        linear-gradient(135deg, #1a1510 0%, #2d2419 50%, #1a1510 100%);
+    }
+    
+    .slide-enter {
+      animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(2deg); }
+    }
+    
+    .float-animation {
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    .ornament-card {
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .ornament-card:hover {
+      transform: translateY(-8px) scale(1.02);
+    }
+    
+    .nav-dot {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-dot.active {
+      transform: scale(1.3);
+    }
+    
+    .drawing-canvas {
+      touch-action: none;
+      cursor: crosshair;
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+    }
+    
+    .quiz-option:hover {
+      transform: translateX(8px);
+    }
+    
+    .quiz-option.correct {
+      background: linear-gradient(135deg, #065f46, #047857) !important;
+      border-color: #10b981 !important;
+    }
+    
+    .quiz-option.incorrect {
+      background: linear-gradient(135deg, #7f1d1d, #991b1b) !important;
+      border-color: #ef4444 !important;
+    }
+    
+    .progress-bar {
+      transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #1a1510;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #c4824c;
+      border-radius: 4px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ </a>          
+<a href="index.html" class="btn-close-white">
+<i class="fas fa-home me-2"></i> Menu
+</a>
+ <body class="h-full font-body">
+  <div id="app-container" class="h-full w-full batik-pattern overflow-auto"><!-- Navigation Header -->
+   <nav class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-black/80 to-transparent px-6 py-4">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-600 to-amber-800 flex items-center justify-center"><span class="text-xl">🎨</span>
+      </div><span id="nav-title" class="font-display text-amber-100 text-lg hidden sm:block">Ragam Hias Daerah</span>
+     </div><!-- Slide Navigation Dots -->
+     <div class="flex gap-2" id="nav-dots"></div><!-- Slide Counter -->
+     <div class="bg-amber-900/50 px-4 py-2 rounded-full border border-amber-700/50"><span id="slide-counter" class="text-amber-200 font-semibold text-sm">1 / 10</span>
+     </div>
+    </div>
+   </nav><!-- Main Content Container -->
+   <main class="pt-20 pb-24 px-4 min-h-full">
+    <div id="slide-container" class="max-w-5xl mx-auto"></div>
+   </main><!-- Navigation Footer -->
+   <footer class="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent px-6 py-4">
+    <div class="max-w-4xl mx-auto flex items-center justify-between"><button id="prev-btn" onclick="changeSlide(-1)" class="flex items-center gap-2 px-5 py-3 bg-amber-900/60 hover:bg-amber-800/80 text-amber-100 rounded-xl border border-amber-700/50 transition-all hover:scale-105 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg><span class="hidden sm:inline">Sebelumnya</span> </button> <!-- Progress Bar -->
+     <div class="flex-1 mx-4 h-2 bg-amber-950/50 rounded-full overflow-hidden hidden sm:block">
+      <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-amber-600 to-amber-400 rounded-full" style="width: 10%"></div>
+     </div><button id="next-btn" onclick="changeSlide(1)" class="flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white rounded-xl border border-amber-500/50 transition-all hover:scale-105 shadow-lg shadow-amber-900/30"> <span class="hidden sm:inline">Selanjutnya</span>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg></button>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: "Mendesain Ragam Hias Daerah",
+      subject_name: "Seni Rupa SMP Kelas VIII",
+      primary_color: "#d97706",
+      secondary_color: "#1f1912",
+      text_color: "#fef3c7",
+      accent_color: "#92400e",
+      surface_color: "#292017"
+    };
+
+    let config = { ...defaultConfig };
+    let currentSlide = 0;
+    const totalSlides = 10;
+    
+    // Quiz state
+    let quizAnswers = {};
+    let quizSubmitted = false;
+    
+    // Drawing state
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+    let currentColor = '#c4824c';
+    let brushSize = 4;
+    let drawingHistory = [];
+
+    // Slide content data
+    const slides = [
+      {
+        id: 'title',
+        render: () => `
+          <div class="slide-enter text-center py-8">
+            <div class="mb-8 float-animation">
+              <div class="inline-block p-6 rounded-full bg-gradient-to-br from-amber-600/20 to-amber-900/20 border-2 border-amber-600/30">
+                <svg class="w-24 h-24 text-amber-500" viewBox="0 0 100 100">
+                  <defs>
+                    <linearGradient id="batikGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style="stop-color:#d97706"/>
+                      <stop offset="100%" style="stop-color:#92400e"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="50" cy="50" r="45" fill="none" stroke="url(#batikGrad)" stroke-width="2"/>
+                  <path d="M50 15 L58 35 L80 35 L62 48 L70 70 L50 55 L30 70 L38 48 L20 35 L42 35 Z" fill="url(#batikGrad)"/>
+                  <circle cx="50" cy="50" r="12" fill="none" stroke="url(#batikGrad)" stroke-width="2"/>
+                </svg>
+              </div>
+            </div>
+            
+            <h1 id="main-title-display" class="font-display text-4xl sm:text-6xl font-bold text-amber-100 mb-4 leading-tight">
+              ${config.main_title || defaultConfig.main_title}
+            </h1>
+            
+            <div class="inline-block px-6 py-2 bg-amber-900/40 rounded-full border border-amber-700/50 mb-6">
+              <span class="text-amber-300 font-semibold">Subunit 2.2</span>
+            </div>
+            
+            <p id="subject-display" class="text-xl text-amber-200/80 mb-8">${config.subject_name || defaultConfig.subject_name}</p>
+            
+            <div class="max-w-2xl mx-auto p-6 bg-gradient-to-br from-amber-900/30 to-amber-950/30 rounded-2xl border border-amber-700/30">
+              <p class="text-amber-100/90 text-lg leading-relaxed">
+                <span class="text-amber-400 font-semibold">Topik Utama:</span><br>
+                Menggabungkan bidang beraturan dengan kekayaan ornamen Nusantara
+              </p>
+            </div>
+            
+            <div class="mt-10 flex flex-wrap justify-center gap-4">
+              <div class="px-4 py-2 bg-amber-800/30 rounded-lg border border-amber-700/40">
+                <span class="text-amber-300">📚 8 Materi</span>
+              </div>
+              <div class="px-4 py-2 bg-amber-800/30 rounded-lg border border-amber-700/40">
+                <span class="text-amber-300">🎨 Praktik Interaktif</span>
+              </div>
+              <div class="px-4 py-2 bg-amber-800/30 rounded-lg border border-amber-700/40">
+                <span class="text-amber-300">📝 10 Soal HOTS</span>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'pengertian',
+        render: () => `
+          <div class="slide-enter">
+            <div class="text-center mb-8">
+              <span class="inline-block px-4 py-1 bg-amber-600/20 text-amber-400 rounded-full text-sm font-semibold mb-3">Slide 2</span>
+              <h2 class="font-display text-3xl sm:text-4xl font-bold text-amber-100">Pengertian Ornamen dan Ragam Hias</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+              <div class="ornament-card p-6 bg-gradient-to-br from-amber-900/40 to-amber-950/40 rounded-2xl border border-amber-700/30">
+                <div class="w-14 h-14 rounded-xl bg-amber-600/20 flex items-center justify-center mb-4">
+                  <span class="text-3xl">📖</span>
+                </div>
+                <h3 class="text-xl font-bold text-amber-200 mb-3">Asal Kata</h3>
+                <p class="text-amber-100/80 leading-relaxed">
+                  Berasal dari bahasa Latin <span class="text-amber-400 font-semibold italic">ornare</span> yang berarti <span class="text-amber-300">menghiasi</span>.
+                </p>
+              </div>
+              
+              <div class="ornament-card p-6 bg-gradient-to-br from-amber-900/40 to-amber-950/40 rounded-2xl border border-amber-700/30">
+                <div class="w-14 h-14 rounded-xl bg-amber-600/20 flex items-center justify-center mb-4">
+                  <span class="text-3xl">📝</span>
+                </div>
+                <h3 class="text-xl font-bold text-amber-200 mb-3">Definisi</h3>
+                <p class="text-amber-100/80 leading-relaxed">
+                  Komponen produk seni rupa yang ditambahkan atau sengaja dibuat dengan tujuan sebagai <span class="text-amber-300">hiasan</span>.
+                </p>
+              </div>
+            </div>
+            
+            <div class="ornament-card p-6 bg-gradient-to-br from-amber-800/30 to-amber-900/30 rounded-2xl border border-amber-600/40">
+              <div class="flex items-start gap-4">
+                <div class="w-16 h-16 rounded-xl bg-amber-600/30 flex items-center justify-center flex-shrink-0">
+                  <span class="text-4xl">✨</span>
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold text-amber-200 mb-2">Fungsi Utama</h3>
+                  <p class="text-amber-100/90 text-lg leading-relaxed">
+                    Memperindah benda produk terapan atau benda yang dihias, memberikan nilai estetika dan makna simbolis.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Illustration -->
+            <div class="mt-8 p-6 bg-amber-950/50 rounded-2xl border border-amber-800/30">
+              <h4 class="text-amber-300 font-semibold mb-4 text-center">Contoh Penerapan Ornamen</h4>
+              <div class="flex justify-center gap-8 flex-wrap">
+                <div class="text-center">
+                  <div class="w-20 h-20 mx-auto mb-2 rounded-lg bg-amber-800/30 flex items-center justify-center">
+                    <svg class="w-12 h-12 text-amber-500" viewBox="0 0 50 50">
+                      <rect x="5" y="5" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" rx="3"/>
+                      <path d="M15 15 Q25 10 35 15 Q40 25 35 35 Q25 40 15 35 Q10 25 15 15" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                      <circle cx="25" cy="25" r="5" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <span class="text-amber-200 text-sm">Ukiran</span>
+                </div>
+                <div class="text-center">
+                  <div class="w-20 h-20 mx-auto mb-2 rounded-lg bg-amber-800/30 flex items-center justify-center">
+                    <svg class="w-12 h-12 text-amber-500" viewBox="0 0 50 50">
+                      <rect x="8" y="8" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <line x1="8" y1="20" x2="42" y2="20" stroke="currentColor" stroke-width="1"/>
+                      <line x1="8" y1="32" x2="42" y2="32" stroke="currentColor" stroke-width="1"/>
+                      <line x1="20" y1="8" x2="20" y2="42" stroke="currentColor" stroke-width="1"/>
+                      <line x1="32" y1="8" x2="32" y2="42" stroke="currentColor" stroke-width="1"/>
+                      <circle cx="14" cy="14" r="2" fill="currentColor"/>
+                      <circle cx="26" cy="26" r="2" fill="currentColor"/>
+                      <circle cx="38" cy="38" r="2" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <span class="text-amber-200 text-sm">Tenun</span>
+                </div>
+                <div class="text-center">
+                  <div class="w-20 h-20 mx-auto mb-2 rounded-lg bg-amber-800/30 flex items-center justify-center">
+                    <svg class="w-12 h-12 text-amber-500" viewBox="0 0 50 50">
+                      <ellipse cx="25" cy="40" rx="18" ry="6" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <path d="M7 40 L7 20 Q7 10 25 10 Q43 10 43 20 L43 40" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <path d="M15 25 Q25 20 35 25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                      <circle cx="25" cy="30" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                  </div>
+                  <span class="text-amber-200 text-sm">Keramik</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'nusantara',
+        render: () => `
+          <div class="slide-enter">
+            <div class="text-center mb-8">
+              <span class="inline-block px-4 py-1 bg-amber-600/20 text-amber-400 rounded-full text-sm font-semibold mb-3">Slide 3</span>
+              <h2 class="font-display text-3xl sm:text-4xl font-bold text-amber-100">Ragam Hias Nusantara</h2>
+            </div>
+            
+            <div class="grid gap-4 mb-8">
+              <div class="ornament-card p-5 bg-gradient-to-r from-amber-900/40 to-amber-950/40 rounded-xl border border-amber-700/30 flex items-start gap-4">
+                <div class="w-12 h-12 rounded-lg bg-amber-600/30 flex items-center justify-center flex-shrink-0">
+                  <span class="text-2xl">💎</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-amber-200 mb-1">Kekayaan Budaya</h3>
+                  <p class="text-amber-100/80">Indonesia memiliki kekayaan ornamen yang luar biasa pada tenun, sulaman, anyaman, ukiran, hingga arsitektur.</p>
+                </div>
+              </div>
+              
+              <div class="ornament-card p-5 bg-gradient-to-r from-amber-900/40 to-amber-950/40 rounded-xl border border-amber-700/30 flex items-start gap-4">
+                <div class="w-12 h-12 rounded-lg bg-amber-600/30 flex items-center justify-center flex-shrink-0">
+                  <span class="text-2xl">🏆</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-amber-200 mb-1">Keunikan</h3>
+                  <p class="text-amber-100/80">Tidak ada negara lain yang memiliki kekayaan ornamen pada tenun sebanyak Indonesia.</p>
+                </div>
+              </div>
+              
+              <div class="ornament-card p-5 bg-gradient-to-r from-amber-900/40 to-amber-950/40 rounded-xl border border-amber-700/30 flex items-start gap-4">
+                <div class="w-12 h-12 rounded-lg bg-amber-600/30 flex items-center justify-center flex-shrink-0">
+                  <span class="text-2xl">🗺️</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-amber-200 mb-1">Karakteristik Daerah</h3>
+                  <p class="text-amber-100/80">Setiap daerah memiliki kekhasan sendiri sebagai cerminan cita rasa seni masyarakat setempat.</p>
+                </div>
+              </div>
+              
+              <div class="ornament-card p-5 bg-gradient-to-r from-amber-900/40 to-amber-950/40 rounded-xl border border-amber-700/30 flex items-start gap-4">
+                <div class="w-12 h-12 rounded-lg bg-amber-600/30 flex items-center justify-center flex-shrink-0">
+                  <span class="text-2xl">🏛️</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-amber-200 mb-1">Sifat Tradisional</h3>
+                  <p class="text-amber-100/80">Disebut tradisional karena digunakan secara turun-temurun dari generasi ke generasi.</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Regional Examples -->
+            <div class="p-6 bg-amber-950/50 rounded-2xl border border-amber-800/30">
+              <h4 class="text-amber-300 font-semibold mb-4 text-center">Contoh Ragam Hias Daerah</h4>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="text-center p-3 bg-amber-900/30 rounded-xl">
+                  <div class="w-16 h-16 mx-auto mb-2 rounded-full bg-amber-800/40 flex items-center justify-center">
+                    <svg class="w-10 h-10 text-amber-400" viewBox="0 0 40 40">
+                      <path d="M20 5 L25 15 L35 15 L27 22 L30 32 L20 26 L10 32 L13 22 L5 15 L15 15 Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                      <circle cx="20" cy="20" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                  </div>
+                  <span class="text-amber-200 text-sm font-medium">Batik Jawa</span>
+                </div>
+                <div class="text-center p-3 bg-amber-900/30 rounded-xl">
+                  <div class="w-16 h-16 mx-auto mb-2 rounded-full bg-amber-800/40 flex items-center justify-center">
+                    <svg class="w-10 h-10 text-amber-400" viewBox="0 0 40 40">
+                      <polygon points="20,5 35,35 5,35" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                      <polygon points="20,12 28,30 12,30" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                      <line x1="20" y1="5" x2="20" y2="35" stroke="currentColor" stroke-width="1"/>
+                    </svg>
+                  </div>
+                  <span class="text-amber-200 text-sm font-medium">Ulos Batak</span>
+                </div>
+                <div class="text-center p-3 bg-amber-900/30 rounded-xl">
+                  <div class="w-16 h-16 mx-auto mb-2 rounded-full bg-amber-800/40 flex items-center justify-center">
+                    <svg class="w-10 h-10 text-amber-400" viewBox="0 0 40 40">
+                      <rect x="8" y="8" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                      <line x1="8" y1="16" x2="32" y2="16" stroke="currentColor" stroke-width="1"/>
+                      <line x1="8" y1="24" x2="32" y2="24" stroke="currentColor" stroke-width="1"/>
+                      <line x1="16" y1="8" x2="16" y2="32" stroke="currentColor" stroke-width="1"/>
+                      <line x1="24" y1="8" x2="24" y2="32" stroke="currentColor" stroke-width="1"/>
+                    </svg>
+                  </div>
+                  <span class="text-amber-200 text-sm font-medium">Songket Palembang</span>
+                </div>
+                <div class="text-center p-3 bg-amber-900/30 rounded-xl">
+                  <div class="w-16 h-16 mx-auto mb-2 rounded-full bg-amber-800/40 flex items-center justify-center">
+                    <svg class="w-10 h-10 text-amber-400" viewBox="0 0 40 40">
+                      <path d="M20 8 Q30 15 30 25 Q30 32 20 35 Q10 32 10 25 Q10 15 20 8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                      <path d="M15 18 Q20 15 25 18" fill="none" stroke="currentColor" stroke-width="1"/>
+                      <circle cx="20" cy="25" r="4" fill="none" stroke="currentColor" stroke-width="1"/>
+                    </svg>
+                  </div>
+                  <span class="text-amber-200 text-sm font-medium">Ukiran Toraja</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'kompetensi',
+        render: () => `
+          <div class="slide-enter">
+            <div class="text-center mb-8">
+              <span class="inline-block px-4 py-1 bg-amber-600/20 text-amber-400 rounded-full text-sm font-semibold mb-3">Slide 4</span>
+              <h2 class="font-display text-3xl sm:text-4xl font-bold text-amber-100">Aspek Kompetensi & Media</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+              <!-- Kompetensi -->
+              <div class="p-6 bg-gradient-to-br from-amber-900/40 to-amber-950/40 rounded-2xl border border-amber-700/30">
+                <div class="flex items-center gap-3 mb-5">
+                  <div class="w-12 h-12 rounded-xl bg-amber-600/30 flex items-center justify-center">
+                    <span class="text-2xl">🎯</span>
+                  </div>
+                  <h3 class="text-xl font-bold text-amber-200">Tiga Kompetensi Utama</h3>
+                </div>
+                
+                <div class="space-y-4">
+                  <div class="flex items-start gap-3 p-3 bg-amber-950/40 rounded-xl">
+                    <div class="w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-white font-bold flex-shrink-0">1</div>
+                    <div>
+                      <p class="text-amber-100 font-medium">Membuat Bidang Beraturan</p>
+                      <p class="text-amber-300/70 text-sm">Lingkaran, segi lima, segi enam, segi delapan</p>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-start gap-3 p-3 bg-amber-950/40 rounded-xl">
+                    <div class="w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-white font-bold flex-shrink-0">2</div>
+                    <div>
+                      <p class="text-amber-100 font-medium">Mengidentifikasi Ragam Hias</p>
+                      <p class="text-amber-300/70 text-sm">Mengenal berbagai motif daerah Indonesia</p>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-start gap-3 p-3 bg-amber-950/40 rounded-xl">
+                    <div class="w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-white font-bold flex-shrink-0">3</div>
+                    <div>
+                      <p class="text-amber-100 font-medium">Kreativitas Menggabungkan</p>
+                      <p class="text-amber-300/70 text-sm">Memadukan bidang dengan ornamen</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Media -->
+              <div class="p-6 bg-gradient-to-br from-amber-900/40 to-amber-950/40 rounded-2xl border border-amber-700/30">
+                <div class="flex items-center gap-3 mb-5">
+                  <div class="w-12 h-12 rounded-xl bg-amber-600/30 flex items-center justify-center">
+                    <span class="text-2xl">🛠️</span>
+                  </div>
+                  <h3 class="text-xl font-bold text-amber-200">Media (Alat & Bahan)</h3>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-3">
+                  <div class="p-4 bg-amber-950/40 rounded-xl text-center">
+                    <span class="text-3xl mb-2 block">📄</span>
+                    <p class="text-amber-100 font-medium">Kertas A3</p>
+                  </div>
+                  <div class="p-4 bg-amber-950/40 rounded-xl text-center">
+                    <span class="text-3xl mb-2 block">✏️</span>
+                    <p class="text-amber-100 font-medium">Pensil</p>
+                  </div>
+                  <div class="p-4 bg-amber-950/40 rounded-xl text-center">
+                    <span class="text-3xl mb-2 block">🧹</span>
+                    <p class="text-amber-100 font-medium">Penghapus</p>
+                  </div>
+                  <div class="p-4 bg-amber-950/40 rounded-xl text-center">
+                    <span class="text-3xl mb-2 block">🎨</span>
+                    <p class="text-amber-100 font-medium">Pewarna</p>
+                  </div>
+                </div>
+                
+                <div class="mt-4 p-3 bg-amber-800/20 rounded-xl border border-amber-700/30">
+                  <p class="text-amber-300/80 text-sm text-center">
+                    💡 <span class="font-medium">Tips:</span> Dapat menggunakan bahan daur ulang jika alat terbatas
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Bidang Beraturan Illustration -->
+            <div class="mt-6 p-6 bg-amber-950/50 rounded-2xl border border-amber-800/30">
+              <h4 class="text-amber-300 font-semibold mb-4 text-center">Contoh Bidang Beraturan</h4>
+              <div class="flex justify-center gap-6 flex-wrap">
+                <div class="text-center">
+                  <svg class="w-16 h-16 text-amber-500" viewBox="0 0 50 50">
+                    <circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  <span class="text-amber-200 text-sm block mt-1">Lingkaran</span>
+                </div>
+                <div class="text-center">
+                  <svg class="w-16 h-16 text-amber-500" viewBox="0 0 50 50">
+                    <polygon points="25,5 47,19 40,45 10,45 3,19" fill="none" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  <span class="text-amber-200 text-sm block mt-1">Segi Lima</span>
+                </div>
+                <div class="text-center">
+                  <svg class="w-16 h-16 text-amber-500" viewBox="0 0 50 50">
+                    <polygon points="25,5 43,13 43,37 25,45 7,37 7,13" fill="none" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  <span class="text-amber-200 text-sm block mt-1">Segi Enam</span>
+                </div>
+                <div class="text-center">
+                  <svg class="w-16 h-16 text-amber-500" viewBox="0 0 50 50">
+                    <polygon points="25,3 40,10 47,25 40,40 25,47 10,40 3,25 10,10" fill="none" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  <span class="text-amber-200 text-sm block mt-1">Segi Delapan</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'jenis-corak',
+        render: () => `
+          <div class="slide-enter">
+            <div class="text-center mb-8">
+              <span class="inline-block px-4 py-1 bg-amber-600/20 text-amber-400 rounded-full text-sm font-semibold mb-3">Slide 5</span>
+              <h2 class="font-display text-3xl sm:text-4xl font-bold text-amber-100">Jenis Corak & Media Penerapan</h2>
+            </div>
+            
+            <!-- Jenis Corak -->
+            <div class="mb-8">
+              <h3 class="text-xl font-bold text-amber-200 mb-4 flex items-center gap-2">
+                <span class="text-2xl">🌸</span> Jenis Corak Ragam Hias
+              </h3>
+              <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="ornament-card p-5 bg-gradient-to-br from-green-900/30 to-green-950/40 rounded-xl border border-green-700/30 text-center">
+                  <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-green-800/40 flex items-center justify-center">
+                    <svg class="w-10 h-10 text-green-400" viewBox="0 0 40 40">
+                      <path d="M20 5 Q25 15 20 20 Q15 15 20 5" fill="currentColor"/>
+                      <path d="M20 20 Q25 25 20 35" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <path d="M12 18 Q16 15 20 20" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                      <path d="M28 18 Q24 15 20 20" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                  </div>
+                  <h4 class="text-green-300 font-bold mb-1">Flora</h4>
+                  <p class="text-green-200/70 text-sm">Motif tumbuhan, bunga, daun</p>
+                </div>
+                
+                <div class="ornament-card p-5 bg-gradient-to-br from-orange-900/30 to-orange-950/40 rounded-xl border border-orange-700/30 text-center">
+                  <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-orange-800/40 flex items-center justify-center">
+                    <svg class="w-10 h-10 text-orange-400" viewBox="0 0 40 40">
+                      <ellipse cx="20" cy="20" rx="12" ry="8" fill="currentColor"/>
+                      <circle cx="14" cy="18" r="2" fill="#1a1510"/>
+                      <path d="M8 20 L3 18 M8 22 L3 24" stroke="currentColor" stroke-width="1.5"/>
+                      <path d="M32 20 Q38 15 35 25" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <h4 class="text-orange-300 font-bold mb-1">Fauna</h4>
+                  <p class="text-orange-200/70 text-sm">Motif hewan, burung, ikan</p>
+                </div>
+                
+                <div class="ornament-card p-5 bg-gradient-to-br from-blue-900/30 to-blue-950/40 rounded-xl border border-blue-700/30 text-center">
+                  <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-blue-800/40 flex items-center justify-center">
+                    <svg class="w-10 h-10 text-blue-400" viewBox="0 0 40 40">
+                      <rect x="8" y="8" width="10" height="10" fill="currentColor"/>
+                      <rect x="22" y="8" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <polygon points="13,22 20,35 6,35" fill="currentColor"/>
+                      <circle cx="27" cy="28" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                  </div>
+                  <h4 class="text-blue-300 font-bold mb-1">Geometris</h4>
+                  <p class="text-blue-200/70 text-sm">Bentuk-bentuk geometri</p>
+                </div>
+                
+                <div class="ornament-card p-5 bg-gradient-to-br from-purple-900/30 to-purple-950/40 rounded-xl border border-purple-700/30 text-center">
+                  <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-purple-800/40 flex items-center justify-center">
+                    <svg class="w-10 h-10 text-purple-400" viewBox="0 0 40 40">
+                      <path d="M10 20 Q15 10 20 20 Q25 30 30 20" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                      <circle cx="28" cy="28" r="3" fill="currentColor"/>
+                      <path d="M20 5 L20 35" stroke="currentColor" stroke-width="1" stroke-dasharray="3,3"/>
+                    </svg>
+                  </div>
+                  <h4 class="text-purple-300 font-bold mb-1">Nonfiguratif</h4>
+                  <p class="text-purple-200/70 text-sm">Abstrak & kombinasi</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Media Penerapan -->
+            <div class="p-6 bg-gradient-to-br from-amber-900/30 to-amber-950/40 rounded-2xl border border-amber-700/30">
+              <h3 class="text-xl font-bold text-amber-200 mb-4 flex items-center gap-2">
+                <span class="text-2xl">🎭</span> Contoh Benda Terapan
+              </h3>
+              <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
+                <div class="text-center p-3">
+                  <div class="w-14 h-14 mx-auto mb-2 rounded-lg bg-amber-800/30 flex items-center justify-center text-3xl">🧵</div>
+                  <span class="text-amber-200 text-sm">Tenun</span>
+                </div>
+                <div class="text-center p-3">
+                  <div class="w-14 h-14 mx-auto mb-2 rounded-lg bg-amber-800/30 flex items-center justify-center text-3xl">✨</div>
+                  <span class="text-amber-200 text-sm">Songket</span>
+                </div>
+                <div class="text-center p-3">
+                  <div class="w-14 h-14 mx-auto mb-2 rounded-lg bg-amber-800/30 flex items-center justify-center text-3xl">👘</div>
+                  <span class="text-amber-200 text-sm">Batik</span>
+                </div>
+                <div class="text-center p-3">
+                  <div class="w-14 h-14 mx-auto mb-2 rounded-lg bg-amber-800/30 flex items-center justify-center text-3xl">🪵</div>
+                  <span class="text-amber-200 text-sm">Ukiran</span>
+                </div>
+                <div class="text-center p-3">
+                  <div class="w-14 h-14 mx-auto mb-2 rounded-lg bg-amber-800/30 flex items-center justify-center text-3xl">🏺</div>
+                  <span class="text-amber-200 text-sm">Keramik</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'prosedur',
+        render: () => `
+          <div class="slide-enter">
+            <div class="text-center mb-8">
+              <span class="inline-block px-4 py-1 bg-amber-600/20 text-amber-400 rounded-full text-sm font-semibold mb-3">Slide 6</span>
+              <h2 class="font-display text-3xl sm:text-4xl font-bold text-amber-100">Prosedur Membuat Karya</h2>
+            </div>
+            
+            <div class="relative">
+              <!-- Timeline -->
+              <div class="absolute left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-600 via-amber-500 to-amber-700 rounded-full hidden sm:block"></div>
+              
+              <div class="space-y-6">
+                <div class="ornament-card flex items-start gap-4 sm:ml-12 p-5 bg-gradient-to-br from-amber-900/40 to-amber-950/40 rounded-xl border border-amber-700/30">
+                  <div class="w-12 h-12 rounded-full bg-amber-600 flex items-center justify-center text-white font-bold text-lg flex-shrink-0 shadow-lg shadow-amber-900/50">1</div>
+                  <div class="flex-1">
+                    <h3 class="text-lg font-bold text-amber-200 mb-2">Membuat Bidang</h3>
+                    <p class="text-amber-100/80 mb-3">Gambar bidang beraturan (lingkaran, segi lima, segi enam, atau segi delapan) di atas kertas A3.</p>
+                    <div class="flex gap-3 flex-wrap">
+                      <span class="px-3 py-1 bg-amber-800/30 rounded-full text-amber-300 text-sm">⭕ Lingkaran</span>
+                      <span class="px-3 py-1 bg-amber-800/30 rounded-full text-amber-300 text-sm">⬡ Segi Enam</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="ornament-card flex items-start gap-4 sm:ml-12 p-5 bg-gradient-to-br from-amber-900/40 to-amber-950/40 rounded-xl border border-amber-700/30">
+                  <div class="w-12 h-12 rounded-full bg-amber-600 flex items-center justify-center text-white font-bold text-lg flex-shrink-0 shadow-lg shadow-amber-900/50">2</div>
+                  <div class="flex-1">
+                    <h3 class="text-lg font-bold text-amber-200 mb-2">Mengisi Bidang</h3>
+                    <p class="text-amber-100/80 mb-3">Masukkan motif ragam hias daerah ke dalam bidang tersebut.</p>
+                    <div class="flex gap-3 flex-wrap">
+                      <span class="px-3 py-1 bg-amber-800/30 rounded-full text-amber-300 text-sm">🌸 Flora</span>
+                      <span class="px-3 py-1 bg-amber-800/30 rounded-full text-amber-300 text-sm">🦅 Fauna</span>
+                      <span class="px-3 py-1 bg-amber-800/30 rounded-full text-amber-300 text-sm">◆ Geometris</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="ornament-card flex items-start gap-4 sm:ml-12 p-5 bg-gradient-to-br from-amber-900/40 to-amber-950/40 rounded-xl border border-amber-700/30">
+                  <div class="w-12 h-12 rounded-full bg-amber-600 flex items-center justify-center text-white font-bold text-lg flex-shrink-0 shadow-lg shadow-amber-900/50">3</div>
+                  <div class="flex-1">
+                    <h3 class="text-lg font-bold text-amber-200 mb-2">Memilih Komposisi</h3>
+                    <p class="text-amber-100/80 mb-3">Dapat menggunakan komposisi simetris, asimetris, atau diagonal.</p>
+                    <div class="grid grid-cols-3 gap-2 max-w-xs">
+                      <div class="text-center p-2 bg-amber-950/50 rounded-lg">
+                        <svg class="w-8 h-8 mx-auto text-amber-400" viewBox="0 0 30 30">
+                          <rect x="5" y="5" width="8" height="8" fill="currentColor"/>
+                          <rect x="17" y="5" width="8" height="8" fill="currentColor"/>
+                          <rect x="5" y="17" width="8" height="8" fill="currentColor"/>
+                          <rect x="17" y="17" width="8" height="8" fill="currentColor"/>
+                        </svg>
+                        <span class="text-amber-300 text-xs">Simetris</span>
+                      </div>
+                      <div class="text-center p-2 bg-amber-950/50 rounded-lg">
+                        <svg class="w-8 h-8 mx-auto text-amber-400" viewBox="0 0 30 30">
+                          <rect x="3" y="5" width="10" height="6" fill="currentColor"/>
+                          <rect x="17" y="12" width="8" height="8" fill="currentColor"/>
+                          <rect x="8" y="22" width="6" height="5" fill="currentColor"/>
+                        </svg>
+                        <span class="text-amber-300 text-xs">Asimetris</span>
+                      </div>
+                      <div class="text-center p-2 bg-amber-950/50 rounded-lg">
+                        <svg class="w-8 h-8 mx-auto text-amber-400" viewBox="0 0 30 30">
+                          <rect x="3" y="3" width="6" height="6" fill="currentColor" transform="rotate(15 6 6)"/>
+                          <rect x="12" y="12" width="6" height="6" fill="currentColor" transform="rotate(15 15 15)"/>
+                          <rect x="21" y="21" width="6" height="6" fill="currentColor" transform="rotate(15 24 24)"/>
+                        </svg>
+                        <span class="text-amber-300 text-xs">Diagonal</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="ornament-card flex items-start gap-4 sm:ml-12 p-5 bg-gradient-to-br from-amber-900/40 to-amber-950/40 rounded-xl border border-amber-700/30">
+                  <div class="w-12 h-12 rounded-full bg-amber-600 flex items-center justify-center text-white font-bold text-lg flex-shrink-0 shadow-lg shadow-amber-900/50">4</div>
+                  <div class="flex-1">
+                    <h3 class="text-lg font-bold text-amber-200 mb-2">Pewarnaan</h3>
+                    <p class="text-amber-100/80">Gunakan medium warna yang disukai (bisa menggunakan bahan daur ulang jika alat terbatas).</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'penilaian',
+        render: () => `
+          <div class="slide-enter">
+            <div class="text-center mb-8">
+              <span class="inline-block px-4 py-1 bg-amber-600/20 text-amber-400 rounded-full text-sm font-semibold mb-3">Slide 7</span>
+              <h2 class="font-display text-3xl sm:text-4xl font-bold text-amber-100">Kriteria Penilaian Produk</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+              <div class="ornament-card p-6 bg-gradient-to-br from-emerald-900/40 to-emerald-950/40 rounded-2xl border border-emerald-700/30">
+                <div class="w-16 h-16 rounded-xl bg-emerald-600/30 flex items-center justify-center mb-4 mx-auto">
+                  <span class="text-4xl">📐</span>
+                </div>
+                <h3 class="text-xl font-bold text-emerald-200 text-center mb-3">Kesesuaian Bentuk</h3>
+                <p class="text-emerald-100/80 text-center mb-4">Kesempurnaan bentuk bidang yang dibuat</p>
+                <div class="space-y-2 text-sm">
+                  <div class="flex justify-between p-2 bg-emerald-950/40 rounded-lg">
+                    <span class="text-emerald-300">Sangat Baik</span>
+                    <span class="text-emerald-400 font-bold">90-100</span>
+                  </div>
+                  <div class="flex justify-between p-2 bg-emerald-950/40 rounded-lg">
+                    <span class="text-emerald-300">Baik</span>
+                    <span class="text-emerald-400 font-bold">80-89</span>
+                  </div>
+                  <div class="flex justify-between p-2 bg-emerald-950/40 rounded-lg">
+                    <span class="text-emerald-300">Cukup</span>
+                    <span class="text-emerald-400 font-bold">70-79</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="ornament-card p-6 bg-gradient-to-br from-blue-900/40 to-blue-950/40 rounded-2xl border border-blue-700/30">
+                <div class="w-16 h-16 rounded-xl bg-blue-600/30 flex items-center justify-center mb-4 mx-auto">
+                  <span class="text-4xl">🎨</span>
+                </div>
+                <h3 class="text-xl font-bold text-blue-200 text-center mb-3">Pilihan Ragam Hias</h3>
+                <p class="text-blue-100/80 text-center mb-4">Variasi motif yang digunakan</p>
+                <div class="space-y-2 text-sm">
+                  <div class="flex justify-between p-2 bg-blue-950/40 rounded-lg">
+                    <span class="text-blue-300">&gt; 3 Motif</span>
+                    <span class="text-blue-400 font-bold">90-100</span>
+                  </div>
+                  <div class="flex justify-between p-2 bg-blue-950/40 rounded-lg">
+                    <span class="text-blue-300">2-3 Motif</span>
+                    <span class="text-blue-400 font-bold">80-89</span>
+                  </div>
+                  <div class="flex justify-between p-2 bg-blue-950/40 rounded-lg">
+                    <span class="text-blue-300">1 Motif</span>
+                    <span class="text-blue-400 font-bold">70-79</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="ornament-card p-6 bg-gradient-to-br from-purple-900/40 to-purple-950/40 rounded-2xl border border-purple-700/30">
+                <div class="w-16 h-16 rounded-xl bg-purple-600/30 flex items-center justify-center mb-4 mx-auto">
+                  <span class="text-4xl">✨</span>
+                </div>
+                <h3 class="text-xl font-bold text-purple-200 text-center mb-3">Kreativitas</h3>
+                <p class="text-purple-100/80 text-center mb-4">Keharmonisan komposisi & medium</p>
+                <div class="space-y-2 text-sm">
+                  <div class="flex justify-between p-2 bg-purple-950/40 rounded-lg">
+                    <span class="text-purple-300">Sangat Kreatif</span>
+                    <span class="text-purple-400 font-bold">90-100</span>
+                  </div>
+                  <div class="flex justify-between p-2 bg-purple-950/40 rounded-lg">
+                    <span class="text-purple-300">Kreatif</span>
+                    <span class="text-purple-400 font-bold">80-89</span>
+                  </div>
+                  <div class="flex justify-between p-2 bg-purple-950/40 rounded-lg">
+                    <span class="text-purple-300">Cukup Kreatif</span>
+                    <span class="text-purple-400 font-bold">70-79</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Tips -->
+            <div class="p-5 bg-amber-800/20 rounded-xl border border-amber-700/30">
+              <h4 class="text-amber-300 font-semibold mb-3 flex items-center gap-2">
+                <span>💡</span> Tips Mendapat Nilai Terbaik
+              </h4>
+              <ul class="space-y-2 text-amber-100/80">
+                <li class="flex items-start gap-2">
+                  <span class="text-amber-500">✓</span>
+                  Buat bidang dengan ukuran yang proporsional dan garis yang rapi
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-amber-500">✓</span>
+                  Kombinasikan lebih dari 3 motif ragam hias yang berbeda
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-amber-500">✓</span>
+                  Perhatikan keharmonisan warna dan komposisi desain
+                </li>
+              </ul>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'filosofis',
+        render: () => `
+          <div class="slide-enter">
+            <div class="text-center mb-8">
+              <span class="inline-block px-4 py-1 bg-amber-600/20 text-amber-400 rounded-full text-sm font-semibold mb-3">Slide 8</span>
+              <h2 class="font-display text-3xl sm:text-4xl font-bold text-amber-100">Nilai Filosofis & Presentasi</h2>
+            </div>
+            
+            <div class="p-6 bg-gradient-to-br from-amber-900/30 to-amber-950/40 rounded-2xl border border-amber-700/30 mb-8">
+              <h3 class="text-xl font-bold text-amber-200 mb-4 flex items-center gap-2">
+                <span class="text-2xl">🎤</span> Aspek yang Harus Dijelaskan
+              </h3>
+              <div class="grid sm:grid-cols-3 gap-4">
+                <div class="p-4 bg-amber-950/40 rounded-xl text-center">
+                  <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-amber-600/30 flex items-center justify-center">
+                    <span class="text-2xl">🏷️</span>
+                  </div>
+                  <h4 class="text-amber-200 font-semibold mb-2">Nama Motif</h4>
+                  <p class="text-amber-100/70 text-sm">Sebutkan nama motif yang dipilih</p>
+                </div>
+                <div class="p-4 bg-amber-950/40 rounded-xl text-center">
+                  <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-amber-600/30 flex items-center justify-center">
+                    <span class="text-2xl">🗺️</span>
+                  </div>
+                  <h4 class="text-amber-200 font-semibold mb-2">Asal Daerah</h4>
+                  <p class="text-amber-100/70 text-sm">Jelaskan dari mana motif berasal</p>
+                </div>
+                <div class="p-4 bg-amber-950/40 rounded-xl text-center">
+                  <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-amber-600/30 flex items-center justify-center">
+                    <span class="text-2xl">📜</span>
+                  </div>
+                  <h4 class="text-amber-200 font-semibold mb-2">Makna Filosofis</h4>
+                  <p class="text-amber-100/70 text-sm">Ungkap makna yang terkandung</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Contoh Motif dengan Filosofi -->
+            <h3 class="text-xl font-bold text-amber-200 mb-4">Contoh Ragam Hias & Maknanya</h3>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div class="ornament-card p-5 bg-gradient-to-br from-amber-900/40 to-amber-950/40 rounded-xl border border-amber-700/30">
+                <div class="flex items-start gap-4">
+                  <div class="w-20 h-20 rounded-xl bg-amber-800/40 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-14 h-14 text-amber-400" viewBox="0 0 50 50">
+                      <path d="M25 8 Q32 12 35 20 Q38 28 35 35 Q28 40 25 42 Q22 40 15 35 Q12 28 15 20 Q18 12 25 8" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <path d="M25 15 Q28 18 28 25 Q28 32 25 35 Q22 32 22 25 Q22 18 25 15" fill="currentColor" opacity="0.5"/>
+                      <circle cx="25" cy="25" r="3" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="text-amber-200 font-bold">Motif Kawung</h4>
+                    <p class="text-amber-400 text-sm mb-2">Jawa Tengah</p>
+                    <p class="text-amber-100/80 text-sm">Melambangkan keadilan, kebijaksanaan, dan kesuburan. Berbentuk seperti buah kolang-kaling.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="ornament-card p-5 bg-gradient-to-br from-amber-900/40 to-amber-950/40 rounded-xl border border-amber-700/30">
+                <div class="flex items-start gap-4">
+                  <div class="w-20 h-20 rounded-xl bg-amber-800/40 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-14 h-14 text-amber-400" viewBox="0 0 50 50">
+                      <path d="M10 25 Q15 15 25 10 Q35 15 40 25 Q35 35 25 40 Q15 35 10 25" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <path d="M18 25 Q20 20 25 18 Q30 20 32 25 Q30 30 25 32 Q20 30 18 25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                      <circle cx="25" cy="25" r="4" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="text-amber-200 font-bold">Motif Parang</h4>
+                    <p class="text-amber-400 text-sm mb-2">Yogyakarta</p>
+                    <p class="text-amber-100/80 text-sm">Melambangkan kekuatan, keberanian, dan semangat pantang menyerah dalam kehidupan.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="ornament-card p-5 bg-gradient-to-br from-amber-900/40 to-amber-950/40 rounded-xl border border-amber-700/30">
+                <div class="flex items-start gap-4">
+                  <div class="w-20 h-20 rounded-xl bg-amber-800/40 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-14 h-14 text-amber-400" viewBox="0 0 50 50">
+                      <polygon points="25,5 40,15 40,35 25,45 10,35 10,15" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <line x1="25" y1="5" x2="25" y2="45" stroke="currentColor" stroke-width="1"/>
+                      <line x1="10" y1="25" x2="40" y2="25" stroke="currentColor" stroke-width="1"/>
+                      <circle cx="25" cy="25" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="text-amber-200 font-bold">Motif Gorga</h4>
+                    <p class="text-amber-400 text-sm mb-2">Sumatera Utara (Batak)</p>
+                    <p class="text-amber-100/80 text-sm">Melambangkan keseimbangan kosmos, menolak bala, dan harapan kebahagiaan.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="ornament-card p-5 bg-gradient-to-br from-amber-900/40 to-amber-950/40 rounded-xl border border-amber-700/30">
+                <div class="flex items-start gap-4">
+                  <div class="w-20 h-20 rounded-xl bg-amber-800/40 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-14 h-14 text-amber-400" viewBox="0 0 50 50">
+                      <path d="M25 5 L30 15 L45 15 L35 25 L40 40 L25 32 L10 40 L15 25 L5 15 L20 15 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                      <circle cx="25" cy="22" r="4" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="text-amber-200 font-bold">Motif Pa'tedong</h4>
+                    <p class="text-amber-400 text-sm mb-2">Sulawesi Selatan (Toraja)</p>
+                    <p class="text-amber-100/80 text-sm">Melambangkan kemakmuran, status sosial, dan penghormatan kepada leluhur.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'praktik',
+        render: () => `
+          <div class="slide-enter">
+            <div class="text-center mb-6">
+              <span class="inline-block px-4 py-1 bg-green-600/20 text-green-400 rounded-full text-sm font-semibold mb-3">Halaman Interaktif</span>
+              <h2 class="font-display text-3xl sm:text-4xl font-bold text-amber-100">Praktik Membuat Ragam Hias</h2>
+              <p class="text-amber-200/70 mt-2">Cobalah membuat desain ragam hias sederhana di kanvas bawah ini!</p>
+            </div>
+            
+            <!-- Drawing Tools -->
+            <div class="mb-4 p-4 bg-amber-900/30 rounded-xl border border-amber-700/30">
+              <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                  <span class="text-amber-300 text-sm font-medium">Warna:</span>
+                  <div class="flex gap-2">
+                    <button onclick="setDrawingColor('#c4824c')" class="w-8 h-8 rounded-full border-2 border-white/30 hover:scale-110 transition-transform" style="background: #c4824c" title="Coklat Emas"></button>
+                    <button onclick="setDrawingColor('#92400e')" class="w-8 h-8 rounded-full border-2 border-white/30 hover:scale-110 transition-transform" style="background: #92400e" title="Coklat Tua"></button>
+                    <button onclick="setDrawingColor('#ef4444')" class="w-8 h-8 rounded-full border-2 border-white/30 hover:scale-110 transition-transform" style="background: #ef4444" title="Merah"></button>
+                    <button onclick="setDrawingColor('#22c55e')" class="w-8 h-8 rounded-full border-2 border-white/30 hover:scale-110 transition-transform" style="background: #22c55e" title="Hijau"></button>
+                    <button onclick="setDrawingColor('#3b82f6')" class="w-8 h-8 rounded-full border-2 border-white/30 hover:scale-110 transition-transform" style="background: #3b82f6" title="Biru"></button>
+                    <button onclick="setDrawingColor('#1f1912')" class="w-8 h-8 rounded-full border-2 border-white/30 hover:scale-110 transition-transform" style="background: #1f1912" title="Hitam"></button>
+                  </div>
+                </div>
+                
+                <div class="flex items-center gap-3">
+                  <span class="text-amber-300 text-sm font-medium">Ukuran:</span>
+                  <input type="range" min="1" max="20" value="4" onchange="setBrushSize(this.value)" class="w-24 accent-amber-500">
+                  <span id="brush-size-display" class="text-amber-200 text-sm w-6">4</span>
+                </div>
+                
+                <div class="flex gap-2">
+                  <button onclick="undoDrawing()" class="px-3 py-2 bg-amber-800/50 hover:bg-amber-700/50 text-amber-200 rounded-lg text-sm transition-colors flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/></svg>
+                    Undo
+                  </button>
+                  <button onclick="clearCanvas()" class="px-3 py-2 bg-red-800/50 hover:bg-red-700/50 text-red-200 rounded-lg text-sm transition-colors flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    Hapus
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Canvas Container -->
+            <div class="relative bg-amber-50 rounded-xl overflow-hidden border-4 border-amber-700/50 shadow-xl">
+              <!-- Grid overlay for reference -->
+              <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: linear-gradient(#c4824c 1px, transparent 1px), linear-gradient(90deg, #c4824c 1px, transparent 1px); background-size: 30px 30px;"></div>
+              
+              <!-- Center shape guide -->
+              <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-20">
+                <polygon points="50%,10% 85%,30% 85%,70% 50%,90% 15%,70% 15%,30%" fill="none" stroke="#92400e" stroke-width="2" stroke-dasharray="10,5"/>
+              </svg>
+              
+              <canvas id="drawing-canvas" class="drawing-canvas w-full" style="height: 400px; display: block;"></canvas>
+            </div>
+            
+            <!-- Guide Templates -->
+            <div class="mt-6 p-4 bg-amber-900/30 rounded-xl border border-amber-700/30">
+              <h4 class="text-amber-300 font-semibold mb-3">Template Bantuan (klik untuk menambahkan ke kanvas)</h4>
+              <div class="flex flex-wrap gap-3">
+                <button onclick="addTemplate('hexagon')" class="px-4 py-2 bg-amber-800/40 hover:bg-amber-700/50 text-amber-200 rounded-lg text-sm transition-colors">⬡ Segi Enam</button>
+                <button onclick="addTemplate('circle')" class="px-4 py-2 bg-amber-800/40 hover:bg-amber-700/50 text-amber-200 rounded-lg text-sm transition-colors">⭕ Lingkaran</button>
+                <button onclick="addTemplate('flower')" class="px-4 py-2 bg-amber-800/40 hover:bg-amber-700/50 text-amber-200 rounded-lg text-sm transition-colors">🌸 Motif Bunga</button>
+                <button onclick="addTemplate('leaf')" class="px-4 py-2 bg-amber-800/40 hover:bg-amber-700/50 text-amber-200 rounded-lg text-sm transition-colors">🍃 Motif Daun</button>
+                <button onclick="addTemplate('diamond')" class="px-4 py-2 bg-amber-800/40 hover:bg-amber-700/50 text-amber-200 rounded-lg text-sm transition-colors">◆ Wajik</button>
+              </div>
+            </div>
+            
+            <!-- Tips -->
+            <div class="mt-4 p-4 bg-green-900/20 rounded-xl border border-green-700/30">
+              <p class="text-green-300 text-sm">
+                <span class="font-semibold">💡 Tips:</span> Mulailah dengan membuat bidang beraturan, lalu isi dengan motif ragam hias. Gunakan berbagai warna untuk hasil yang menarik!
+              </p>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 'quiz',
+        render: () => renderQuiz()
+      }
+    ];
+
+    // Quiz questions (10 HOTS questions)
+    const quizQuestions = [
+      {
+        id: 1,
+        question: "Mengapa ragam hias Nusantara disebut sebagai warisan budaya yang tak ternilai?",
+        options: [
+          "Karena harganya mahal di pasaran internasional",
+          "Karena mencerminkan identitas, nilai filosofis, dan kearifan lokal masyarakat Indonesia yang beragam",
+          "Karena dibuat dengan teknik yang sangat rumit",
+          "Karena hanya bisa dibuat oleh seniman profesional"
+        ],
+        correct: 1,
+        explanation: "Ragam hias Nusantara mencerminkan identitas budaya, mengandung nilai filosofis mendalam, dan menunjukkan kearifan lokal dari berbagai suku di Indonesia."
+      },
+      {
+        id: 2,
+        question: "Jika seorang siswa ingin membuat desain ragam hias yang menggambarkan keseimbangan hidup, motif manakah yang paling tepat dipilih?",
+        options: [
+          "Motif Mega Mendung karena menggambarkan awan",
+          "Motif Kawung karena melambangkan kesempurnaan dan keadilan",
+          "Motif Lereng karena berbentuk diagonal",
+          "Motif Tumpal karena berbentuk segitiga"
+        ],
+        correct: 1,
+        explanation: "Motif Kawung dengan bentuknya yang simetris melambangkan kesempurnaan, keadilan, dan keseimbangan dalam kehidupan."
+      },
+      {
+        id: 3,
+        question: "Seorang desainer ingin mengkombinasikan tiga jenis corak ragam hias dalam satu karya. Kombinasi manakah yang paling harmonis?",
+        options: [
+          "Flora + Fauna + Geometris dengan komposisi asimetris untuk kesan dinamis",
+          "Hanya menggunakan geometris agar tidak membingungkan",
+          "Menggunakan semua jenis tanpa mempertimbangkan komposisi",
+          "Memilih satu jenis saja agar lebih fokus"
+        ],
+        correct: 0,
+        explanation: "Kombinasi Flora + Fauna + Geometris dengan komposisi asimetris menciptakan keseimbangan visual yang dinamis dan menarik, sesuai kriteria penilaian."
+      },
+      {
+        id: 4,
+        question: "Dalam konteks pelestarian budaya, mengapa penting bagi generasi muda untuk mempelajari makna filosofis di balik ragam hias?",
+        options: [
+          "Agar bisa menjual karya dengan harga tinggi",
+          "Agar memahami nilai-nilai luhur leluhur dan meneruskannya dengan bermakna",
+          "Agar mendapat nilai bagus di sekolah",
+          "Agar bisa mengkritik desain modern"
+        ],
+        correct: 1,
+        explanation: "Memahami makna filosofis membantu generasi muda menghargai warisan budaya dan meneruskannya dengan pemahaman yang mendalam, bukan sekadar meniru bentuk."
+      },
+      {
+        id: 5,
+        question: "Jika motif Parang melambangkan semangat pantang menyerah, bagaimana penerapan nilai ini dalam pembuatan karya ragam hias?",
+        options: [
+          "Menggunakan warna yang sangat cerah",
+          "Membuat garis-garis yang tegas, konsisten, dan penuh dedikasi dalam prosesnya",
+          "Menyelesaikan karya dengan cepat",
+          "Menyalin persis dari contoh yang ada"
+        ],
+        correct: 1,
+        explanation: "Nilai pantang menyerah dari motif Parang tercermin dalam proses pembuatan yang teliti, konsisten, dan penuh dedikasi untuk menghasilkan karya berkualitas."
+      },
+      {
+        id: 6,
+        question: "Seorang siswa menggunakan komposisi diagonal dalam karyanya. Apa dampak visual yang dihasilkan dari pilihan ini?",
+        options: [
+          "Kesan statis dan formal",
+          "Kesan dinamis, bergerak, dan penuh energi",
+          "Kesan membosankan dan monoton",
+          "Kesan berantakan dan tidak teratur"
+        ],
+        correct: 1,
+        explanation: "Komposisi diagonal menciptakan ilusi gerakan dan dinamika, memberikan kesan energik dan tidak kaku pada karya seni."
+      },
+      {
+        id: 7,
+        question: "Mengapa Indonesia disebut memiliki kekayaan ornamen tenun yang tidak dimiliki negara lain?",
+        options: [
+          "Karena memiliki teknologi tenun paling modern",
+          "Karena keragaman suku dan budaya menghasilkan ribuan variasi motif unik di setiap daerah",
+          "Karena Indonesia penghasil kapas terbesar",
+          "Karena tenun Indonesia paling mahal di dunia"
+        ],
+        correct: 1,
+        explanation: "Keragaman 1.340+ suku bangsa di Indonesia menghasilkan ribuan variasi motif tenun yang masing-masing memiliki keunikan berdasarkan budaya lokal."
+      },
+      {
+        id: 8,
+        question: "Dalam membuat karya ragam hias dengan nilai tertinggi, strategi apa yang harus diterapkan siswa?",
+        options: [
+          "Menggunakan satu motif yang paling rumit",
+          "Mengkombinasikan lebih dari 3 motif dengan komposisi harmonis dan teknik pewarnaan kreatif",
+          "Meniru persis contoh dari buku",
+          "Menggunakan warna sebanyak mungkin tanpa perencanaan"
+        ],
+        correct: 1,
+        explanation: "Kriteria penilaian tertinggi mensyaratkan variasi motif (>3), komposisi yang harmonis, dan kreativitas dalam penggunaan medium/warna."
+      },
+      {
+        id: 9,
+        question: "Jika ragam hias tradisional dimodifikasi dengan sentuhan modern, aspek apa yang harus tetap dipertahankan?",
+        options: [
+          "Warna asli tanpa perubahan",
+          "Nilai filosofis dan esensi bentuk dasar motif",
+          "Ukuran yang sama persis",
+          "Material tradisional"
+        ],
+        correct: 1,
+        explanation: "Dalam modernisasi ragam hias, nilai filosofis dan esensi bentuk dasar harus tetap dipertahankan agar makna budaya tidak hilang."
+      },
+      {
+        id: 10,
+        question: "Seorang siswa akan mempresentasikan karyanya. Urutan penyampaian yang paling efektif adalah?",
+        options: [
+          "Langsung menjelaskan teknik pembuatan",
+          "Menyebutkan nama motif → menjelaskan asal daerah → mengungkap makna filosofis",
+          "Menunjukkan hasil akhir saja",
+          "Membandingkan dengan karya teman"
+        ],
+        correct: 1,
+        explanation: "Urutan ini mengikuti struktur presentasi yang sistematis: identifikasi (nama), konteks (asal), dan pemahaman mendalam (filosofi)."
+      }
+    ];
+
+    function renderQuiz() {
+      const questionElements = quizQuestions.map((q, index) => {
+        const userAnswer = quizAnswers[q.id];
+        const isAnswered = userAnswer !== undefined;
+        const isCorrect = userAnswer === q.correct;
+        
+        return `
+          <div class="p-5 bg-gradient-to-br from-amber-900/40 to-amber-950/40 rounded-xl border border-amber-700/30 mb-4">
+            <div class="flex items-start gap-3 mb-4">
+              <span class="w-8 h-8 rounded-full ${quizSubmitted ? (isCorrect ? 'bg-green-600' : 'bg-red-600') : 'bg-amber-600'} flex items-center justify-center text-white font-bold flex-shrink-0">${index + 1}</span>
+              <p class="text-amber-100 font-medium leading-relaxed">${q.question}</p>
+            </div>
+            <div class="space-y-2 ml-11">
+              ${q.options.map((opt, optIndex) => {
+                let optionClass = 'quiz-option p-3 rounded-lg border cursor-pointer transition-all ';
+                if (quizSubmitted) {
+                  if (optIndex === q.correct) {
+                    optionClass += 'correct text-white border-green-500';
+                  } else if (optIndex === userAnswer && optIndex !== q.correct) {
+                    optionClass += 'incorrect text-white border-red-500';
+                  } else {
+                    optionClass += 'bg-amber-950/40 border-amber-800/30 text-amber-200/60';
+                  }
+                } else {
+                  if (optIndex === userAnswer) {
+                    optionClass += 'bg-amber-700/50 border-amber-500 text-amber-100';
+                  } else {
+                    optionClass += 'bg-amber-950/40 border-amber-800/30 text-amber-200 hover:bg-amber-900/50 hover:border-amber-700/50';
+                  }
+                }
+                return `
+                  <div class="${optionClass}" onclick="${!quizSubmitted ? `selectAnswer(${q.id}, ${optIndex})` : ''}">
+                    <span class="font-medium mr-2">${String.fromCharCode(65 + optIndex)}.</span> ${opt}
+                  </div>
+                `;
+              }).join('')}
+            </div>
+            ${quizSubmitted ? `
+              <div class="mt-4 ml-11 p-3 ${isCorrect ? 'bg-green-900/30 border-green-700/30' : 'bg-amber-900/30 border-amber-700/30'} rounded-lg border">
+                <p class="text-sm ${isCorrect ? 'text-green-300' : 'text-amber-300'}">
+                  <span class="font-semibold">${isCorrect ? '✓ Benar!' : '✗ Penjelasan:'}</span> ${q.explanation}
+                </p>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+
+      const answeredCount = Object.keys(quizAnswers).length;
+      const correctCount = quizSubmitted ? quizQuestions.filter(q => quizAnswers[q.id] === q.correct).length : 0;
+
+      return `
+        <div class="slide-enter">
+          <div class="text-center mb-6">
+            <span class="inline-block px-4 py-1 bg-purple-600/20 text-purple-400 rounded-full text-sm font-semibold mb-3">Evaluasi HOTS</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-amber-100">Kuis Ragam Hias</h2>
+            <p class="text-amber-200/70 mt-2">10 Soal Higher Order Thinking Skills (HOTS)</p>
+          </div>
+          
+          <!-- Progress -->
+          <div class="mb-6 p-4 bg-amber-900/30 rounded-xl border border-amber-700/30">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-amber-300 font-medium">Progress Pengerjaan</span>
+              <span class="text-amber-200">${answeredCount}/10 soal dijawab</span>
+            </div>
+            <div class="h-3 bg-amber-950/50 rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-amber-600 to-amber-400 rounded-full transition-all" style="width: ${answeredCount * 10}%"></div>
+            </div>
+          </div>
+          
+          ${quizSubmitted ? `
+            <div class="mb-6 p-6 ${correctCount >= 7 ? 'bg-green-900/30 border-green-700/30' : correctCount >= 5 ? 'bg-amber-900/30 border-amber-700/30' : 'bg-red-900/30 border-red-700/30'} rounded-xl border text-center">
+              <div class="text-5xl mb-3">${correctCount >= 7 ? '🎉' : correctCount >= 5 ? '👍' : '💪'}</div>
+              <h3 class="text-2xl font-bold ${correctCount >= 7 ? 'text-green-300' : correctCount >= 5 ? 'text-amber-300' : 'text-red-300'} mb-2">
+                Skor: ${correctCount}/10 (${correctCount * 10}%)
+              </h3>
+              <p class="${correctCount >= 7 ? 'text-green-200' : correctCount >= 5 ? 'text-amber-200' : 'text-red-200'}">
+                ${correctCount >= 7 ? 'Luar biasa! Kamu menguasai materi dengan sangat baik!' : correctCount >= 5 ? 'Bagus! Terus tingkatkan pemahamanmu!' : 'Jangan menyerah! Pelajari kembali materinya ya!'}
+              </p>
+            </div>
+          ` : ''}
+          
+          <!-- Questions -->
+          <div class="space-y-4">
+            ${questionElements}
+          </div>
+          
+          <!-- Submit Button -->
+          <div class="mt-6 text-center">
+            ${!quizSubmitted ? `
+              <button onclick="submitQuiz()" ${answeredCount < 10 ? 'disabled' : ''} class="px-8 py-4 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-all hover:scale-105 disabled:hover:scale-100 shadow-lg">
+                ${answeredCount < 10 ? `Jawab Semua Soal (${10 - answeredCount} tersisa)` : 'Kirim Jawaban'}
+              </button>
+            ` : `
+              <button onclick="resetQuiz()" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-bold rounded-xl transition-all hover:scale-105 shadow-lg">
+                Ulangi Kuis
+              </button>
+            `}
+          </div>
+        </div>
+      `;
+    }
+
+    function selectAnswer(questionId, optionIndex) {
+      if (quizSubmitted) return;
+      quizAnswers[questionId] = optionIndex;
+      renderSlide();
+    }
+
+    function submitQuiz() {
+      if (Object.keys(quizAnswers).length < 10) return;
+      quizSubmitted = true;
+      renderSlide();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetQuiz() {
+      quizAnswers = {};
+      quizSubmitted = false;
+      renderSlide();
+    }
+
+    // Navigation functions
+    function changeSlide(direction) {
+      const newSlide = currentSlide + direction;
+      if (newSlide >= 0 && newSlide < totalSlides) {
+        currentSlide = newSlide;
+        renderSlide();
+        updateNavigation();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function goToSlide(index) {
+      if (index >= 0 && index < totalSlides) {
+        currentSlide = index;
+        renderSlide();
+        updateNavigation();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function renderSlide() {
+      const container = document.getElementById('slide-container');
+      container.innerHTML = slides[currentSlide].render();
+      
+      // Initialize canvas if on praktik slide
+      if (slides[currentSlide].id === 'praktik') {
+        setTimeout(initCanvas, 100);
+      }
+    }
+
+    function updateNavigation() {
+      // Update counter
+      document.getElementById('slide-counter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+      
+      // Update progress bar
+      const progress = ((currentSlide + 1) / totalSlides) * 100;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+      
+      // Update nav dots
+      const dotsContainer = document.getElementById('nav-dots');
+      dotsContainer.innerHTML = Array.from({ length: totalSlides }, (_, i) => `
+        <button onclick="goToSlide(${i})" class="nav-dot w-3 h-3 rounded-full transition-all ${i === currentSlide ? 'bg-amber-500 active' : 'bg-amber-800 hover:bg-amber-600'}"></button>
+      `).join('');
+      
+      // Update button states
+      document.getElementById('prev-btn').disabled = currentSlide === 0;
+      document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
+    }
+
+    // Canvas drawing functions
+    let canvas, ctx;
+
+    function initCanvas() {
+      canvas = document.getElementById('drawing-canvas');
+      if (!canvas) return;
+      
+      ctx = canvas.getContext('2d');
+      
+      // Set actual canvas size
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      
+      // Fill with background
+      ctx.fillStyle = '#fef3c7';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Save initial state
+      saveDrawingState();
+      
+      // Mouse events
+      canvas.addEventListener('mousedown', startDrawing);
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseup', stopDrawing);
+      canvas.addEventListener('mouseout', stopDrawing);
+      
+      // Touch events
+      canvas.addEventListener('touchstart', handleTouchStart);
+      canvas.addEventListener('touchmove', handleTouchMove);
+      canvas.addEventListener('touchend', stopDrawing);
+    }
+
+    function startDrawing(e) {
+      isDrawing = true;
+      const rect = canvas.getBoundingClientRect();
+      lastX = e.clientX - rect.left;
+      lastY = e.clientY - rect.top;
+    }
+
+    function draw(e) {
+      if (!isDrawing) return;
+      
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(x, y);
+      ctx.strokeStyle = currentColor;
+      ctx.lineWidth = brushSize;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+      
+      lastX = x;
+      lastY = y;
+    }
+
+    function stopDrawing() {
+      if (isDrawing) {
+        isDrawing = false;
+        saveDrawingState();
+      }
+    }
+
+    function handleTouchStart(e) {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      isDrawing = true;
+      lastX = touch.clientX - rect.left;
+      lastY = touch.clientY - rect.top;
+    }
+
+    function handleTouchMove(e) {
+      e.preventDefault();
+      if (!isDrawing) return;
+      
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(x, y);
+      ctx.strokeStyle = currentColor;
+      ctx.lineWidth = brushSize;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+      
+      lastX = x;
+      lastY = y;
+    }
+
+    function setDrawingColor(color) {
+      currentColor = color;
+    }
+
+    function setBrushSize(size) {
+      brushSize = parseInt(size);
+      document.getElementById('brush-size-display').textContent = size;
+    }
+
+    function saveDrawingState() {
+      if (canvas && ctx) {
+        drawingHistory.push(canvas.toDataURL());
+        if (drawingHistory.length > 20) {
+          drawingHistory.shift();
+        }
+      }
+    }
+
+    function undoDrawing() {
+      if (drawingHistory.length > 1) {
+        drawingHistory.pop();
+        const img = new Image();
+        img.onload = function() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0);
+        };
+        img.src = drawingHistory[drawingHistory.length - 1];
+      }
+    }
+
+    function clearCanvas() {
+      if (canvas && ctx) {
+        ctx.fillStyle = '#fef3c7';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        drawingHistory = [];
+        saveDrawingState();
+      }
+    }
+
+    function addTemplate(type) {
+      if (!canvas || !ctx) return;
+      
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      
+      ctx.strokeStyle = currentColor;
+      ctx.lineWidth = 2;
+      
+      switch(type) {
+        case 'hexagon':
+          drawHexagon(centerX, centerY, 100);
+          break;
+        case 'circle':
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, 100, 0, Math.PI * 2);
+          ctx.stroke();
+          break;
+        case 'flower':
+          drawFlower(centerX, centerY, 50);
+          break;
+        case 'leaf':
+          drawLeaf(centerX, centerY, 60);
+          break;
+        case 'diamond':
+          drawDiamond(centerX, centerY, 80);
+          break;
+      }
+      
+      saveDrawingState();
+    }
+
+    function drawHexagon(cx, cy, size) {
+      ctx.beginPath();
+      for (let i = 0; i < 6; i++) {
+        const angle = (Math.PI / 3) * i - Math.PI / 2;
+        const x = cx + size * Math.cos(angle);
+        const y = cy + size * Math.sin(angle);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.stroke();
+    }
+
+    function drawFlower(cx, cy, size) {
+      for (let i = 0; i < 6; i++) {
+        const angle = (Math.PI / 3) * i;
+        ctx.beginPath();
+        ctx.ellipse(cx + Math.cos(angle) * size * 0.7, cy + Math.sin(angle) * size * 0.7, size * 0.5, size * 0.3, angle, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.beginPath();
+      ctx.arc(cx, cy, size * 0.3, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    function drawLeaf(cx, cy, size) {
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - size);
+      ctx.quadraticCurveTo(cx + size, cy, cx, cy + size);
+      ctx.quadraticCurveTo(cx - size, cy, cx, cy - size);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - size);
+      ctx.lineTo(cx, cy + size);
+      ctx.stroke();
+    }
+
+    function drawDiamond(cx, cy, size) {
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - size);
+      ctx.lineTo(cx + size * 0.6, cy);
+      ctx.lineTo(cx, cy + size);
+      ctx.lineTo(cx - size * 0.6, cy);
+      ctx.closePath();
+      ctx.stroke();
+    }
+
+    // Element SDK integration
+    async function onConfigChange(newConfig) {
+      Object.assign(config, newConfig);
+      
+      const mainTitleEl = document.getElementById('main-title-display');
+      const subjectEl = document.getElementById('subject-display');
+      const navTitleEl = document.getElementById('nav-title');
+      
+      if (mainTitleEl) mainTitleEl.textContent = config.main_title || defaultConfig.main_title;
+      if (subjectEl) subjectEl.textContent = config.subject_name || defaultConfig.subject_name;
+      if (navTitleEl) navTitleEl.textContent = config.main_title || defaultConfig.main_title;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              config.secondary_color = value;
+              window.elementSdk.setConfig({ secondary_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["main_title", config.main_title || defaultConfig.main_title],
+        ["subject_name", config.subject_name || defaultConfig.subject_name]
+      ]);
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        changeSlide(1);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        changeSlide(-1);
+      }
+    });
+
+    // Initialize
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+      config = { ...defaultConfig, ...window.elementSdk.config };
+    }
+    
+    renderSlide();
+    updateNavigation();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c8b2965f1230ddc',t:'MTc3MDIxODUyOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

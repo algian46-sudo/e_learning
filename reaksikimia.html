@@ -1,0 +1,1365 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mengenal Reaksi Kimia dalam Kehidupan Sehari-hari</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Quicksand:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Nunito', sans-serif;
+    }
+    
+    .section-title {
+      font-family: 'Quicksand', sans-serif;
+    }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+    
+    .card-glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:hover {
+      transform: translateX(5px);
+    }
+    
+    .nav-item.active {
+      background: linear-gradient(90deg, #e94560, #ff6b6b);
+      color: white;
+    }
+    
+    .molecule {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes bubble {
+      0% { transform: translateY(0) scale(1); opacity: 0.8; }
+      100% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+    }
+    
+    .bubble {
+      animation: bubble 2s ease-out infinite;
+    }
+    
+    @keyframes flame {
+      0%, 100% { transform: scaleY(1) scaleX(1); }
+      50% { transform: scaleY(1.1) scaleX(0.9); }
+    }
+    
+    .flame {
+      animation: flame 0.3s ease-in-out infinite;
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+    }
+    
+    .quiz-option:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+    }
+    
+    .quiz-option.selected {
+      border-color: #e94560;
+      background: linear-gradient(135deg, #ffe4e8, #fff);
+    }
+    
+    .quiz-option.correct {
+      border-color: #10b981;
+      background: linear-gradient(135deg, #d1fae5, #fff);
+    }
+    
+    .quiz-option.incorrect {
+      border-color: #ef4444;
+      background: linear-gradient(135deg, #fee2e2, #fff);
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .illustration-container {
+      background: linear-gradient(180deg, #e8f4f8 0%, #fff 100%);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    
+    .interactive-btn {
+      transition: all 0.3s ease;
+    }
+    
+    .interactive-btn:hover {
+      transform: scale(1.05);
+    }
+    
+    .interactive-btn:active {
+      transform: scale(0.95);
+    }
+    
+    .scroll-container {
+      scroll-behavior: smooth;
+    }
+    
+    .comparison-card {
+      transition: all 0.3s ease;
+    }
+    
+    .comparison-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #e94560;
+      border-radius: 10px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full gradient-bg">
+  <div class="h-full w-full flex overflow-hidden"><!-- Sidebar Navigation -->
+   <nav class="w-72 bg-white/10 backdrop-blur-lg p-4 flex flex-col h-full overflow-y-auto">
+    <div class="mb-6 text-center">
+     <div class="text-4xl mb-2">
+      ⚗️
+     </div>
+     <h1 id="main-title" class="text-xl font-bold text-white section-title">Reaksi Kimia</h1>
+     <p id="teacher-display" class="text-sm text-white/70 mt-1"></p>
+    </div>
+    <div class="flex-1 space-y-2"><button onclick="showSection(0)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 text-sm font-medium flex items-center gap-3 active" data-nav="0"> <span class="text-lg">🧪</span> <span>Apa itu Reaksi Kimia?</span> </button> <button onclick="showSection(1)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 text-sm font-medium flex items-center gap-3" data-nav="1"> <span class="text-lg">🔄</span> <span>Fisika vs Kimia</span> </button> <button onclick="showSection(2)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 text-sm font-medium flex items-center gap-3" data-nav="2"> <span class="text-lg">🔬</span> <span>Komponen Reaksi</span> </button> <button onclick="showSection(3)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 text-sm font-medium flex items-center gap-3" data-nav="3"> <span class="text-lg">📝</span> <span>Persamaan Kimia</span> </button> <button onclick="showSection(4)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 text-sm font-medium flex items-center gap-3" data-nav="4"> <span class="text-lg">🧬</span> <span>Jenis Reaksi (1)</span> </button> <button onclick="showSection(5)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 text-sm font-medium flex items-center gap-3" data-nav="5"> <span class="text-lg">🔥</span> <span>Jenis Reaksi (2)</span> </button> <button onclick="showSection(6)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 text-sm font-medium flex items-center gap-3" data-nav="6"> <span class="text-lg">🌍</span> <span>Reaksi di Sekitar Kita</span> </button> <button onclick="showSection(7)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 text-sm font-medium flex items-center gap-3" data-nav="7"> <span class="text-lg">📊</span> <span>Kuis HOTS</span> </button>
+    </div>
+    <div class="mt-4 p-3 bg-white/10 rounded-xl">
+     <p class="text-white/60 text-xs text-center">Progres Belajar</p>
+     <div class="w-full bg-white/20 rounded-full h-2 mt-2">
+      <div id="progress-bar" class="progress-bar bg-gradient-to-r from-green-400 to-emerald-500 h-2 rounded-full" style="width: 12.5%"></div>
+     </div>
+     <p id="progress-text" class="text-white/80 text-xs text-center mt-1">1 dari 8 materi</p>
+    </div>
+   </nav><!-- Main Content -->
+   <main class="flex-1 h-full overflow-y-auto scroll-container p-6"><!-- Section 0: Apa itu Reaksi Kimia -->
+    <section id="section-0" class="section card-glass rounded-3xl p-8 shadow-2xl">
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">
+       🧪
+      </div>
+      <div>
+       <h2 class="text-3xl font-bold text-gray-800 section-title">Apa itu Reaksi Kimia?</h2>
+       <p class="text-gray-500">Memahami dasar-dasar perubahan kimia</p>
+      </div>
+     </div>
+     <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="bg-gradient-to-br from-indigo-50 to-purple-50 p-6 rounded-2xl">
+       <h3 class="text-xl font-bold text-indigo-800 mb-3">📖 Definisi</h3>
+       <p class="text-gray-700 leading-relaxed"><strong>Reaksi kimia</strong> terjadi saat berlangsungnya perubahan kimia, di mana zat awal (<span class="text-purple-600 font-semibold">pereaksi/reaktan</span>) berubah menjadi zat baru (<span class="text-pink-600 font-semibold">produk</span>) dengan sifat yang berbeda.</p>
+      </div>
+      <div class="bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-2xl">
+       <h3 class="text-xl font-bold text-amber-800 mb-3">⭐ Ciri Utama</h3>
+       <ul class="space-y-2">
+        <li class="flex items-start gap-2"><span class="text-green-500 mt-1">✓</span> <span class="text-gray-700">Terbentuk <strong>zat baru</strong> dengan sifat berbeda</span></li>
+        <li class="flex items-start gap-2"><span class="text-green-500 mt-1">✓</span> <span class="text-gray-700">Bersifat <strong>ireversibel</strong> (tidak dapat kembali ke bentuk semula)</span></li>
+        <li class="flex items-start gap-2"><span class="text-green-500 mt-1">✓</span> <span class="text-gray-700">Terjadi perubahan susunan atom/molekul</span></li>
+       </ul>
+      </div>
+     </div><!-- Interactive Rice Cooking Illustration -->
+     <div class="illustration-container mb-6">
+      <h3 class="text-lg font-bold text-gray-700 mb-4 text-center">🍚 Contoh: Beras Menjadi Nasi</h3>
+      <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+       <div class="text-center">
+        <div class="w-32 h-32 bg-gradient-to-b from-yellow-100 to-yellow-200 rounded-full flex items-center justify-center shadow-lg mb-3 mx-auto relative overflow-hidden">
+         <svg viewbox="0 0 100 100" class="w-24 h-24"><ellipse cx="50" cy="70" rx="35" ry="15" fill="#f5e6d3" /> <ellipse cx="35" cy="65" rx="8" ry="4" fill="#fff8e7" /> <ellipse cx="50" cy="60" rx="8" ry="4" fill="#fff8e7" /> <ellipse cx="65" cy="65" rx="8" ry="4" fill="#fff8e7" /> <ellipse cx="42" cy="72" rx="7" ry="3" fill="#fff8e7" /> <ellipse cx="58" cy="72" rx="7" ry="3" fill="#fff8e7" /> <ellipse cx="50" cy="68" rx="6" ry="3" fill="#fff8e7" />
+         </svg>
+        </div>
+        <p class="font-semibold text-gray-700">Beras (Pereaksi)</p>
+        <p class="text-sm text-gray-500">Keras, butiran terpisah</p>
+       </div>
+       <div class="flex flex-col items-center">
+        <div id="cooking-animation" class="w-20 h-20 bg-gradient-to-t from-orange-400 to-red-400 rounded-full flex items-center justify-center text-3xl cursor-pointer interactive-btn shadow-lg">
+         🔥
+        </div>
+        <p class="text-sm text-gray-600 mt-2 font-medium">+ Panas &amp; Air</p><button onclick="animateCooking()" class="mt-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white text-sm rounded-full font-semibold hover:shadow-lg transition-all"> Lihat Proses </button>
+       </div>
+       <div class="text-center">
+        <div class="w-32 h-32 bg-gradient-to-b from-white to-gray-100 rounded-full flex items-center justify-center shadow-lg mb-3 mx-auto relative overflow-hidden">
+         <svg viewbox="0 0 100 100" class="w-24 h-24"><ellipse cx="50" cy="65" rx="38" ry="20" fill="#fff" /> <ellipse cx="50" cy="60" rx="35" ry="18" fill="#fefefe" /> <path d="M30 55 Q35 50 40 55 Q45 50 50 55 Q55 50 60 55 Q65 50 70 55" stroke="#f0f0f0" fill="none" stroke-width="2" /> <path d="M35 62 Q40 57 45 62 Q50 57 55 62 Q60 57 65 62" stroke="#f0f0f0" fill="none" stroke-width="2" /> <ellipse cx="40" cy="45" rx="3" ry="6" fill="#fff" opacity="0.5" /> <ellipse cx="55" cy="42" rx="2" ry="5" fill="#fff" opacity="0.5" />
+         </svg>
+        </div>
+        <p class="font-semibold text-gray-700">Nasi (Produk)</p>
+        <p class="text-sm text-gray-500">Lembut, pulen, lengket</p>
+       </div>
+      </div>
+      <p id="cooking-result" class="text-center mt-4 text-gray-600 italic hidden">⚠️ Nasi <strong>tidak bisa</strong> kembali menjadi beras! Ini adalah reaksi ireversibel.</p>
+     </div>
+     <div class="bg-gradient-to-r from-red-50 to-pink-50 p-5 rounded-xl border-l-4 border-red-400">
+      <p class="text-gray-700"><span class="font-bold text-red-600">💡 Ingat!</span> Reaksi kimia mengubah struktur molekul zat. Pati dalam beras mengalami gelatinisasi saat dipanaskan dengan air, menghasilkan tekstur yang sama sekali berbeda.</p>
+     </div>
+    </section><!-- Section 1: Perubahan Fisika vs Kimia -->
+    <section id="section-1" class="section card-glass rounded-3xl p-8 shadow-2xl hidden">
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">
+       🔄
+      </div>
+      <div>
+       <h2 class="text-3xl font-bold text-gray-800 section-title">Perubahan Fisika vs Perubahan Kimia</h2>
+       <p class="text-gray-500">Memahami perbedaan kedua jenis perubahan</p>
+      </div>
+     </div>
+     <div class="grid md:grid-cols-2 gap-6 mb-8"><!-- Perubahan Fisika -->
+      <div class="comparison-card bg-gradient-to-br from-blue-50 to-cyan-50 p-6 rounded-2xl border-2 border-blue-200">
+       <div class="flex items-center gap-3 mb-4"><span class="text-3xl">🧊</span>
+        <h3 class="text-xl font-bold text-blue-800">Perubahan Fisika</h3>
+       </div>
+       <p class="text-gray-700 mb-4"><strong>Tidak menghasilkan zat baru</strong>, hanya perubahan wujud atau bentuk.</p>
+       <div class="space-y-4">
+        <div class="bg-white p-4 rounded-xl shadow-sm">
+         <p class="font-semibold text-blue-700 mb-2">Contoh 1: Es Mencair</p>
+         <div class="flex items-center justify-center gap-4">
+          <div class="text-center">
+           <div class="w-16 h-16 bg-gradient-to-b from-blue-200 to-blue-300 rounded-lg flex items-center justify-center text-2xl">
+            🧊
+           </div>
+           <p class="text-xs mt-1">Es (H₂O)</p>
+          </div><span class="text-2xl">→</span>
+          <div class="text-center">
+           <div class="w-16 h-16 bg-gradient-to-b from-blue-100 to-blue-200 rounded-lg flex items-center justify-center text-2xl">
+            💧
+           </div>
+           <p class="text-xs mt-1">Air (H₂O)</p>
+          </div>
+         </div>
+         <p class="text-sm text-gray-600 mt-2 text-center">Molekulnya tetap H₂O!</p>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow-sm">
+         <p class="font-semibold text-blue-700 mb-2">Contoh 2: Kertas Disobek</p>
+         <div class="flex items-center justify-center gap-4">
+          <div class="text-center">
+           <div class="w-16 h-16 bg-white border-2 border-gray-300 rounded-lg flex items-center justify-center text-2xl">
+            📄
+           </div>
+           <p class="text-xs mt-1">Kertas utuh</p>
+          </div><span class="text-2xl">→</span>
+          <div class="text-center">
+           <div class="w-16 h-16 bg-white border-2 border-gray-300 rounded-lg flex items-center justify-center text-xl">
+            📄📄
+           </div>
+           <p class="text-xs mt-1">Kertas sobek</p>
+          </div>
+         </div>
+         <p class="text-sm text-gray-600 mt-2 text-center">Masih kertas dengan sifat sama!</p>
+        </div>
+       </div>
+       <div class="mt-4 p-3 bg-blue-100 rounded-lg">
+        <p class="text-sm text-blue-800"><strong>Ciri:</strong> Dapat dikembalikan ke bentuk semula (reversibel)</p>
+       </div>
+      </div><!-- Perubahan Kimia -->
+      <div class="comparison-card bg-gradient-to-br from-red-50 to-orange-50 p-6 rounded-2xl border-2 border-red-200">
+       <div class="flex items-center gap-3 mb-4"><span class="text-3xl">🔥</span>
+        <h3 class="text-xl font-bold text-red-800">Perubahan Kimia</h3>
+       </div>
+       <p class="text-gray-700 mb-4"><strong>Menghasilkan zat baru</strong> melalui reaksi kimia.</p>
+       <div class="space-y-4">
+        <div class="bg-white p-4 rounded-xl shadow-sm">
+         <p class="font-semibold text-red-700 mb-2">Contoh 1: Kertas Dibakar</p>
+         <div class="flex items-center justify-center gap-4">
+          <div class="text-center">
+           <div class="w-16 h-16 bg-white border-2 border-gray-300 rounded-lg flex items-center justify-center text-2xl">
+            📄
+           </div>
+           <p class="text-xs mt-1">Kertas</p>
+          </div><span class="text-2xl">🔥→</span>
+          <div class="text-center">
+           <div class="w-16 h-16 bg-gray-700 rounded-lg flex items-center justify-center text-2xl">
+            ite
+           </div>
+           <p class="text-xs mt-1">Abu + CO₂</p>
+          </div>
+         </div>
+         <p class="text-sm text-gray-600 mt-2 text-center">Terbentuk zat baru!</p>
+        </div>
+        <div class="bg-white p-4 rounded-xl shadow-sm">
+         <p class="font-semibold text-red-700 mb-2">Contoh 2: Besi Berkarat</p>
+         <div class="flex items-center justify-center gap-4">
+          <div class="text-center">
+           <div class="w-16 h-16 bg-gradient-to-b from-gray-400 to-gray-500 rounded-lg flex items-center justify-center text-2xl">
+            🔩
+           </div>
+           <p class="text-xs mt-1">Besi (Fe)</p>
+          </div><span class="text-2xl">+ O₂ →</span>
+          <div class="text-center">
+           <div class="w-16 h-16 bg-gradient-to-b from-orange-600 to-red-700 rounded-lg flex items-center justify-center text-2xl">
+            🔩
+           </div>
+           <p class="text-xs mt-1">Karat (Fe₂O₃)</p>
+          </div>
+         </div>
+         <p class="text-sm text-gray-600 mt-2 text-center">Besi oksida terbentuk!</p>
+        </div>
+       </div>
+       <div class="mt-4 p-3 bg-red-100 rounded-lg">
+        <p class="text-sm text-red-800"><strong>Ciri:</strong> Tidak dapat dikembalikan (ireversibel)</p>
+       </div>
+      </div>
+     </div><!-- Interactive Quiz -->
+     <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-2xl">
+      <h3 class="text-xl font-bold text-purple-800 mb-4">🎯 Mini Quiz: Fisika atau Kimia?</h3>
+      <div id="mini-quiz" class="space-y-3">
+       <div class="flex items-center justify-between bg-white p-4 rounded-xl"><span>Gula larut dalam air</span>
+        <div class="flex gap-2"><button onclick="checkMiniQuiz(this, 'fisika')" class="px-4 py-2 bg-blue-100 hover:bg-blue-200 rounded-lg text-sm font-medium transition-all">Fisika</button> <button onclick="checkMiniQuiz(this, 'kimia')" class="px-4 py-2 bg-red-100 hover:bg-red-200 rounded-lg text-sm font-medium transition-all">Kimia</button>
+        </div>
+       </div>
+       <div class="flex items-center justify-between bg-white p-4 rounded-xl"><span>Makanan membusuk</span>
+        <div class="flex gap-2"><button onclick="checkMiniQuiz(this, 'fisika')" class="px-4 py-2 bg-blue-100 hover:bg-blue-200 rounded-lg text-sm font-medium transition-all">Fisika</button> <button onclick="checkMiniQuiz(this, 'kimia')" class="px-4 py-2 bg-red-100 hover:bg-red-200 rounded-lg text-sm font-medium transition-all">Kimia</button>
+        </div>
+       </div>
+       <div class="flex items-center justify-between bg-white p-4 rounded-xl"><span>Kayu dipotong</span>
+        <div class="flex gap-2"><button onclick="checkMiniQuiz(this, 'fisika')" class="px-4 py-2 bg-blue-100 hover:bg-blue-200 rounded-lg text-sm font-medium transition-all">Fisika</button> <button onclick="checkMiniQuiz(this, 'kimia')" class="px-4 py-2 bg-red-100 hover:bg-red-200 rounded-lg text-sm font-medium transition-all">Kimia</button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 2: Komponen Reaksi Kimia -->
+    <section id="section-2" class="section card-glass rounded-3xl p-8 shadow-2xl hidden">
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">
+       🔬
+      </div>
+      <div>
+       <h2 class="text-3xl font-bold text-gray-800 section-title">Komponen dalam Reaksi Kimia</h2>
+       <p class="text-gray-500">Memahami pereaksi, produk, dan proses pembentukan zat baru</p>
+      </div>
+     </div>
+     <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-2xl">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-2xl text-white">
+         ⚡
+        </div>
+        <h3 class="text-xl font-bold text-blue-800">Pereaksi (Reaktan)</h3>
+       </div>
+       <p class="text-gray-700 mb-3">Zat-zat yang <strong>digunakan</strong> atau <strong>bereaksi</strong> sebelum reaksi dimulai.</p>
+       <div class="bg-white p-4 rounded-xl">
+        <p class="text-sm text-gray-600">Contoh: Hidrogen (H₂) dan Oksigen (O₂) dalam pembentukan air</p>
+       </div>
+      </div>
+      <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-2xl">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center text-2xl text-white">
+         ✨
+        </div>
+        <h3 class="text-xl font-bold text-green-800">Produk</h3>
+       </div>
+       <p class="text-gray-700 mb-3">Zat-zat <strong>baru</strong> yang <strong>diperoleh</strong> setelah reaksi selesai.</p>
+       <div class="bg-white p-4 rounded-xl">
+        <p class="text-sm text-gray-600">Contoh: Air (H₂O) hasil dari reaksi H₂ dan O₂</p>
+       </div>
+      </div>
+     </div><!-- Interactive Molecular Animation -->
+     <div class="illustration-container mb-6">
+      <h3 class="text-lg font-bold text-gray-700 mb-4 text-center">💧 Pembentukan Air (H₂O)</h3>
+      <div class="bg-gradient-to-b from-gray-800 to-gray-900 rounded-2xl p-6 relative overflow-hidden">
+       <div id="molecule-container" class="flex flex-col md:flex-row items-center justify-center gap-6 py-4"><!-- Reaktan -->
+        <div class="flex items-center gap-4"><!-- 2 H2 molecules -->
+         <div class="molecule text-center">
+          <div class="flex gap-1 justify-center mb-2">
+           <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+            H
+           </div>
+           <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+            H
+           </div>
+          </div>
+          <p class="text-blue-300 text-sm">H₂</p>
+         </div><span class="text-white text-2xl">+</span>
+         <div class="molecule text-center">
+          <div class="flex gap-1 justify-center mb-2">
+           <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+            H
+           </div>
+           <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+            H
+           </div>
+          </div>
+          <p class="text-blue-300 text-sm">H₂</p>
+         </div><span class="text-white text-2xl">+</span> <!-- O2 molecule -->
+         <div class="molecule text-center">
+          <div class="flex gap-1 justify-center mb-2">
+           <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+            O
+           </div>
+           <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+            O
+           </div>
+          </div>
+          <p class="text-red-300 text-sm">O₂</p>
+         </div>
+        </div><!-- Arrow -->
+        <div class="text-center">
+         <div class="text-4xl text-yellow-400 animate-pulse">
+          ⚡
+         </div>
+         <p class="text-yellow-300 text-sm">Reaksi</p>
+        </div><!-- Produk -->
+        <div class="flex items-center gap-4">
+         <div class="molecule text-center">
+          <div class="flex gap-0 justify-center mb-2 relative">
+           <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg absolute -left-2 -top-2">
+            H
+           </div>
+           <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+            O
+           </div>
+           <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg absolute -right-2 -top-2">
+            H
+           </div>
+          </div>
+          <p class="text-cyan-300 text-sm mt-2">H₂O</p>
+         </div><span class="text-white text-2xl">+</span>
+         <div class="molecule text-center">
+          <div class="flex gap-0 justify-center mb-2 relative">
+           <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg absolute -left-2 -top-2">
+            H
+           </div>
+           <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+            O
+           </div>
+           <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg absolute -right-2 -top-2">
+            H
+           </div>
+          </div>
+          <p class="text-cyan-300 text-sm mt-2">H₂O</p>
+         </div>
+        </div>
+       </div>
+       <div class="text-center mt-4">
+        <p class="text-white text-lg font-bold">2H₂ + O₂ → 2H₂O</p>
+        <p class="text-gray-400 text-sm">2 molekul Hidrogen + 1 molekul Oksigen → 2 molekul Air</p>
+       </div>
+      </div>
+     </div>
+     <div class="bg-gradient-to-r from-amber-50 to-yellow-50 p-6 rounded-2xl">
+      <h3 class="text-xl font-bold text-amber-800 mb-3">🤔 Mengapa Zat Baru Terbentuk?</h3>
+      <p class="text-gray-700 leading-relaxed mb-4">Karena adanya <strong>perubahan ikatan</strong> pada atom-atom zat pereaksi. Atom-atom menyusun ulang dirinya menjadi <strong>molekul baru</strong> dengan struktur dan sifat yang berbeda.</p>
+      <div class="bg-white p-4 rounded-xl">
+       <p class="text-sm text-gray-600"><strong>Analogi:</strong> Seperti membangun rumah dari balok LEGO. Balok yang sama bisa disusun menjadi bentuk berbeda. Atom adalah "balok" dan molekul adalah "bangunan" yang dibentuk.</p>
+      </div>
+     </div>
+    </section><!-- Section 3: Persamaan Kimia -->
+    <section id="section-3" class="section card-glass rounded-3xl p-8 shadow-2xl hidden">
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">
+       📝
+      </div>
+      <div>
+       <h2 class="text-3xl font-bold text-gray-800 section-title">Menuliskan Persamaan Kimia</h2>
+       <p class="text-gray-500">Cara ilmuwan menggambarkan reaksi kimia</p>
+      </div>
+     </div>
+     <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-2xl mb-6">
+      <h3 class="text-xl font-bold text-indigo-800 mb-4">📐 Format Dasar</h3>
+      <div class="bg-white p-6 rounded-xl text-center">
+       <p class="text-2xl font-bold text-gray-800 mb-2"><span class="text-blue-600">Pereaksi</span> <span class="text-yellow-500 mx-3">→</span> <span class="text-green-600">Produk</span></p>
+       <p class="text-gray-500 text-sm">Gunakan tanda panah (→), bukan sama dengan (=)</p>
+      </div>
+      <div class="mt-4 p-4 bg-yellow-50 rounded-xl border-l-4 border-yellow-400">
+       <p class="text-gray-700"><strong>💡 Mengapa tanda panah?</strong> Karena sifat zat telah berubah! Pereaksi dan produk adalah zat yang berbeda, bukan sama.</p>
+      </div>
+     </div><!-- Simbol Wujud Zat -->
+     <div class="mb-6">
+      <h3 class="text-xl font-bold text-gray-800 mb-4">🏷️ Simbol Wujud Zat</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+       <div class="bg-gradient-to-br from-gray-100 to-gray-200 p-4 rounded-xl text-center hover:shadow-lg transition-all">
+        <div class="w-16 h-16 bg-gray-600 rounded-xl flex items-center justify-center mx-auto mb-3"><span class="text-white text-2xl font-bold">s</span>
+        </div>
+        <p class="font-bold text-gray-800">solid</p>
+        <p class="text-sm text-gray-600">Padat</p>
+        <p class="text-xs text-gray-500 mt-1">Contoh: Fe(s)</p>
+       </div>
+       <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-4 rounded-xl text-center hover:shadow-lg transition-all">
+        <div class="w-16 h-16 bg-blue-500 rounded-xl flex items-center justify-center mx-auto mb-3"><span class="text-white text-2xl font-bold">l</span>
+        </div>
+        <p class="font-bold text-blue-800">liquid</p>
+        <p class="text-sm text-blue-600">Cair</p>
+        <p class="text-xs text-blue-500 mt-1">Contoh: H₂O(l)</p>
+       </div>
+       <div class="bg-gradient-to-br from-cyan-100 to-cyan-200 p-4 rounded-xl text-center hover:shadow-lg transition-all">
+        <div class="w-16 h-16 bg-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-3"><span class="text-white text-2xl font-bold">g</span>
+        </div>
+        <p class="font-bold text-cyan-800">gas</p>
+        <p class="text-sm text-cyan-600">Gas</p>
+        <p class="text-xs text-cyan-500 mt-1">Contoh: O₂(g)</p>
+       </div>
+       <div class="bg-gradient-to-br from-purple-100 to-purple-200 p-4 rounded-xl text-center hover:shadow-lg transition-all">
+        <div class="w-16 h-16 bg-purple-500 rounded-xl flex items-center justify-center mx-auto mb-3"><span class="text-white text-2xl font-bold">aq</span>
+        </div>
+        <p class="font-bold text-purple-800">aqueous</p>
+        <p class="text-sm text-purple-600">Larutan dalam air</p>
+        <p class="text-xs text-purple-500 mt-1">Contoh: NaCl(aq)</p>
+       </div>
+      </div>
+     </div><!-- Interactive Equation Builder -->
+     <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-2xl">
+      <h3 class="text-xl font-bold text-green-800 mb-4">✍️ Latihan: Susun Persamaan Kimia</h3>
+      <p class="text-gray-600 mb-4">Klik tombol untuk menyusun persamaan reaksi pembakaran karbon:</p>
+      <div id="equation-builder" class="bg-white p-6 rounded-xl mb-4">
+       <div id="equation-display" class="text-2xl font-mono text-center text-gray-800 min-h-12 flex items-center justify-center flex-wrap gap-2"><span class="text-gray-400">Klik tombol di bawah...</span>
+       </div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-3 mb-4"><button onclick="addToEquation('C(s)')" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg font-mono transition-all">C(s)</button> <button onclick="addToEquation('+')" class="px-4 py-2 bg-yellow-200 hover:bg-yellow-300 rounded-lg font-mono transition-all">+</button> <button onclick="addToEquation('O₂(g)')" class="px-4 py-2 bg-cyan-200 hover:bg-cyan-300 rounded-lg font-mono transition-all">O₂(g)</button> <button onclick="addToEquation('→')" class="px-4 py-2 bg-orange-200 hover:bg-orange-300 rounded-lg font-mono transition-all">→</button> <button onclick="addToEquation('CO₂(g)')" class="px-4 py-2 bg-green-200 hover:bg-green-300 rounded-lg font-mono transition-all">CO₂(g)</button>
+      </div>
+      <div class="flex justify-center gap-3"><button onclick="clearEquation()" class="px-6 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg font-medium transition-all">Hapus</button> <button onclick="checkEquation()" class="px-6 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-all">Periksa</button>
+      </div>
+      <p id="equation-feedback" class="text-center mt-4 font-medium hidden"></p>
+     </div>
+    </section><!-- Section 4: Jenis Reaksi (1) -->
+    <section id="section-4" class="section card-glass rounded-3xl p-8 shadow-2xl hidden">
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-rose-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">
+       🧬
+      </div>
+      <div>
+       <h2 class="text-3xl font-bold text-gray-800 section-title">Jenis-Jenis Reaksi Kimia (1)</h2>
+       <p class="text-gray-500">Reaksi Kombinasi dan Penguraian</p>
+      </div>
+     </div><!-- Reaksi Kombinasi -->
+     <div class="bg-gradient-to-br from-emerald-50 to-green-50 p-6 rounded-2xl mb-6">
+      <div class="flex items-center gap-3 mb-4"><span class="text-3xl">🔗</span>
+       <h3 class="text-xl font-bold text-emerald-800">Reaksi Kombinasi (Sintesis)</h3>
+      </div>
+      <p class="text-gray-700 mb-4">Dua atau lebih zat <strong>bergabung</strong> menjadi <strong>satu produk baru</strong>.</p>
+      <div class="bg-white p-6 rounded-xl mb-4">
+       <p class="text-center text-lg font-bold text-gray-700 mb-4">A + B → AB</p>
+       <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+        <div class="text-center">
+         <div class="w-20 h-20 bg-gradient-to-br from-gray-300 to-gray-400 rounded-xl flex items-center justify-center mx-auto mb-2 shadow-lg"><span class="text-2xl font-bold text-white">Na</span>
+         </div>
+         <p class="text-sm text-gray-600">Natrium</p>
+         <p class="text-xs text-red-500">(Logam berbahaya)</p>
+        </div><span class="text-3xl text-gray-400">+</span>
+        <div class="text-center">
+         <div class="w-20 h-20 bg-gradient-to-br from-yellow-300 to-green-400 rounded-xl flex items-center justify-center mx-auto mb-2 shadow-lg"><span class="text-2xl font-bold text-white">Cl₂</span>
+         </div>
+         <p class="text-sm text-gray-600">Gas Klorin</p>
+         <p class="text-xs text-red-500">(Gas beracun)</p>
+        </div><span class="text-3xl text-yellow-500">→</span>
+        <div class="text-center">
+         <div class="w-20 h-20 bg-gradient-to-br from-white to-gray-100 rounded-xl flex items-center justify-center mx-auto mb-2 shadow-lg border-2 border-gray-200"><span class="text-2xl">🧂</span>
+         </div>
+         <p class="text-sm text-gray-600">Garam Dapur (NaCl)</p>
+         <p class="text-xs text-green-500">(Aman dikonsumsi!)</p>
+        </div>
+       </div>
+       <p class="text-center mt-4 text-sm text-gray-500">2Na(s) + Cl₂(g) → 2NaCl(s)</p>
+      </div>
+      <div class="bg-emerald-100 p-4 rounded-xl">
+       <p class="text-emerald-800 text-sm"><strong>🤯 Fakta Menarik:</strong> Dua zat berbahaya bisa menghasilkan produk yang aman! Ini menunjukkan bahwa sifat produk bisa sangat berbeda dari pereaksinya.</p>
+      </div>
+     </div><!-- Reaksi Penguraian -->
+     <div class="bg-gradient-to-br from-orange-50 to-amber-50 p-6 rounded-2xl">
+      <div class="flex items-center gap-3 mb-4"><span class="text-3xl">💥</span>
+       <h3 class="text-xl font-bold text-orange-800">Reaksi Penguraian (Dekomposisi)</h3>
+      </div>
+      <p class="text-gray-700 mb-4">Satu zat kompleks <strong>terurai</strong> menjadi <strong>beberapa zat</strong> yang lebih sederhana.</p>
+      <div class="bg-white p-6 rounded-xl mb-4">
+       <p class="text-center text-lg font-bold text-gray-700 mb-4">AB → A + B</p><!-- Soda Animation -->
+       <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+        <div class="text-center relative">
+         <div class="w-24 h-32 bg-gradient-to-b from-amber-600 to-amber-800 rounded-lg flex items-end justify-center mx-auto mb-2 shadow-lg overflow-hidden">
+          <div class="w-full h-24 bg-gradient-to-t from-amber-400 to-amber-500 rounded-t-lg relative">
+           <div id="soda-bubbles" class="absolute inset-0"></div>
+          </div>
+         </div>
+         <p class="text-sm text-gray-600">Minuman Bersoda</p>
+         <p class="text-xs text-gray-500">(mengandung H₂CO₃)</p>
+        </div><span class="text-3xl text-yellow-500">→</span>
+        <div class="text-center">
+         <div class="w-20 h-20 bg-gradient-to-br from-blue-200 to-blue-300 rounded-xl flex items-center justify-center mx-auto mb-2 shadow-lg"><span class="text-2xl">💧</span>
+         </div>
+         <p class="text-sm text-gray-600">Air (H₂O)</p>
+        </div><span class="text-3xl text-gray-400">+</span>
+        <div class="text-center">
+         <div class="w-20 h-20 bg-gradient-to-br from-gray-200 to-gray-300 rounded-xl flex items-center justify-center mx-auto mb-2 shadow-lg relative">
+          <div class="bubble-container"><span class="text-xl">💨</span>
+          </div>
+         </div>
+         <p class="text-sm text-gray-600">Gas CO₂</p>
+         <p class="text-xs text-gray-500">(gelembung!)</p>
+        </div>
+       </div>
+       <p class="text-center mt-4 text-sm text-gray-500">H₂CO₃(aq) → H₂O(l) + CO₂(g)</p>
+      </div><button onclick="animateSodaBubbles()" class="w-full py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-xl font-bold hover:shadow-lg transition-all"> 🫧 Lihat Gelembung Gas! </button>
+     </div>
+    </section><!-- Section 5: Jenis Reaksi (2) -->
+    <section id="section-5" class="section card-glass rounded-3xl p-8 shadow-2xl hidden">
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">
+       🔥
+      </div>
+      <div>
+       <h2 class="text-3xl font-bold text-gray-800 section-title">Jenis-Jenis Reaksi Kimia (2)</h2>
+       <p class="text-gray-500">Reaksi Pembakaran</p>
+      </div>
+     </div>
+     <div class="bg-gradient-to-br from-red-50 to-orange-50 p-6 rounded-2xl mb-6">
+      <div class="flex items-center gap-3 mb-4"><span class="text-3xl">🔥</span>
+       <h3 class="text-xl font-bold text-red-800">Reaksi Pembakaran</h3>
+      </div>
+      <p class="text-gray-700 mb-4">Reaksi yang melibatkan <strong>oksigen</strong> dan melepaskan <strong>energi panas</strong> secara cepat (menghasilkan nyala api).</p>
+      <div class="bg-white p-4 rounded-xl mb-4">
+       <p class="text-center font-bold text-gray-700">Bahan Bakar + O₂ → CO₂ + H₂O + Energi Panas</p>
+      </div>
+     </div><!-- Pembakaran Metana -->
+     <div class="grid md:grid-cols-2 gap-6 mb-6">
+      <div class="bg-white p-6 rounded-2xl shadow-lg border-2 border-blue-200">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center"><span class="text-2xl">🔵</span>
+        </div>
+        <div>
+         <h4 class="font-bold text-blue-800">Pembakaran Metana (CH₄)</h4>
+         <p class="text-xs text-gray-500">Gas untuk memasak</p>
+        </div>
+       </div>
+       <div class="illustration-container mb-4">
+        <div class="flex items-center justify-center gap-4">
+         <div class="text-center">
+          <div class="w-16 h-16 bg-gradient-to-br from-blue-300 to-blue-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-white font-bold">CH₄</span>
+          </div>
+          <p class="text-xs mt-1">1 Metana</p>
+         </div><span class="text-xl">+</span>
+         <div class="text-center">
+          <div class="flex gap-1">
+           <div class="w-10 h-10 bg-gradient-to-br from-red-300 to-red-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-white text-xs font-bold">O₂</span>
+           </div>
+           <div class="w-10 h-10 bg-gradient-to-br from-red-300 to-red-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-white text-xs font-bold">O₂</span>
+           </div>
+          </div>
+          <p class="text-xs mt-1">2 Oksigen</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-blue-50 p-3 rounded-xl text-center mb-3">
+        <p class="font-mono text-sm">CH₄ + 2O₂ → CO₂ + 2H₂O</p>
+       </div>
+       <div class="flex items-center justify-center gap-2 text-sm text-gray-600"><span>🔥</span> <span>Digunakan untuk kompor gas</span>
+       </div>
+      </div><!-- Pembakaran Propana -->
+      <div class="bg-white p-6 rounded-2xl shadow-lg border-2 border-orange-200">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center"><span class="text-2xl">🟠</span>
+        </div>
+        <div>
+         <h4 class="font-bold text-orange-800">Pembakaran Propana (C₃H₈)</h4>
+         <p class="text-xs text-gray-500">Isi gas elpiji (LPG)</p>
+        </div>
+       </div>
+       <div class="illustration-container mb-4">
+        <div class="flex items-center justify-center gap-4">
+         <div class="text-center">
+          <div class="w-16 h-16 bg-gradient-to-br from-orange-300 to-orange-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-white font-bold text-sm">C₃H₈</span>
+          </div>
+          <p class="text-xs mt-1">1 Propana</p>
+         </div><span class="text-xl">+</span>
+         <div class="text-center">
+          <div class="flex flex-wrap justify-center gap-1 w-28">
+           <div class="w-8 h-8 bg-gradient-to-br from-red-300 to-red-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-white text-xs font-bold">O₂</span>
+           </div>
+           <div class="w-8 h-8 bg-gradient-to-br from-red-300 to-red-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-white text-xs font-bold">O₂</span>
+           </div>
+           <div class="w-8 h-8 bg-gradient-to-br from-red-300 to-red-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-white text-xs font-bold">O₂</span>
+           </div>
+           <div class="w-8 h-8 bg-gradient-to-br from-red-300 to-red-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-white text-xs font-bold">O₂</span>
+           </div>
+           <div class="w-8 h-8 bg-gradient-to-br from-red-300 to-red-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-white text-xs font-bold">O₂</span>
+           </div>
+          </div>
+          <p class="text-xs mt-1">5 Oksigen</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-orange-50 p-3 rounded-xl text-center mb-3">
+        <p class="font-mono text-sm">C₃H₈ + 5O₂ → 3CO₂ + 4H₂O</p>
+       </div>
+       <div class="flex items-center justify-center gap-2 text-sm text-gray-600"><span>⚠️</span> <span>Menghasilkan lebih banyak CO₂</span>
+       </div>
+      </div>
+     </div><!-- Interactive Flame -->
+     <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-2xl">
+      <h4 class="text-white font-bold text-center mb-4">🔥 Simulasi Nyala Api</h4>
+      <div class="flex justify-center mb-4">
+       <div id="flame-container" class="relative w-32 h-48">
+        <div class="flame absolute bottom-0 left-1/2 -translate-x-1/2">
+         <svg width="80" height="120" viewbox="0 0 80 120"><defs>
+           <lineargradient id="flameGradient" x1="0%" y1="100%" x2="0%" y2="0%">
+            <stop offset="0%" style="stop-color:#ff6b35" />
+            <stop offset="50%" style="stop-color:#f7c531" />
+            <stop offset="100%" style="stop-color:#ffeb3b" />
+           </lineargradient>
+          </defs> <path d="M40 10 Q60 40 55 70 Q50 90 40 100 Q30 90 25 70 Q20 40 40 10" fill="url(#flameGradient)" /> <path d="M40 30 Q50 50 48 70 Q45 85 40 90 Q35 85 32 70 Q30 50 40 30" fill="#fff" opacity="0.5" />
+         </svg>
+        </div>
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-4 bg-gray-600 rounded-full"></div>
+       </div>
+      </div>
+      <p class="text-gray-400 text-center text-sm">Pembakaran melepaskan energi dalam bentuk cahaya dan panas</p>
+     </div>
+    </section><!-- Section 6: Reaksi di Sekitar Kita -->
+    <section id="section-6" class="section card-glass rounded-3xl p-8 shadow-2xl hidden">
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-16 h-16 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">
+       🌍
+      </div>
+      <div>
+       <h2 class="text-3xl font-bold text-gray-800 section-title">Reaksi Kimia di Sekitar Kita</h2>
+       <p class="text-gray-500">Contoh reaksi kimia dalam kehidupan sehari-hari</p>
+      </div>
+     </div>
+     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6"><!-- Fotosintesis -->
+      <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-5 rounded-2xl hover:shadow-lg transition-all">
+       <div class="flex items-center gap-3 mb-3"><span class="text-3xl">🌱</span>
+        <h4 class="font-bold text-green-800">Fotosintesis</h4>
+       </div>
+       <div class="bg-white p-3 rounded-xl mb-3">
+        <svg viewbox="0 0 200 120" class="w-full h-24"><!-- Sun --> <circle cx="30" cy="30" r="15" fill="#fbbf24" /> <line x1="30" y1="5" x2="30" y2="15" stroke="#fbbf24" stroke-width="2" /> <line x1="30" y1="45" x2="30" y2="55" stroke="#fbbf24" stroke-width="2" /> <line x1="5" y1="30" x2="15" y2="30" stroke="#fbbf24" stroke-width="2" /> <line x1="45" y1="30" x2="55" y2="30" stroke="#fbbf24" stroke-width="2" /> <!-- Plant --> <rect x="95" y="70" width="10" height="40" fill="#059669" /> <ellipse cx="100" cy="50" rx="25" ry="20" fill="#10b981" /> <ellipse cx="85" cy="65" rx="15" ry="12" fill="#059669" /> <ellipse cx="115" cy="65" rx="15" ry="12" fill="#059669" /> <!-- Arrows --> <path d="M55 40 L80 55" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowhead)" /> <text x="60" y="38" fill="#3b82f6" font-size="8">
+          CO₂
+         </text> <path d="M130 50 L160 40" stroke="#10b981" stroke-width="2" /> <text x="155" y="35" fill="#10b981" font-size="8">
+          O₂
+         </text>
+        </svg>
+       </div>
+       <p class="text-sm text-gray-600">CO₂ + H₂O + Cahaya → C₆H₁₂O₆ + O₂</p>
+       <p class="text-xs text-gray-500 mt-2">Tumbuhan mengubah CO₂ dan air menjadi glukosa dan oksigen</p>
+      </div><!-- Pencernaan -->
+      <div class="bg-gradient-to-br from-orange-50 to-amber-50 p-5 rounded-2xl hover:shadow-lg transition-all">
+       <div class="flex items-center gap-3 mb-3"><span class="text-3xl">🍽️</span>
+        <h4 class="font-bold text-orange-800">Pencernaan Makanan</h4>
+       </div>
+       <div class="bg-white p-3 rounded-xl mb-3 flex items-center justify-center gap-3">
+        <div class="text-center">
+         <div class="text-3xl mb-1">
+          🍞
+         </div>
+         <p class="text-xs">Karbohidrat</p>
+        </div><span class="text-xl">→</span>
+        <div class="text-center">
+         <div class="text-3xl mb-1">
+          🔋
+         </div>
+         <p class="text-xs">Energi</p>
+        </div>
+       </div>
+       <p class="text-sm text-gray-600">Enzim memecah molekul kompleks menjadi nutrisi sederhana</p>
+      </div><!-- Perkaratan -->
+      <div class="bg-gradient-to-br from-red-50 to-rose-50 p-5 rounded-2xl hover:shadow-lg transition-all">
+       <div class="flex items-center gap-3 mb-3"><span class="text-3xl">🔩</span>
+        <h4 class="font-bold text-red-800">Perkaratan Besi</h4>
+       </div>
+       <div class="bg-white p-3 rounded-xl mb-3 flex items-center justify-center gap-3">
+        <div class="text-center">
+         <div class="w-12 h-12 bg-gray-400 rounded flex items-center justify-center"><span class="text-white font-bold">Fe</span>
+         </div>
+         <p class="text-xs mt-1">Besi</p>
+        </div><span class="text-xl">+ O₂ →</span>
+        <div class="text-center">
+         <div class="w-12 h-12 bg-gradient-to-br from-orange-600 to-red-700 rounded flex items-center justify-center"><span class="text-white font-bold text-xs">Fe₂O₃</span>
+         </div>
+         <p class="text-xs mt-1">Karat</p>
+        </div>
+       </div>
+       <p class="text-sm text-gray-600">4Fe + 3O₂ → 2Fe₂O₃</p>
+      </div><!-- Fermentasi -->
+      <div class="bg-gradient-to-br from-purple-50 to-violet-50 p-5 rounded-2xl hover:shadow-lg transition-all">
+       <div class="flex items-center gap-3 mb-3"><span class="text-3xl">🍶</span>
+        <h4 class="font-bold text-purple-800">Fermentasi</h4>
+       </div>
+       <div class="bg-white p-3 rounded-xl mb-3 flex items-center justify-center gap-3">
+        <div class="text-center">
+         <div class="text-3xl mb-1">
+          🍚
+         </div>
+         <p class="text-xs">Beras/Kedelai</p>
+        </div><span class="text-xl">→</span>
+        <div class="text-center">
+         <div class="text-3xl mb-1">
+          🍘
+         </div>
+         <p class="text-xs">Tape/Tempe</p>
+        </div>
+       </div>
+       <p class="text-sm text-gray-600">Mikroorganisme mengubah gula menjadi alkohol/asam</p>
+      </div><!-- Baterai -->
+      <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-2xl hover:shadow-lg transition-all">
+       <div class="flex items-center gap-3 mb-3"><span class="text-3xl">🔋</span>
+        <h4 class="font-bold text-blue-800">Reaksi Baterai</h4>
+       </div>
+       <div class="bg-white p-3 rounded-xl mb-3 flex items-center justify-center gap-3">
+        <div class="text-center">
+         <div class="text-3xl mb-1">
+          ⚡
+         </div>
+         <p class="text-xs">Kimia</p>
+        </div><span class="text-xl">→</span>
+        <div class="text-center">
+         <div class="text-3xl mb-1">
+          💡
+         </div>
+         <p class="text-xs">Listrik</p>
+        </div>
+       </div>
+       <p class="text-sm text-gray-600">Energi kimia diubah menjadi energi listrik</p>
+      </div><!-- Memasak -->
+      <div class="bg-gradient-to-br from-yellow-50 to-orange-50 p-5 rounded-2xl hover:shadow-lg transition-all">
+       <div class="flex items-center gap-3 mb-3"><span class="text-3xl">🍳</span>
+        <h4 class="font-bold text-yellow-800">Memasak</h4>
+       </div>
+       <div class="bg-white p-3 rounded-xl mb-3 flex items-center justify-center gap-3">
+        <div class="text-center">
+         <div class="text-3xl mb-1">
+          🥚
+         </div>
+         <p class="text-xs">Telur mentah</p>
+        </div><span class="text-xl">🔥→</span>
+        <div class="text-center">
+         <div class="text-3xl mb-1">
+          🍳
+         </div>
+         <p class="text-xs">Telur matang</p>
+        </div>
+       </div>
+       <p class="text-sm text-gray-600">Protein mengalami denaturasi (perubahan struktur)</p>
+      </div>
+     </div><!-- Discussion Activity -->
+     <div class="bg-gradient-to-r from-teal-50 to-cyan-50 p-6 rounded-2xl">
+      <h3 class="text-xl font-bold text-teal-800 mb-4">💬 Aktivitas Diskusi</h3>
+      <p class="text-gray-700 mb-4">Tuliskan contoh reaksi kimia lain yang kamu temui sehari-hari:</p><textarea id="discussion-input" class="w-full p-4 border-2 border-teal-200 rounded-xl focus:border-teal-500 focus:outline-none resize-none" rows="3" placeholder="Contoh: Lilin yang menyala, kue mengembang saat dipanggang..."></textarea> <button onclick="saveDiscussion()" class="mt-3 px-6 py-2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-xl font-medium hover:shadow-lg transition-all"> 💾 Simpan Jawaban </button>
+      <div id="discussion-saved" class="hidden mt-3 p-3 bg-green-100 text-green-700 rounded-xl">
+       ✅ Jawaban tersimpan! Bagus sekali!
+      </div>
+     </div>
+    </section><!-- Section 7: Quiz HOTS -->
+    <section id="section-7" class="section card-glass rounded-3xl p-8 shadow-2xl hidden">
+     <div class="flex items-center gap-4 mb-6">
+      <div class="w-16 h-16 bg-gradient-to-br from-violet-500 to-purple-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">
+       📊
+      </div>
+      <div>
+       <h2 class="text-3xl font-bold text-gray-800 section-title">Kuis HOTS</h2>
+       <p class="text-gray-500">Uji pemahamanmu dengan soal berpikir tingkat tinggi</p>
+      </div>
+     </div>
+     <div id="quiz-container"><!-- Quiz Progress -->
+      <div class="mb-6">
+       <div class="flex justify-between text-sm text-gray-600 mb-2"><span>Soal <span id="current-question">1</span> dari 10</span> <span>Skor: <span id="quiz-score">0</span>/10</span>
+       </div>
+       <div class="w-full bg-gray-200 rounded-full h-3">
+        <div id="quiz-progress" class="bg-gradient-to-r from-violet-500 to-purple-500 h-3 rounded-full transition-all duration-500" style="width: 10%"></div>
+       </div>
+      </div><!-- Question Display -->
+      <div id="question-display" class="bg-gradient-to-br from-violet-50 to-purple-50 p-6 rounded-2xl mb-6">
+       <p id="question-text" class="text-lg font-medium text-gray-800 mb-4"></p>
+       <div id="options-container" class="space-y-3"></div>
+      </div><!-- Feedback -->
+      <div id="quiz-feedback" class="hidden p-4 rounded-xl mb-4"></div><!-- Navigation -->
+      <div class="flex justify-between"><button id="prev-btn" onclick="prevQuestion()" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 rounded-xl font-medium transition-all disabled:opacity-50" disabled> ← Sebelumnya </button> <button id="next-btn" onclick="nextQuestion()" class="px-6 py-3 bg-gradient-to-r from-violet-500 to-purple-500 text-white rounded-xl font-medium hover:shadow-lg transition-all"> Selanjutnya → </button>
+      </div>
+     </div><!-- Quiz Result -->
+     <div id="quiz-result" class="hidden text-center">
+      <div class="text-6xl mb-4">
+       🏆
+      </div>
+      <h3 class="text-2xl font-bold text-gray-800 mb-2">Kuis Selesai!</h3>
+      <p class="text-gray-600 mb-4">Skor akhir kamu:</p>
+      <div class="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-purple-500 mb-4"><span id="final-score">0</span>/10
+      </div>
+      <p id="result-message" class="text-gray-600 mb-6"></p><button onclick="restartQuiz()" class="px-8 py-3 bg-gradient-to-r from-violet-500 to-purple-500 text-white rounded-xl font-bold hover:shadow-lg transition-all"> 🔄 Ulangi Kuis </button>
+     </div>
+    </section>
+   </main>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_title: "Reaksi Kimia",
+      teacher_name: "",
+      background_color: "#1a1a2e",
+      surface_color: "#ffffff",
+      text_color: "#1f2937",
+      primary_action: "#e94560",
+      secondary_action: "#8b5cf6",
+      font_family: "Nunito",
+      font_size: 16
+    };
+    
+    let config = { ...defaultConfig };
+    let currentSection = 0;
+    let equationParts = [];
+    let userAnswers = [];
+    let currentQuestionIndex = 0;
+    let quizScore = 0;
+    
+    // HOTS Questions
+    const hotsQuestions = [
+      {
+        question: "Seorang siswa mencampurkan cuka dengan soda kue dan melihat gelembung gas. Mengapa fenomena ini menunjukkan reaksi kimia, bukan perubahan fisika?",
+        options: [
+          "Karena terjadi perubahan suhu",
+          "Karena terbentuk zat baru (gas CO₂) yang tidak ada sebelumnya",
+          "Karena campuran menjadi lebih encer",
+          "Karena warna larutan berubah"
+        ],
+        correct: 1,
+        explanation: "Reaksi kimia ditandai dengan pembentukan zat baru. Gas CO₂ yang muncul sebagai gelembung adalah zat baru hasil reaksi antara asam asetat (cuka) dan natrium bikarbonat (soda kue)."
+      },
+      {
+        question: "Perhatikan persamaan: 2H₂(g) + O₂(g) → 2H₂O(l). Jika kita memiliki 4 molekul H₂, berapa molekul O₂ yang dibutuhkan dan berapa molekul H₂O yang dihasilkan?",
+        options: [
+          "1 molekul O₂, menghasilkan 2 molekul H₂O",
+          "2 molekul O₂, menghasilkan 4 molekul H₂O",
+          "4 molekul O₂, menghasilkan 4 molekul H₂O",
+          "2 molekul O₂, menghasilkan 2 molekul H₂O"
+        ],
+        correct: 1,
+        explanation: "Dari perbandingan koefisien 2H₂ : 1O₂ : 2H₂O, maka 4H₂ membutuhkan 2O₂ dan menghasilkan 4H₂O (semua dikalikan 2)."
+      },
+      {
+        question: "Mengapa garam dapur (NaCl) yang terbentuk dari reaksi natrium dan klorin memiliki sifat yang sangat berbeda dari kedua pereaksinya?",
+        options: [
+          "Karena garam dapur lebih berat dari natrium dan klorin",
+          "Karena atom-atom menyusun ulang ikatannya membentuk struktur molekul baru dengan sifat berbeda",
+          "Karena natrium dan klorin menghilang saat bereaksi",
+          "Karena garam dapur mengandung air"
+        ],
+        correct: 1,
+        explanation: "Dalam reaksi kimia, atom-atom pereaksi memutuskan ikatan lamanya dan membentuk ikatan baru, menghasilkan struktur molekul baru (NaCl) dengan sifat yang sama sekali berbeda dari Na dan Cl₂."
+      },
+      {
+        question: "Sebuah paku besi dibiarkan di luar ruangan selama sebulan dan menjadi berkarat. Manakah pernyataan yang BENAR tentang fenomena ini?",
+        options: [
+          "Ini adalah perubahan fisika karena paku masih berbentuk paku",
+          "Massa paku berkurang karena sebagian besi menguap",
+          "Ini adalah reaksi kombinasi antara besi dan oksigen membentuk besi oksida",
+          "Karat dapat dihilangkan dengan mencuci paku dengan air"
+        ],
+        correct: 2,
+        explanation: "Perkaratan adalah reaksi kombinasi: 4Fe + 3O₂ → 2Fe₂O₃. Besi bergabung dengan oksigen dari udara membentuk senyawa baru yaitu besi oksida (karat)."
+      },
+      {
+        question: "Bandingkan pembakaran metana (CH₄) dan propana (C₃H₈). Mengapa pembakaran propana menghasilkan lebih banyak CO₂?",
+        options: [
+          "Karena propana lebih mudah terbakar",
+          "Karena propana memiliki lebih banyak atom karbon yang masing-masing menghasilkan satu molekul CO₂",
+          "Karena propana membutuhkan lebih sedikit oksigen",
+          "Karena propana lebih panas saat dibakar"
+        ],
+        correct: 1,
+        explanation: "Propana (C₃H₈) memiliki 3 atom karbon, sedangkan metana (CH₄) hanya 1 atom karbon. Setiap atom karbon menghasilkan satu molekul CO₂ saat pembakaran sempurna, sehingga propana menghasilkan 3 kali lebih banyak CO₂."
+      },
+      {
+        question: "Air (H₂O) dapat berubah menjadi es melalui pendinginan, dan es dapat mencair kembali menjadi air. Namun, saat air terurai menjadi H₂ dan O₂, prosesnya tidak dapat dibalik dengan mudah. Apa perbedaan mendasar kedua proses ini?",
+        options: [
+          "Proses pertama lebih cepat dari proses kedua",
+          "Proses pertama adalah perubahan fisika (wujud) sedangkan kedua adalah perubahan kimia (struktur molekul)",
+          "Proses kedua membutuhkan suhu lebih tinggi",
+          "Tidak ada perbedaan, keduanya sama-sama perubahan kimia"
+        ],
+        correct: 1,
+        explanation: "Perubahan es-air-es adalah perubahan fisika (hanya wujud berubah, molekul tetap H₂O). Penguraian air adalah perubahan kimia (ikatan H-O putus, terbentuk molekul H₂ dan O₂ yang berbeda)."
+      },
+      {
+        question: "Dalam fotosintesis, tumbuhan mengubah CO₂ dan H₂O menjadi glukosa (C₆H₁₂O₆) dan O₂. Jika tidak ada cahaya matahari, apa yang akan terjadi pada proses ini?",
+        options: [
+          "Reaksi tetap berlangsung tapi lebih lambat",
+          "Reaksi tidak dapat berlangsung karena cahaya adalah sumber energi yang menggerakkan reaksi",
+          "Tumbuhan akan menggunakan energi dari tanah sebagai pengganti",
+          "Reaksi akan berbalik arah menghasilkan CO₂"
+        ],
+        correct: 1,
+        explanation: "Fotosintesis membutuhkan energi cahaya untuk memutus ikatan dalam CO₂ dan H₂O serta membentuk ikatan baru dalam glukosa. Tanpa cahaya, energi ini tidak tersedia dan reaksi tidak dapat berlangsung."
+      },
+      {
+        question: "Perhatikan simbol berikut: NaCl(aq). Apa arti simbol (aq) dan mengapa penting mencantumkannya dalam persamaan kimia?",
+        options: [
+          "(aq) berarti aqua atau air murni",
+          "(aq) menunjukkan zat berbentuk gas dalam air",
+          "(aq) menunjukkan zat terlarut dalam air, penting untuk memahami keadaan zat saat reaksi",
+          "(aq) berarti zat tersebut beracun"
+        ],
+        correct: 2,
+        explanation: "Simbol (aq) dari 'aqueous' menunjukkan zat terlarut dalam air. Informasi ini penting karena keadaan/wujud zat mempengaruhi bagaimana reaksi berlangsung dan sifat produk yang dihasilkan."
+      },
+      {
+        question: "Saat membuat tape, beras ketan dicampur dengan ragi dan dibiarkan beberapa hari. Mengapa tape memiliki rasa manis dan sedikit alkohol?",
+        options: [
+          "Karena ragi menambahkan gula ke dalam beras",
+          "Karena enzim dalam ragi memecah pati menjadi gula, lalu sebagian gula difermentasi menjadi alkohol",
+          "Karena beras ketan sudah mengandung alkohol sejak awal",
+          "Karena suhu ruangan membuat beras menjadi manis"
+        ],
+        correct: 1,
+        explanation: "Fermentasi adalah reaksi kimia bertahap: 1) Enzim amilase memecah pati (karbohidrat kompleks) menjadi gula sederhana. 2) Ragi memfermentasi sebagian gula menjadi alkohol dan CO₂. Inilah mengapa tape terasa manis dan sedikit beralkohol."
+      },
+      {
+        question: "Sebuah eksperimen menunjukkan bahwa ketika logam magnesium dibakar, massa abu yang dihasilkan lebih berat dari logam magnesium awal. Bagaimana hal ini mungkin terjadi jika materi tidak dapat diciptakan atau dimusnahkan?",
+        options: [
+          "Timbangan yang digunakan tidak akurat",
+          "Magnesium menyerap kelembaban dari udara",
+          "Magnesium bereaksi dengan oksigen dari udara, menambahkan massa oksigen ke dalam produk (MgO)",
+          "Pembakaran menciptakan materi baru"
+        ],
+        correct: 2,
+        explanation: "Sesuai hukum kekekalan massa, materi tidak diciptakan atau dimusnahkan. Massa bertambah karena magnesium (Mg) bereaksi dengan oksigen (O₂) dari udara membentuk magnesium oksida (MgO). Massa O₂ yang bergabung menambah massa total produk."
+      }
+    ];
+    
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (v) => { cfg.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
+            },
+            {
+              get: () => cfg.surface_color || defaultConfig.surface_color,
+              set: (v) => { cfg.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+            },
+            {
+              get: () => cfg.primary_action || defaultConfig.primary_action,
+              set: (v) => { cfg.primary_action = v; window.elementSdk.setConfig({ primary_action: v }); }
+            },
+            {
+              get: () => cfg.secondary_action || defaultConfig.secondary_action,
+              set: (v) => { cfg.secondary_action = v; window.elementSdk.setConfig({ secondary_action: v }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => cfg.font_family || defaultConfig.font_family,
+            set: (v) => { cfg.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+          },
+          fontSizeable: {
+            get: () => cfg.font_size || defaultConfig.font_size,
+            set: (v) => { cfg.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+          }
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ["main_title", cfg.main_title || defaultConfig.main_title],
+          ["teacher_name", cfg.teacher_name || defaultConfig.teacher_name]
+        ])
+      });
+    }
+    
+    function applyConfig() {
+      const mainTitle = document.getElementById('main-title');
+      const teacherDisplay = document.getElementById('teacher-display');
+      
+      if (mainTitle) mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      if (teacherDisplay) {
+        const teacherName = config.teacher_name || defaultConfig.teacher_name;
+        teacherDisplay.textContent = teacherName ? `Oleh: ${teacherName}` : '';
+      }
+      
+      // Apply colors
+      document.body.style.setProperty('--bg-color', config.background_color || defaultConfig.background_color);
+      document.body.style.setProperty('--surface-color', config.surface_color || defaultConfig.surface_color);
+      document.body.style.setProperty('--text-color', config.text_color || defaultConfig.text_color);
+      document.body.style.setProperty('--primary-action', config.primary_action || defaultConfig.primary_action);
+      document.body.style.setProperty('--secondary-action', config.secondary_action || defaultConfig.secondary_action);
+      
+      // Apply font
+      const fontFamily = config.font_family || defaultConfig.font_family;
+      document.body.style.fontFamily = `${fontFamily}, Nunito, sans-serif`;
+      
+      // Apply font size
+      const baseSize = config.font_size || defaultConfig.font_size;
+      document.documentElement.style.fontSize = `${baseSize}px`;
+    }
+    
+    // Navigation Functions
+    function showSection(index) {
+      document.querySelectorAll('.section').forEach((section, i) => {
+        section.classList.toggle('hidden', i !== index);
+      });
+      
+      document.querySelectorAll('.nav-item').forEach((nav, i) => {
+        nav.classList.toggle('active', i === index);
+      });
+      
+      currentSection = index;
+      updateProgress();
+      
+      // Initialize quiz when section 7 is shown
+      if (index === 7) {
+        initQuiz();
+      }
+      
+      // Scroll to top of main content
+      document.querySelector('main').scrollTop = 0;
+    }
+    
+    function updateProgress() {
+      const progress = ((currentSection + 1) / 8) * 100;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+      document.getElementById('progress-text').textContent = `${currentSection + 1} dari 8 materi`;
+    }
+    
+    // Interactive Animations
+    function animateCooking() {
+      const animation = document.getElementById('cooking-animation');
+      const result = document.getElementById('cooking-result');
+      
+      animation.classList.add('animate-pulse');
+      setTimeout(() => {
+        animation.classList.remove('animate-pulse');
+        result.classList.remove('hidden');
+      }, 1500);
+    }
+    
+    function checkMiniQuiz(button, answer) {
+      const parent = button.parentElement;
+      const question = parent.previousElementSibling.textContent;
+      
+      const correctAnswers = {
+        'Gula larut dalam air': 'fisika',
+        'Makanan membusuk': 'kimia',
+        'Kayu dipotong': 'fisika'
+      };
+      
+      const isCorrect = correctAnswers[question] === answer;
+      
+      parent.querySelectorAll('button').forEach(btn => {
+        btn.disabled = true;
+        btn.classList.add('opacity-50');
+      });
+      
+      button.classList.remove('opacity-50');
+      if (isCorrect) {
+        button.classList.add('bg-green-500', 'text-white');
+        button.textContent += ' ✓';
+      } else {
+        button.classList.add('bg-red-500', 'text-white');
+        button.textContent += ' ✗';
+      }
+    }
+    
+    // Equation Builder
+    function addToEquation(part) {
+      equationParts.push(part);
+      updateEquationDisplay();
+    }
+    
+    function clearEquation() {
+      equationParts = [];
+      updateEquationDisplay();
+      document.getElementById('equation-feedback').classList.add('hidden');
+    }
+    
+    function updateEquationDisplay() {
+      const display = document.getElementById('equation-display');
+      if (equationParts.length === 0) {
+        display.innerHTML = '<span class="text-gray-400">Klik tombol di bawah...</span>';
+      } else {
+        display.innerHTML = equationParts.map(part => `<span class="mx-1">${part}</span>`).join('');
+      }
+    }
+    
+    function checkEquation() {
+      const feedback = document.getElementById('equation-feedback');
+      const userEquation = equationParts.join(' ');
+      const correctEquation = 'C(s) + O₂(g) → CO₂(g)';
+      
+      feedback.classList.remove('hidden');
+      
+      if (userEquation === correctEquation) {
+        feedback.className = 'p-4 rounded-xl mb-4 bg-green-100 text-green-800';
+        feedback.innerHTML = '✅ <strong>Benar!</strong> Persamaan kimia untuk pembakaran karbon sudah tepat!';
+      } else {
+        feedback.className = 'p-4 rounded-xl mb-4 bg-red-100 text-red-800';
+        feedback.innerHTML = '❌ <strong>Belum tepat.</strong> Coba susun: C(s) + O₂(g) → CO₂(g)';
+      }
+    }
+    
+    // Soda Bubbles Animation
+    function animateSodaBubbles() {
+      const container = document.getElementById('soda-bubbles');
+      container.innerHTML = '';
+      
+      for (let i = 0; i < 15; i++) {
+        const bubble = document.createElement('div');
+        bubble.className = 'absolute rounded-full bg-white opacity-60';
+        bubble.style.width = `${Math.random() * 8 + 4}px`;
+        bubble.style.height = bubble.style.width;
+        bubble.style.left = `${Math.random() * 90}%`;
+        bubble.style.bottom = '0';
+        bubble.style.animation = `bubble ${Math.random() * 1.5 + 1}s ease-out ${Math.random() * 0.5}s`;
+        container.appendChild(bubble);
+      }
+      
+      setTimeout(() => {
+        container.innerHTML = '';
+      }, 3000);
+    }
+    
+    // Discussion
+    function saveDiscussion() {
+      const input = document.getElementById('discussion-input');
+      const saved = document.getElementById('discussion-saved');
+      
+      if (input.value.trim()) {
+        saved.classList.remove('hidden');
+        setTimeout(() => {
+          saved.classList.add('hidden');
+        }, 3000);
+      }
+    }
+    
+    // Quiz Functions
+    function initQuiz() {
+      currentQuestionIndex = 0;
+      quizScore = 0;
+      userAnswers = new Array(hotsQuestions.length).fill(null);
+      
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('quiz-result').classList.add('hidden');
+      
+      displayQuestion();
+    }
+    
+    function displayQuestion() {
+      const question = hotsQuestions[currentQuestionIndex];
+      document.getElementById('question-text').textContent = `${currentQuestionIndex + 1}. ${question.question}`;
+      document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+      document.getElementById('quiz-score').textContent = quizScore;
+      document.getElementById('quiz-progress').style.width = `${((currentQuestionIndex + 1) / hotsQuestions.length) * 100}%`;
+      
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+      
+      question.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'quiz-option w-full p-4 text-left border-2 border-gray-200 rounded-xl hover:border-purple-300 transition-all';
+        button.innerHTML = `<span class="font-bold mr-2">${String.fromCharCode(65 + index)}.</span> ${option}`;
+        button.onclick = () => selectAnswer(index);
+        
+        if (userAnswers[currentQuestionIndex] === index) {
+          button.classList.add('selected');
+        }
+        
+        optionsContainer.appendChild(button);
+      });
+      
+      // Update navigation buttons
+      document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+      document.getElementById('next-btn').textContent = currentQuestionIndex === hotsQuestions.length - 1 ? 'Selesai' : 'Selanjutnya →';
+      
+      // Hide feedback
+      document.getElementById('quiz-feedback').classList.add('hidden');
+    }
+    
+    function selectAnswer(index) {
+      const previousAnswer = userAnswers[currentQuestionIndex];
+      userAnswers[currentQuestionIndex] = index;
+      
+      // Update visual selection
+      const options = document.querySelectorAll('.quiz-option');
+      options.forEach((opt, i) => {
+        opt.classList.remove('selected');
+        if (i === index) opt.classList.add('selected');
+      });
+      
+      // Show feedback
+      const question = hotsQuestions[currentQuestionIndex];
+      const feedback = document.getElementById('quiz-feedback');
+      feedback.classList.remove('hidden');
+      
+      if (index === question.correct) {
+        feedback.className = 'p-4 rounded-xl mb-4 bg-green-100 text-green-800';
+        feedback.innerHTML = `✅ <strong>Benar!</strong> ${question.explanation}`;
+        if (previousAnswer !== index) quizScore++;
+      } else {
+        feedback.className = 'p-4 rounded-xl mb-4 bg-red-100 text-red-800';
+        feedback.innerHTML = `❌ <strong>Kurang tepat.</strong> ${question.explanation}`;
+        if (previousAnswer === question.correct) quizScore--;
+      }
+      
+      document.getElementById('quiz-score').textContent = quizScore;
+    }
+    
+    function nextQuestion() {
+      if (currentQuestionIndex < hotsQuestions.length - 1) {
+        currentQuestionIndex++;
+        displayQuestion();
+      } else {
+        showResult();
+      }
+    }
+    
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        displayQuestion();
+      }
+    }
+    
+    function showResult() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      document.getElementById('final-score').textContent = quizScore;
+      
+      const resultMessage = document.getElementById('result-message');
+      if (quizScore >= 9) {
+        resultMessage.textContent = '🌟 Luar biasa! Kamu menguasai materi dengan sangat baik!';
+      } else if (quizScore >= 7) {
+        resultMessage.textContent = '👏 Bagus! Pemahaman kamu sudah baik, terus tingkatkan!';
+      } else if (quizScore >= 5) {
+        resultMessage.textContent = '💪 Cukup baik! Pelajari lagi materi yang masih kurang dipahami.';
+      } else {
+        resultMessage.textContent = '📚 Jangan menyerah! Baca kembali materinya dan coba lagi.';
+      }
+    }
+    
+    function restartQuiz() {
+      initQuiz();
+    }
+    
+    // Initialize
+    applyConfig();
+    showSection(0);
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9caaa9d37676051a',t:'MTc3MDU0ODg0Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

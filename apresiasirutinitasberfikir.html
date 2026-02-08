@@ -1,0 +1,1238 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apresiasi Karya Seni - Presentasi Pembelajaran</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Source+Sans+Pro:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    .font-display { font-family: 'Playfair Display', serif; }
+    .font-body { font-family: 'Source Sans Pro', sans-serif; }
+    
+    .slide {
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    .slide.active {
+      display: flex;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.6); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .progress-bar {
+      transition: width 0.3s ease;
+    }
+    
+    .btn-nav {
+      transition: all 0.2s ease;
+    }
+    
+    .btn-nav:hover {
+      transform: scale(1.05);
+    }
+    
+    .btn-nav:active {
+      transform: scale(0.95);
+    }
+    
+    .artwork-frame {
+      background: linear-gradient(135deg, #8B7355 0%, #D4A574 50%, #8B7355 100%);
+      padding: 12px;
+      border-radius: 4px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .quiz-option:hover {
+      transform: translateX(5px);
+      background: rgba(251, 191, 36, 0.1);
+    }
+    
+    .quiz-option.selected {
+      background: rgba(251, 191, 36, 0.2);
+      border-color: #fbbf24;
+    }
+    
+    .quiz-option.correct {
+      background: rgba(34, 197, 94, 0.2);
+      border-color: #22c55e;
+    }
+    
+    .quiz-option.incorrect {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #ef4444;
+    }
+    
+    .step-ladder {
+      position: relative;
+    }
+    
+    .step-ladder::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, #fbbf24, #f59e0b);
+    }
+    
+    .interactive-card {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .interactive-card:hover {
+      transform: scale(1.02);
+    }
+    
+    .interactive-card.flipped .card-front {
+      transform: rotateY(180deg);
+    }
+    
+    .interactive-card.flipped .card-back {
+      transform: rotateY(0);
+    }
+    
+    .tooltip {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .tooltip-trigger:hover .tooltip {
+      opacity: 1;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-auto">
+  <div id="app" class="h-full w-full flex flex-col"><!-- Header Navigation -->
+   <header class="bg-slate-800/80 backdrop-blur-sm border-b border-amber-500/20 px-4 py-3 flex-shrink-0">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center">
+       <svg class="w-6 h-6 text-slate-900" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+       </svg>
+      </div>
+      <div>
+       <h1 id="main-title" class="font-display text-lg font-semibold text-amber-400">Apresiasi Karya Seni</h1>
+       <p class="text-xs text-slate-400">Rutinitas Berpikir Visibel &amp; Tangga Umpan Balik</p>
+      </div>
+     </div>
+     <div class="flex items-center gap-4"><span class="text-sm text-slate-400">Slide <span id="current-slide-num">1</span> / <span id="total-slides">12</span></span>
+      <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
+       <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-amber-400 to-orange-500 rounded-full" style="width: 8.33%"></div>
+      </div>
+     </div>
+    </div>
+   </header><!-- Main Content Area -->
+   <main class="flex-1 overflow-auto">
+    <div class="max-w-6xl mx-auto p-6"><!-- Slide 1: Judul & Pendahuluan -->
+     <section class="slide active min-h-96 flex-col items-center justify-center text-center py-12" data-slide="1">
+      <div class="float-animation mb-8">
+       <div class="w-32 h-32 mx-auto bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-2xl" style="animation: pulse-glow 2s ease-in-out infinite;">
+        <svg class="w-16 h-16 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M20.71 4.63l-1.34-1.34c-.39-.39-1.02-.39-1.41 0L9 12.25 11.75 15l8.96-8.96c.39-.39.39-1.02 0-1.41zM7 14c-1.66 0-3 1.34-3 3 0 1.31-1.16 2-2 2 .92 1.22 2.49 2 4 2 2.21 0 4-1.79 4-4 0-1.66-1.34-3-3-3z" />
+        </svg>
+       </div>
+      </div>
+      <h2 class="font-display text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 bg-clip-text text-transparent">Apresiasi Karya Seni</h2>
+      <p class="text-xl text-slate-300 mb-6">Rutinitas Berpikir Visibel &amp; Tangga Umpan Balik</p>
+      <div class="bg-slate-800/50 rounded-xl p-6 max-w-2xl mx-auto border border-amber-500/20">
+       <div class="grid md:grid-cols-2 gap-4 text-left mb-6">
+        <div class="flex items-center gap-3"><span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center text-amber-400">📚</span>
+         <div>
+          <p class="text-xs text-slate-400">Subunit</p>
+          <p class="font-semibold">2</p>
+         </div>
+        </div>
+        <div class="flex items-center gap-3"><span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center text-amber-400">⏱️</span>
+         <div>
+          <p class="text-xs text-slate-400">Alokasi Waktu</p>
+          <p class="font-semibold">4 × 2 jam pertemuan</p>
+         </div>
+        </div>
+       </div>
+       <div class="border-t border-slate-700 pt-4">
+        <h3 class="text-amber-400 font-semibold mb-3 flex items-center gap-2">
+         <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+         </svg> Tujuan Utama</h3>
+        <ul class="space-y-2 text-sm text-slate-300">
+         <li class="flex items-start gap-2"><span class="text-amber-400 mt-1">✦</span> Mengapresiasi bagaimana karya seni rupa mengekspresikan peristiwa hidup seniman</li>
+         <li class="flex items-start gap-2"><span class="text-amber-400 mt-1">✦</span> Menghubungkan tema dengan karya lukis dan melahirkan ide-ide baru</li>
+        </ul>
+       </div>
+      </div>
+     </section><!-- Slide 2: Apa itu Karya Seni Rupa -->
+     <section class="slide min-h-96 flex-col py-8" data-slide="2">
+      <h2 class="font-display text-3xl font-bold mb-8 text-center"><span class="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Apa itu Karya Seni Rupa?</span></h2>
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+       <div class="space-y-6">
+        <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-700 rounded-xl p-6 border border-amber-500/20">
+         <div class="flex items-center gap-4 mb-4">
+          <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+           <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+           </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-amber-400">Representasi Diri</h3>
+         </div>
+         <p class="text-slate-300 leading-relaxed">Bentuk pengalaman, kisah, atau kegelisahan yang dituangkan seniman ke dalam karyanya. Setiap goresan kuas menceritakan sebuah cerita.</p>
+        </div>
+        <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-700 rounded-xl p-6 border border-amber-500/20">
+         <div class="flex items-center gap-4 mb-4">
+          <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center">
+           <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+           </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-amber-400">Manfaat Apresiasi</h3>
+         </div>
+         <ul class="space-y-3 text-slate-300">
+          <li class="flex items-start gap-3"><span class="w-6 h-6 bg-emerald-500/20 rounded-full flex items-center justify-center text-emerald-400 text-sm flex-shrink-0 mt-0.5">1</span> Belajar melihat keindahan dari perspektif yang berbeda</li>
+          <li class="flex items-start gap-3"><span class="w-6 h-6 bg-emerald-500/20 rounded-full flex items-center justify-center text-emerald-400 text-sm flex-shrink-0 mt-0.5">2</span> Sarana memahami pikiran dan perasaan orang lain</li>
+          <li class="flex items-start gap-3"><span class="w-6 h-6 bg-emerald-500/20 rounded-full flex items-center justify-center text-emerald-400 text-sm flex-shrink-0 mt-0.5">3</span> Menerapkan toleransi terhadap perbedaan dan membentuk moral yang baik</li>
+         </ul>
+        </div>
+       </div>
+       <div class="flex justify-center">
+        <div class="artwork-frame">
+         <div class="bg-slate-900 rounded p-4">
+          <svg viewbox="0 0 300 250" class="w-full max-w-sm"><!-- Canvas Background --> <rect x="10" y="10" width="280" height="230" fill="#f5f0e6" rx="2" /> <!-- Abstract Art Elements --> <circle cx="80" cy="80" r="40" fill="#e74c3c" opacity="0.8" /> <circle cx="150" cy="100" r="50" fill="#3498db" opacity="0.7" /> <circle cx="220" cy="70" r="35" fill="#f39c12" opacity="0.8" /> <!-- Brush strokes --> <path d="M50 150 Q100 120 150 160 T250 140" stroke="#2ecc71" stroke-width="8" fill="none" stroke-linecap="round" /> <path d="M30 180 Q120 200 200 170 T280 190" stroke="#9b59b6" stroke-width="6" fill="none" stroke-linecap="round" /> <!-- Human silhouette representing the artist --> <path d="M140 200 Q145 180 150 200 Q155 180 160 200 L155 220 L145 220 Z" fill="#34495e" /> <circle cx="150" cy="175" r="12" fill="#34495e" /> <!-- Paint palette --> <ellipse cx="230" cy="200" rx="35" ry="20" fill="#8B4513" /> <circle cx="215" cy="195" r="6" fill="#e74c3c" /> <circle cx="230" cy="192" r="6" fill="#3498db" /> <circle cx="245" cy="195" r="6" fill="#f1c40f" /> <circle cx="225" cy="205" r="6" fill="#2ecc71" /> <circle cx="240" cy="205" r="6" fill="#9b59b6" />
+          </svg>
+          <p class="text-center text-sm text-slate-400 mt-2 italic">"Seni adalah ekspresi jiwa yang tak terucap"</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 3: Metode 1 - Rutinitas Berpikir Visibel -->
+     <section class="slide min-h-96 flex-col py-8" data-slide="3">
+      <h2 class="font-display text-3xl font-bold mb-2 text-center"><span class="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Metode 1</span></h2>
+      <p class="text-center text-slate-400 mb-8">Rutinitas Berpikir Visibel</p>
+      <div class="grid md:grid-cols-3 gap-6 mb-8">
+       <div class="card-hover bg-gradient-to-br from-blue-900/50 to-blue-800/30 rounded-xl p-6 border border-blue-500/30 text-center">
+        <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+         <svg class="w-10 h-10 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+         </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-blue-400 mb-2">LIHAT</h3>
+        <p class="text-slate-300 text-sm">Apa yang kamu lihat dalam karya ini?</p>
+       </div>
+       <div class="card-hover bg-gradient-to-br from-purple-900/50 to-purple-800/30 rounded-xl p-6 border border-purple-500/30 text-center">
+        <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center">
+         <svg class="w-10 h-10 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+         </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-purple-400 mb-2">PIKIRKAN</h3>
+        <p class="text-slate-300 text-sm">Apa yang kamu pikirkan tentangnya?</p>
+       </div>
+       <div class="card-hover bg-gradient-to-br from-pink-900/50 to-pink-800/30 rounded-xl p-6 border border-pink-500/30 text-center">
+        <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
+         <svg class="w-10 h-10 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z" />
+         </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-pink-400 mb-2">IMAJINASIKAN</h3>
+        <p class="text-slate-300 text-sm">Apa yang kamu bayangkan?</p>
+       </div>
+      </div>
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-amber-500/20">
+       <h3 class="text-amber-400 font-semibold mb-4 flex items-center gap-2"><span class="text-2xl">💡</span> Pertanyaan Pemantik Dasar</h3>
+       <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-slate-700/50 rounded-lg p-4 border-l-4 border-amber-400">
+         <p class="text-slate-200 italic">"Apa yang kamu rasakan ketika melihat gambar tersebut? Apa alasannya?"</p>
+        </div>
+        <div class="bg-slate-700/50 rounded-lg p-4 border-l-4 border-blue-400">
+         <p class="text-slate-200 italic">"Apa yang kamu lihat, pikirkan, dan imajinasikan?"</p>
+        </div>
+        <div class="bg-slate-700/50 rounded-lg p-4 border-l-4 border-purple-400 md:col-span-2">
+         <p class="text-slate-200 italic">"Apa lagi yang bisa kita temukan di sana?"</p>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 4: Eksplorasi Lebih Dalam -->
+     <section class="slide min-h-96 flex-col py-8" data-slide="4">
+      <h2 class="font-display text-3xl font-bold mb-2 text-center"><span class="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Eksplorasi Lebih Dalam</span></h2>
+      <p class="text-center text-slate-400 mb-8">Pertanyaan Inkuiri untuk Membantu Siswa</p>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+       <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-700 rounded-xl p-5 border border-cyan-500/30">
+        <div class="flex items-center gap-3 mb-3"><span class="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center text-cyan-400 text-xl">🔍</span>
+         <h3 class="font-semibold text-cyan-400">Fokus Objek</h3>
+        </div>
+        <p class="text-slate-300 text-sm">"Objek apa yang terlihat jika diperhatikan lebih dekat?"</p>
+       </div>
+       <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-700 rounded-xl p-5 border border-rose-500/30">
+        <div class="flex items-center gap-3 mb-3"><span class="w-10 h-10 bg-rose-500/20 rounded-lg flex items-center justify-center text-rose-400 text-xl">❤️</span>
+         <h3 class="font-semibold text-rose-400">Empati</h3>
+        </div>
+        <p class="text-slate-300 text-sm">"Menurutmu, apa yang dirasakan oleh objek dalam lukisan tersebut?"</p>
+       </div>
+       <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-700 rounded-xl p-5 border border-violet-500/30">
+        <div class="flex items-center gap-3 mb-3"><span class="w-10 h-10 bg-violet-500/20 rounded-lg flex items-center justify-center text-violet-400 text-xl">🌅</span>
+         <h3 class="font-semibold text-violet-400">Suasana</h3>
+        </div>
+        <p class="text-slate-300 text-sm">"Bagaimana suasana yang tertangkap oleh indramu?"</p>
+       </div>
+       <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-700 rounded-xl p-5 border border-emerald-500/30">
+        <div class="flex items-center gap-3 mb-3"><span class="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center text-emerald-400 text-xl">✍️</span>
+         <h3 class="font-semibold text-emerald-400">Deskripsi Kreatif</h3>
+        </div>
+        <p class="text-slate-300 text-sm">"Sebutkan 6 kata untuk mendeskripsikan lukisan ini."</p>
+       </div>
+       <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-700 rounded-xl p-5 border border-amber-500/30 md:col-span-2 lg:col-span-2">
+        <div class="flex items-center gap-3 mb-3"><span class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center text-amber-400 text-xl">💬</span>
+         <h3 class="font-semibold text-amber-400">Pesan</h3>
+        </div>
+        <p class="text-slate-300 text-sm">"Apa pesan yang ingin disampaikan oleh pelukis?"</p>
+       </div>
+      </div><!-- Interactive Activity -->
+      <div class="mt-8 bg-gradient-to-r from-amber-900/30 to-orange-900/30 rounded-xl p-6 border border-amber-500/30">
+       <h3 class="text-amber-400 font-semibold mb-4 flex items-center gap-2"><span class="text-xl">🎨</span> Aktivitas Interaktif: Latihan Observasi</h3>
+       <div class="flex flex-col md:flex-row gap-6 items-center">
+        <div class="artwork-frame flex-shrink-0">
+         <div class="bg-slate-900 rounded p-2">
+          <svg viewbox="0 0 200 150" class="w-48"><!-- Simple landscape for observation --> <rect width="200" height="150" fill="#87CEEB" /> <circle cx="160" cy="40" r="25" fill="#FFD700" /> <path d="M0 100 Q50 80 100 95 T200 85 L200 150 L0 150 Z" fill="#228B22" /> <path d="M60 150 L80 90 L100 150 Z" fill="#2F4F4F" /> <path d="M120 150 L150 70 L180 150 Z" fill="#2F4F4F" /> <rect x="30" y="110" width="25" height="30" fill="#8B4513" /> <polygon points="30,110 42.5,90 55,110" fill="#A52A2A" /> <rect x="38" y="125" width="8" height="15" fill="#4A2C2A" /> <circle cx="45" cy="100" r="12" fill="#228B22" />
+          </svg>
+         </div>
+        </div>
+        <div class="flex-1">
+         <p class="text-slate-300 mb-4">Amati gambar di samping, lalu jawab pertanyaan berikut:</p>
+         <div id="observation-activity" class="space-y-3">
+          <div class="flex items-center gap-3"><input type="text" id="obs-word1" placeholder="Kata 1" class="flex-1 bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:border-amber-400 focus:outline-none"> <input type="text" id="obs-word2" placeholder="Kata 2" class="flex-1 bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:border-amber-400 focus:outline-none"> <input type="text" id="obs-word3" placeholder="Kata 3" class="flex-1 bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:border-amber-400 focus:outline-none">
+          </div>
+          <div class="flex items-center gap-3"><input type="text" id="obs-word4" placeholder="Kata 4" class="flex-1 bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:border-amber-400 focus:outline-none"> <input type="text" id="obs-word5" placeholder="Kata 5" class="flex-1 bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:border-amber-400 focus:outline-none"> <input type="text" id="obs-word6" placeholder="Kata 6" class="flex-1 bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:border-amber-400 focus:outline-none">
+          </div><button onclick="checkObservation()" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold px-4 py-2 rounded-lg transition-colors"> Lihat Contoh Jawaban </button>
+          <div id="obs-feedback" class="hidden bg-emerald-900/30 border border-emerald-500/30 rounded-lg p-3 text-sm text-emerald-300"></div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 5: Hendra Gunawan -->
+     <section class="slide min-h-96 flex-col py-8" data-slide="5">
+      <h2 class="font-display text-3xl font-bold mb-2 text-center"><span class="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Mengenal Tokoh Seniman</span></h2>
+      <p class="text-center text-slate-400 mb-8">Hendra Gunawan (1918-1983)</p>
+      <div class="grid md:grid-cols-2 gap-8 items-start">
+       <div class="space-y-4">
+        <div class="bg-slate-800/50 rounded-xl p-6 border border-amber-500/20">
+         <div class="flex items-center gap-4 mb-4">
+          <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-orange-500 rounded-full flex items-center justify-center text-3xl">
+           🎨
+          </div>
+          <div>
+           <h3 class="text-xl font-semibold text-white">Hendra Gunawan</h3>
+           <p class="text-slate-400 text-sm">Pelukis Indonesia Legendaris</p>
+          </div>
+         </div>
+         <div class="space-y-4">
+          <div class="flex items-start gap-3"><span class="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center text-red-400 flex-shrink-0">🖌️</span>
+           <div>
+            <h4 class="font-semibold text-red-400 text-sm">Gaya</h4>
+            <p class="text-slate-300 text-sm">Menggabungkan teknik Barat dengan estetika tradisional Indonesia</p>
+           </div>
+          </div>
+          <div class="flex items-start gap-3"><span class="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center text-orange-400 flex-shrink-0">✨</span>
+           <div>
+            <h4 class="font-semibold text-orange-400 text-sm">Ciri Khas</h4>
+            <p class="text-slate-300 text-sm">Warna yang kaya, pemandangan masa muda, dan satwa liar subur</p>
+           </div>
+          </div>
+          <div class="flex items-start gap-3"><span class="w-8 h-8 bg-amber-500/20 rounded-lg flex items-center justify-center text-amber-400 flex-shrink-0">📜</span>
+           <div>
+            <h4 class="font-semibold text-amber-400 text-sm">Latar Belakang</h4>
+            <p class="text-slate-300 text-sm">Pernah menjadi pejuang dan aktivis. Tetap melukis di atas kanvas kasar meskipun saat dipenjara.</p>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="bg-gradient-to-r from-red-900/30 to-orange-900/30 rounded-xl p-4 border border-red-500/30">
+         <p class="text-sm text-slate-300 italic">"Seni adalah perjuangan, dan perjuangan adalah seni hidup."</p>
+        </div>
+       </div>
+       <div class="flex flex-col items-center">
+        <div class="artwork-frame">
+         <div class="bg-slate-900 rounded p-3">
+          <svg viewbox="0 0 280 220" class="w-full"><!-- Pengorbanan Ibu - Stylized interpretation --> <rect width="280" height="220" fill="#f5e6d3" /> <!-- Background warm colors --> <rect x="0" y="0" width="280" height="220" fill="#8B4513" opacity="0.3" /> <!-- Mother figure --> <ellipse cx="140" cy="120" rx="60" ry="80" fill="#CD853F" /> <circle cx="140" cy="60" r="30" fill="#DEB887" /> <ellipse cx="130" cy="55" r="4" ry="5" fill="#4A2C2A" /> <ellipse cx="150" cy="55" r="4" ry="5" fill="#4A2C2A" /> <path d="M135 70 Q140 75 145 70" stroke="#8B4513" stroke-width="2" fill="none" /> <!-- Baby/Child --> <ellipse cx="140" cy="130" rx="25" ry="30" fill="#FFE4C4" /> <circle cx="140" cy="115" r="15" fill="#FFDAB9" /> <ellipse cx="135" cy="112" r="2" ry="3" fill="#4A2C2A" /> <ellipse cx="145" cy="112" r="2" ry="3" fill="#4A2C2A" /> <!-- Arms embracing --> <path d="M80 100 Q100 130 115 140" stroke="#DEB887" stroke-width="15" fill="none" stroke-linecap="round" /> <path d="M200 100 Q180 130 165 140" stroke="#DEB887" stroke-width="15" fill="none" stroke-linecap="round" /> <!-- Decorative elements - Indonesian batik pattern --> <circle cx="50" cy="30" r="15" fill="#FF6347" opacity="0.7" /> <circle cx="230" cy="40" r="20" fill="#FFD700" opacity="0.6" /> <circle cx="40" cy="180" r="18" fill="#32CD32" opacity="0.5" /> <circle cx="240" cy="190" r="15" fill="#FF69B4" opacity="0.6" /> <!-- Floral decorations --> <path d="M20 80 Q30 70 40 80 Q50 70 60 80" stroke="#228B22" stroke-width="3" fill="none" /> <path d="M220 70 Q230 60 240 70 Q250 60 260 70" stroke="#228B22" stroke-width="3" fill="none" />
+          </svg>
+         </div>
+        </div>
+        <p class="text-center text-sm text-amber-400 mt-3 font-semibold">"Pengorbanan Ibu"</p>
+        <p class="text-center text-xs text-slate-400">Interpretasi visual karya Hendra Gunawan</p>
+       </div>
+      </div>
+     </section><!-- Slide 6: Erica Hestu Wahyuni -->
+     <section class="slide min-h-96 flex-col py-8" data-slide="6">
+      <h2 class="font-display text-3xl font-bold mb-2 text-center"><span class="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Mengenal Tokoh Seniman</span></h2>
+      <p class="text-center text-slate-400 mb-8">Erica Hestu Wahyuni (Lahir 1971)</p>
+      <div class="grid md:grid-cols-2 gap-8 items-start">
+       <div class="flex flex-col items-center order-2 md:order-1">
+        <div class="artwork-frame">
+         <div class="bg-slate-900 rounded p-3">
+          <svg viewbox="0 0 280 220" class="w-full"><!-- Goldie Merlion - Naif style --> <defs>
+            <lineargradient id="rainbow" x1="0%" y1="0%" x2="100%" y2="0%">
+             <stop offset="0%" style="stop-color:#FF0000" />
+             <stop offset="17%" style="stop-color:#FF7F00" />
+             <stop offset="33%" style="stop-color:#FFFF00" />
+             <stop offset="50%" style="stop-color:#00FF00" />
+             <stop offset="67%" style="stop-color:#0000FF" />
+             <stop offset="83%" style="stop-color:#4B0082" />
+             <stop offset="100%" style="stop-color:#9400D3" />
+            </lineargradient>
+           </defs> <!-- Sky background --> <rect width="280" height="220" fill="#87CEEB" /> <!-- Rainbow --> <path d="M-20 180 Q140 20 300 180" stroke="url(#rainbow)" stroke-width="25" fill="none" opacity="0.8" /> <!-- Clouds --> <g fill="white">
+            <ellipse cx="50" cy="40" rx="30" ry="20" />
+            <ellipse cx="75" cy="35" rx="25" ry="18" />
+            <ellipse cx="230" cy="50" rx="35" ry="22" />
+            <ellipse cx="205" cy="45" rx="28" ry="18" />
+           </g> <!-- Merlion (cute naif style) --> <ellipse cx="140" cy="160" rx="45" ry="35" fill="#FFD700" /> <circle cx="140" cy="110" r="40" fill="#FFD700" /> <!-- Lion face features --> <circle cx="125" cy="100" r="8" fill="white" /> <circle cx="155" cy="100" r="8" fill="white" /> <circle cx="125" cy="102" r="4" fill="#333" /> <circle cx="155" cy="102" r="4" fill="#333" /> <!-- Cute smile --> <path d="M125 120 Q140 135 155 120" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round" /> <!-- Nose --> <ellipse cx="140" cy="115" rx="6" ry="4" fill="#FF69B4" /> <!-- Crown --> <path d="M105 75 L115 60 L125 75 L135 55 L145 75 L155 60 L165 75 L175 55 L185 75" fill="#FFD700" stroke="#FFA500" stroke-width="2" /> <!-- Fish tail --> <path d="M95 160 Q70 180 80 200 Q100 190 95 160" fill="#4169E1" /> <path d="M185 160 Q210 180 200 200 Q180 190 185 160" fill="#4169E1" /> <!-- Decorative stars --> <g fill="#FFD700">
+            <polygon points="40,100 43,108 52,108 45,114 48,122 40,117 32,122 35,114 28,108 37,108" transform="scale(0.7) translate(20,80)" />
+            <polygon points="40,100 43,108 52,108 45,114 48,122 40,117 32,122 35,114 28,108 37,108" transform="scale(0.5) translate(400,100)" />
+            <polygon points="40,100 43,108 52,108 45,114 48,122 40,117 32,122 35,114 28,108 37,108" transform="scale(0.6) translate(350,250)" />
+           </g> <!-- Hearts --> <path d="M250 80 C250 70 240 70 240 80 C240 90 250 95 250 95 C250 95 260 90 260 80 C260 70 250 70 250 80" fill="#FF69B4" /> <path d="M30 150 C30 145 25 145 25 150 C25 155 30 158 30 158 C30 158 35 155 35 150 C35 145 30 145 30 150" fill="#FF69B4" transform="scale(0.8)" />
+          </svg>
+         </div>
+        </div>
+        <p class="text-center text-sm text-pink-400 mt-3 font-semibold">"Goldie Merlion at the Rainbows Ends"</p>
+        <p class="text-center text-xs text-slate-400">Interpretasi visual karya Erica Hestu Wahyuni</p>
+       </div>
+       <div class="space-y-4 order-1 md:order-2">
+        <div class="bg-slate-800/50 rounded-xl p-6 border border-pink-500/20">
+         <div class="flex items-center gap-4 mb-4">
+          <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full flex items-center justify-center text-3xl">
+           🌈
+          </div>
+          <div>
+           <h3 class="text-xl font-semibold text-white">Erica Hestu Wahyuni</h3>
+           <p class="text-slate-400 text-sm">Seniman Kontemporer Indonesia</p>
+          </div>
+         </div>
+         <div class="space-y-4">
+          <div class="flex items-start gap-3"><span class="w-8 h-8 bg-pink-500/20 rounded-lg flex items-center justify-center text-pink-400 flex-shrink-0">🎨</span>
+           <div>
+            <h4 class="font-semibold text-pink-400 text-sm">Gaya</h4>
+            <p class="text-slate-300 text-sm">Visualisasi pengalaman pribadi dengan tampilan naif dan lucu</p>
+           </div>
+          </div>
+          <div class="flex items-start gap-3"><span class="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-400 flex-shrink-0">🎓</span>
+           <div>
+            <h4 class="font-semibold text-purple-400 text-sm">Pendidikan</h4>
+            <p class="text-slate-300 text-sm">Institut Seni Indonesia (Yogyakarta) &amp; Surikov Institute of Art (Rusia)</p>
+           </div>
+          </div>
+          <div class="flex items-start gap-3"><span class="w-8 h-8 bg-amber-500/20 rounded-lg flex items-center justify-center text-amber-400 flex-shrink-0">💫</span>
+           <div>
+            <h4 class="font-semibold text-amber-400 text-sm">Ciri Khas</h4>
+            <p class="text-slate-300 text-sm">Warna cerah, karakter lucu, dan narasi fantasi yang membawa kebahagiaan</p>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="bg-gradient-to-r from-pink-900/30 to-purple-900/30 rounded-xl p-4 border border-pink-500/30">
+         <p class="text-sm text-slate-300 italic">"Seni adalah cara saya berbagi kebahagiaan dengan dunia."</p>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 7: Marcel Duchamp -->
+     <section class="slide min-h-96 flex-col py-8" data-slide="7">
+      <h2 class="font-display text-3xl font-bold mb-2 text-center"><span class="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Mengenal Tokoh Seniman</span></h2>
+      <p class="text-center text-slate-400 mb-8">Marcel Duchamp (1887-1968)</p>
+      <div class="grid md:grid-cols-2 gap-8 items-start">
+       <div class="space-y-4">
+        <div class="bg-slate-800/50 rounded-xl p-6 border border-cyan-500/20">
+         <div class="flex items-center gap-4 mb-4">
+          <div class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-3xl">
+           🚲
+          </div>
+          <div>
+           <h3 class="text-xl font-semibold text-white">Marcel Duchamp</h3>
+           <p class="text-slate-400 text-sm">Bapak Seni Konseptual</p>
+          </div>
+         </div>
+         <div class="space-y-4">
+          <div class="flex items-start gap-3"><span class="w-8 h-8 bg-cyan-500/20 rounded-lg flex items-center justify-center text-cyan-400 flex-shrink-0">💡</span>
+           <div>
+            <h4 class="font-semibold text-cyan-400 text-sm">Gaya</h4>
+            <p class="text-slate-300 text-sm">Seniman "pendobrak batas" antara seni dan objek sehari-hari</p>
+           </div>
+          </div>
+          <div class="flex items-start gap-3"><span class="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-400 flex-shrink-0">🔧</span>
+           <div>
+            <h4 class="font-semibold text-blue-400 text-sm">Konsep "Readymades"</h4>
+            <p class="text-slate-300 text-sm">Objek sehari-hari yang sedikit dimodifikasi dan ditunjuk sebagai karya seni</p>
+           </div>
+          </div>
+          <div class="flex items-start gap-3"><span class="w-8 h-8 bg-violet-500/20 rounded-lg flex items-center justify-center text-violet-400 flex-shrink-0">🎯</span>
+           <div>
+            <h4 class="font-semibold text-violet-400 text-sm">Pengaruh</h4>
+            <p class="text-slate-300 text-sm">Mengubah definisi seni dan mempengaruhi gerakan seni kontemporer</p>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="bg-gradient-to-r from-cyan-900/30 to-blue-900/30 rounded-xl p-4 border border-cyan-500/30">
+         <p class="text-sm text-slate-300 italic">"Saya tidak percaya pada seni. Saya percaya pada seniman."</p>
+        </div>
+       </div>
+       <div class="flex flex-col items-center">
+        <div class="artwork-frame">
+         <div class="bg-slate-900 rounded p-3">
+          <svg viewbox="0 0 280 250" class="w-full"><!-- Bicycle Wheel (1913) --> <rect width="280" height="250" fill="#f0ece3" /> <!-- Wooden stool --> <rect x="115" y="200" width="50" height="10" fill="#8B4513" rx="2" /> <rect x="120" y="210" width="5" height="30" fill="#A0522D" /> <rect x="155" y="210" width="5" height="30" fill="#A0522D" /> <rect x="110" y="238" width="60" height="8" fill="#8B4513" rx="2" /> <!-- Fork --> <rect x="137" y="100" width="6" height="100" fill="#4a4a4a" /> <path d="M130 100 L140 80 L150 100" fill="none" stroke="#4a4a4a" stroke-width="4" /> <!-- Wheel --> <circle cx="140" cy="80" r="65" fill="none" stroke="#333" stroke-width="3" /> <circle cx="140" cy="80" r="60" fill="none" stroke="#666" stroke-width="1" /> <circle cx="140" cy="80" r="8" fill="#333" /> <!-- Spokes --> <g stroke="#555" stroke-width="1">
+            <line x1="140" y1="20" x2="140" y2="72" />
+            <line x1="140" y1="88" x2="140" y2="140" />
+            <line x1="80" y1="80" x2="132" y2="80" />
+            <line x1="148" y1="80" x2="200" y2="80" />
+            <line x1="97" y1="37" x2="134" y2="74" />
+            <line x1="146" y1="86" x2="183" y2="123" />
+            <line x1="183" y1="37" x2="146" y2="74" />
+            <line x1="134" y1="86" x2="97" y2="123" />
+           </g> <!-- Additional detail spokes --> <g stroke="#777" stroke-width="0.5">
+            <line x1="118" y1="25" x2="136" y2="72" />
+            <line x1="162" y1="25" x2="144" y2="72" />
+            <line x1="85" y1="58" x2="132" y2="76" />
+            <line x1="195" y1="58" x2="148" y2="76" />
+            <line x1="85" y1="102" x2="132" y2="84" />
+            <line x1="195" y1="102" x2="148" y2="84" />
+            <line x1="118" y1="135" x2="136" y2="88" />
+            <line x1="162" y1="135" x2="144" y2="88" />
+           </g> <!-- Shadow --> <ellipse cx="140" cy="245" rx="40" ry="5" fill="rgba(0,0,0,0.2)" />
+          </svg>
+         </div>
+        </div>
+        <p class="text-center text-sm text-cyan-400 mt-3 font-semibold">"Bicycle Wheel" (1913)</p>
+        <p class="text-center text-xs text-slate-400">Roda sepeda dipasang di atas bangku kayu</p>
+       </div>
+      </div><!-- Interactive: What makes it art? -->
+      <div class="mt-8 bg-gradient-to-r from-cyan-900/30 to-blue-900/30 rounded-xl p-6 border border-cyan-500/30">
+       <h3 class="text-cyan-400 font-semibold mb-4 flex items-center gap-2"><span class="text-xl">🤔</span> Aktivitas Diskusi: Apa yang Membuat Sesuatu Menjadi Seni?</h3>
+       <p class="text-slate-300 mb-4 text-sm">Duchamp menantang definisi tradisional tentang seni. Pikirkan dan diskusikan:</p>
+       <div class="grid md:grid-cols-3 gap-4"><button onclick="revealDuchampThought(1)" class="bg-slate-700/50 hover:bg-slate-700 rounded-lg p-4 text-left transition-colors border border-slate-600 hover:border-cyan-500"> <p class="text-cyan-400 font-semibold text-sm mb-1">Pertanyaan 1</p><p class="text-slate-400 text-xs">Apakah benda sehari-hari bisa menjadi seni?</p><p id="duchamp-thought-1" class="hidden mt-2 text-emerald-400 text-xs bg-emerald-900/30 p-2 rounded">Ya! Menurut Duchamp, konteks dan intensi seniman yang menentukan.</p></button> <button onclick="revealDuchampThought(2)" class="bg-slate-700/50 hover:bg-slate-700 rounded-lg p-4 text-left transition-colors border border-slate-600 hover:border-cyan-500"> <p class="text-cyan-400 font-semibold text-sm mb-1">Pertanyaan 2</p><p class="text-slate-400 text-xs">Siapa yang menentukan nilai sebuah karya seni?</p><p id="duchamp-thought-2" class="hidden mt-2 text-emerald-400 text-xs bg-emerald-900/30 p-2 rounded">Seniman, kurator, publik, dan sejarah bersama-sama membentuk nilai seni.</p></button> <button onclick="revealDuchampThought(3)" class="bg-slate-700/50 hover:bg-slate-700 rounded-lg p-4 text-left transition-colors border border-slate-600 hover:border-cyan-500"> <p class="text-cyan-400 font-semibold text-sm mb-1">Pertanyaan 3</p><p class="text-slate-400 text-xs">Apakah ide lebih penting dari teknik?</p><p id="duchamp-thought-3" class="hidden mt-2 text-emerald-400 text-xs bg-emerald-900/30 p-2 rounded">Duchamp percaya bahwa konsep di balik karya sama pentingnya dengan eksekusi.</p></button>
+       </div>
+      </div>
+     </section><!-- Slide 8: Metode 2 - Tangga Umpan Balik -->
+     <section class="slide min-h-96 flex-col py-8" data-slide="8">
+      <h2 class="font-display text-3xl font-bold mb-2 text-center"><span class="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Metode 2</span></h2>
+      <p class="text-center text-slate-400 mb-8">Tangga Umpan Balik</p>
+      <div class="bg-slate-800/30 rounded-xl p-4 mb-6 border border-amber-500/20">
+       <p class="text-center text-slate-300"><span class="text-amber-400 font-semibold">💡 Prinsip:</span> Umpan balik harus bersifat konstruktif, bukan sekadar pujian singkat seperti "bagus".</p>
+      </div>
+      <div class="step-ladder space-y-4 max-w-3xl mx-auto">
+       <div class="flex items-start gap-4 pl-2 relative">
+        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold z-10 flex-shrink-0">
+         1
+        </div>
+        <div class="card-hover bg-gradient-to-r from-blue-900/40 to-blue-800/30 rounded-xl p-4 flex-1 border border-blue-500/30">
+         <h3 class="text-blue-400 font-semibold mb-1">Klarifikasi</h3>
+         <p class="text-slate-300 text-sm">Bertanya objektif untuk memahami karya</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 pl-2 relative">
+        <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold z-10 flex-shrink-0">
+         2
+        </div>
+        <div class="card-hover bg-gradient-to-r from-emerald-900/40 to-emerald-800/30 rounded-xl p-4 flex-1 border border-emerald-500/30">
+         <h3 class="text-emerald-400 font-semibold mb-1">Memberi Apresiasi</h3>
+         <p class="text-slate-300 text-sm">Memberikan penghargaan pada nilai positif karya</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 pl-2 relative">
+        <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center text-white font-bold z-10 flex-shrink-0">
+         3
+        </div>
+        <div class="card-hover bg-gradient-to-r from-amber-900/40 to-amber-800/30 rounded-xl p-4 flex-1 border border-amber-500/30">
+         <h3 class="text-amber-400 font-semibold mb-1">Mengungkapkan Area yang Bisa Ditingkatkan</h3>
+         <p class="text-slate-300 text-sm">Identifikasi bagian yang bisa lebih baik</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 pl-2 relative">
+        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold z-10 flex-shrink-0">
+         4
+        </div>
+        <div class="card-hover bg-gradient-to-r from-purple-900/40 to-purple-800/30 rounded-xl p-4 flex-1 border border-purple-500/30">
+         <h3 class="text-purple-400 font-semibold mb-1">Memberikan Saran</h3>
+         <p class="text-slate-300 text-sm">Menawarkan solusi spesifik untuk pengembangan diri</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 pl-2 relative">
+        <div class="w-10 h-10 bg-gradient-to-br from-rose-500 to-rose-600 rounded-full flex items-center justify-center text-white font-bold z-10 flex-shrink-0">
+         5
+        </div>
+        <div class="card-hover bg-gradient-to-r from-rose-900/40 to-rose-800/30 rounded-xl p-4 flex-1 border border-rose-500/30">
+         <h3 class="text-rose-400 font-semibold mb-1">Berterima Kasih</h3>
+         <p class="text-slate-300 text-sm">Menghargai masukan yang diberikan orang lain</p>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 9: Contoh Kalimat Umpan Balik -->
+     <section class="slide min-h-96 flex-col py-8" data-slide="9">
+      <h2 class="font-display text-3xl font-bold mb-8 text-center"><span class="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Contoh Kalimat Umpan Balik Konstruktif</span></h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+       <div class="card-hover bg-slate-800/50 rounded-xl p-5 border border-blue-500/30">
+        <div class="flex items-center gap-2 mb-3"><span class="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400 font-bold text-sm">1</span>
+         <h3 class="font-semibold text-blue-400">Klarifikasi</h3>
+        </div>
+        <p class="text-slate-300 text-sm italic bg-slate-700/50 p-3 rounded-lg">"Dapatkah kamu menjelaskan bagian yang ini?"</p>
+       </div>
+       <div class="card-hover bg-slate-800/50 rounded-xl p-5 border border-emerald-500/30">
+        <div class="flex items-center gap-2 mb-3"><span class="w-8 h-8 bg-emerald-500/20 rounded-full flex items-center justify-center text-emerald-400 font-bold text-sm">2</span>
+         <h3 class="font-semibold text-emerald-400">Apresiasi</h3>
+        </div>
+        <p class="text-slate-300 text-sm italic bg-slate-700/50 p-3 rounded-lg">"Idemu bagus karena..."</p>
+       </div>
+       <div class="card-hover bg-slate-800/50 rounded-xl p-5 border border-amber-500/30">
+        <div class="flex items-center gap-2 mb-3"><span class="w-8 h-8 bg-amber-500/20 rounded-full flex items-center justify-center text-amber-400 font-bold text-sm">3</span>
+         <h3 class="font-semibold text-amber-400">Peningkatan</h3>
+        </div>
+        <p class="text-slate-300 text-sm italic bg-slate-700/50 p-3 rounded-lg">"Apa kesan yang ditangkap jika bagian ini diubah?"</p>
+       </div>
+       <div class="card-hover bg-slate-800/50 rounded-xl p-5 border border-purple-500/30">
+        <div class="flex items-center gap-2 mb-3"><span class="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center text-purple-400 font-bold text-sm">4</span>
+         <h3 class="font-semibold text-purple-400">Saran</h3>
+        </div>
+        <p class="text-slate-300 text-sm italic bg-slate-700/50 p-3 rounded-lg">"Bagaimana jika ditambahkan...?"</p>
+       </div>
+       <div class="card-hover bg-slate-800/50 rounded-xl p-5 border border-rose-500/30 md:col-span-2 lg:col-span-2">
+        <div class="flex items-center gap-2 mb-3"><span class="w-8 h-8 bg-rose-500/20 rounded-full flex items-center justify-center text-rose-400 font-bold text-sm">5</span>
+         <h3 class="font-semibold text-rose-400">Terima Kasih</h3>
+        </div>
+        <p class="text-slate-300 text-sm italic bg-slate-700/50 p-3 rounded-lg">"Saran darimu membuat karya ini lebih baik!"</p>
+       </div>
+      </div><!-- Interactive: Practice Feedback -->
+      <div class="bg-gradient-to-r from-amber-900/30 to-orange-900/30 rounded-xl p-6 border border-amber-500/30">
+       <h3 class="text-amber-400 font-semibold mb-4 flex items-center gap-2"><span class="text-xl">✏️</span> Aktivitas: Latihan Memberi Umpan Balik</h3>
+       <div class="grid md:grid-cols-2 gap-6">
+        <div>
+         <div class="artwork-frame mb-4">
+          <div class="bg-slate-900 rounded p-2">
+           <svg viewbox="0 0 200 150" class="w-full"><!-- Student artwork simulation --> <rect width="200" height="150" fill="#FFF8DC" /> <circle cx="100" cy="50" r="30" fill="#FFD700" /> <path d="M20 100 Q60 70 100 100 T180 100" fill="#228B22" /> <rect x="70" y="90" width="30" height="40" fill="#8B4513" /> <polygon points="70,90 85,60 100,90" fill="#A52A2A" /> <circle cx="150" cy="80" r="20" fill="#87CEEB" /> <path d="M140 70 L145 65 L150 70 L155 65 L160 70" stroke="white" stroke-width="2" fill="none" />
+           </svg>
+          </div>
+         </div>
+         <p class="text-xs text-slate-400 text-center">Karya siswa: "Sore di Desa"</p>
+        </div>
+        <div class="space-y-3">
+         <p class="text-slate-300 text-sm mb-3">Berikan umpan balik menggunakan tangga:</p>
+         <div><label for="feedback-input" class="block text-sm text-amber-400 mb-1">Tulis umpan balikmu:</label> <textarea id="feedback-input" rows="4" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:border-amber-400 focus:outline-none resize-none" placeholder="Contoh: Dapatkah kamu menjelaskan mengapa memilih warna kuning untuk matahari? Idemu bagus karena..."></textarea>
+         </div><button onclick="checkFeedback()" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold px-4 py-2 rounded-lg transition-colors text-sm"> Periksa Umpan Balik </button>
+         <div id="feedback-result" class="hidden text-sm p-3 rounded-lg"></div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 10: Panduan Penilaian -->
+     <section class="slide min-h-96 flex-col py-8" data-slide="10">
+      <h2 class="font-display text-3xl font-bold mb-8 text-center"><span class="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Panduan Penilaian (Asesmen)</span></h2>
+      <div class="grid md:grid-cols-3 gap-6 mb-8">
+       <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-700 rounded-xl p-6 border border-cyan-500/30">
+        <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-xl flex items-center justify-center">
+         <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+         </svg>
+        </div>
+        <h3 class="text-center text-cyan-400 font-semibold mb-3">Kesesuaian Interpretasi</h3>
+        <p class="text-slate-300 text-sm text-center">Kemampuan menarik "benang merah" antara elemen visual dengan pesan pelukis</p>
+        <div class="mt-4 bg-slate-800/50 rounded-lg p-3">
+         <p class="text-xs text-slate-400">Indikator:</p>
+         <ul class="text-xs text-slate-300 mt-1 space-y-1">
+          <li>• Mengenali elemen visual</li>
+          <li>• Menghubungkan dengan konteks</li>
+          <li>• Mengidentifikasi makna</li>
+         </ul>
+        </div>
+       </div>
+       <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-700 rounded-xl p-6 border border-amber-500/30">
+        <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center">
+         <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" />
+         </svg>
+        </div>
+        <h3 class="text-center text-amber-400 font-semibold mb-3">Kemampuan Menyampaikan Gagasan</h3>
+        <p class="text-slate-300 text-sm text-center">Sejauh mana siswa percaya diri mengemukakan pendapat</p>
+        <div class="mt-4 bg-slate-800/50 rounded-lg p-3">
+         <p class="text-xs text-slate-400">Indikator:</p>
+         <ul class="text-xs text-slate-300 mt-1 space-y-1">
+          <li>• Kejelasan penyampaian</li>
+          <li>• Kepercayaan diri</li>
+          <li>• Orisinalitas pemikiran</li>
+         </ul>
+        </div>
+       </div>
+       <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-700 rounded-xl p-6 border border-emerald-500/30">
+        <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-xl flex items-center justify-center">
+         <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+         </svg>
+        </div>
+        <h3 class="text-center text-emerald-400 font-semibold mb-3">Kemampuan Menyampaikan Masukan</h3>
+        <p class="text-slate-300 text-sm text-center">Penggunaan bahasa yang terstruktur dan mudah dipahami dalam memberi saran</p>
+        <div class="mt-4 bg-slate-800/50 rounded-lg p-3">
+         <p class="text-xs text-slate-400">Indikator:</p>
+         <ul class="text-xs text-slate-300 mt-1 space-y-1">
+          <li>• Struktur umpan balik</li>
+          <li>• Bahasa yang sopan</li>
+          <li>• Saran yang konstruktif</li>
+         </ul>
+        </div>
+       </div>
+      </div><!-- Rubric Table -->
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 overflow-x-auto">
+       <h3 class="text-amber-400 font-semibold mb-4">Rubrik Penilaian</h3>
+       <table class="w-full text-sm">
+        <thead>
+         <tr class="border-b border-slate-600">
+          <th class="text-left py-2 px-3 text-slate-300">Kriteria</th>
+          <th class="text-center py-2 px-3 text-emerald-400">Sangat Baik (4)</th>
+          <th class="text-center py-2 px-3 text-blue-400">Baik (3)</th>
+          <th class="text-center py-2 px-3 text-amber-400">Cukup (2)</th>
+          <th class="text-center py-2 px-3 text-rose-400">Perlu Bimbingan (1)</th>
+         </tr>
+        </thead>
+        <tbody class="text-slate-300">
+         <tr class="border-b border-slate-700">
+          <td class="py-3 px-3 font-medium">Interpretasi</td>
+          <td class="py-3 px-3 text-center text-xs">Sangat mendalam &amp; relevan</td>
+          <td class="py-3 px-3 text-center text-xs">Mendalam</td>
+          <td class="py-3 px-3 text-center text-xs">Cukup memahami</td>
+          <td class="py-3 px-3 text-center text-xs">Belum memahami</td>
+         </tr>
+         <tr class="border-b border-slate-700">
+          <td class="py-3 px-3 font-medium">Gagasan</td>
+          <td class="py-3 px-3 text-center text-xs">Sangat jelas &amp; percaya diri</td>
+          <td class="py-3 px-3 text-center text-xs">Jelas</td>
+          <td class="py-3 px-3 text-center text-xs">Kurang jelas</td>
+          <td class="py-3 px-3 text-center text-xs">Ragu-ragu</td>
+         </tr>
+         <tr>
+          <td class="py-3 px-3 font-medium">Masukan</td>
+          <td class="py-3 px-3 text-center text-xs">Sangat konstruktif</td>
+          <td class="py-3 px-3 text-center text-xs">Konstruktif</td>
+          <td class="py-3 px-3 text-center text-xs">Kurang konstruktif</td>
+          <td class="py-3 px-3 text-center text-xs">Tidak konstruktif</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </section><!-- Slide 11: Ringkasan -->
+     <section class="slide min-h-96 flex-col py-8" data-slide="11">
+      <h2 class="font-display text-3xl font-bold mb-8 text-center"><span class="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Ringkasan Pembelajaran</span></h2>
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+       <div class="bg-gradient-to-br from-blue-900/40 to-blue-800/30 rounded-xl p-6 border border-blue-500/30">
+        <h3 class="text-blue-400 font-semibold mb-4 flex items-center gap-2"><span class="text-xl">👁️</span> Rutinitas Berpikir Visibel</h3>
+        <ul class="space-y-2 text-slate-300 text-sm">
+         <li class="flex items-start gap-2"><span class="text-blue-400">•</span> Melihat dengan saksama</li>
+         <li class="flex items-start gap-2"><span class="text-blue-400">•</span> Berpikir kritis tentang karya</li>
+         <li class="flex items-start gap-2"><span class="text-blue-400">•</span> Berimajinasi dan mengembangkan ide</li>
+         <li class="flex items-start gap-2"><span class="text-blue-400">•</span> Mengeksplorasi makna tersembunyi</li>
+        </ul>
+       </div>
+       <div class="bg-gradient-to-br from-amber-900/40 to-amber-800/30 rounded-xl p-6 border border-amber-500/30">
+        <h3 class="text-amber-400 font-semibold mb-4 flex items-center gap-2"><span class="text-xl">🪜</span> Tangga Umpan Balik</h3>
+        <ul class="space-y-2 text-slate-300 text-sm">
+         <li class="flex items-start gap-2"><span class="text-amber-400">1.</span> Klarifikasi untuk memahami</li>
+         <li class="flex items-start gap-2"><span class="text-amber-400">2.</span> Apresiasi nilai positif</li>
+         <li class="flex items-start gap-2"><span class="text-amber-400">3.</span> Identifikasi area peningkatan</li>
+         <li class="flex items-start gap-2"><span class="text-amber-400">4.</span> Berikan saran konstruktif</li>
+         <li class="flex items-start gap-2"><span class="text-amber-400">5.</span> Sampaikan terima kasih</li>
+        </ul>
+       </div>
+      </div>
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+       <h3 class="text-emerald-400 font-semibold mb-4 flex items-center gap-2"><span class="text-xl">🎨</span> Seniman yang Dipelajari</h3>
+       <div class="grid md:grid-cols-3 gap-4">
+        <div class="bg-slate-700/50 rounded-lg p-4 text-center">
+         <p class="text-amber-400 font-semibold">Hendra Gunawan</p>
+         <p class="text-xs text-slate-400 mt-1">Tradisi Indonesia + Teknik Barat</p>
+        </div>
+        <div class="bg-slate-700/50 rounded-lg p-4 text-center">
+         <p class="text-pink-400 font-semibold">Erica Hestu Wahyuni</p>
+         <p class="text-xs text-slate-400 mt-1">Gaya Naif &amp; Fantasi</p>
+        </div>
+        <div class="bg-slate-700/50 rounded-lg p-4 text-center">
+         <p class="text-cyan-400 font-semibold">Marcel Duchamp</p>
+         <p class="text-xs text-slate-400 mt-1">Konsep Readymades</p>
+        </div>
+       </div>
+      </div>
+     </section><!-- Slide 12: Quiz HOTS -->
+     <section class="slide min-h-96 flex-col py-8" data-slide="12">
+      <h2 class="font-display text-3xl font-bold mb-2 text-center"><span class="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Soal HOTS</span></h2>
+      <p class="text-center text-slate-400 mb-6">Higher Order Thinking Skills - 10 Pertanyaan</p>
+      <div id="quiz-container" class="max-w-3xl mx-auto"><!-- Quiz content will be dynamically loaded -->
+       <div id="quiz-intro" class="text-center py-8">
+        <div class="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center">
+         <svg class="w-12 h-12 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14h-2v-2h2v2zm2.07-7.75l-.9.92C12.45 10.9 12 11.5 12 13h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
+         </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-3">Siap Menguji Pemahamanmu?</h3>
+        <p class="text-slate-300 mb-6">10 soal HOTS tentang apresiasi karya seni</p><button onclick="startQuiz()" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold px-8 py-3 rounded-xl transition-all transform hover:scale-105"> Mulai Kuis </button>
+       </div>
+       <div id="quiz-questions" class="hidden space-y-6"></div>
+       <div id="quiz-result" class="hidden text-center py-8">
+        <div id="result-icon" class="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center"></div>
+        <h3 id="result-title" class="text-2xl font-semibold mb-3"></h3>
+        <p id="result-score" class="text-slate-300 mb-6"></p><button onclick="restartQuiz()" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold px-8 py-3 rounded-xl transition-all transform hover:scale-105"> Ulangi Kuis </button>
+       </div>
+      </div>
+     </section>
+    </div>
+   </main><!-- Footer Navigation -->
+   <footer class="bg-slate-800/80 backdrop-blur-sm border-t border-amber-500/20 px-4 py-3 flex-shrink-0">
+    <div class="max-w-6xl mx-auto flex items-center justify-between"><button onclick="prevSlide()" id="prev-btn" class="btn-nav flex items-center gap-2 bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg><span class="hidden sm:inline">Sebelumnya</span> </button>
+     <div class="flex items-center gap-2">
+      <div id="slide-dots" class="flex gap-1"><!-- Dots will be generated dynamically -->
+      </div>
+     </div><button onclick="nextSlide()" id="next-btn" class="btn-nav flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 px-4 py-2 rounded-lg transition-colors"> <span class="hidden sm:inline">Selanjutnya</span>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg></button>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Apresiasi Karya Seni',
+      primary_color: '#fbbf24',
+      secondary_color: '#1e293b',
+      text_color: '#f1f5f9',
+      accent_color: '#f97316',
+      background_color: '#0f172a'
+    };
+
+    let config = { ...defaultConfig };
+
+    // Slide navigation
+    let currentSlide = 1;
+    const totalSlides = 12;
+
+    function updateSlideDisplay() {
+      document.querySelectorAll('.slide').forEach((slide, index) => {
+        slide.classList.remove('active');
+        if (index + 1 === currentSlide) {
+          slide.classList.add('active');
+        }
+      });
+
+      document.getElementById('current-slide-num').textContent = currentSlide;
+      document.getElementById('progress-bar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+
+      document.getElementById('prev-btn').disabled = currentSlide === 1;
+      document.getElementById('next-btn').style.display = currentSlide === totalSlides ? 'none' : 'flex';
+
+      updateDots();
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlideDisplay();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlideDisplay();
+      }
+    }
+
+    function goToSlide(num) {
+      currentSlide = num;
+      updateSlideDisplay();
+    }
+
+    function updateDots() {
+      const dotsContainer = document.getElementById('slide-dots');
+      dotsContainer.innerHTML = '';
+      for (let i = 1; i <= totalSlides; i++) {
+        const dot = document.createElement('button');
+        dot.className = `w-2 h-2 rounded-full transition-all ${i === currentSlide ? 'bg-amber-400 w-4' : 'bg-slate-600 hover:bg-slate-500'}`;
+        dot.onclick = () => goToSlide(i);
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    // Interactive activities
+    function checkObservation() {
+      const feedback = document.getElementById('obs-feedback');
+      feedback.classList.remove('hidden');
+      feedback.innerHTML = `
+        <p class="font-semibold mb-2">Contoh kata-kata deskriptif:</p>
+        <p>Cerah, Damai, Pedesaan, Hangat, Sederhana, Asri, Tenang, Sejuk, Harmonis, Indah</p>
+        <p class="mt-2 text-emerald-400">Bagus! Setiap orang bisa memiliki perspektif berbeda. Yang penting adalah alasan di balik pilihan kata-katamu.</p>
+      `;
+    }
+
+    function revealDuchampThought(num) {
+      const thought = document.getElementById(`duchamp-thought-${num}`);
+      thought.classList.toggle('hidden');
+    }
+
+    function checkFeedback() {
+      const input = document.getElementById('feedback-input').value.trim();
+      const result = document.getElementById('feedback-result');
+      result.classList.remove('hidden');
+
+      if (input.length < 20) {
+        result.className = 'text-sm p-3 rounded-lg bg-rose-900/30 border border-rose-500/30 text-rose-300';
+        result.innerHTML = 'Coba tuliskan umpan balik yang lebih lengkap menggunakan tangga umpan balik!';
+      } else {
+        const hasKeywords = ['karena', 'bagaimana', 'menurutku', 'mungkin', 'jika', 'apakah'].some(kw => input.toLowerCase().includes(kw));
+        if (hasKeywords) {
+          result.className = 'text-sm p-3 rounded-lg bg-emerald-900/30 border border-emerald-500/30 text-emerald-300';
+          result.innerHTML = '✓ Bagus! Umpan balikmu sudah menggunakan struktur yang baik dengan penjelasan yang jelas.';
+        } else {
+          result.className = 'text-sm p-3 rounded-lg bg-amber-900/30 border border-amber-500/30 text-amber-300';
+          result.innerHTML = 'Coba tambahkan alasan atau pertanyaan klarifikasi untuk membuat umpan balikmu lebih konstruktif.';
+        }
+      }
+    }
+
+    // Quiz functionality
+    const quizQuestions = [
+      {
+        question: "Mengapa Hendra Gunawan tetap melukis meskipun dalam kondisi dipenjara? Analisis motivasi seniman berdasarkan pemahaman Anda tentang karya seni sebagai representasi diri.",
+        options: [
+          "Karena ia bosan dan tidak ada kegiatan lain",
+          "Seni menjadi medium ekspresi jiwa dan perjuangan yang tidak bisa dipadamkan oleh situasi fisik",
+          "Karena ia ingin menjual lukisannya setelah keluar penjara",
+          "Karena ia diperintahkan oleh pihak penjara"
+        ],
+        correct: 1,
+        explanation: "Bagi seniman sejati, seni adalah kebutuhan jiwa untuk mengekspresikan diri. Kondisi fisik tidak menghalangi kebutuhan batiniah untuk berkarya."
+      },
+      {
+        question: "Marcel Duchamp meletakkan roda sepeda di atas bangku dan menyebutnya karya seni. Evaluasi dampak konsep 'readymades' terhadap definisi seni tradisional.",
+        options: [
+          "Readymades menghancurkan seni karena menghilangkan kebutuhan keterampilan",
+          "Readymades memperluas definisi seni dengan menekankan konsep dan konteks di atas teknik semata",
+          "Readymades tidak memiliki dampak signifikan terhadap dunia seni",
+          "Readymades hanya berlaku untuk seni patung, bukan lukisan"
+        ],
+        correct: 1,
+        explanation: "Duchamp menantang bahwa seni bukan hanya tentang keterampilan teknis, tetapi juga tentang ide, konteks, dan bagaimana kita memandang objek."
+      },
+      {
+        question: "Bandingkan gaya Erica Hestu Wahyuni dengan Hendra Gunawan. Apa yang membuat kedua seniman Indonesia ini berbeda dalam mengekspresikan pengalaman mereka?",
+        options: [
+          "Tidak ada perbedaan, keduanya menggunakan gaya yang sama",
+          "Hendra fokus pada realitas sosial dengan warna kaya tradisional, sementara Erica mengekspresikan kebahagiaan melalui gaya naif dan fantasi",
+          "Erica lebih baik karena pendidikannya di luar negeri",
+          "Hendra lebih fokus pada abstrak sementara Erica pada realisme"
+        ],
+        correct: 1,
+        explanation: "Setiap seniman memiliki cara unik mengekspresikan diri. Hendra dipengaruhi pengalaman perjuangan, sementara Erica menuangkan kebahagiaan dalam gaya ceria dan fantastis."
+      },
+      {
+        question: "Dalam tangga umpan balik, mengapa 'klarifikasi' diletakkan di tahap pertama sebelum apresiasi?",
+        options: [
+          "Karena klarifikasi lebih penting daripada apresiasi",
+          "Untuk memastikan pemahaman yang benar sebelum memberikan penilaian, sehingga umpan balik lebih relevan dan adil",
+          "Karena klarifikasi lebih mudah dilakukan",
+          "Tidak ada alasan khusus, urutannya bisa diubah"
+        ],
+        correct: 1,
+        explanation: "Memahami terlebih dahulu sebelum menilai adalah prinsip dasar umpan balik yang konstruktif. Tanpa pemahaman yang benar, apresiasi atau kritik bisa salah sasaran."
+      },
+      {
+        question: "Seorang siswa melihat lukisan abstrak dan berkata 'Saya tidak mengerti apa artinya, jadi ini bukan seni yang bagus.' Bagaimana Anda merespons pernyataan ini berdasarkan materi yang dipelajari?",
+        options: [
+          "Setuju, karena seni harus mudah dipahami",
+          "Apresiasi seni tidak selalu membutuhkan pemahaman langsung; rasa kebingungan juga merupakan respons valid yang bisa menjadi awal eksplorasi makna",
+          "Menyalahkan siswa karena tidak belajar dengan baik",
+          "Meminta siswa mengganti lukisan dengan yang lebih mudah"
+        ],
+        correct: 1,
+        explanation: "Kebingungan adalah bagian dari proses apresiasi. Rutinitas berpikir visibel mengajarkan kita untuk mengeksplorasi lebih dalam, bukan langsung menghakimi."
+      },
+      {
+        question: "Mengapa dalam apresiasi seni kita perlu mempertimbangkan latar belakang seniman seperti pengalaman hidup Hendra Gunawan sebagai pejuang?",
+        options: [
+          "Karena seniman terkenal selalu membuat karya yang lebih baik",
+          "Konteks kehidupan seniman membantu memahami makna dan emosi yang terkandung dalam karya, memperkaya interpretasi kita",
+          "Hanya untuk menambah nilai jual karya",
+          "Tidak perlu, karya seni harus dinilai secara terpisah dari senimannya"
+        ],
+        correct: 1,
+        explanation: "Karya seni adalah representasi diri seniman. Memahami konteks kehidupan membantu kita menemukan 'benang merah' antara pengalaman dan ekspresi visual."
+      },
+      {
+        question: "Sintesiskan hubungan antara rutinitas 'Lihat-Pikir-Imajinasi' dengan kemampuan berempati terhadap orang lain dalam kehidupan sehari-hari.",
+        options: [
+          "Tidak ada hubungan, keduanya adalah kemampuan yang terpisah",
+          "Rutinitas ini melatih kita untuk mengamati dengan cermat, memproses informasi, dan membayangkan perspektif orang lain - keterampilan dasar empati",
+          "Rutinitas ini hanya berlaku untuk seni, tidak untuk kehidupan nyata",
+          "Empati tidak bisa dilatih melalui apresiasi seni"
+        ],
+        correct: 1,
+        explanation: "Kemampuan melihat dari berbagai perspektif, berpikir mendalam, dan berimajinasi adalah fondasi empati yang bisa dilatih melalui apresiasi seni."
+      },
+      {
+        question: "Evaluasi mengapa umpan balik 'Bagus!' tanpa penjelasan dianggap kurang konstruktif dalam tangga umpan balik.",
+        options: [
+          "Karena terlalu singkat dan menghemat waktu",
+          "Umpan balik tanpa penjelasan tidak memberikan informasi spesifik untuk pengembangan diri dan tidak menunjukkan pemahaman terhadap karya",
+          "Karena kata 'bagus' sudah tidak digunakan lagi",
+          "Sebenarnya tidak masalah, yang penting niatnya baik"
+        ],
+        correct: 1,
+        explanation: "Umpan balik konstruktif membutuhkan kejelasan tentang 'apa' dan 'mengapa'. 'Bagus karena...' lebih bermanfaat untuk pembelajaran."
+      },
+      {
+        question: "Jika Anda diminta membuat karya seni tentang pandemi, bagaimana Anda akan mengaplikasikan konsep 'seni sebagai representasi diri' yang dipelajari dari seniman-seniman dalam materi ini?",
+        options: [
+          "Menyalin gaya seniman terkenal tanpa modifikasi",
+          "Mengeksplorasi pengalaman personal selama pandemi dan mengekspresikannya dengan gaya yang autentik, seperti para seniman mengekspresikan pengalaman hidup mereka",
+          "Membuat karya yang hanya fokus pada keindahan visual tanpa makna",
+          "Menggunakan objek sehari-hari tanpa mempertimbangkan konteks personal"
+        ],
+        correct: 1,
+        explanation: "Seperti Hendra mengekspresikan perjuangan dan Erica mengekspresikan kebahagiaan, karya yang bermakna lahir dari pengalaman dan perasaan autentik seniman."
+      },
+      {
+        question: "Ciptakan kriteria untuk membedakan antara 'karya seni yang provokatif' seperti readymades Duchamp dengan 'bukan karya seni'. Apa faktor penentunya?",
+        options: [
+          "Karya seni harus indah dan menyenangkan mata",
+          "Intensi seniman, konteks presentasi, dan dialog yang diciptakan dengan penonton adalah faktor penentu, bukan semata-mata bentuk fisik",
+          "Hanya karya yang dijual dengan harga tinggi yang bisa disebut seni",
+          "Karya seni harus menggunakan cat dan kanvas"
+        ],
+        correct: 1,
+        explanation: "Duchamp mengajarkan bahwa seni bukan hanya tentang bentuk fisik, tetapi tentang ide, konteks, dan bagaimana karya berkomunikasi dengan penonton."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answers = [];
+
+    function startQuiz() {
+      document.getElementById('quiz-intro').classList.add('hidden');
+      document.getElementById('quiz-questions').classList.remove('hidden');
+      currentQuestion = 0;
+      score = 0;
+      answers = [];
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const container = document.getElementById('quiz-questions');
+      const q = quizQuestions[currentQuestion];
+
+      container.innerHTML = `
+        <div class="bg-slate-800/50 rounded-xl p-6 border border-amber-500/20">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-amber-400 font-semibold">Soal ${currentQuestion + 1} dari ${quizQuestions.length}</span>
+            <span class="text-slate-400 text-sm">Skor: ${score}/${currentQuestion}</span>
+          </div>
+          <div class="w-full h-2 bg-slate-700 rounded-full mb-6">
+            <div class="h-full bg-gradient-to-r from-amber-400 to-orange-500 rounded-full transition-all" style="width: ${((currentQuestion + 1) / quizQuestions.length) * 100}%"></div>
+          </div>
+          <p class="text-white text-lg mb-6 leading-relaxed">${q.question}</p>
+          <div class="space-y-3">
+            ${q.options.map((opt, idx) => `
+              <button onclick="selectAnswer(${idx})" class="quiz-option w-full text-left p-4 rounded-lg border border-slate-600 hover:border-amber-500 transition-all" data-index="${idx}">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-slate-700 text-amber-400 font-semibold mr-3">${String.fromCharCode(65 + idx)}</span>
+                <span class="text-slate-200">${opt}</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function selectAnswer(idx) {
+      const q = quizQuestions[currentQuestion];
+      const options = document.querySelectorAll('.quiz-option');
+
+      options.forEach(opt => {
+        opt.disabled = true;
+        const optIdx = parseInt(opt.dataset.index);
+        if (optIdx === q.correct) {
+          opt.classList.add('correct');
+        } else if (optIdx === idx && idx !== q.correct) {
+          opt.classList.add('incorrect');
+        }
+      });
+
+      if (idx === q.correct) {
+        score++;
+      }
+
+      answers.push({
+        question: currentQuestion,
+        selected: idx,
+        correct: q.correct
+      });
+
+      setTimeout(() => {
+        const container = document.getElementById('quiz-questions');
+        const explanationDiv = document.createElement('div');
+        explanationDiv.className = 'mt-4 p-4 rounded-lg ' + (idx === q.correct ? 'bg-emerald-900/30 border border-emerald-500/30' : 'bg-rose-900/30 border border-rose-500/30');
+        explanationDiv.innerHTML = `
+          <p class="font-semibold ${idx === q.correct ? 'text-emerald-400' : 'text-rose-400'} mb-2">${idx === q.correct ? '✓ Benar!' : '✗ Kurang tepat'}</p>
+          <p class="text-slate-300 text-sm">${q.explanation}</p>
+          <button onclick="nextQuestion()" class="mt-4 bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold px-6 py-2 rounded-lg transition-colors">
+            ${currentQuestion < quizQuestions.length - 1 ? 'Soal Berikutnya →' : 'Lihat Hasil'}
+          </button>
+        `;
+        container.querySelector('.bg-slate-800\\/50').appendChild(explanationDiv);
+      }, 500);
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < quizQuestions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('quiz-questions').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+
+      const percentage = (score / quizQuestions.length) * 100;
+      const resultIcon = document.getElementById('result-icon');
+      const resultTitle = document.getElementById('result-title');
+      const resultScore = document.getElementById('result-score');
+
+      if (percentage >= 80) {
+        resultIcon.className = 'w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-gradient-to-br from-emerald-400 to-emerald-600';
+        resultIcon.innerHTML = '<svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>';
+        resultTitle.textContent = 'Luar Biasa! 🎉';
+        resultTitle.className = 'text-2xl font-semibold mb-3 text-emerald-400';
+      } else if (percentage >= 60) {
+        resultIcon.className = 'w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-gradient-to-br from-amber-400 to-amber-600';
+        resultIcon.innerHTML = '<svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>';
+        resultTitle.textContent = 'Bagus! 👍';
+        resultTitle.className = 'text-2xl font-semibold mb-3 text-amber-400';
+      } else {
+        resultIcon.className = 'w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-gradient-to-br from-blue-400 to-blue-600';
+        resultIcon.innerHTML = '<svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>';
+        resultTitle.textContent = 'Terus Belajar! 💪';
+        resultTitle.className = 'text-2xl font-semibold mb-3 text-blue-400';
+      }
+
+      resultScore.innerHTML = `Skor Anda: <span class="text-amber-400 font-bold text-2xl">${score}</span> dari <span class="font-bold">${quizQuestions.length}</span> soal (${percentage}%)`;
+    }
+
+    function restartQuiz() {
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('quiz-intro').classList.remove('hidden');
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+      }
+    });
+
+    // Element SDK initialization
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          
+          // Update main title
+          const mainTitle = document.getElementById('main-title');
+          if (mainTitle) {
+            mainTitle.textContent = config.main_title || defaultConfig.main_title;
+          }
+          
+          // Apply colors
+          document.documentElement.style.setProperty('--primary-color', config.primary_color || defaultConfig.primary_color);
+          document.documentElement.style.setProperty('--background-color', config.background_color || defaultConfig.background_color);
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (value) => {
+                cfg.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (value) => {
+                cfg.secondary_color = value;
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (value) => {
+                cfg.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                cfg.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+              get: () => cfg.accent_color || defaultConfig.accent_color,
+              set: (value) => {
+                cfg.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ["main_title", cfg.main_title || defaultConfig.main_title]
+        ])
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      updateSlideDisplay();
+      document.getElementById('total-slides').textContent = totalSlides;
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c9b05edc213b5a2',t:'MTc3MDM4NDg0Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

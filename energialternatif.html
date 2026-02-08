@@ -1,0 +1,1457 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pembelajaran Listrik, Magnet &amp; Energi Alternatif</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --primary-bg: #0f172a;
+      --secondary-surface: #1e293b;
+      --text-color: #f1f5f9;
+      --primary-action: #3b82f6;
+      --secondary-action: #22d3ee;
+    }
+    
+    * {
+      font-family: 'Nunito', sans-serif;
+    }
+    
+    .title-font {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #3b82f6, #22d3ee, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+    }
+    
+    .magnet-animation {
+      animation: magnetPulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes magnetPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .field-line {
+      stroke-dasharray: 10;
+      animation: flowLine 1s linear infinite;
+    }
+    
+    @keyframes flowLine {
+      to { stroke-dashoffset: -20; }
+    }
+    
+    .electron-flow {
+      animation: electronMove 2s linear infinite;
+    }
+    
+    @keyframes electronMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(100px); }
+    }
+    
+    .rotate-slow {
+      animation: rotateSlow 4s linear infinite;
+    }
+    
+    @keyframes rotateSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .nav-item {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #3b82f6, #22d3ee);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+    
+    .nav-item:hover::after,
+    .nav-item.active::after {
+      width: 100%;
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    
+    .quiz-option:hover {
+      transform: scale(1.02);
+    }
+    
+    .quiz-option.selected {
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.1);
+    }
+    
+    .quiz-option.correct {
+      border-color: #22c55e;
+      background: rgba(34, 197, 94, 0.2);
+    }
+    
+    .quiz-option.incorrect {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.2);
+    }
+    
+    .floating {
+      animation: floating 3s ease-in-out infinite;
+    }
+    
+    @keyframes floating {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .glow {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    }
+    
+    .section-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .interactive-magnet {
+      cursor: grab;
+    }
+    
+    .interactive-magnet:active {
+      cursor: grabbing;
+    }
+    
+    .spark {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #fbbf24;
+      border-radius: 50%;
+      animation: sparkle 0.5s ease-out forwards;
+    }
+    
+    @keyframes sparkle {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(0); }
+    }
+    
+    .coil-wire {
+      fill: none;
+      stroke: #f59e0b;
+      stroke-width: 3;
+    }
+    
+    .magnetic-field {
+      stroke: #22d3ee;
+      stroke-width: 2;
+      fill: none;
+      opacity: 0.6;
+    }
+    
+    .tooltip {
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .has-tooltip:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .scroll-indicator {
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-slate-900 text-slate-100 overflow-auto">
+  <div id="app-container" class="min-h-full w-full"><!-- Navigation Header -->
+   <nav class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center"><span class="text-xl">⚡</span>
+       </div>
+       <div>
+        <h1 id="main-title" class="title-font font-bold text-lg gradient-text">Listrik &amp; Magnet</h1>
+        <p id="teacher-display" class="text-xs text-slate-400">Pembelajaran Interaktif</p>
+       </div>
+      </div>
+      <div class="hidden md:flex items-center gap-1"><button onclick="scrollToSection('intro')" class="nav-item px-3 py-2 text-sm text-slate-300 hover:text-white rounded-lg">Intro</button> <button onclick="scrollToSection('magnet')" class="nav-item px-3 py-2 text-sm text-slate-300 hover:text-white rounded-lg">Magnet</button> <button onclick="scrollToSection('medan')" class="nav-item px-3 py-2 text-sm text-slate-300 hover:text-white rounded-lg">Medan</button> <button onclick="scrollToSection('elektro')" class="nav-item px-3 py-2 text-sm text-slate-300 hover:text-white rounded-lg">Elektromagnet</button> <button onclick="scrollToSection('generator')" class="nav-item px-3 py-2 text-sm text-slate-300 hover:text-white rounded-lg">Generator</button> <button onclick="scrollToSection('quiz')" class="nav-item px-3 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-500">Quiz</button>
+      </div><!-- Mobile Menu Button --> <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg bg-slate-800">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+       </svg></button>
+     </div><!-- Mobile Menu -->
+     <div id="mobile-menu" class="hidden md:hidden mt-3 pb-3 border-t border-slate-700 pt-3">
+      <div class="flex flex-col gap-2"><button onclick="scrollToSection('intro')" class="px-3 py-2 text-left text-slate-300 hover:bg-slate-800 rounded-lg">📚 Intro</button> <button onclick="scrollToSection('magnet')" class="px-3 py-2 text-left text-slate-300 hover:bg-slate-800 rounded-lg">🧲 Magnet</button> <button onclick="scrollToSection('medan')" class="px-3 py-2 text-left text-slate-300 hover:bg-slate-800 rounded-lg">🌀 Medan Magnet</button> <button onclick="scrollToSection('elektro')" class="px-3 py-2 text-left text-slate-300 hover:bg-slate-800 rounded-lg">⚡ Elektromagnet</button> <button onclick="scrollToSection('generator')" class="px-3 py-2 text-left text-slate-300 hover:bg-slate-800 rounded-lg">🔋 Generator</button> <button onclick="scrollToSection('quiz')" class="px-3 py-2 text-left bg-blue-600 text-white rounded-lg">📝 Quiz HOTS</button>
+      </div>
+     </div>
+    </div>
+   </nav><!-- Progress Bar -->
+   <div class="fixed top-[65px] left-0 right-0 h-1 bg-slate-800 z-40">
+    <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-blue-500 via-cyan-400 to-purple-500" style="width: 0%"></div>
+   </div><!-- Hero Section -->
+   <section id="intro" class="relative min-h-[90%] flex items-center justify-center py-20 px-4 overflow-hidden"><!-- Animated Background -->
+    <div class="absolute inset-0 overflow-hidden">
+     <div class="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl floating"></div>
+     <div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl floating" style="animation-delay: 1s"></div>
+     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-3xl"></div>
+    </div>
+    <div class="relative z-10 max-w-4xl mx-auto text-center">
+     <div class="inline-flex items-center gap-2 px-4 py-2 bg-slate-800/50 rounded-full mb-6 border border-slate-700"><span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span> <span class="text-sm text-slate-300">Materi IPA Kelas IX</span>
+     </div>
+     <h1 class="title-font text-4xl md:text-6xl font-extrabold mb-6"><span class="gradient-text">Listrik, Magnet &amp;</span><br><span class="text-white">Sumber Energi Alternatif</span></h1>
+     <p class="text-lg md:text-xl text-slate-400 mb-8 max-w-2xl mx-auto">Jelajahi dunia elektromagnetik melalui pembelajaran interaktif dengan simulasi, visualisasi, dan tantangan HOTS yang menantang!</p>
+     <div class="flex flex-wrap justify-center gap-4 mb-12"><button onclick="scrollToSection('magnet')" class="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 flex items-center gap-2"> <span>Mulai Belajar</span>
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+       </svg></button> <button onclick="scrollToSection('quiz')" class="px-8 py-4 bg-slate-800 border border-slate-600 rounded-xl font-semibold hover:bg-slate-700 transition-all duration-300"> Langsung Quiz 📝 </button>
+     </div><!-- Feature Cards -->
+     <div class="grid md:grid-cols-3 gap-4 text-left">
+      <div class="p-5 bg-slate-800/50 rounded-2xl border border-slate-700/50 card-hover">
+       <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-3"><span class="text-2xl">🧲</span>
+       </div>
+       <h3 class="font-bold mb-2">6 Materi Lengkap</h3>
+       <p class="text-sm text-slate-400">Dari dasar magnet hingga generator listrik</p>
+      </div>
+      <div class="p-5 bg-slate-800/50 rounded-2xl border border-slate-700/50 card-hover">
+       <div class="w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-3"><span class="text-2xl">🎮</span>
+       </div>
+       <h3 class="font-bold mb-2">Simulasi Interaktif</h3>
+       <p class="text-sm text-slate-400">Eksperimen virtual yang menyenangkan</p>
+      </div>
+      <div class="p-5 bg-slate-800/50 rounded-2xl border border-slate-700/50 card-hover">
+       <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-3"><span class="text-2xl">🧠</span>
+       </div>
+       <h3 class="font-bold mb-2">10 Soal HOTS</h3>
+       <p class="text-sm text-slate-400">Uji pemahamanmu dengan tantangan tingkat tinggi</p>
+      </div>
+     </div><!-- Scroll Indicator -->
+     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator">
+      <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+     </div>
+    </div>
+   </section><!-- Section 1: Pengenalan Magnet -->
+   <section id="magnet" class="py-20 px-4 bg-gradient-to-b from-slate-900 to-slate-800">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm font-medium mb-4">Bagian 1</span>
+      <h2 class="title-font text-3xl md:text-4xl font-bold mb-4">Pengenalan Magnet</h2>
+      <p class="text-slate-400 max-w-2xl mx-auto">Memahami dasar-dasar magnet dan sifat-sifatnya</p>
+     </div><!-- History Card -->
+     <div class="mb-8 p-6 bg-gradient-to-r from-amber-900/30 to-orange-900/30 rounded-2xl border border-amber-700/30">
+      <div class="flex items-start gap-4">
+       <div class="w-16 h-16 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-3xl">📜</span>
+       </div>
+       <div>
+        <h3 class="text-xl font-bold text-amber-400 mb-2">Sejarah Singkat Magnet</h3>
+        <p class="text-slate-300 leading-relaxed">Kata "magnet" berasal dari bahasa Yunani <strong class="text-amber-300">"magnítis líthos"</strong> yang berarti "batu magnesia". Pengamatan pertama dilakukan oleh <strong class="text-amber-300">Thales dari Miletus</strong> pada abad ke-6 SM terhadap bijih mineral metalik yang memiliki kemampuan menarik besi. Batu magnetit (Fe₃O₄) inilah yang menjadi cikal bakal penemuan magnet.</p>
+       </div>
+      </div>
+     </div>
+     <div class="grid lg:grid-cols-2 gap-8 mb-12"><!-- Interactive Magnet Illustration -->
+      <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+       <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">🧲</span> Bentuk-Bentuk Magnet</h3>
+       <div class="grid grid-cols-2 gap-4"><!-- Magnet Batang -->
+        <div class="p-4 bg-slate-700/50 rounded-xl text-center card-hover">
+         <svg viewbox="0 0 120 60" class="w-full h-20 mb-2"><defs>
+           <lineargradient id="magnetGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#ef4444" />
+            <stop offset="50%" style="stop-color:#ef4444" />
+            <stop offset="50%" style="stop-color:#3b82f6" />
+            <stop offset="100%" style="stop-color:#3b82f6" />
+           </lineargradient>
+          </defs> <rect x="10" y="15" width="100" height="30" rx="3" fill="url(#magnetGrad1)" class="magnet-animation" /> <text x="35" y="35" fill="white" font-size="14" font-weight="bold">
+           U
+          </text> <text x="80" y="35" fill="white" font-size="14" font-weight="bold">
+           S
+          </text>
+         </svg>
+         <p class="text-sm font-medium">Magnet Batang</p>
+        </div><!-- Magnet U -->
+        <div class="p-4 bg-slate-700/50 rounded-xl text-center card-hover">
+         <svg viewbox="0 0 100 80" class="w-full h-20 mb-2"><defs>
+           <lineargradient id="magnetGradU" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#ef4444" />
+            <stop offset="100%" style="stop-color:#3b82f6" />
+           </lineargradient>
+          </defs> <path d="M15,10 L15,60 Q15,70 25,70 L75,70 Q85,70 85,60 L85,10" fill="none" stroke="url(#magnetGradU)" stroke-width="15" stroke-linecap="round" class="magnet-animation" /> <text x="10" y="15" fill="#ef4444" font-size="12" font-weight="bold">
+           U
+          </text> <text x="82" y="15" fill="#3b82f6" font-size="12" font-weight="bold">
+           S
+          </text>
+         </svg>
+         <p class="text-sm font-medium">Magnet Ladam (U)</p>
+        </div><!-- Magnet Jarum -->
+        <div class="p-4 bg-slate-700/50 rounded-xl text-center card-hover">
+         <svg viewbox="0 0 120 60" class="w-full h-20 mb-2"><defs>
+           <lineargradient id="magnetGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#ef4444" />
+            <stop offset="50%" style="stop-color:#94a3b8" />
+            <stop offset="100%" style="stop-color:#3b82f6" />
+           </lineargradient>
+          </defs> <polygon points="10,30 55,20 55,40" fill="#ef4444" /> <polygon points="110,30 65,20 65,40" fill="#3b82f6" /> <rect x="55" y="25" width="10" height="10" fill="#94a3b8" /> <circle cx="60" cy="30" r="3" fill="#1e293b" />
+         </svg>
+         <p class="text-sm font-medium">Magnet Jarum (Kompas)</p>
+        </div><!-- Magnet Silinder -->
+        <div class="p-4 bg-slate-700/50 rounded-xl text-center card-hover">
+         <svg viewbox="0 0 100 70" class="w-full h-20 mb-2"><defs>
+           <lineargradient id="magnetGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#ef4444" />
+            <stop offset="50%" style="stop-color:#ef4444" />
+            <stop offset="50%" style="stop-color:#3b82f6" />
+            <stop offset="100%" style="stop-color:#3b82f6" />
+           </lineargradient>
+          </defs> <ellipse cx="20" cy="35" rx="10" ry="20" fill="#dc2626" /> <rect x="20" y="15" width="60" height="40" fill="url(#magnetGrad3)" /> <ellipse cx="80" cy="35" rx="10" ry="20" fill="#2563eb" />
+         </svg>
+         <p class="text-sm font-medium">Magnet Silinder</p>
+        </div>
+       </div>
+      </div><!-- Properties -->
+      <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+       <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">📋</span> Sifat-Sifat Magnet</h3>
+       <div class="space-y-4">
+        <div class="flex items-start gap-3 p-3 bg-slate-700/30 rounded-xl">
+         <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0"><span>1</span>
+         </div>
+         <div>
+          <p class="font-medium">Dapat menarik benda berbahan besi, baja, kobalt, dan nikel</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-3 p-3 bg-slate-700/30 rounded-xl">
+         <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0"><span>2</span>
+         </div>
+         <div>
+          <p class="font-medium">Memiliki dua kutub: <span class="text-red-400">Utara (U)</span> dan <span class="text-blue-400">Selatan (S)</span></p>
+         </div>
+        </div>
+        <div class="flex items-start gap-3 p-3 bg-slate-700/30 rounded-xl">
+         <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0"><span>3</span>
+         </div>
+         <div>
+          <p class="font-medium">Gaya magnet terkuat berada di kedua kutubnya</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-3 p-3 bg-slate-700/30 rounded-xl">
+         <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0"><span>4</span>
+         </div>
+         <div>
+          <p class="font-medium">Jika digantung bebas, akan menunjuk arah Utara-Selatan bumi</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Interactive: Magnetic Interaction -->
+     <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 mb-8">
+      <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">🎮</span> Simulasi Interaktif: Interaksi Kutub Magnet</h3>
+      <p class="text-slate-400 mb-4">Klik tombol untuk melihat interaksi antara dua kutub magnet!</p>
+      <div id="magnet-sim" class="bg-slate-900/50 rounded-xl p-8 mb-4">
+       <div class="flex items-center justify-center gap-4 mb-6">
+        <div id="magnet1" class="relative">
+         <svg viewbox="0 0 100 50" class="w-32 transition-transform duration-500" id="mag1-svg"><rect x="5" y="10" width="90" height="30" rx="3" fill="#ef4444" /> <rect x="50" y="10" width="45" height="30" rx="0 3 3 0" fill="#3b82f6" /> <text x="25" y="30" fill="white" font-size="12" font-weight="bold">
+           U
+          </text> <text x="70" y="30" fill="white" font-size="12" font-weight="bold">
+           S
+          </text>
+         </svg>
+        </div>
+        <div id="interaction-zone" class="w-16 h-16 flex items-center justify-center"><span id="interaction-icon" class="text-4xl">❓</span>
+        </div>
+        <div id="magnet2" class="relative">
+         <svg viewbox="0 0 100 50" class="w-32 transition-transform duration-500" id="mag2-svg"><rect x="5" y="10" width="45" height="30" rx="3 0 0 3" fill="#ef4444" /> <rect x="50" y="10" width="45" height="30" rx="0 3 3 0" fill="#3b82f6" /> <text x="25" y="30" fill="white" font-size="12" font-weight="bold">
+           U
+          </text> <text x="70" y="30" fill="white" font-size="12" font-weight="bold">
+           S
+          </text>
+         </svg>
+        </div>
+       </div>
+       <p id="interaction-result" class="text-center text-lg font-medium text-slate-400">Pilih kombinasi kutub untuk melihat interaksinya</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-3"><button onclick="showMagnetInteraction('UU')" class="px-4 py-2 bg-red-600/20 border border-red-500/50 rounded-lg hover:bg-red-600/30 transition-colors"> <span class="text-red-400">Utara</span> ↔ <span class="text-red-400">Utara</span> </button> <button onclick="showMagnetInteraction('SS')" class="px-4 py-2 bg-blue-600/20 border border-blue-500/50 rounded-lg hover:bg-blue-600/30 transition-colors"> <span class="text-blue-400">Selatan</span> ↔ <span class="text-blue-400">Selatan</span> </button> <button onclick="showMagnetInteraction('US')" class="px-4 py-2 bg-purple-600/20 border border-purple-500/50 rounded-lg hover:bg-purple-600/30 transition-colors"> <span class="text-red-400">Utara</span> ↔ <span class="text-blue-400">Selatan</span> </button>
+      </div>
+     </div><!-- Teori Magnet Elementer -->
+     <div class="bg-gradient-to-r from-cyan-900/30 to-blue-900/30 rounded-2xl p-6 border border-cyan-700/30">
+      <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">🔬</span> Teori Magnet Elementer</h3>
+      <div class="grid md:grid-cols-2 gap-6">
+       <div>
+        <h4 class="font-semibold text-cyan-400 mb-3">Benda Bersifat Magnet</h4>
+        <svg viewbox="0 0 200 80" class="w-full h-24 mb-3"><rect x="10" y="10" width="180" height="60" rx="5" fill="#1e293b" stroke="#22d3ee" stroke-width="2" /> <g transform="translate(20, 25)">
+          <rect x="0" y="0" width="25" height="12" fill="#ef4444" rx="2" />
+          <rect x="25" y="0" width="25" height="12" fill="#3b82f6" rx="2" />
+         </g> <g transform="translate(60, 25)">
+          <rect x="0" y="0" width="25" height="12" fill="#ef4444" rx="2" />
+          <rect x="25" y="0" width="25" height="12" fill="#3b82f6" rx="2" />
+         </g> <g transform="translate(100, 25)">
+          <rect x="0" y="0" width="25" height="12" fill="#ef4444" rx="2" />
+          <rect x="25" y="0" width="25" height="12" fill="#3b82f6" rx="2" />
+         </g> <g transform="translate(140, 25)">
+          <rect x="0" y="0" width="25" height="12" fill="#ef4444" rx="2" />
+          <rect x="25" y="0" width="25" height="12" fill="#3b82f6" rx="2" />
+         </g> <g transform="translate(20, 45)">
+          <rect x="0" y="0" width="25" height="12" fill="#ef4444" rx="2" />
+          <rect x="25" y="0" width="25" height="12" fill="#3b82f6" rx="2" />
+         </g> <g transform="translate(60, 45)">
+          <rect x="0" y="0" width="25" height="12" fill="#ef4444" rx="2" />
+          <rect x="25" y="0" width="25" height="12" fill="#3b82f6" rx="2" />
+         </g> <g transform="translate(100, 45)">
+          <rect x="0" y="0" width="25" height="12" fill="#ef4444" rx="2" />
+          <rect x="25" y="0" width="25" height="12" fill="#3b82f6" rx="2" />
+         </g> <g transform="translate(140, 45)">
+          <rect x="0" y="0" width="25" height="12" fill="#ef4444" rx="2" />
+          <rect x="25" y="0" width="25" height="12" fill="#3b82f6" rx="2" />
+         </g>
+        </svg>
+        <p class="text-slate-300 text-sm">Partikel elementer tersusun <strong class="text-cyan-400">teratur searah</strong>, menghasilkan sifat magnet yang kuat.</p>
+       </div>
+       <div>
+        <h4 class="font-semibold text-slate-400 mb-3">Benda Tidak Bersifat Magnet</h4>
+        <svg viewbox="0 0 200 80" class="w-full h-24 mb-3"><rect x="10" y="10" width="180" height="60" rx="5" fill="#1e293b" stroke="#64748b" stroke-width="2" /> <g transform="translate(25, 25) rotate(15)">
+          <rect x="0" y="0" width="20" height="10" fill="#ef4444" rx="2" />
+          <rect x="20" y="0" width="20" height="10" fill="#3b82f6" rx="2" />
+         </g> <g transform="translate(70, 30) rotate(-20)">
+          <rect x="0" y="0" width="20" height="10" fill="#ef4444" rx="2" />
+          <rect x="20" y="0" width="20" height="10" fill="#3b82f6" rx="2" />
+         </g> <g transform="translate(115, 22) rotate(45)">
+          <rect x="0" y="0" width="20" height="10" fill="#ef4444" rx="2" />
+          <rect x="20" y="0" width="20" height="10" fill="#3b82f6" rx="2" />
+         </g> <g transform="translate(155, 35) rotate(-10)">
+          <rect x="0" y="0" width="20" height="10" fill="#ef4444" rx="2" />
+          <rect x="20" y="0" width="20" height="10" fill="#3b82f6" rx="2" />
+         </g> <g transform="translate(30, 50) rotate(-30)">
+          <rect x="0" y="0" width="20" height="10" fill="#ef4444" rx="2" />
+          <rect x="20" y="0" width="20" height="10" fill="#3b82f6" rx="2" />
+         </g> <g transform="translate(80, 48) rotate(25)">
+          <rect x="0" y="0" width="20" height="10" fill="#ef4444" rx="2" />
+          <rect x="20" y="0" width="20" height="10" fill="#3b82f6" rx="2" />
+         </g> <g transform="translate(130, 52) rotate(-45)">
+          <rect x="0" y="0" width="20" height="10" fill="#ef4444" rx="2" />
+          <rect x="20" y="0" width="20" height="10" fill="#3b82f6" rx="2" />
+         </g>
+        </svg>
+        <p class="text-slate-300 text-sm">Partikel elementer tersusun <strong class="text-slate-400">acak/tidak teratur</strong>, sehingga sifat magnet saling meniadakan.</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Section 2: Medan Magnet -->
+   <section id="medan" class="py-20 px-4 bg-slate-900">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-sm font-medium mb-4">Bagian 2</span>
+      <h2 class="title-font text-3xl md:text-4xl font-bold mb-4">Medan Magnet</h2>
+      <p class="text-slate-400 max-w-2xl mx-auto">Memahami daerah pengaruh gaya magnet dan visualisasinya</p>
+     </div>
+     <div class="grid lg:grid-cols-2 gap-8 mb-12"><!-- Definition -->
+      <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+       <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">📖</span> Definisi Medan Magnet</h3>
+       <div class="p-4 bg-cyan-900/20 rounded-xl border border-cyan-700/30 mb-4">
+        <p class="text-lg text-cyan-100"><strong>Medan magnet</strong> adalah daerah di sekitar magnet yang masih dipengaruhi oleh gaya magnet.</p>
+       </div>
+       <div class="space-y-3">
+        <div class="flex items-center gap-3 p-3 bg-slate-700/30 rounded-lg"><span class="text-2xl">🎯</span>
+         <p class="text-sm">Digambarkan dengan <strong class="text-cyan-400">garis-garis gaya magnet</strong></p>
+        </div>
+        <div class="flex items-center gap-3 p-3 bg-slate-700/30 rounded-lg"><span class="text-2xl">🔴</span>
+         <p class="text-sm">Garis gaya keluar dari kutub <strong class="text-red-400">Utara</strong></p>
+        </div>
+        <div class="flex items-center gap-3 p-3 bg-slate-700/30 rounded-lg"><span class="text-2xl">🔵</span>
+         <p class="text-sm">Garis gaya masuk ke kutub <strong class="text-blue-400">Selatan</strong></p>
+        </div>
+        <div class="flex items-center gap-3 p-3 bg-slate-700/30 rounded-lg"><span class="text-2xl">💪</span>
+         <p class="text-sm">Medan terkuat di <strong class="text-yellow-400">ujung-ujung kutub</strong></p>
+        </div>
+       </div>
+      </div><!-- Visualization -->
+      <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+       <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">🌀</span> Visualisasi Garis Gaya Magnet</h3>
+       <svg viewbox="0 0 300 200" class="w-full h-64"><!-- Background --> <rect width="300" height="200" fill="#0f172a" /> <!-- Magnet --> <rect x="100" y="85" width="100" height="30" rx="3" fill="#dc2626" /> <rect x="150" y="85" width="50" height="30" rx="0 3 3 0" fill="#2563eb" /> <text x="120" y="105" fill="white" font-size="12" font-weight="bold">
+         U
+        </text> <text x="170" y="105" fill="white" font-size="12" font-weight="bold">
+         S
+        </text> <!-- Field Lines --> <path d="M100,100 Q50,100 50,50 Q50,0 150,0 Q250,0 250,50 Q250,100 200,100" fill="none" stroke="#22d3ee" stroke-width="2" class="field-line" /> <path d="M100,100 Q60,100 60,60 Q60,20 150,20 Q240,20 240,60 Q240,100 200,100" fill="none" stroke="#22d3ee" stroke-width="2" class="field-line" style="animation-delay: 0.2s" /> <path d="M100,100 Q70,100 70,70 Q70,40 150,40 Q230,40 230,70 Q230,100 200,100" fill="none" stroke="#22d3ee" stroke-width="2" class="field-line" style="animation-delay: 0.4s" /> <path d="M100,100 Q50,100 50,150 Q50,200 150,200 Q250,200 250,150 Q250,100 200,100" fill="none" stroke="#22d3ee" stroke-width="2" class="field-line" style="animation-delay: 0.1s" /> <path d="M100,100 Q60,100 60,140 Q60,180 150,180 Q240,180 240,140 Q240,100 200,100" fill="none" stroke="#22d3ee" stroke-width="2" class="field-line" style="animation-delay: 0.3s" /> <path d="M100,100 Q70,100 70,130 Q70,160 150,160 Q230,160 230,130 Q230,100 200,100" fill="none" stroke="#22d3ee" stroke-width="2" class="field-line" style="animation-delay: 0.5s" /> <!-- Arrows indicating direction --> <polygon points="50,45 55,50 50,55 45,50" fill="#22d3ee" /> <polygon points="250,45 255,50 250,55 245,50" fill="#22d3ee" /> <polygon points="50,155 55,150 50,145 45,150" fill="#22d3ee" /> <polygon points="250,155 255,150 250,145 245,150" fill="#22d3ee" />
+       </svg>
+       <p class="text-center text-slate-400 text-sm mt-2">Garis gaya magnet mengalir dari kutub Utara ke Selatan</p>
+      </div>
+     </div><!-- Iron Filings Experiment -->
+     <div class="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-2xl p-6 border border-purple-700/30">
+      <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">🧪</span> Eksperimen Serbuk Besi</h3>
+      <div class="grid md:grid-cols-2 gap-6">
+       <div>
+        <p class="text-slate-300 mb-4">Saat serbuk besi ditaburkan di sekitar magnet, serbuk akan membentuk pola yang menunjukkan <strong class="text-purple-400">garis-garis gaya magnet</strong>. Kerapatan serbuk menunjukkan kekuatan medan:</p>
+        <ul class="space-y-2 text-slate-300">
+         <li class="flex items-center gap-2"><span class="w-3 h-3 bg-purple-500 rounded-full"></span> Serbuk paling rapat di <strong>ujung kutub</strong> = medan terkuat</li>
+         <li class="flex items-center gap-2"><span class="w-3 h-3 bg-purple-400 rounded-full"></span> Serbuk merenggang di <strong>tengah</strong> = medan lebih lemah</li>
+         <li class="flex items-center gap-2"><span class="w-3 h-3 bg-purple-300 rounded-full"></span> Serbuk jarang di <strong>jauh dari magnet</strong> = medan terlemah</li>
+        </ul>
+       </div>
+       <div class="bg-slate-900/50 rounded-xl p-4">
+        <svg viewbox="0 0 200 150" class="w-full h-40"><!-- Magnet --> <rect x="60" y="60" width="80" height="30" rx="3" fill="#dc2626" /> <rect x="100" y="60" width="40" height="30" rx="0 3 3 0" fill="#2563eb" /> <text x="75" y="80" fill="white" font-size="10" font-weight="bold">
+          U
+         </text> <text x="115" y="80" fill="white" font-size="10" font-weight="bold">
+          S
+         </text> <!-- Iron filings - dense at poles --> <g fill="#a855f7" opacity="0.8"><!-- North pole - very dense -->
+          <circle cx="55" cy="65" r="1.5" />
+          <circle cx="52" cy="70" r="1.5" />
+          <circle cx="50" cy="75" r="1.5" />
+          <circle cx="48" cy="68" r="1.5" />
+          <circle cx="46" cy="73" r="1.5" />
+          <circle cx="44" cy="78" r="1.5" />
+          <circle cx="55" cy="85" r="1.5" />
+          <circle cx="52" cy="80" r="1.5" />
+          <circle cx="50" cy="83" r="1.5" />
+          <circle cx="42" cy="70" r="1.5" />
+          <circle cx="40" cy="75" r="1.5" /> <!-- South pole - very dense -->
+          <circle cx="145" cy="65" r="1.5" />
+          <circle cx="148" cy="70" r="1.5" />
+          <circle cx="150" cy="75" r="1.5" />
+          <circle cx="152" cy="68" r="1.5" />
+          <circle cx="154" cy="73" r="1.5" />
+          <circle cx="156" cy="78" r="1.5" />
+          <circle cx="145" cy="85" r="1.5" />
+          <circle cx="148" cy="80" r="1.5" />
+          <circle cx="150" cy="83" r="1.5" />
+          <circle cx="158" cy="70" r="1.5" />
+          <circle cx="160" cy="75" r="1.5" />
+         </g> <!-- Field pattern filings - top --> <g fill="#a855f7" opacity="0.5">
+          <circle cx="70" cy="50" r="1" />
+          <circle cx="90" cy="45" r="1" />
+          <circle cx="110" cy="45" r="1" />
+          <circle cx="130" cy="50" r="1" />
+          <circle cx="60" cy="40" r="1" />
+          <circle cx="100" cy="35" r="1" />
+          <circle cx="140" cy="40" r="1" />
+          <circle cx="80" cy="30" r="1" />
+          <circle cx="120" cy="30" r="1" />
+         </g> <!-- Field pattern filings - bottom --> <g fill="#a855f7" opacity="0.5">
+          <circle cx="70" cy="100" r="1" />
+          <circle cx="90" cy="105" r="1" />
+          <circle cx="110" cy="105" r="1" />
+          <circle cx="130" cy="100" r="1" />
+          <circle cx="60" cy="110" r="1" />
+          <circle cx="100" cy="115" r="1" />
+          <circle cx="140" cy="110" r="1" />
+          <circle cx="80" cy="120" r="1" />
+          <circle cx="120" cy="120" r="1" />
+         </g>
+        </svg>
+        <p class="text-center text-sm text-slate-400">Pola serbuk besi menunjukkan garis gaya magnet</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Section 3: Elektromagnet -->
+   <section id="elektro" class="py-20 px-4 bg-gradient-to-b from-slate-900 to-slate-800">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm font-medium mb-4">Bagian 3 &amp; 4</span>
+      <h2 class="title-font text-3xl md:text-4xl font-bold mb-4">Elektromagnet &amp; Induksi</h2>
+      <p class="text-slate-400 max-w-2xl mx-auto">Hubungan antara listrik dan magnet</p>
+     </div><!-- Oersted Discovery -->
+     <div class="mb-8 p-6 bg-gradient-to-r from-yellow-900/30 to-amber-900/30 rounded-2xl border border-yellow-700/30">
+      <div class="grid md:grid-cols-2 gap-6">
+       <div>
+        <div class="flex items-center gap-3 mb-4">
+         <div class="w-14 h-14 bg-yellow-500/20 rounded-xl flex items-center justify-center"><span class="text-3xl">💡</span>
+         </div>
+         <div>
+          <h3 class="text-xl font-bold text-yellow-400">Penemuan Oersted (1820)</h3>
+          <p class="text-sm text-slate-400">Hans Christian Ørsted</p>
+         </div>
+        </div>
+        <p class="text-slate-300 mb-4">Oersted menemukan bahwa <strong class="text-yellow-400">kawat yang dialiri arus listrik menghasilkan medan magnet</strong>. Hal ini dibuktikan dengan menyimpangnya jarum kompas yang didekatkan ke kawat berarus.</p>
+        <div class="p-4 bg-slate-900/50 rounded-xl">
+         <p class="text-sm text-slate-300"><strong class="text-yellow-400">Kesimpulan:</strong> Listrik dan magnet saling berhubungan! Arus listrik dapat menghasilkan medan magnet.</p>
+        </div>
+       </div>
+       <div class="flex items-center justify-center">
+        <svg viewbox="0 0 200 150" class="w-full h-48"><!-- Wire --> <line x1="20" y1="75" x2="180" y2="75" stroke="#f59e0b" stroke-width="6" /> <circle cx="100" cy="75" r="8" fill="#fbbf24" /> <!-- Current direction arrows --> <polygon points="60,70 70,75 60,80" fill="#fbbf24" /> <polygon points="120,70 130,75 120,80" fill="#fbbf24" /> <!-- Magnetic field circles --> <circle cx="100" cy="75" r="20" fill="none" stroke="#22d3ee" stroke-width="2" stroke-dasharray="5,5" class="rotate-slow" style="transform-origin: 100px 75px" /> <circle cx="100" cy="75" r="35" fill="none" stroke="#22d3ee" stroke-width="1.5" stroke-dasharray="5,5" class="rotate-slow" style="transform-origin: 100px 75px; animation-delay: 0.5s" /> <circle cx="100" cy="75" r="50" fill="none" stroke="#22d3ee" stroke-width="1" stroke-dasharray="5,5" class="rotate-slow" style="transform-origin: 100px 75px; animation-delay: 1s" /> <!-- Compass --> <g transform="translate(100, 120)">
+          <circle r="15" fill="#1e293b" stroke="#64748b" stroke-width="2" />
+          <polygon points="0,-10 3,5 0,3 -3,5" fill="#ef4444" />
+          <polygon points="0,10 3,-5 0,-3 -3,-5" fill="#f1f5f9" />
+         </g> <!-- Labels --> <text x="10" y="65" fill="#fbbf24" font-size="10">
+          Arus listrik
+         </text> <text x="155" y="65" fill="#22d3ee" font-size="10">
+          Medan magnet
+         </text>
+        </svg>
+       </div>
+      </div>
+     </div><!-- Faraday's Contributions -->
+     <div class="grid lg:grid-cols-2 gap-8 mb-8">
+      <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center"><span class="text-2xl">⚙️</span>
+        </div>
+        <div>
+         <h3 class="text-xl font-bold text-green-400">Motor Listrik Pertama</h3>
+         <p class="text-sm text-slate-400">Michael Faraday</p>
+        </div>
+       </div>
+       <p class="text-slate-300 mb-4">Faraday menemukan bahwa kawat yang dialiri listrik akan <strong class="text-green-400">berputar</strong> jika didekatkan dengan magnet. Inilah prinsip dasar motor listrik!</p>
+       <svg viewbox="0 0 200 150" class="w-full h-40"><!-- Magnet --> <rect x="80" y="110" width="40" height="30" rx="3" fill="#3b82f6" /> <text x="90" y="130" fill="white" font-size="10" font-weight="bold">
+         MAGNET
+        </text> <!-- Wire rotation --> <g class="rotate-slow" style="transform-origin: 100px 60px">
+         <line x1="100" y1="30" x2="100" y2="90" stroke="#f59e0b" stroke-width="4" />
+         <circle cx="100" cy="30" r="5" fill="#fbbf24" />
+        </g> <!-- Battery --> <rect x="20" y="50" width="30" height="40" rx="3" fill="#64748b" /> <text x="25" y="75" fill="white" font-size="10">
+         🔋
+        </text> <!-- Connection --> <path d="M50,70 Q70,70 70,60 L100,60" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5,3" />
+       </svg>
+      </div>
+      <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center"><span class="text-2xl">⚡</span>
+        </div>
+        <div>
+         <h3 class="text-xl font-bold text-purple-400">Hukum Faraday</h3>
+         <p class="text-sm text-slate-400">Induksi Elektromagnetik</p>
+        </div>
+       </div>
+       <div class="p-4 bg-purple-900/20 rounded-xl border border-purple-700/30 mb-4">
+        <p class="text-purple-100">"Perubahan medan magnet pada kumparan kawat akan menghasilkan <strong>arus listrik</strong> atau <strong>Gaya Gerak Listrik (GGL)</strong>"</p>
+       </div>
+       <p class="text-slate-300 text-sm">Artinya: Listrik bisa diproduksi menggunakan magnet, tidak harus dari baterai!</p>
+      </div>
+     </div><!-- Gaya Lorentz -->
+     <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 mb-8">
+      <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">✋</span> Gaya Lorentz &amp; Kaidah Tangan Kanan</h3>
+      <div class="grid md:grid-cols-2 gap-6">
+       <div>
+        <p class="text-slate-300 mb-4"><strong class="text-cyan-400">Gaya Lorentz</strong> adalah gaya yang timbul akibat interaksi penghantar berarus di dalam medan magnet.</p>
+        <div class="space-y-3">
+         <div class="p-3 bg-slate-700/30 rounded-lg flex items-center gap-3"><span class="text-xl">👆</span>
+          <p class="text-sm"><strong>Ibu jari:</strong> Arah arus listrik (I)</p>
+         </div>
+         <div class="p-3 bg-slate-700/30 rounded-lg flex items-center gap-3"><span class="text-xl">👉</span>
+          <p class="text-sm"><strong>Jari telunjuk:</strong> Arah medan magnet (B)</p>
+         </div>
+         <div class="p-3 bg-slate-700/30 rounded-lg flex items-center gap-3"><span class="text-xl">🖐️</span>
+          <p class="text-sm"><strong>Jari tengah:</strong> Arah gaya Lorentz (F)</p>
+         </div>
+        </div>
+        <div class="mt-4 p-3 bg-green-900/20 rounded-lg border border-green-700/30">
+         <p class="text-sm text-green-300"><strong>Aplikasi:</strong> Motor listrik pada kipas angin, blender, mesin cuci, dan banyak alat rumah tangga lainnya!</p>
+        </div>
+       </div>
+       <div class="flex items-center justify-center">
+        <svg viewbox="0 0 200 200" class="w-full h-48"><!-- Hand representation --> <g transform="translate(100, 100)"><!-- Palm -->
+          <ellipse cx="0" cy="0" rx="40" ry="50" fill="#fcd34d" opacity="0.3" /> <!-- Thumb (I - current) - pointing up -->
+          <rect x="-8" y="-80" width="16" height="50" rx="8" fill="#ef4444" />
+          <text x="15" y="-55" fill="#ef4444" font-size="12" font-weight="bold">
+           I
+          </text> <!-- Index finger (B - magnetic field) - pointing right -->
+          <rect x="20" y="-8" width="60" height="16" rx="8" fill="#3b82f6" />
+          <text x="85" y="5" fill="#3b82f6" font-size="12" font-weight="bold">
+           B
+          </text> <!-- Middle finger (F - force) - pointing out -->
+          <ellipse cx="0" cy="50" rx="12" ry="30" fill="#22c55e" />
+          <text x="20" y="55" fill="#22c55e" font-size="12" font-weight="bold">
+           F
+          </text>
+         </g> <!-- Arrows --> <path d="M100,30 L100,10" stroke="#ef4444" stroke-width="3" marker-end="url(#arrowRed)" /> <path d="M140,100 L160,100" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowBlue)" /> <path d="M100,140 L100,160" stroke="#22c55e" stroke-width="3" marker-end="url(#arrowGreen)" /> <defs>
+          <marker id="arrowRed" markerwidth="10" markerheight="10" refx="9" refy="3" orient="auto">
+           <path d="M0,0 L0,6 L9,3 z" fill="#ef4444" />
+          </marker>
+          <marker id="arrowBlue" markerwidth="10" markerheight="10" refx="9" refy="3" orient="auto">
+           <path d="M0,0 L0,6 L9,3 z" fill="#3b82f6" />
+          </marker>
+          <marker id="arrowGreen" markerwidth="10" markerheight="10" refx="9" refy="3" orient="auto">
+           <path d="M0,0 L0,6 L9,3 z" fill="#22c55e" />
+          </marker>
+         </defs>
+        </svg>
+       </div>
+      </div>
+     </div><!-- Interactive Electromagnet -->
+     <div class="bg-gradient-to-r from-blue-900/30 to-cyan-900/30 rounded-2xl p-6 border border-blue-700/30">
+      <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">🎮</span> Simulasi: Buat Elektromagnet</h3>
+      <p class="text-slate-400 mb-4">Atur jumlah lilitan dan kekuatan arus untuk melihat pengaruhnya pada kekuatan elektromagnet!</p>
+      <div class="grid md:grid-cols-2 gap-6">
+       <div class="space-y-4">
+        <div><label class="block text-sm font-medium mb-2">Jumlah Lilitan: <span id="coil-value" class="text-cyan-400">5</span></label> <input type="range" id="coil-slider" min="1" max="10" value="5" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer" onchange="updateElectromagnet()">
+        </div>
+        <div><label class="block text-sm font-medium mb-2">Kekuatan Arus: <span id="current-value" class="text-yellow-400">5</span>A</label> <input type="range" id="current-slider" min="1" max="10" value="5" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer" onchange="updateElectromagnet()">
+        </div>
+        <div class="p-4 bg-slate-900/50 rounded-xl">
+         <p class="text-sm mb-2">Kekuatan Medan Magnet:</p>
+         <div class="flex items-center gap-2">
+          <div class="flex-1 h-4 bg-slate-700 rounded-full overflow-hidden">
+           <div id="field-strength-bar" class="h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-300" style="width: 50%"></div>
+          </div><span id="field-strength-value" class="text-cyan-400 font-bold">50%</span>
+         </div>
+        </div>
+       </div>
+       <div class="bg-slate-900/50 rounded-xl p-4 flex items-center justify-center">
+        <svg viewbox="0 0 200 150" class="w-full h-40" id="electromagnet-svg"><!-- Iron core --> <rect x="70" y="50" width="60" height="50" rx="3" fill="#64748b" /> <!-- Coils --> <g id="coils-group"><!-- Dynamic coils will be generated here -->
+         </g> <!-- Battery --> <rect x="10" y="60" width="40" height="30" rx="3" fill="#1e293b" stroke="#64748b" /> <text x="15" y="80" fill="#fbbf24" font-size="10">
+          + -
+         </text> <!-- Wires --> <path d="M50,70 L70,70" stroke="#f59e0b" stroke-width="2" /> <path d="M50,80 L70,80" stroke="#f59e0b" stroke-width="2" /> <!-- Magnetic field lines --> <g id="field-lines-group" opacity="0.5"><!-- Dynamic field lines -->
+         </g> <!-- Attracted objects --> <g id="attracted-objects">
+          <circle cx="160" cy="75" r="8" fill="#94a3b8" id="nail1" />
+          <circle cx="175" cy="65" r="6" fill="#94a3b8" id="nail2" />
+          <circle cx="175" cy="85" r="6" fill="#94a3b8" id="nail3" />
+         </g>
+        </svg>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Section 4: Generator -->
+   <section id="generator" class="py-20 px-4 bg-slate-900">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-medium mb-4">Bagian 5</span>
+      <h2 class="title-font text-3xl md:text-4xl font-bold mb-4">Generator Listrik</h2>
+      <p class="text-slate-400 max-w-2xl mx-auto">Mengubah energi gerak menjadi energi listrik</p>
+     </div><!-- Generator Explanation -->
+     <div class="grid lg:grid-cols-2 gap-8 mb-12">
+      <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+       <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">🔌</span> Apa itu Generator?</h3>
+       <div class="p-4 bg-green-900/20 rounded-xl border border-green-700/30 mb-4">
+        <p class="text-green-100"><strong>Generator</strong> adalah mesin yang mengubah <strong>energi gerak (mekanik)</strong> menjadi <strong>energi listrik</strong>.</p>
+       </div>
+       <h4 class="font-semibold mb-3">Prinsip Kerja:</h4>
+       <ol class="space-y-3">
+        <li class="flex items-start gap-3"><span class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</span> <p class="text-slate-300">Kumparan kawat diputar di dalam medan magnet</p></li>
+        <li class="flex items-start gap-3"><span class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</span> <p class="text-slate-300">Perubahan fluks magnetik menginduksi GGL (Hukum Faraday)</p></li>
+        <li class="flex items-start gap-3"><span class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</span> <p class="text-slate-300">GGL menghasilkan arus listrik pada rangkaian</p></li>
+       </ol>
+      </div><!-- Generator Animation -->
+      <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50">
+       <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">⚙️</span> Simulasi Generator</h3>
+       <div class="bg-slate-900/50 rounded-xl p-4 mb-4">
+        <svg viewbox="0 0 250 180" class="w-full h-44"><!-- Magnets --> <rect x="20" y="50" width="30" height="80" rx="3" fill="#ef4444" /> <text x="27" y="95" fill="white" font-size="12" font-weight="bold">
+          N
+         </text> <rect x="200" y="50" width="30" height="80" rx="3" fill="#3b82f6" /> <text x="210" y="95" fill="white" font-size="12" font-weight="bold">
+          S
+         </text> <!-- Rotating coil --> <g id="generator-coil" class="rotate-slow" style="transform-origin: 125px 90px">
+          <rect x="85" y="60" width="80" height="60" rx="5" fill="none" stroke="#f59e0b" stroke-width="4" />
+          <rect x="90" y="65" width="70" height="50" rx="3" fill="none" stroke="#f59e0b" stroke-width="3" />
+          <rect x="95" y="70" width="60" height="40" rx="2" fill="none" stroke="#f59e0b" stroke-width="2" />
+         </g> <!-- Axis --> <line x1="125" y1="30" x2="125" y2="150" stroke="#64748b" stroke-width="4" /> <circle cx="125" cy="90" r="8" fill="#475569" /> <!-- Output wires --> <path d="M125,150 L125,170 L200,170" stroke="#22c55e" stroke-width="3" /> <path d="M200,170 L200,160" stroke="#22c55e" stroke-width="3" /> <!-- Light bulb --> <circle cx="200" cy="145" r="15" fill="#fef3c7" stroke="#fbbf24" stroke-width="2" /> <path d="M195,145 Q200,135 205,145" fill="none" stroke="#f59e0b" stroke-width="2" /> <!-- Field lines --> <g stroke="#22d3ee" stroke-width="1" stroke-dasharray="4,4" opacity="0.4">
+          <path d="M50,60 Q125,40 200,60" />
+          <path d="M50,90 L200,90" />
+          <path d="M50,120 Q125,140 200,120" />
+         </g>
+        </svg>
+       </div>
+       <div class="flex items-center justify-center gap-4"><button onclick="toggleGeneratorAnimation()" id="gen-toggle-btn" class="px-4 py-2 bg-green-600 rounded-lg hover:bg-green-500 transition-colors"> ▶️ Mulai </button>
+        <div class="text-sm text-slate-400">
+         Status: <span id="gen-status" class="text-yellow-400">Berhenti</span>
+        </div>
+       </div>
+      </div>
+     </div><!-- Energy Sources -->
+     <div class="bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-2xl p-6 border border-green-700/30">
+      <h3 class="text-xl font-bold mb-6 flex items-center gap-2"><span class="text-2xl">🌍</span> Sumber Energi Penggerak Generator</h3>
+      <div class="grid md:grid-cols-3 gap-6"><!-- Wind -->
+       <div class="bg-slate-900/50 rounded-xl p-5 text-center card-hover">
+        <div class="w-20 h-20 mx-auto mb-4 bg-sky-500/20 rounded-full flex items-center justify-center">
+         <svg viewbox="0 0 60 60" class="w-14 h-14"><circle cx="30" cy="30" r="8" fill="#0ea5e9" /> <g class="rotate-slow" style="transform-origin: 30px 30px">
+           <ellipse cx="30" cy="12" rx="6" ry="15" fill="#38bdf8" />
+           <ellipse cx="30" cy="12" rx="6" ry="15" fill="#38bdf8" transform="rotate(120 30 30)" />
+           <ellipse cx="30" cy="12" rx="6" ry="15" fill="#38bdf8" transform="rotate(240 30 30)" />
+          </g>
+         </svg>
+        </div>
+        <h4 class="font-bold text-sky-400 mb-2">Angin (Kincir Angin)</h4>
+        <p class="text-sm text-slate-400">Energi kinetik angin memutar baling-baling yang terhubung ke generator.</p>
+        <div class="mt-3 px-3 py-1 bg-sky-900/30 rounded-full text-xs text-sky-300">
+         Energi Terbarukan ♻️
+        </div>
+       </div><!-- Water -->
+       <div class="bg-slate-900/50 rounded-xl p-5 text-center card-hover">
+        <div class="w-20 h-20 mx-auto mb-4 bg-blue-500/20 rounded-full flex items-center justify-center">
+         <svg viewbox="0 0 60 60" class="w-14 h-14"><path d="M30,5 Q45,25 30,45 Q15,25 30,5" fill="#3b82f6" /> <ellipse cx="30" cy="48" rx="12" ry="5" fill="#60a5fa" /> <g class="rotate-slow" style="transform-origin: 30px 48px">
+           <rect x="28" y="35" width="4" height="20" fill="#1e40af" />
+           <rect x="20" y="46" width="20" height="4" fill="#1e40af" />
+          </g>
+         </svg>
+        </div>
+        <h4 class="font-bold text-blue-400 mb-2">Air (PLTA)</h4>
+        <p class="text-sm text-slate-400">Energi potensial air dari bendungan memutar turbin generator.</p>
+        <div class="mt-3 px-3 py-1 bg-blue-900/30 rounded-full text-xs text-blue-300">
+         Energi Terbarukan ♻️
+        </div>
+       </div><!-- Diesel -->
+       <div class="bg-slate-900/50 rounded-xl p-5 text-center card-hover">
+        <div class="w-20 h-20 mx-auto mb-4 bg-orange-500/20 rounded-full flex items-center justify-center">
+         <svg viewbox="0 0 60 60" class="w-14 h-14"><rect x="15" y="20" width="30" height="30" rx="3" fill="#64748b" /> <rect x="20" y="25" width="20" height="10" fill="#1e293b" /> <rect x="18" y="40" width="24" height="8" fill="#475569" /> <path d="M25,10 L35,10 L37,20 L23,20 Z" fill="#f97316" /> <circle cx="42" cy="35" r="5" fill="#1e293b" />
+         </svg>
+        </div>
+        <h4 class="font-bold text-orange-400 mb-2">Bahan Bakar (Diesel)</h4>
+        <p class="text-sm text-slate-400">Mesin diesel membakar bahan bakar untuk memutar generator.</p>
+        <div class="mt-3 px-3 py-1 bg-orange-900/30 rounded-full text-xs text-orange-300">
+         Tidak Terbarukan ⚠️
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Section 5: Environmental Awareness -->
+   <section id="lingkungan" class="py-20 px-4 bg-gradient-to-b from-slate-900 to-slate-800">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-1 bg-red-500/20 text-red-400 rounded-full text-sm font-medium mb-4">Bagian 6</span>
+      <h2 class="title-font text-3xl md:text-4xl font-bold mb-4">Relevansi Sosial &amp; Lingkungan</h2>
+      <p class="text-slate-400 max-w-2xl mx-auto">Menerapkan ilmu magnet untuk solusi lingkungan</p>
+     </div><!-- E-waste Facts -->
+     <div class="mb-8 p-6 bg-gradient-to-r from-red-900/30 to-orange-900/30 rounded-2xl border border-red-700/30">
+      <div class="flex items-start gap-4 mb-6">
+       <div class="w-16 h-16 bg-red-500/20 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-3xl">⚠️</span>
+       </div>
+       <div>
+        <h3 class="text-xl font-bold text-red-400 mb-2">Fakta Sains: Krisis Sampah Elektronik</h3>
+        <p class="text-slate-300">Sampah elektronik (e-waste) menjadi masalah lingkungan global yang serius. Banyak komponen elektronik mengandung logam berat berbahaya.</p>
+       </div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-4">
+       <div class="bg-slate-900/50 rounded-xl p-4 text-center">
+        <p class="text-4xl font-bold text-red-400 mb-2">74</p>
+        <p class="text-sm text-slate-400">Juta ton e-waste diprediksi pada 2030 (global)</p>
+       </div>
+       <div class="bg-slate-900/50 rounded-xl p-4 text-center">
+        <p class="text-4xl font-bold text-orange-400 mb-2">1.618</p>
+        <p class="text-sm text-slate-400">Kilo ton e-waste Indonesia (2019)</p>
+       </div>
+       <div class="bg-slate-900/50 rounded-xl p-4 text-center">
+        <p class="text-4xl font-bold text-yellow-400 mb-2">0%</p>
+        <p class="text-sm text-slate-400">Tingkat daur ulang e-waste Indonesia</p>
+       </div>
+      </div>
+     </div><!-- Project Challenge -->
+     <div class="bg-gradient-to-r from-green-900/30 to-teal-900/30 rounded-2xl p-6 border border-green-700/30">
+      <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">🎯</span> Proyek Siswa: Pemisahan Sampah dengan Magnet</h3>
+      <div class="grid md:grid-cols-2 gap-6">
+       <div>
+        <p class="text-slate-300 mb-4"><strong class="text-green-400">Tantangan:</strong> Rancang metode pemisahan sampah besi dari tumpukan sampah campuran menggunakan prinsip magnet!</p>
+        <h4 class="font-semibold text-green-400 mb-3">Bahan Campuran:</h4>
+        <div class="flex flex-wrap gap-2 mb-4"><span class="px-3 py-1 bg-slate-700 rounded-full text-sm">🔩 Besi</span> <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">🥤 Plastik</span> <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">🪵 Kayu</span> <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">🥫 Aluminium</span> <span class="px-3 py-1 bg-slate-700 rounded-full text-sm">📄 Kertas</span>
+        </div>
+        <div class="p-4 bg-slate-900/50 rounded-xl">
+         <p class="text-sm text-slate-300"><strong class="text-teal-400">Tujuan SDGs:</strong> Mendukung Tujuan Pembangunan Berkelanjutan dalam pengelolaan sampah dan perlindungan lingkungan.</p>
+        </div>
+       </div>
+       <div class="bg-slate-900/50 rounded-xl p-4">
+        <svg viewbox="0 0 250 180" class="w-full h-44"><!-- Conveyor belt --> <rect x="20" y="120" width="210" height="20" rx="10" fill="#475569" /> <line x1="20" y1="130" x2="230" y2="130" stroke="#64748b" stroke-width="2" stroke-dasharray="10,5" /> <!-- Mixed waste --> <g><!-- Plastic -->
+          <rect x="40" y="100" width="20" height="20" rx="3" fill="#3b82f6" /> <!-- Iron -->
+          <circle cx="85" cy="110" r="10" fill="#94a3b8" /> <!-- Wood -->
+          <rect x="110" y="105" width="25" height="15" rx="2" fill="#a16207" /> <!-- Iron -->
+          <rect x="150" y="100" width="15" height="20" rx="2" fill="#94a3b8" /> <!-- Aluminum -->
+          <circle cx="195" cy="110" r="8" fill="#e5e7eb" />
+         </g> <!-- Electromagnet --> <rect x="80" y="30" width="80" height="40" rx="5" fill="#1e293b" stroke="#22d3ee" stroke-width="2" /> <text x="95" y="55" fill="#22d3ee" font-size="10">
+          MAGNET
+         </text> <!-- Attracted iron --> <g class="floating">
+          <circle cx="95" cy="80" r="8" fill="#94a3b8" />
+          <rect x="130" y="75" width="12" height="16" rx="2" fill="#94a3b8" />
+         </g> <!-- Magnetic field --> <path d="M100,70 Q120,85 140,70" fill="none" stroke="#22d3ee" stroke-width="1" stroke-dasharray="3,3" /> <!-- Collection bins --> <rect x="30" y="150" width="50" height="25" rx="3" fill="#22c55e" /> <text x="38" y="167" fill="white" font-size="8">
+          BESI
+         </text> <rect x="170" y="150" width="50" height="25" rx="3" fill="#64748b" /> <text x="175" y="167" fill="white" font-size="8">
+          LAINNYA
+         </text>
+        </svg>
+        <p class="text-center text-sm text-slate-400 mt-2">Ilustrasi sistem pemisahan sampah magnetik</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Quiz Section -->
+   <section id="quiz" class="py-20 px-4 bg-slate-900">
+    <div class="max-w-4xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm font-medium mb-4">Evaluasi</span>
+      <h2 class="title-font text-3xl md:text-4xl font-bold mb-4">Quiz HOTS</h2>
+      <p class="text-slate-400 max-w-2xl mx-auto">10 soal tingkat tinggi untuk menguji pemahamanmu!</p>
+     </div><!-- Quiz Container -->
+     <div id="quiz-container" class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50"><!-- Quiz Start Screen -->
+      <div id="quiz-start" class="text-center py-8">
+       <div class="w-24 h-24 mx-auto mb-6 bg-purple-500/20 rounded-full flex items-center justify-center"><span class="text-5xl">🧠</span>
+       </div>
+       <h3 class="text-2xl font-bold mb-4">Siap Mengerjakan Quiz?</h3>
+       <p class="text-slate-400 mb-6">10 soal HOTS dengan tingkat kesulitan tinggi. Baca setiap soal dengan teliti!</p>
+       <div class="flex flex-wrap justify-center gap-4 mb-6">
+        <div class="px-4 py-2 bg-slate-700/50 rounded-lg"><span class="text-purple-400 font-bold">10</span> Soal
+        </div>
+        <div class="px-4 py-2 bg-slate-700/50 rounded-lg"><span class="text-cyan-400 font-bold">HOTS</span> Level
+        </div>
+        <div class="px-4 py-2 bg-slate-700/50 rounded-lg"><span class="text-green-400 font-bold">Langsung</span> Hasil
+        </div>
+       </div><button onclick="startQuiz()" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-500 rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-300"> Mulai Quiz 🚀 </button>
+      </div><!-- Quiz Questions -->
+      <div id="quiz-questions" class="hidden">
+       <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-3"><span class="text-2xl">📝</span> <span class="font-semibold">Soal <span id="current-q">1</span>/10</span>
+        </div>
+        <div class="flex items-center gap-2"><span class="text-sm text-slate-400">Skor:</span> <span id="current-score" class="font-bold text-green-400">0</span>
+        </div>
+       </div><!-- Progress -->
+       <div class="h-2 bg-slate-700 rounded-full mb-6 overflow-hidden">
+        <div id="quiz-progress" class="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-300" style="width: 10%"></div>
+       </div><!-- Question Display -->
+       <div id="question-display" class="mb-6">
+        <p id="question-text" class="text-lg font-medium mb-6"></p>
+        <div id="options-container" class="space-y-3"></div>
+       </div><!-- Navigation -->
+       <div class="flex justify-between items-center pt-4 border-t border-slate-700"><button onclick="previousQuestion()" id="prev-btn" class="px-4 py-2 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled> ← Sebelumnya </button> <button onclick="nextQuestion()" id="next-btn" class="px-6 py-2 bg-purple-600 rounded-lg hover:bg-purple-500 transition-colors"> Selanjutnya → </button> <button onclick="submitQuiz()" id="submit-btn" class="hidden px-6 py-2 bg-green-600 rounded-lg hover:bg-green-500 transition-colors"> Selesai ✓ </button>
+       </div>
+      </div><!-- Quiz Results -->
+      <div id="quiz-results" class="hidden text-center py-8">
+       <div id="result-icon" class="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center"></div>
+       <h3 id="result-title" class="text-2xl font-bold mb-2"></h3>
+       <p id="result-message" class="text-slate-400 mb-6"></p>
+       <div class="grid grid-cols-2 gap-4 max-w-xs mx-auto mb-8">
+        <div class="p-4 bg-slate-700/50 rounded-xl">
+         <p class="text-3xl font-bold text-green-400" id="final-score">0</p>
+         <p class="text-sm text-slate-400">Benar</p>
+        </div>
+        <div class="p-4 bg-slate-700/50 rounded-xl">
+         <p class="text-3xl font-bold text-purple-400" id="final-percentage">0%</p>
+         <p class="text-sm text-slate-400">Persentase</p>
+        </div>
+       </div>
+       <div class="flex flex-wrap justify-center gap-4"><button onclick="reviewQuiz()" class="px-6 py-3 bg-slate-700 rounded-xl hover:bg-slate-600 transition-colors"> 📖 Lihat Pembahasan </button> <button onclick="restartQuiz()" class="px-6 py-3 bg-purple-600 rounded-xl hover:bg-purple-500 transition-colors"> 🔄 Ulangi Quiz </button>
+       </div>
+      </div><!-- Quiz Review -->
+      <div id="quiz-review" class="hidden">
+       <div class="flex items-center justify-between mb-6">
+        <h3 class="text-xl font-bold flex items-center gap-2"><span class="text-2xl">📖</span> Pembahasan</h3><button onclick="backToResults()" class="px-4 py-2 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors"> ← Kembali </button>
+       </div>
+       <div id="review-container" class="space-y-6"></div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="py-8 px-4 bg-slate-800/50 border-t border-slate-700/50">
+    <div class="max-w-6xl mx-auto text-center">
+     <p class="text-slate-400 text-sm mb-2">Platform Pembelajaran Interaktif - Listrik, Magnet &amp; Energi Alternatif</p>
+     <p class="text-slate-500 text-xs">Dibuat untuk mendukung pembelajaran IPA yang menyenangkan 🎓</p>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: "Listrik & Magnet",
+      teacher_name: "Pembelajaran Interaktif"
+    };
+
+    let config = { ...defaultConfig };
+
+    // Quiz Questions Data - 10 HOTS Questions
+    const quizQuestions = [
+      {
+        id: 1,
+        question: "Sebuah magnet batang dipotong menjadi dua bagian yang sama. Apa yang terjadi pada kedua potongan tersebut?",
+        options: [
+          "Satu bagian menjadi kutub utara saja, satu bagian menjadi kutub selatan saja",
+          "Kedua bagian kehilangan sifat magnetnya",
+          "Masing-masing bagian tetap memiliki dua kutub (utara dan selatan)",
+          "Kekuatan magnet menghilang sepenuhnya"
+        ],
+        correct: 2,
+        explanation: "Berdasarkan teori magnet elementer, setiap bagian magnet sekecil apapun tetap memiliki dua kutub. Ini karena setiap partikel elementer (domain magnet) sudah memiliki kutub utara dan selatan sendiri."
+      },
+      {
+        id: 2,
+        question: "Dalam percobaan Oersted, mengapa jarum kompas menyimpang ketika didekatkan ke kawat berarus listrik?",
+        options: [
+          "Arus listrik menghasilkan panas yang mempengaruhi kompas",
+          "Kawat berarus listrik menghasilkan medan magnet di sekitarnya",
+          "Elektron dalam kawat menarik jarum kompas secara langsung",
+          "Jarum kompas bereaksi terhadap getaran dari arus listrik"
+        ],
+        correct: 1,
+        explanation: "Percobaan Oersted membuktikan bahwa arus listrik yang mengalir dalam kawat menghasilkan medan magnet di sekitarnya. Medan magnet ini berinteraksi dengan jarum kompas (yang merupakan magnet kecil) dan menyebabkannya menyimpang."
+      },
+      {
+        id: 3,
+        question: "Sebuah generator PLTA menghasilkan listrik dengan memutar turbin menggunakan air terjun. Prinsip fisika apa yang mendasari kerja generator tersebut?",
+        options: [
+          "Hukum Ohm - hubungan antara tegangan, arus, dan hambatan",
+          "Hukum Faraday - perubahan fluks magnetik menginduksi GGL",
+          "Hukum Coulomb - gaya elektrostatis antara muatan",
+          "Hukum Newton - aksi dan reaksi"
+        ],
+        correct: 1,
+        explanation: "Generator bekerja berdasarkan Hukum Faraday tentang induksi elektromagnetik. Ketika kumparan kawat diputar dalam medan magnet, fluks magnetik yang melewati kumparan berubah, sehingga menginduksi Gaya Gerak Listrik (GGL) yang menghasilkan arus listrik."
+      },
+      {
+        id: 4,
+        question: "Perhatikan gambar berikut: Dua magnet didekatkan dengan kutub yang menghadap berbeda. Magnet A memiliki kutub Utara menghadap ke Magnet B yang juga kutub Utara. Apa yang akan terjadi?",
+        options: [
+          "Kedua magnet akan saling mendekat dan menempel",
+          "Kedua magnet akan saling menjauh (tolak-menolak)",
+          "Tidak terjadi interaksi apapun",
+          "Salah satu magnet akan kehilangan sifat magnetnya"
+        ],
+        correct: 1,
+        explanation: "Kutub magnet sejenis (U-U atau S-S) akan saling tolak-menolak. Ini adalah sifat dasar magnet yang ditemukan dalam interaksi kutub magnet."
+      },
+      {
+        id: 5,
+        question: "Mengapa kekuatan elektromagnet dapat diatur sedangkan magnet permanen tidak?",
+        options: [
+          "Elektromagnet terbuat dari bahan yang lebih kuat",
+          "Kekuatan elektromagnet bergantung pada besar arus listrik dan jumlah lilitan",
+          "Magnet permanen sudah mencapai kekuatan maksimumnya",
+          "Elektromagnet menggunakan bahan yang lebih mahal"
+        ],
+        correct: 1,
+        explanation: "Kekuatan elektromagnet ditentukan oleh besar arus listrik yang mengalir dan jumlah lilitan kawat. Dengan mengubah kedua faktor ini, kita dapat mengatur kekuatan medan magnet yang dihasilkan. Magnet permanen tidak memiliki variabel yang bisa diatur."
+      },
+      {
+        id: 6,
+        question: "Dalam proyek pemisahan sampah menggunakan magnet, mengapa aluminium tidak dapat dipisahkan menggunakan metode ini meskipun keduanya merupakan logam?",
+        options: [
+          "Aluminium terlalu ringan untuk ditarik magnet",
+          "Aluminium bukan bahan feromagnetik sehingga tidak tertarik magnet",
+          "Aluminium memiliki kutub yang sama dengan magnet",
+          "Aluminium hanya bereaksi dengan elektromagnet, bukan magnet biasa"
+        ],
+        correct: 1,
+        explanation: "Aluminium adalah bahan paramagnetik, bukan feromagnetik seperti besi, nikel, atau kobalt. Bahan feromagnetik memiliki domain magnet yang dapat disejajarkan oleh medan magnet eksternal, sedangkan aluminium tidak memiliki sifat ini sehingga tidak tertarik oleh magnet."
+      },
+      {
+        id: 7,
+        question: "Sebuah kumparan dengan 100 lilitan menghasilkan GGL sebesar 10 volt ketika fluks magnetik berubah dalam waktu tertentu. Jika jumlah lilitan ditambah menjadi 200, berapa GGL yang dihasilkan dengan perubahan fluks yang sama?",
+        options: [
+          "5 volt",
+          "10 volt",
+          "20 volt",
+          "40 volt"
+        ],
+        correct: 2,
+        explanation: "Menurut Hukum Faraday, GGL induksi berbanding lurus dengan jumlah lilitan (N). Jika N digandakan (dari 100 menjadi 200), maka GGL juga akan menjadi 2 kali lipat (dari 10V menjadi 20V), dengan asumsi perubahan fluks magnetik tetap sama."
+      },
+      {
+        id: 8,
+        question: "Kaidah Tangan Kanan digunakan untuk menentukan arah gaya Lorentz. Jika arus listrik mengalir ke atas dan medan magnet mengarah ke kanan, ke arah mana gaya Lorentz yang timbul?",
+        options: [
+          "Ke atas",
+          "Ke bawah",
+          "Keluar dari bidang (menuju pengamat)",
+          "Masuk ke dalam bidang (menjauhi pengamat)"
+        ],
+        correct: 2,
+        explanation: "Menggunakan Kaidah Tangan Kanan: ibu jari menunjuk ke atas (arah arus I), jari telunjuk menunjuk ke kanan (arah medan magnet B), maka jari tengah yang tegak lurus keduanya akan menunjuk keluar dari bidang (arah gaya Lorentz F)."
+      },
+      {
+        id: 9,
+        question: "Mengapa pembangkit listrik tenaga angin (kincir angin) dan tenaga air (PLTA) disebut sebagai sumber energi terbarukan, sedangkan pembangkit listrik diesel tidak?",
+        options: [
+          "Karena angin dan air lebih murah daripada diesel",
+          "Karena angin dan air dapat diperbaharui secara alami dan tidak habis, sedangkan diesel berasal dari bahan bakar fosil yang terbatas",
+          "Karena generator angin dan air lebih efisien",
+          "Karena diesel menghasilkan listrik yang lebih kecil"
+        ],
+        correct: 1,
+        explanation: "Energi terbarukan adalah energi yang berasal dari sumber yang dapat diperbaharui secara alami dalam waktu singkat. Angin dan siklus air terus tersedia di alam. Sebaliknya, diesel berasal dari minyak bumi (bahan bakar fosil) yang terbentuk selama jutaan tahun dan jumlahnya terbatas."
+      },
+      {
+        id: 10,
+        question: "Analisis situasi berikut: Indonesia menghasilkan 1.618 kilo ton sampah elektronik pada 2019 dengan tingkat daur ulang 0%. Bagaimana penerapan ilmu magnet dapat membantu mengatasi masalah ini dalam konteks SDGs?",
+        options: [
+          "Menggunakan magnet untuk menghancurkan komponen elektronik",
+          "Menggunakan elektromagnet untuk memisahkan komponen besi dari sampah elektronik campuran sehingga dapat didaur ulang secara efisien",
+          "Menggunakan magnet untuk menyimpan sampah elektronik",
+          "Menggunakan medan magnet untuk mengubah sampah menjadi energi"
+        ],
+        correct: 1,
+        explanation: "Elektromagnet dapat digunakan dalam sistem pemilahan sampah otomatis untuk memisahkan komponen berbahan besi/baja dari material lain (plastik, kaca, aluminium). Pemisahan ini merupakan langkah awal yang penting dalam proses daur ulang sampah elektronik, mendukung SDGs terkait konsumsi dan produksi berkelanjutan."
+      }
+    ];
+
+    // Quiz State
+    let currentQuestion = 0;
+    let userAnswers = [];
+    let quizScore = 0;
+    let generatorAnimating = false;
+
+    // Initialize SDK
+    async function initializeSDK() {
+      if (window.elementSdk) {
+        await window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (newConfig) => {
+            config = { ...defaultConfig, ...newConfig };
+            updateUIFromConfig();
+          },
+          mapToCapabilities: (cfg) => ({
+            recolorables: [],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (cfg) => new Map([
+            ["main_title", cfg.main_title || defaultConfig.main_title],
+            ["teacher_name", cfg.teacher_name || defaultConfig.teacher_name]
+          ])
+        });
+        config = { ...defaultConfig, ...window.elementSdk.config };
+        updateUIFromConfig();
+      }
+    }
+
+    function updateUIFromConfig() {
+      const mainTitle = document.getElementById('main-title');
+      const teacherDisplay = document.getElementById('teacher-display');
+      
+      if (mainTitle) mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      if (teacherDisplay) teacherDisplay.textContent = config.teacher_name || defaultConfig.teacher_name;
+    }
+
+    // Navigation Functions
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+      // Close mobile menu if open
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu) mobileMenu.classList.add('hidden');
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    // Progress Bar
+    function updateProgressBar() {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = window.scrollY;
+      const progress = (scrolled / scrollHeight) * 100;
+      const progressBar = document.getElementById('progress-bar');
+      if (progressBar) progressBar.style.width = `${Math.min(progress, 100)}%`;
+    }
+
+    // Magnet Interaction Simulation
+    function showMagnetInteraction(type) {
+      const icon = document.getElementById('interaction-icon');
+      const result = document.getElementById('interaction-result');
+      const mag1 = document.getElementById('mag1-svg');
+      const mag2 = document.getElementById('mag2-svg');
+      
+      // Reset positions
+      if (mag1) mag1.style.transform = 'translateX(0)';
+      if (mag2) mag2.style.transform = 'translateX(0)';
+      
+      setTimeout(() => {
+        if (type === 'UU' || type === 'SS') {
+          // Like poles repel
+          if (mag1) mag1.style.transform = 'translateX(-20px)';
+          if (mag2) mag2.style.transform = 'translateX(20px)';
+          if (icon) icon.textContent = '↔️';
+          if (result) {
+            result.textContent = type === 'UU' 
+              ? '⚡ Kutub Utara - Utara: TOLAK MENOLAK!' 
+              : '⚡ Kutub Selatan - Selatan: TOLAK MENOLAK!';
+            result.className = 'text-center text-lg font-medium text-red-400';
+          }
+        } else {
+          // Unlike poles attract
+          if (mag1) mag1.style.transform = 'translateX(10px)';
+          if (mag2) mag2.style.transform = 'translateX(-10px)';
+          if (icon) icon.textContent = '💕';
+          if (result) {
+            result.textContent = '💫 Kutub Utara - Selatan: TARIK MENARIK!';
+            result.className = 'text-center text-lg font-medium text-green-400';
+          }
+        }
+      }, 100);
+    }
+
+    // Electromagnet Simulation
+    function updateElectromagnet() {
+      const coils = parseInt(document.getElementById('coil-slider').value);
+      const current = parseInt(document.getElementById('current-slider').value);
+      
+      document.getElementById('coil-value').textContent = coils;
+      document.getElementById('current-value').textContent = current;
+      
+      const strength = (coils * current) / 100 * 100;
+      document.getElementById('field-strength-bar').style.width = `${strength}%`;
+      document.getElementById('field-strength-value').textContent = `${Math.round(strength)}%`;
+      
+      // Update attracted objects position based on strength
+      const attractedObjects = document.getElementById('attracted-objects');
+      if (attractedObjects) {
+        const offset = Math.max(0, 30 - (strength * 0.3));
+        attractedObjects.style.transform = `translateX(-${offset}px)`;
+      }
+      
+      // Update coils visualization
+      updateCoilsVisualization(coils);
+    }
+
+    function updateCoilsVisualization(numCoils) {
+      const coilsGroup = document.getElementById('coils-group');
+      if (!coilsGroup) return;
+      
+      coilsGroup.innerHTML = '';
+      for (let i = 0; i < numCoils; i++) {
+        const y = 50 + (i * 5);
+        const coil = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        coil.setAttribute('cx', '100');
+        coil.setAttribute('cy', `${75}`);
+        coil.setAttribute('rx', `${35 + i * 2}`);
+        coil.setAttribute('ry', `${25 + i}`);
+        coil.setAttribute('fill', 'none');
+        coil.setAttribute('stroke', '#f59e0b');
+        coil.setAttribute('stroke-width', '2');
+        coilsGroup.appendChild(coil);
+      }
+    }
+
+    // Generator Animation
+    function toggleGeneratorAnimation() {
+      generatorAnimating = !generatorAnimating;
+      const coil = document.getElementById('generator-coil');
+      const btn = document.getElementById('gen-toggle-btn');
+      const status = document.getElementById('gen-status');
+      
+      if (generatorAnimating) {
+        if (coil) coil.style.animationPlayState = 'running';
+        if (btn) btn.textContent = '⏸️ Berhenti';
+        if (status) {
+          status.textContent = 'Beroperasi';
+          status.className = 'text-green-400';
+        }
+      } else {
+        if (coil) coil.style.animationPlayState = 'paused';
+        if (btn) btn.textContent = '▶️ Mulai';
+        if (status) {
+          status.textContent = 'Berhenti';
+          status.className = 'text-yellow-400';
+        }
+      }
+    }
+
+    // Quiz Functions
+    function startQuiz() {
+      document.getElementById('quiz-start').classList.add('hidden');
+      document.getElementById('quiz-questions').classList.remove('hidden');
+      currentQuestion = 0;
+      userAnswers = new Array(quizQuestions.length).fill(null);
+      quizScore = 0;
+      displayQuestion();
+    }
+
+    function displayQuestion() {
+      const q = quizQuestions[currentQuestion];
+      document.getElementById('current-q').textContent = currentQuestion + 1;
+      document.getElementById('quiz-progress').style.width = `${((currentQuestion + 1) / quizQuestions.length) * 100}%`;
+      document.getElementById('question-text').textContent = `${currentQuestion + 1}. ${q.question}`;
+      
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+      
+      q.options.forEach((option, index) => {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = `quiz-option p-4 bg-slate-700/50 rounded-xl border-2 border-transparent cursor-pointer hover:border-slate-500 ${userAnswers[currentQuestion] === index ? 'selected border-blue-500' : ''}`;
+        optionDiv.innerHTML = `
+          <div class="flex items-start gap-3">
+            <span class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-600 text-sm font-bold flex-shrink-0">${String.fromCharCode(65 + index)}</span>
+            <p>${option}</p>
+          </div>
+        `;
+        optionDiv.onclick = () => selectAnswer(index);
+        optionsContainer.appendChild(optionDiv);
+      });
+      
+      // Update navigation buttons
+      document.getElementById('prev-btn').disabled = currentQuestion === 0;
+      
+      if (currentQuestion === quizQuestions.length - 1) {
+        document.getElementById('next-btn').classList.add('hidden');
+        document.getElementById('submit-btn').classList.remove('hidden');
+      } else {
+        document.getElementById('next-btn').classList.remove('hidden');
+        document.getElementById('submit-btn').classList.add('hidden');
+      }
+    }
+
+    function selectAnswer(index) {
+      userAnswers[currentQuestion] = index;
+      displayQuestion();
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        displayQuestion();
+      }
+    }
+
+    function previousQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion();
+      }
+    }
+
+    function submitQuiz() {
+      // Calculate score
+      quizScore = 0;
+      quizQuestions.forEach((q, index) => {
+        if (userAnswers[index] === q.correct) {
+          quizScore++;
+        }
+      });
+      
+      // Show results
+      document.getElementById('quiz-questions').classList.add('hidden');
+      document.getElementById('quiz-results').classList.remove('hidden');
+      
+      const percentage = (quizScore / quizQuestions.length) * 100;
+      document.getElementById('final-score').textContent = quizScore;
+      document.getElementById('final-percentage').textContent = `${percentage}%`;
+      document.getElementById('current-score').textContent = quizScore;
+      
+      const resultIcon = document.getElementById('result-icon');
+      const resultTitle = document.getElementById('result-title');
+      const resultMessage = document.getElementById('result-message');
+      
+      if (percentage >= 80) {
+        resultIcon.className = 'w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-green-500/20';
+        resultIcon.innerHTML = '<span class="text-5xl">🎉</span>';
+        resultTitle.textContent = 'Luar Biasa!';
+        resultTitle.className = 'text-2xl font-bold mb-2 text-green-400';
+        resultMessage.textContent = 'Kamu menguasai materi dengan sangat baik!';
+      } else if (percentage >= 60) {
+        resultIcon.className = 'w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-yellow-500/20';
+        resultIcon.innerHTML = '<span class="text-5xl">👍</span>';
+        resultTitle.textContent = 'Bagus!';
+        resultTitle.className = 'text-2xl font-bold mb-2 text-yellow-400';
+        resultMessage.textContent = 'Pemahaman sudah cukup baik, terus tingkatkan!';
+      } else {
+        resultIcon.className = 'w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-orange-500/20';
+        resultIcon.innerHTML = '<span class="text-5xl">💪</span>';
+        resultTitle.textContent = 'Tetap Semangat!';
+        resultTitle.className = 'text-2xl font-bold mb-2 text-orange-400';
+        resultMessage.textContent = 'Pelajari kembali materinya dan coba lagi!';
+      }
+    }
+
+    function reviewQuiz() {
+      document.getElementById('quiz-results').classList.add('hidden');
+      document.getElementById('quiz-review').classList.remove('hidden');
+      
+      const reviewContainer = document.getElementById('review-container');
+      reviewContainer.innerHTML = '';
+      
+      quizQuestions.forEach((q, index) => {
+        const isCorrect = userAnswers[index] === q.correct;
+        const reviewItem = document.createElement('div');
+        reviewItem.className = `p-4 rounded-xl ${isCorrect ? 'bg-green-900/20 border border-green-700/30' : 'bg-red-900/20 border border-red-700/30'}`;
+        
+        reviewItem.innerHTML = `
+          <div class="flex items-start gap-3 mb-3">
+            <span class="w-8 h-8 flex items-center justify-center rounded-full ${isCorrect ? 'bg-green-500' : 'bg-red-500'} text-sm font-bold flex-shrink-0">
+              ${isCorrect ? '✓' : '✗'}
+            </span>
+            <p class="font-medium">${index + 1}. ${q.question}</p>
+          </div>
+          <div class="ml-11 space-y-2">
+            <p class="text-sm">
+              <span class="text-slate-400">Jawabanmu:</span> 
+              <span class="${isCorrect ? 'text-green-400' : 'text-red-400'}">
+                ${userAnswers[index] !== null ? q.options[userAnswers[index]] : 'Tidak dijawab'}
+              </span>
+            </p>
+            ${!isCorrect ? `
+              <p class="text-sm">
+                <span class="text-slate-400">Jawaban benar:</span> 
+                <span class="text-green-400">${q.options[q.correct]}</span>
+              </p>
+            ` : ''}
+            <div class="mt-3 p-3 bg-slate-800/50 rounded-lg">
+              <p class="text-sm text-cyan-300"><strong>Pembahasan:</strong> ${q.explanation}</p>
+            </div>
+          </div>
+        `;
+        
+        reviewContainer.appendChild(reviewItem);
+      });
+    }
+
+    function backToResults() {
+      document.getElementById('quiz-review').classList.add('hidden');
+      document.getElementById('quiz-results').classList.remove('hidden');
+    }
+
+    function restartQuiz() {
+      document.getElementById('quiz-results').classList.add('hidden');
+      document.getElementById('quiz-start').classList.remove('hidden');
+    }
+
+    // Event Listeners
+    window.addEventListener('scroll', updateProgressBar);
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeSDK();
+      updateElectromagnet();
+      updateProgressBar();
+      
+      // Set initial generator animation state
+      const coil = document.getElementById('generator-coil');
+      if (coil) coil.style.animationPlayState = 'paused';
+    });
+
+    // Also initialize immediately for non-DOM dependent code
+    initializeSDK();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9caa7b5a70ccb5be',t:'MTc3MDU0Njk0My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

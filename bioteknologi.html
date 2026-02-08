@@ -1,0 +1,1330 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dunia Bioteknologi - Media Pembelajaran Interaktif</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Outfit', sans-serif;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .card-hover {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.25);
+    }
+    
+    .nav-item {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #10b981, #059669);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+    
+    .nav-item:hover::after,
+    .nav-item.active::after {
+      width: 100%;
+    }
+    
+    .pulse-dot {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .slide-in {
+      animation: slideIn 0.6s ease-out forwards;
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border-color: #10b981;
+    }
+    
+    .quiz-option.selected {
+      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+      border-color: #3b82f6;
+    }
+    
+    .quiz-option.correct {
+      background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+      border-color: #22c55e;
+    }
+    
+    .quiz-option.incorrect {
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+      border-color: #ef4444;
+    }
+    
+    .progress-ring {
+      transition: stroke-dashoffset 0.5s ease;
+    }
+    
+    .section-bg {
+      background: linear-gradient(180deg, #f0fdf4 0%, #ecfdf5 50%, #f0fdf4 100%);
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(16, 185, 129, 0.1);
+    }
+    
+    .dna-helix {
+      position: relative;
+    }
+    
+    .dna-helix::before {
+      content: '🧬';
+      position: absolute;
+      font-size: 2rem;
+      animation: float 2s ease-in-out infinite;
+    }
+    
+    .image-card {
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    
+    .image-card img {
+      transition: transform 0.5s ease;
+    }
+    
+    .image-card:hover img {
+      transform: scale(1.05);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+      animation: slideIn 0.4s ease-out;
+    }
+    
+    .interactive-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .interactive-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+    
+    .interactive-btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .tooltip {
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .tooltip-trigger:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-emerald-50 via-white to-teal-50 overflow-auto">
+  <div id="app-wrapper" class="w-full h-full"><!-- Navigation -->
+   <nav class="sticky top-0 z-50 glass-card shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex items-center justify-between h-16">
+      <div class="flex items-center space-x-3">
+       <div class="text-3xl float-animation">
+        🧬
+       </div><span id="nav-title" class="text-xl font-bold gradient-text">Bioteknologi</span>
+      </div>
+      <div class="hidden md:flex items-center space-x-8"><button onclick="scrollToSection('intro')" class="nav-item text-gray-700 font-medium hover:text-emerald-600">Pengantar</button> <button onclick="scrollToSection('konvensional')" class="nav-item text-gray-700 font-medium hover:text-emerald-600">Konvensional</button> <button onclick="scrollToSection('modern')" class="nav-item text-gray-700 font-medium hover:text-emerald-600">Modern</button> <button onclick="scrollToSection('dna')" class="nav-item text-gray-700 font-medium hover:text-emerald-600">DNA Rekombinan</button> <button onclick="scrollToSection('aktivitas')" class="nav-item text-gray-700 font-medium hover:text-emerald-600">Aktivitas</button> <button onclick="scrollToSection('quiz')" class="nav-item px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-full font-medium hover:shadow-lg transition-all">Quiz 🎯</button>
+      </div><button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg hover:bg-emerald-100 transition-colors">
+       <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+       </svg></button>
+     </div>
+    </div><!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-emerald-100">
+     <div class="px-4 py-3 space-y-2"><button onclick="scrollToSection('intro'); toggleMobileMenu()" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-emerald-50 rounded-lg">Pengantar</button> <button onclick="scrollToSection('konvensional'); toggleMobileMenu()" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-emerald-50 rounded-lg">Konvensional</button> <button onclick="scrollToSection('modern'); toggleMobileMenu()" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-emerald-50 rounded-lg">Modern</button> <button onclick="scrollToSection('dna'); toggleMobileMenu()" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-emerald-50 rounded-lg">DNA Rekombinan</button> <button onclick="scrollToSection('aktivitas'); toggleMobileMenu()" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-emerald-50 rounded-lg">Aktivitas</button> <button onclick="scrollToSection('quiz'); toggleMobileMenu()" class="block w-full text-left px-4 py-2 bg-emerald-500 text-white rounded-lg text-center">Quiz 🎯</button>
+     </div>
+    </div>
+   </nav><!-- Hero Section -->
+   <section id="intro" class="relative py-16 lg:py-24 overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+     <div class="absolute -top-40 -right-40 w-80 h-80 bg-emerald-200 rounded-full opacity-30 blur-3xl"></div>
+     <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-teal-200 rounded-full opacity-30 blur-3xl"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12">
+      <div class="inline-flex items-center px-4 py-2 bg-emerald-100 rounded-full text-emerald-700 text-sm font-medium mb-6"><span class="pulse-dot w-2 h-2 bg-emerald-500 rounded-full mr-2"></span> Media Pembelajaran Interaktif
+      </div>
+      <h1 id="main-title" class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6"><span class="text-gray-800">Mengenal Dunia</span><br><span class="gradient-text">Bioteknologi</span></h1>
+      <p id="subtitle" class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">Pelajari bagaimana kehidupan mikroskopis dapat mengubah dunia melalui inovasi bioteknologi konvensional hingga modern</p>
+     </div><!-- What is Biotechnology Card -->
+     <div class="glass-card rounded-3xl p-8 lg:p-12 shadow-xl card-hover max-w-4xl mx-auto">
+      <div class="flex flex-col lg:flex-row items-center gap-8">
+       <div class="flex-shrink-0">
+        <div class="w-32 h-32 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-3xl flex items-center justify-center shadow-lg"><span class="text-6xl">🔬</span>
+        </div>
+       </div>
+       <div class="flex-1 text-center lg:text-left">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Apa itu Bioteknologi?</h2>
+        <p class="text-gray-600 text-lg leading-relaxed mb-6">Bioteknologi adalah <strong class="text-emerald-600">pemanfaatan agen biologis</strong> (seperti mikroorganisme, enzim, sel, atau DNA) untuk menghasilkan produk atau jasa yang berguna bagi manusia.</p>
+        <div class="flex flex-wrap justify-center lg:justify-start gap-3"><span class="px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium">🦠 Mikroorganisme</span> <span class="px-4 py-2 bg-teal-100 text-teal-700 rounded-full text-sm font-medium">🧪 Enzim</span> <span class="px-4 py-2 bg-cyan-100 text-cyan-700 rounded-full text-sm font-medium">🔴 Sel</span> <span class="px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-medium">🧬 DNA</span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Bioteknologi Konvensional Section -->
+   <section id="konvensional" class="py-16 section-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-amber-100 text-amber-700 rounded-full text-sm font-semibold mb-4">Bagian 1</span>
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Bioteknologi Konvensional</h2>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto">Teknik tradisional yang telah dikenal selama ribuan tahun dan sangat dekat dengan kehidupan sehari-hari</p>
+     </div><!-- Characteristics Cards -->
+     <div class="grid md:grid-cols-3 gap-6 mb-12">
+      <div class="glass-card rounded-2xl p-6 card-hover">
+       <div class="w-14 h-14 bg-amber-100 rounded-xl flex items-center justify-center mb-4"><span class="text-2xl">🦠</span>
+       </div>
+       <h3 class="text-lg font-bold text-gray-800 mb-2">Mikroorganisme Langsung</h3>
+       <p class="text-gray-600">Menggunakan mikroorganisme secara langsung tanpa modifikasi genetik</p>
+      </div>
+      <div class="glass-card rounded-2xl p-6 card-hover">
+       <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center mb-4"><span class="text-2xl">🔧</span>
+       </div>
+       <h3 class="text-lg font-bold text-gray-800 mb-2">Metode Sederhana</h3>
+       <p class="text-gray-600">Peralatan dan metode yang digunakan relatif sederhana</p>
+      </div>
+      <div class="glass-card rounded-2xl p-6 card-hover">
+       <div class="w-14 h-14 bg-yellow-100 rounded-xl flex items-center justify-center mb-4"><span class="text-2xl">🏠</span>
+       </div>
+       <h3 class="text-lg font-bold text-gray-800 mb-2">Skala Rumahan</h3>
+       <p class="text-gray-600">Tidak memerlukan sterilitas yang sangat tinggi</p>
+      </div>
+     </div><!-- Fermentation Process -->
+     <div class="glass-card rounded-3xl p-8 mb-12 card-hover">
+      <div class="flex flex-col lg:flex-row items-center gap-8">
+       <div class="flex-1">
+        <div class="inline-flex items-center px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium mb-4">
+         ⚗️ Prinsip Kerja
+        </div>
+        <h3 class="text-2xl font-bold text-gray-800 mb-4">Proses Fermentasi</h3>
+        <p class="text-gray-600 text-lg mb-6">Fermentasi adalah proses <strong class="text-purple-600">pemecahan senyawa kompleks menjadi lebih sederhana</strong> dalam keadaan anaerob (tanpa oksigen). Proses ini memanfaatkan aktivitas metabolisme mikroorganisme.</p>
+        <div class="flex items-center space-x-4 p-4 bg-purple-50 rounded-xl">
+         <div class="text-center">
+          <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md mb-2"><span class="text-2xl">🍬</span>
+          </div><span class="text-xs text-gray-600">Gula</span>
+         </div>
+         <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+         </svg>
+         <div class="text-center">
+          <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md mb-2"><span class="text-2xl">🦠</span>
+          </div><span class="text-xs text-gray-600">Mikroba</span>
+         </div>
+         <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+         </svg>
+         <div class="text-center">
+          <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md mb-2"><span class="text-2xl">🫧</span>
+          </div><span class="text-xs text-gray-600">CO₂ + Produk</span>
+         </div>
+        </div>
+       </div>
+       <div class="flex-shrink-0">
+        <div class="relative">
+         <div class="w-48 h-48 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-3xl flex items-center justify-center shadow-xl"><span class="text-8xl">🧫</span>
+         </div>
+         <div class="absolute -bottom-4 -right-4 w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg"><span class="text-4xl">💨</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Product Gallery -->
+     <h3 class="text-2xl font-bold text-gray-800 text-center mb-8">Contoh Produk Bioteknologi Konvensional</h3>
+     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"><!-- Tempe -->
+      <div class="glass-card rounded-2xl overflow-hidden card-hover group">
+       <div class="image-card h-48 bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center relative"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Tempe_sliced.jpg/320px-Tempe_sliced.jpg" alt="Tempe - produk fermentasi kedelai" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-7xl\'>🫘</div>';">
+       </div>
+       <div class="p-5">
+        <h4 class="font-bold text-gray-800 text-lg mb-2">Tempe</h4>
+        <p class="text-gray-600 text-sm mb-3">Fermentasi kedelai menggunakan jamur <em>Rhizopus oligosporus</em></p>
+        <div class="flex items-center text-xs text-amber-600"><span class="px-2 py-1 bg-amber-50 rounded-full">🍄 Jamur Tempe</span>
+        </div>
+       </div>
+      </div><!-- Yoghurt -->
+      <div class="glass-card rounded-2xl overflow-hidden card-hover group">
+       <div class="image-card h-48 bg-gradient-to-br from-pink-100 to-rose-100 flex items-center justify-center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Joghurt.jpg/320px-Joghurt.jpg" alt="Yoghurt - produk fermentasi susu" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-7xl\'>🥛</div>';">
+       </div>
+       <div class="p-5">
+        <h4 class="font-bold text-gray-800 text-lg mb-2">Yoghurt</h4>
+        <p class="text-gray-600 text-sm mb-3">Fermentasi susu oleh bakteri <em>Lactobacillus bulgaricus</em></p>
+        <div class="flex items-center text-xs text-pink-600"><span class="px-2 py-1 bg-pink-50 rounded-full">🦠 Bakteri Asam Laktat</span>
+        </div>
+       </div>
+      </div><!-- Keju -->
+      <div class="glass-card rounded-2xl overflow-hidden card-hover group">
+       <div class="image-card h-48 bg-gradient-to-br from-yellow-100 to-amber-100 flex items-center justify-center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Camembert_de_Normandie_%28AOP%29_12.jpg/320px-Camembert_de_Normandie_%28AOP%29_12.jpg" alt="Keju - produk fermentasi susu" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-7xl\'>🧀</div>';">
+       </div>
+       <div class="p-5">
+        <h4 class="font-bold text-gray-800 text-lg mb-2">Keju</h4>
+        <p class="text-gray-600 text-sm mb-3">Fermentasi susu dengan enzim renin dan bakteri starter</p>
+        <div class="flex items-center text-xs text-yellow-600"><span class="px-2 py-1 bg-yellow-50 rounded-full">🧪 Enzim Renin</span>
+        </div>
+       </div>
+      </div><!-- Roti -->
+      <div class="glass-card rounded-2xl overflow-hidden card-hover group">
+       <div class="image-card h-48 bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Fresh_made_bread_05.jpg/320px-Fresh_made_bread_05.jpg" alt="Roti - produk fermentasi ragi" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-7xl\'>🍞</div>';">
+       </div>
+       <div class="p-5">
+        <h4 class="font-bold text-gray-800 text-lg mb-2">Roti</h4>
+        <p class="text-gray-600 text-sm mb-3">Fermentasi adonan tepung menggunakan ragi <em>Saccharomyces</em></p>
+        <div class="flex items-center text-xs text-orange-600"><span class="px-2 py-1 bg-orange-50 rounded-full">🍄 Ragi/Yeast</span>
+        </div>
+       </div>
+      </div>
+     </div><!-- More Products -->
+     <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="glass-card rounded-xl p-4 flex items-center space-x-4 card-hover">
+       <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center text-2xl">
+        🫗
+       </div>
+       <div>
+        <h5 class="font-semibold text-gray-800">Kecap</h5>
+        <p class="text-xs text-gray-500">Fermentasi kedelai</p>
+       </div>
+      </div>
+      <div class="glass-card rounded-xl p-4 flex items-center space-x-4 card-hover">
+       <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center text-2xl">
+        🥬
+       </div>
+       <div>
+        <h5 class="font-semibold text-gray-800">Tauco</h5>
+        <p class="text-xs text-gray-500">Fermentasi kedelai</p>
+       </div>
+      </div>
+      <div class="glass-card rounded-xl p-4 flex items-center space-x-4 card-hover">
+       <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center text-2xl">
+        🍶
+       </div>
+       <div>
+        <h5 class="font-semibold text-gray-800">Cuka</h5>
+        <p class="text-xs text-gray-500">Fermentasi alkohol</p>
+       </div>
+      </div>
+      <div class="glass-card rounded-xl p-4 flex items-center space-x-4 card-hover">
+       <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-2xl">
+        🍺
+       </div>
+       <div>
+        <h5 class="font-semibold text-gray-800">Tape</h5>
+        <p class="text-xs text-gray-500">Fermentasi singkong/beras</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Bioteknologi Modern Section -->
+   <section id="modern" class="py-16 bg-gradient-to-br from-slate-900 via-emerald-900 to-teal-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-emerald-500/20 text-emerald-300 rounded-full text-sm font-semibold mb-4 border border-emerald-500/30">Bagian 2</span>
+      <h2 class="text-3xl lg:text-4xl font-bold mb-4">Bioteknologi Modern</h2>
+      <p class="text-emerald-200 text-lg max-w-2xl mx-auto">Berkembang pesat sejak ditemukannya struktur DNA dan teknik rekayasa genetika</p>
+     </div><!-- Modern Characteristics -->
+     <div class="grid md:grid-cols-2 gap-6 mb-12">
+      <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 card-hover">
+       <div class="flex items-start space-x-4">
+        <div class="w-14 h-14 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">🧬</span>
+        </div>
+        <div>
+         <h3 class="text-lg font-bold mb-2">Rekayasa Genetika</h3>
+         <p class="text-emerald-200">Melibatkan manipulasi DNA dan rekayasa sel untuk menghasilkan organisme dengan sifat yang diinginkan</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 card-hover">
+       <div class="flex items-start space-x-4">
+        <div class="w-14 h-14 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">🔬</span>
+        </div>
+        <div>
+         <h3 class="text-lg font-bold mb-2">Peralatan Modern &amp; Steril</h3>
+         <p class="text-emerald-200">Membutuhkan laboratorium berteknologi tinggi dan kondisi steril yang ketat</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Techniques Tabs -->
+     <div class="bg-white/5 backdrop-blur-sm rounded-3xl p-6 lg:p-8 border border-white/10">
+      <h3 class="text-2xl font-bold text-center mb-8">Teknik-Teknik Bioteknologi Modern</h3><!-- Tab Buttons -->
+      <div class="flex flex-wrap justify-center gap-2 mb-8" id="technique-tabs"><button onclick="showTechnique('kultur')" class="technique-tab px-4 py-2 rounded-full text-sm font-medium transition-all bg-emerald-500 text-white" data-tab="kultur"> 🌱 Kultur Jaringan </button> <button onclick="showTechnique('bayi')" class="technique-tab px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white/70 hover:bg-white/20" data-tab="bayi"> 👶 Bayi Tabung </button> <button onclick="showTechnique('kloning')" class="technique-tab px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white/70 hover:bg-white/20" data-tab="kloning"> 🐑 Kloning </button> <button onclick="showTechnique('hibridoma')" class="technique-tab px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white/70 hover:bg-white/20" data-tab="hibridoma"> 💉 Hibridoma </button> <button onclick="showTechnique('rekombinan')" class="technique-tab px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white/70 hover:bg-white/20" data-tab="rekombinan"> 🧬 DNA Rekombinan </button>
+      </div><!-- Tab Contents -->
+      <div id="technique-contents"><!-- Kultur Jaringan -->
+       <div id="content-kultur" class="tab-content active">
+        <div class="flex flex-col lg:flex-row items-center gap-8">
+         <div class="flex-1">
+          <h4 class="text-xl font-bold text-emerald-300 mb-4">Kultur Jaringan (Tissue Culture)</h4>
+          <p class="text-emerald-100 mb-4">Teknik memperbanyak tumbuhan dari sebagian kecil jaringan (eksplan) dalam media steril yang mengandung nutrisi lengkap.</p>
+          <div class="bg-white/10 rounded-xl p-4 mb-4">
+           <h5 class="font-semibold text-emerald-300 mb-2">🎯 Tujuan:</h5>
+           <ul class="text-emerald-200 text-sm space-y-1">
+            <li>• Mendapatkan keturunan dalam jumlah banyak</li>
+            <li>• Proses lebih cepat dari cara konvensional</li>
+            <li>• Menghasilkan tanaman yang seragam (identik)</li>
+            <li>• Bebas dari penyakit</li>
+           </ul>
+          </div>
+          <div class="flex flex-wrap gap-2"><span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm">🌿 Anggrek</span> <span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm">🍌 Pisang</span> <span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm">🌴 Kelapa Sawit</span>
+          </div>
+         </div>
+         <div class="flex-shrink-0">
+          <div class="relative"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Tissue_culture_hood.jpg/320px-Tissue_culture_hood.jpg" alt="Kultur Jaringan Tanaman" class="w-64 h-64 object-cover rounded-2xl shadow-2xl" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+           <div class="w-64 h-64 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl hidden items-center justify-center shadow-2xl"><span class="text-8xl">🌱</span>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div><!-- Bayi Tabung -->
+       <div id="content-bayi" class="tab-content">
+        <div class="flex flex-col lg:flex-row items-center gap-8">
+         <div class="flex-1">
+          <h4 class="text-xl font-bold text-pink-300 mb-4">Bayi Tabung (In Vitro Fertilization)</h4>
+          <p class="text-emerald-100 mb-4">Teknik fertilisasi (pembuahan) sel sperma dan sel telur (ovum) yang dilakukan di luar tubuh dalam cawan laboratorium.</p>
+          <div class="bg-white/10 rounded-xl p-4 mb-4">
+           <h5 class="font-semibold text-pink-300 mb-2">🎯 Tujuan:</h5>
+           <ul class="text-emerald-200 text-sm space-y-1">
+            <li>• Membantu pasangan yang mengalami kesulitan memiliki keturunan</li>
+            <li>• Mengatasi masalah infertilitas</li>
+            <li>• Memungkinkan seleksi embrio sehat</li>
+           </ul>
+          </div>
+          <div class="bg-pink-500/10 rounded-xl p-4 border border-pink-500/20">
+           <h5 class="font-semibold text-pink-300 mb-2">📋 Proses:</h5>
+           <div class="flex items-center space-x-2 text-sm text-emerald-200"><span class="px-2 py-1 bg-pink-500/20 rounded">1. Pengambilan Ovum</span> <span>→</span> <span class="px-2 py-1 bg-pink-500/20 rounded">2. Fertilisasi</span> <span>→</span> <span class="px-2 py-1 bg-pink-500/20 rounded">3. Implantasi</span>
+           </div>
+          </div>
+         </div>
+         <div class="flex-shrink-0">
+          <div class="w-64 h-64 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl flex items-center justify-center shadow-2xl"><span class="text-8xl">👶</span>
+          </div>
+         </div>
+        </div>
+       </div><!-- Kloning -->
+       <div id="content-kloning" class="tab-content">
+        <div class="flex flex-col lg:flex-row items-center gap-8">
+         <div class="flex-1">
+          <h4 class="text-xl font-bold text-purple-300 mb-4">Kloning</h4>
+          <p class="text-emerald-100 mb-4">Teknik membuat individu baru dengan memindahkan inti sel tubuh (somatik) ke dalam sel telur yang intinya sudah dibuang (enukleasi).</p>
+          <div class="bg-white/10 rounded-xl p-4 mb-4">
+           <h5 class="font-semibold text-purple-300 mb-2">🎯 Tujuan:</h5>
+           <ul class="text-emerald-200 text-sm space-y-1">
+            <li>• Menghasilkan individu dengan sifat identik dengan pendonor inti</li>
+            <li>• Melestarikan spesies langka</li>
+            <li>• Penelitian biomedis</li>
+           </ul>
+          </div>
+          <div class="bg-purple-500/10 rounded-xl p-4 border border-purple-500/20">
+           <h5 class="font-semibold text-purple-300 mb-2">🐑 Contoh Terkenal:</h5>
+           <p class="text-emerald-200 text-sm">Domba Dolly (1996) - Mamalia pertama yang berhasil dikloning dari sel dewasa</p>
+          </div>
+         </div>
+         <div class="flex-shrink-0">
+          <div class="relative"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Dolly_the_sheep_2016.JPG/240px-Dolly_the_sheep_2016.JPG" alt="Domba Dolly - hasil kloning" class="w-64 h-64 object-cover rounded-2xl shadow-2xl" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+           <div class="w-64 h-64 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl hidden items-center justify-center shadow-2xl"><span class="text-8xl">🐑</span>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div><!-- Hibridoma -->
+       <div id="content-hibridoma" class="tab-content">
+        <div class="flex flex-col lg:flex-row items-center gap-8">
+         <div class="flex-1">
+          <h4 class="text-xl font-bold text-blue-300 mb-4">Hibridoma</h4>
+          <p class="text-emerald-100 mb-4">Teknik penggabungan (fusi) dua jenis sel yang berbeda untuk menghasilkan sel hibrida dengan sifat gabungan kedua sel induk.</p>
+          <div class="bg-white/10 rounded-xl p-4 mb-4">
+           <h5 class="font-semibold text-blue-300 mb-2">🎯 Tujuan:</h5>
+           <ul class="text-emerald-200 text-sm space-y-1">
+            <li>• Memproduksi antibodi monoklonal dalam jumlah besar</li>
+            <li>• Untuk diagnosis penyakit</li>
+            <li>• Pengobatan kanker dan penyakit autoimun</li>
+           </ul>
+          </div>
+          <div class="bg-blue-500/10 rounded-xl p-4 border border-blue-500/20">
+           <h5 class="font-semibold text-blue-300 mb-2">🔬 Proses Fusi:</h5>
+           <div class="flex items-center justify-center space-x-4 text-sm">
+            <div class="text-center">
+             <div class="w-16 h-16 bg-blue-500/30 rounded-full flex items-center justify-center mb-1"><span class="text-2xl">🔴</span>
+             </div><span class="text-emerald-300 text-xs">Sel Limfosit B</span>
+            </div><span class="text-2xl">+</span>
+            <div class="text-center">
+             <div class="w-16 h-16 bg-red-500/30 rounded-full flex items-center justify-center mb-1"><span class="text-2xl">⚫</span>
+             </div><span class="text-emerald-300 text-xs">Sel Mieloma</span>
+            </div><span class="text-2xl">=</span>
+            <div class="text-center">
+             <div class="w-16 h-16 bg-purple-500/30 rounded-full flex items-center justify-center mb-1"><span class="text-2xl">🟣</span>
+             </div><span class="text-emerald-300 text-xs">Hibridoma</span>
+            </div>
+           </div>
+          </div>
+         </div>
+         <div class="flex-shrink-0">
+          <div class="w-64 h-64 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-2xl"><span class="text-8xl">💉</span>
+          </div>
+         </div>
+        </div>
+       </div><!-- DNA Rekombinan -->
+       <div id="content-rekombinan" class="tab-content">
+        <div class="flex flex-col lg:flex-row items-center gap-8">
+         <div class="flex-1">
+          <h4 class="text-xl font-bold text-cyan-300 mb-4">DNA Rekombinan</h4>
+          <p class="text-emerald-100 mb-4">Teknik penggabungan dua atau lebih fragmen DNA dari sumber yang berbeda untuk menghasilkan DNA dengan kombinasi baru.</p>
+          <div class="bg-white/10 rounded-xl p-4 mb-4">
+           <h5 class="font-semibold text-cyan-300 mb-2">🎯 Tujuan:</h5>
+           <ul class="text-emerald-200 text-sm space-y-1">
+            <li>• Memproduksi hormon insulin untuk diabetes</li>
+            <li>• Membuat tanaman tahan hama</li>
+            <li>• Produksi vaksin dan obat-obatan</li>
+            <li>• Terapi gen</li>
+           </ul>
+          </div>
+          <div class="flex flex-wrap gap-2"><span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">💊 Insulin</span> <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">🌾 Tanaman GMO</span> <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">💉 Vaksin</span>
+          </div>
+         </div>
+         <div class="flex-shrink-0">
+          <div class="w-64 h-64 bg-gradient-to-br from-cyan-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-2xl"><span class="text-8xl">🧬</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- DNA Rekombinan Detail Section -->
+   <section id="dna" class="py-16 section-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-cyan-100 text-cyan-700 rounded-full text-sm font-semibold mb-4">Bagian 3</span>
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Fokus: Teknologi DNA Rekombinan</h2>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto">Memahami proses pembuatan insulin untuk membantu penderita diabetes</p>
+     </div><!-- Interactive DNA Process -->
+     <div class="glass-card rounded-3xl p-8 mb-12">
+      <h3 class="text-xl font-bold text-gray-800 mb-6 text-center">Proses Pembuatan Insulin dengan DNA Rekombinan</h3>
+      <div class="relative"><!-- Step-by-step Process -->
+       <div class="grid md:grid-cols-5 gap-4"><!-- Step 1 -->
+        <div class="text-center">
+         <div class="w-20 h-20 mx-auto bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg mb-3"><span class="text-3xl">🧬</span>
+         </div>
+         <div class="bg-blue-50 rounded-xl p-3"><span class="text-xs font-bold text-blue-600 block mb-1">STEP 1</span>
+          <p class="text-xs text-gray-600">Isolasi gen insulin dari DNA manusia</p>
+         </div>
+        </div><!-- Arrow -->
+        <div class="hidden md:flex items-center justify-center">
+         <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+         </svg>
+        </div><!-- Step 2 -->
+        <div class="text-center">
+         <div class="w-20 h-20 mx-auto bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg mb-3"><span class="text-3xl">✂️</span>
+         </div>
+         <div class="bg-purple-50 rounded-xl p-3"><span class="text-xs font-bold text-purple-600 block mb-1">STEP 2</span>
+          <p class="text-xs text-gray-600">Potong plasmid bakteri dengan enzim restriksi</p>
+         </div>
+        </div><!-- Arrow -->
+        <div class="hidden md:flex items-center justify-center">
+         <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+         </svg>
+        </div><!-- Step 3 -->
+        <div class="text-center">
+         <div class="w-20 h-20 mx-auto bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center shadow-lg mb-3"><span class="text-3xl">🔗</span>
+         </div>
+         <div class="bg-green-50 rounded-xl p-3"><span class="text-xs font-bold text-green-600 block mb-1">STEP 3</span>
+          <p class="text-xs text-gray-600">Sambung gen insulin ke plasmid dengan enzim ligase</p>
+         </div>
+        </div>
+       </div><!-- Second Row -->
+       <div class="grid md:grid-cols-4 gap-4 mt-6">
+        <div class="md:col-start-2 text-center">
+         <div class="w-20 h-20 mx-auto bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg mb-3"><span class="text-3xl">🦠</span>
+         </div>
+         <div class="bg-orange-50 rounded-xl p-3"><span class="text-xs font-bold text-orange-600 block mb-1">STEP 4</span>
+          <p class="text-xs text-gray-600">Masukkan plasmid rekombinan ke bakteri E. coli</p>
+         </div>
+        </div><!-- Arrow -->
+        <div class="hidden md:flex items-center justify-center">
+         <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+         </svg>
+        </div>
+        <div class="text-center">
+         <div class="w-20 h-20 mx-auto bg-gradient-to-br from-pink-400 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg mb-3"><span class="text-3xl">💊</span>
+         </div>
+         <div class="bg-pink-50 rounded-xl p-3"><span class="text-xs font-bold text-pink-600 block mb-1">STEP 5</span>
+          <p class="text-xs text-gray-600">Bakteri memproduksi insulin, lalu dimurnikan</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Tools Section -->
+     <div class="grid md:grid-cols-2 gap-6"><!-- Plasmid -->
+      <div class="glass-card rounded-2xl p-6 card-hover">
+       <div class="flex items-start space-x-4">
+        <div class="w-16 h-16 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-3xl">🔄</span>
+        </div>
+        <div>
+         <h4 class="text-lg font-bold text-gray-800 mb-2">Plasmid</h4>
+         <p class="text-gray-600 text-sm mb-3">DNA sirkuler (berbentuk lingkaran) pada bakteri yang digunakan sebagai vektor (pembawa) gen asing.</p>
+         <div class="bg-indigo-50 rounded-lg p-3">
+          <h5 class="text-xs font-semibold text-indigo-600 mb-1">Keunggulan:</h5>
+          <ul class="text-xs text-gray-600 space-y-1">
+           <li>✓ Mudah direkayasa (dimodifikasi)</li>
+           <li>✓ Dapat memperbanyak diri sendiri</li>
+           <li>✓ Ukuran kecil, mudah dimasukkan ke sel</li>
+          </ul>
+         </div>
+        </div>
+       </div>
+      </div><!-- Enzymes -->
+      <div class="glass-card rounded-2xl p-6 card-hover">
+       <div class="flex items-start space-x-4">
+        <div class="w-16 h-16 bg-gradient-to-br from-red-400 to-orange-500 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-3xl">🧪</span>
+        </div>
+        <div>
+         <h4 class="text-lg font-bold text-gray-800 mb-2">Enzim Pembantu</h4>
+         <p class="text-gray-600 text-sm mb-3">Dua jenis enzim utama yang digunakan dalam teknologi DNA rekombinan:</p>
+         <div class="space-y-2">
+          <div class="bg-red-50 rounded-lg p-3">
+           <h5 class="text-xs font-semibold text-red-600 mb-1">✂️ Enzim Restriksi (Endonuklease)</h5>
+           <p class="text-xs text-gray-600">Memotong DNA pada urutan tertentu</p>
+          </div>
+          <div class="bg-green-50 rounded-lg p-3">
+           <h5 class="text-xs font-semibold text-green-600 mb-1">🔗 Enzim Ligase</h5>
+           <p class="text-xs text-gray-600">Menyambungkan fragmen DNA yang berbeda</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Aktivitas Section -->
+   <section id="aktivitas" class="py-16 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-amber-100 text-amber-700 rounded-full text-sm font-semibold mb-4">🎨 Ayo Berkreasi!</span>
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Aktivitas Interaktif</h2>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto">Praktikkan pemahaman bioteknologi melalui proyek nyata</p>
+     </div>
+     <div class="grid lg:grid-cols-3 gap-6"><!-- Activity 1 -->
+      <div class="glass-card rounded-2xl p-6 card-hover border-t-4 border-amber-400">
+       <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center mb-4"><span class="text-2xl">🔍</span>
+       </div>
+       <h3 class="text-lg font-bold text-gray-800 mb-3">1. Identifikasi Potensi Lokal</h3>
+       <p class="text-gray-600 text-sm mb-4">Temukan bahan pangan di sekitarmu yang berpotensi untuk difermentasi menjadi produk baru.</p>
+       <div class="bg-amber-50 rounded-xl p-4 mb-4">
+        <h4 class="text-sm font-semibold text-amber-700 mb-2">💡 Contoh Ide:</h4>
+        <ul class="text-sm text-gray-600 space-y-1">
+         <li>• Kacang hijau → Tempe kacang hijau</li>
+         <li>• Singkong → Tape singkong</li>
+         <li>• Susu kedelai → Tahu susu</li>
+        </ul>
+       </div><button onclick="showActivityModal('identifikasi')" class="w-full interactive-btn px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:shadow-lg transition-all"> Mulai Identifikasi 📝 </button>
+      </div><!-- Activity 2 -->
+      <div class="glass-card rounded-2xl p-6 card-hover border-t-4 border-green-400">
+       <div class="w-14 h-14 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center mb-4"><span class="text-2xl">🧪</span>
+       </div>
+       <h3 class="text-lg font-bold text-gray-800 mb-3">2. Eksperimen Fermentasi</h3>
+       <p class="text-gray-600 text-sm mb-4">Lakukan percobaan dengan merekayasa variabel untuk melihat pengaruhnya terhadap hasil fermentasi.</p>
+       <div class="bg-green-50 rounded-xl p-4 mb-4">
+        <h4 class="text-sm font-semibold text-green-700 mb-2">🔬 Variabel yang Diuji:</h4>
+        <ul class="text-sm text-gray-600 space-y-1">
+         <li>• Jumlah ragi (0.5%, 1%, 2%)</li>
+         <li>• Suhu fermentasi (25°C, 30°C, 35°C)</li>
+         <li>• Lama fermentasi (24, 48, 72 jam)</li>
+        </ul>
+       </div><button onclick="showActivityModal('eksperimen')" class="w-full interactive-btn px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl font-medium hover:shadow-lg transition-all"> Rancang Eksperimen 🔬 </button>
+      </div><!-- Activity 3 -->
+      <div class="glass-card rounded-2xl p-6 card-hover border-t-4 border-blue-400">
+       <div class="w-14 h-14 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-xl flex items-center justify-center mb-4"><span class="text-2xl">📱</span>
+       </div>
+       <h3 class="text-lg font-bold text-gray-800 mb-3">3. Publikasi &amp; Edukasi</h3>
+       <p class="text-gray-600 text-sm mb-4">Buat laporan hasil percobaan dalam bentuk poster atau infografis untuk mengedukasi masyarakat.</p>
+       <div class="bg-blue-50 rounded-xl p-4 mb-4">
+        <h4 class="text-sm font-semibold text-blue-700 mb-2">📊 Format Publikasi:</h4>
+        <ul class="text-sm text-gray-600 space-y-1">
+         <li>• Poster ilmiah (A3/A2)</li>
+         <li>• Infografis digital</li>
+         <li>• Video pendek (1-3 menit)</li>
+        </ul>
+       </div><button onclick="showActivityModal('publikasi')" class="w-full interactive-btn px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-medium hover:shadow-lg transition-all"> Template Poster 🎨 </button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Quiz Section -->
+   <section id="quiz" class="py-16 bg-gradient-to-br from-emerald-900 via-teal-800 to-cyan-900">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-emerald-500/20 text-emerald-300 rounded-full text-sm font-semibold mb-4 border border-emerald-500/30">🎯 Quiz HOTS</span>
+      <h2 class="text-3xl lg:text-4xl font-bold text-white mb-4">Uji Pemahamanmu!</h2>
+      <p class="text-emerald-200 text-lg">10 Soal Higher Order Thinking Skills (HOTS) tentang Bioteknologi</p>
+     </div><!-- Quiz Container -->
+     <div id="quiz-container" class="bg-white/10 backdrop-blur-sm rounded-3xl p-6 lg:p-8 border border-white/10"><!-- Progress Bar -->
+      <div class="flex items-center justify-between mb-6">
+       <div class="flex items-center space-x-3"><span id="quiz-progress" class="text-emerald-300 font-semibold">Soal 1/10</span>
+       </div>
+       <div class="flex items-center space-x-2"><span class="text-emerald-300 text-sm">Skor:</span> <span id="quiz-score" class="text-2xl font-bold text-white">0</span>
+       </div>
+      </div>
+      <div class="w-full bg-white/10 rounded-full h-2 mb-8">
+       <div id="progress-bar" class="bg-gradient-to-r from-emerald-400 to-teal-400 h-2 rounded-full transition-all duration-500" style="width: 10%"></div>
+      </div><!-- Question Area -->
+      <div id="question-area">
+       <div id="question-text" class="text-xl lg:text-2xl font-semibold text-white mb-8 leading-relaxed"></div>
+       <div id="options-container" class="space-y-3"></div>
+       <div id="explanation" class="hidden mt-6 p-4 bg-white/10 rounded-xl border border-white/20">
+        <h4 class="font-semibold text-emerald-300 mb-2">💡 Pembahasan:</h4>
+        <p id="explanation-text" class="text-emerald-100 text-sm"></p>
+       </div>
+      </div><!-- Navigation Buttons -->
+      <div class="flex justify-between mt-8"><button id="prev-btn" onclick="prevQuestion()" class="px-6 py-3 bg-white/10 text-white rounded-xl font-medium hover:bg-white/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled> ← Sebelumnya </button> <button id="next-btn" onclick="nextQuestion()" class="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-medium hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"> Selanjutnya → </button>
+      </div>
+     </div><!-- Quiz Result -->
+     <div id="quiz-result" class="hidden bg-white/10 backdrop-blur-sm rounded-3xl p-8 lg:p-12 border border-white/10 text-center">
+      <div class="mb-6">
+       <div id="result-icon" class="text-8xl mb-4">
+        🎉
+       </div>
+       <h3 id="result-title" class="text-3xl font-bold text-white mb-2">Luar Biasa!</h3>
+       <p id="result-subtitle" class="text-emerald-200 text-lg"></p>
+      </div>
+      <div class="inline-flex items-center justify-center w-40 h-40 relative mb-6">
+       <svg class="w-40 h-40 transform -rotate-90"><circle cx="80" cy="80" r="70" stroke="rgba(255,255,255,0.1)" stroke-width="10" fill="none" /> <circle id="result-circle" cx="80" cy="80" r="70" stroke="url(#gradient)" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="439.8" stroke-dashoffset="439.8" class="progress-ring" /> <defs>
+         <lineargradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#10b981" />
+          <stop offset="100%" stop-color="#14b8a6" />
+         </lineargradient>
+        </defs>
+       </svg>
+       <div class="absolute inset-0 flex flex-col items-center justify-center"><span id="final-score" class="text-4xl font-bold text-white">0</span> <span class="text-emerald-300 text-sm">/100</span>
+       </div>
+      </div>
+      <div id="result-breakdown" class="grid grid-cols-2 gap-4 mb-8 max-w-xs mx-auto">
+       <div class="bg-green-500/20 rounded-xl p-4"><span class="text-3xl font-bold text-green-400" id="correct-count">0</span>
+        <p class="text-green-300 text-sm">Benar</p>
+       </div>
+       <div class="bg-red-500/20 rounded-xl p-4"><span class="text-3xl font-bold text-red-400" id="wrong-count">0</span>
+        <p class="text-red-300 text-sm">Salah</p>
+       </div>
+      </div><button onclick="restartQuiz()" class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-semibold hover:shadow-lg transition-all"> Ulangi Quiz 🔄 </button>
+     </div>
+    </div>
+   </section><!-- Activity Modal -->
+   <div id="activity-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90%] overflow-y-auto">
+     <div class="p-6 lg:p-8">
+      <div class="flex justify-between items-start mb-6">
+       <h3 id="modal-title" class="text-2xl font-bold text-gray-800"></h3><button onclick="closeActivityModal()" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
+        <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg></button>
+      </div>
+      <div id="modal-content"></div>
+     </div>
+    </div>
+   </div><!-- Footer -->
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center">
+      <div class="flex items-center justify-center space-x-3 mb-4"><span class="text-4xl">🧬</span> <span class="text-2xl font-bold">Bioteknologi</span>
+      </div>
+      <p class="text-gray-400 mb-6">Media Pembelajaran Interaktif untuk Siswa</p>
+      <div class="flex justify-center space-x-4 mb-6"><span class="px-4 py-2 bg-gray-800 rounded-full text-sm">🔬 Sains</span> <span class="px-4 py-2 bg-gray-800 rounded-full text-sm">🧪 Biologi</span> <span class="px-4 py-2 bg-gray-800 rounded-full text-sm">🌱 Inovasi</span>
+      </div>
+      <p class="text-gray-500 text-sm">© 2024 Media Pembelajaran Bioteknologi. Dibuat dengan ❤️ untuk pendidikan.</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: "Mengenal Dunia Bioteknologi",
+      subtitle: "Pelajari bagaimana kehidupan mikroskopis dapat mengubah dunia melalui inovasi bioteknologi konvensional hingga modern",
+      background_color: "#f0fdf4",
+      surface_color: "#ffffff",
+      text_color: "#1f2937",
+      primary_color: "#10b981",
+      secondary_color: "#047857",
+      font_family: "Outfit",
+      font_size: 16
+    };
+
+    let config = { ...defaultConfig };
+
+    // Quiz Data - HOTS Questions
+    const quizData = [
+      {
+        question: "Seorang petani ingin memperbanyak tanaman anggrek langka dengan cepat dan menghasilkan tanaman yang identik. Teknik bioteknologi modern apa yang paling tepat digunakan?",
+        options: [
+          "Fermentasi dengan ragi",
+          "Kultur jaringan",
+          "Hibridoma",
+          "Bayi tabung"
+        ],
+        correct: 1,
+        explanation: "Kultur jaringan adalah teknik yang tepat karena dapat memperbanyak tanaman dari sebagian kecil jaringan dalam waktu singkat dan menghasilkan tanaman yang identik (seragam) dengan induknya. Teknik ini juga dapat menghasilkan tanaman bebas penyakit."
+      },
+      {
+        question: "Mengapa pembuatan tempe termasuk bioteknologi konvensional, sedangkan pembuatan insulin dengan bakteri termasuk bioteknologi modern?",
+        options: [
+          "Tempe lebih murah dibanding insulin",
+          "Tempe tidak memerlukan peralatan, insulin memerlukan laboratorium",
+          "Tempe menggunakan mikroba langsung tanpa rekayasa genetik, insulin memerlukan rekayasa DNA",
+          "Tempe dibuat di rumah, insulin di pabrik"
+        ],
+        correct: 2,
+        explanation: "Perbedaan utama terletak pada prinsip kerjanya. Bioteknologi konvensional (tempe) memanfaatkan mikroorganisme secara langsung tanpa memodifikasi genetiknya. Sedangkan bioteknologi modern (insulin) melibatkan rekayasa genetika dengan menyisipkan gen insulin manusia ke dalam DNA bakteri."
+      },
+      {
+        question: "Dalam proses fermentasi tempe, mengapa kedelai harus direbus terlebih dahulu sebelum ditambahkan ragi?",
+        options: [
+          "Agar tempe lebih enak rasanya",
+          "Untuk membunuh mikroba pesaing dan melunakkan kedelai agar ragi dapat tumbuh",
+          "Supaya tempe menjadi putih",
+          "Untuk menambah kandungan protein"
+        ],
+        correct: 1,
+        explanation: "Perebusan kedelai bertujuan untuk: (1) membunuh mikroba kontaminan yang dapat mengganggu pertumbuhan jamur tempe, (2) melunakkan struktur kedelai sehingga hifa jamur lebih mudah menembus dan menyerap nutrisi, dan (3) menghilangkan zat anti-nutrisi pada kedelai."
+      },
+      {
+        question: "Seorang ilmuwan ingin membuat antibodi dalam jumlah besar untuk mendeteksi virus tertentu. Teknik apa yang harus digunakan dan mengapa?",
+        options: [
+          "Kloning, karena dapat memperbanyak sel",
+          "DNA rekombinan, karena dapat menggabungkan DNA",
+          "Hibridoma, karena menggabungkan sel penghasil antibodi dengan sel kanker yang dapat membelah terus-menerus",
+          "Kultur jaringan, karena dapat memperbanyak sel secara cepat"
+        ],
+        correct: 2,
+        explanation: "Hibridoma adalah teknik yang tepat karena menggabungkan sel limfosit B (penghasil antibodi spesifik) dengan sel mieloma (sel kanker yang dapat membelah terus-menerus). Hasilnya adalah sel yang dapat memproduksi antibodi monoklonal spesifik dalam jumlah besar dan tak terbatas."
+      },
+      {
+        question: "Mengapa plasmid bakteri dipilih sebagai vektor dalam teknologi DNA rekombinan dibandingkan kromosom bakteri?",
+        options: [
+          "Plasmid lebih besar ukurannya",
+          "Plasmid mudah direkayasa, dapat bereplikasi sendiri, dan mudah dimasukkan ke sel",
+          "Plasmid mengandung lebih banyak gen",
+          "Plasmid lebih stabil dibanding kromosom"
+        ],
+        correct: 1,
+        explanation: "Plasmid dipilih karena: (1) berukuran kecil sehingga mudah dimanipulasi dan dimasukkan ke dalam sel, (2) memiliki kemampuan replikasi mandiri (ori - origin of replication), (3) memiliki situs restriksi yang dapat dipotong enzim, dan (4) dapat diisolasi dengan mudah dari sel bakteri."
+      },
+      {
+        question: "Jika enzim restriksi EcoRI memotong DNA pada urutan GAATTC, mengapa harus menggunakan enzim yang sama untuk memotong gen insulin dan plasmid?",
+        options: [
+          "Supaya lebih murah biayanya",
+          "Agar menghasilkan ujung lengket (sticky ends) yang kompatibel untuk disambungkan",
+          "Karena enzim lain tidak bisa memotong DNA",
+          "Supaya proses lebih cepat"
+        ],
+        correct: 1,
+        explanation: "Enzim restriksi yang sama akan menghasilkan ujung lengket (sticky ends) dengan urutan basa yang komplementer. Hal ini memungkinkan gen insulin dan plasmid yang sudah dipotong dapat disambungkan dengan tepat oleh enzim ligase, karena ujung-ujungnya dapat berpasangan dengan ikatan hidrogen."
+      },
+      {
+        question: "Seorang peneliti berhasil mengkloning domba menggunakan teknik transfer inti sel. Mengapa hasil kloning memiliki sifat yang identik dengan pendonor inti, bukan dengan pendonor sel telur?",
+        options: [
+          "Karena sel telur tidak memiliki DNA",
+          "Karena inti sel mengandung seluruh informasi genetik yang menentukan sifat individu",
+          "Karena sel telur hanya menyediakan nutrisi",
+          "Karena transfer inti lebih mudah dilakukan"
+        ],
+        correct: 1,
+        explanation: "Inti sel (nukleus) mengandung hampir seluruh DNA organisme, termasuk semua gen yang menentukan sifat-sifat fenotip. Sel telur yang intinya sudah dibuang hanya menyediakan sitoplasma dengan organel dan faktor-faktor yang diperlukan untuk perkembangan embrio. Oleh karena itu, klon memiliki DNA yang sama dengan pendonor inti."
+      },
+      {
+        question: "Dalam pembuatan yoghurt, bakteri Lactobacillus mengubah laktosa menjadi asam laktat. Apa dampak penurunan pH terhadap protein susu?",
+        options: [
+          "Protein susu menjadi lebih banyak",
+          "Protein susu terdenaturasi dan menggumpal membentuk tekstur kental",
+          "Protein susu hilang",
+          "Protein susu berubah menjadi lemak"
+        ],
+        correct: 1,
+        explanation: "Asam laktat yang dihasilkan menurunkan pH susu. Kondisi asam menyebabkan protein kasein dalam susu terdenaturasi (struktur proteinnya berubah) dan menggumpal. Proses ini yang membentuk tekstur kental dan padat khas yoghurt. Kandungan protein tidak hilang, hanya strukturnya yang berubah."
+      },
+      {
+        question: "Indonesia memiliki potensi besar dalam bioteknologi karena kekayaan biodiversitas. Sebutkan alasan mengapa mikroorganisme lokal penting untuk dikembangkan dalam bioteknologi!",
+        options: [
+          "Karena lebih murah dan mudah didapat",
+          "Karena sudah beradaptasi dengan kondisi lokal, memiliki keunikan genetik, dan potensial menghasilkan produk khas",
+          "Karena lebih aman untuk dikonsumsi",
+          "Karena ukurannya lebih besar"
+        ],
+        correct: 1,
+        explanation: "Mikroorganisme lokal memiliki keunggulan: (1) sudah beradaptasi dengan kondisi iklim dan substrat lokal, (2) memiliki keragaman genetik unik yang tidak ditemukan di tempat lain, (3) berpotensi menghasilkan metabolit atau produk dengan karakteristik khas, dan (4) dapat dimanfaatkan untuk mengolah bahan baku lokal secara optimal."
+      },
+      {
+        question: "Seorang siswa ingin meneliti pengaruh jumlah ragi terhadap kualitas tape singkong. Variabel manakah yang harus dikontrol agar penelitian valid?",
+        options: [
+          "Jumlah ragi",
+          "Kualitas tape yang dihasilkan",
+          "Jenis singkong, suhu, kelembaban, dan lama fermentasi",
+          "Waktu pengamatan"
+        ],
+        correct: 2,
+        explanation: "Dalam eksperimen, variabel kontrol adalah faktor-faktor yang harus dibuat sama agar hasil penelitian valid. Jika jumlah ragi adalah variabel bebas (yang dimanipulasi), maka jenis singkong, suhu lingkungan, kelembaban, dan lama fermentasi harus dikontrol (dibuat sama). Hal ini memastikan bahwa perbedaan kualitas tape hanya dipengaruhi oleh jumlah ragi."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answers = new Array(quizData.length).fill(null);
+    let answered = new Array(quizData.length).fill(false);
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...config, ...newConfig };
+          updateUI();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (value) => { cfg.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+            },
+            {
+              get: () => cfg.surface_color || defaultConfig.surface_color,
+              set: (value) => { cfg.surface_color = value; window.elementSdk.setConfig({ surface_color: value }); }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (value) => { cfg.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+            },
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (value) => { cfg.primary_color = value; window.elementSdk.setConfig({ primary_color: value }); }
+            },
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (value) => { cfg.secondary_color = value; window.elementSdk.setConfig({ secondary_color: value }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => cfg.font_family || defaultConfig.font_family,
+            set: (value) => { cfg.font_family = value; window.elementSdk.setConfig({ font_family: value }); }
+          },
+          fontSizeable: {
+            get: () => cfg.font_size || defaultConfig.font_size,
+            set: (value) => { cfg.font_size = value; window.elementSdk.setConfig({ font_size: value }); }
+          }
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ["main_title", cfg.main_title || defaultConfig.main_title],
+          ["subtitle", cfg.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
+
+    function updateUI() {
+      const mainTitle = document.getElementById('main-title');
+      const subtitle = document.getElementById('subtitle');
+      
+      if (mainTitle) {
+        mainTitle.innerHTML = `<span class="text-gray-800">Mengenal Dunia</span><br><span class="gradient-text">${config.main_title.replace('Mengenal Dunia ', '')}</span>`;
+      }
+      if (subtitle) {
+        subtitle.textContent = config.subtitle;
+      }
+
+      // Apply font
+      const fontFamily = `${config.font_family}, Outfit, sans-serif`;
+      document.body.style.fontFamily = fontFamily;
+
+      // Apply font size scaling
+      const baseSize = config.font_size;
+      document.documentElement.style.fontSize = `${baseSize}px`;
+    }
+
+    // Navigation functions
+    function scrollToSection(sectionId) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    // Technique tabs
+    function showTechnique(tab) {
+      // Update tab buttons
+      document.querySelectorAll('.technique-tab').forEach(btn => {
+        btn.classList.remove('bg-emerald-500', 'text-white');
+        btn.classList.add('bg-white/10', 'text-white/70');
+      });
+      const activeBtn = document.querySelector(`.technique-tab[data-tab="${tab}"]`);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-white/10', 'text-white/70');
+        activeBtn.classList.add('bg-emerald-500', 'text-white');
+      }
+
+      // Show content
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      const activeContent = document.getElementById(`content-${tab}`);
+      if (activeContent) {
+        activeContent.classList.add('active');
+      }
+    }
+
+    // Quiz functions
+    function loadQuestion() {
+      const question = quizData[currentQuestion];
+      document.getElementById('question-text').textContent = question.question;
+      document.getElementById('quiz-progress').textContent = `Soal ${currentQuestion + 1}/10`;
+      document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
+      
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+      
+      question.options.forEach((option, index) => {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = `quiz-option p-4 rounded-xl border-2 border-white/20 cursor-pointer transition-all ${
+          answers[currentQuestion] === index ? 
+            (answered[currentQuestion] ? 
+              (index === question.correct ? 'correct' : 'incorrect') 
+              : 'selected') 
+            : ''
+        }`;
+        
+        if (answered[currentQuestion] && index === question.correct) {
+          optionDiv.classList.add('correct');
+        }
+        
+        optionDiv.innerHTML = `
+          <div class="flex items-start space-x-3">
+            <span class="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-white/20 rounded-lg font-semibold text-white">
+              ${String.fromCharCode(65 + index)}
+            </span>
+            <span class="text-white">${option}</span>
+          </div>
+        `;
+        
+        if (!answered[currentQuestion]) {
+          optionDiv.onclick = () => selectOption(index);
+        }
+        
+        optionsContainer.appendChild(optionDiv);
+      });
+
+      // Show explanation if answered
+      const explanationDiv = document.getElementById('explanation');
+      if (answered[currentQuestion]) {
+        explanationDiv.classList.remove('hidden');
+        document.getElementById('explanation-text').textContent = question.explanation;
+      } else {
+        explanationDiv.classList.add('hidden');
+      }
+
+      // Update navigation buttons
+      document.getElementById('prev-btn').disabled = currentQuestion === 0;
+      document.getElementById('next-btn').textContent = currentQuestion === quizData.length - 1 ? 'Lihat Hasil' : 'Selanjutnya →';
+    }
+
+    function selectOption(index) {
+      if (answered[currentQuestion]) return;
+      
+      answers[currentQuestion] = index;
+      answered[currentQuestion] = true;
+      
+      const question = quizData[currentQuestion];
+      if (index === question.correct) {
+        score += 10;
+        document.getElementById('quiz-score').textContent = score;
+      }
+      
+      loadQuestion();
+    }
+
+    function nextQuestion() {
+      if (!answered[currentQuestion]) {
+        // Show inline message instead of alert
+        const questionArea = document.getElementById('question-area');
+        let warningEl = document.getElementById('answer-warning');
+        if (!warningEl) {
+          warningEl = document.createElement('div');
+          warningEl.id = 'answer-warning';
+          warningEl.className = 'mt-4 p-3 bg-amber-500/20 border border-amber-500/30 rounded-xl text-amber-200 text-sm';
+          warningEl.textContent = '⚠️ Silakan pilih jawaban terlebih dahulu!';
+          questionArea.appendChild(warningEl);
+          setTimeout(() => warningEl.remove(), 3000);
+        }
+        return;
+      }
+      
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      
+      const percentage = score;
+      const correctCount = score / 10;
+      const wrongCount = 10 - correctCount;
+      
+      document.getElementById('final-score').textContent = score;
+      document.getElementById('correct-count').textContent = correctCount;
+      document.getElementById('wrong-count').textContent = wrongCount;
+      
+      // Animate progress ring
+      const circle = document.getElementById('result-circle');
+      const circumference = 2 * Math.PI * 70;
+      const offset = circumference - (percentage / 100) * circumference;
+      setTimeout(() => {
+        circle.style.strokeDashoffset = offset;
+      }, 100);
+      
+      // Set result message
+      let icon, title, subtitle;
+      if (percentage >= 80) {
+        icon = '🏆';
+        title = 'Luar Biasa!';
+        subtitle = 'Kamu sangat memahami materi Bioteknologi!';
+      } else if (percentage >= 60) {
+        icon = '🌟';
+        title = 'Bagus!';
+        subtitle = 'Pemahaman yang baik, terus tingkatkan!';
+      } else if (percentage >= 40) {
+        icon = '📚';
+        title = 'Cukup Baik';
+        subtitle = 'Pelajari lagi materi yang kurang dipahami.';
+      } else {
+        icon = '💪';
+        title = 'Semangat!';
+        subtitle = 'Jangan menyerah, baca ulang materinya ya!';
+      }
+      
+      document.getElementById('result-icon').textContent = icon;
+      document.getElementById('result-title').textContent = title;
+      document.getElementById('result-subtitle').textContent = subtitle;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answers = new Array(quizData.length).fill(null);
+      answered = new Array(quizData.length).fill(false);
+      
+      document.getElementById('quiz-score').textContent = '0';
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('quiz-container').classList.remove('hidden');
+      
+      // Reset progress ring
+      document.getElementById('result-circle').style.strokeDashoffset = 439.8;
+      
+      loadQuestion();
+    }
+
+    // Activity Modal
+    function showActivityModal(type) {
+      const modal = document.getElementById('activity-modal');
+      const title = document.getElementById('modal-title');
+      const content = document.getElementById('modal-content');
+      
+      if (type === 'identifikasi') {
+        title.textContent = '🔍 Lembar Identifikasi Potensi Lokal';
+        content.innerHTML = `
+          <div class="space-y-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Nama Bahan Pangan Lokal</label>
+              <input type="text" class="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Contoh: Kacang Hijau">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Potensi Produk Fermentasi</label>
+              <input type="text" class="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Contoh: Tempe Kacang Hijau">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Mikroorganisme yang Digunakan</label>
+              <input type="text" class="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Contoh: Rhizopus oligosporus">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Alasan Pemilihan</label>
+              <textarea rows="3" class="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Jelaskan mengapa bahan ini berpotensi..."></textarea>
+            </div>
+            <div class="bg-emerald-50 rounded-xl p-4">
+              <h4 class="font-semibold text-emerald-700 mb-2">💡 Tips:</h4>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Cari bahan yang banyak tersedia di daerahmu</li>
+                <li>• Pertimbangkan nilai gizinya</li>
+                <li>• Pikirkan potensi pasarnya</li>
+              </ul>
+            </div>
+          </div>
+        `;
+      } else if (type === 'eksperimen') {
+        title.textContent = '🧪 Rancangan Eksperimen Fermentasi';
+        content.innerHTML = `
+          <div class="space-y-6">
+            <div class="bg-purple-50 rounded-xl p-4">
+              <h4 class="font-semibold text-purple-700 mb-2">📋 Komponen Eksperimen</h4>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Judul Penelitian</label>
+              <input type="text" class="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500" placeholder="Contoh: Pengaruh Jumlah Ragi terhadap Kualitas Tape">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Variabel Bebas (yang diubah)</label>
+              <input type="text" class="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500" placeholder="Contoh: Jumlah ragi (0.5%, 1%, 2%)">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Variabel Terikat (yang diukur)</label>
+              <input type="text" class="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500" placeholder="Contoh: Rasa, tekstur, aroma tape">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Variabel Kontrol (yang dijaga sama)</label>
+              <input type="text" class="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500" placeholder="Contoh: Jenis singkong, suhu, lama fermentasi">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Hipotesis</label>
+              <textarea rows="2" class="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500" placeholder="Contoh: Semakin banyak ragi, maka tape akan semakin..."></textarea>
+            </div>
+          </div>
+        `;
+      } else if (type === 'publikasi') {
+        title.textContent = '📱 Template Poster Ilmiah';
+        content.innerHTML = `
+          <div class="space-y-6">
+            <div class="bg-blue-50 rounded-xl p-4">
+              <h4 class="font-semibold text-blue-700 mb-2">📊 Struktur Poster</h4>
+              <p class="text-sm text-gray-600">Gunakan struktur berikut untuk poster ilmiahmu:</p>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="bg-gray-50 rounded-xl p-4 border-2 border-dashed border-gray-300">
+                <h5 class="font-semibold text-gray-700 mb-2">1. Judul</h5>
+                <p class="text-xs text-gray-500">Singkat, jelas, menarik</p>
+              </div>
+              <div class="bg-gray-50 rounded-xl p-4 border-2 border-dashed border-gray-300">
+                <h5 class="font-semibold text-gray-700 mb-2">2. Pendahuluan</h5>
+                <p class="text-xs text-gray-500">Latar belakang & tujuan</p>
+              </div>
+              <div class="bg-gray-50 rounded-xl p-4 border-2 border-dashed border-gray-300">
+                <h5 class="font-semibold text-gray-700 mb-2">3. Metode</h5>
+                <p class="text-xs text-gray-500">Cara kerja singkat</p>
+              </div>
+              <div class="bg-gray-50 rounded-xl p-4 border-2 border-dashed border-gray-300">
+                <h5 class="font-semibold text-gray-700 mb-2">4. Hasil</h5>
+                <p class="text-xs text-gray-500">Data & grafik</p>
+              </div>
+              <div class="bg-gray-50 rounded-xl p-4 border-2 border-dashed border-gray-300">
+                <h5 class="font-semibold text-gray-700 mb-2">5. Pembahasan</h5>
+                <p class="text-xs text-gray-500">Analisis hasil</p>
+              </div>
+              <div class="bg-gray-50 rounded-xl p-4 border-2 border-dashed border-gray-300">
+                <h5 class="font-semibold text-gray-700 mb-2">6. Kesimpulan</h5>
+                <p class="text-xs text-gray-500">Ringkasan temuan</p>
+              </div>
+            </div>
+            <div class="bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl p-4 text-white">
+              <h4 class="font-semibold mb-2">💡 Tips Desain</h4>
+              <ul class="text-sm space-y-1 opacity-90">
+                <li>• Gunakan gambar dan grafik yang menarik</li>
+                <li>• Pilih warna yang kontras tapi harmonis</li>
+                <li>• Font harus mudah dibaca dari jarak 1 meter</li>
+                <li>• Sisakan ruang kosong agar tidak terlalu padat</li>
+              </ul>
+            </div>
+          </div>
+        `;
+      }
+      
+      modal.classList.remove('hidden');
+    }
+
+    function closeActivityModal() {
+      document.getElementById('activity-modal').classList.add('hidden');
+    }
+
+    // Close modal on backdrop click
+    document.getElementById('activity-modal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeActivityModal();
+      }
+    });
+
+    // Initialize quiz on load
+    loadQuestion();
+    updateUI();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cab4e492464ccfd',t:'MTc3MDU1NTU4My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

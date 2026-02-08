@@ -1,0 +1,945 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subunit 2.3: Membuat Mock Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@700;800&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .title-font {
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .slide {
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    .slide.active {
+      display: flex;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.6); }
+    }
+    
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+    }
+    
+    .progress-bar {
+      transition: width 0.3s ease;
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.wrong) {
+      background: rgba(139, 92, 246, 0.1);
+      border-color: #8b5cf6;
+    }
+    
+    .quiz-option.selected {
+      background: rgba(139, 92, 246, 0.2);
+      border-color: #8b5cf6;
+    }
+    
+    .quiz-option.correct {
+      background: rgba(34, 197, 94, 0.2);
+      border-color: #22c55e;
+    }
+    
+    .quiz-option.wrong {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #ef4444;
+    }
+    
+    .illustration-box {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+      border: 2px dashed #cbd5e1;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ </a>          
+<a href="index.html" class="btn-close-white">
+<i class="fas fa-home me-2"></i> Menu
+</a>
+ <body class="h-full bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white overflow-auto">
+  <div id="app-wrapper" class="w-full h-full flex flex-col"><!-- Progress Bar -->
+   <div class="fixed top-0 left-0 right-0 h-1 bg-slate-800 z-50">
+    <div id="progress" class="progress-bar h-full bg-gradient-to-r from-violet-500 to-fuchsia-500" style="width: 0%"></div>
+   </div><!-- Navigation -->
+   <nav class="fixed top-4 right-4 z-40 flex gap-2"><button id="prevBtn" onclick="changeSlide(-1)" class="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full hover:bg-white/20 transition-all disabled:opacity-30 disabled:cursor-not-allowed"> ← Sebelumnya </button> <span id="slideCounter" class="px-4 py-2 bg-violet-600/50 backdrop-blur-sm rounded-full font-medium">1 / 9</span> <button id="nextBtn" onclick="changeSlide(1)" class="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full hover:bg-white/20 transition-all"> Selanjutnya → </button>
+   </nav><!-- Slides Container -->
+   <div id="slides-container" class="flex-1 w-full"><!-- Slide 1: Cover -->
+    <div class="slide active flex-col items-center justify-center min-h-full p-8 text-center">
+     <div class="max-w-4xl mx-auto">
+      <div class="mb-8 float-animation">
+       <svg class="w-32 h-32 mx-auto" viewbox="0 0 128 128" fill="none"><rect x="20" y="30" width="88" height="68" rx="8" fill="url(#boxGrad)" stroke="#a78bfa" stroke-width="3" /> <path d="M20 45 L64 30 L108 45" stroke="#c4b5fd" stroke-width="2" fill="none" /> <rect x="35" y="50" width="25" height="20" rx="3" fill="#f0abfc" /> <rect x="68" y="50" width="25" height="20" rx="3" fill="#c4b5fd" /> <rect x="35" y="75" width="58" height="8" rx="2" fill="#e9d5ff" /> <circle cx="100" cy="35" r="12" fill="#fbbf24" stroke="#f59e0b" stroke-width="2" /> <path d="M96 35 L99 38 L104 32" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" /> <defs>
+         <lineargradient id="boxGrad" x1="20" y1="30" x2="108" y2="98">
+          <stop offset="0%" stop-color="#4c1d95" />
+          <stop offset="100%" stop-color="#7c3aed" />
+         </lineargradient>
+        </defs>
+       </svg>
+      </div>
+      <p id="subjectInfo" class="text-violet-300 text-lg mb-4 tracking-widest uppercase">Prakarya • Kelas VIII</p>
+      <h1 id="presentationTitle" class="title-font text-5xl md:text-7xl font-bold mb-6 gradient-text">Subunit 2.3</h1>
+      <h2 class="text-3xl md:text-4xl font-light text-white/90 mb-8">Membuat Mock Up</h2>
+      <div class="flex flex-wrap justify-center gap-3 mb-12"><span class="px-4 py-2 bg-violet-500/30 rounded-full text-sm">🎨 Desain</span> <span class="px-4 py-2 bg-fuchsia-500/30 rounded-full text-sm">📦 Kemasan</span> <span class="px-4 py-2 bg-pink-500/30 rounded-full text-sm">✂️ Prakarya</span>
+      </div><button onclick="changeSlide(1)" class="px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full font-semibold text-lg hover:scale-105 transition-transform pulse-glow"> Mulai Belajar → </button>
+     </div>
+    </div><!-- Slide 2: Definisi Mock Up -->
+    <div class="slide flex-col items-center justify-center min-h-full p-8">
+     <div class="max-w-5xl mx-auto w-full">
+      <h2 class="title-font text-4xl font-bold mb-8 text-center gradient-text">1. Definisi &amp; Konsep Dasar Mock Up</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+       <div class="space-y-6">
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 card-hover">
+         <div class="flex items-start gap-4"><span class="text-4xl">📖</span>
+          <div>
+           <h3 class="text-xl font-semibold text-violet-300 mb-2">Pengertian</h3>
+           <p class="text-white/80 leading-relaxed">Mock up adalah <strong class="text-violet-300">model skala utuh</strong> atau tiruan suatu benda yang dibuat menyerupai aslinya, namun hanya menampilkan bagian tertentu sesuai kebutuhan.</p>
+          </div>
+         </div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 card-hover">
+         <h3 class="text-xl font-semibold text-fuchsia-300 mb-4 flex items-center gap-2">🎯 Peran dalam Produksi</h3>
+         <div class="space-y-3">
+          <div class="flex items-start gap-3 bg-violet-500/20 rounded-xl p-4"><span class="text-2xl">🎨</span>
+           <div>
+            <p class="font-medium text-violet-200">Dalam Desain</p>
+            <p class="text-sm text-white/70">Mock up = Hasil akhir perancangan</p>
+           </div>
+          </div>
+          <div class="flex items-start gap-3 bg-fuchsia-500/20 rounded-xl p-4"><span class="text-2xl">🏭</span>
+           <div>
+            <p class="font-medium text-fuchsia-200">Dalam Manufaktur</p>
+            <p class="text-sm text-white/70">Mock up = Prototipe sebelum produksi massal</p>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-2xl p-6 border border-amber-500/30">
+         <h3 class="text-lg font-semibold text-amber-300 mb-2 flex items-center gap-2">💡 Tujuan Utama</h3>
+         <p class="text-white/80">Mendapatkan <strong class="text-amber-200">umpan balik</strong> dari pengguna sebelum produk benar-benar diproduksi atau diaplikasikan.</p>
+        </div>
+       </div>
+       <div class="flex items-center justify-center">
+        <div class="illustration-box rounded-3xl p-6 w-full max-w-md">
+         <svg class="w-full h-64" viewbox="0 0 300 200" fill="none"><!-- Mock up kemasan 3D --> <rect x="60" y="40" width="120" height="140" rx="4" fill="#7c3aed" opacity="0.9" /> <rect x="65" y="45" width="110" height="130" rx="2" fill="#a78bfa" /> <!-- Logo area --> <rect x="80" y="60" width="80" height="40" rx="4" fill="#f0abfc" /> <text x="120" y="85" font-size="14" fill="#4c1d95" text-anchor="middle" font-weight="bold">
+           BRAND
+          </text> <!-- Product image area --> <rect x="85" y="110" width="70" height="50" rx="3" fill="#e9d5ff" /> <circle cx="120" cy="135" r="15" fill="#c4b5fd" /> <!-- Efek 3D - sisi kanan --> <polygon points="180,40 220,60 220,180 180,180" fill="#5b21b6" /> <polygon points="180,40 220,60 140,60 60,40" fill="#8b5cf6" /> <!-- Label "MOCK UP" --> <rect x="190" y="100" width="80" height="30" rx="15" fill="#fbbf24" /> <text x="230" y="120" font-size="10" fill="#78350f" text-anchor="middle" font-weight="bold">
+           MOCK UP
+          </text> <!-- Arrow menunjuk --> <path d="M250 90 L230 115 M250 90 L240 90 M250 90 L250 100" stroke="#fbbf24" stroke-width="3" fill="none" />
+         </svg>
+         <p class="text-center text-slate-600 text-sm mt-4 font-medium">📦 Ilustrasi: Mock Up Desain Kemasan Produk</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div><!-- Slide 3: Elemen Mock Up -->
+    <div class="slide flex-col items-center justify-center min-h-full p-8">
+     <div class="max-w-5xl mx-auto w-full">
+      <h2 class="title-font text-4xl font-bold mb-8 text-center gradient-text">2. Lima Elemen Utama Mock Up</h2>
+      <div class="grid md:grid-cols-3 gap-6 mb-8"><!-- Peta Konsep Visual -->
+       <div class="md:col-span-2">
+        <div class="bg-white/5 backdrop-blur-sm rounded-3xl p-8 relative overflow-hidden">
+         <div class="absolute top-0 right-0 w-40 h-40 bg-violet-500/20 rounded-full blur-3xl"></div>
+         <div class="relative grid grid-cols-2 gap-4"><!-- Central Element -->
+          <div class="col-span-2 flex justify-center mb-4">
+           <div class="bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-2xl px-8 py-4 shadow-xl"><span class="text-2xl font-bold">🎯 MOCK UP</span>
+           </div>
+          </div><!-- 5 Elements -->
+          <div class="bg-violet-500/30 rounded-xl p-4 card-hover border border-violet-400/30"><span class="text-3xl mb-2 block">💡</span>
+           <h4 class="font-semibold text-violet-200">Ide/Gagasan</h4>
+           <p class="text-sm text-white/70 mt-1">Konsep awal desain yang akan diwujudkan</p>
+          </div>
+          <div class="bg-fuchsia-500/30 rounded-xl p-4 card-hover border border-fuchsia-400/30"><span class="text-3xl mb-2 block">🎨</span>
+           <h4 class="font-semibold text-fuchsia-200">Bentuk/Performa</h4>
+           <p class="text-sm text-white/70 mt-1">Tampilan fisik dan visual karya</p>
+          </div>
+          <div class="bg-pink-500/30 rounded-xl p-4 card-hover border border-pink-400/30"><span class="text-3xl mb-2 block">📐</span>
+           <h4 class="font-semibold text-pink-200">Ukuran/Dimensi</h4>
+           <p class="text-sm text-white/70 mt-1">Ketepatan skala dan proporsi</p>
+          </div>
+          <div class="bg-amber-500/30 rounded-xl p-4 card-hover border border-amber-400/30"><span class="text-3xl mb-2 block">🧱</span>
+           <h4 class="font-semibold text-amber-200">Bahan</h4>
+           <p class="text-sm text-white/70 mt-1">Material yang digunakan</p>
+          </div>
+          <div class="col-span-2 flex justify-center">
+           <div class="bg-emerald-500/30 rounded-xl p-4 card-hover border border-emerald-400/30 w-1/2"><span class="text-3xl mb-2 block text-center">⚙️</span>
+            <h4 class="font-semibold text-emerald-200 text-center">Fungsi</h4>
+            <p class="text-sm text-white/70 mt-1 text-center">Kegunaan dari benda yang dibuat</p>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div><!-- Ilustrasi Peta Konsep -->
+       <div class="flex items-center">
+        <div class="illustration-box rounded-3xl p-4 w-full">
+         <svg class="w-full h-48" viewbox="0 0 150 150" fill="none"><!-- Central node --> <circle cx="75" cy="75" r="25" fill="#7c3aed" /> <text x="75" y="75" font-size="8" fill="white" text-anchor="middle" dominant-baseline="middle">
+           MOCK UP
+          </text> <!-- Connecting lines --> <line x1="75" y1="50" x2="75" y2="20" stroke="#a78bfa" stroke-width="2" /> <line x1="100" y1="75" x2="130" y2="75" stroke="#f0abfc" stroke-width="2" /> <line x1="75" y1="100" x2="75" y2="130" stroke="#c4b5fd" stroke-width="2" /> <line x1="50" y1="75" x2="20" y2="75" stroke="#fbbf24" stroke-width="2" /> <line x1="95" y1="55" x2="115" y2="35" stroke="#34d399" stroke-width="2" /> <!-- Outer nodes --> <circle cx="75" cy="15" r="12" fill="#8b5cf6" /> <text x="75" y="15" font-size="6" fill="white" text-anchor="middle" dominant-baseline="middle">
+           IDE
+          </text> <circle cx="135" cy="75" r="12" fill="#f472b6" /> <text x="135" y="75" font-size="5" fill="white" text-anchor="middle" dominant-baseline="middle">
+           BENTUK
+          </text> <circle cx="75" cy="135" r="12" fill="#a78bfa" /> <text x="75" y="135" font-size="5" fill="white" text-anchor="middle" dominant-baseline="middle">
+           UKURAN
+          </text> <circle cx="15" cy="75" r="12" fill="#fbbf24" /> <text x="15" y="75" font-size="5" fill="#78350f" text-anchor="middle" dominant-baseline="middle">
+           BAHAN
+          </text> <circle cx="120" cy="30" r="12" fill="#34d399" /> <text x="120" y="30" font-size="5" fill="white" text-anchor="middle" dominant-baseline="middle">
+           FUNGSI
+          </text>
+         </svg>
+         <p class="text-center text-slate-600 text-sm mt-2 font-medium">🗺️ Peta Konsep 5 Elemen</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div><!-- Slide 4: Alat dan Bahan -->
+    <div class="slide flex-col items-center justify-center min-h-full p-8">
+     <div class="max-w-5xl mx-auto w-full">
+      <h2 class="title-font text-4xl font-bold mb-8 text-center gradient-text">3. Alat, Bahan &amp; Kosa Kata</h2>
+      <div class="grid md:grid-cols-2 gap-8"><!-- Alat dan Bahan -->
+       <div>
+        <h3 class="text-2xl font-semibold text-violet-300 mb-6 flex items-center gap-2">🛠️ Media yang Diperlukan</h3>
+        <div class="grid grid-cols-2 gap-4">
+         <div class="bg-white/10 rounded-xl p-4 card-hover flex items-center gap-3"><span class="text-3xl">✏️</span> <span>Pensil</span>
+         </div>
+         <div class="bg-white/10 rounded-xl p-4 card-hover flex items-center gap-3"><span class="text-3xl">📄</span> <span>Kertas Karton</span>
+         </div>
+         <div class="bg-white/10 rounded-xl p-4 card-hover flex items-center gap-3"><span class="text-3xl">📋</span> <span>Kertas Karbon</span>
+         </div>
+         <div class="bg-white/10 rounded-xl p-4 card-hover flex items-center gap-3"><span class="text-3xl">🖍️</span> <span>Alat Warna</span>
+         </div>
+         <div class="bg-white/10 rounded-xl p-4 card-hover flex items-center gap-3"><span class="text-3xl">✂️</span> <span>Gunting</span>
+         </div>
+         <div class="bg-white/10 rounded-xl p-4 card-hover flex items-center gap-3"><span class="text-3xl">🔪</span> <span>Pisau Cutter</span>
+         </div>
+         <div class="bg-white/10 rounded-xl p-4 card-hover flex items-center gap-3"><span class="text-3xl">🧴</span> <span>Lem</span>
+         </div>
+         <div class="bg-white/10 rounded-xl p-4 card-hover flex items-center gap-3"><span class="text-3xl">📏</span> <span>Penggaris</span>
+         </div>
+        </div><!-- Ilustrasi Alat -->
+        <div class="illustration-box rounded-2xl p-4 mt-6">
+         <svg class="w-full h-32" viewbox="0 0 300 80" fill="none"><!-- Pensil --> <rect x="10" y="30" width="60" height="12" rx="2" fill="#fbbf24" /> <polygon points="70,30 85,36 70,42" fill="#f59e0b" /> <polygon points="85,33 95,36 85,39" fill="#374151" /> <!-- Gunting --> <ellipse cx="130" cy="25" rx="15" ry="8" fill="#9ca3af" /> <ellipse cx="130" cy="55" rx="15" ry="8" fill="#9ca3af" /> <circle cx="145" cy="40" r="6" fill="#6b7280" /> <rect x="145" y="37" width="25" height="6" rx="1" fill="#4b5563" /> <rect x="145" y="37" width="25" height="6" rx="1" fill="#4b5563" transform="rotate(-30 145 40)" /> <!-- Penggaris --> <rect x="190" y="25" width="100" height="20" fill="#60a5fa" /> <line x1="200" y1="25" x2="200" y2="35" stroke="white" stroke-width="1" /> <line x1="220" y1="25" x2="220" y2="35" stroke="white" stroke-width="1" /> <line x1="240" y1="25" x2="240" y2="35" stroke="white" stroke-width="1" /> <line x1="260" y1="25" x2="260" y2="35" stroke="white" stroke-width="1" /> <line x1="280" y1="25" x2="280" y2="35" stroke="white" stroke-width="1" />
+         </svg>
+         <p class="text-center text-slate-600 text-sm font-medium">🧰 Peralatan Membuat Mock Up</p>
+        </div>
+       </div><!-- Kosa Kata -->
+       <div>
+        <h3 class="text-2xl font-semibold text-fuchsia-300 mb-6 flex items-center gap-2">📚 Istilah Penting</h3>
+        <div class="space-y-4">
+         <div class="bg-gradient-to-r from-violet-500/20 to-purple-500/20 rounded-xl p-5 border-l-4 border-violet-500">
+          <h4 class="font-bold text-violet-300 text-lg mb-2">Model</h4>
+          <p class="text-white/80">Mock up tiga dimensi atau prototipe dari suatu desain yang dapat diraba dan dilihat secara nyata.</p>
+         </div>
+         <div class="bg-gradient-to-r from-fuchsia-500/20 to-pink-500/20 rounded-xl p-5 border-l-4 border-fuchsia-500">
+          <h4 class="font-bold text-fuchsia-300 text-lg mb-2">Replikasi</h4>
+          <p class="text-white/80">Proses menduplikasi atau meniru suatu objek dengan tingkat ketelitian tertentu.</p>
+         </div>
+         <div class="bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-xl p-5 border-l-4 border-amber-500">
+          <h4 class="font-bold text-amber-300 text-lg mb-2">Desainer</h4>
+          <p class="text-white/80">Orang yang berprofesi membuat desain, mulai dari konsep hingga visualisasi akhir.</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div><!-- Slide 5: Prosedur 1-2 -->
+    <div class="slide flex-col items-center justify-center min-h-full p-8">
+     <div class="max-w-5xl mx-auto w-full">
+      <h2 class="title-font text-4xl font-bold mb-2 text-center gradient-text">4. Prosedur Pembuatan Mock Up</h2>
+      <p class="text-center text-violet-300 mb-8">Langkah 1 &amp; 2 dari 5 Langkah</p>
+      <div class="grid md:grid-cols-2 gap-8"><!-- Langkah 1 -->
+       <div class="bg-white/10 backdrop-blur-sm rounded-3xl p-6 card-hover relative overflow-hidden">
+        <div class="absolute -top-4 -left-4 w-20 h-20 bg-violet-500 rounded-full flex items-center justify-center text-3xl font-bold">
+         1
+        </div>
+        <div class="mt-8">
+         <h3 class="text-2xl font-bold text-violet-300 mb-4 flex items-center gap-2">🔍 Pengamatan</h3>
+         <ul class="space-y-3 text-white/80">
+          <li class="flex items-start gap-2"><span class="text-violet-400 mt-1">▸</span> <span>Mencari dan membawa kemasan produk dari karton</span></li>
+          <li class="flex items-start gap-2"><span class="text-violet-400 mt-1">▸</span> <span>Mencatat data yang ada pada kemasan (nama produk, berat, komposisi, dll)</span></li>
+          <li class="flex items-start gap-2"><span class="text-violet-400 mt-1">▸</span> <span>Mengamati desain visual dan struktur kemasan</span></li>
+         </ul>
+         <div class="illustration-box rounded-xl p-4 mt-4">
+          <svg class="w-full h-28" viewbox="0 0 200 80" fill="none"><!-- Berbagai kemasan --> <rect x="10" y="20" width="40" height="50" rx="3" fill="#7c3aed" /> <rect x="15" y="25" width="30" height="15" rx="2" fill="#a78bfa" /> <text x="30" y="35" font-size="6" fill="white" text-anchor="middle">
+            MILK
+           </text> <rect x="60" y="30" width="35" height="40" rx="3" fill="#f472b6" /> <circle cx="77" cy="45" r="10" fill="#fce7f3" /> <rect x="105" y="15" width="45" height="55" rx="3" fill="#fbbf24" /> <rect x="110" y="20" width="35" height="20" rx="2" fill="#fef3c7" /> <text x="127" y="32" font-size="5" fill="#78350f" text-anchor="middle">
+            CEREAL
+           </text> <!-- Mata pengamatan --> <circle cx="175" cy="40" r="20" fill="#1e293b" /> <circle cx="175" cy="40" r="12" fill="#3b82f6" /> <circle cx="175" cy="40" r="5" fill="#1e293b" /> <circle cx="178" cy="37" r="2" fill="white" />
+          </svg>
+          <p class="text-center text-slate-600 text-xs font-medium">👁️ Mengamati berbagai kemasan produk</p>
+         </div>
+        </div>
+       </div><!-- Langkah 2 -->
+       <div class="bg-white/10 backdrop-blur-sm rounded-3xl p-6 card-hover relative overflow-hidden">
+        <div class="absolute -top-4 -left-4 w-20 h-20 bg-fuchsia-500 rounded-full flex items-center justify-center text-3xl font-bold">
+         2
+        </div>
+        <div class="mt-8">
+         <h3 class="text-2xl font-bold text-fuchsia-300 mb-4 flex items-center gap-2">🔬 Hipotesis (Bedah Kemasan)</h3>
+         <ul class="space-y-3 text-white/80">
+          <li class="flex items-start gap-2"><span class="text-fuchsia-400 mt-1">▸</span> <span>Membongkar kemasan dengan hati-hati</span></li>
+          <li class="flex items-start gap-2"><span class="text-fuchsia-400 mt-1">▸</span> <span>Melihat bentuk "jaring-jaring" kemasan</span></li>
+          <li class="flex items-start gap-2"><span class="text-fuchsia-400 mt-1">▸</span> <span>Menggambar dan mengukur setiap bagian secara akurat</span></li>
+         </ul>
+         <div class="illustration-box rounded-xl p-4 mt-4">
+          <svg class="w-full h-28" viewbox="0 0 200 80" fill="none"><!-- Jaring-jaring kotak --> <rect x="70" y="25" width="30" height="30" fill="none" stroke="#7c3aed" stroke-width="2" stroke-dasharray="4" /> <!-- Tutup --> <rect x="70" y="5" width="30" height="20" fill="none" stroke="#a78bfa" stroke-width="2" /> <!-- Bawah --> <rect x="70" y="55" width="30" height="20" fill="none" stroke="#a78bfa" stroke-width="2" /> <!-- Kiri --> <rect x="40" y="25" width="30" height="30" fill="none" stroke="#f472b6" stroke-width="2" /> <!-- Kanan --> <rect x="100" y="25" width="30" height="30" fill="none" stroke="#f472b6" stroke-width="2" /> <!-- Flap kiri --> <rect x="20" y="25" width="20" height="30" fill="none" stroke="#fbbf24" stroke-width="2" /> <!-- Penggaris --> <rect x="145" y="20" width="50" height="10" fill="#60a5fa" /> <text x="170" y="27" font-size="5" fill="white" text-anchor="middle">
+            cm
+           </text> <!-- Pensil --> <rect x="150" y="45" width="40" height="8" fill="#fbbf24" /> <polygon points="190,45 200,49 190,53" fill="#374151" />
+          </svg>
+          <p class="text-center text-slate-600 text-xs font-medium">📐 Membedah dan mengukur jaring-jaring</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div><!-- Slide 6: Prosedur 3-5 -->
+    <div class="slide flex-col items-center justify-center min-h-full p-8">
+     <div class="max-w-5xl mx-auto w-full">
+      <h2 class="title-font text-4xl font-bold mb-2 text-center gradient-text">4. Prosedur Pembuatan Mock Up</h2>
+      <p class="text-center text-violet-300 mb-8">Langkah 3, 4 &amp; 5</p>
+      <div class="grid md:grid-cols-3 gap-6"><!-- Langkah 3 -->
+       <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-5 card-hover">
+        <div class="w-14 h-14 bg-pink-500 rounded-full flex items-center justify-center text-2xl font-bold mb-4">
+         3
+        </div>
+        <h3 class="text-xl font-bold text-pink-300 mb-3">📝 Perencanaan</h3>
+        <ul class="space-y-2 text-sm text-white/80">
+         <li>• Duplikasi jaring-jaring ke karton baru</li>
+         <li>• Rancang desain visual (gambar/tulisan)</li>
+         <li>• Tentukan warna dan branding</li>
+        </ul>
+        <div class="illustration-box rounded-lg p-3 mt-4">
+         <svg class="w-full h-20" viewbox="0 0 100 60" fill="none"><rect x="10" y="10" width="40" height="40" fill="none" stroke="#f472b6" stroke-width="2" /> <rect x="50" y="10" width="40" height="40" fill="none" stroke="#f472b6" stroke-width="2" /> <path d="M30 25 L30 35 M25 30 L35 30" stroke="#a78bfa" stroke-width="2" /> <circle cx="70" cy="30" r="10" fill="#fbbf24" opacity="0.5" /> <text x="70" y="33" font-size="6" fill="#78350f" text-anchor="middle">
+           A
+          </text>
+         </svg>
+        </div>
+       </div><!-- Langkah 4 -->
+       <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-5 card-hover">
+        <div class="w-14 h-14 bg-amber-500 rounded-full flex items-center justify-center text-2xl font-bold mb-4">
+         4
+        </div>
+        <h3 class="text-xl font-bold text-amber-300 mb-3">🔧 Replikasi</h3>
+        <ul class="space-y-2 text-sm text-white/80">
+         <li>• Rakit jaring-jaring menjadi kotak 3D</li>
+         <li>• Aplikasikan desain visual</li>
+         <li>• Buat merek/brand buatan sendiri</li>
+        </ul>
+        <div class="illustration-box rounded-lg p-3 mt-4">
+         <svg class="w-full h-20" viewbox="0 0 100 60" fill="none"><!-- Kotak 3D --> <rect x="25" y="15" width="35" height="35" fill="#7c3aed" /> <polygon points="25,15 45,5 80,5 60,15" fill="#a78bfa" /> <polygon points="60,15 80,5 80,40 60,50" fill="#5b21b6" /> <rect x="30" y="20" width="25" height="15" rx="2" fill="#f0abfc" /> <text x="42" y="30" font-size="5" fill="#4c1d95" text-anchor="middle">
+           NEW!
+          </text>
+         </svg>
+        </div>
+       </div><!-- Langkah 5 -->
+       <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-5 card-hover">
+        <div class="w-14 h-14 bg-emerald-500 rounded-full flex items-center justify-center text-2xl font-bold mb-4">
+         5
+        </div>
+        <h3 class="text-xl font-bold text-emerald-300 mb-3">🎤 Komunikasi</h3>
+        <ul class="space-y-2 text-sm text-white/80">
+         <li>• Presentasikan hasil karya</li>
+         <li>• Terima umpan balik dari teman</li>
+         <li>• Evaluasi dan perbaiki</li>
+        </ul>
+        <div class="illustration-box rounded-lg p-3 mt-4">
+         <svg class="w-full h-20" viewbox="0 0 100 60" fill="none"><!-- Orang presentasi --> <circle cx="30" cy="15" r="8" fill="#fbbf24" /> <rect x="25" y="25" width="10" height="20" rx="3" fill="#60a5fa" /> <line x1="25" y1="30" x2="15" y2="40" stroke="#60a5fa" stroke-width="3" stroke-linecap="round" /> <line x1="35" y1="30" x2="50" y2="25" stroke="#60a5fa" stroke-width="3" stroke-linecap="round" /> <!-- Board presentasi --> <rect x="55" y="10" width="35" height="30" fill="white" stroke="#374151" stroke-width="2" /> <rect x="60" y="15" width="25" height="10" fill="#e9d5ff" /> <rect x="60" y="28" width="15" height="5" fill="#c4b5fd" />
+         </svg>
+        </div>
+       </div>
+      </div><!-- Flow Diagram -->
+      <div class="mt-8 bg-white/5 rounded-2xl p-6">
+       <h4 class="text-center text-lg font-semibold text-violet-300 mb-4">🔄 Alur Proses</h4>
+       <div class="flex items-center justify-center flex-wrap gap-4"><span class="px-4 py-2 bg-violet-500/30 rounded-full">Pengamatan</span> <span class="text-2xl">→</span> <span class="px-4 py-2 bg-fuchsia-500/30 rounded-full">Hipotesis</span> <span class="text-2xl">→</span> <span class="px-4 py-2 bg-pink-500/30 rounded-full">Perencanaan</span> <span class="text-2xl">→</span> <span class="px-4 py-2 bg-amber-500/30 rounded-full">Replikasi</span> <span class="text-2xl">→</span> <span class="px-4 py-2 bg-emerald-500/30 rounded-full">Komunikasi</span>
+       </div>
+      </div>
+     </div>
+    </div><!-- Slide 7: Penilaian -->
+    <div class="slide flex-col items-center justify-center min-h-full p-8">
+     <div class="max-w-5xl mx-auto w-full">
+      <h2 class="title-font text-4xl font-bold mb-8 text-center gradient-text">5. Penilaian (Asesmen)</h2>
+      <div class="grid md:grid-cols-2 gap-8"><!-- Rubrik Proses -->
+       <div class="bg-gradient-to-br from-violet-500/20 to-purple-500/20 rounded-3xl p-6 border border-violet-400/30">
+        <h3 class="text-2xl font-bold text-violet-300 mb-6 flex items-center gap-3"><span class="w-12 h-12 bg-violet-500 rounded-xl flex items-center justify-center">📊</span> Rubrik Proses</h3>
+        <div class="space-y-4">
+         <div class="bg-white/10 rounded-xl p-4">
+          <div class="flex items-center gap-3 mb-2"><span class="text-2xl">🤝</span>
+           <h4 class="font-semibold">Kerjasama Tim</h4>
+          </div>
+          <p class="text-sm text-white/70 ml-10">Kolaborasi dan komunikasi antar anggota kelompok</p>
+         </div>
+         <div class="bg-white/10 rounded-xl p-4">
+          <div class="flex items-center gap-3 mb-2"><span class="text-2xl">⚖️</span>
+           <h4 class="font-semibold">Pembagian Tugas</h4>
+          </div>
+          <p class="text-sm text-white/70 ml-10">Keadilan dalam distribusi pekerjaan</p>
+         </div>
+         <div class="bg-white/10 rounded-xl p-4">
+          <div class="flex items-center gap-3 mb-2"><span class="text-2xl">⏰</span>
+           <h4 class="font-semibold">Ketekunan &amp; Ketepatan Waktu</h4>
+          </div>
+          <p class="text-sm text-white/70 ml-10">Disiplin dalam menyelesaikan tugas</p>
+         </div>
+        </div>
+       </div><!-- Rubrik Produk -->
+       <div class="bg-gradient-to-br from-fuchsia-500/20 to-pink-500/20 rounded-3xl p-6 border border-fuchsia-400/30">
+        <h3 class="text-2xl font-bold text-fuchsia-300 mb-6 flex items-center gap-3"><span class="w-12 h-12 bg-fuchsia-500 rounded-xl flex items-center justify-center">🏆</span> Rubrik Produk</h3>
+        <div class="space-y-4">
+         <div class="bg-white/10 rounded-xl p-4">
+          <div class="flex items-center gap-3 mb-2"><span class="text-2xl">📝</span>
+           <h4 class="font-semibold">Detail Sketsa Rencana</h4>
+          </div>
+          <p class="text-sm text-white/70 ml-10">Kelengkapan dan kejelasan sketsa awal</p>
+         </div>
+         <div class="bg-white/10 rounded-xl p-4">
+          <div class="flex items-center gap-3 mb-2"><span class="text-2xl">📐</span>
+           <h4 class="font-semibold">Akurasi Ukuran</h4>
+          </div>
+          <p class="text-sm text-white/70 ml-10">Ketepatan dimensi jaring-jaring</p>
+         </div>
+         <div class="bg-white/10 rounded-xl p-4">
+          <div class="flex items-center gap-3 mb-2"><span class="text-2xl">🎨</span>
+           <h4 class="font-semibold">Desain Visual</h4>
+          </div>
+          <p class="text-sm text-white/70 ml-10">Daya tarik dan informatif desain</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Ilustrasi Hasil Karya -->
+      <div class="mt-8 illustration-box rounded-2xl p-6 mx-auto max-w-2xl">
+       <svg class="w-full h-36" viewbox="0 0 400 100" fill="none"><!-- Karya 1 --> <g transform="translate(20, 10)">
+         <rect x="0" y="10" width="50" height="60" rx="4" fill="#7c3aed" />
+         <rect x="5" y="15" width="40" height="20" rx="2" fill="#f0abfc" />
+         <text x="25" y="28" font-size="6" fill="#4c1d95" text-anchor="middle">
+          SNACK
+         </text>
+         <rect x="5" y="40" width="40" height="25" fill="#e9d5ff" />
+         <text x="25" y="88" font-size="8" fill="#475569" text-anchor="middle">
+          ⭐⭐⭐⭐
+         </text>
+        </g> <!-- Karya 2 --> <g transform="translate(120, 10)">
+         <rect x="0" y="5" width="60" height="70" rx="4" fill="#f472b6" />
+         <circle cx="30" cy="30" r="15" fill="#fce7f3" />
+         <text x="30" y="33" font-size="6" fill="#be185d" text-anchor="middle">
+          JUICE
+         </text>
+         <rect x="10" y="50" width="40" height="15" fill="#fda4af" />
+         <text x="30" y="88" font-size="8" fill="#475569" text-anchor="middle">
+          ⭐⭐⭐⭐⭐
+         </text>
+        </g> <!-- Karya 3 --> <g transform="translate(230, 10)">
+         <rect x="0" y="0" width="70" height="75" rx="4" fill="#fbbf24" />
+         <rect x="10" y="10" width="50" height="25" rx="2" fill="#fef3c7" />
+         <text x="35" y="25" font-size="7" fill="#78350f" text-anchor="middle">
+          COOKIES
+         </text>
+         <rect x="10" y="40" width="50" height="25" fill="#fde68a" />
+         <text x="35" y="88" font-size="8" fill="#475569" text-anchor="middle">
+          ⭐⭐⭐⭐⭐
+         </text>
+        </g> <!-- Trophy --> <g transform="translate(340, 20)">
+         <path d="M20 10 L30 10 L35 30 L15 30 Z" fill="#fbbf24" />
+         <rect x="20" y="30" width="10" height="15" fill="#f59e0b" />
+         <rect x="15" y="45" width="20" height="5" rx="2" fill="#78350f" />
+         <circle cx="25" cy="20" r="8" fill="#fef3c7" />
+         <text x="25" y="23" font-size="8" fill="#78350f" text-anchor="middle">
+          1
+         </text>
+        </g>
+       </svg>
+       <p class="text-center text-slate-600 text-sm font-medium mt-2">🎨 Contoh Hasil Karya Mock Up Siswa</p>
+      </div>
+     </div>
+    </div><!-- Slide 8: Pengembangan -->
+    <div class="slide flex-col items-center justify-center min-h-full p-8">
+     <div class="max-w-5xl mx-auto w-full">
+      <h2 class="title-font text-4xl font-bold mb-8 text-center gradient-text">6. Pengembangan Materi (Pengayaan)</h2>
+      <div class="grid md:grid-cols-2 gap-8"><!-- Digital Mock Up -->
+       <div class="bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-3xl p-6 border border-cyan-400/30">
+        <div class="flex items-center gap-4 mb-6"><span class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center text-3xl">💻</span>
+         <div>
+          <h3 class="text-2xl font-bold text-cyan-300">Digital Mock Up</h3>
+          <p class="text-white/70">Visualisasi 3D Tanpa Cetak</p>
+         </div>
+        </div>
+        <p class="text-white/80 mb-6 leading-relaxed">Menggunakan perangkat lunak seperti <strong class="text-cyan-300">Adobe Photoshop</strong>, <strong class="text-cyan-300">Illustrator</strong>, atau <strong class="text-cyan-300">Canva</strong> untuk membuat visualisasi 3D tanpa harus mencetak fisik terlebih dahulu.</p>
+        <div class="bg-white/10 rounded-xl p-4 space-y-3">
+         <h4 class="font-semibold text-cyan-200">✨ Keunggulan:</h4>
+         <ul class="text-sm text-white/70 space-y-2">
+          <li>• Hemat biaya material</li>
+          <li>• Mudah direvisi dan diedit</li>
+          <li>• Hasil lebih presisi dan profesional</li>
+          <li>• Dapat dibagikan secara digital</li>
+         </ul>
+        </div>
+       </div><!-- Ilustrasi Digital -->
+       <div class="flex flex-col justify-center">
+        <div class="illustration-box rounded-3xl p-6">
+         <svg class="w-full h-48" viewbox="0 0 250 150" fill="none"><!-- Monitor --> <rect x="30" y="10" width="190" height="110" rx="8" fill="#1e293b" /> <rect x="40" y="20" width="170" height="85" fill="#0f172a" /> <!-- Software UI --> <rect x="45" y="25" width="30" height="75" fill="#374151" /> <rect x="50" y="30" width="20" height="3" fill="#60a5fa" /> <rect x="50" y="36" width="20" height="3" fill="#f472b6" /> <rect x="50" y="42" width="20" height="3" fill="#fbbf24" /> <rect x="50" y="48" width="20" height="3" fill="#34d399" /> <!-- 3D Mock up di layar --> <rect x="100" y="35" width="60" height="60" rx="3" fill="#7c3aed" /> <polygon points="100,35 120,25 180,25 160,35" fill="#a78bfa" /> <polygon points="160,35 180,25 180,85 160,95" fill="#5b21b6" /> <rect x="105" y="45" width="50" height="20" rx="2" fill="#f0abfc" /> <rect x="110" y="70" width="40" height="20" fill="#e9d5ff" /> <!-- Mouse cursor --> <path d="M175 70 L175 85 L180 80 L185 90 L188 88 L183 78 L190 78 Z" fill="white" /> <!-- Stand --> <rect x="100" y="120" width="50" height="8" fill="#4b5563" /> <rect x="115" y="128" width="20" height="15" fill="#374151" />
+         </svg>
+         <p class="text-center text-slate-600 text-sm font-medium mt-4">🖥️ Membuat Mock Up dengan Software Desain</p>
+        </div><!-- Kata Kunci -->
+        <div class="mt-6 bg-amber-500/20 rounded-xl p-4 border border-amber-500/30">
+         <h4 class="font-semibold text-amber-300 mb-3">🔑 Kata Kunci Pencarian:</h4>
+         <div class="flex flex-wrap gap-2"><span class="px-3 py-1 bg-amber-500/30 rounded-full text-sm">digital mock up</span> <span class="px-3 py-1 bg-amber-500/30 rounded-full text-sm">packaging design</span> <span class="px-3 py-1 bg-amber-500/30 rounded-full text-sm">jaring-jaring kemasan</span> <span class="px-3 py-1 bg-amber-500/30 rounded-full text-sm">box template</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div><!-- Slide 9: Quiz -->
+    <div class="slide flex-col items-center min-h-full p-8 overflow-auto">
+     <div class="max-w-4xl mx-auto w-full">
+      <h2 class="title-font text-4xl font-bold mb-2 text-center gradient-text">📝 Kuis HOTS</h2>
+      <p class="text-center text-violet-300 mb-6">Uji Pemahaman Tingkat Tinggi</p>
+      <div id="quiz-container"><!-- Quiz akan di-render oleh JavaScript -->
+      </div>
+      <div id="quiz-result" class="hidden mt-8 bg-gradient-to-r from-violet-500/30 to-fuchsia-500/30 rounded-2xl p-8 text-center">
+       <h3 class="text-3xl font-bold mb-4">🎉 Hasil Kuis</h3>
+       <p id="score-text" class="text-2xl text-violet-200 mb-4"></p>
+       <div id="score-bar" class="h-4 bg-white/20 rounded-full overflow-hidden mb-6">
+        <div id="score-fill" class="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-all duration-1000"></div>
+       </div><button onclick="resetQuiz()" class="px-6 py-3 bg-violet-600 rounded-full hover:bg-violet-700 transition-colors"> 🔄 Ulangi Kuis </button>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Config dan SDK Setup
+    const defaultConfig = {
+      presentation_title: 'Subunit 2.3',
+      subject_info: 'Prakarya • Kelas VIII',
+      primary_color: '#7c3aed',
+      secondary_color: '#f472b6',
+      background_color: '#0f172a',
+      text_color: '#ffffff',
+      accent_color: '#fbbf24'
+    };
+    
+    let config = { ...defaultConfig };
+    
+    // Slides Navigation
+    let currentSlide = 0;
+    const totalSlides = 9;
+    
+    function updateSlide() {
+      const slides = document.querySelectorAll('.slide');
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === currentSlide);
+      });
+      
+      // Update progress
+      const progress = ((currentSlide + 1) / totalSlides) * 100;
+      document.getElementById('progress').style.width = `${progress}%`;
+      
+      // Update counter
+      document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+      
+      // Update buttons
+      document.getElementById('prevBtn').disabled = currentSlide === 0;
+      document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+    }
+    
+    function changeSlide(direction) {
+      const newSlide = currentSlide + direction;
+      if (newSlide >= 0 && newSlide < totalSlides) {
+        currentSlide = newSlide;
+        updateSlide();
+      }
+    }
+    
+    // Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        changeSlide(1);
+      } else if (e.key === 'ArrowLeft') {
+        changeSlide(-1);
+      }
+    });
+    
+    // Quiz Data - HOTS Questions
+    const quizData = [
+      {
+        question: "Sebuah perusahaan ingin meluncurkan produk baru namun memiliki budget terbatas. Mengapa membuat mock up terlebih dahulu menjadi keputusan yang tepat?",
+        options: [
+          "Karena mock up lebih mudah dibuat daripada produk asli",
+          "Untuk mendapatkan umpan balik dan menghindari kesalahan produksi massal yang mahal",
+          "Karena konsumen lebih menyukai mock up daripada produk jadi",
+          "Agar proses desain bisa selesai lebih cepat"
+        ],
+        correct: 1,
+        explanation: "Mock up memungkinkan evaluasi desain sebelum investasi besar untuk produksi massal, menghemat biaya dari potensi kesalahan."
+      },
+      {
+        question: "Dalam proses bedah kemasan, mengapa penting untuk membongkar kemasan dengan hati-hati dan bukan asal sobek?",
+        options: [
+          "Agar kemasan bisa digunakan kembali untuk menyimpan barang",
+          "Supaya dapat melihat struktur jaring-jaring secara utuh untuk replikasi yang akurat",
+          "Karena kemasan yang robek tidak bisa didaur ulang",
+          "Untuk menjaga kebersihan area kerja"
+        ],
+        correct: 1,
+        explanation: "Membongkar hati-hati memungkinkan kita melihat pola jaring-jaring utuh yang diperlukan untuk mengukur dan menduplikasi secara akurat."
+      },
+      {
+        question: "Jika hasil mock up kemasan yang kamu buat tidak sesuai dengan ukuran aslinya, elemen mana yang perlu dievaluasi terlebih dahulu?",
+        options: [
+          "Ide/Gagasan karena konsep awalnya mungkin salah",
+          "Fungsi karena kegunaan kemasan tidak tepat",
+          "Ukuran/Dimensi karena ketepatan skala dan proporsi bermasalah",
+          "Bahan karena material yang digunakan tidak cocok"
+        ],
+        correct: 2,
+        explanation: "Ketidaksesuaian ukuran langsung berkaitan dengan elemen Ukuran/Dimensi yang mengatur ketepatan skala dan proporsi."
+      },
+      {
+        question: "Seorang desainer membuat mock up kemasan menggunakan Photoshop tanpa mencetak fisik. Apa keuntungan utama pendekatan ini dibanding mock up fisik?",
+        options: [
+          "Hasil desain lebih kreatif dan artistik",
+          "Tidak memerlukan keahlian khusus dalam desain",
+          "Lebih mudah melakukan revisi berulang dengan biaya minimal",
+          "Konsumen lebih percaya pada desain digital"
+        ],
+        correct: 2,
+        explanation: "Digital mock up memungkinkan revisi cepat dan berulang tanpa biaya material tambahan, berbeda dengan mock up fisik yang perlu dibuat ulang."
+      },
+      {
+        question: "Dalam rubrik penilaian proses, mengapa aspek 'kerjasama tim' dan 'pembagian tugas yang adil' dinilai, bukan hanya hasil akhir?",
+        options: [
+          "Karena guru tidak punya waktu menilai hasil akhir semua siswa",
+          "Karena proses pembelajaran dan soft skill sama pentingnya dengan produk akhir",
+          "Karena hasil akhir semua kelompok pasti sama saja",
+          "Karena pembagian tugas lebih mudah dinilai daripada kreativitas"
+        ],
+        correct: 1,
+        explanation: "Penilaian proses mengakui bahwa pembelajaran tidak hanya tentang hasil, tapi juga pengembangan keterampilan kolaborasi dan tanggung jawab."
+      },
+      {
+        question: "Bandingkan peran mock up dalam industri desain dan manufaktur. Pernyataan mana yang paling tepat?",
+        options: [
+          "Keduanya menggunakan mock up sebagai hasil akhir yang dijual",
+          "Desain menjadikannya hasil akhir, manufaktur menjadikannya langkah awal sebelum produksi",
+          "Manufaktur menjadikannya hasil akhir, desain menjadikannya langkah awal",
+          "Keduanya hanya menggunakan mock up digital, bukan fisik"
+        ],
+        correct: 1,
+        explanation: "Dalam desain, mock up adalah representasi final dari tahap perancangan. Dalam manufaktur, mock up adalah prototipe untuk pengujian sebelum produksi massal."
+      },
+      {
+        question: "Kelompokmu mendapat kritik bahwa desain visual mock up kurang informatif. Langkah perbaikan apa yang paling efektif?",
+        options: [
+          "Membuat ulang jaring-jaring dengan ukuran lebih besar",
+          "Mengganti bahan karton dengan bahan yang lebih mahal",
+          "Menambahkan informasi produk yang relevan dan memperjelas hierarki visual",
+          "Meminta kelompok lain untuk membantu mendesain"
+        ],
+        correct: 2,
+        explanation: "Kritik tentang informatif berkaitan dengan konten dan penyajian informasi, bukan ukuran atau material. Perlu penambahan info dan perbaikan visual."
+      },
+      {
+        question: "Mengapa tahap 'Komunikasi' ditempatkan di akhir prosedur pembuatan mock up, bukan di awal?",
+        options: [
+          "Karena berbicara di depan kelas membuat siswa gugup",
+          "Agar ada produk konkret yang bisa ditunjukkan dan didiskusikan untuk umpan balik",
+          "Karena guru hanya punya waktu di akhir untuk menilai",
+          "Karena siswa perlu istirahat sebelum presentasi"
+        ],
+        correct: 1,
+        explanation: "Komunikasi memerlukan hasil nyata untuk dipresentasikan dan didiskusikan. Umpan balik akan lebih bermakna bila ada produk konkret yang bisa dievaluasi."
+      },
+      {
+        question: "Jika kamu ingin membuat mock up kemasan makanan ringan yang akan dijual di kantin sekolah, pertimbangan apa yang paling penting?",
+        options: [
+          "Menggunakan warna-warna gelap agar terlihat premium",
+          "Menyesuaikan ukuran, daya tarik visual, dan informasi produk dengan target pasar siswa",
+          "Meniru persis kemasan produk terkenal yang sudah ada",
+          "Membuat kemasan dengan ukuran sebesar mungkin"
+        ],
+        correct: 1,
+        explanation: "Mock up yang efektif mempertimbangkan target pasar (siswa), termasuk ukuran praktis, visual menarik bagi remaja, dan informasi yang relevan."
+      },
+      {
+        question: "Apa yang membedakan 'replikasi' dengan sekadar 'meniru' dalam konteks pembuatan mock up?",
+        options: [
+          "Replikasi dilakukan dengan mesin, meniru dilakukan manual",
+          "Replikasi memerlukan izin, meniru tidak perlu izin",
+          "Replikasi menekankan ketelitian dan akurasi dalam menduplikasi, meniru bisa tanpa standar presisi",
+          "Tidak ada perbedaan, keduanya sama"
+        ],
+        correct: 2,
+        explanation: "Replikasi dalam konteks ini adalah proses duplikasi yang terukur dan akurat, berbeda dengan meniru yang bisa saja dilakukan tanpa memperhatikan ketepatan dimensi dan detail."
+      }
+    ];
+    
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = new Array(quizData.length).fill(false);
+    let userAnswers = new Array(quizData.length).fill(null);
+    
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      const q = quizData[currentQuestion];
+      
+      container.innerHTML = `
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-6">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-violet-300 font-medium">Soal ${currentQuestion + 1} dari ${quizData.length}</span>
+            <span class="px-3 py-1 bg-violet-500/30 rounded-full text-sm">${score} Benar</span>
+          </div>
+          <div class="h-2 bg-white/20 rounded-full overflow-hidden mb-6">
+            <div class="h-full bg-violet-500 transition-all" style="width: ${((currentQuestion + 1) / quizData.length) * 100}%"></div>
+          </div>
+          <p class="text-lg leading-relaxed mb-6">${q.question}</p>
+          <div class="space-y-3">
+            ${q.options.map((opt, i) => `
+              <button 
+                onclick="selectAnswer(${i})" 
+                class="quiz-option w-full text-left p-4 rounded-xl border-2 border-white/20 transition-all ${
+                  userAnswers[currentQuestion] === i ? 
+                    (answered[currentQuestion] ? (i === q.correct ? 'correct' : 'wrong') : 'selected') : 
+                    (answered[currentQuestion] && i === q.correct ? 'correct' : '')
+                }"
+                ${answered[currentQuestion] ? 'disabled' : ''}
+              >
+                <span class="font-semibold mr-2">${String.fromCharCode(65 + i)}.</span>
+                ${opt}
+              </button>
+            `).join('')}
+          </div>
+          ${answered[currentQuestion] ? `
+            <div class="mt-6 p-4 rounded-xl ${userAnswers[currentQuestion] === q.correct ? 'bg-emerald-500/20 border border-emerald-500/30' : 'bg-red-500/20 border border-red-500/30'}">
+              <p class="font-semibold mb-2">${userAnswers[currentQuestion] === q.correct ? '✅ Benar!' : '❌ Kurang Tepat'}</p>
+              <p class="text-sm text-white/80">${q.explanation}</p>
+            </div>
+          ` : ''}
+        </div>
+        <div class="flex justify-between">
+          <button 
+            onclick="prevQuestion()" 
+            class="px-6 py-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors ${currentQuestion === 0 ? 'invisible' : ''}"
+          >
+            ← Sebelumnya
+          </button>
+          ${answered[currentQuestion] ? `
+            <button 
+              onclick="nextQuestion()" 
+              class="px-6 py-3 bg-violet-600 rounded-full hover:bg-violet-700 transition-colors"
+            >
+              ${currentQuestion === quizData.length - 1 ? 'Lihat Hasil' : 'Selanjutnya →'}
+            </button>
+          ` : `
+            <button 
+              onclick="checkAnswer()" 
+              class="px-6 py-3 bg-fuchsia-600 rounded-full hover:bg-fuchsia-700 transition-colors ${userAnswers[currentQuestion] === null ? 'opacity-50 cursor-not-allowed' : ''}"
+              ${userAnswers[currentQuestion] === null ? 'disabled' : ''}
+            >
+              Periksa Jawaban
+            </button>
+          `}
+        </div>
+      `;
+    }
+    
+    function selectAnswer(index) {
+      if (!answered[currentQuestion]) {
+        userAnswers[currentQuestion] = index;
+        renderQuiz();
+      }
+    }
+    
+    function checkAnswer() {
+      if (userAnswers[currentQuestion] !== null) {
+        answered[currentQuestion] = true;
+        if (userAnswers[currentQuestion] === quizData[currentQuestion].correct) {
+          score++;
+        }
+        renderQuiz();
+      }
+    }
+    
+    function nextQuestion() {
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        renderQuiz();
+      } else {
+        showResults();
+      }
+    }
+    
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuiz();
+      }
+    }
+    
+    function showResults() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      
+      const percentage = (score / quizData.length) * 100;
+      document.getElementById('score-text').textContent = `Skor: ${score} dari ${quizData.length} (${percentage}%)`;
+      
+      setTimeout(() => {
+        document.getElementById('score-fill').style.width = `${percentage}%`;
+      }, 100);
+    }
+    
+    function resetQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answered = new Array(quizData.length).fill(false);
+      userAnswers = new Array(quizData.length).fill(null);
+      
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('score-fill').style.width = '0%';
+      
+      renderQuiz();
+    }
+    
+    // Element SDK Integration
+    async function onConfigChange(newConfig) {
+      config = { ...config, ...newConfig };
+      
+      // Update presentation title
+      const titleEl = document.getElementById('presentationTitle');
+      if (titleEl) {
+        titleEl.textContent = config.presentation_title || defaultConfig.presentation_title;
+      }
+      
+      // Update subject info
+      const subjectEl = document.getElementById('subjectInfo');
+      if (subjectEl) {
+        subjectEl.textContent = config.subject_info || defaultConfig.subject_info;
+      }
+    }
+    
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              config.secondary_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+    
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['presentation_title', config.presentation_title || defaultConfig.presentation_title],
+        ['subject_info', config.subject_info || defaultConfig.subject_info]
+      ]);
+    }
+    
+    // Initialize
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+    
+    // Initial render
+    renderQuiz();
+    updateSlide();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c8b3b135728e77a',t:'MTc3MDIxOTI1Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

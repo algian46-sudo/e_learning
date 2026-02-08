@@ -1,0 +1,1119 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 2.1: Membuat Desain Poster</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=Comic+Neue:wght@700&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .comic-font {
+      font-family: 'Comic Neue', cursive;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.6); }
+    }
+    
+    @keyframes slide-in {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    @keyframes bounce-in {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+    
+    .slide-in {
+      animation: slide-in 0.5s ease-out forwards;
+    }
+    
+    .bounce-in {
+      animation: bounce-in 0.6s ease-out forwards;
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px) scale(1.02);
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:hover {
+      background: rgba(251, 191, 36, 0.2);
+    }
+    
+    .nav-item.active {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #1e293b;
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .interactive-element {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .interactive-element:hover {
+      transform: scale(1.05);
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.wrong) {
+      background: rgba(251, 191, 36, 0.2);
+      border-color: #fbbf24;
+    }
+    
+    .quiz-option.selected {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: #3b82f6;
+    }
+    
+    .quiz-option.correct {
+      background: rgba(34, 197, 94, 0.2);
+      border-color: #22c55e;
+    }
+    
+    .quiz-option.wrong {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #ef4444;
+    }
+    
+    .tooltip {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .tooltip-trigger:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .poster-frame {
+      background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+      box-shadow: 
+        0 10px 40px rgba(0,0,0,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.8),
+        0 0 0 8px #1e293b,
+        0 0 0 12px #fbbf24;
+    }
+    
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #1e293b;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #fbbf24;
+      border-radius: 4px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ </a>          
+<a href="index.html" class="btn-close-white">
+<i class="fas fa-home me-2"></i> Menu
+</a>
+ <body class="h-full bg-slate-900 text-white overflow-auto">
+  <div id="app" class="h-full w-full"><!-- Header -->
+   <header class="bg-gradient-to-r from-slate-800 via-slate-900 to-slate-800 border-b-2 border-amber-400 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <div class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center float-animation">
+        <svg viewbox="0 0 24 24" class="w-7 h-7 text-slate-900" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-7-2h2v-4h4v-2h-4V7h-2v4H8v2h4z" />
+        </svg>
+       </div>
+       <div>
+        <h1 id="main-title" class="text-xl font-bold gradient-text">Unit 2.1: Membuat Desain Poster</h1>
+        <p id="subtitle" class="text-sm text-slate-400">Seni Rupa SMP Kelas VIII</p>
+       </div>
+      </div>
+      <div class="hidden md:flex items-center gap-2"><span class="text-sm text-slate-400">Progress:</span>
+       <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
+        <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-amber-400 to-orange-500 rounded-full" style="width: 0%"></div>
+       </div><span id="progress-text" class="text-sm text-amber-400 font-semibold">0%</span>
+      </div>
+     </div>
+    </div>
+   </header>
+   <div class="flex"><!-- Sidebar Navigation -->
+    <nav class="hidden lg:block w-64 bg-slate-800 border-r border-slate-700 sticky top-20 h-[calc(100%-5rem)] overflow-y-auto">
+     <div class="p-4">
+      <h3 class="text-xs uppercase text-slate-500 font-semibold mb-3 tracking-wider">Daftar Materi</h3>
+      <ul id="nav-list" class="space-y-1"><!-- Generated by JS -->
+      </ul>
+     </div>
+    </nav><!-- Main Content -->
+    <main class="flex-1 max-w-5xl mx-auto px-4 py-8"><!-- Section 1: Hero -->
+     <section id="section-1" class="mb-16 scroll-mt-24">
+      <div class="relative rounded-3xl overflow-hidden bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 p-1">
+       <div class="bg-slate-900 rounded-3xl p-8 md:p-12">
+        <div class="flex flex-col md:flex-row items-center gap-8">
+         <div class="flex-1 text-center md:text-left"><span class="inline-block px-4 py-1 bg-amber-400/20 text-amber-400 rounded-full text-sm font-medium mb-4">📚 Unit Pembelajaran</span>
+          <h2 class="text-4xl md:text-5xl font-extrabold mb-4"><span class="gradient-text">Membuat Desain</span><br><span class="text-white">Poster</span></h2>
+          <p class="text-slate-400 text-lg mb-6">Pelajari seni membuat poster yang menarik dan efektif untuk berbagai kebutuhan komunikasi visual.</p><button onclick="scrollToSection('section-2')" class="px-6 py-3 bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 font-bold rounded-xl hover:shadow-lg hover:shadow-amber-400/30 transition-all"> Mulai Belajar → </button>
+         </div>
+         <div class="flex-shrink-0"><!-- Interactive Poster Illustration -->
+          <div class="poster-frame w-64 h-80 rounded-lg p-4 interactive-element" onclick="animatePoster(this)">
+           <div class="h-full flex flex-col items-center justify-center text-slate-800">
+            <div class="text-4xl mb-2">
+             🎨
+            </div>
+            <div class="comic-font text-2xl text-center text-amber-600 mb-2">
+             WISATA INDONESIA
+            </div>
+            <svg viewbox="0 0 100 60" class="w-full h-24 mb-2"><path d="M10,50 Q30,20 50,40 T90,30" stroke="#f59e0b" stroke-width="3" fill="none" stroke-dasharray="200" stroke-dashoffset="200" class="poster-path">
+              <animate attributename="stroke-dashoffset" from="200" to="0" dur="2s" fill="freeze" />
+             </path> <circle cx="25" cy="35" r="8" fill="#22c55e" /> <circle cx="50" cy="42" r="6" fill="#3b82f6" /> <circle cx="75" cy="32" r="10" fill="#ef4444" />
+            </svg>
+            <div class="text-sm font-bold text-slate-600">
+             Klik untuk animasi!
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 2: Tujuan Pembelajaran -->
+     <section id="section-2" class="mb-16 scroll-mt-24">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center"><span class="text-xl">🎯</span>
+       </div>
+       <h2 class="text-2xl font-bold">Tujuan Pembelajaran</h2>
+      </div>
+      <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700">
+       <p class="text-slate-300 mb-6">Di akhir pembelajaran ini, kamu akan mampu:</p>
+       <div class="grid md:grid-cols-2 gap-4">
+        <div class="goal-card bg-slate-700/50 rounded-xl p-4 card-hover cursor-pointer" onclick="toggleGoal(this, 0)">
+         <div class="flex items-start gap-3">
+          <div class="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center flex-shrink-0 goal-icon"><span class="text-emerald-400">1</span>
+          </div>
+          <div>
+           <h4 class="font-semibold text-white mb-1">Memahami Pengertian</h4>
+           <p class="text-sm text-slate-400">Menjelaskan pengertian poster sebagai karya seni rupa 2D.</p>
+          </div>
+         </div>
+        </div>
+        <div class="goal-card bg-slate-700/50 rounded-xl p-4 card-hover cursor-pointer" onclick="toggleGoal(this, 1)">
+         <div class="flex items-start gap-3">
+          <div class="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0 goal-icon"><span class="text-blue-400">2</span>
+          </div>
+          <div>
+           <h4 class="font-semibold text-white mb-1">Konsep Desain</h4>
+           <p class="text-sm text-slate-400">Memahami kapan poster disebut sebagai sebuah "Desain".</p>
+          </div>
+         </div>
+        </div>
+        <div class="goal-card bg-slate-700/50 rounded-xl p-4 card-hover cursor-pointer" onclick="toggleGoal(this, 2)">
+         <div class="flex items-start gap-3">
+          <div class="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0 goal-icon"><span class="text-purple-400">3</span>
+          </div>
+          <div>
+           <h4 class="font-semibold text-white mb-1">Analisis Unsur</h4>
+           <p class="text-sm text-slate-400">Menganalisis unsur dan prinsip dalam poster.</p>
+          </div>
+         </div>
+        </div>
+        <div class="goal-card bg-slate-700/50 rounded-xl p-4 card-hover cursor-pointer" onclick="toggleGoal(this, 3)">
+         <div class="flex items-start gap-3">
+          <div class="w-8 h-8 bg-amber-500/20 rounded-lg flex items-center justify-center flex-shrink-0 goal-icon"><span class="text-amber-400">4</span>
+          </div>
+          <div>
+           <h4 class="font-semibold text-white mb-1">Praktik Membuat</h4>
+           <p class="text-sm text-slate-400">Membuat desain poster promosi wisata daerah.</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 3: Pesan dalam Karya Seni -->
+     <section id="section-3" class="mb-16 scroll-mt-24">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl flex items-center justify-center"><span class="text-xl">💬</span>
+       </div>
+       <h2 class="text-2xl font-bold">Pesan dalam Karya Seni Rupa</h2>
+      </div>
+      <div class="bg-gradient-to-br from-purple-900/30 to-slate-800 rounded-2xl p-6 border border-purple-500/30 mb-6">
+       <p class="text-lg text-slate-200 text-center italic">"Setiap karya seni rupa lahir dari sebuah ide atau gagasan yang ingin disampaikan oleh penciptanya."</p>
+      </div><!-- Interactive Message Types -->
+      <div class="grid md:grid-cols-3 gap-6">
+       <div class="message-card bg-slate-800 rounded-2xl p-6 border border-slate-700 card-hover cursor-pointer relative overflow-hidden" onclick="showMessageDetail('simbolis')">
+        <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-pink-500/20 to-transparent rounded-bl-full"></div>
+        <div class="relative">
+         <div class="w-16 h-16 bg-pink-500/20 rounded-2xl flex items-center justify-center mb-4 mx-auto"><span class="text-3xl">🎭</span>
+         </div>
+         <h3 class="text-lg font-bold text-center mb-2 text-pink-400">Pesan Simbolis</h3>
+         <p class="text-sm text-slate-400 text-center">(Tersirat)</p>
+         <div class="mt-4 p-3 bg-slate-700/50 rounded-xl">
+          <p class="text-sm text-slate-300">Pesan disamarkan melalui tokoh atau adegan</p>
+          <p class="text-xs text-slate-500 mt-1">Contoh: Lukisan</p>
+         </div>
+        </div>
+       </div>
+       <div class="message-card bg-slate-800 rounded-2xl p-6 border border-slate-700 card-hover cursor-pointer relative overflow-hidden" onclick="showMessageDetail('lugas')">
+        <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-cyan-500/20 to-transparent rounded-bl-full"></div>
+        <div class="relative">
+         <div class="w-16 h-16 bg-cyan-500/20 rounded-2xl flex items-center justify-center mb-4 mx-auto"><span class="text-3xl">📝</span>
+         </div>
+         <h3 class="text-lg font-bold text-center mb-2 text-cyan-400">Pesan Lugas</h3>
+         <p class="text-sm text-slate-400 text-center">(Tersurat)</p>
+         <div class="mt-4 p-3 bg-slate-700/50 rounded-xl">
+          <p class="text-sm text-slate-300">Pesan disampaikan secara jelas melalui tulisan</p>
+          <p class="text-xs text-slate-500 mt-1">Menggunakan huruf dan kalimat</p>
+         </div>
+        </div>
+       </div>
+       <div class="message-card bg-slate-800 rounded-2xl p-6 border border-slate-700 card-hover cursor-pointer relative overflow-hidden" onclick="showMessageDetail('publikasi')">
+        <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-amber-500/20 to-transparent rounded-bl-full"></div>
+        <div class="relative">
+         <div class="w-16 h-16 bg-amber-500/20 rounded-2xl flex items-center justify-center mb-4 mx-auto"><span class="text-3xl">📢</span>
+         </div>
+         <h3 class="text-lg font-bold text-center mb-2 text-amber-400">Media Publikasi</h3>
+         <p class="text-sm text-slate-400 text-center">(Untuk Masyarakat)</p>
+         <div class="mt-4 p-3 bg-slate-700/50 rounded-xl">
+          <p class="text-sm text-slate-300">Menyampaikan pesan tersurat kepada masyarakat luas</p>
+          <p class="text-xs text-slate-500 mt-1">Contoh: Poster, booklet, pamflet</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 4: Apa itu Poster -->
+     <section id="section-4" class="mb-16 scroll-mt-24">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-xl flex items-center justify-center"><span class="text-xl">🖼️</span>
+       </div>
+       <h2 class="text-2xl font-bold">Apa itu Poster?</h2>
+      </div>
+      <div class="bg-slate-800 rounded-2xl overflow-hidden border border-slate-700">
+       <div class="bg-gradient-to-r from-emerald-600 to-teal-600 p-6">
+        <h3 class="text-xl font-bold flex items-center gap-2"><span>📖</span> Definisi</h3>
+        <p class="text-emerald-100 mt-2 text-lg">Karya seni rupa dua dimensi yang berfungsi untuk menyampaikan pesan secara tersurat.</p>
+       </div>
+       <div class="p-6">
+        <h4 class="font-bold text-amber-400 mb-4 flex items-center gap-2"><span>❓</span> Kapan disebut "Desain"?</h4>
+        <p class="text-slate-300 mb-6">Jika poster berfungsi sebagai gambar rencana (rancangan) yang ditujukan untuk digandakan atau diperbanyak.</p><!-- Interactive Comparison -->
+        <div class="grid md:grid-cols-2 gap-4">
+         <div class="comparison-card bg-slate-700/50 rounded-xl p-5 border-2 border-transparent hover:border-blue-400 transition-all cursor-pointer" onclick="highlightComparison(this, 'akhir')">
+          <div class="flex items-center gap-3 mb-3">
+           <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center"><span class="text-2xl">🎨</span>
+           </div>
+           <h5 class="font-bold text-blue-400">Karya Akhir</h5>
+          </div>
+          <p class="text-slate-300 text-sm">Digunakan langsung (hanya satu)</p>
+          <div class="mt-3 flex items-center gap-2 text-xs text-slate-500"><span class="w-2 h-2 bg-blue-400 rounded-full"></span> Unik &amp; Tunggal
+          </div>
+         </div>
+         <div class="comparison-card bg-slate-700/50 rounded-xl p-5 border-2 border-transparent hover:border-amber-400 transition-all cursor-pointer" onclick="highlightComparison(this, 'desain')">
+          <div class="flex items-center gap-3 mb-3">
+           <div class="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center"><span class="text-2xl">📋</span>
+           </div>
+           <h5 class="font-bold text-amber-400">Karya Desain</h5>
+          </div>
+          <p class="text-slate-300 text-sm">Menjadi model/prototipe untuk dicetak massal</p>
+          <div class="mt-3 flex items-center gap-2 text-xs text-slate-500"><span class="w-2 h-2 bg-amber-400 rounded-full"></span> Dapat Diperbanyak
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 5: Karakteristik Poster -->
+     <section id="section-5" class="mb-16 scroll-mt-24">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-10 h-10 bg-gradient-to-br from-rose-400 to-rose-600 rounded-xl flex items-center justify-center"><span class="text-xl">✨</span>
+       </div>
+       <h2 class="text-2xl font-bold">Karakteristik &amp; Ciri-Ciri Poster</h2>
+      </div>
+      <p class="text-slate-400 mb-6">Poster yang efektif memiliki ciri-ciri berikut:</p><!-- Interactive Characteristics -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+       <div class="char-card group bg-slate-800 rounded-2xl p-5 border border-slate-700 hover:border-rose-400 transition-all cursor-pointer" onclick="expandCharacteristic(this)">
+        <div class="w-14 h-14 bg-gradient-to-br from-rose-400 to-pink-500 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span class="text-2xl">📄</span>
+        </div>
+        <h4 class="font-bold text-rose-400 mb-2">Berbasis Kalimat &amp; Gambar</h4>
+        <p class="text-sm text-slate-400">Kombinasi antara teks dan visual yang saling melengkapi.</p>
+        <div class="char-detail hidden mt-3 p-3 bg-rose-500/10 rounded-lg">
+         <p class="text-xs text-rose-300">💡 Tips: Gambar menarik perhatian, teks menyampaikan pesan!</p>
+        </div>
+       </div>
+       <div class="char-card group bg-slate-800 rounded-2xl p-5 border border-slate-700 hover:border-cyan-400 transition-all cursor-pointer" onclick="expandCharacteristic(this)">
+        <div class="w-14 h-14 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span class="text-2xl">✂️</span>
+        </div>
+        <h4 class="font-bold text-cyan-400 mb-2">Sederhana</h4>
+        <p class="text-sm text-slate-400">Kalimat singkat dan gambar tidak rumit.</p>
+        <div class="char-detail hidden mt-3 p-3 bg-cyan-500/10 rounded-lg">
+         <p class="text-xs text-cyan-300">💡 Tips: Less is more! Hindari informasi berlebihan.</p>
+        </div>
+       </div>
+       <div class="char-card group bg-slate-800 rounded-2xl p-5 border border-slate-700 hover:border-amber-400 transition-all cursor-pointer" onclick="expandCharacteristic(this)">
+        <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span class="text-2xl">🎯</span>
+        </div>
+        <h4 class="font-bold text-amber-400 mb-2">Persuasif</h4>
+        <p class="text-sm text-slate-400">Bersifat mengajak dan memberikan informasi.</p>
+        <div class="char-detail hidden mt-3 p-3 bg-amber-500/10 rounded-lg">
+         <p class="text-xs text-amber-300">💡 Tips: Gunakan kata-kata ajakan seperti "Ayo!", "Mari!"</p>
+        </div>
+       </div>
+       <div class="char-card group bg-slate-800 rounded-2xl p-5 border border-slate-700 hover:border-emerald-400 transition-all cursor-pointer" onclick="expandCharacteristic(this)">
+        <div class="w-14 h-14 bg-gradient-to-br from-emerald-400 to-green-500 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span class="text-2xl">📌</span>
+        </div>
+        <h4 class="font-bold text-emerald-400 mb-2">Publikasi</h4>
+        <p class="text-sm text-slate-400">Ditempel di tempat umum atau disebarkan digital.</p>
+        <div class="char-detail hidden mt-3 p-3 bg-emerald-500/10 rounded-lg">
+         <p class="text-xs text-emerald-300">💡 Tips: Pertimbangkan di mana poster akan dipajang!</p>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 6: Unsur dan Prinsip -->
+     <section id="section-6" class="mb-16 scroll-mt-24">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-10 h-10 bg-gradient-to-br from-violet-400 to-violet-600 rounded-xl flex items-center justify-center"><span class="text-xl">🔧</span>
+       </div>
+       <h2 class="text-2xl font-bold">Unsur dan Prinsip Desain Poster</h2>
+      </div>
+      <p class="text-slate-400 mb-6">Untuk membuat poster yang kuat, perhatikan dua hal ini:</p>
+      <div class="grid md:grid-cols-2 gap-6"><!-- Unsur Visual -->
+       <div class="bg-gradient-to-br from-violet-900/30 to-slate-800 rounded-2xl p-6 border border-violet-500/30">
+        <div class="flex items-center gap-3 mb-4">
+         <div class="w-12 h-12 bg-violet-500/20 rounded-xl flex items-center justify-center"><span class="text-2xl">👁️</span>
+         </div>
+         <h3 class="text-xl font-bold text-violet-400">Unsur Visual</h3>
+        </div>
+        <div class="space-y-3">
+         <div class="unsur-item flex items-center gap-3 p-3 bg-slate-700/50 rounded-xl cursor-pointer hover:bg-violet-500/20 transition-all" onclick="animateUnsur(this)">
+          <div class="w-10 h-10 bg-violet-500/30 rounded-lg flex items-center justify-center"><span class="text-xl">✏️</span>
+          </div>
+          <div>
+           <h4 class="font-semibold text-white">Tulisan</h4>
+           <p class="text-xs text-slate-400">Huruf dan Kalimat</p>
+          </div>
+         </div>
+         <div class="unsur-item flex items-center gap-3 p-3 bg-slate-700/50 rounded-xl cursor-pointer hover:bg-violet-500/20 transition-all" onclick="animateUnsur(this)">
+          <div class="w-10 h-10 bg-violet-500/30 rounded-lg flex items-center justify-center"><span class="text-xl">🖌️</span>
+          </div>
+          <div>
+           <h4 class="font-semibold text-white">Gambar</h4>
+           <p class="text-xs text-slate-400">Ilustrasi Visual</p>
+          </div>
+         </div>
+        </div>
+       </div><!-- Prinsip Konten -->
+       <div class="bg-gradient-to-br from-amber-900/30 to-slate-800 rounded-2xl p-6 border border-amber-500/30">
+        <div class="flex items-center gap-3 mb-4">
+         <div class="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center"><span class="text-2xl">📐</span>
+         </div>
+         <h3 class="text-xl font-bold text-amber-400">Prinsip Konten</h3>
+        </div>
+        <div class="space-y-3">
+         <div class="prinsip-item flex items-center gap-3 p-3 bg-slate-700/50 rounded-xl cursor-pointer hover:bg-amber-500/20 transition-all" onclick="animatePrinsip(this)">
+          <div class="w-10 h-10 bg-amber-500/30 rounded-lg flex items-center justify-center"><span class="text-xl">💡</span>
+          </div>
+          <div>
+           <h4 class="font-semibold text-white">Jelas</h4>
+           <p class="text-xs text-slate-400">Pesan mudah ditangkap</p>
+          </div>
+         </div>
+         <div class="prinsip-item flex items-center gap-3 p-3 bg-slate-700/50 rounded-xl cursor-pointer hover:bg-amber-500/20 transition-all" onclick="animatePrinsip(this)">
+          <div class="w-10 h-10 bg-amber-500/30 rounded-lg flex items-center justify-center"><span class="text-xl">🎯</span>
+          </div>
+          <div>
+           <h4 class="font-semibold text-white">Sederhana</h4>
+           <p class="text-xs text-slate-400">Tidak penuh sesak</p>
+          </div>
+         </div>
+         <div class="prinsip-item flex items-center gap-3 p-3 bg-slate-700/50 rounded-xl cursor-pointer hover:bg-amber-500/20 transition-all" onclick="animatePrinsip(this)">
+          <div class="w-10 h-10 bg-amber-500/30 rounded-lg flex items-center justify-center"><span class="text-xl">🎤</span>
+          </div>
+          <div>
+           <h4 class="font-semibold text-white">Persuasif</h4>
+           <p class="text-xs text-slate-400">Mempengaruhi pembaca</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 7: Langkah-Langkah -->
+     <section id="section-7" class="mb-16 scroll-mt-24">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-10 h-10 bg-gradient-to-br from-teal-400 to-teal-600 rounded-xl flex items-center justify-center"><span class="text-xl">📋</span>
+       </div>
+       <h2 class="text-2xl font-bold">Langkah-Langkah Membuat Poster</h2>
+      </div>
+      <p class="text-slate-400 mb-6">Ikuti prosedur berikut untuk memulai karyamu:</p><!-- Interactive Steps -->
+      <div class="relative">
+       <div class="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-400 via-emerald-400 to-green-400 hidden md:block"></div>
+       <div class="space-y-4">
+        <div class="step-card relative flex items-start gap-4 md:gap-6 p-4 bg-slate-800 rounded-2xl border border-slate-700 cursor-pointer hover:border-teal-400 transition-all" onclick="activateStep(this, 1)">
+         <div class="w-12 h-12 bg-gradient-to-br from-teal-400 to-teal-600 rounded-xl flex items-center justify-center flex-shrink-0 z-10 step-number"><span class="text-xl font-bold text-white">1</span>
+         </div>
+         <div class="flex-1">
+          <h4 class="font-bold text-teal-400 mb-1">Tentukan Pesan</h4>
+          <p class="text-slate-300">Apa yang ingin disampaikan?</p>
+          <div class="step-tip hidden mt-2 p-2 bg-teal-500/10 rounded-lg">
+           <p class="text-xs text-teal-300">💡 Contoh: "Promosikan keindahan pantai di daerahmu"</p>
+          </div>
+         </div>
+        </div>
+        <div class="step-card relative flex items-start gap-4 md:gap-6 p-4 bg-slate-800 rounded-2xl border border-slate-700 cursor-pointer hover:border-emerald-400 transition-all" onclick="activateStep(this, 2)">
+         <div class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 z-10 step-number"><span class="text-xl font-bold text-white">2</span>
+         </div>
+         <div class="flex-1">
+          <h4 class="font-bold text-emerald-400 mb-1">Visualisasi</h4>
+          <p class="text-slate-300">Bayangkan bentuk gambar dan tata letaknya.</p>
+          <div class="step-tip hidden mt-2 p-2 bg-emerald-500/10 rounded-lg">
+           <p class="text-xs text-emerald-300">💡 Buat sketsa kasar di kertas terlebih dahulu</p>
+          </div>
+         </div>
+        </div>
+        <div class="step-card relative flex items-start gap-4 md:gap-6 p-4 bg-slate-800 rounded-2xl border border-slate-700 cursor-pointer hover:border-green-400 transition-all" onclick="activateStep(this, 3)">
+         <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center flex-shrink-0 z-10 step-number"><span class="text-xl font-bold text-white">3</span>
+         </div>
+         <div class="flex-1">
+          <h4 class="font-bold text-green-400 mb-1">Rumuskan Kata</h4>
+          <p class="text-slate-300">Buat kalimat singkat dan pilih gaya gambar.</p>
+          <div class="step-tip hidden mt-2 p-2 bg-green-500/10 rounded-lg">
+           <p class="text-xs text-green-300">💡 Gunakan kalimat ajakan yang mudah diingat</p>
+          </div>
+         </div>
+        </div>
+        <div class="step-card relative flex items-start gap-4 md:gap-6 p-4 bg-slate-800 rounded-2xl border border-slate-700 cursor-pointer hover:border-lime-400 transition-all" onclick="activateStep(this, 4)">
+         <div class="w-12 h-12 bg-gradient-to-br from-lime-400 to-lime-600 rounded-xl flex items-center justify-center flex-shrink-0 z-10 step-number"><span class="text-xl font-bold text-white">4</span>
+         </div>
+         <div class="flex-1">
+          <h4 class="font-bold text-lime-400 mb-1">Siapkan Alat</h4>
+          <p class="text-slate-300">Kertas, pensil, penghapus, dan pewarna.</p>
+          <div class="step-tip hidden mt-2 p-2 bg-lime-500/10 rounded-lg">
+           <p class="text-xs text-lime-300">💡 Bisa juga menggunakan alat digital!</p>
+          </div>
+         </div>
+        </div>
+        <div class="step-card relative flex items-start gap-4 md:gap-6 p-4 bg-slate-800 rounded-2xl border border-slate-700 cursor-pointer hover:border-yellow-400 transition-all" onclick="activateStep(this, 5)">
+         <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-xl flex items-center justify-center flex-shrink-0 z-10 step-number"><span class="text-xl font-bold text-white">5</span>
+         </div>
+         <div class="flex-1">
+          <h4 class="font-bold text-yellow-400 mb-1">Realisasi</h4>
+          <p class="text-slate-300">Mulai menggambar dan mewarnai poster.</p>
+          <div class="step-tip hidden mt-2 p-2 bg-yellow-500/10 rounded-lg">
+           <p class="text-xs text-yellow-300">💡 Jangan takut bereksperimen dengan warna!</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 8: Tugas Praktik -->
+     <section id="section-8" class="mb-16 scroll-mt-24">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center"><span class="text-xl">📝</span>
+       </div>
+       <h2 class="text-2xl font-bold">Tugas Praktik (Asesmen)</h2>
+      </div>
+      <div class="bg-gradient-to-br from-orange-900/30 to-slate-800 rounded-2xl overflow-hidden border border-orange-500/30">
+       <div class="bg-gradient-to-r from-orange-500 to-amber-500 p-6">
+        <h3 class="text-xl font-bold text-white flex items-center gap-2"><span>📢</span> Instruksi Tugas</h3>
+       </div>
+       <div class="p-6">
+        <div class="bg-slate-700/50 rounded-xl p-5 mb-6 border-l-4 border-orange-400">
+         <p class="text-lg text-white font-medium">"Buatlah satu desain poster yang berisi pesan tentang <span class="text-orange-400">promosi pariwisata</span> yang ada di daerahmu!"</p>
+        </div>
+        <h4 class="font-bold text-amber-400 mb-4 flex items-center gap-2"><span>⭐</span> Kriteria Penilaian</h4>
+        <div class="grid md:grid-cols-3 gap-4">
+         <div class="kriteria-card bg-slate-700/50 rounded-xl p-4 border border-transparent hover:border-amber-400 transition-all cursor-pointer" onclick="highlightKriteria(this)">
+          <div class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center mb-3"><span class="text-xl">✅</span>
+          </div>
+          <h5 class="font-semibold text-amber-400 mb-2">Kelengkapan Unsur</h5>
+          <p class="text-sm text-slate-400">Tulisan, gambar, warna, dan ukuran yang pas.</p>
+         </div>
+         <div class="kriteria-card bg-slate-700/50 rounded-xl p-4 border border-transparent hover:border-emerald-400 transition-all cursor-pointer" onclick="highlightKriteria(this)">
+          <div class="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center mb-3"><span class="text-xl">📐</span>
+          </div>
+          <h5 class="font-semibold text-emerald-400 mb-2">Prinsip Desain</h5>
+          <p class="text-sm text-slate-400">Harus jelas, sederhana, dan persuasif.</p>
+         </div>
+         <div class="kriteria-card bg-slate-700/50 rounded-xl p-4 border border-transparent hover:border-blue-400 transition-all cursor-pointer" onclick="highlightKriteria(this)">
+          <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mb-3"><span class="text-xl">🔗</span>
+          </div>
+          <h5 class="font-semibold text-blue-400 mb-2">Kesesuaian</h5>
+          <p class="text-sm text-slate-400">Kalimat dan gambar harus saling mendukung.</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 9: Tips Kreatif -->
+     <section id="section-9" class="mb-16 scroll-mt-24">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-10 h-10 bg-gradient-to-br from-pink-400 to-pink-600 rounded-xl flex items-center justify-center"><span class="text-xl">💡</span>
+       </div>
+       <h2 class="text-2xl font-bold">Tips Kreatif (Alternatif Media)</h2>
+      </div>
+      <div class="bg-gradient-to-br from-pink-900/30 to-slate-800 rounded-2xl p-6 border border-pink-500/30">
+       <p class="text-lg text-slate-200 mb-6 text-center">"Jangan biarkan keterbatasan alat menghambatmu! Kamu bisa menggunakan:"</p>
+       <div class="grid sm:grid-cols-3 gap-4">
+        <div class="tip-card bg-slate-700/50 rounded-xl p-5 text-center hover:bg-pink-500/20 transition-all cursor-pointer" onclick="bounceTip(this)">
+         <div class="w-16 h-16 bg-pink-500/20 rounded-2xl flex items-center justify-center mb-3 mx-auto"><span class="text-3xl">📄</span>
+         </div>
+         <h4 class="font-bold text-pink-400 mb-1">Kertas Bekas</h4>
+         <p class="text-sm text-slate-400">Kardus, koran, atau kertas daur ulang</p>
+        </div>
+        <div class="tip-card bg-slate-700/50 rounded-xl p-5 text-center hover:bg-purple-500/20 transition-all cursor-pointer" onclick="bounceTip(this)">
+         <div class="w-16 h-16 bg-purple-500/20 rounded-2xl flex items-center justify-center mb-3 mx-auto"><span class="text-3xl">🎨</span>
+         </div>
+         <h4 class="font-bold text-purple-400 mb-1">Pewarna Alami</h4>
+         <p class="text-sm text-slate-400">Pewarna makanan, arang, kunyit, dsb.</p>
+        </div>
+        <div class="tip-card bg-slate-700/50 rounded-xl p-5 text-center hover:bg-cyan-500/20 transition-all cursor-pointer" onclick="bounceTip(this)">
+         <div class="w-16 h-16 bg-cyan-500/20 rounded-2xl flex items-center justify-center mb-3 mx-auto"><span class="text-3xl">🌿</span>
+         </div>
+         <h4 class="font-bold text-cyan-400 mb-1">Media Lokal</h4>
+         <p class="text-sm text-slate-400">Apa pun yang terjangkau di lingkunganmu</p>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section 10: Penutup -->
+     <section id="section-10" class="mb-16 scroll-mt-24">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-10 h-10 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-xl flex items-center justify-center"><span class="text-xl">🎓</span>
+       </div>
+       <h2 class="text-2xl font-bold">Penutup &amp; Referensi</h2>
+      </div>
+      <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700">
+       <div class="mb-6">
+        <h4 class="font-bold text-indigo-400 mb-3 flex items-center gap-2"><span>🔑</span> Kata Kunci</h4>
+        <div class="flex flex-wrap gap-2"><span class="px-4 py-2 bg-indigo-500/20 text-indigo-400 rounded-full font-medium">Desain</span> <span class="px-4 py-2 bg-purple-500/20 text-purple-400 rounded-full font-medium">Poster</span> <span class="px-4 py-2 bg-pink-500/20 text-pink-400 rounded-full font-medium">Publikasi</span> <span class="px-4 py-2 bg-amber-500/20 text-amber-400 rounded-full font-medium">Persuasif</span>
+        </div>
+       </div>
+       <div>
+        <h4 class="font-bold text-emerald-400 mb-3 flex items-center gap-2"><span>📚</span> Referensi Belajar</h4>
+        <p class="text-slate-300">Cari info lebih lanjut tentang poster kesehatan, niaga, atau pendidikan di internet.</p>
+       </div>
+      </div>
+     </section><!-- Section 11: Quiz HOTS -->
+     <section id="section-quiz" class="mb-16 scroll-mt-24">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-10 h-10 bg-gradient-to-br from-red-400 to-red-600 rounded-xl flex items-center justify-center pulse-glow"><span class="text-xl">🧠</span>
+       </div>
+       <h2 class="text-2xl font-bold">Quiz HOTS - Uji Pemahamanmu!</h2>
+      </div>
+      <div id="quiz-container" class="bg-slate-800 rounded-2xl overflow-hidden border border-slate-700">
+       <div class="bg-gradient-to-r from-red-600 to-orange-500 p-4">
+        <div class="flex items-center justify-between">
+         <h3 class="text-lg font-bold text-white">Soal <span id="current-question">1</span> dari 10</h3>
+         <div class="flex items-center gap-2"><span class="text-white/80 text-sm">Skor:</span> <span id="score-display" class="bg-white/20 px-3 py-1 rounded-full text-white font-bold">0</span>
+         </div>
+        </div>
+        <div class="mt-3 h-2 bg-white/20 rounded-full overflow-hidden">
+         <div id="quiz-progress" class="h-full bg-white rounded-full transition-all duration-500" style="width: 10%"></div>
+        </div>
+       </div>
+       <div id="question-area" class="p-6"><!-- Question content will be injected here -->
+       </div>
+       <div id="quiz-result" class="hidden p-6 text-center">
+        <div class="w-24 h-24 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4"><span class="text-5xl">🏆</span>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-2">Quiz Selesai!</h3>
+        <p class="text-slate-400 mb-4">Skor Akhir Kamu:</p>
+        <div class="text-5xl font-bold gradient-text mb-4" id="final-score">
+         0/10
+        </div>
+        <p id="score-message" class="text-lg text-slate-300 mb-6"></p><button onclick="restartQuiz()" class="px-6 py-3 bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 font-bold rounded-xl hover:shadow-lg transition-all"> Ulangi Quiz 🔄 </button>
+       </div>
+      </div>
+     </section>
+    </main>
+   </div><!-- Mobile Navigation -->
+   <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-800 border-t border-slate-700 p-2 z-50">
+    <div class="flex justify-around"><button onclick="navigateMobile('prev')" class="p-3 text-slate-400 hover:text-amber-400 transition-colors">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg></button> <button onclick="scrollToSection('section-quiz')" class="px-4 py-2 bg-amber-400 text-slate-900 rounded-xl font-bold text-sm"> Quiz 🧠 </button> <button onclick="navigateMobile('next')" class="p-3 text-slate-400 hover:text-amber-400 transition-colors">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg></button>
+    </div>
+   </nav>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: "Unit 2.1: Membuat Desain Poster",
+      subtitle: "Seni Rupa SMP Kelas VIII"
+    };
+
+    let config = { ...defaultConfig };
+
+    // Navigation items
+    const navItems = [
+      { id: 'section-1', title: 'Pendahuluan', icon: '🏠' },
+      { id: 'section-2', title: 'Tujuan Pembelajaran', icon: '🎯' },
+      { id: 'section-3', title: 'Pesan dalam Seni', icon: '💬' },
+      { id: 'section-4', title: 'Apa itu Poster?', icon: '🖼️' },
+      { id: 'section-5', title: 'Karakteristik', icon: '✨' },
+      { id: 'section-6', title: 'Unsur & Prinsip', icon: '🔧' },
+      { id: 'section-7', title: 'Langkah-Langkah', icon: '📋' },
+      { id: 'section-8', title: 'Tugas Praktik', icon: '📝' },
+      { id: 'section-9', title: 'Tips Kreatif', icon: '💡' },
+      { id: 'section-10', title: 'Penutup', icon: '🎓' },
+      { id: 'section-quiz', title: 'Quiz HOTS', icon: '🧠' }
+    ];
+
+    // Quiz questions (HOTS level)
+    const quizQuestions = [
+      {
+        question: "Seorang desainer diminta membuat poster untuk kampanye kebersihan lingkungan. Ia memilih menggunakan gambar tangan yang sedang membuang sampah ke tempat sampah dengan tulisan 'Buang Sampah pada Tempatnya'. Mengapa kombinasi ini dianggap efektif?",
+        options: [
+          "Karena gambarnya berwarna-warni",
+          "Karena pesan tersurat diperkuat dengan visualisasi tindakan yang diharapkan",
+          "Karena posternya berukuran besar",
+          "Karena menggunakan font yang menarik"
+        ],
+        correct: 1,
+        explanation: "Kombinasi efektif karena gambar menunjukkan tindakan konkret yang sesuai dengan pesan tulisan, sehingga pesan tersurat diperkuat secara visual."
+      },
+      {
+        question: "Sebuah poster wisata menampilkan pemandangan pantai yang indah tetapi menggunakan kalimat yang sangat panjang dan detail. Berdasarkan prinsip desain poster, apa kritik yang tepat untuk poster tersebut?",
+        options: [
+          "Poster sudah sempurna karena informasinya lengkap",
+          "Gambarnya kurang menarik",
+          "Melanggar prinsip kesederhanaan karena kalimat terlalu panjang",
+          "Warnanya tidak cocok"
+        ],
+        correct: 2,
+        explanation: "Poster yang efektif harus sederhana dengan kalimat singkat. Kalimat yang terlalu panjang membuat pesan sulit ditangkap dengan cepat."
+      },
+      {
+        question: "Jika kamu diminta membuat poster promosi wisata daerah dengan anggaran terbatas, pendekatan mana yang paling tepat berdasarkan materi yang dipelajari?",
+        options: [
+          "Tidak membuat poster karena tidak ada dana",
+          "Menggunakan media alternatif seperti kertas bekas dan pewarna alami",
+          "Meminjam uang untuk membeli alat mahal",
+          "Menunggu sampai ada dana cukup"
+        ],
+        correct: 1,
+        explanation: "Materi menekankan kreativitas tidak harus mahal. Media alternatif seperti kertas bekas dan pewarna alami bisa menghasilkan karya berkualitas."
+      },
+      {
+        question: "Apa perbedaan mendasar antara 'poster sebagai karya akhir' dan 'poster sebagai desain'?",
+        options: [
+          "Karya akhir lebih bagus dari desain",
+          "Desain tidak perlu diwarnai",
+          "Karya akhir digunakan langsung (tunggal), sedangkan desain adalah prototipe untuk digandakan",
+          "Tidak ada perbedaan"
+        ],
+        correct: 2,
+        explanation: "Poster sebagai karya akhir bersifat tunggal dan langsung digunakan, sedangkan poster sebagai desain merupakan rancangan yang akan diperbanyak."
+      },
+      {
+        question: "Sebuah lukisan menggambarkan burung yang terbang bebas di langit sebagai simbol kemerdekaan. Bagaimana cara penyampaian pesan dalam lukisan ini berbeda dengan poster?",
+        options: [
+          "Lukisan menyampaikan pesan secara simbolis (tersirat), poster secara lugas (tersurat)",
+          "Lukisan lebih besar dari poster",
+          "Poster tidak boleh menggunakan gambar",
+          "Tidak ada perbedaan"
+        ],
+        correct: 0,
+        explanation: "Lukisan menggunakan simbol untuk menyampaikan pesan secara tersirat, sedangkan poster menyampaikan pesan secara tersurat melalui kombinasi gambar dan tulisan yang jelas."
+      },
+      {
+        question: "Dalam membuat poster promosi wisata pantai, seorang siswa menempatkan gambar pantai di bagian bawah dan tulisan 'KUNJUNGI PANTAI INDAH' dengan font sangat kecil di pojok atas. Apa saran perbaikan yang tepat?",
+        options: [
+          "Tidak perlu diperbaiki, sudah bagus",
+          "Hilangkan gambar pantai",
+          "Perbesar tulisan dan tempatkan secara proporsional agar mudah terbaca dan menarik perhatian",
+          "Ganti warna background saja"
+        ],
+        correct: 2,
+        explanation: "Poster harus jelas dan mudah ditangkap. Tulisan yang terlalu kecil dan tidak proporsional mengurangi efektivitas komunikasi visual."
+      },
+      {
+        question: "Mengapa poster digolongkan sebagai 'media publikasi' bukan 'karya seni murni'?",
+        options: [
+          "Karena poster tidak membutuhkan keahlian seni",
+          "Karena poster bertujuan menyampaikan pesan kepada masyarakat luas, bukan sekadar ekspresi pribadi",
+          "Karena poster selalu dicetak massal",
+          "Karena poster tidak menggunakan warna"
+        ],
+        correct: 1,
+        explanation: "Poster adalah media publikasi karena fungsi utamanya adalah menyampaikan pesan secara tersurat kepada masyarakat luas, berbeda dengan seni murni yang lebih mengutamakan ekspresi estetis."
+      },
+      {
+        question: "Seorang siswa membuat poster dengan banyak gambar dan tulisan yang memenuhi seluruh bidang kertas. Prinsip desain poster apa yang dilanggar?",
+        options: [
+          "Prinsip persuasif",
+          "Prinsip kesederhanaan - poster tidak boleh penuh sesak",
+          "Prinsip kejelasan saja",
+          "Tidak ada yang dilanggar"
+        ],
+        correct: 1,
+        explanation: "Prinsip kesederhanaan mengharuskan poster tidak penuh sesak. Terlalu banyak elemen membuat poster sulit dipahami dan tidak efektif."
+      },
+      {
+        question: "Dalam langkah pembuatan poster, mengapa 'visualisasi' (membayangkan bentuk gambar dan tata letak) dilakukan sebelum 'realisasi' (menggambar)?",
+        options: [
+          "Karena tidak penting",
+          "Agar hemat kertas dan waktu dengan perencanaan yang matang sebelum eksekusi",
+          "Karena visualisasi lebih mudah",
+          "Tidak ada alasan khusus"
+        ],
+        correct: 1,
+        explanation: "Visualisasi membantu merencanakan komposisi dan pesan sebelum eksekusi, sehingga menghemat waktu dan material serta menghasilkan karya yang lebih terstruktur."
+      },
+      {
+        question: "Jika kamu melihat poster dengan tulisan 'Jaga Kebersihan' tetapi gambarnya menampilkan pemandangan gunung tanpa konteks kebersihan, evaluasi apa yang tepat untuk poster tersebut?",
+        options: [
+          "Poster sudah bagus karena gambarnya indah",
+          "Tidak masalah karena yang penting ada gambar",
+          "Melanggar prinsip kesesuaian - gambar dan tulisan tidak saling mendukung",
+          "Gambar gunung sudah cukup mewakili"
+        ],
+        correct: 2,
+        explanation: "Kesesuaian antara gambar dan tulisan adalah kriteria penting. Gambar harus mendukung dan memperkuat pesan yang disampaikan dalam tulisan."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answeredQuestions = [];
+    let currentMobileSection = 0;
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...config, ...newConfig };
+          updateUI();
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["main_title", config.main_title || defaultConfig.main_title],
+          ["subtitle", config.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
+
+    function updateUI() {
+      document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+      document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+    }
+
+    // Initialize navigation
+    function initNavigation() {
+      const navList = document.getElementById('nav-list');
+      navList.innerHTML = navItems.map((item, index) => `
+        <li>
+          <a href="#${item.id}" onclick="scrollToSection('${item.id}'); return false;" 
+             class="nav-item flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-300 hover:text-white transition-all"
+             data-section="${item.id}">
+            <span>${item.icon}</span>
+            <span>${item.title}</span>
+          </a>
+        </li>
+      `).join('');
+    }
+
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+        updateActiveNav(sectionId);
+        currentMobileSection = navItems.findIndex(item => item.id === sectionId);
+      }
+    }
+
+    function updateActiveNav(activeSectionId) {
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.dataset.section === activeSectionId) {
+          item.classList.add('active');
+        }
+      });
+    }
+
+    function navigateMobile(direction) {
+      if (direction === 'next' && currentMobileSection < navItems.length - 1) {
+        currentMobileSection++;
+      } else if (direction === 'prev' && currentMobileSection > 0) {
+        currentMobileSection--;
+      }
+      scrollToSection(navItems[currentMobileSection].id);
+    }
+
+    // Progress tracking
+    function updateProgress() {
+      const sections = document.querySelectorAll('section[id^="section"]');
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+      let currentIndex = 0;
+
+      sections.forEach((section, index) => {
+        if (scrollPosition >= section.offsetTop) {
+          currentIndex = index;
+        }
+      });
+
+      const progress = Math.min(100, Math.round(((currentIndex + 1) / sections.length) * 100));
+      document.getElementById('progress-bar').style.width = progress + '%';
+      document.getElementById('progress-text').textContent = progress + '%';
+      
+      if (sections[currentIndex]) {
+        updateActiveNav(sections[currentIndex].id);
+        currentMobileSection = currentIndex;
+      }
+    }
+
+    // Interactive functions
+    function animatePoster(element) {
+      element.style.transform = 'scale(1.05) rotate(-2deg)';
+      setTimeout(() => {
+        element.style.transform = 'scale(1) rotate(0deg)';
+      }, 300);
+    }
+
+    function toggleGoal(element, index) {
+      const icon = element.querySelector('.goal-icon');
+      icon.innerHTML = '<span class="text-white">✓</span>';
+      icon.classList.add('bg-emerald-500');
+      element.classList.add('ring-2', 'ring-emerald-400');
+    }
+
+    function showMessageDetail(type) {
+      const cards = document.querySelectorAll('.message-card');
+      cards.forEach(card => {
+        card.classList.remove('ring-2');
+      });
+      event.currentTarget.classList.add('ring-2', 'ring-amber-400');
+    }
+
+    function highlightComparison(element, type) {
+      document.querySelectorAll('.comparison-card').forEach(card => {
+        card.classList.remove('ring-2');
+      });
+      element.classList.add('ring-2');
+    }
+
+    function expandCharacteristic(element) {
+      const detail = element.querySelector('.char-detail');
+      if (detail) {
+        detail.classList.toggle('hidden');
+      }
+    }
+
+    function animateUnsur(element) {
+      element.classList.add('scale-105');
+      setTimeout(() => {
+        element.classList.remove('scale-105');
+      }, 200);
+    }
+
+    function animatePrinsip(element) {
+      element.classList.add('scale-105');
+      setTimeout(() => {
+        element.classList.remove('scale-105');
+      }, 200);
+    }
+
+    function activateStep(element, stepNum) {
+      document.querySelectorAll('.step-card').forEach(card => {
+        card.classList.remove('bg-slate-700');
+        card.querySelector('.step-tip')?.classList.add('hidden');
+      });
+      element.classList.add('bg-slate-700');
+      element.querySelector('.step-tip')?.classList.remove('hidden');
+    }
+
+    function highlightKriteria(element) {
+      element.classList.add('scale-105', 'ring-2', 'ring-amber-400');
+      setTimeout(() => {
+        element.classList.remove('scale-105', 'ring-2', 'ring-amber-400');
+      }, 500);
+    }
+
+    function bounceTip(element) {
+      element.style.transform = 'scale(1.1)';
+      setTimeout(() => {
+        element.style.transform = 'scale(1)';
+      }, 200);
+    }
+
+    // Quiz functions
+    function initQuiz() {
+      displayQuestion();
+    }
+
+    function displayQuestion() {
+      const question = quizQuestions[currentQuestion];
+      const questionArea = document.getElementById('question-area');
+      
+      questionArea.innerHTML = `
+        <div class="mb-6">
+          <p class="text-lg text-white leading-relaxed">${question.question}</p>
+        </div>
+        <div class="space-y-3">
+          ${question.options.map((option, index) => `
+            <div class="quiz-option p-4 bg-slate-700/50 rounded-xl border-2 border-slate-600 flex items-start gap-3"
+                 onclick="selectAnswer(${index})" data-index="${index}">
+              <span class="w-8 h-8 bg-slate-600 rounded-lg flex items-center justify-center flex-shrink-0 text-white font-bold">
+                ${String.fromCharCode(65 + index)}
+              </span>
+              <span class="text-slate-200">${option}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div id="feedback-area" class="mt-4 hidden"></div>
+        <div class="mt-6 flex justify-end">
+          <button id="next-btn" onclick="nextQuestion()" class="hidden px-6 py-3 bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 font-bold rounded-xl hover:shadow-lg transition-all">
+            ${currentQuestion < quizQuestions.length - 1 ? 'Soal Berikutnya →' : 'Lihat Hasil 🏆'}
+          </button>
+        </div>
+      `;
+
+      document.getElementById('current-question').textContent = currentQuestion + 1;
+      document.getElementById('quiz-progress').style.width = ((currentQuestion + 1) / quizQuestions.length * 100) + '%';
+    }
+
+    function selectAnswer(selectedIndex) {
+      if (answeredQuestions.includes(currentQuestion)) return;
+      
+      answeredQuestions.push(currentQuestion);
+      const question = quizQuestions[currentQuestion];
+      const options = document.querySelectorAll('.quiz-option');
+      
+      options.forEach((option, index) => {
+        option.style.pointerEvents = 'none';
+        if (index === question.correct) {
+          option.classList.add('correct');
+          option.querySelector('span:first-child').classList.add('bg-emerald-500');
+        } else if (index === selectedIndex && selectedIndex !== question.correct) {
+          option.classList.add('wrong');
+          option.querySelector('span:first-child').classList.add('bg-red-500');
+        }
+      });
+
+      if (selectedIndex === question.correct) {
+        score++;
+        document.getElementById('score-display').textContent = score;
+      }
+
+      // Show feedback
+      const feedbackArea = document.getElementById('feedback-area');
+      feedbackArea.classList.remove('hidden');
+      feedbackArea.innerHTML = `
+        <div class="p-4 rounded-xl ${selectedIndex === question.correct ? 'bg-emerald-500/20 border border-emerald-500/50' : 'bg-red-500/20 border border-red-500/50'}">
+          <p class="font-bold ${selectedIndex === question.correct ? 'text-emerald-400' : 'text-red-400'} mb-2">
+            ${selectedIndex === question.correct ? '✅ Benar!' : '❌ Kurang Tepat'}
+          </p>
+          <p class="text-sm text-slate-300">${question.explanation}</p>
+        </div>
+      `;
+
+      document.getElementById('next-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        displayQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('question-area').classList.add('hidden');
+      const resultArea = document.getElementById('quiz-result');
+      resultArea.classList.remove('hidden');
+      
+      document.getElementById('final-score').textContent = `${score}/10`;
+      
+      let message = '';
+      if (score >= 9) {
+        message = '🌟 Luar Biasa! Kamu sangat memahami materi desain poster!';
+      } else if (score >= 7) {
+        message = '👍 Bagus! Pemahamanmu sudah baik, terus tingkatkan!';
+      } else if (score >= 5) {
+        message = '💪 Cukup baik! Coba pelajari lagi materi yang belum dikuasai.';
+      } else {
+        message = '📚 Jangan menyerah! Ulangi membaca materi dan coba lagi.';
+      }
+      document.getElementById('score-message').textContent = message;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answeredQuestions = [];
+      document.getElementById('score-display').textContent = '0';
+      document.getElementById('question-area').classList.remove('hidden');
+      document.getElementById('quiz-result').classList.add('hidden');
+      displayQuestion();
+    }
+
+    // Initialize everything
+    document.addEventListener('DOMContentLoaded', () => {
+      initNavigation();
+      initQuiz();
+      updateUI();
+      
+      // Scroll tracking
+      window.addEventListener('scroll', () => {
+        updateProgress();
+      });
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c8b04f85586ba3d',t:'MTc3MDIxNzAzNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

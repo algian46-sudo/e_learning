@@ -1,0 +1,1175 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 1: Menggambar - Seni Rupa Kelas IX</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    .font-display {
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .font-body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    
+    .slide {
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    .slide.active {
+      display: flex;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .pulse-animation {
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .progress-bar {
+      transition: width 0.3s ease;
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    
+    .interactive-element {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .interactive-element:hover {
+      transform: scale(1.02);
+    }
+    
+    .tooltip {
+      position: absolute;
+      background: #1a1a2e;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      z-index: 100;
+    }
+    
+    .tooltip.show {
+      opacity: 1;
+    }
+    
+    .nav-dot {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-dot.active {
+      transform: scale(1.3);
+    }
+    
+    .sketch-line {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: draw 2s ease forwards;
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.wrong) {
+      background: #f0e6ff;
+      border-color: #7c3aed;
+    }
+    
+    .quiz-option.selected {
+      background: #e0e7ff;
+      border-color: #4f46e5;
+    }
+    
+    .quiz-option.correct {
+      background: #d1fae5;
+      border-color: #10b981;
+    }
+    
+    .quiz-option.wrong {
+      background: #fee2e2;
+      border-color: #ef4444;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50">
+  <div id="app-wrapper" class="h-full w-full overflow-auto"><!-- Progress Bar -->
+   <div class="fixed top-0 left-0 right-0 h-1 bg-gray-200 z-50">
+    <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-violet-500 to-fuchsia-500" style="width: 9.09%"></div>
+   </div><!-- Navigation -->
+   <nav class="fixed top-4 right-4 z-40 flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg"><button onclick="prevSlide()" class="p-2 hover:bg-gray-100 rounded-full transition-colors" aria-label="Previous slide">
+     <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+     </svg></button> <span id="slide-counter" class="text-sm font-medium text-gray-600 min-w-[60px] text-center">1 / 11</span> <button onclick="nextSlide()" class="p-2 hover:bg-gray-100 rounded-full transition-colors" aria-label="Next slide">
+     <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+     </svg></button>
+   </nav><!-- Slide Navigation Dots -->
+   <div class="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-40 flex gap-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg"><button onclick="goToSlide(0)" class="nav-dot w-3 h-3 rounded-full bg-violet-500 active" data-slide="0" aria-label="Go to slide 1"></button> <button onclick="goToSlide(1)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="1" aria-label="Go to slide 2"></button> <button onclick="goToSlide(2)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="2" aria-label="Go to slide 3"></button> <button onclick="goToSlide(3)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="3" aria-label="Go to slide 4"></button> <button onclick="goToSlide(4)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="4" aria-label="Go to slide 5"></button> <button onclick="goToSlide(5)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="5" aria-label="Go to slide 6"></button> <button onclick="goToSlide(6)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="6" aria-label="Go to slide 7"></button> <button onclick="goToSlide(7)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="7" aria-label="Go to slide 8"></button> <button onclick="goToSlide(8)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="8" aria-label="Go to slide 9"></button> <button onclick="goToSlide(9)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="9" aria-label="Go to slide 10"></button> <button onclick="goToSlide(10)" class="nav-dot w-3 h-3 rounded-full bg-gray-300" data-slide="10" aria-label="Go to quiz"></button>
+   </div><!-- SLIDE 1: Title -->
+   <section class="slide active min-h-full flex-col items-center justify-center p-8 pt-16" data-slide="0">
+    <div class="max-w-5xl mx-auto text-center"><!-- Decorative Art Elements -->
+     <div class="relative mb-8">
+      <svg class="w-full h-48 mx-auto" viewbox="0 0 400 150"><!-- Palette --> <ellipse cx="100" cy="80" rx="50" ry="35" fill="#8B5CF6" opacity="0.8" class="float-animation" /> <circle cx="80" cy="70" r="8" fill="#F59E0B" /> <circle cx="95" cy="60" r="8" fill="#EF4444" /> <circle cx="115" cy="65" r="8" fill="#3B82F6" /> <circle cx="105" cy="85" r="8" fill="#10B981" /> <!-- Brush --> <rect x="280" y="40" width="12" height="80" rx="2" fill="#92400E" transform="rotate(15 286 80)" class="float-animation" style="animation-delay: 0.5s" /> <path d="M275 35 Q286 20 297 35 L295 55 L277 55 Z" fill="#7C3AED" transform="rotate(15 286 35)" /> <!-- Pencil --> <rect x="180" y="50" width="8" height="70" fill="#FCD34D" transform="rotate(-10 184 85)" class="float-animation" style="animation-delay: 1s" /> <polygon points="180,120 184,135 188,120" fill="#1F2937" transform="rotate(-10 184 127)" /> <!-- Stars --> <polygon points="350,30 352,36 358,36 353,40 355,46 350,42 345,46 347,40 342,36 348,36" fill="#F59E0B" class="pulse-animation" /> <polygon points="50,40 51,44 55,44 52,47 53,51 50,48 47,51 48,47 45,44 49,44" fill="#EC4899" class="pulse-animation" style="animation-delay: 0.3s" />
+      </svg>
+     </div><span class="inline-block px-4 py-2 bg-violet-100 text-violet-700 rounded-full text-sm font-medium mb-6"> 📚 Seni Rupa Kelas IX </span>
+     <h1 id="main-title" class="font-display text-4xl md:text-6xl font-bold text-gray-800 mb-6 leading-tight">Unit 1: Menggambar</h1>
+     <h2 class="text-xl md:text-2xl text-gray-600 mb-4">Referensi, Bahan, Teknik, dan Teknologi</h2>
+     <p class="text-lg text-violet-600 font-medium mb-8">✨ Eksplorasi Kreatif melalui Jurnal Visual dan Gambar Konstruktif</p>
+     <div class="flex flex-wrap justify-center gap-4 mb-8">
+      <div class="bg-white rounded-xl px-6 py-3 shadow-md"><span class="text-gray-500 text-sm">Mata Pelajaran</span>
+       <p id="subject-name" class="font-semibold text-gray-700">Seni Rupa Kelas IX</p>
+      </div>
+      <div class="bg-white rounded-xl px-6 py-3 shadow-md"><span class="text-gray-500 text-sm">Referensi</span>
+       <p class="font-semibold text-gray-700 text-sm">Buku Panduan Guru Seni Rupa</p>
+       <p class="text-xs text-gray-500">Irma Nurul Fatimah &amp; Fadia Alyani Kumala</p>
+      </div>
+     </div><button onclick="nextSlide()" class="inline-flex items-center gap-2 bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-105"> Mulai Belajar 
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      </svg></button>
+    </div>
+   </section><!-- SLIDE 2: Tujuan Pembelajaran -->
+   <section class="slide min-h-full flex-col items-center justify-center p-8 pt-16" data-slide="1">
+    <div class="max-w-5xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium mb-4"> 🎯 Slide 2 </span>
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-gray-800">Tujuan Pembelajaran</h2>
+      <p class="text-gray-600 mt-2">Berdasarkan kurikulum Seni Rupa Kelas IX</p>
+     </div>
+     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border-l-4 border-violet-500 interactive-element" onclick="toggleDetail(this)">
+       <div class="w-12 h-12 bg-violet-100 rounded-xl flex items-center justify-center mb-4"><span class="text-2xl">🔍</span>
+       </div>
+       <h3 class="font-bold text-lg text-gray-800 mb-2">Mencari Referensi</h3>
+       <p class="text-gray-600 text-sm">Menemukan sumber ide yang relevan dengan karya yang akan dibuat.</p>
+       <div class="hidden mt-4 pt-4 border-t border-gray-100 text-xs text-violet-600">
+        💡 Tips: Gunakan jurnal visual untuk mengumpulkan referensi!
+       </div>
+      </div>
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border-l-4 border-emerald-500 interactive-element" onclick="toggleDetail(this)">
+       <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4"><span class="text-2xl">📝</span>
+       </div>
+       <h3 class="font-bold text-lg text-gray-800 mb-2">Perencanaan Mandiri</h3>
+       <p class="text-gray-600 text-sm">Membuat rencana karya akhir secara detail dan terstruktur.</p>
+       <div class="hidden mt-4 pt-4 border-t border-gray-100 text-xs text-emerald-600">
+        💡 Tips: Buat sketsa awal sebelum memulai karya final!
+       </div>
+      </div>
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border-l-4 border-amber-500 interactive-element" onclick="toggleDetail(this)">
+       <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mb-4"><span class="text-2xl">🎨</span>
+       </div>
+       <h3 class="font-bold text-lg text-gray-800 mb-2">Eksplorasi Teknik</h3>
+       <p class="text-gray-600 text-sm">Menghasilkan karya secara mandiri dengan teknik gambar pilihan.</p>
+       <div class="hidden mt-4 pt-4 border-t border-gray-100 text-xs text-amber-600">
+        💡 Tips: Coba berbagai teknik untuk menemukan gaya unikmu!
+       </div>
+      </div>
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border-l-4 border-blue-500 interactive-element" onclick="toggleDetail(this)">
+       <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4"><span class="text-2xl">📐</span>
+       </div>
+       <h3 class="font-bold text-lg text-gray-800 mb-2">Perspektif Konstruktif</h3>
+       <p class="text-gray-600 text-sm">Menguasai gambar perspektif 1 dan 2 titik hilang dengan teknik bayangan.</p>
+       <div class="hidden mt-4 pt-4 border-t border-gray-100 text-xs text-blue-600">
+        💡 Tips: Perhatikan arah cahaya saat membuat shading!
+       </div>
+      </div>
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border-l-4 border-rose-500 interactive-element" onclick="toggleDetail(this)">
+       <div class="w-12 h-12 bg-rose-100 rounded-xl flex items-center justify-center mb-4"><span class="text-2xl">🪞</span>
+       </div>
+       <h3 class="font-bold text-lg text-gray-800 mb-2">Refleksi</h3>
+       <p class="text-gray-600 text-sm">Melakukan evaluasi terhadap hasil karya sendiri.</p>
+       <div class="hidden mt-4 pt-4 border-t border-gray-100 text-xs text-rose-600">
+        💡 Tips: Tanya pendapat teman untuk sudut pandang berbeda!
+       </div>
+      </div>
+     </div>
+     <p class="text-center text-sm text-gray-500 mt-6">💡 Klik kartu untuk melihat tips!</p>
+    </div>
+   </section><!-- SLIDE 3: Apa itu Menggambar? -->
+   <section class="slide min-h-full flex-col items-center justify-center p-8 pt-16" data-slide="2">
+    <div class="max-w-5xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-fuchsia-100 text-fuchsia-700 rounded-full text-sm font-medium mb-4"> ✏️ Slide 3 </span>
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-gray-800">Apa itu Menggambar?</h2>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div>
+       <div class="bg-white rounded-2xl p-8 shadow-lg mb-6">
+        <h3 class="font-bold text-xl text-gray-800 mb-4 flex items-center gap-2"><span class="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center text-sm">📖</span> Definisi</h3>
+        <p class="text-gray-600 leading-relaxed">Menggambar adalah kegiatan <strong class="text-violet-600">mengekspresikan perasaan</strong>, <strong class="text-violet-600">pemahaman</strong>, dan <strong class="text-violet-600">pengalaman</strong> ke dalam media dua dimensi.</p>
+       </div>
+       <div class="bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-2xl p-8 text-white">
+        <h3 class="font-bold text-xl mb-4">🔑 Kunci Mahir Menggambar</h3>
+        <ul class="space-y-3">
+         <li class="flex items-start gap-3"><span class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">1</span> <span>Sering <strong>mengamati objek</strong> di sekitar</span></li>
+         <li class="flex items-start gap-3"><span class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">2</span> <span>Banyak <strong>mengalami atau merasakan</strong> suasana</span></li>
+         <li class="flex items-start gap-3"><span class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">3</span> <span><strong>Berlatih kontinu</strong> untuk menguatkan sinapsis otak dan keterampilan</span></li>
+        </ul>
+       </div>
+      </div>
+      <div class="relative"><!-- Interactive Drawing Demo -->
+       <div class="bg-white rounded-2xl p-6 shadow-lg">
+        <h4 class="font-bold text-gray-700 mb-4 text-center">🖌️ Ilustrasi Proses Menggambar</h4>
+        <svg viewbox="0 0 300 250" class="w-full"><!-- Paper --> <rect x="50" y="30" width="200" height="180" fill="white" stroke="#e5e7eb" stroke-width="2" rx="4" /> <!-- Simple house sketch --> <path class="sketch-line" d="M100 160 L100 100 L150 60 L200 100 L200 160" fill="none" stroke="#6366f1" stroke-width="2" /> <path class="sketch-line" style="animation-delay: 0.5s" d="M100 160 L200 160" fill="none" stroke="#6366f1" stroke-width="2" /> <rect class="sketch-line" style="animation-delay: 1s" x="130" y="120" width="40" height="40" fill="none" stroke="#6366f1" stroke-width="2" /> <circle class="sketch-line" style="animation-delay: 1.5s" cx="220" cy="70" r="20" fill="none" stroke="#f59e0b" stroke-width="2" /> <!-- Hand with pencil --> <g class="float-animation" style="animation-delay: 0.5s">
+          <ellipse cx="250" cy="200" rx="25" ry="15" fill="#fcd9bd" />
+          <rect x="220" y="150" width="8" height="60" fill="#fcd34d" transform="rotate(-30 224 180)" />
+          <polygon points="215,205 220,218 225,205" fill="#374151" transform="rotate(-30 220 210)" />
+         </g>
+        </svg>
+        <p class="text-center text-sm text-gray-500 mt-4">Menggambar = Observasi + Praktik + Ekspresi</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- SLIDE 4: Tahapan Perkembangan Remaja -->
+   <section class="slide min-h-full flex-col items-center justify-center p-8 pt-16" data-slide="3">
+    <div class="max-w-5xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4"> 🧠 Slide 4 </span>
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-gray-800">Tahapan Perkembangan Remaja</h2>
+      <p class="text-gray-600 mt-2">Psikologi Seni - Teori Jean Piaget</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div class="bg-white rounded-2xl p-8 shadow-lg">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center"><span class="text-3xl">👤</span>
+        </div>
+        <div>
+         <h3 class="font-bold text-xl text-gray-800">Jean Piaget</h3>
+         <p class="text-gray-500 text-sm">Psikolog Perkembangan</p>
+        </div>
+       </div>
+       <div class="bg-blue-50 rounded-xl p-4 mb-6">
+        <p class="text-blue-800 font-medium">"Remaja masuk ke tahap <strong>Formal Operasional</strong>"</p>
+       </div>
+       <h4 class="font-bold text-gray-700 mb-3">✨ Kemampuan Baru:</h4>
+       <ul class="space-y-3">
+        <li class="flex items-start gap-3"><span class="w-6 h-6 bg-violet-100 rounded-full flex items-center justify-center text-violet-600 flex-shrink-0">✓</span> <span class="text-gray-600">Berpikir <strong>abstrak</strong> dan membangun korelasi</span></li>
+        <li class="flex items-start gap-3"><span class="w-6 h-6 bg-violet-100 rounded-full flex items-center justify-center text-violet-600 flex-shrink-0">✓</span> <span class="text-gray-600">Menerjemahkan <strong>proporsi alam dan bangunan</strong> ke dalam logika gambar</span></li>
+       </ul>
+      </div>
+      <div class="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl p-8 text-white">
+       <h3 class="font-bold text-2xl mb-6">🎨 Aplikasi dalam Seni</h3><!-- Interactive brain diagram -->
+       <div class="bg-white/10 rounded-xl p-6 mb-6">
+        <svg viewbox="0 0 200 120" class="w-full"><!-- Brain outline --> <path d="M40 60 Q40 20 100 20 Q160 20 160 60 Q160 100 100 100 Q40 100 40 60" fill="none" stroke="white" stroke-width="2" class="pulse-animation" /> <!-- Brain details --> <path d="M60 50 Q80 30 100 50 Q120 30 140 50" fill="none" stroke="white" stroke-width="1.5" opacity="0.7" /> <path d="M70 70 Q90 50 110 70 Q130 50 130 70" fill="none" stroke="white" stroke-width="1.5" opacity="0.7" /> <!-- Lightbulb --> <circle cx="100" cy="60" r="15" fill="#fcd34d" class="pulse-animation" /> <path d="M95 75 L105 75 L105 85 L95 85 Z" fill="#fcd34d" />
+        </svg>
+       </div>
+       <p class="text-white/90 leading-relaxed">Tahap ini menjadi <strong>dasar pengenalan gambar konstruktif</strong> yang lebih kompleks di kelas IX. Siswa dapat memahami perspektif dan proporsi dengan lebih baik.</p>
+      </div>
+     </div><!-- Interactive Timeline -->
+     <div class="mt-8 bg-white rounded-2xl p-6 shadow-lg">
+      <h4 class="font-bold text-gray-700 mb-4 text-center">📈 Tahapan Kognitif Piaget</h4>
+      <div class="flex flex-wrap justify-center gap-2 md:gap-4">
+       <div class="text-center p-3 rounded-xl bg-gray-100"><span class="text-2xl">👶</span>
+        <p class="text-xs font-medium text-gray-600 mt-1">Sensorimotor</p>
+        <p class="text-xs text-gray-400">0-2 tahun</p>
+       </div>
+       <div class="text-gray-300 self-center">
+        →
+       </div>
+       <div class="text-center p-3 rounded-xl bg-gray-100"><span class="text-2xl">🧒</span>
+        <p class="text-xs font-medium text-gray-600 mt-1">Praoperasional</p>
+        <p class="text-xs text-gray-400">2-7 tahun</p>
+       </div>
+       <div class="text-gray-300 self-center">
+        →
+       </div>
+       <div class="text-center p-3 rounded-xl bg-gray-100"><span class="text-2xl">👦</span>
+        <p class="text-xs font-medium text-gray-600 mt-1">Operasional Konkret</p>
+        <p class="text-xs text-gray-400">7-11 tahun</p>
+       </div>
+       <div class="text-gray-300 self-center">
+        →
+       </div>
+       <div class="text-center p-3 rounded-xl bg-violet-100 border-2 border-violet-500"><span class="text-2xl">🧑‍🎓</span>
+        <p class="text-xs font-bold text-violet-700 mt-1">Formal Operasional</p>
+        <p class="text-xs text-violet-500">12+ tahun ← Kamu!</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- SLIDE 5: Jurnal Visual -->
+   <section class="slide min-h-full flex-col items-center justify-center p-8 pt-16" data-slide="4">
+    <div class="max-w-5xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-amber-100 text-amber-700 rounded-full text-sm font-medium mb-4"> 📓 Slide 5 </span>
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-gray-800">Jurnal Visual</h2>
+      <p class="text-gray-600 mt-2">Rekam Jejak Kreatifmu</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div>
+       <div class="bg-white rounded-2xl p-8 shadow-lg mb-6">
+        <h3 class="font-bold text-xl text-gray-800 mb-4 flex items-center gap-2"><span class="text-2xl">📖</span> Definisi</h3>
+        <p class="text-gray-600 leading-relaxed">Jurnal visual adalah <strong class="text-amber-600">buku untuk menuangkan ide</strong>, ekspresi, sketsa, dan tempelan benda menarik sebagai referensi kreatif.</p>
+       </div>
+       <div class="bg-amber-50 rounded-2xl p-6 border-2 border-amber-200">
+        <h4 class="font-bold text-amber-800 mb-3">📝 Media Jurnal:</h4>
+        <ul class="space-y-2 text-amber-700">
+         <li class="flex items-center gap-2"><span>✓</span> Buku notes biasa</li>
+         <li class="flex items-center gap-2"><span>✓</span> Kumpulan kertas yang dijilid sendiri</li>
+         <li class="flex items-center gap-2"><span>✓</span> Buku sketsa</li>
+        </ul>
+       </div>
+      </div><!-- Interactive Journal Preview -->
+      <div class="bg-white rounded-2xl p-6 shadow-lg">
+       <h4 class="font-bold text-gray-700 mb-4 text-center">📚 Isi Jurnal Visual</h4>
+       <div class="grid grid-cols-2 gap-4">
+        <div class="interactive-element bg-violet-50 rounded-xl p-4 text-center" onclick="highlightJournal(this, 'sketsa')"><span class="text-3xl block mb-2">✏️</span>
+         <p class="text-sm font-medium text-violet-700">Sketsa Objek</p>
+        </div>
+        <div class="interactive-element bg-rose-50 rounded-xl p-4 text-center" onclick="highlightJournal(this, 'foto')"><span class="text-3xl block mb-2">📸</span>
+         <p class="text-sm font-medium text-rose-700">Foto Inspiratif</p>
+        </div>
+        <div class="interactive-element bg-emerald-50 rounded-xl p-4 text-center" onclick="highlightJournal(this, 'tulisan')"><span class="text-3xl block mb-2">✍️</span>
+         <p class="text-sm font-medium text-emerald-700">Hand Lettering</p>
+        </div>
+        <div class="interactive-element bg-amber-50 rounded-xl p-4 text-center" onclick="highlightJournal(this, 'tempel')"><span class="text-3xl block mb-2">🎫</span>
+         <p class="text-sm font-medium text-amber-700">Tempelan Benda</p>
+        </div>
+       </div>
+       <div id="journal-detail" class="mt-4 p-4 bg-gray-50 rounded-xl text-center text-sm text-gray-600 transition-all">
+        👆 Klik item di atas untuk melihat contoh!
+       </div>
+      </div>
+     </div><!-- Sample Journal Illustration -->
+     <div class="mt-8 bg-gradient-to-r from-amber-400 to-orange-400 rounded-2xl p-6 text-white">
+      <div class="flex flex-wrap items-center justify-center gap-6">
+       <svg viewbox="0 0 120 150" class="w-24 float-animation"><!-- Book --> <rect x="10" y="10" width="100" height="130" rx="5" fill="#fff" stroke="#92400e" stroke-width="3" /> <line x1="30" y1="10" x2="30" y2="140" stroke="#92400e" stroke-width="2" /> <!-- Content --> <rect x="40" y="25" width="60" height="40" fill="#fef3c7" stroke="#f59e0b" /> <circle cx="70" cy="95" r="20" fill="#ddd6fe" stroke="#8b5cf6" /> <line x1="45" y1="125" x2="95" y2="125" stroke="#9ca3af" stroke-width="2" /> <line x1="45" y1="132" x2="80" y2="132" stroke="#9ca3af" stroke-width="2" />
+       </svg>
+       <div>
+        <h4 class="font-bold text-xl mb-2">💡 Tips Membuat Jurnal Visual</h4>
+        <p class="text-white/90">Tidak perlu sempurna! Yang penting konsisten dan ekspresikan dirimu.</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- SLIDE 6: Moodboard -->
+   <section class="slide min-h-full flex-col items-center justify-center p-8 pt-16" data-slide="5">
+    <div class="max-w-5xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-pink-100 text-pink-700 rounded-full text-sm font-medium mb-4"> 🎨 Slide 6 </span>
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-gray-800">Moodboard</h2>
+      <p class="text-gray-600 mt-2">Mengumpulkan Nuansa Visual</p>
+     </div>
+     <div class="bg-white rounded-2xl p-8 shadow-lg mb-8">
+      <div class="flex flex-col md:flex-row gap-6 items-center">
+       <div class="flex-1">
+        <h3 class="font-bold text-xl text-gray-800 mb-4">📋 Apa itu Moodboard?</h3>
+        <p class="text-gray-600 leading-relaxed mb-4">Moodboard adalah <strong class="text-pink-600">kumpulan ide yang memiliki nuansa atau tema tertentu</strong> dalam satu papan/lembar. Fungsinya membantu menentukan "arah" visual sebelum membuat karya akhir.</p>
+       </div>
+       <div class="w-32 h-32 bg-gradient-to-br from-pink-400 to-rose-500 rounded-2xl flex items-center justify-center"><span class="text-5xl">🖼️</span>
+       </div>
+      </div>
+     </div><!-- Interactive Moodboard Elements -->
+     <h4 class="font-bold text-xl text-gray-700 mb-6 text-center">✨ Elemen Moodboard</h4>
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg text-center interactive-element" onclick="showMoodElement('warna')">
+       <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-violet-400 via-pink-400 to-amber-400"></div>
+       <h5 class="font-bold text-gray-800">🎨 Warna</h5>
+       <p class="text-gray-500 text-sm mt-2">Palet warna yang menggambarkan suasana</p>
+      </div>
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg text-center interactive-element" onclick="showMoodElement('bentuk')">
+       <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+        <svg viewbox="0 0 60 60" class="w-full h-full"><circle cx="15" cy="15" r="12" fill="#8b5cf6" opacity="0.7" /> <rect x="25" y="25" width="25" height="25" fill="#f59e0b" opacity="0.7" /> <polygon points="45,10 55,30 35,30" fill="#10b981" opacity="0.7" />
+        </svg>
+       </div>
+       <h5 class="font-bold text-gray-800">⬡ Bentuk</h5>
+       <p class="text-gray-500 text-sm mt-2">Pola atau siluet objek</p>
+      </div>
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg text-center interactive-element" onclick="showMoodElement('tekstur')">
+       <div class="w-16 h-16 mx-auto mb-4 rounded-xl overflow-hidden">
+        <svg viewbox="0 0 60 60" class="w-full h-full"><defs>
+          <pattern id="wood" patternunits="userSpaceOnUse" width="10" height="10">
+           <rect width="10" height="10" fill="#d4a574" />
+           <line x1="0" y1="3" x2="10" y2="3" stroke="#b8956c" stroke-width="1" />
+           <line x1="0" y1="7" x2="10" y2="7" stroke="#b8956c" stroke-width="0.5" />
+          </pattern>
+         </defs> <rect width="60" height="60" fill="url(#wood)" />
+        </svg>
+       </div>
+       <h5 class="font-bold text-gray-800">🪵 Tekstur</h5>
+       <p class="text-gray-500 text-sm mt-2">Visualisasi permukaan</p>
+      </div>
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg text-center interactive-element" onclick="showMoodElement('foto')">
+       <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-xl flex items-center justify-center"><span class="text-3xl">📷</span>
+       </div>
+       <h5 class="font-bold text-gray-800">📸 Foto</h5>
+       <p class="text-gray-500 text-sm mt-2">Gambar inspirasi</p>
+      </div>
+     </div><!-- Moodboard Demo -->
+     <div id="moodboard-demo" class="mt-8 bg-gradient-to-br from-pink-100 to-rose-100 rounded-2xl p-6">
+      <h5 class="font-bold text-rose-800 mb-4 text-center">🎯 Contoh Moodboard Mini</h5>
+      <div class="grid grid-cols-3 gap-3 max-w-md mx-auto">
+       <div class="aspect-square bg-rose-300 rounded-lg"></div>
+       <div class="aspect-square bg-amber-200 rounded-lg"></div>
+       <div class="aspect-square bg-violet-300 rounded-lg"></div>
+       <div class="aspect-square bg-emerald-200 rounded-lg col-span-2"></div>
+       <div class="aspect-square bg-blue-200 rounded-lg"></div>
+      </div>
+      <p class="text-center text-rose-700 text-sm mt-4">Klik elemen di atas untuk melihat penjelasan!</p>
+     </div>
+    </div>
+   </section><!-- SLIDE 7: Sketsa dan Referensi -->
+   <section class="slide min-h-full flex-col items-center justify-center p-8 pt-16" data-slide="6">
+    <div class="max-w-5xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-4"> ✏️ Slide 7 </span>
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-gray-800">Sketsa dan Referensi</h2>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div>
+       <div class="bg-white rounded-2xl p-8 shadow-lg mb-6">
+        <h3 class="font-bold text-xl text-gray-800 mb-4 flex items-center gap-2"><span class="text-2xl">✏️</span> Apa itu Sketsa?</h3>
+        <p class="text-gray-600 leading-relaxed">Sketsa adalah <strong class="text-teal-600">desain awal atau perencanaan</strong> saat menciptakan lukisan/karya. Ini seperti "peta jalan" sebelum membuat karya final.</p>
+       </div>
+       <div class="bg-teal-50 rounded-2xl p-6 border-2 border-teal-200 mb-6">
+        <h4 class="font-bold text-teal-800 mb-3">🔍 Sumber Referensi:</h4>
+        <ul class="space-y-2 text-teal-700">
+         <li class="flex items-center gap-2"><span>🌿</span> Pengamatan alam</li>
+         <li class="flex items-center gap-2"><span>🏠</span> Budaya sekitar</li>
+         <li class="flex items-center gap-2"><span>🌐</span> Internet &amp; media digital</li>
+        </ul>
+       </div>
+       <div class="bg-gradient-to-r from-teal-500 to-emerald-500 rounded-2xl p-6 text-white">
+        <h4 class="font-bold text-lg mb-3">💡 Tips untuk Pemula:</h4>
+        <ul class="space-y-2 text-white/90">
+         <li>✓ Jangan takut salah atau tidak mirip aslinya</li>
+         <li>✓ Mulai dari objek yang sederhana</li>
+         <li>✓ Observasi berulang untuk memperkaya bank visual</li>
+        </ul>
+       </div>
+      </div><!-- Interactive Sketching Demo -->
+      <div class="bg-white rounded-2xl p-6 shadow-lg">
+       <h4 class="font-bold text-gray-700 mb-4 text-center">🎨 Demo: Proses Sketsa</h4>
+       <div class="bg-gray-50 rounded-xl p-4 mb-4">
+        <svg id="sketch-demo" viewbox="0 0 300 200" class="w-full"><!-- Paper background --> <rect x="10" y="10" width="280" height="180" fill="white" stroke="#e5e7eb" stroke-width="2" rx="4" /> <!-- Step 1: Basic shapes --> <g id="sketch-step-1" class="transition-opacity duration-500">
+          <circle cx="150" cy="70" r="25" fill="none" stroke="#9ca3af" stroke-width="1" stroke-dasharray="5,5" />
+          <rect x="125" y="95" width="50" height="70" fill="none" stroke="#9ca3af" stroke-width="1" stroke-dasharray="5,5" />
+         </g> <!-- Step 2: Refined outline --> <g id="sketch-step-2" class="transition-opacity duration-500 opacity-0">
+          <ellipse cx="150" cy="70" rx="22" ry="28" fill="none" stroke="#6366f1" stroke-width="2" />
+          <path d="M128 95 Q125 130 130 165 L170 165 Q175 130 172 95" fill="none" stroke="#6366f1" stroke-width="2" />
+         </g> <!-- Step 3: Details --> <g id="sketch-step-3" class="transition-opacity duration-500 opacity-0">
+          <circle cx="140" cy="65" r="4" fill="#374151" />
+          <circle cx="160" cy="65" r="4" fill="#374151" />
+          <path d="M145 80 Q150 85 155 80" fill="none" stroke="#374151" stroke-width="2" />
+          <path d="M135 55 Q150 45 165 55" fill="none" stroke="#374151" stroke-width="1.5" />
+         </g>
+        </svg>
+       </div>
+       <div class="flex justify-center gap-2 mb-4"><button onclick="setSketchStep(1)" class="sketch-btn px-4 py-2 bg-violet-100 text-violet-700 rounded-lg text-sm font-medium transition-colors hover:bg-violet-200 active">1. Bentuk Dasar</button> <button onclick="setSketchStep(2)" class="sketch-btn px-4 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm font-medium transition-colors hover:bg-gray-200">2. Outline</button> <button onclick="setSketchStep(3)" class="sketch-btn px-4 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm font-medium transition-colors hover:bg-gray-200">3. Detail</button>
+       </div>
+       <p id="sketch-desc" class="text-center text-sm text-gray-600">Mulai dengan bentuk geometris dasar untuk menentukan proporsi</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- SLIDE 8: Kegiatan Kreatif Alternatif -->
+   <section class="slide min-h-full flex-col items-center justify-center p-8 pt-16" data-slide="7">
+    <div class="max-w-5xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-medium mb-4"> ♻️ Slide 8 </span>
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-gray-800">Kegiatan Kreatif Alternatif</h2>
+      <p class="text-gray-600 mt-2">Kreativitas dengan Bahan Bekas</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div>
+       <div class="bg-white rounded-2xl p-8 shadow-lg mb-6">
+        <div class="flex items-center gap-4 mb-6">
+         <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center"><span class="text-3xl">♻️</span>
+         </div>
+         <div>
+          <h3 class="font-bold text-xl text-gray-800">Pemanfaatan Limbah</h3>
+          <p class="text-gray-500 text-sm">Kreasi dari bahan bekas</p>
+         </div>
+        </div>
+        <p class="text-gray-600 leading-relaxed">Menggunakan <strong class="text-green-600">bahan bekas</strong> untuk membuat jurnal visual dan karya seni. Mendukung kreativitas tanpa batas dengan sumber daya yang ada di daerah masing-masing.</p>
+       </div>
+       <div class="bg-green-50 rounded-2xl p-6 border-2 border-green-200">
+        <h4 class="font-bold text-green-800 mb-4">📦 Contoh Bahan:</h4>
+        <div class="grid grid-cols-2 gap-3">
+         <div class="bg-white rounded-xl p-3 text-center shadow-sm"><span class="text-2xl block mb-1">📄</span> <span class="text-sm text-gray-600">Kertas bekas</span>
+         </div>
+         <div class="bg-white rounded-xl p-3 text-center shadow-sm"><span class="text-2xl block mb-1">📦</span> <span class="text-sm text-gray-600">Kardus kemasan</span>
+         </div>
+         <div class="bg-white rounded-xl p-3 text-center shadow-sm"><span class="text-2xl block mb-1">✉️</span> <span class="text-sm text-gray-600">Amplop bekas</span>
+         </div>
+         <div class="bg-white rounded-xl p-3 text-center shadow-sm"><span class="text-2xl block mb-1">🏷️</span> <span class="text-sm text-gray-600">Label &amp; brosur</span>
+         </div>
+        </div>
+       </div>
+      </div><!-- Creative Recycling Illustration -->
+      <div class="bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl p-8 text-white">
+       <h4 class="font-bold text-xl mb-6 text-center">🌱 Proses Daur Ulang Kreatif</h4>
+       <div class="flex flex-col items-center gap-4">
+        <div class="flex items-center gap-4">
+         <div class="w-20 h-20 bg-white/20 rounded-xl flex items-center justify-center"><span class="text-3xl">🗑️</span>
+         </div>
+         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+         </svg>
+         <div class="w-20 h-20 bg-white/20 rounded-xl flex items-center justify-center"><span class="text-3xl">✂️</span>
+         </div>
+         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+         </svg>
+         <div class="w-20 h-20 bg-white/20 rounded-xl flex items-center justify-center"><span class="text-3xl">📓</span>
+         </div>
+        </div>
+        <div class="text-center mt-4">
+         <p class="text-sm text-white/80">Limbah → Proses → Jurnal Visual</p>
+        </div>
+       </div>
+       <div class="mt-6 bg-white/10 rounded-xl p-4">
+        <p class="text-center text-sm">💚 <strong>Nilai:</strong> Kreativitas + Kepedulian Lingkungan</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- SLIDE 9: Profil Pelajar Pancasila -->
+   <section class="slide min-h-full flex-col items-center justify-center p-8 pt-16" data-slide="8">
+    <div class="max-w-5xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-red-100 text-red-700 rounded-full text-sm font-medium mb-4"> 🇮🇩 Slide 9 </span>
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-gray-800">Profil Pelajar Pancasila</h2>
+      <p class="text-gray-600 mt-2">dalam Pembelajaran Seni Rupa</p>
+     </div>
+     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg text-center interactive-element" onclick="showPancasilaDetail('mandiri')">
+       <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-violet-400 to-purple-500 rounded-2xl flex items-center justify-center"><span class="text-4xl">💪</span>
+       </div>
+       <h3 class="font-bold text-lg text-gray-800 mb-2">Mandiri</h3>
+       <p class="text-gray-600 text-sm">Berani mencoba dan mengeksplorasi kemampuan diri</p>
+      </div>
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg text-center interactive-element" onclick="showPancasilaDetail('kritis')">
+       <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-2xl flex items-center justify-center"><span class="text-4xl">🧠</span>
+       </div>
+       <h3 class="font-bold text-lg text-gray-800 mb-2">Bernalar Kritis</h3>
+       <p class="text-gray-600 text-sm">Mempelajari logika pencahayaan dan perspektif</p>
+      </div>
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg text-center interactive-element" onclick="showPancasilaDetail('kreatif')">
+       <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center"><span class="text-4xl">💡</span>
+       </div>
+       <h3 class="font-bold text-lg text-gray-800 mb-2">Kreatif</h3>
+       <p class="text-gray-600 text-sm">Menghasilkan gagasan dan karya yang orisinal</p>
+      </div>
+      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg text-center interactive-element" onclick="showPancasilaDetail('akhlak')">
+       <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center"><span class="text-4xl">🤲</span>
+       </div>
+       <h3 class="font-bold text-lg text-gray-800 mb-2">Berakhlak Mulia</h3>
+       <p class="text-gray-600 text-sm">Menghargai keindahan alam sebagai ciptaan Tuhan</p>
+      </div>
+     </div><!-- Pancasila Detail Modal -->
+     <div id="pancasila-detail" class="mt-8 bg-gradient-to-r from-red-500 to-rose-500 rounded-2xl p-8 text-white">
+      <div class="text-center">
+       <h4 class="font-bold text-2xl mb-4">🎯 Tujuan Pembelajaran</h4>
+       <p class="text-white/90 max-w-2xl mx-auto">Pembelajaran seni rupa ini bertujuan membentuk karakter pelajar yang sesuai dengan <strong>Profil Pelajar Pancasila</strong>. Klik kartu di atas untuk melihat detail setiap karakter!</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- SLIDE 10: Tugas -->
+   <section class="slide min-h-full flex-col items-center justify-center p-8 pt-16" data-slide="9">
+    <div class="max-w-5xl mx-auto">
+     <div class="text-center mb-12"><span class="inline-block px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium mb-4"> 📋 Slide 10 </span>
+      <h2 class="font-display text-3xl md:text-5xl font-bold text-gray-800">Tugas &amp; Langkah Selanjutnya</h2>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div class="space-y-4">
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border-l-4 border-violet-500">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 bg-violet-100 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">1️⃣</span>
+         </div>
+         <div>
+          <h3 class="font-bold text-lg text-gray-800">Observasi</h3>
+          <p class="text-gray-600">Cari <strong>3 objek menarik</strong> di sekitarmu</p>
+         </div>
+        </div>
+       </div>
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border-l-4 border-emerald-500">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">2️⃣</span>
+         </div>
+         <div>
+          <h3 class="font-bold text-lg text-gray-800">Dokumentasi</h3>
+          <p class="text-gray-600">Ambil <strong>foto</strong> atau buat <strong>sketsa cepat</strong> di jurnalmu</p>
+         </div>
+        </div>
+       </div>
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border-l-4 border-amber-500">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">3️⃣</span>
+         </div>
+         <div>
+          <h3 class="font-bold text-lg text-gray-800">Analisis</h3>
+          <p class="text-gray-600">Tentukan <strong>warna dan tekstur dominan</strong> dari objek tersebut</p>
+         </div>
+        </div>
+       </div>
+       <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border-l-4 border-rose-500">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 bg-rose-100 rounded-xl flex items-center justify-center flex-shrink-0"><span class="text-2xl">4️⃣</span>
+         </div>
+         <div>
+          <h3 class="font-bold text-lg text-gray-800">Moodboard</h3>
+          <p class="text-gray-600">Susun hasil pengamatanmu menjadi satu halaman <strong>moodboard sederhana</strong></p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Task Checklist -->
+      <div class="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl p-8 text-white">
+       <h4 class="font-bold text-xl mb-6 flex items-center gap-2"><span>✅</span> Checklist Tugas</h4>
+       <div class="space-y-4" id="task-checklist"><label class="flex items-center gap-3 cursor-pointer"> <input type="checkbox" class="w-5 h-5 rounded border-2 border-white/50 bg-transparent checked:bg-white checked:border-white" onchange="updateProgress()"> <span>Menemukan 3 objek menarik</span> </label> <label class="flex items-center gap-3 cursor-pointer"> <input type="checkbox" class="w-5 h-5 rounded border-2 border-white/50 bg-transparent checked:bg-white checked:border-white" onchange="updateProgress()"> <span>Membuat dokumentasi (foto/sketsa)</span> </label> <label class="flex items-center gap-3 cursor-pointer"> <input type="checkbox" class="w-5 h-5 rounded border-2 border-white/50 bg-transparent checked:bg-white checked:border-white" onchange="updateProgress()"> <span>Menganalisis warna dominan</span> </label> <label class="flex items-center gap-3 cursor-pointer"> <input type="checkbox" class="w-5 h-5 rounded border-2 border-white/50 bg-transparent checked:bg-white checked:border-white" onchange="updateProgress()"> <span>Menganalisis tekstur dominan</span> </label> <label class="flex items-center gap-3 cursor-pointer"> <input type="checkbox" class="w-5 h-5 rounded border-2 border-white/50 bg-transparent checked:bg-white checked:border-white" onchange="updateProgress()"> <span>Membuat moodboard sederhana</span> </label>
+       </div>
+       <div class="mt-6 pt-6 border-t border-white/20">
+        <div class="flex justify-between items-center mb-2"><span class="text-sm">Progress Tugas</span> <span id="task-progress-text" class="font-bold">0%</span>
+        </div>
+        <div class="h-3 bg-white/20 rounded-full overflow-hidden">
+         <div id="task-progress-bar" class="h-full bg-white rounded-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="mt-8 text-center"><button onclick="goToSlide(10)" class="inline-flex items-center gap-2 bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-105"> Lanjut ke Soal HOTS 
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+       </svg></button>
+     </div>
+    </div>
+   </section><!-- SLIDE 11: HOTS Quiz -->
+   <section class="slide min-h-full flex-col items-center justify-start p-8 pt-16 pb-24" data-slide="10">
+    <div class="max-w-4xl mx-auto w-full">
+     <div class="text-center mb-8"><span class="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium mb-4"> 🧠 Soal HOTS </span>
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-gray-800">Uji Pemahamanmu!</h2>
+      <p class="text-gray-600 mt-2">10 Soal Pilihan Ganda - Higher Order Thinking Skills</p>
+     </div><!-- Quiz Progress -->
+     <div class="bg-white rounded-2xl p-4 shadow-lg mb-6">
+      <div class="flex justify-between items-center mb-2"><span class="text-sm font-medium text-gray-600">Soal <span id="current-question">1</span> dari 10</span> <span id="quiz-score" class="text-sm font-bold text-violet-600">Skor: 0/10</span>
+      </div>
+      <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+       <div id="quiz-progress" class="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full transition-all duration-300" style="width: 10%"></div>
+      </div>
+     </div><!-- Quiz Container -->
+     <div id="quiz-container" class="bg-white rounded-2xl p-8 shadow-lg"><!-- Question will be rendered here -->
+     </div><!-- Quiz Navigation -->
+     <div class="flex justify-between items-center mt-6"><button id="prev-question-btn" onclick="prevQuestion()" class="px-6 py-3 bg-gray-100 text-gray-600 rounded-xl font-medium hover:bg-gray-200 transition-colors disabled:opacity-50" disabled> ← Sebelumnya </button> <button id="next-question-btn" onclick="nextQuestion()" class="px-6 py-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white rounded-xl font-medium hover:shadow-lg transition-all"> Selanjutnya → </button>
+     </div><!-- Quiz Results (hidden initially) -->
+     <div id="quiz-results" class="hidden mt-8 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-2xl p-8 text-white text-center">
+      <h3 class="text-3xl font-bold mb-4">🎉 Selamat!</h3>
+      <p class="text-xl mb-2">Kamu telah menyelesaikan kuis</p>
+      <p class="text-5xl font-bold my-6" id="final-score">0/10</p>
+      <p id="score-message" class="text-lg mb-6"></p><button onclick="resetQuiz()" class="px-8 py-3 bg-white text-violet-600 rounded-xl font-bold hover:shadow-lg transition-all"> Ulangi Kuis </button>
+     </div>
+    </div>
+   </section>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_title: 'Unit 1: Menggambar',
+      subject_name: 'Seni Rupa Kelas IX',
+      primary_color: '#8b5cf6',
+      secondary_color: '#f59e0b',
+      text_color: '#1f2937',
+      background_color: '#fffbeb',
+      accent_color: '#ec4899'
+    };
+    
+    let config = { ...defaultConfig };
+    
+    // Slide Management
+    let currentSlide = 0;
+    const totalSlides = 11;
+    
+    function updateSlide() {
+      const slides = document.querySelectorAll('.slide');
+      const dots = document.querySelectorAll('.nav-dot');
+      
+      slides.forEach((slide, index) => {
+        slide.classList.remove('active');
+        if (index === currentSlide) {
+          slide.classList.add('active');
+        }
+      });
+      
+      dots.forEach((dot, index) => {
+        dot.classList.remove('active', 'bg-violet-500');
+        dot.classList.add('bg-gray-300');
+        if (index === currentSlide) {
+          dot.classList.add('active', 'bg-violet-500');
+          dot.classList.remove('bg-gray-300');
+        }
+      });
+      
+      document.getElementById('slide-counter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+      document.getElementById('progress-bar').style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+    }
+    
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+    
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+    
+    function goToSlide(index) {
+      currentSlide = index;
+      updateSlide();
+    }
+    
+    // Interactive Functions
+    function toggleDetail(element) {
+      const detail = element.querySelector('.hidden, .block');
+      if (detail) {
+        detail.classList.toggle('hidden');
+        detail.classList.toggle('block');
+      }
+    }
+    
+    function highlightJournal(element, type) {
+      const detailEl = document.getElementById('journal-detail');
+      const details = {
+        sketsa: '✏️ <strong>Sketsa Objek:</strong> Gambar cepat dari objek yang menarik perhatianmu. Tidak perlu sempurna!',
+        foto: '📸 <strong>Foto Inspiratif:</strong> Potongan gambar dari majalah, koran, atau cetakan foto digital.',
+        tulisan: '✍️ <strong>Hand Lettering:</strong> Tulisan tangan yang artistik, quotes, atau catatan ide.',
+        tempel: '🎫 <strong>Tempelan Benda:</strong> Tiket konser, label baju, brosur, kain kecil, atau benda flat menarik lainnya.'
+      };
+      detailEl.innerHTML = details[type];
+    }
+    
+    function showMoodElement(type) {
+      const demoEl = document.getElementById('moodboard-demo');
+      const messages = {
+        warna: '🎨 <strong>Warna</strong> menciptakan suasana! Warna hangat = energi, warna dingin = tenang.',
+        bentuk: '⬡ <strong>Bentuk</strong> memberikan struktur visual. Kombinasikan bentuk geometris dan organik!',
+        tekstur: '🪵 <strong>Tekstur</strong> menambah dimensi. Bayangkan permukaan objek - halus, kasar, berbulu?',
+        foto: '📷 <strong>Foto</strong> sebagai inspirasi langsung. Kumpulkan gambar yang sesuai dengan tema!'
+      };
+      demoEl.querySelector('h5').innerHTML = messages[type];
+    }
+    
+    function setSketchStep(step) {
+      const buttons = document.querySelectorAll('.sketch-btn');
+      buttons.forEach((btn, index) => {
+        btn.classList.remove('bg-violet-100', 'text-violet-700', 'active');
+        btn.classList.add('bg-gray-100', 'text-gray-600');
+        if (index === step - 1) {
+          btn.classList.add('bg-violet-100', 'text-violet-700', 'active');
+          btn.classList.remove('bg-gray-100', 'text-gray-600');
+        }
+      });
+      
+      const steps = ['sketch-step-1', 'sketch-step-2', 'sketch-step-3'];
+      const descriptions = [
+        'Mulai dengan bentuk geometris dasar untuk menentukan proporsi',
+        'Perhalus garis luar dengan mengikuti bentuk dasar',
+        'Tambahkan detail untuk menghidupkan karakter'
+      ];
+      
+      steps.forEach((stepId, index) => {
+        const el = document.getElementById(stepId);
+        if (index < step) {
+          el.classList.remove('opacity-0');
+        } else {
+          el.classList.add('opacity-0');
+        }
+      });
+      
+      document.getElementById('sketch-desc').textContent = descriptions[step - 1];
+    }
+    
+    function showPancasilaDetail(type) {
+      const detailEl = document.getElementById('pancasila-detail');
+      const details = {
+        mandiri: { icon: '💪', title: 'Mandiri', desc: 'Dalam seni rupa, kemandirian berarti berani bereksperimen dengan teknik baru, tidak takut gagal, dan percaya pada proses kreatif diri sendiri. Siswa belajar membuat keputusan artistik secara independen.' },
+        kritis: { icon: '🧠', title: 'Bernalar Kritis', desc: 'Memahami logika di balik pencahayaan, perspektif, dan komposisi. Siswa belajar menganalisis mengapa sebuah karya terlihat baik atau kurang, dan bagaimana memperbaikinya secara sistematis.' },
+        kreatif: { icon: '💡', title: 'Kreatif', desc: 'Menghasilkan ide-ide orisinal dan solusi unik untuk tantangan visual. Kreativitas bukan hanya tentang membuat sesuatu yang baru, tapi juga melihat hal biasa dengan cara yang tidak biasa.' },
+        akhlak: { icon: '🤲', title: 'Berakhlak Mulia', desc: 'Menghargai keindahan alam sebagai ciptaan Tuhan dan menjadikannya inspirasi. Juga berarti menghormati karya orang lain dan tidak menjiplak.' }
+      };
+      
+      const detail = details[type];
+      detailEl.innerHTML = `
+        <div class="text-center">
+          <span class="text-5xl block mb-4">${detail.icon}</span>
+          <h4 class="font-bold text-2xl mb-4">${detail.title}</h4>
+          <p class="text-white/90 max-w-2xl mx-auto">${detail.desc}</p>
+        </div>
+      `;
+    }
+    
+    function updateProgress() {
+      const checkboxes = document.querySelectorAll('#task-checklist input[type="checkbox"]');
+      const checked = document.querySelectorAll('#task-checklist input[type="checkbox"]:checked').length;
+      const percentage = (checked / checkboxes.length) * 100;
+      
+      document.getElementById('task-progress-bar').style.width = `${percentage}%`;
+      document.getElementById('task-progress-text').textContent = `${Math.round(percentage)}%`;
+    }
+    
+    // HOTS Quiz
+    const quizQuestions = [
+      {
+        question: 'Seorang seniman ingin membuat lukisan pemandangan gunung dengan suasana pagi yang sejuk. Langkah pertama yang paling tepat dalam proses kreatif adalah...',
+        options: [
+          'Langsung melukis di kanvas tanpa perencanaan',
+          'Membuat jurnal visual dan moodboard tentang suasana pagi',
+          'Menyalin gambar gunung dari internet',
+          'Membeli cat dengan warna-warna cerah'
+        ],
+        correct: 1,
+        explanation: 'Membuat jurnal visual dan moodboard membantu mengumpulkan referensi dan menentukan arah visual sebelum memulai karya akhir.'
+      },
+      {
+        question: 'Menurut teori Jean Piaget, kemampuan remaja untuk memahami perspektif dalam gambar konstruktif dimungkinkan karena...',
+        options: [
+          'Mereka sudah bisa memegang pensil dengan baik',
+          'Otak mereka sudah memasuki tahap formal operasional yang memungkinkan berpikir abstrak',
+          'Mereka sudah pernah melihat banyak gambar',
+          'Guru mengajarkan teknik menggambar'
+        ],
+        correct: 1,
+        explanation: 'Tahap formal operasional memungkinkan remaja berpikir abstrak dan membangun korelasi, termasuk menerjemahkan proporsi ke dalam logika gambar.'
+      },
+      {
+        question: 'Dalam membuat moodboard untuk proyek desain interior bertema "alam tropis", elemen yang TIDAK relevan untuk disertakan adalah...',
+        options: [
+          'Palet warna hijau dan coklat tanah',
+          'Tekstur anyaman rotan dan daun',
+          'Foto salju dan pegunungan es',
+          'Bentuk-bentuk organik dari flora'
+        ],
+        correct: 2,
+        explanation: 'Moodboard harus konsisten dengan tema. Foto salju dan pegunungan es tidak sesuai dengan nuansa "alam tropis" yang hangat dan hijau.'
+      },
+      {
+        question: 'Seorang siswa kesulitan menggambar wajah manusia yang proporsional. Berdasarkan kunci mahir menggambar, solusi terbaik adalah...',
+        options: [
+          'Menyerah dan memilih objek yang lebih mudah',
+          'Menggunakan teknologi AI untuk menggambar',
+          'Berlatih kontinu dengan observasi berulang terhadap wajah manusia',
+          'Menyalin karya seniman terkenal'
+        ],
+        correct: 2,
+        explanation: 'Kunci mahir menggambar adalah: sering mengamati, banyak merasakan, dan berlatih kontinu untuk menguatkan sinapsis otak.'
+      },
+      {
+        question: 'Pemanfaatan limbah dalam membuat jurnal visual mencerminkan karakter Profil Pelajar Pancasila yang...',
+        options: [
+          'Hanya kreatif saja',
+          'Mandiri dan kreatif sekaligus mencerminkan akhlak mulia terhadap lingkungan',
+          'Bernalar kritis dalam ekonomi',
+          'Tidak relevan dengan Profil Pelajar Pancasila'
+        ],
+        correct: 1,
+        explanation: 'Menggunakan limbah menunjukkan kreativitas, kemandirian (mengolah sumber daya terbatas), dan akhlak mulia (peduli lingkungan).'
+      },
+      {
+        question: 'Perbedaan utama antara jurnal visual dan moodboard adalah...',
+        options: [
+          'Jurnal visual menggunakan kertas, moodboard menggunakan digital',
+          'Jurnal visual adalah rekaman proses kreatif berkelanjutan, moodboard fokus pada satu tema/proyek tertentu',
+          'Moodboard lebih murah dibuat daripada jurnal visual',
+          'Tidak ada perbedaan, keduanya sama saja'
+        ],
+        correct: 1,
+        explanation: 'Jurnal visual adalah rekam jejak kreatif berkelanjutan, sedangkan moodboard adalah kumpulan ide dengan tema tertentu untuk satu proyek.'
+      },
+      {
+        question: 'Dalam konteks bernalar kritis, mengapa penting memahami logika pencahayaan saat menggambar?',
+        options: [
+          'Agar gambar terlihat lebih mahal',
+          'Karena pencahayaan menentukan kedalaman, volume, dan realisme objek dalam gambar',
+          'Supaya bisa menghemat penggunaan pensil',
+          'Agar guru memberikan nilai yang bagus'
+        ],
+        correct: 1,
+        explanation: 'Pemahaman pencahayaan (shading) menentukan kesan 3D, kedalaman, dan realisme, yang merupakan esensi dari bernalar kritis dalam seni.'
+      },
+      {
+        question: 'Seorang siswa menemukan sketsa menarik di internet dan ingin menggunakannya sebagai referensi. Sikap yang mencerminkan "berakhlak mulia" adalah...',
+        options: [
+          'Langsung menyalin tanpa modifikasi',
+          'Menjadikannya inspirasi lalu membuat versi orisinal dengan gaya sendiri',
+          'Mengaku sketsa tersebut sebagai karyanya',
+          'Menghapus watermark pembuat asli'
+        ],
+        correct: 1,
+        explanation: 'Berakhlak mulia dalam seni berarti menghargai karya orang lain. Menggunakan sebagai inspirasi boleh, tapi harus membuat versi orisinal.'
+      },
+      {
+        question: 'Mengapa observasi berulang penting dalam proses menggambar menurut perspektif neurologi?',
+        options: [
+          'Agar mata tidak cepat lelah',
+          'Karena repetisi menguatkan sinapsis otak dan meningkatkan kemampuan visual-motorik',
+          'Supaya gambar menjadi lebih besar',
+          'Agar bisa menggambar lebih cepat'
+        ],
+        correct: 1,
+        explanation: 'Berlatih kontinu menguatkan sinapsis otak (koneksi antar sel saraf), sehingga keterampilan menggambar menjadi lebih otomatis dan terampil.'
+      },
+      {
+        question: 'Dalam tugas membuat moodboard, seorang siswa menganalisis warna dan tekstur dominan dari objek. Kemampuan ini paling mencerminkan dimensi Profil Pelajar Pancasila...',
+        options: [
+          'Bergotong royong',
+          'Bernalar kritis dan kreatif',
+          'Berkebhinekaan global',
+          'Beriman kepada Tuhan Yang Maha Esa'
+        ],
+        correct: 1,
+        explanation: 'Menganalisis warna dan tekstur membutuhkan kemampuan bernalar kritis (analisis sistematis) dan kreatif (melihat potensi visual).'
+      }
+    ];
+    
+    let currentQuestion = 0;
+    let score = 0;
+    let answeredQuestions = new Array(quizQuestions.length).fill(null);
+    
+    function renderQuestion() {
+      const container = document.getElementById('quiz-container');
+      const q = quizQuestions[currentQuestion];
+      const answered = answeredQuestions[currentQuestion];
+      
+      let optionsHTML = q.options.map((opt, index) => {
+        let classes = 'quiz-option p-4 border-2 border-gray-200 rounded-xl cursor-pointer transition-all';
+        if (answered !== null) {
+          if (index === q.correct) {
+            classes += ' correct';
+          } else if (index === answered && answered !== q.correct) {
+            classes += ' wrong';
+          }
+        }
+        return `
+          <div class="${classes}" onclick="selectAnswer(${index})" data-index="${index}">
+            <div class="flex items-start gap-3">
+              <span class="w-8 h-8 flex-shrink-0 rounded-full bg-gray-100 flex items-center justify-center font-bold text-gray-600">
+                ${String.fromCharCode(65 + index)}
+              </span>
+              <span class="text-gray-700">${opt}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      let explanationHTML = '';
+      if (answered !== null) {
+        explanationHTML = `
+          <div class="mt-6 p-4 rounded-xl ${answered === q.correct ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}">
+            <p class="font-bold ${answered === q.correct ? 'text-green-700' : 'text-red-700'} mb-2">
+              ${answered === q.correct ? '✅ Benar!' : '❌ Kurang tepat'}
+            </p>
+            <p class="text-gray-600 text-sm">${q.explanation}</p>
+          </div>
+        `;
+      }
+      
+      container.innerHTML = `
+        <div class="mb-6">
+          <span class="inline-block px-3 py-1 bg-violet-100 text-violet-700 rounded-full text-xs font-medium mb-4">
+            Soal ${currentQuestion + 1}
+          </span>
+          <h3 class="text-lg font-semibold text-gray-800 leading-relaxed">${q.question}</h3>
+        </div>
+        <div class="space-y-3">
+          ${optionsHTML}
+        </div>
+        ${explanationHTML}
+      `;
+      
+      // Update progress
+      document.getElementById('current-question').textContent = currentQuestion + 1;
+      document.getElementById('quiz-progress').style.width = `${((currentQuestion + 1) / quizQuestions.length) * 100}%`;
+      document.getElementById('quiz-score').textContent = `Skor: ${score}/${quizQuestions.length}`;
+      
+      // Update navigation buttons
+      document.getElementById('prev-question-btn').disabled = currentQuestion === 0;
+      
+      const nextBtn = document.getElementById('next-question-btn');
+      if (currentQuestion === quizQuestions.length - 1) {
+        nextBtn.textContent = 'Lihat Hasil';
+      } else {
+        nextBtn.textContent = 'Selanjutnya →';
+      }
+    }
+    
+    function selectAnswer(index) {
+      if (answeredQuestions[currentQuestion] !== null) return;
+      
+      answeredQuestions[currentQuestion] = index;
+      
+      if (index === quizQuestions[currentQuestion].correct) {
+        score++;
+      }
+      
+      renderQuestion();
+    }
+    
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+    
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+    
+    function showResults() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('prev-question-btn').classList.add('hidden');
+      document.getElementById('next-question-btn').classList.add('hidden');
+      
+      const resultsEl = document.getElementById('quiz-results');
+      resultsEl.classList.remove('hidden');
+      
+      document.getElementById('final-score').textContent = `${score}/${quizQuestions.length}`;
+      
+      let message = '';
+      if (score === 10) {
+        message = '🌟 Sempurna! Kamu menguasai materi dengan sangat baik!';
+      } else if (score >= 8) {
+        message = '👏 Hebat! Pemahamanmu sudah sangat baik!';
+      } else if (score >= 6) {
+        message = '👍 Bagus! Terus tingkatkan pemahamanmu!';
+      } else if (score >= 4) {
+        message = '📚 Cukup baik. Pelajari kembali materi yang kurang dipahami.';
+      } else {
+        message = '💪 Jangan menyerah! Baca ulang materi dan coba lagi.';
+      }
+      
+      document.getElementById('score-message').textContent = message;
+    }
+    
+    function resetQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answeredQuestions = new Array(quizQuestions.length).fill(null);
+      
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('prev-question-btn').classList.remove('hidden');
+      document.getElementById('next-question-btn').classList.remove('hidden');
+      document.getElementById('quiz-results').classList.add('hidden');
+      
+      renderQuestion();
+    }
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        if (currentSlide < 10) {
+          nextSlide();
+        }
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      }
+    });
+    
+    // Element SDK Integration
+    async function onConfigChange(newConfig) {
+      config = { ...config, ...newConfig };
+      
+      const mainTitle = document.getElementById('main-title');
+      if (mainTitle) mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      
+      const subjectName = document.getElementById('subject-name');
+      if (subjectName) subjectName.textContent = config.subject_name || defaultConfig.subject_name;
+    }
+    
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => { config.background_color = value; if (window.elementSdk) window.elementSdk.setConfig({ background_color: value }); }
+          },
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => { config.primary_color = value; if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value }); }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => { config.text_color = value; if (window.elementSdk) window.elementSdk.setConfig({ text_color: value }); }
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => { config.secondary_color = value; if (window.elementSdk) window.elementSdk.setConfig({ secondary_color: value }); }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => { config.accent_color = value; if (window.elementSdk) window.elementSdk.setConfig({ accent_color: value }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || 'Plus Jakarta Sans',
+          set: (value) => { config.font_family = value; if (window.elementSdk) window.elementSdk.setConfig({ font_family: value }); }
+        },
+        fontSizeable: {
+          get: () => config.font_size || 16,
+          set: (value) => { config.font_size = value; if (window.elementSdk) window.elementSdk.setConfig({ font_size: value }); }
+        }
+      };
+    }
+    
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['main_title', config.main_title || defaultConfig.main_title],
+        ['subject_name', config.subject_name || defaultConfig.subject_name]
+      ]);
+    }
+    
+    // Initialize
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+    
+    // Initialize quiz
+    renderQuestion();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c9774b8532a70ac',t:'MTc3MDM0NzQ0Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,1238 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Melukis dengan Medium Pilihan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Nunito:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Nunito', sans-serif;
+    }
+    
+    .font-display {
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .slide {
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    .slide.active {
+      display: flex;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .pulse-animation {
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .zentangle-pattern {
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(139, 92, 246, 0.1) 10px,
+        rgba(139, 92, 246, 0.1) 20px
+      );
+    }
+    
+    .swirl-bg {
+      background: conic-gradient(from 0deg, #ec4899, #8b5cf6, #06b6d4, #10b981, #f59e0b, #ec4899);
+      filter: blur(60px);
+      opacity: 0.3;
+    }
+    
+    .progress-bar {
+      transition: width 0.3s ease;
+    }
+    
+    .interactive-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+    }
+    
+    .quiz-option:hover {
+      background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+      color: white;
+      transform: translateX(5px);
+    }
+    
+    .quiz-option.correct {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+      color: white;
+    }
+    
+    .quiz-option.wrong {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+      color: white;
+    }
+    
+    .drawing-canvas {
+      touch-action: none;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50 overflow-auto">
+  <div id="app" class="w-full h-full flex flex-col"><!-- Header Navigation -->
+   <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center"><span class="text-white text-xl">🎨</span>
+      </div><span class="font-display font-semibold text-slate-800">Seni Lukis</span>
+     </div>
+     <div class="flex items-center gap-2"><span id="slideCounter" class="text-sm text-slate-500 mr-4">Slide 1 / 12</span>
+      <div class="w-48 h-2 bg-slate-200 rounded-full overflow-hidden">
+       <div id="progressBar" class="progress-bar h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" style="width: 8.33%"></div>
+      </div>
+     </div>
+     <div class="flex gap-2"><button onclick="prevSlide()" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all flex items-center gap-2"> <span>←</span> Kembali </button> <button onclick="nextSlide()" class="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white transition-all flex items-center gap-2"> Lanjut <span>→</span> </button>
+     </div>
+    </div>
+   </header><!-- Slides Container -->
+   <main class="flex-1 overflow-auto"><!-- Slide 1: Judul -->
+    <section id="slide1" class="slide active min-h-full flex-col items-center justify-center p-8 relative overflow-hidden">
+     <div class="absolute inset-0 swirl-bg"></div>
+     <div class="relative z-10 text-center max-w-4xl mx-auto">
+      <div class="mb-8 float-animation">
+       <svg viewbox="0 0 200 200" class="w-40 h-40 mx-auto"><defs>
+         <lineargradient id="brushGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#8b5cf6" />
+          <stop offset="100%" style="stop-color:#ec4899" />
+         </lineargradient>
+        </defs> <!-- Palette --> <ellipse cx="100" cy="120" rx="70" ry="50" fill="#f3e8ff" stroke="url(#brushGrad)" stroke-width="3" /> <circle cx="60" cy="110" r="12" fill="#ec4899" /> <circle cx="90" cy="100" r="12" fill="#8b5cf6" /> <circle cx="120" cy="100" r="12" fill="#06b6d4" /> <circle cx="140" cy="115" r="12" fill="#10b981" /> <circle cx="100" cy="130" r="12" fill="#f59e0b" /> <!-- Brush --> <rect x="140" y="30" width="12" height="60" rx="2" fill="#92400e" transform="rotate(30 146 60)" /> <path d="M 155 75 Q 165 90 155 105 Q 145 90 155 75" fill="#8b5cf6" />
+       </svg>
+      </div>
+      <h1 id="mainTitle" class="font-display text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 bg-clip-text text-transparent mb-6">Menggambar atau Melukis dengan Medium Pilihan</h1>
+      <p id="subtitle" class="text-xl md:text-2xl text-slate-600 mb-8">Eksplorasi Kreativitas Tanpa Batas melalui Kuas, Nonkuas, dan Mixed Media</p>
+      <div class="flex flex-wrap gap-4 justify-center mt-8"><span class="px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">🖌️ Teknik Kuas</span> <span class="px-4 py-2 bg-pink-100 text-pink-700 rounded-full text-sm font-medium">✋ Teknik Nonkuas</span> <span class="px-4 py-2 bg-cyan-100 text-cyan-700 rounded-full text-sm font-medium">🎭 Mixed Media</span>
+      </div><button onclick="nextSlide()" class="mt-12 px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-2xl font-semibold text-lg interactive-btn transition-all"> Mulai Belajar → </button>
+     </div>
+    </section><!-- Slide 2: Apa Itu Seni Gambar & Lukis -->
+    <section id="slide2" class="slide min-h-full flex-col items-center justify-center p-8">
+     <div class="max-w-5xl mx-auto w-full">
+      <h2 class="font-display text-4xl font-bold text-slate-800 mb-8 text-center">Apa Itu Seni Gambar &amp; Lukis? 🎨</h2>
+      <div class="grid md:grid-cols-2 gap-8 mb-8">
+       <div class="bg-white rounded-3xl p-8 shadow-xl card-hover transition-all">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center mb-4"><span class="text-3xl">✏️</span>
+        </div>
+        <h3 class="font-semibold text-xl text-slate-800 mb-3">Media Ekspresi</h3>
+        <p class="text-slate-600">Seni dapat diekspresikan melalui berbagai media seperti <strong>pensil, pulpen, cat air, akrilik</strong>, dan masih banyak lagi.</p>
+       </div>
+       <div class="bg-white rounded-3xl p-8 shadow-xl card-hover transition-all">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500 to-pink-600 flex items-center justify-center mb-4"><span class="text-3xl">🖌️</span>
+        </div>
+        <h3 class="font-semibold text-xl text-slate-800 mb-3">Teknik Pengerjaan</h3>
+        <p class="text-slate-600">Bisa menggunakan <strong>alat bantu (kuas)</strong> maupun <strong>tanpa alat bantu konvensional (nonkuas)</strong>.</p>
+       </div>
+      </div>
+      <div class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl p-8 text-white text-center">
+       <div class="text-4xl mb-4">
+        💡
+       </div>
+       <p class="text-2xl font-display font-semibold italic">"Tidak ada kata salah dalam seni"</p>
+       <p class="mt-2 opacity-90">Ekspresi bebas adalah kunci kreativitas</p>
+      </div><!-- Interactive Element -->
+      <div class="mt-8 bg-white rounded-3xl p-6 shadow-lg">
+       <h4 class="font-semibold text-lg text-slate-800 mb-4">🎯 Coba Pilih Media Favoritmu:</h4>
+       <div class="flex flex-wrap gap-3" id="mediaSelector"><button onclick="selectMedia(this, 'Pensil')" class="px-4 py-2 rounded-xl border-2 border-purple-200 hover:border-purple-500 hover:bg-purple-50 transition-all">✏️ Pensil</button> <button onclick="selectMedia(this, 'Pulpen')" class="px-4 py-2 rounded-xl border-2 border-purple-200 hover:border-purple-500 hover:bg-purple-50 transition-all">🖊️ Pulpen</button> <button onclick="selectMedia(this, 'Cat Air')" class="px-4 py-2 rounded-xl border-2 border-purple-200 hover:border-purple-500 hover:bg-purple-50 transition-all">💧 Cat Air</button> <button onclick="selectMedia(this, 'Krayon')" class="px-4 py-2 rounded-xl border-2 border-purple-200 hover:border-purple-500 hover:bg-purple-50 transition-all">🖍️ Krayon</button> <button onclick="selectMedia(this, 'Digital')" class="px-4 py-2 rounded-xl border-2 border-purple-200 hover:border-purple-500 hover:bg-purple-50 transition-all">💻 Digital</button>
+       </div>
+       <p id="mediaFeedback" class="mt-4 text-slate-600 hidden"></p>
+      </div>
+     </div>
+    </section><!-- Slide 3: Mengenal Zentangle -->
+    <section id="slide3" class="slide min-h-full flex-col items-center justify-center p-8">
+     <div class="max-w-5xl mx-auto w-full">
+      <h2 class="font-display text-4xl font-bold text-slate-800 mb-8 text-center">Mengenal Zentangle 🌀</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+       <div class="space-y-6">
+        <div class="bg-white rounded-3xl p-6 shadow-lg">
+         <h3 class="font-semibold text-lg text-purple-600 mb-2">📖 Definisi</h3>
+         <p class="text-slate-600">Karya seni yang terdiri dari berbagai <strong>permainan garis dengan pola terstruktur</strong>.</p>
+        </div>
+        <div class="bg-white rounded-3xl p-6 shadow-lg">
+         <h3 class="font-semibold text-lg text-pink-600 mb-2">✨ Karakteristik</h3>
+         <ul class="space-y-2 text-slate-600">
+          <li class="flex items-start gap-2"><span class="text-purple-500">•</span> Digambar secara <strong>sadar</strong> (berbeda dengan doodle)</li>
+          <li class="flex items-start gap-2"><span class="text-purple-500">•</span> Media utama: <strong>Kertas kecil (tile), pensil, dan pulpen</strong></li>
+         </ul>
+        </div>
+        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-3xl p-6 text-white">
+         <h3 class="font-semibold text-lg mb-2">🧘 Manfaat</h3>
+         <p>Memberikan efek <strong>relaksasi</strong> atau sering disebut sebagai <em>meditative drawing</em>.</p>
+        </div>
+        <div class="bg-white rounded-3xl p-6 shadow-lg">
+         <h3 class="font-semibold text-lg text-slate-800 mb-2">👥 Tokoh Pendiri</h3>
+         <p class="text-slate-600">Diperkenalkan oleh <strong>Rick Roberts</strong> dan <strong>Maria Thomas</strong></p>
+        </div>
+       </div><!-- Interactive Zentangle Demo -->
+       <div class="bg-white rounded-3xl p-6 shadow-xl">
+        <h3 class="font-semibold text-lg text-slate-800 mb-4">🎨 Coba Buat Zentangle!</h3>
+        <div class="zentangle-pattern rounded-2xl p-4 mb-4">
+         <canvas id="zentangleCanvas" width="350" height="300" class="drawing-canvas bg-white rounded-xl w-full cursor-crosshair border-2 border-purple-200"></canvas>
+        </div>
+        <div class="flex gap-3 flex-wrap"><button onclick="setDrawColor('#8b5cf6')" class="w-10 h-10 rounded-full bg-purple-500 border-4 border-white shadow-lg hover:scale-110 transition-transform"></button> <button onclick="setDrawColor('#ec4899')" class="w-10 h-10 rounded-full bg-pink-500 border-4 border-white shadow-lg hover:scale-110 transition-transform"></button> <button onclick="setDrawColor('#000000')" class="w-10 h-10 rounded-full bg-black border-4 border-white shadow-lg hover:scale-110 transition-transform"></button> <button onclick="setDrawColor('#06b6d4')" class="w-10 h-10 rounded-full bg-cyan-500 border-4 border-white shadow-lg hover:scale-110 transition-transform"></button> <button onclick="clearCanvas()" class="ml-auto px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-sm font-medium transition-all">🗑️ Hapus</button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 4: Melukis Tanpa Kuas -->
+    <section id="slide4" class="slide min-h-full flex-col items-center justify-center p-8">
+     <div class="max-w-5xl mx-auto w-full">
+      <h2 class="font-display text-4xl font-bold text-slate-800 mb-8 text-center">Melukis Tanpa Kuas (Teknik Nonkuas) ✋</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+       <div class="bg-white rounded-3xl p-6 shadow-xl card-hover transition-all text-center">
+        <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center"><span class="text-4xl">🧽</span>
+        </div>
+        <h3 class="font-semibold text-lg text-slate-800 mb-2">Spons</h3>
+        <p class="text-sm text-slate-600">Menggunakan spons cuci piring untuk efek tekstur tertentu</p>
+       </div>
+       <div class="bg-white rounded-3xl p-6 shadow-xl card-hover transition-all text-center">
+        <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center"><span class="text-4xl">🖐️</span>
+        </div>
+        <h3 class="font-semibold text-lg text-slate-800 mb-2">Tangan</h3>
+        <p class="text-sm text-slate-600">Melukis langsung menggunakan jari atau telapak tangan</p>
+       </div>
+       <div class="bg-white rounded-3xl p-6 shadow-xl card-hover transition-all text-center">
+        <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-purple-400 to-violet-500 flex items-center justify-center"><span class="text-4xl">📮</span>
+        </div>
+        <h3 class="font-semibold text-lg text-slate-800 mb-2">Stempel</h3>
+        <p class="text-sm text-slate-600">Benda datar yang dikupas lalu dibubuhi cat</p>
+       </div>
+       <div class="bg-white rounded-3xl p-6 shadow-xl card-hover transition-all text-center">
+        <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center"><span class="text-4xl">🥔</span>
+        </div>
+        <h3 class="font-semibold text-lg text-slate-800 mb-2">Bahan Stempel</h3>
+        <p class="text-sm text-slate-600">Kentang (alami) atau penghapus (buatan)</p>
+       </div>
+      </div><!-- Interactive Stamp Simulator -->
+      <div class="bg-white rounded-3xl p-8 shadow-xl">
+       <h3 class="font-semibold text-xl text-slate-800 mb-4">🎮 Simulasi Stempel Interaktif</h3>
+       <p class="text-slate-600 mb-4">Klik area kanvas untuk membuat stempel!</p>
+       <div class="flex flex-wrap gap-4 mb-4"><span class="text-sm text-slate-500">Pilih bentuk:</span> <button onclick="setStampShape('circle')" class="px-4 py-2 rounded-xl bg-purple-100 text-purple-700 hover:bg-purple-200 transition-all stamp-shape-btn active">⭕ Lingkaran</button> <button onclick="setStampShape('star')" class="px-4 py-2 rounded-xl bg-purple-100 text-purple-700 hover:bg-purple-200 transition-all stamp-shape-btn">⭐ Bintang</button> <button onclick="setStampShape('heart')" class="px-4 py-2 rounded-xl bg-purple-100 text-purple-700 hover:bg-purple-200 transition-all stamp-shape-btn">❤️ Hati</button> <button onclick="setStampShape('leaf')" class="px-4 py-2 rounded-xl bg-purple-100 text-purple-700 hover:bg-purple-200 transition-all stamp-shape-btn">🍃 Daun</button>
+       </div>
+       <div class="flex flex-wrap gap-3 mb-4"><span class="text-sm text-slate-500">Pilih warna:</span> <button onclick="setStampColor('#8b5cf6')" class="w-8 h-8 rounded-full bg-purple-500 border-2 border-white shadow hover:scale-110 transition-transform stamp-color-btn"></button> <button onclick="setStampColor('#ec4899')" class="w-8 h-8 rounded-full bg-pink-500 border-2 border-white shadow hover:scale-110 transition-transform stamp-color-btn"></button> <button onclick="setStampColor('#10b981')" class="w-8 h-8 rounded-full bg-emerald-500 border-2 border-white shadow hover:scale-110 transition-transform stamp-color-btn"></button> <button onclick="setStampColor('#f59e0b')" class="w-8 h-8 rounded-full bg-amber-500 border-2 border-white shadow hover:scale-110 transition-transform stamp-color-btn"></button> <button onclick="setStampColor('#06b6d4')" class="w-8 h-8 rounded-full bg-cyan-500 border-2 border-white shadow hover:scale-110 transition-transform stamp-color-btn"></button>
+       </div>
+       <div id="stampCanvas" class="w-full h-64 bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl cursor-pointer relative overflow-hidden border-2 border-slate-300"></div><button onclick="clearStampCanvas()" class="mt-4 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-sm font-medium transition-all">🗑️ Bersihkan Kanvas</button>
+      </div>
+     </div>
+    </section><!-- Slide 5: Teknik Swirl -->
+    <section id="slide5" class="slide min-h-full flex-col items-center justify-center p-8">
+     <div class="max-w-5xl mx-auto w-full">
+      <h2 class="font-display text-4xl font-bold text-slate-800 mb-8 text-center">Teknik Swirl (Kombinasi Warna) 🌈</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+       <div class="space-y-4">
+        <div class="bg-white rounded-3xl p-6 shadow-lg">
+         <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-xl">
+           1
+          </div>
+          <h3 class="font-semibold text-lg text-slate-800">Tuang Cat</h3>
+         </div>
+         <p class="text-slate-600">Tuangkan berbagai warna cat ke dalam gelas secara <strong>bergantian</strong>.</p>
+        </div>
+        <div class="bg-white rounded-3xl p-6 shadow-lg">
+         <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center text-white font-bold text-xl">
+           2
+          </div>
+          <h3 class="font-semibold text-lg text-slate-800">Tumpahkan</h3>
+         </div>
+         <p class="text-slate-600">Tumpahkan isi gelas ke atas <strong>kanvas atau media gambar</strong>.</p>
+        </div>
+        <div class="bg-white rounded-3xl p-6 shadow-lg">
+         <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center text-white font-bold text-xl">
+           3
+          </div>
+          <h3 class="font-semibold text-lg text-slate-800">Goyangkan</h3>
+         </div>
+         <p class="text-slate-600">Goyangkan kanvas ke <strong>kanan dan kiri</strong> agar warna berbaur membentuk pola yang indah.</p>
+        </div>
+       </div><!-- Interactive Swirl Demo -->
+       <div class="bg-white rounded-3xl p-6 shadow-xl">
+        <h3 class="font-semibold text-lg text-slate-800 mb-4">🎨 Demo Swirl Interaktif</h3>
+        <div id="swirlDemo" class="w-full h-72 rounded-2xl bg-slate-100 relative overflow-hidden mb-4">
+         <div id="swirlPattern" class="absolute inset-0 transition-all duration-500"></div>
+        </div>
+        <div class="flex flex-wrap gap-3"><button onclick="addSwirlColor('#8b5cf6')" class="px-4 py-2 rounded-xl bg-purple-100 text-purple-700 hover:bg-purple-200 transition-all">+ Ungu</button> <button onclick="addSwirlColor('#ec4899')" class="px-4 py-2 rounded-xl bg-pink-100 text-pink-700 hover:bg-pink-200 transition-all">+ Pink</button> <button onclick="addSwirlColor('#06b6d4')" class="px-4 py-2 rounded-xl bg-cyan-100 text-cyan-700 hover:bg-cyan-200 transition-all">+ Cyan</button> <button onclick="addSwirlColor('#10b981')" class="px-4 py-2 rounded-xl bg-emerald-100 text-emerald-700 hover:bg-emerald-200 transition-all">+ Hijau</button> <button onclick="addSwirlColor('#f59e0b')" class="px-4 py-2 rounded-xl bg-amber-100 text-amber-700 hover:bg-amber-200 transition-all">+ Kuning</button>
+        </div>
+        <div class="flex gap-3 mt-4"><button onclick="mixSwirl()" class="flex-1 px-4 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:opacity-90 transition-all">🌀 Campurkan!</button> <button onclick="resetSwirl()" class="px-4 py-3 rounded-xl bg-slate-200 hover:bg-slate-300 transition-all">🗑️</button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 6: Mixed Media -->
+    <section id="slide6" class="slide min-h-full flex-col items-center justify-center p-8">
+     <div class="max-w-5xl mx-auto w-full">
+      <h2 class="font-display text-4xl font-bold text-slate-800 mb-8 text-center">Mixed Media: Kreativitas Bahan Bekas ♻️</h2>
+      <div class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl p-8 text-white mb-8">
+       <h3 class="font-semibold text-xl mb-3">📖 Definisi</h3>
+       <p class="text-lg">Teknik membuat karya dengan <strong>menggabungkan berbagai bahan</strong> di sekitar kita (bahan bekas &amp; alam) berdasarkan konsep tertentu.</p>
+      </div>
+      <h3 class="font-semibold text-xl text-slate-800 mb-6 text-center">Contoh Aplikasi Mixed Media</h3>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+       <div class="bg-white rounded-3xl p-6 shadow-xl card-hover transition-all group">
+        <div class="w-full h-32 rounded-2xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform"><span class="text-5xl">🔵</span>
+        </div>
+        <h4 class="font-semibold text-slate-800 mb-2">Tutup Botol</h4>
+        <p class="text-sm text-slate-600">Menyusun tutup botol bekas menjadi objek seni</p>
+       </div>
+       <div class="bg-white rounded-3xl p-6 shadow-xl card-hover transition-all group">
+        <div class="w-full h-32 rounded-2xl bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform"><span class="text-5xl">🖼️</span>
+        </div>
+        <h4 class="font-semibold text-slate-800 mb-2">Bingkai Ranting</h4>
+        <p class="text-sm text-slate-600">Membuat pigura dari ranting pohon yang disusun rapi</p>
+       </div>
+       <div class="bg-white rounded-3xl p-6 shadow-xl card-hover transition-all group">
+        <div class="w-full h-32 rounded-2xl bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform"><span class="text-5xl">📦</span>
+        </div>
+        <h4 class="font-semibold text-slate-800 mb-2">Stempel Kardus</h4>
+        <p class="text-sm text-slate-600">Menggunakan potongan kardus sebagai stempel</p>
+       </div>
+       <div class="bg-white rounded-3xl p-6 shadow-xl card-hover transition-all group">
+        <div class="w-full h-32 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform"><span class="text-5xl">📰</span>
+        </div>
+        <h4 class="font-semibold text-slate-800 mb-2">Kolase Koran</h4>
+        <p class="text-sm text-slate-600">Menempelkan kertas koran yang diwarnai untuk tekstur</p>
+       </div>
+      </div><!-- Interactive Mixed Media Builder -->
+      <div class="mt-8 bg-white rounded-3xl p-6 shadow-xl">
+       <h4 class="font-semibold text-lg text-slate-800 mb-4">🛠️ Rancang Mixed Media-mu!</h4>
+       <p class="text-slate-600 mb-4">Pilih bahan yang akan kamu gabungkan:</p>
+       <div class="flex flex-wrap gap-3 mb-4" id="mixedMediaBuilder"><button onclick="toggleMaterial(this, '📰 Koran')" class="px-4 py-2 rounded-xl border-2 border-slate-200 hover:border-purple-500 transition-all material-btn">📰 Koran</button> <button onclick="toggleMaterial(this, '🪵 Ranting')" class="px-4 py-2 rounded-xl border-2 border-slate-200 hover:border-purple-500 transition-all material-btn">🪵 Ranting</button> <button onclick="toggleMaterial(this, '🔵 Tutup Botol')" class="px-4 py-2 rounded-xl border-2 border-slate-200 hover:border-purple-500 transition-all material-btn">🔵 Tutup Botol</button> <button onclick="toggleMaterial(this, '📦 Kardus')" class="px-4 py-2 rounded-xl border-2 border-slate-200 hover:border-purple-500 transition-all material-btn">📦 Kardus</button> <button onclick="toggleMaterial(this, '🧵 Benang')" class="px-4 py-2 rounded-xl border-2 border-slate-200 hover:border-purple-500 transition-all material-btn">🧵 Benang</button> <button onclick="toggleMaterial(this, '🍂 Daun Kering')" class="px-4 py-2 rounded-xl border-2 border-slate-200 hover:border-purple-500 transition-all material-btn">🍂 Daun Kering</button> <button onclick="toggleMaterial(this, '🎨 Cat')" class="px-4 py-2 rounded-xl border-2 border-slate-200 hover:border-purple-500 transition-all material-btn">🎨 Cat</button>
+       </div>
+       <div id="selectedMaterials" class="p-4 bg-slate-50 rounded-xl min-h-16">
+        <p class="text-slate-400 text-sm">Bahan yang dipilih akan muncul di sini...</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 7: Solusi Kreatif -->
+    <section id="slide7" class="slide min-h-full flex-col items-center justify-center p-8">
+     <div class="max-w-5xl mx-auto w-full">
+      <h2 class="font-display text-4xl font-bold text-slate-800 mb-8 text-center">Solusi Kreatif di Lingkungan Terbatas 💡</h2>
+      <div class="bg-gradient-to-r from-amber-400 to-orange-500 rounded-3xl p-6 text-white mb-8 text-center">
+       <p class="text-xl font-semibold">🌟 "Manfaatkan apa yang ada di sekitarmu untuk mengasah kreativitas" 🌟</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+       <div class="bg-white rounded-3xl p-8 shadow-xl">
+        <div class="flex items-center gap-4 mb-6">
+         <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center"><span class="text-3xl">🪥</span>
+         </div>
+         <div>
+          <h3 class="font-semibold text-xl text-slate-800">Alat Alternatif</h3>
+          <p class="text-slate-500">Pengganti kuas</p>
+         </div>
+        </div>
+        <div class="space-y-4">
+         <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl"><span class="text-2xl">🪥</span> <span class="text-slate-700">Sikat gigi bekas</span>
+         </div>
+         <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl"><span class="text-2xl">🧹</span> <span class="text-slate-700">Sapu ijuk kecil</span>
+         </div>
+         <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl"><span class="text-2xl">🌿</span> <span class="text-slate-700">Ranting dengan daun</span>
+         </div>
+         <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl"><span class="text-2xl">🧶</span> <span class="text-slate-700">Gulungan kapas</span>
+         </div>
+        </div>
+       </div>
+       <div class="bg-white rounded-3xl p-8 shadow-xl">
+        <div class="flex items-center gap-4 mb-6">
+         <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center"><span class="text-3xl">🌱</span>
+         </div>
+         <div>
+          <h3 class="font-semibold text-xl text-slate-800">Pewarna Alami</h3>
+          <p class="text-slate-500">Dari alam sekitar</p>
+         </div>
+        </div>
+        <div class="space-y-4">
+         <div class="flex items-center gap-3 p-3 bg-amber-50 rounded-xl border-l-4 border-amber-500"><span class="text-2xl">☕</span>
+          <div><span class="text-slate-700 font-medium">Bubuk Kopi</span> <span class="text-xs text-slate-500 block">→ Warna coklat</span>
+          </div>
+         </div>
+         <div class="flex items-center gap-3 p-3 bg-yellow-50 rounded-xl border-l-4 border-yellow-500"><span class="text-2xl">🫚</span>
+          <div><span class="text-slate-700 font-medium">Kunyit</span> <span class="text-xs text-slate-500 block">→ Warna kuning</span>
+          </div>
+         </div>
+         <div class="flex items-center gap-3 p-3 bg-green-50 rounded-xl border-l-4 border-green-500"><span class="text-2xl">🌿</span>
+          <div><span class="text-slate-700 font-medium">Daun Suji</span> <span class="text-xs text-slate-500 block">→ Warna hijau</span>
+          </div>
+         </div>
+         <div class="flex items-center gap-3 p-3 bg-purple-50 rounded-xl border-l-4 border-purple-500"><span class="text-2xl">🍇</span>
+          <div><span class="text-slate-700 font-medium">Kulit Manggis</span> <span class="text-xs text-slate-500 block">→ Warna ungu</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 8: Curah Ide -->
+    <section id="slide8" class="slide min-h-full flex-col items-center justify-center p-8">
+     <div class="max-w-5xl mx-auto w-full">
+      <h2 class="font-display text-4xl font-bold text-slate-800 mb-8 text-center">Tahap Persiapan: Curah Ide (Brainstorming) 🧠</h2>
+      <div class="bg-gradient-to-r from-purple-500 to-indigo-500 rounded-3xl p-6 text-white mb-8">
+       <h3 class="font-semibold text-xl mb-2">📖 Definisi</h3>
+       <p class="text-lg">Kegiatan pendahuluan untuk mencari solusi dan <strong>mengumpulkan ide sebanyak-banyaknya</strong>.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8"><!-- Method 1: Table -->
+       <div class="bg-white rounded-3xl p-6 shadow-xl">
+        <h3 class="font-semibold text-xl text-slate-800 mb-4 flex items-center gap-2"><span class="text-2xl">📋</span> Metode Tabel</h3>
+        <p class="text-slate-600 mb-4">Memetakan Tema, Elemen, serta Alat &amp; Bahan</p>
+        <div class="overflow-x-auto">
+         <table class="w-full border-collapse">
+          <thead>
+           <tr class="bg-gradient-to-r from-purple-100 to-pink-100">
+            <th class="border border-slate-200 p-3 text-left text-purple-700">Tema</th>
+            <th class="border border-slate-200 p-3 text-left text-purple-700">Elemen</th>
+            <th class="border border-slate-200 p-3 text-left text-purple-700">Alat &amp; Bahan</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr>
+            <td class="border border-slate-200 p-3 text-slate-600">Alam</td>
+            <td class="border border-slate-200 p-3 text-slate-600">Hijau, Coklat</td>
+            <td class="border border-slate-200 p-3 text-slate-600">Daun, Ranting</td>
+           </tr>
+           <tr class="bg-slate-50">
+            <td class="border border-slate-200 p-3 text-slate-600">Laut</td>
+            <td class="border border-slate-200 p-3 text-slate-600">Biru, Pasir</td>
+            <td class="border border-slate-200 p-3 text-slate-600">Kerang, Pasir</td>
+           </tr>
+          </tbody>
+         </table>
+        </div>
+       </div><!-- Method 2: Mind Map -->
+       <div class="bg-white rounded-3xl p-6 shadow-xl">
+        <h3 class="font-semibold text-xl text-slate-800 mb-4 flex items-center gap-2"><span class="text-2xl">🗺️</span> Metode Peta Konsep</h3>
+        <p class="text-slate-600 mb-4">Menulis tema di tengah, tarik garis untuk ide</p>
+        <div class="relative h-64 bg-slate-50 rounded-xl p-4">
+         <svg viewbox="0 0 300 200" class="w-full h-full"><!-- Center --> <circle cx="150" cy="100" r="35" fill="url(#centerGrad)" /> <text x="150" y="105" text-anchor="middle" fill="white" font-weight="bold" font-size="12">
+           TEMA
+          </text> <!-- Branches --> <line x1="150" y1="65" x2="150" y2="30" stroke="#8b5cf6" stroke-width="2" /> <circle cx="150" cy="20" r="15" fill="#f3e8ff" stroke="#8b5cf6" stroke-width="2" /> <text x="150" y="24" text-anchor="middle" fill="#8b5cf6" font-size="10">
+           Warna
+          </text> <line x1="185" y1="100" x2="240" y2="100" stroke="#ec4899" stroke-width="2" /> <circle cx="255" cy="100" r="15" fill="#fce7f3" stroke="#ec4899" stroke-width="2" /> <text x="255" y="104" text-anchor="middle" fill="#ec4899" font-size="10">
+           Bentuk
+          </text> <line x1="150" y1="135" x2="150" y2="170" stroke="#06b6d4" stroke-width="2" /> <circle cx="150" cy="185" r="15" fill="#cffafe" stroke="#06b6d4" stroke-width="2" /> <text x="150" y="189" text-anchor="middle" fill="#06b6d4" font-size="10">
+           Bahan
+          </text> <line x1="115" y1="100" x2="60" y2="100" stroke="#10b981" stroke-width="2" /> <circle cx="45" cy="100" r="15" fill="#d1fae5" stroke="#10b981" stroke-width="2" /> <text x="45" y="104" text-anchor="middle" fill="#10b981" font-size="10">
+           Alat
+          </text> <defs>
+           <lineargradient id="centerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#8b5cf6" />
+            <stop offset="100%" style="stop-color:#ec4899" />
+           </lineargradient>
+          </defs>
+         </svg>
+        </div>
+       </div>
+      </div><!-- Interactive Brainstorming Tool -->
+      <div class="mt-8 bg-white rounded-3xl p-6 shadow-xl">
+       <h4 class="font-semibold text-lg text-slate-800 mb-4">✏️ Coba Curah Ide-mu!</h4>
+       <div class="grid md:grid-cols-3 gap-4">
+        <div><label class="block text-sm font-medium text-slate-700 mb-2">Tema:</label> <input type="text" id="brainstormTheme" placeholder="Contoh: Alam" class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors">
+        </div>
+        <div><label class="block text-sm font-medium text-slate-700 mb-2">Warna/Tekstur:</label> <input type="text" id="brainstormElement" placeholder="Contoh: Hijau, Kasar" class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors">
+        </div>
+        <div><label class="block text-sm font-medium text-slate-700 mb-2">Alat &amp; Bahan:</label> <input type="text" id="brainstormMaterial" placeholder="Contoh: Daun, Ranting" class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors">
+        </div>
+       </div><button onclick="addBrainstormIdea()" class="mt-4 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold hover:opacity-90 transition-all"> ➕ Tambah Ide </button>
+       <div id="brainstormList" class="mt-4 space-y-2"></div>
+      </div>
+     </div>
+    </section><!-- Slide 9: Refleksi Karya -->
+    <section id="slide9" class="slide min-h-full flex-col items-center justify-center p-8">
+     <div class="max-w-4xl mx-auto w-full">
+      <h2 class="font-display text-4xl font-bold text-slate-800 mb-8 text-center">Panduan Refleksi Karya 🔍</h2>
+      <p class="text-center text-slate-600 text-lg mb-8">Setelah berkarya, tanyakan pada diri sendiri:</p>
+      <div class="space-y-6">
+       <div class="bg-white rounded-3xl p-8 shadow-xl card-hover transition-all">
+        <div class="flex items-start gap-6">
+         <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-400 to-rose-500 flex items-center justify-center flex-shrink-0"><span class="text-3xl">🔧</span>
+         </div>
+         <div class="flex-1">
+          <h3 class="font-semibold text-xl text-slate-800 mb-2">Perbaikan</h3>
+          <p class="text-slate-600 mb-3">Bagian mana yang ingin diperbaiki?</p><textarea id="reflection1" placeholder="Tulis refleksimu di sini..." class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors resize-none h-20"></textarea>
+         </div>
+        </div>
+       </div>
+       <div class="bg-white rounded-3xl p-8 shadow-xl card-hover transition-all">
+        <div class="flex items-start gap-6">
+         <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center flex-shrink-0"><span class="text-3xl">💡</span>
+         </div>
+         <div class="flex-1">
+          <h3 class="font-semibold text-xl text-slate-800 mb-2">Solusi</h3>
+          <p class="text-slate-600 mb-3">Bagaimana cara memperbaikinya?</p><textarea id="reflection2" placeholder="Tulis solusimu di sini..." class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors resize-none h-20"></textarea>
+         </div>
+        </div>
+       </div>
+       <div class="bg-white rounded-3xl p-8 shadow-xl card-hover transition-all">
+        <div class="flex items-start gap-6">
+         <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 to-green-500 flex items-center justify-center flex-shrink-0"><span class="text-3xl">✨</span>
+         </div>
+         <div class="flex-1">
+          <h3 class="font-semibold text-xl text-slate-800 mb-2">Detail Tambahan</h3>
+          <p class="text-slate-600 mb-3">Bagian mana yang perlu ditambahkan detailnya?</p><textarea id="reflection3" placeholder="Tulis ide detailmu di sini..." class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors resize-none h-20"></textarea>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 10: Penutup -->
+    <section id="slide10" class="slide min-h-full flex-col items-center justify-center p-8 relative overflow-hidden">
+     <div class="absolute inset-0 swirl-bg"></div>
+     <div class="relative z-10 text-center max-w-3xl mx-auto">
+      <div class="mb-8 pulse-animation">
+       <svg viewbox="0 0 120 120" class="w-32 h-32 mx-auto"><defs>
+         <lineargradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#f59e0b" />
+          <stop offset="100%" style="stop-color:#ef4444" />
+         </lineargradient>
+        </defs> <path d="M60 10 L73 43 L108 43 L80 65 L90 98 L60 78 L30 98 L40 65 L12 43 L47 43 Z" fill="url(#starGrad)" /> <circle cx="60" cy="60" r="20" fill="white" /> <text x="60" y="67" text-anchor="middle" font-size="24">
+         🎨
+        </text>
+       </svg>
+      </div>
+      <h2 class="font-display text-4xl md:text-5xl font-bold text-slate-800 mb-6">Kesimpulan</h2>
+      <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl mb-8">
+       <p class="text-xl text-slate-700 leading-relaxed mb-6">Seni bukan tentang <strong>alat yang mahal</strong>, melainkan tentang <strong>keberanian mengekspresikan diri</strong> secara mandiri.</p>
+       <div class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-6 text-white">
+        <p class="text-2xl font-display font-semibold italic">"Kreativitas memang tanpa batas"</p>
+       </div>
+      </div>
+      <div class="flex flex-wrap gap-4 justify-center"><span class="px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">✅ Ekspresikan Diri</span> <span class="px-4 py-2 bg-pink-100 text-pink-700 rounded-full text-sm font-medium">✅ Gunakan Apapun</span> <span class="px-4 py-2 bg-cyan-100 text-cyan-700 rounded-full text-sm font-medium">✅ Tanpa Batas</span>
+      </div><button onclick="goToSlide(11)" class="mt-8 px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-2xl font-semibold text-lg interactive-btn transition-all"> 📝 Kerjakan Soal HOTS → </button>
+     </div>
+    </section><!-- Slide 11: Quiz HOTS -->
+    <section id="slide11" class="slide min-h-full flex-col items-center p-8">
+     <div class="max-w-4xl mx-auto w-full">
+      <h2 class="font-display text-4xl font-bold text-slate-800 mb-4 text-center">Soal HOTS (Higher Order Thinking Skills) 🧠</h2>
+      <p class="text-center text-slate-600 mb-8">Jawab 10 soal berikut untuk menguji pemahamanmu!</p>
+      <div id="quizContainer"><!-- Quiz questions will be rendered here -->
+      </div>
+      <div id="quizResult" class="hidden text-center mt-8">
+       <div class="bg-white rounded-3xl p-8 shadow-xl">
+        <div class="text-6xl mb-4" id="resultEmoji">
+         🎉
+        </div>
+        <h3 class="font-display text-3xl font-bold text-slate-800 mb-2">Hasil Kuis</h3>
+        <p class="text-xl text-slate-600 mb-4">Kamu menjawab benar:</p>
+        <div class="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4" id="scoreDisplay">
+         0/10
+        </div>
+        <p id="scoreFeedback" class="text-slate-600 mb-6"></p><button onclick="resetQuiz()" class="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold hover:opacity-90 transition-all"> 🔄 Ulangi Kuis </button>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 12: Additional Materials -->
+    <section id="slide12" class="slide min-h-full flex-col items-center justify-center p-8">
+     <div class="max-w-5xl mx-auto w-full">
+      <h2 class="font-display text-4xl font-bold text-slate-800 mb-8 text-center">Materi Tambahan: Tips &amp; Trik Berkarya 🎯</h2>
+      <div class="grid md:grid-cols-2 gap-8 mb-8">
+       <div class="bg-white rounded-3xl p-6 shadow-xl">
+        <h3 class="font-semibold text-xl text-purple-600 mb-4 flex items-center gap-2"><span class="text-2xl">🎨</span> Teori Warna Dasar</h3>
+        <div class="space-y-4">
+         <div class="flex items-center gap-3">
+          <div class="flex gap-1">
+           <div class="w-8 h-8 rounded-full bg-red-500"></div>
+           <div class="w-8 h-8 rounded-full bg-yellow-500"></div>
+           <div class="w-8 h-8 rounded-full bg-blue-500"></div>
+          </div><span class="text-slate-700"><strong>Primer:</strong> Merah, Kuning, Biru</span>
+         </div>
+         <div class="flex items-center gap-3">
+          <div class="flex gap-1">
+           <div class="w-8 h-8 rounded-full bg-orange-500"></div>
+           <div class="w-8 h-8 rounded-full bg-green-500"></div>
+           <div class="w-8 h-8 rounded-full bg-purple-500"></div>
+          </div><span class="text-slate-700"><strong>Sekunder:</strong> Oranye, Hijau, Ungu</span>
+         </div>
+         <p class="text-sm text-slate-600 bg-slate-50 p-3 rounded-xl">💡 <strong>Tips:</strong> Warna yang berseberangan di roda warna menciptakan kontras yang menarik!</p>
+        </div>
+       </div>
+       <div class="bg-white rounded-3xl p-6 shadow-xl">
+        <h3 class="font-semibold text-xl text-pink-600 mb-4 flex items-center gap-2"><span class="text-2xl">📐</span> Komposisi Sederhana</h3>
+        <div class="space-y-4">
+         <div class="p-3 bg-slate-50 rounded-xl"><strong class="text-slate-800">Rule of Thirds:</strong>
+          <p class="text-sm text-slate-600">Bagi kanvas menjadi 9 bagian, letakkan objek utama di titik perpotongan</p>
+         </div>
+         <div class="p-3 bg-slate-50 rounded-xl"><strong class="text-slate-800">Balance:</strong>
+          <p class="text-sm text-slate-600">Seimbangkan elemen berat dan ringan dalam karya</p>
+         </div>
+         <div class="p-3 bg-slate-50 rounded-xl"><strong class="text-slate-800">Focal Point:</strong>
+          <p class="text-sm text-slate-600">Tentukan satu titik fokus yang menarik perhatian</p>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-3xl p-8 text-white">
+       <h3 class="font-semibold text-xl mb-4 flex items-center gap-2"><span class="text-2xl">🌟</span> Langkah Memulai Berkarya</h3>
+       <div class="grid md:grid-cols-4 gap-4">
+        <div class="bg-white/20 rounded-xl p-4 text-center">
+         <div class="text-3xl mb-2">
+          1️⃣
+         </div>
+         <p class="text-sm">Tentukan ide &amp; konsep</p>
+        </div>
+        <div class="bg-white/20 rounded-xl p-4 text-center">
+         <div class="text-3xl mb-2">
+          2️⃣
+         </div>
+         <p class="text-sm">Siapkan alat &amp; bahan</p>
+        </div>
+        <div class="bg-white/20 rounded-xl p-4 text-center">
+         <div class="text-3xl mb-2">
+          3️⃣
+         </div>
+         <p class="text-sm">Eksperimen bebas</p>
+        </div>
+        <div class="bg-white/20 rounded-xl p-4 text-center">
+         <div class="text-3xl mb-2">
+          4️⃣
+         </div>
+         <p class="text-sm">Refleksi &amp; perbaiki</p>
+        </div>
+       </div>
+      </div>
+      <div class="mt-8 text-center"><button onclick="goToSlide(1)" class="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-2xl font-semibold text-lg interactive-btn transition-all"> 🏠 Kembali ke Awal </button>
+      </div>
+     </div>
+    </section>
+   </main><!-- Slide Navigation Dots -->
+   <div class="bg-white/80 backdrop-blur-md py-4 sticky bottom-0">
+    <div class="flex justify-center gap-2 flex-wrap max-w-4xl mx-auto px-4"><button onclick="goToSlide(1)" class="slide-dot w-3 h-3 rounded-full bg-purple-500 transition-all" data-slide="1"></button> <button onclick="goToSlide(2)" class="slide-dot w-3 h-3 rounded-full bg-slate-300 hover:bg-purple-300 transition-all" data-slide="2"></button> <button onclick="goToSlide(3)" class="slide-dot w-3 h-3 rounded-full bg-slate-300 hover:bg-purple-300 transition-all" data-slide="3"></button> <button onclick="goToSlide(4)" class="slide-dot w-3 h-3 rounded-full bg-slate-300 hover:bg-purple-300 transition-all" data-slide="4"></button> <button onclick="goToSlide(5)" class="slide-dot w-3 h-3 rounded-full bg-slate-300 hover:bg-purple-300 transition-all" data-slide="5"></button> <button onclick="goToSlide(6)" class="slide-dot w-3 h-3 rounded-full bg-slate-300 hover:bg-purple-300 transition-all" data-slide="6"></button> <button onclick="goToSlide(7)" class="slide-dot w-3 h-3 rounded-full bg-slate-300 hover:bg-purple-300 transition-all" data-slide="7"></button> <button onclick="goToSlide(8)" class="slide-dot w-3 h-3 rounded-full bg-slate-300 hover:bg-purple-300 transition-all" data-slide="8"></button> <button onclick="goToSlide(9)" class="slide-dot w-3 h-3 rounded-full bg-slate-300 hover:bg-purple-300 transition-all" data-slide="9"></button> <button onclick="goToSlide(10)" class="slide-dot w-3 h-3 rounded-full bg-slate-300 hover:bg-purple-300 transition-all" data-slide="10"></button> <button onclick="goToSlide(11)" class="slide-dot w-3 h-3 rounded-full bg-slate-300 hover:bg-purple-300 transition-all" data-slide="11"></button> <button onclick="goToSlide(12)" class="slide-dot w-3 h-3 rounded-full bg-slate-300 hover:bg-purple-300 transition-all" data-slide="12"></button>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Default config
+    const defaultConfig = {
+      main_title: 'Menggambar atau Melukis dengan Medium Pilihan',
+      subtitle: 'Eksplorasi Kreativitas Tanpa Batas melalui Kuas, Nonkuas, dan Mixed Media',
+      primary_color: '#8b5cf6',
+      secondary_color: '#ec4899',
+      text_color: '#1e293b',
+      background_color: '#f8fafc',
+      surface_color: '#ffffff'
+    };
+    
+    let config = { ...defaultConfig };
+    
+    // Element SDK initialization
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          document.getElementById('mainTitle').textContent = config.main_title;
+          document.getElementById('subtitle').textContent = config.subtitle;
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (v) => { cfg.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); }
+            },
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (v) => { cfg.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['main_title', cfg.main_title || defaultConfig.main_title],
+          ['subtitle', cfg.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
+    
+    // Slide Navigation
+    let currentSlide = 1;
+    const totalSlides = 12;
+    
+    function updateSlideDisplay() {
+      document.querySelectorAll('.slide').forEach((slide, index) => {
+        slide.classList.remove('active');
+        if (index + 1 === currentSlide) {
+          slide.classList.add('active');
+        }
+      });
+      
+      document.getElementById('slideCounter').textContent = `Slide ${currentSlide} / ${totalSlides}`;
+      document.getElementById('progressBar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+      
+      document.querySelectorAll('.slide-dot').forEach((dot, index) => {
+        dot.classList.remove('bg-purple-500');
+        dot.classList.add('bg-slate-300');
+        if (index + 1 === currentSlide) {
+          dot.classList.remove('bg-slate-300');
+          dot.classList.add('bg-purple-500');
+        }
+      });
+      
+      // Initialize canvas when on slide 3
+      if (currentSlide === 3) {
+        initZentangleCanvas();
+      }
+      
+      // Initialize quiz when on slide 11
+      if (currentSlide === 11) {
+        initQuiz();
+      }
+    }
+    
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlideDisplay();
+      }
+    }
+    
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlideDisplay();
+      }
+    }
+    
+    function goToSlide(num) {
+      currentSlide = num;
+      updateSlideDisplay();
+    }
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+      }
+    });
+    
+    // Media Selector (Slide 2)
+    function selectMedia(btn, media) {
+      document.querySelectorAll('#mediaSelector button').forEach(b => {
+        b.classList.remove('bg-purple-500', 'text-white');
+      });
+      btn.classList.add('bg-purple-500', 'text-white');
+      
+      const feedback = document.getElementById('mediaFeedback');
+      feedback.classList.remove('hidden');
+      feedback.innerHTML = `<span class="text-purple-600 font-semibold">${media}</span> adalah pilihan yang bagus! Setiap media memiliki keunikannya sendiri. 🎨`;
+    }
+    
+    // Zentangle Canvas (Slide 3)
+    let zentangleCanvas, zentangleCtx;
+    let isDrawing = false;
+    let drawColor = '#8b5cf6';
+    
+    function initZentangleCanvas() {
+      zentangleCanvas = document.getElementById('zentangleCanvas');
+      if (!zentangleCanvas) return;
+      
+      zentangleCtx = zentangleCanvas.getContext('2d');
+      zentangleCtx.lineCap = 'round';
+      zentangleCtx.lineJoin = 'round';
+      zentangleCtx.lineWidth = 3;
+      
+      zentangleCanvas.addEventListener('mousedown', startDrawing);
+      zentangleCanvas.addEventListener('mousemove', draw);
+      zentangleCanvas.addEventListener('mouseup', stopDrawing);
+      zentangleCanvas.addEventListener('mouseout', stopDrawing);
+      
+      zentangleCanvas.addEventListener('touchstart', handleTouchStart);
+      zentangleCanvas.addEventListener('touchmove', handleTouchMove);
+      zentangleCanvas.addEventListener('touchend', stopDrawing);
+    }
+    
+    function startDrawing(e) {
+      isDrawing = true;
+      zentangleCtx.beginPath();
+      zentangleCtx.moveTo(e.offsetX, e.offsetY);
+    }
+    
+    function draw(e) {
+      if (!isDrawing) return;
+      zentangleCtx.strokeStyle = drawColor;
+      zentangleCtx.lineTo(e.offsetX, e.offsetY);
+      zentangleCtx.stroke();
+    }
+    
+    function stopDrawing() {
+      isDrawing = false;
+    }
+    
+    function handleTouchStart(e) {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const rect = zentangleCanvas.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      isDrawing = true;
+      zentangleCtx.beginPath();
+      zentangleCtx.moveTo(x, y);
+    }
+    
+    function handleTouchMove(e) {
+      e.preventDefault();
+      if (!isDrawing) return;
+      const touch = e.touches[0];
+      const rect = zentangleCanvas.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      zentangleCtx.strokeStyle = drawColor;
+      zentangleCtx.lineTo(x, y);
+      zentangleCtx.stroke();
+    }
+    
+    function setDrawColor(color) {
+      drawColor = color;
+    }
+    
+    function clearCanvas() {
+      if (zentangleCtx) {
+        zentangleCtx.clearRect(0, 0, zentangleCanvas.width, zentangleCanvas.height);
+      }
+    }
+    
+    // Stamp Simulator (Slide 4)
+    let stampShape = 'circle';
+    let stampColor = '#8b5cf6';
+    
+    function setStampShape(shape) {
+      stampShape = shape;
+      document.querySelectorAll('.stamp-shape-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-purple-500', 'text-white');
+      });
+      event.target.classList.add('active', 'bg-purple-500', 'text-white');
+    }
+    
+    function setStampColor(color) {
+      stampColor = color;
+    }
+    
+    document.getElementById('stampCanvas').addEventListener('click', function(e) {
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const stamp = document.createElement('div');
+      stamp.style.position = 'absolute';
+      stamp.style.left = (x - 20) + 'px';
+      stamp.style.top = (y - 20) + 'px';
+      stamp.style.fontSize = '40px';
+      stamp.style.animation = 'fadeIn 0.3s ease-out';
+      stamp.style.filter = `drop-shadow(0 2px 4px rgba(0,0,0,0.2))`;
+      
+      const shapes = {
+        'circle': '⬤',
+        'star': '★',
+        'heart': '❤',
+        'leaf': '🍃'
+      };
+      
+      stamp.textContent = shapes[stampShape];
+      stamp.style.color = stampColor;
+      
+      this.appendChild(stamp);
+    });
+    
+    function clearStampCanvas() {
+      const canvas = document.getElementById('stampCanvas');
+      canvas.innerHTML = '';
+    }
+    
+    // Swirl Demo (Slide 5)
+    let swirlColors = [];
+    
+    function addSwirlColor(color) {
+      if (swirlColors.length < 6) {
+        swirlColors.push(color);
+        updateSwirlPreview();
+      }
+    }
+    
+    function updateSwirlPreview() {
+      const pattern = document.getElementById('swirlPattern');
+      if (swirlColors.length === 0) {
+        pattern.style.background = '#f1f5f9';
+        return;
+      }
+      
+      const stripes = swirlColors.map((color, i) => {
+        const percent = (i / swirlColors.length) * 100;
+        const nextPercent = ((i + 1) / swirlColors.length) * 100;
+        return `${color} ${percent}%, ${color} ${nextPercent}%`;
+      }).join(', ');
+      
+      pattern.style.background = `linear-gradient(to bottom, ${stripes})`;
+    }
+    
+    function mixSwirl() {
+      const pattern = document.getElementById('swirlPattern');
+      if (swirlColors.length < 2) return;
+      
+      const colorString = swirlColors.join(', ');
+      pattern.style.transition = 'all 1s ease-in-out';
+      pattern.style.background = `conic-gradient(from ${Math.random() * 360}deg, ${colorString})`;
+      pattern.style.filter = `blur(${5 + Math.random() * 15}px)`;
+      
+      setTimeout(() => {
+        pattern.style.filter = 'blur(20px)';
+        pattern.style.background = `radial-gradient(ellipse at ${Math.random() * 100}% ${Math.random() * 100}%, ${colorString})`;
+      }, 500);
+    }
+    
+    function resetSwirl() {
+      swirlColors = [];
+      const pattern = document.getElementById('swirlPattern');
+      pattern.style.background = '#f1f5f9';
+      pattern.style.filter = 'none';
+    }
+    
+    // Mixed Media Builder (Slide 6)
+    let selectedMaterials = [];
+    
+    function toggleMaterial(btn, material) {
+      const index = selectedMaterials.indexOf(material);
+      if (index > -1) {
+        selectedMaterials.splice(index, 1);
+        btn.classList.remove('bg-purple-500', 'text-white', 'border-purple-500');
+      } else {
+        selectedMaterials.push(material);
+        btn.classList.add('bg-purple-500', 'text-white', 'border-purple-500');
+      }
+      updateSelectedMaterials();
+    }
+    
+    function updateSelectedMaterials() {
+      const container = document.getElementById('selectedMaterials');
+      if (selectedMaterials.length === 0) {
+        container.innerHTML = '<p class="text-slate-400 text-sm">Bahan yang dipilih akan muncul di sini...</p>';
+        return;
+      }
+      
+      container.innerHTML = `
+        <p class="text-sm text-slate-500 mb-2">Bahan terpilih (${selectedMaterials.length}):</p>
+        <div class="flex flex-wrap gap-2">
+          ${selectedMaterials.map(m => `<span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">${m}</span>`).join('')}
+        </div>
+        ${selectedMaterials.length >= 3 ? '<p class="mt-3 text-green-600 text-sm font-medium">✅ Kombinasi menarik! Coba eksplorasi ide karyamu!</p>' : ''}
+      `;
+    }
+    
+    // Brainstorming Tool (Slide 8)
+    let brainstormIdeas = [];
+    
+    function addBrainstormIdea() {
+      const theme = document.getElementById('brainstormTheme').value;
+      const element = document.getElementById('brainstormElement').value;
+      const material = document.getElementById('brainstormMaterial').value;
+      
+      if (!theme && !element && !material) return;
+      
+      brainstormIdeas.push({ theme, element, material });
+      
+      const list = document.getElementById('brainstormList');
+      const ideaEl = document.createElement('div');
+      ideaEl.className = 'p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl border border-purple-100 flex items-center justify-between';
+      ideaEl.innerHTML = `
+        <div class="flex gap-4 flex-wrap">
+          ${theme ? `<span class="text-purple-700"><strong>Tema:</strong> ${theme}</span>` : ''}
+          ${element ? `<span class="text-pink-700"><strong>Elemen:</strong> ${element}</span>` : ''}
+          ${material ? `<span class="text-cyan-700"><strong>Bahan:</strong> ${material}</span>` : ''}
+        </div>
+        <span class="text-green-500">✓</span>
+      `;
+      list.appendChild(ideaEl);
+      
+      document.getElementById('brainstormTheme').value = '';
+      document.getElementById('brainstormElement').value = '';
+      document.getElementById('brainstormMaterial').value = '';
+    }
+    
+    // Quiz System (Slide 11)
+    const quizQuestions = [
+      {
+        question: "Seorang seniman ingin menciptakan karya dengan efek relaksasi. Teknik mana yang paling tepat digunakan?",
+        options: ["Teknik Swirl", "Zentangle", "Finger Painting", "Stempel"],
+        correct: 1,
+        explanation: "Zentangle dikenal sebagai 'meditative drawing' yang memberikan efek relaksasi karena fokus pada pola terstruktur."
+      },
+      {
+        question: "Mengapa mixed media dianggap sebagai solusi kreatif untuk lingkungan dengan keterbatasan sumber daya?",
+        options: [
+          "Karena hanya menggunakan bahan mahal",
+          "Karena memanfaatkan bahan bekas dan alam sekitar",
+          "Karena tidak memerlukan kreativitas",
+          "Karena hasilnya selalu sempurna"
+        ],
+        correct: 1,
+        explanation: "Mixed media memanfaatkan bahan bekas dan alam sekitar, sehingga tidak tergantung pada alat mahal."
+      },
+      {
+        question: "Dalam teknik Swirl, apa yang terjadi ketika kanvas digoyangkan ke kanan dan kiri?",
+        options: [
+          "Cat mengering lebih cepat",
+          "Warna tetap terpisah",
+          "Warna berbaur membentuk pola yang indah",
+          "Cat tumpah keluar kanvas"
+        ],
+        correct: 2,
+        explanation: "Goyangan membuat cat-cat berbeda warna saling bercampur menciptakan pola unik yang tidak bisa direncanakan."
+      },
+      {
+        question: "Bagaimana kamu dapat mengaplikasikan konsep 'tidak ada kata salah dalam seni' saat menghadapi kesalahan dalam berkarya?",
+        options: [
+          "Membuang karya dan memulai dari awal",
+          "Menyalahkan alat yang digunakan",
+          "Mengubah kesalahan menjadi bagian dari karya kreatif",
+          "Menyembunyikan kesalahan"
+        ],
+        correct: 2,
+        explanation: "Dalam seni, 'kesalahan' bisa diubah menjadi elemen artistik yang unik dan personal."
+      },
+      {
+        question: "Seorang siswa hanya memiliki sikat gigi bekas dan pewarna makanan. Analisis teknik apa yang paling sesuai untuk bahan tersebut?",
+        options: [
+          "Teknik Zentangle dengan pola detail",
+          "Teknik splatter painting (percikan cat)",
+          "Teknik Swirl dengan gelas",
+          "Teknik stempel kentang"
+        ],
+        correct: 1,
+        explanation: "Sikat gigi cocok untuk teknik splatter/percikan karena bulu sikatnya dapat menyemprotkan cat saat digesek."
+      },
+      {
+        question: "Mengapa tahap brainstorming (curah ide) penting dilakukan sebelum berkarya?",
+        options: [
+          "Agar karya mirip dengan karya orang lain",
+          "Untuk mengumpulkan dan mengorganisir ide-ide secara sistematis",
+          "Agar proses berkarya menjadi lebih lama",
+          "Karena merupakan syarat wajib dalam seni"
+        ],
+        correct: 1,
+        explanation: "Brainstorming membantu memetakan tema, elemen, dan bahan secara terstruktur sebelum eksekusi."
+      },
+      {
+        question: "Evaluasi pernyataan berikut: 'Kentang lebih baik daripada penghapus sebagai bahan stempel.' Manakah analisis yang tepat?",
+        options: [
+          "Benar, karena kentang lebih murah",
+          "Salah, karena penghapus lebih mudah dibentuk",
+          "Tidak bisa dibandingkan karena keduanya memiliki keunggulan berbeda",
+          "Benar, karena kentang lebih awet"
+        ],
+        correct: 2,
+        explanation: "Kentang (alami) dan penghapus (buatan) memiliki karakteristik berbeda. Kentang mudah diukir tapi cepat rusak, penghapus lebih awet tapi butuh alat tajam."
+      },
+      {
+        question: "Jika kamu ingin membuat pewarna ungu dari bahan alami, bahan apa yang paling tepat digunakan?",
+        options: [
+          "Bubuk kopi",
+          "Kunyit",
+          "Kulit manggis",
+          "Daun suji"
+        ],
+        correct: 2,
+        explanation: "Kulit manggis menghasilkan warna ungu alami, sedangkan kopi (coklat), kunyit (kuning), dan daun suji (hijau)."
+      },
+      {
+        question: "Dalam refleksi karya, mengapa penting untuk mengidentifikasi bagian yang perlu diperbaiki DAN cara memperbaikinya?",
+        options: [
+          "Agar bisa menyalahkan diri sendiri",
+          "Untuk membuktikan karya tidak sempurna",
+          "Sebagai proses belajar dan pengembangan diri yang konstruktif",
+          "Karena guru memintanya"
+        ],
+        correct: 2,
+        explanation: "Refleksi konstruktif membantu seniman berkembang dengan mengidentifikasi area perbaikan dan solusinya."
+      },
+      {
+        question: "Ciptakan solusi: Seorang siswa di desa terpencil ingin belajar melukis tapi tidak ada toko alat lukis. Kombinasi alternatif apa yang paling praktis?",
+        options: [
+          "Menunggu sampai ada toko alat lukis",
+          "Tidak jadi belajar melukis",
+          "Menggunakan arang, tanah liat, dan ranting sebagai alat lukis alami",
+          "Membeli online dengan ongkir mahal"
+        ],
+        correct: 2,
+        explanation: "Bahan alami seperti arang (pewarna), tanah liat (tekstur), dan ranting (kuas) bisa ditemukan di alam dan gratis."
+      }
+    ];
+    
+    let currentQuestion = 0;
+    let score = 0;
+    let quizAnswered = [];
+    let quizInitialized = false;
+    
+    function initQuiz() {
+      if (quizInitialized) return;
+      quizInitialized = true;
+      currentQuestion = 0;
+      score = 0;
+      quizAnswered = new Array(quizQuestions.length).fill(null);
+      renderQuiz();
+    }
+    
+    function renderQuiz() {
+      const container = document.getElementById('quizContainer');
+      const q = quizQuestions[currentQuestion];
+      
+      container.innerHTML = `
+        <div class="bg-white rounded-3xl p-8 shadow-xl">
+          <div class="flex items-center justify-between mb-6">
+            <span class="text-sm text-slate-500">Soal ${currentQuestion + 1} dari ${quizQuestions.length}</span>
+            <div class="flex gap-1">
+              ${quizQuestions.map((_, i) => `
+                <div class="w-3 h-3 rounded-full ${i === currentQuestion ? 'bg-purple-500' : quizAnswered[i] !== null ? (quizAnswered[i] === quizQuestions[i].correct ? 'bg-green-500' : 'bg-red-500') : 'bg-slate-200'}"></div>
+              `).join('')}
+            </div>
+          </div>
+          
+          <h3 class="text-xl font-semibold text-slate-800 mb-6">${q.question}</h3>
+          
+          <div class="space-y-3" id="quizOptions">
+            ${q.options.map((opt, i) => `
+              <button onclick="selectAnswer(${i})" class="quiz-option w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-purple-300 ${quizAnswered[currentQuestion] !== null ? (i === q.correct ? 'correct' : (i === quizAnswered[currentQuestion] ? 'wrong' : '')) : ''}" ${quizAnswered[currentQuestion] !== null ? 'disabled' : ''}>
+                <span class="font-medium text-slate-700">${String.fromCharCode(65 + i)}.</span> ${opt}
+              </button>
+            `).join('')}
+          </div>
+          
+          ${quizAnswered[currentQuestion] !== null ? `
+            <div class="mt-6 p-4 rounded-xl ${quizAnswered[currentQuestion] === q.correct ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}">
+              <p class="font-semibold ${quizAnswered[currentQuestion] === q.correct ? 'text-green-700' : 'text-red-700'}">
+                ${quizAnswered[currentQuestion] === q.correct ? '✅ Benar!' : '❌ Kurang tepat'}
+              </p>
+              <p class="text-slate-600 mt-2">${q.explanation}</p>
+            </div>
+          ` : ''}
+          
+          <div class="flex justify-between mt-8">
+            <button onclick="prevQuestion()" class="px-6 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all ${currentQuestion === 0 ? 'opacity-50 cursor-not-allowed' : ''}" ${currentQuestion === 0 ? 'disabled' : ''}>
+              ← Sebelumnya
+            </button>
+            ${currentQuestion === quizQuestions.length - 1 ? `
+              <button onclick="showResult()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:opacity-90 transition-all">
+                Lihat Hasil 🎯
+              </button>
+            ` : `
+              <button onclick="nextQuestion()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:opacity-90 transition-all">
+                Selanjutnya →
+              </button>
+            `}
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('quizResult').classList.add('hidden');
+    }
+    
+    function selectAnswer(index) {
+      if (quizAnswered[currentQuestion] !== null) return;
+      
+      quizAnswered[currentQuestion] = index;
+      if (index === quizQuestions[currentQuestion].correct) {
+        score++;
+      }
+      renderQuiz();
+    }
+    
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        renderQuiz();
+      }
+    }
+    
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuiz();
+      }
+    }
+    
+    function showResult() {
+      document.getElementById('quizContainer').innerHTML = '';
+      const resultDiv = document.getElementById('quizResult');
+      resultDiv.classList.remove('hidden');
+      
+      document.getElementById('scoreDisplay').textContent = `${score}/${quizQuestions.length}`;
+      
+      let emoji, feedback;
+      if (score === 10) {
+        emoji = '🏆';
+        feedback = 'Sempurna! Kamu benar-benar memahami materi dengan sangat baik!';
+      } else if (score >= 8) {
+        emoji = '🌟';
+        feedback = 'Luar biasa! Pemahamanmu sangat baik!';
+      } else if (score >= 6) {
+        emoji = '👍';
+        feedback = 'Bagus! Terus tingkatkan pemahamanmu!';
+      } else if (score >= 4) {
+        emoji = '💪';
+        feedback = 'Cukup baik! Coba pelajari lagi materi yang belum dikuasai.';
+      } else {
+        emoji = '📚';
+        feedback = 'Jangan menyerah! Pelajari lagi materinya dan coba lagi.';
+      }
+      
+      document.getElementById('resultEmoji').textContent = emoji;
+      document.getElementById('scoreFeedback').textContent = feedback;
+    }
+    
+    function resetQuiz() {
+      quizInitialized = false;
+      currentQuestion = 0;
+      score = 0;
+      quizAnswered = [];
+      initQuiz();
+    }
+    
+    // Initialize
+    updateSlideDisplay();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c98ae86a384ea83',t:'MTc3MDM2MDI5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

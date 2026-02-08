@@ -1,0 +1,1242 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homeostasis &amp; Reproduksi Manusia</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      font-family: 'Nunito', sans-serif;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    }
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    .nav-item:hover, .nav-item.active {
+      background: rgba(255,255,255,0.2);
+      transform: scale(1.02);
+    }
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    .quiz-option:hover:not(.selected):not(.correct):not(.wrong) {
+      background: #e0e7ff;
+      border-color: #6366f1;
+    }
+    .quiz-option.selected {
+      background: #c7d2fe;
+      border-color: #4f46e5;
+    }
+    .quiz-option.correct {
+      background: #bbf7d0;
+      border-color: #22c55e;
+    }
+    .quiz-option.wrong {
+      background: #fecaca;
+      border-color: #ef4444;
+    }
+    .fade-in {
+      animation: fadeIn 0.5s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .pulse-animation {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    .tooltip {
+      position: relative;
+    }
+    .tooltip:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1f2937;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 10;
+    }
+    .interactive-diagram {
+      cursor: pointer;
+    }
+    .interactive-diagram:hover .highlight {
+      fill-opacity: 0.3;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gray-50 overflow-auto">
+  <div id="app" class="w-full h-full"><!-- Header -->
+   <header class="gradient-bg text-white py-6 px-4 shadow-lg">
+    <div class="max-w-6xl mx-auto">
+     <h1 id="mainTitle" class="text-3xl md:text-4xl font-extrabold text-center mb-2">🧬 Homeostasis &amp; Reproduksi Manusia</h1>
+     <p id="teacherInfo" class="text-center text-purple-100 text-lg">Materi Pembelajaran Biologi Interaktif</p>
+    </div>
+   </header><!-- Navigation -->
+   <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-3 overflow-x-auto">
+     <div class="flex gap-2 min-w-max"><button onclick="showSection('intro')" class="nav-item px-4 py-2 rounded-full bg-purple-600 text-white font-semibold text-sm" id="nav-intro">📚 Pendahuluan</button> <button onclick="showSection('suhu')" class="nav-item px-4 py-2 rounded-full bg-purple-100 text-purple-700 font-semibold text-sm" id="nav-suhu">🌡️ Suhu Tubuh</button> <button onclick="showSection('cairan')" class="nav-item px-4 py-2 rounded-full bg-purple-100 text-purple-700 font-semibold text-sm" id="nav-cairan">💧 Cairan Tubuh</button> <button onclick="showSection('gula')" class="nav-item px-4 py-2 rounded-full bg-purple-100 text-purple-700 font-semibold text-sm" id="nav-gula">🍬 Gula &amp; Kalsium</button> <button onclick="showSection('reproduksi')" class="nav-item px-4 py-2 rounded-full bg-purple-100 text-purple-700 font-semibold text-sm" id="nav-reproduksi">👶 Reproduksi</button> <button onclick="showSection('quiz')" class="nav-item px-4 py-2 rounded-full bg-orange-500 text-white font-semibold text-sm pulse-animation" id="nav-quiz">📝 Kuis HOTS</button>
+     </div>
+    </div>
+   </nav><!-- Main Content -->
+   <main class="max-w-6xl mx-auto px-4 py-8"><!-- Section 1: Introduction -->
+    <section id="section-intro" class="fade-in">
+     <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">🏠</span>
+       <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Apa itu Homeostasis?</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+       <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-6">
+        <h3 class="font-bold text-xl text-purple-800 mb-4">📖 Definisi</h3>
+        <p class="text-gray-700 leading-relaxed"><strong>Homeostasis</strong> adalah proses otomatis tubuh untuk mempertahankan kondisi internal yang stabil agar fungsi tubuh berjalan normal, meskipun terjadi perubahan di dalam maupun di luar tubuh.</p>
+        <div class="mt-4 p-4 bg-white rounded-lg border-l-4 border-purple-500">
+         <p class="text-sm text-gray-600"><strong>🔤 Asal Kata:</strong> Dari bahasa Yunani "homeo" (sama) dan "stasis" (kondisi tetap)</p>
+        </div>
+       </div>
+       <div class="space-y-4">
+        <div class="bg-green-50 rounded-xl p-5 card-hover">
+         <div class="flex items-center gap-3"><span class="text-3xl">✅</span>
+          <div>
+           <h4 class="font-bold text-green-800">Jika Berhasil</h4>
+           <p class="text-green-700">Tubuh berfungsi normal &amp; sehat</p>
+          </div>
+         </div>
+        </div>
+        <div class="bg-red-50 rounded-xl p-5 card-hover">
+         <div class="flex items-center gap-3"><span class="text-3xl">⚠️</span>
+          <div>
+           <h4 class="font-bold text-red-800">Jika Gagal</h4>
+           <p class="text-red-700">Dapat menyebabkan kelainan hingga kematian</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Interactive Diagram: Feedback Loop -->
+      <div class="bg-gray-50 rounded-xl p-6">
+       <h3 class="font-bold text-xl text-gray-800 mb-4 text-center">🔄 Mekanisme Umpan Balik (Feedback Loop)</h3>
+       <div class="flex flex-col items-center">
+        <svg viewbox="0 0 500 300" class="w-full max-w-lg"><!-- Stimulus --> <rect x="180" y="10" width="140" height="50" rx="10" fill="#fbbf24" stroke="#f59e0b" stroke-width="2" /> <text x="250" y="42" text-anchor="middle" font-weight="bold" fill="#78350f" font-size="14">
+          Stimulus/Perubahan
+         </text> <!-- Arrow down --> <path d="M250 60 L250 90" stroke="#6b7280" stroke-width="3" marker-end="url(#arrowhead)" /> <!-- Receptor --> <rect x="180" y="90" width="140" height="50" rx="10" fill="#a78bfa" stroke="#7c3aed" stroke-width="2" /> <text x="250" y="122" text-anchor="middle" font-weight="bold" fill="#4c1d95" font-size="14">
+          Reseptor
+         </text> <!-- Arrow down --> <path d="M250 140 L250 170" stroke="#6b7280" stroke-width="3" marker-end="url(#arrowhead)" /> <!-- Control Center --> <rect x="180" y="170" width="140" height="50" rx="10" fill="#60a5fa" stroke="#2563eb" stroke-width="2" /> <text x="250" y="195" text-anchor="middle" font-weight="bold" fill="#1e3a8a" font-size="12">
+          Pusat Kendali
+         </text> <text x="250" y="210" text-anchor="middle" fill="#1e3a8a" font-size="10">
+          (Otak/Kelenjar)
+         </text> <!-- Arrow down --> <path d="M250 220 L250 250" stroke="#6b7280" stroke-width="3" marker-end="url(#arrowhead)" /> <!-- Effector --> <rect x="180" y="250" width="140" height="50" rx="10" fill="#34d399" stroke="#10b981" stroke-width="2" /> <text x="250" y="282" text-anchor="middle" font-weight="bold" fill="#064e3b" font-size="14">
+          Efektor
+         </text> <!-- Feedback arrow --> <path d="M320 275 C400 275 400 35 320 35" stroke="#ef4444" stroke-width="3" fill="none" stroke-dasharray="8,4" /> <text x="400" y="160" text-anchor="middle" fill="#ef4444" font-weight="bold" font-size="11">
+          Umpan Balik
+         </text> <defs>
+          <marker id="arrowhead" markerwidth="10" markerheight="7" refx="9" refy="3.5" orient="auto">
+           <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280" />
+          </marker>
+         </defs>
+        </svg>
+       </div>
+       <p class="text-center text-gray-600 mt-4 text-sm">Klik bagian diagram untuk mempelajari lebih lanjut!</p>
+      </div><!-- Examples Grid -->
+      <div class="mt-8">
+       <h3 class="font-bold text-xl text-gray-800 mb-4">🎯 Contoh Utama Homeostasis</h3>
+       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-orange-50 rounded-xl p-4 text-center card-hover cursor-pointer" onclick="showSection('suhu')"><span class="text-4xl block mb-2">🌡️</span>
+         <p class="font-semibold text-orange-800">Suhu Tubuh</p>
+         <p class="text-xs text-orange-600">37°C konstan</p>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-4 text-center card-hover cursor-pointer" onclick="showSection('cairan')"><span class="text-4xl block mb-2">💧</span>
+         <p class="font-semibold text-blue-800">Kadar Air</p>
+         <p class="text-xs text-blue-600">Keseimbangan cairan</p>
+        </div>
+        <div class="bg-pink-50 rounded-xl p-4 text-center card-hover cursor-pointer" onclick="showSection('gula')"><span class="text-4xl block mb-2">🍬</span>
+         <p class="font-semibold text-pink-800">Gula Darah</p>
+         <p class="text-xs text-pink-600">Glukosa stabil</p>
+        </div>
+        <div class="bg-green-50 rounded-xl p-4 text-center card-hover cursor-pointer" onclick="showSection('gula')"><span class="text-4xl block mb-2">🦴</span>
+         <p class="font-semibold text-green-800">Kalsium</p>
+         <p class="text-xs text-green-600">Kesehatan tulang</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 2: Temperature Regulation -->
+    <section id="section-suhu" class="fade-in hidden">
+     <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">🌡️</span>
+       <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Pengaturan Suhu Tubuh</h2>
+      </div>
+      <div class="bg-gradient-to-r from-blue-50 to-orange-50 rounded-xl p-6 mb-6">
+       <p class="text-lg text-gray-700 text-center">Tubuh manusia mempertahankan suhu konstan sekitar <strong class="text-2xl text-purple-700">37°C</strong> melalui pusat kendali di otak yang disebut <strong class="text-purple-700">Hipotalamus</strong></p>
+      </div><!-- Interactive Temperature Simulator -->
+      <div class="bg-gray-50 rounded-xl p-6 mb-8">
+       <h3 class="font-bold text-xl text-gray-800 mb-4 text-center">🎮 Simulasi Interaktif: Respons Tubuh terhadap Suhu</h3>
+       <div class="flex flex-col items-center gap-6">
+        <div class="flex items-center gap-4"><button onclick="changeTemp(-1)" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full font-bold text-xl transition">❄️ Dinginkan</button>
+         <div class="text-center">
+          <div id="tempDisplay" class="text-5xl font-bold text-gray-800">
+           37°C
+          </div>
+          <p class="text-gray-600">Suhu Tubuh</p>
+         </div><button onclick="changeTemp(1)" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full font-bold text-xl transition">🔥 Panaskan</button>
+        </div><!-- Body Response Display -->
+        <div id="bodyResponse" class="w-full max-w-2xl bg-white rounded-xl p-6 border-2 border-green-300">
+         <div class="text-center"><span class="text-6xl mb-4 block">😊</span>
+          <h4 class="font-bold text-xl text-green-700 mb-2">Suhu Normal</h4>
+          <p class="text-gray-600">Tubuh dalam kondisi homeostasis. Semua sistem berfungsi optimal!</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Temperature Response Table -->
+      <div class="grid md:grid-cols-2 gap-6">
+       <div class="bg-orange-50 rounded-xl p-6 border-2 border-orange-200">
+        <div class="flex items-center gap-3 mb-4"><span class="text-4xl">🥵</span>
+         <h3 class="font-bold text-xl text-orange-800">Terlalu Panas</h3>
+        </div>
+        <div class="space-y-4">
+         <div class="bg-white rounded-lg p-4">
+          <h4 class="font-semibold text-orange-700 mb-2">🔬 Bioproses:</h4>
+          <ul class="space-y-2 text-gray-700">
+           <li class="flex items-start gap-2"><span>•</span> <span>Pembuluh darah <strong>melebar</strong> (vasodilatasi)</span></li>
+           <li class="flex items-start gap-2"><span>•</span> <span>Kelenjar keringat <strong>aktif</strong> memproduksi keringat</span></li>
+          </ul>
+         </div>
+         <div class="bg-orange-100 rounded-lg p-4">
+          <h4 class="font-semibold text-orange-700 mb-2">✨ Hasil:</h4>
+          <p class="text-gray-700">Panas keluar saat keringat menguap → <strong>Suhu turun</strong></p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-blue-50 rounded-xl p-6 border-2 border-blue-200">
+        <div class="flex items-center gap-3 mb-4"><span class="text-4xl">🥶</span>
+         <h3 class="font-bold text-xl text-blue-800">Terlalu Dingin</h3>
+        </div>
+        <div class="space-y-4">
+         <div class="bg-white rounded-lg p-4">
+          <h4 class="font-semibold text-blue-700 mb-2">🔬 Bioproses:</h4>
+          <ul class="space-y-2 text-gray-700">
+           <li class="flex items-start gap-2"><span>•</span> <span>Pembuluh darah <strong>menyempit</strong> (vasokonstriksi)</span></li>
+           <li class="flex items-start gap-2"><span>•</span> <span>Otot <strong>berkontraksi</strong> (menggigil)</span></li>
+          </ul>
+         </div>
+         <div class="bg-blue-100 rounded-lg p-4">
+          <h4 class="font-semibold text-blue-700 mb-2">✨ Hasil:</h4>
+          <p class="text-gray-700">Panas ditahan &amp; dihasilkan oleh otot → <strong>Suhu naik</strong></p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Visual Diagram -->
+      <div class="mt-8 bg-gray-50 rounded-xl p-6">
+       <h3 class="font-bold text-xl text-gray-800 mb-4 text-center">🖼️ Ilustrasi Mekanisme</h3>
+       <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl p-4">
+         <svg viewbox="0 0 200 150" class="w-full"><!-- Hot condition - dilated vessels --> <text x="100" y="20" text-anchor="middle" font-weight="bold" fill="#ea580c" font-size="12">
+           PANAS - Vasodilatasi
+          </text> <rect x="30" y="35" width="140" height="40" rx="5" fill="#fed7aa" /> <!-- Wide blood vessel --> <ellipse cx="100" cy="55" rx="50" ry="15" fill="#ef4444" /> <ellipse cx="100" cy="55" rx="40" ry="10" fill="#fca5a5" /> <!-- Sweat glands --> <circle cx="50" cy="100" r="10" fill="#60a5fa" /> <circle cx="100" cy="100" r="10" fill="#60a5fa" /> <circle cx="150" cy="100" r="10" fill="#60a5fa" /> <path d="M50 110 Q50 125 45 135" stroke="#60a5fa" stroke-width="2" fill="none" /> <path d="M100 110 Q100 125 95 135" stroke="#60a5fa" stroke-width="2" fill="none" /> <path d="M150 110 Q150 125 145 135" stroke="#60a5fa" stroke-width="2" fill="none" /> <text x="100" y="148" text-anchor="middle" fill="#2563eb" font-size="10">
+           Keringat aktif
+          </text>
+         </svg>
+        </div>
+        <div class="bg-white rounded-xl p-4">
+         <svg viewbox="0 0 200 150" class="w-full"><!-- Cold condition - constricted vessels --> <text x="100" y="20" text-anchor="middle" font-weight="bold" fill="#2563eb" font-size="12">
+           DINGIN - Vasokonstriksi
+          </text> <rect x="30" y="35" width="140" height="40" rx="5" fill="#dbeafe" /> <!-- Narrow blood vessel --> <ellipse cx="100" cy="55" rx="50" ry="8" fill="#ef4444" /> <ellipse cx="100" cy="55" rx="45" ry="4" fill="#fca5a5" /> <!-- Muscle shivering --> <rect x="40" y="90" width="30" height="20" fill="#f87171" rx="3" /> <rect x="85" y="90" width="30" height="20" fill="#f87171" rx="3" /> <rect x="130" y="90" width="30" height="20" fill="#f87171" rx="3" /> <!-- Zigzag lines for shivering --> <path d="M55 115 L50 125 L60 130 L50 135" stroke="#dc2626" stroke-width="2" fill="none" /> <path d="M100 115 L95 125 L105 130 L95 135" stroke="#dc2626" stroke-width="2" fill="none" /> <path d="M145 115 L140 125 L150 130 L140 135" stroke="#dc2626" stroke-width="2" fill="none" /> <text x="100" y="148" text-anchor="middle" fill="#dc2626" font-size="10">
+           Otot menggigil
+          </text>
+         </svg>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 3: Fluid Regulation -->
+    <section id="section-cairan" class="fade-in hidden">
+     <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">💧</span>
+       <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Pengaturan Kadar Cairan Tubuh</h2>
+      </div>
+      <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-6 mb-6">
+       <p class="text-lg text-gray-700 text-center"><strong class="text-blue-700">Ginjal</strong> dan <strong class="text-purple-700">Kelenjar Pituitari</strong> bekerja sama mengatur jumlah air dalam darah melalui hormon <strong class="text-cyan-700">ADH (Antidiuretic Hormone)</strong></p>
+      </div><!-- Interactive ADH Simulator -->
+      <div class="bg-gray-50 rounded-xl p-6 mb-8">
+       <h3 class="font-bold text-xl text-gray-800 mb-4 text-center">🎮 Simulasi: Keseimbangan Cairan</h3>
+       <div class="flex flex-col items-center gap-6">
+        <div class="flex flex-wrap justify-center items-center gap-4"><button onclick="changeWater(-1)" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-3 rounded-full font-bold transition">🏃 Olahraga/Berkeringat</button>
+         <div class="text-center mx-4">
+          <div id="waterDisplay" class="text-4xl font-bold text-blue-600">
+           💧💧💧
+          </div>
+          <p class="text-gray-600 text-sm">Level Hidrasi</p>
+         </div><button onclick="changeWater(1)" class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-3 rounded-full font-bold transition">🥤 Minum Air</button>
+        </div>
+        <div id="waterResponse" class="w-full max-w-2xl bg-white rounded-xl p-6 border-2 border-blue-300">
+         <div class="text-center"><span class="text-5xl mb-3 block">😊</span>
+          <h4 class="font-bold text-lg text-blue-700 mb-2">Hidrasi Seimbang</h4>
+          <div class="grid grid-cols-3 gap-4 mt-4 text-sm">
+           <div class="bg-purple-50 rounded-lg p-3">
+            <p class="font-semibold text-purple-700">ADH</p>
+            <p class="text-purple-600">Normal</p>
+           </div>
+           <div class="bg-yellow-50 rounded-lg p-3">
+            <p class="font-semibold text-yellow-700">Ginjal</p>
+            <p class="text-yellow-600">Seimbang</p>
+           </div>
+           <div class="bg-cyan-50 rounded-lg p-3">
+            <p class="font-semibold text-cyan-700">Urine</p>
+            <p class="text-cyan-600">Normal</p>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Detailed Cards -->
+      <div class="grid md:grid-cols-2 gap-6">
+       <div class="bg-orange-50 rounded-xl p-6 border-2 border-orange-200">
+        <div class="flex items-center gap-3 mb-4"><span class="text-4xl">🏜️</span>
+         <h3 class="font-bold text-xl text-orange-800">Kurang Minum / Banyak Keringat</h3>
+        </div>
+        <div class="space-y-3">
+         <div class="flex items-center gap-3 bg-white rounded-lg p-3"><span class="text-2xl">🧠</span>
+          <p class="text-gray-700">Pituitari mengeluarkan <strong>BANYAK ADH</strong></p>
+         </div>
+         <div class="flex items-center justify-center"><span class="text-2xl">⬇️</span>
+         </div>
+         <div class="flex items-center gap-3 bg-white rounded-lg p-3"><span class="text-2xl">🫘</span>
+          <p class="text-gray-700">Ginjal menyerap kembali <strong>BANYAK air</strong></p>
+         </div>
+         <div class="flex items-center justify-center"><span class="text-2xl">⬇️</span>
+         </div>
+         <div class="bg-orange-200 rounded-lg p-4 text-center">
+          <p class="font-bold text-orange-800">🚽 Hasil: Urine SEDIKIT &amp; KENTAL</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-blue-50 rounded-xl p-6 border-2 border-blue-200">
+        <div class="flex items-center gap-3 mb-4"><span class="text-4xl">🌊</span>
+         <h3 class="font-bold text-xl text-blue-800">Terlalu Banyak Minum</h3>
+        </div>
+        <div class="space-y-3">
+         <div class="flex items-center gap-3 bg-white rounded-lg p-3"><span class="text-2xl">🧠</span>
+          <p class="text-gray-700">Pituitari <strong>MENGURANGI</strong> produksi ADH</p>
+         </div>
+         <div class="flex items-center justify-center"><span class="text-2xl">⬇️</span>
+         </div>
+         <div class="flex items-center gap-3 bg-white rounded-lg p-3"><span class="text-2xl">🫘</span>
+          <p class="text-gray-700">Ginjal menyerap <strong>SEDIKIT air</strong></p>
+         </div>
+         <div class="flex items-center justify-center"><span class="text-2xl">⬇️</span>
+         </div>
+         <div class="bg-blue-200 rounded-lg p-4 text-center">
+          <p class="font-bold text-blue-800">🚽 Hasil: Urine BANYAK &amp; ENCER</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- ADH Mechanism Diagram -->
+      <div class="mt-8 bg-gray-50 rounded-xl p-6">
+       <h3 class="font-bold text-xl text-gray-800 mb-4 text-center">🖼️ Diagram Sistem ADH</h3>
+       <svg viewbox="0 0 400 250" class="w-full max-w-xl mx-auto"><!-- Brain/Pituitary --> <ellipse cx="200" cy="40" rx="60" ry="30" fill="#a78bfa" stroke="#7c3aed" stroke-width="2" /> <text x="200" y="45" text-anchor="middle" font-weight="bold" fill="white" font-size="12">
+         Pituitari
+        </text> <!-- ADH Arrow --> <path d="M200 70 L200 100" stroke="#7c3aed" stroke-width="3" marker-end="url(#arrow2)" /> <text x="230" y="90" fill="#7c3aed" font-size="10" font-weight="bold">
+         ADH
+        </text> <!-- Kidney --> <path d="M150 140 Q120 180 150 220 Q200 240 250 220 Q280 180 250 140 Q200 120 150 140" fill="#f87171" stroke="#dc2626" stroke-width="2" /> <text x="200" y="180" text-anchor="middle" font-weight="bold" fill="white" font-size="14">
+         Ginjal
+        </text> <!-- Water reabsorption arrows --> <path d="M280 160 L320 140" stroke="#60a5fa" stroke-width="2" marker-end="url(#arrow2)" /> <path d="M280 180 L320 180" stroke="#60a5fa" stroke-width="2" marker-end="url(#arrow2)" /> <path d="M280 200 L320 200" stroke="#60a5fa" stroke-width="2" marker-end="url(#arrow2)" /> <text x="350" y="175" fill="#2563eb" font-size="10">
+         Air diserap
+        </text> <text x="350" y="188" fill="#2563eb" font-size="10">
+         kembali
+        </text> <!-- Urine output --> <path d="M200 220 L200 245" stroke="#fbbf24" stroke-width="3" marker-end="url(#arrow2)" /> <text x="200" y="260" text-anchor="middle" fill="#d97706" font-size="10" font-weight="bold">
+         Urine
+        </text> <defs>
+         <marker id="arrow2" markerwidth="10" markerheight="7" refx="9" refy="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280" />
+         </marker>
+        </defs>
+       </svg>
+      </div>
+     </div>
+    </section><!-- Section 4: Blood Sugar & Calcium -->
+    <section id="section-gula" class="fade-in hidden">
+     <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">🍬</span>
+       <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Pengaturan Gula Darah &amp; Kalsium</h2>
+      </div>
+      <div class="bg-gradient-to-r from-pink-50 to-yellow-50 rounded-xl p-6 mb-6">
+       <p class="text-lg text-gray-700 text-center">Tubuh menggunakan <strong class="text-purple-700">hormon</strong> untuk menjaga keseimbangan zat kimia dalam darah</p>
+      </div><!-- Blood Sugar Section -->
+      <div class="mb-8">
+       <h3 class="font-bold text-2xl text-pink-700 mb-4 flex items-center gap-2"><span>🩸</span> Pengaturan Gula Darah (Glukosa)</h3><!-- Interactive Glucose Simulator -->
+       <div class="bg-pink-50 rounded-xl p-6 mb-6">
+        <h4 class="font-bold text-lg text-gray-800 mb-4 text-center">🎮 Simulasi: Kadar Gula Darah</h4>
+        <div class="flex flex-col items-center gap-4">
+         <div class="flex flex-wrap justify-center items-center gap-4"><button onclick="changeGlucose(-1)" class="bg-green-500 hover:bg-green-600 text-white px-5 py-3 rounded-full font-bold transition">🏃 Olahraga</button>
+          <div class="text-center mx-4">
+           <div id="glucoseBar" class="w-48 h-8 bg-gray-200 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-green-400 to-yellow-400 transition-all duration-500" style="width: 50%"></div>
+           </div>
+           <p id="glucoseLevel" class="text-gray-700 font-semibold mt-2">Normal (100 mg/dL)</p>
+          </div><button onclick="changeGlucose(1)" class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-3 rounded-full font-bold transition">🍰 Makan Manis</button>
+         </div>
+         <div id="glucoseResponse" class="w-full max-w-2xl bg-white rounded-xl p-4 border-2 border-pink-200">
+          <div class="text-center"><span class="text-4xl mb-2 block">⚖️</span>
+           <p class="font-bold text-pink-700">Kadar gula darah seimbang</p>
+           <p class="text-gray-600 text-sm">Insulin dan Glukagon bekerja seimbang</p>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-red-50 rounded-xl p-6 border-2 border-red-200">
+         <div class="flex items-center gap-3 mb-4"><span class="text-3xl">📈</span>
+          <h4 class="font-bold text-lg text-red-800">Gula Darah TINGGI</h4>
+         </div>
+         <div class="space-y-3">
+          <div class="bg-white rounded-lg p-3">
+           <p class="text-gray-700"><strong>🔵 Pankreas</strong> melepas <strong class="text-blue-600">INSULIN</strong></p>
+          </div>
+          <div class="text-center text-2xl">
+           ⬇️
+          </div>
+          <div class="bg-red-100 rounded-lg p-3">
+           <p class="text-gray-700">Glukosa <strong>masuk ke sel</strong> atau diubah jadi <strong>glikogen</strong> di hati</p>
+          </div>
+          <div class="bg-green-100 rounded-lg p-3 text-center">
+           <p class="font-bold text-green-700">✅ Gula darah TURUN</p>
+          </div>
+         </div>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-6 border-2 border-blue-200">
+         <div class="flex items-center gap-3 mb-4"><span class="text-3xl">📉</span>
+          <h4 class="font-bold text-lg text-blue-800">Gula Darah RENDAH</h4>
+         </div>
+         <div class="space-y-3">
+          <div class="bg-white rounded-lg p-3">
+           <p class="text-gray-700"><strong>🔵 Pankreas</strong> melepas <strong class="text-orange-600">GLUKAGON</strong></p>
+          </div>
+          <div class="text-center text-2xl">
+           ⬇️
+          </div>
+          <div class="bg-blue-100 rounded-lg p-3">
+           <p class="text-gray-700"><strong>Glikogen</strong> di hati diubah kembali jadi <strong>glukosa</strong></p>
+          </div>
+          <div class="bg-green-100 rounded-lg p-3 text-center">
+           <p class="font-bold text-green-700">✅ Gula darah NAIK</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Calcium Section -->
+      <div class="mt-10">
+       <h3 class="font-bold text-2xl text-green-700 mb-4 flex items-center gap-2"><span>🦴</span> Pengaturan Kalsium (Ca²⁺)</h3>
+       <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-yellow-50 rounded-xl p-6 border-2 border-yellow-200">
+         <div class="flex items-center gap-3 mb-4"><span class="text-3xl">📉</span>
+          <h4 class="font-bold text-lg text-yellow-800">Kalsium RENDAH</h4>
+         </div>
+         <div class="space-y-3">
+          <div class="bg-white rounded-lg p-3">
+           <p class="text-gray-700"><strong>🔴 Kelenjar Parathyroid</strong> melepas hormon <strong class="text-yellow-600">PTH</strong></p>
+          </div>
+          <div class="text-center text-2xl">
+           ⬇️
+          </div>
+          <div class="bg-yellow-100 rounded-lg p-3">
+           <ul class="text-gray-700 space-y-1">
+            <li>• Tulang <strong>melepaskan</strong> kalsium</li>
+            <li>• Ginjal <strong>menyerap lebih banyak</strong> kalsium</li>
+           </ul>
+          </div>
+          <div class="bg-green-100 rounded-lg p-3 text-center">
+           <p class="font-bold text-green-700">✅ Kalsium darah NAIK</p>
+          </div>
+         </div>
+        </div>
+        <div class="bg-purple-50 rounded-xl p-6 border-2 border-purple-200">
+         <div class="flex items-center gap-3 mb-4"><span class="text-3xl">📈</span>
+          <h4 class="font-bold text-lg text-purple-800">Kalsium TINGGI</h4>
+         </div>
+         <div class="space-y-3">
+          <div class="bg-white rounded-lg p-3">
+           <p class="text-gray-700"><strong>🟣 Kelenjar Tiroid</strong> melepas <strong class="text-purple-600">Kalsitonin</strong></p>
+          </div>
+          <div class="text-center text-2xl">
+           ⬇️
+          </div>
+          <div class="bg-purple-100 rounded-lg p-3">
+           <p class="text-gray-700">Kalsium <strong>diendapkan ke tulang</strong></p>
+          </div>
+          <div class="bg-green-100 rounded-lg p-3 text-center">
+           <p class="font-bold text-green-700">✅ Kalsium darah TURUN</p>
+          </div>
+         </div>
+        </div>
+       </div><!-- Calcium Visual -->
+       <div class="mt-6 bg-gray-50 rounded-xl p-6">
+        <h4 class="font-bold text-lg text-gray-800 mb-4 text-center">🖼️ Diagram Regulasi Kalsium</h4>
+        <svg viewbox="0 0 400 200" class="w-full max-w-xl mx-auto"><!-- Bone --> <rect x="150" y="80" width="100" height="60" rx="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" /> <text x="200" y="115" text-anchor="middle" font-weight="bold" fill="#92400e" font-size="12">
+          🦴 Tulang
+         </text> <!-- Parathyroid --> <circle cx="60" cy="60" r="35" fill="#fbbf24" stroke="#d97706" stroke-width="2" /> <text x="60" y="55" text-anchor="middle" font-weight="bold" fill="#78350f" font-size="9">
+          Parathyroid
+         </text> <text x="60" y="68" text-anchor="middle" fill="#78350f" font-size="8">
+          (PTH)
+         </text> <!-- Thyroid --> <circle cx="340" cy="60" r="35" fill="#c4b5fd" stroke="#7c3aed" stroke-width="2" /> <text x="340" y="55" text-anchor="middle" font-weight="bold" fill="#4c1d95" font-size="9">
+          Tiroid
+         </text> <text x="340" y="68" text-anchor="middle" fill="#4c1d95" font-size="8">
+          (Kalsitonin)
+         </text> <!-- Arrows --> <path d="M95 70 L145 90" stroke="#d97706" stroke-width="2" marker-end="url(#arrow3)" /> <text x="100" y="95" fill="#d97706" font-size="8">
+          Ca²⁺ keluar
+         </text> <path d="M305 70 L255 90" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow3)" /> <text x="270" y="95" fill="#7c3aed" font-size="8">
+          Ca²⁺ masuk
+         </text> <!-- Blood --> <rect x="100" y="160" width="200" height="30" rx="5" fill="#fca5a5" stroke="#ef4444" stroke-width="2" /> <text x="200" y="180" text-anchor="middle" font-weight="bold" fill="#7f1d1d" font-size="10">
+          🩸 Darah (Ca²⁺)
+         </text> <path d="M200 140 L200 155" stroke="#6b7280" stroke-width="2" stroke-dasharray="4,2" /> <defs>
+          <marker id="arrow3" markerwidth="10" markerheight="7" refx="9" refy="3.5" orient="auto">
+           <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280" />
+          </marker>
+         </defs>
+        </svg>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 5: Reproduction -->
+    <section id="section-reproduksi" class="fade-in hidden">
+     <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">👶</span>
+       <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Reproduksi &amp; Kesehatan Janin</h2>
+      </div><!-- Female Reproductive System -->
+      <div class="mb-8">
+       <h3 class="font-bold text-xl text-pink-700 mb-4">🔬 Struktur Alat Reproduksi Wanita</h3>
+       <div class="bg-pink-50 rounded-xl p-6">
+        <div class="grid md:grid-cols-2 gap-6 items-center"><!-- SVG Diagram -->
+         <div class="bg-white rounded-xl p-4">
+          <svg viewbox="0 0 300 220" class="w-full"><!-- Uterus --> <path d="M100 100 Q80 80 100 60 L200 60 Q220 80 200 100 L200 180 Q150 200 100 180 Z" fill="#fecdd3" stroke="#e11d48" stroke-width="2" /> <text x="150" y="140" text-anchor="middle" font-weight="bold" fill="#881337" font-size="12">
+            Uterus (C)
+           </text> <!-- Left Fallopian Tube --> <path d="M100 70 Q60 50 30 60 Q20 70 30 80" fill="none" stroke="#f472b6" stroke-width="4" /> <circle cx="25" cy="70" r="8" fill="#f9a8d4" /> <text x="55" y="45" font-weight="bold" fill="#9d174d" font-size="10">
+            Tuba Falopi (A)
+           </text> <!-- Right Fallopian Tube --> <path d="M200 70 Q240 50 270 60 Q280 70 270 80" fill="none" stroke="#f472b6" stroke-width="4" /> <circle cx="275" cy="70" r="8" fill="#f9a8d4" /> <!-- Left Ovary --> <ellipse cx="30" cy="90" rx="20" ry="15" fill="#fb7185" stroke="#e11d48" stroke-width="2" /> <text x="30" y="120" text-anchor="middle" font-weight="bold" fill="#9d174d" font-size="9">
+            Ovarium (B)
+           </text> <!-- Right Ovary --> <ellipse cx="270" cy="90" rx="20" ry="15" fill="#fb7185" stroke="#e11d48" stroke-width="2" /> <!-- Labels --> <circle cx="25" cy="30" r="12" fill="#7c3aed" /> <text x="25" y="35" text-anchor="middle" font-weight="bold" fill="white" font-size="12">
+            A
+           </text> <circle cx="30" cy="130" r="12" fill="#7c3aed" /> <text x="30" y="135" text-anchor="middle" font-weight="bold" fill="white" font-size="12">
+            B
+           </text> <circle cx="150" cy="170" r="12" fill="#7c3aed" /> <text x="150" y="175" text-anchor="middle" font-weight="bold" fill="white" font-size="12">
+            C
+           </text>
+          </svg>
+         </div><!-- Labels Explanation -->
+         <div class="space-y-4">
+          <div class="bg-white rounded-lg p-4 border-l-4 border-purple-500 card-hover">
+           <div class="flex items-center gap-3"><span class="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">A</span>
+            <div>
+             <h4 class="font-bold text-purple-800">Tuba Falopi</h4>
+             <p class="text-gray-600 text-sm">Saluran telur - tempat fertilisasi terjadi</p>
+            </div>
+           </div>
+          </div>
+          <div class="bg-white rounded-lg p-4 border-l-4 border-pink-500 card-hover">
+           <div class="flex items-center gap-3"><span class="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">B</span>
+            <div>
+             <h4 class="font-bold text-pink-800">Ovarium</h4>
+             <p class="text-gray-600 text-sm">Indung telur - menghasilkan sel telur &amp; hormon</p>
+            </div>
+           </div>
+          </div>
+          <div class="bg-white rounded-lg p-4 border-l-4 border-red-500 card-hover">
+           <div class="flex items-center gap-3"><span class="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">C</span>
+            <div>
+             <h4 class="font-bold text-red-800">Uterus</h4>
+             <p class="text-gray-600 text-sm">Rahim - tempat janin berkembang</p>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Smoking Dangers -->
+      <div class="mb-8">
+       <h3 class="font-bold text-xl text-red-700 mb-4">🚭 Bahaya Merokok bagi Janin</h3>
+       <div class="bg-red-50 rounded-xl p-6 border-2 border-red-200">
+        <div class="grid md:grid-cols-2 gap-6 items-center">
+         <div>
+          <div class="bg-white rounded-xl p-4 mb-4">
+           <h4 class="font-bold text-red-800 mb-3">⚠️ Mekanisme Bahaya:</h4>
+           <div class="space-y-3">
+            <div class="flex items-start gap-3"><span class="text-2xl">1️⃣</span>
+             <p class="text-gray-700">Merokok <strong>menyempitkan pembuluh darah</strong></p>
+            </div>
+            <div class="flex items-start gap-3"><span class="text-2xl">2️⃣</span>
+             <p class="text-gray-700">Sirkulasi <strong>nutrisi dan oksigen</strong> ke janin terganggu</p>
+            </div>
+            <div class="flex items-start gap-3"><span class="text-2xl">3️⃣</span>
+             <p class="text-gray-700">Plasenta tidak dapat mengirim cukup makanan ke bayi</p>
+            </div>
+           </div>
+          </div>
+          <div class="bg-red-200 rounded-xl p-4">
+           <p class="font-bold text-red-800 text-center">☠️ Risiko: Kematian janin, berat lahir rendah, kelainan perkembangan</p>
+          </div>
+         </div><!-- Visual -->
+         <div class="bg-white rounded-xl p-4">
+          <svg viewbox="0 0 200 180" class="w-full"><!-- Normal vs Constricted comparison --> <text x="100" y="20" text-anchor="middle" font-weight="bold" fill="#374151" font-size="11">
+            Perbandingan Pembuluh Darah
+           </text> <!-- Normal --> <text x="50" y="45" text-anchor="middle" fill="#22c55e" font-size="9" font-weight="bold">
+            Normal ✓
+           </text> <rect x="20" y="55" width="60" height="30" rx="15" fill="#bbf7d0" stroke="#22c55e" stroke-width="2" /> <rect x="30" y="62" width="40" height="16" rx="8" fill="#ef4444" /> <!-- Arrows for blood flow --> <path d="M25 70 L75 70" stroke="#ef4444" stroke-width="2" marker-end="url(#bloodArrow)" /> <text x="50" y="100" text-anchor="middle" fill="#16a34a" font-size="8">
+            Aliran lancar
+           </text> <!-- Constricted --> <text x="150" y="45" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="bold">
+            Perokok ✗
+           </text> <rect x="120" y="55" width="60" height="30" rx="15" fill="#fecaca" stroke="#ef4444" stroke-width="2" /> <rect x="140" y="65" width="20" height="10" rx="5" fill="#ef4444" /> <text x="150" y="100" text-anchor="middle" fill="#dc2626" font-size="8">
+            Aliran terhambat
+           </text> <!-- Baby illustration --> <ellipse cx="100" cy="145" rx="35" ry="25" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" /> <circle cx="100" cy="140" r="12" fill="#fed7aa" /> <text x="100" y="170" text-anchor="middle" fill="#92400e" font-size="8">
+            Janin membutuhkan
+           </text> <text x="100" y="180" text-anchor="middle" fill="#92400e" font-size="8">
+            nutrisi &amp; oksigen
+           </text> <defs>
+            <marker id="bloodArrow" markerwidth="8" markerheight="6" refx="7" refy="3" orient="auto">
+             <polygon points="0 0, 8 3, 0 6" fill="#ef4444" />
+            </marker>
+           </defs>
+          </svg>
+         </div>
+        </div>
+       </div>
+      </div><!-- Fun Fact -->
+      <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-6 border-2 border-yellow-300">
+       <div class="flex items-start gap-4"><span class="text-5xl">💡</span>
+        <div>
+         <h3 class="font-bold text-xl text-yellow-800 mb-2">Fakta Unik!</h3>
+         <p class="text-gray-700 text-lg leading-relaxed"><strong>Tulang tengkorak bayi baru lahir belum menyatu utuh</strong> (disebut <em>fontanel</em> atau ubun-ubun). Hal ini memudahkan kepala bayi untuk menyesuaikan diri saat melewati jalan lahir. Fontanel akan menutup sempurna pada usia sekitar 18-24 bulan.</p>
+        </div>
+       </div><!-- Baby skull illustration -->
+       <div class="mt-4 flex justify-center">
+        <svg viewbox="0 0 200 120" class="w-48"><ellipse cx="100" cy="60" rx="50" ry="45" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" /> <!-- Fontanel --> <ellipse cx="100" cy="30" rx="15" ry="10" fill="#fbbf24" stroke="#d97706" stroke-width="2" /> <text x="100" y="35" text-anchor="middle" fill="#78350f" font-size="8" font-weight="bold">
+          Fontanel
+         </text> <!-- Sutures --> <path d="M100 40 L100 80" stroke="#d97706" stroke-width="1" stroke-dasharray="3,2" /> <path d="M70 60 L130 60" stroke="#d97706" stroke-width="1" stroke-dasharray="3,2" /> <text x="100" y="110" text-anchor="middle" fill="#92400e" font-size="9">
+          Tengkorak bayi
+         </text>
+        </svg>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 6: Quiz -->
+    <section id="section-quiz" class="fade-in hidden">
+     <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">📝</span>
+       <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Kuis HOTS - Uji Pemahamanmu!</h2>
+      </div><!-- Progress Bar -->
+      <div class="mb-6">
+       <div class="flex justify-between text-sm text-gray-600 mb-2"><span>Progres</span> <span id="progressText">0/10 soal</span>
+       </div>
+       <div class="w-full h-4 bg-gray-200 rounded-full overflow-hidden">
+        <div id="progressBar" class="progress-bar h-full bg-gradient-to-r from-purple-500 to-pink-500" style="width: 0%"></div>
+       </div>
+      </div><!-- Quiz Container -->
+      <div id="quizContainer"><!-- Questions will be rendered here -->
+      </div><!-- Results -->
+      <div id="quizResults" class="hidden">
+       <div class="text-center py-8"><span id="resultEmoji" class="text-8xl block mb-4">🎉</span>
+        <h3 id="resultTitle" class="text-3xl font-bold text-gray-800 mb-2">Hasil Kuis</h3>
+        <p id="resultScore" class="text-xl text-gray-600 mb-6"></p>
+        <div id="resultFeedback" class="bg-gray-50 rounded-xl p-6 mb-6 text-left max-w-2xl mx-auto"></div><button onclick="restartQuiz()" class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-full font-bold text-lg transition"> 🔄 Ulangi Kuis </button>
+       </div>
+      </div>
+     </div>
+    </section>
+   </main><!-- Footer -->
+   <footer class="bg-gray-800 text-white py-6 px-4">
+    <div class="max-w-6xl mx-auto text-center">
+     <p class="text-gray-400">🧬 Materi Pembelajaran Biologi - Homeostasis &amp; Reproduksi Manusia</p>
+     <p class="text-gray-500 text-sm mt-2">Belajar dengan interaktif untuk pemahaman lebih baik!</p>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: "🧬 Homeostasis & Reproduksi Manusia",
+      teacher_name: "Materi Pembelajaran Biologi Interaktif",
+      primary_color: "#7c3aed",
+      secondary_color: "#f3f4f6",
+      text_color: "#1f2937",
+      accent_color: "#ec4899",
+      button_color: "#8b5cf6"
+    };
+
+    let config = { ...defaultConfig };
+
+    // Element SDK Integration
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (v) => window.elementSdk.setConfig({ primary_color: v })
+            },
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (v) => window.elementSdk.setConfig({ secondary_color: v })
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (v) => window.elementSdk.setConfig({ text_color: v })
+            },
+            {
+              get: () => cfg.accent_color || defaultConfig.accent_color,
+              set: (v) => window.elementSdk.setConfig({ accent_color: v })
+            },
+            {
+              get: () => cfg.button_color || defaultConfig.button_color,
+              set: (v) => window.elementSdk.setConfig({ button_color: v })
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ["main_title", cfg.main_title || defaultConfig.main_title],
+          ["teacher_name", cfg.teacher_name || defaultConfig.teacher_name]
+        ])
+      });
+    }
+
+    function applyConfig() {
+      document.getElementById('mainTitle').textContent = config.main_title || defaultConfig.main_title;
+      document.getElementById('teacherInfo').textContent = config.teacher_name || defaultConfig.teacher_name;
+      
+      // Apply colors
+      document.documentElement.style.setProperty('--primary-color', config.primary_color || defaultConfig.primary_color);
+      document.documentElement.style.setProperty('--text-color', config.text_color || defaultConfig.text_color);
+    }
+
+    // Navigation
+    function showSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('section[id^="section-"]').forEach(s => s.classList.add('hidden'));
+      // Show target section
+      const target = document.getElementById(`section-${sectionId}`);
+      if (target) {
+        target.classList.remove('hidden');
+        target.classList.add('fade-in');
+      }
+      
+      // Update nav buttons
+      document.querySelectorAll('nav button').forEach(btn => {
+        btn.classList.remove('bg-purple-600', 'text-white');
+        btn.classList.add('bg-purple-100', 'text-purple-700');
+      });
+      const activeBtn = document.getElementById(`nav-${sectionId}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-purple-100', 'text-purple-700');
+        if (sectionId === 'quiz') {
+          activeBtn.classList.add('bg-orange-500', 'text-white');
+        } else {
+          activeBtn.classList.add('bg-purple-600', 'text-white');
+        }
+      }
+      
+      // Initialize quiz if needed
+      if (sectionId === 'quiz' && !quizInitialized) {
+        initQuiz();
+      }
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Temperature Simulator
+    let currentTemp = 37;
+    
+    function changeTemp(delta) {
+      currentTemp = Math.max(35, Math.min(40, currentTemp + delta));
+      document.getElementById('tempDisplay').textContent = `${currentTemp}°C`;
+      updateTempResponse();
+    }
+    
+    function updateTempResponse() {
+      const responseDiv = document.getElementById('bodyResponse');
+      let content = '';
+      
+      if (currentTemp < 36) {
+        content = `
+          <div class="text-center">
+            <span class="text-6xl mb-4 block">🥶</span>
+            <h4 class="font-bold text-xl text-blue-700 mb-2">Hipotermia!</h4>
+            <div class="text-left bg-blue-100 rounded-lg p-4 mt-4">
+              <p class="font-semibold text-blue-800 mb-2">Respons Tubuh:</p>
+              <ul class="text-blue-700 space-y-1">
+                <li>❄️ Pembuluh darah MENYEMPIT (vasokonstriksi)</li>
+                <li>💪 Otot MENGGIGIL untuk menghasilkan panas</li>
+                <li>🔥 Metabolisme MENINGKAT</li>
+              </ul>
+            </div>
+          </div>`;
+        responseDiv.className = 'w-full max-w-2xl bg-white rounded-xl p-6 border-2 border-blue-400';
+      } else if (currentTemp > 38) {
+        content = `
+          <div class="text-center">
+            <span class="text-6xl mb-4 block">🥵</span>
+            <h4 class="font-bold text-xl text-orange-700 mb-2">Demam / Hipertermia!</h4>
+            <div class="text-left bg-orange-100 rounded-lg p-4 mt-4">
+              <p class="font-semibold text-orange-800 mb-2">Respons Tubuh:</p>
+              <ul class="text-orange-700 space-y-1">
+                <li>🔥 Pembuluh darah MELEBAR (vasodilatasi)</li>
+                <li>💦 Kelenjar keringat AKTIF</li>
+                <li>😓 Kulit menjadi MERAH dan BERKERINGAT</li>
+              </ul>
+            </div>
+          </div>`;
+        responseDiv.className = 'w-full max-w-2xl bg-white rounded-xl p-6 border-2 border-orange-400';
+      } else {
+        content = `
+          <div class="text-center">
+            <span class="text-6xl mb-4 block">😊</span>
+            <h4 class="font-bold text-xl text-green-700 mb-2">Suhu Normal</h4>
+            <p class="text-gray-600">Tubuh dalam kondisi homeostasis. Semua sistem berfungsi optimal!</p>
+          </div>`;
+        responseDiv.className = 'w-full max-w-2xl bg-white rounded-xl p-6 border-2 border-green-300';
+      }
+      
+      responseDiv.innerHTML = content;
+    }
+
+    // Water/ADH Simulator
+    let waterLevel = 3;
+    
+    function changeWater(delta) {
+      waterLevel = Math.max(1, Math.min(5, waterLevel + delta));
+      document.getElementById('waterDisplay').textContent = '💧'.repeat(waterLevel);
+      updateWaterResponse();
+    }
+    
+    function updateWaterResponse() {
+      const responseDiv = document.getElementById('waterResponse');
+      let content = '';
+      
+      if (waterLevel <= 2) {
+        content = `
+          <div class="text-center">
+            <span class="text-5xl mb-3 block">🏜️</span>
+            <h4 class="font-bold text-lg text-orange-700 mb-2">Dehidrasi!</h4>
+            <div class="grid grid-cols-3 gap-4 mt-4 text-sm">
+              <div class="bg-purple-100 rounded-lg p-3">
+                <p class="font-semibold text-purple-700">ADH</p>
+                <p class="text-purple-600">📈 TINGGI</p>
+              </div>
+              <div class="bg-yellow-100 rounded-lg p-3">
+                <p class="font-semibold text-yellow-700">Ginjal</p>
+                <p class="text-yellow-600">Serap banyak air</p>
+              </div>
+              <div class="bg-orange-100 rounded-lg p-3">
+                <p class="font-semibold text-orange-700">Urine</p>
+                <p class="text-orange-600">Sedikit & Kental</p>
+              </div>
+            </div>
+          </div>`;
+        responseDiv.className = 'w-full max-w-2xl bg-white rounded-xl p-6 border-2 border-orange-300';
+      } else if (waterLevel >= 4) {
+        content = `
+          <div class="text-center">
+            <span class="text-5xl mb-3 block">🌊</span>
+            <h4 class="font-bold text-lg text-blue-700 mb-2">Overhidrasi</h4>
+            <div class="grid grid-cols-3 gap-4 mt-4 text-sm">
+              <div class="bg-purple-100 rounded-lg p-3">
+                <p class="font-semibold text-purple-700">ADH</p>
+                <p class="text-purple-600">📉 RENDAH</p>
+              </div>
+              <div class="bg-yellow-100 rounded-lg p-3">
+                <p class="font-semibold text-yellow-700">Ginjal</p>
+                <p class="text-yellow-600">Serap sedikit air</p>
+              </div>
+              <div class="bg-cyan-100 rounded-lg p-3">
+                <p class="font-semibold text-cyan-700">Urine</p>
+                <p class="text-cyan-600">Banyak & Encer</p>
+              </div>
+            </div>
+          </div>`;
+        responseDiv.className = 'w-full max-w-2xl bg-white rounded-xl p-6 border-2 border-blue-300';
+      } else {
+        content = `
+          <div class="text-center">
+            <span class="text-5xl mb-3 block">😊</span>
+            <h4 class="font-bold text-lg text-blue-700 mb-2">Hidrasi Seimbang</h4>
+            <div class="grid grid-cols-3 gap-4 mt-4 text-sm">
+              <div class="bg-purple-50 rounded-lg p-3">
+                <p class="font-semibold text-purple-700">ADH</p>
+                <p class="text-purple-600">Normal</p>
+              </div>
+              <div class="bg-yellow-50 rounded-lg p-3">
+                <p class="font-semibold text-yellow-700">Ginjal</p>
+                <p class="text-yellow-600">Seimbang</p>
+              </div>
+              <div class="bg-cyan-50 rounded-lg p-3">
+                <p class="font-semibold text-cyan-700">Urine</p>
+                <p class="text-cyan-600">Normal</p>
+              </div>
+            </div>
+          </div>`;
+        responseDiv.className = 'w-full max-w-2xl bg-white rounded-xl p-6 border-2 border-blue-300';
+      }
+      
+      responseDiv.innerHTML = content;
+    }
+
+    // Glucose Simulator
+    let glucoseLevel = 50;
+    
+    function changeGlucose(delta) {
+      glucoseLevel = Math.max(10, Math.min(90, glucoseLevel + delta * 20));
+      document.querySelector('#glucoseBar > div').style.width = `${glucoseLevel}%`;
+      updateGlucoseResponse();
+    }
+    
+    function updateGlucoseResponse() {
+      const responseDiv = document.getElementById('glucoseResponse');
+      const levelText = document.getElementById('glucoseLevel');
+      let content = '';
+      let mgDL = Math.round(50 + glucoseLevel);
+      
+      if (glucoseLevel <= 30) {
+        levelText.textContent = `Rendah (${mgDL} mg/dL)`;
+        levelText.className = 'text-blue-700 font-semibold mt-2';
+        content = `
+          <div class="text-center">
+            <span class="text-4xl mb-2 block">📉</span>
+            <p class="font-bold text-blue-700">Hipoglikemia - Glukagon dilepaskan!</p>
+            <p class="text-gray-600 text-sm">Glikogen diubah menjadi glukosa</p>
+          </div>`;
+        responseDiv.className = 'w-full max-w-2xl bg-white rounded-xl p-4 border-2 border-blue-300';
+      } else if (glucoseLevel >= 70) {
+        levelText.textContent = `Tinggi (${mgDL} mg/dL)`;
+        levelText.className = 'text-red-700 font-semibold mt-2';
+        content = `
+          <div class="text-center">
+            <span class="text-4xl mb-2 block">📈</span>
+            <p class="font-bold text-red-700">Hiperglikemia - Insulin dilepaskan!</p>
+            <p class="text-gray-600 text-sm">Glukosa masuk sel & diubah jadi glikogen</p>
+          </div>`;
+        responseDiv.className = 'w-full max-w-2xl bg-white rounded-xl p-4 border-2 border-red-300';
+      } else {
+        levelText.textContent = `Normal (${mgDL} mg/dL)`;
+        levelText.className = 'text-gray-700 font-semibold mt-2';
+        content = `
+          <div class="text-center">
+            <span class="text-4xl mb-2 block">⚖️</span>
+            <p class="font-bold text-pink-700">Kadar gula darah seimbang</p>
+            <p class="text-gray-600 text-sm">Insulin dan Glukagon bekerja seimbang</p>
+          </div>`;
+        responseDiv.className = 'w-full max-w-2xl bg-white rounded-xl p-4 border-2 border-pink-200';
+      }
+      
+      responseDiv.innerHTML = content;
+    }
+
+    // HOTS Quiz Questions
+    const quizQuestions = [
+      {
+        question: "Seorang pelari maraton berlari di bawah terik matahari selama 2 jam. Bagaimana tubuhnya mempertahankan suhu normal?",
+        options: [
+          "Pembuluh darah menyempit dan otot menggigil",
+          "Pembuluh darah melebar dan kelenjar keringat aktif",
+          "Produksi ADH meningkat drastis",
+          "Pankreas melepaskan insulin"
+        ],
+        correct: 1,
+        explanation: "Saat kepanasan, pembuluh darah melebar (vasodilatasi) untuk melepas panas ke permukaan kulit, dan kelenjar keringat aktif memproduksi keringat yang menguapkan panas."
+      },
+      {
+        question: "Mengapa seseorang yang tidak minum air seharian akan menghasilkan urine yang sedikit dan berwarna gelap?",
+        options: [
+          "Ginjal berhenti bekerja",
+          "ADH menurun sehingga air banyak dibuang",
+          "ADH meningkat sehingga ginjal menyerap lebih banyak air",
+          "Insulin menyimpan air di dalam sel"
+        ],
+        correct: 2,
+        explanation: "Saat dehidrasi, kelenjar pituitari melepas banyak ADH yang memerintahkan ginjal untuk menyerap kembali lebih banyak air, sehingga urine menjadi sedikit dan pekat."
+      },
+      {
+        question: "Setelah makan nasi dan makanan manis, kadar glukosa darah meningkat. Hormon apa yang akan dilepaskan dan apa fungsinya?",
+        options: [
+          "Glukagon - mengubah glikogen menjadi glukosa",
+          "Insulin - membantu glukosa masuk ke sel dan menyimpannya sebagai glikogen",
+          "ADH - menyerap air di ginjal",
+          "Kalsitonin - menyimpan kalsium di tulang"
+        ],
+        correct: 1,
+        explanation: "Insulin dilepaskan oleh pankreas saat gula darah tinggi. Insulin membantu sel menyerap glukosa dan mengubah kelebihan glukosa menjadi glikogen di hati."
+      },
+      {
+        question: "Seorang anak mengalami patah tulang dan dokter menyarankan untuk banyak minum susu. Bagaimana tubuh mengatur kalsium untuk penyembuhan tulang?",
+        options: [
+          "Kalsitonin melepaskan kalsium dari tulang ke darah",
+          "PTH menyimpan kalsium ke dalam tulang",
+          "Jika kalsium darah rendah, PTH merangsang pelepasan kalsium dari tulang dan penyerapan di ginjal",
+          "Insulin mengatur penyerapan kalsium di usus"
+        ],
+        correct: 2,
+        explanation: "Saat kalsium darah rendah, hormon PTH dari kelenjar paratiroid merangsang tulang melepas kalsium dan ginjal menyerap lebih banyak kalsium untuk meningkatkan kadar kalsium darah."
+      },
+      {
+        question: "Mengapa ibu hamil yang merokok berisiko tinggi melahirkan bayi dengan berat badan rendah?",
+        options: [
+          "Asap rokok membuat bayi tidak nafsu makan",
+          "Nikotin menyempitkan pembuluh darah sehingga nutrisi dan oksigen ke janin berkurang",
+          "Rokok membuat ibu kehilangan nafsu makan",
+          "Asap rokok langsung masuk ke paru-paru janin"
+        ],
+        correct: 1,
+        explanation: "Nikotin dalam rokok menyebabkan vasokonstriksi (penyempitan pembuluh darah), mengurangi aliran darah ke plasenta, sehingga janin kekurangan nutrisi dan oksigen untuk pertumbuhan optimal."
+      },
+      {
+        question: "Perhatikan kondisi berikut: suhu lingkungan 15°C, seseorang mulai menggigil. Proses apa yang TIDAK terjadi dalam kondisi ini?",
+        options: [
+          "Vasokonstriksi pembuluh darah kulit",
+          "Kontraksi otot rangka menghasilkan panas",
+          "Vasodilatasi pembuluh darah kulit",
+          "Hipotalamus mendeteksi perubahan suhu"
+        ],
+        correct: 2,
+        explanation: "Vasodilatasi (pelebaran pembuluh darah) adalah respons terhadap suhu PANAS, bukan dingin. Saat kedinginan, tubuh melakukan vasokonstriksi untuk menahan panas."
+      },
+      {
+        question: "Seseorang didiagnosis diabetes tipe 1 di mana pankreasnya tidak dapat memproduksi insulin. Tanpa pengobatan, apa yang akan terjadi pada sel-sel tubuhnya?",
+        options: [
+          "Sel akan kelebihan glukosa",
+          "Sel akan kekurangan glukosa meski kadar gula darah tinggi",
+          "Sel akan menyimpan terlalu banyak glikogen",
+          "Sel akan memproduksi insulin sendiri"
+        ],
+        correct: 1,
+        explanation: "Tanpa insulin, glukosa tidak dapat masuk ke dalam sel meskipun kadar gula darah tinggi. Sel 'kelaparan' di tengah 'kelimpahan' glukosa di darah."
+      },
+      {
+        question: "Bagian manakah dari sistem reproduksi wanita yang merupakan tempat terjadinya fertilisasi (pembuahan)?",
+        options: [
+          "Ovarium",
+          "Uterus",
+          "Tuba Falopi",
+          "Vagina"
+        ],
+        correct: 2,
+        explanation: "Fertilisasi terjadi di tuba falopi (saluran telur) ketika sel sperma bertemu dengan sel telur. Setelah fertilisasi, zigot akan bergerak ke uterus untuk implantasi."
+      },
+      {
+        question: "Seorang atlet minum 3 liter air sebelum pertandingan. Prediksi apa yang akan terjadi pada sistem ekskresinya?",
+        options: [
+          "ADH meningkat, urine sedikit dan pekat",
+          "ADH menurun, urine banyak dan encer",
+          "Glukagon meningkat",
+          "Tekanan darah menurun drastis"
+        ],
+        correct: 1,
+        explanation: "Kelebihan air menurunkan osmolaritas darah, pituitari mengurangi ADH, ginjal menyerap sedikit air, menghasilkan urine yang banyak dan encer untuk membuang kelebihan air."
+      },
+      {
+        question: "Mengapa ubun-ubun (fontanel) pada bayi baru lahir belum menutup sempurna? Analisis keuntungan adaptasi ini!",
+        options: [
+          "Agar otak bayi dapat tumbuh dengan cepat dan kepala dapat menyesuaikan saat melewati jalan lahir",
+          "Karena bayi kekurangan kalsium",
+          "Untuk memudahkan dokter memeriksa otak bayi",
+          "Karena tulang bayi belum terbentuk sempurna akibat genetik"
+        ],
+        correct: 0,
+        explanation: "Fontanel memiliki dua fungsi adaptif: (1) memungkinkan kepala bayi sedikit 'mengempis' saat melewati jalan lahir yang sempit, dan (2) memberi ruang bagi otak untuk berkembang pesat pada tahun-tahun pertama kehidupan."
+      }
+    ];
+
+    let quizInitialized = false;
+    let currentQuestion = 0;
+    let score = 0;
+    let userAnswers = [];
+
+    function initQuiz() {
+      quizInitialized = true;
+      currentQuestion = 0;
+      score = 0;
+      userAnswers = [];
+      document.getElementById('quizResults').classList.add('hidden');
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const container = document.getElementById('quizContainer');
+      const q = quizQuestions[currentQuestion];
+      
+      container.innerHTML = `
+        <div class="fade-in">
+          <div class="bg-purple-50 rounded-xl p-6 mb-6">
+            <div class="flex items-start gap-3">
+              <span class="bg-purple-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">${currentQuestion + 1}</span>
+              <p class="text-lg text-gray-800 leading-relaxed">${q.question}</p>
+            </div>
+          </div>
+          
+          <div class="space-y-3" id="optionsContainer">
+            ${q.options.map((opt, idx) => `
+              <button onclick="selectAnswer(${idx})" class="quiz-option w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-purple-400 transition flex items-center gap-3" data-idx="${idx}">
+                <span class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-bold text-gray-600">${String.fromCharCode(65 + idx)}</span>
+                <span class="text-gray-700">${opt}</span>
+              </button>
+            `).join('')}
+          </div>
+          
+          <div id="feedback" class="hidden mt-6"></div>
+          
+          <div class="mt-6 flex justify-end">
+            <button id="nextBtn" onclick="nextQuestion()" class="hidden bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-full font-bold transition">
+              ${currentQuestion < quizQuestions.length - 1 ? 'Soal Berikutnya →' : 'Lihat Hasil 🎉'}
+            </button>
+          </div>
+        </div>
+      `;
+      
+      updateProgress();
+    }
+
+    function selectAnswer(idx) {
+      const q = quizQuestions[currentQuestion];
+      const options = document.querySelectorAll('.quiz-option');
+      const feedback = document.getElementById('feedback');
+      
+      // Disable all options
+      options.forEach(opt => {
+        opt.disabled = true;
+        opt.classList.remove('hover:border-purple-400');
+      });
+      
+      // Mark selected and correct
+      options[idx].classList.add(idx === q.correct ? 'correct' : 'wrong');
+      if (idx !== q.correct) {
+        options[q.correct].classList.add('correct');
+      }
+      
+      // Update score
+      if (idx === q.correct) {
+        score++;
+      }
+      userAnswers.push(idx);
+      
+      // Show feedback
+      feedback.classList.remove('hidden');
+      feedback.innerHTML = `
+        <div class="${idx === q.correct ? 'bg-green-50 border-green-300' : 'bg-red-50 border-red-300'} border-2 rounded-xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-2xl">${idx === q.correct ? '✅' : '❌'}</span>
+            <span class="font-bold ${idx === q.correct ? 'text-green-700' : 'text-red-700'}">
+              ${idx === q.correct ? 'Benar!' : 'Kurang tepat!'}
+            </span>
+          </div>
+          <p class="text-gray-700"><strong>Penjelasan:</strong> ${q.explanation}</p>
+        </div>
+      `;
+      
+      // Show next button
+      document.getElementById('nextBtn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < quizQuestions.length) {
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function updateProgress() {
+      const progress = ((currentQuestion) / quizQuestions.length) * 100;
+      document.getElementById('progressBar').style.width = `${progress}%`;
+      document.getElementById('progressText').textContent = `${currentQuestion}/${quizQuestions.length} soal`;
+    }
+
+    function showResults() {
+      document.getElementById('quizContainer').innerHTML = '';
+      document.getElementById('quizResults').classList.remove('hidden');
+      
+      const percentage = (score / quizQuestions.length) * 100;
+      let emoji, title, message;
+      
+      if (percentage >= 90) {
+        emoji = '🏆';
+        title = 'Luar Biasa!';
+        message = 'Kamu menguasai materi dengan sangat baik!';
+      } else if (percentage >= 70) {
+        emoji = '🌟';
+        title = 'Hebat!';
+        message = 'Pemahaman kamu sudah bagus, terus tingkatkan!';
+      } else if (percentage >= 50) {
+        emoji = '💪';
+        title = 'Cukup Baik!';
+        message = 'Masih ada beberapa konsep yang perlu dipelajari lagi.';
+      } else {
+        emoji = '📚';
+        title = 'Tetap Semangat!';
+        message = 'Yuk pelajari lagi materinya dan coba lagi!';
+      }
+      
+      document.getElementById('resultEmoji').textContent = emoji;
+      document.getElementById('resultTitle').textContent = title;
+      document.getElementById('resultScore').textContent = `Skor: ${score}/${quizQuestions.length} (${percentage}%)`;
+      
+      // Generate feedback for wrong answers
+      let feedbackHTML = '<h4 class="font-bold text-lg mb-4">📋 Review Jawaban:</h4>';
+      quizQuestions.forEach((q, idx) => {
+        const isCorrect = userAnswers[idx] === q.correct;
+        feedbackHTML += `
+          <div class="mb-4 p-3 rounded-lg ${isCorrect ? 'bg-green-50' : 'bg-red-50'}">
+            <p class="font-semibold text-sm">${idx + 1}. ${q.question.substring(0, 60)}...</p>
+            <p class="text-sm ${isCorrect ? 'text-green-700' : 'text-red-700'}">
+              ${isCorrect ? '✅ Benar' : `❌ Jawaban kamu: ${q.options[userAnswers[idx]].substring(0, 40)}...`}
+            </p>
+            ${!isCorrect ? `<p class="text-sm text-green-700">✅ Jawaban benar: ${q.options[q.correct].substring(0, 40)}...</p>` : ''}
+          </div>
+        `;
+      });
+      
+      document.getElementById('resultFeedback').innerHTML = feedbackHTML;
+      
+      // Update progress to 100%
+      document.getElementById('progressBar').style.width = '100%';
+      document.getElementById('progressText').textContent = `${quizQuestions.length}/${quizQuestions.length} soal`;
+    }
+
+    function restartQuiz() {
+      initQuiz();
+    }
+
+    // Initialize
+    applyConfig();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9caa1a42538bb29b',t:'MTc3MDU0Mjk2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

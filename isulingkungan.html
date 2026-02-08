@@ -1,0 +1,1604 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pembelajaran Lingkungan Hidup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #0f766e 0%, #134e4a 50%, #064e3b 100%);
+    }
+    .card-glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+    .progress-bar {
+      transition: width 0.5s ease-out;
+    }
+    .slide-enter {
+      animation: slideIn 0.5s ease-out;
+    }
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    .pulse-icon {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .fact-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+    .nav-btn:hover {
+      transform: scale(1.05);
+    }
+    .quiz-option:hover {
+      border-color: #0f766e;
+      background: #f0fdfa;
+    }
+    .quiz-option.selected {
+      border-color: #0f766e;
+      background: #ccfbf1;
+    }
+    .quiz-option.correct {
+      border-color: #16a34a;
+      background: #dcfce7;
+    }
+    .quiz-option.incorrect {
+      border-color: #dc2626;
+      background: #fee2e2;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full overflow-auto">
+  <div id="app" class="min-h-full gradient-bg"><!-- Navigation Header -->
+   <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center"><span class="text-white text-xl">🌍</span>
+      </div><span id="header-title" class="font-bold text-teal-800 text-lg">Penyelamat Bumi</span>
+     </div>
+     <div class="flex items-center gap-4">
+      <div class="hidden sm:flex items-center gap-2 text-sm text-teal-700"><span id="current-section">Materi 1</span> <span>/</span> <span id="total-sections">9</span>
+      </div>
+      <div class="w-32 h-2 bg-teal-100 rounded-full overflow-hidden">
+       <div id="progress-bar" class="h-full bg-gradient-to-r from-teal-500 to-emerald-500 progress-bar" style="width: 11%"></div>
+      </div>
+     </div>
+    </div>
+   </header><!-- Main Content Container -->
+   <main class="max-w-6xl mx-auto px-4 py-6 pb-24">
+    <div id="content-container" class="slide-enter"><!-- Content will be dynamically loaded here -->
+    </div>
+   </main><!-- Navigation Footer -->
+   <footer class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md shadow-lg border-t border-teal-100">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between"><button id="prev-btn" onclick="navigateSlide(-1)" class="nav-btn flex items-center gap-2 px-5 py-2.5 bg-teal-50 text-teal-700 rounded-full font-semibold transition-all hover:bg-teal-100 disabled:opacity-50 disabled:cursor-not-allowed">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg><span class="hidden sm:inline">Sebelumnya</span> </button>
+     <div class="flex gap-1.5"><button onclick="goToSlide(0)" class="nav-dot w-2.5 h-2.5 rounded-full bg-teal-300 hover:bg-teal-500 transition-colors" data-slide="0"></button> <button onclick="goToSlide(1)" class="nav-dot w-2.5 h-2.5 rounded-full bg-teal-300 hover:bg-teal-500 transition-colors" data-slide="1"></button> <button onclick="goToSlide(2)" class="nav-dot w-2.5 h-2.5 rounded-full bg-teal-300 hover:bg-teal-500 transition-colors" data-slide="2"></button> <button onclick="goToSlide(3)" class="nav-dot w-2.5 h-2.5 rounded-full bg-teal-300 hover:bg-teal-500 transition-colors" data-slide="3"></button> <button onclick="goToSlide(4)" class="nav-dot w-2.5 h-2.5 rounded-full bg-teal-300 hover:bg-teal-500 transition-colors" data-slide="4"></button> <button onclick="goToSlide(5)" class="nav-dot w-2.5 h-2.5 rounded-full bg-teal-300 hover:bg-teal-500 transition-colors" data-slide="5"></button> <button onclick="goToSlide(6)" class="nav-dot w-2.5 h-2.5 rounded-full bg-teal-300 hover:bg-teal-500 transition-colors" data-slide="6"></button> <button onclick="goToSlide(7)" class="nav-dot w-2.5 h-2.5 rounded-full bg-teal-300 hover:bg-teal-500 transition-colors" data-slide="7"></button> <button onclick="goToSlide(8)" class="nav-dot w-2.5 h-2.5 rounded-full bg-teal-300 hover:bg-teal-500 transition-colors" data-slide="8"></button>
+     </div><button id="next-btn" onclick="navigateSlide(1)" class="nav-btn flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-white rounded-full font-semibold transition-all hover:bg-teal-700"> <span class="hidden sm:inline">Selanjutnya</span>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg></button>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_title: "Menjadi Penyelamat Bumi",
+      subtitle: "Mengatasi Isu Lingkungan di Sekitar Kita",
+      primary_color: "#0f766e",
+      secondary_color: "#f0fdfa",
+      text_color: "#134e4a",
+      accent_color: "#10b981",
+      background_color: "#064e3b",
+      font_family: "Plus Jakarta Sans",
+      font_size: 16
+    };
+
+    let config = { ...defaultConfig };
+    let currentSlide = 0;
+    let quizAnswers = {};
+    let quizSubmitted = false;
+    let savedAnswers = [];
+
+    // Quiz Questions - 10 HOTS Questions
+    const quizQuestions = [
+      {
+        id: 1,
+        question: "Berdasarkan data akses air bersih di Indonesia, provinsi manakah yang memiliki kesenjangan tertinggi dengan rata-rata nasional (73,65%) dan apa implikasi kesehatan yang mungkin terjadi?",
+        options: [
+          "Kalimantan Barat (37,37%) - meningkatkan risiko penyakit diare dan ISPA",
+          "Kalimantan Timur (93,77%) - menurunkan kasus penyakit menular",
+          "Papua (39,05%) - meningkatkan angka harapan hidup",
+          "Kepulauan Riau (91,53%) - menurunkan produktivitas masyarakat"
+        ],
+        correct: 0,
+        explanation: "Kalimantan Barat dengan akses 37,37% memiliki kesenjangan 36,28% dari rata-rata nasional. Rendahnya akses air bersih berkorelasi langsung dengan tingginya risiko penyakit berbasis lingkungan seperti diare dan ISPA."
+      },
+      {
+        id: 2,
+        question: "Jika sebuah desa memiliki sumur bor yang terletak 8 meter dari septic tank, analisis apa risiko kesehatan yang paling mungkin terjadi berdasarkan standar keamanan sumber air?",
+        options: [
+          "Air tetap aman karena sudah menggunakan sumur bor",
+          "Terjadi kontaminasi biologis yang dapat menyebabkan penyakit pencernaan",
+          "Tidak ada risiko karena air tanah tidak terhubung dengan septic tank",
+          "Risiko hanya terjadi jika sumur lebih dalam dari 10 meter"
+        ],
+        correct: 1,
+        explanation: "Standar menyatakan sumber air harus berjarak minimal 10 meter dari penampungan limbah. Jarak 8 meter berisiko tinggi terkontaminasi bakteri dan patogen dari septic tank melalui rembesan tanah."
+      },
+      {
+        id: 3,
+        question: "Mengapa program 'Suroboyo Bus' di Surabaya dianggap sebagai solusi inovatif yang menggabungkan aspek ekonomi dan lingkungan sekaligus?",
+        options: [
+          "Karena bus tersebut menggunakan bahan bakar ramah lingkungan",
+          "Karena menciptakan insentif ekonomi bagi masyarakat untuk mengumpulkan sampah plastik",
+          "Karena mengurangi kemacetan di kota Surabaya",
+          "Karena tiket bus lebih murah dibanding transportasi lain"
+        ],
+        correct: 1,
+        explanation: "Suroboyo Bus menciptakan sistem win-win dimana masyarakat mendapat insentif (tiket bus gratis) untuk mengumpulkan botol plastik, sementara pemerintah berhasil mengurangi sampah plastik dan meningkatkan kesadaran lingkungan."
+      },
+      {
+        id: 4,
+        question: "Berdasarkan temuan mikroplastik pada 23 sampel ikan di Makassar, bagaimana hal ini dapat berdampak pada kesehatan manusia melalui rantai makanan?",
+        options: [
+          "Tidak berdampak karena plastik akan keluar bersama kotoran",
+          "Mikroplastik dapat terakumulasi dalam tubuh manusia dan berpotensi menyebabkan gangguan hormonal serta kanker",
+          "Hanya mempengaruhi rasa ikan, tidak berbahaya bagi kesehatan",
+          "Mikroplastik hanya berbahaya jika dikonsumsi dalam jumlah sangat besar"
+        ],
+        correct: 1,
+        explanation: "Bioakumulasi mikroplastik terjadi ketika plastik terus menumpuk di jaringan tubuh organisme. Manusia yang mengonsumsi ikan terkontaminasi akan mengakumulasi zat ini, yang dapat mengganggu sistem endokrin dan memiliki sifat karsinogenik."
+      },
+      {
+        id: 5,
+        question: "Evaluasi mengapa Covid-19 disebut sebagai 'pelajaran' terkait Perilaku Hidup Bersih dan Sehat (PHBS) dalam konteks kesehatan lingkungan?",
+        options: [
+          "Karena Covid-19 hanya menyebar melalui udara",
+          "Karena pandemi membuktikan bahwa perilaku individu (cuci tangan, sanitasi) berpengaruh signifikan terhadap penyebaran penyakit",
+          "Karena vaksin adalah satu-satunya solusi melawan penyakit",
+          "Karena penyakit berbasis lingkungan tidak dapat dicegah"
+        ],
+        correct: 1,
+        explanation: "Pandemi Covid-19 menunjukkan bahwa PHBS seperti mencuci tangan, menjaga kebersihan lingkungan, dan sanitasi yang baik dapat secara signifikan mengurangi transmisi penyakit. Ini menegaskan hubungan erat antara perilaku, lingkungan, dan kesehatan."
+      },
+      {
+        id: 6,
+        question: "Analisis mengapa air dari penjual keliling dikategorikan sebagai 'sumber tidak layak' meskipun airnya mungkin bersih secara visual?",
+        options: [
+          "Karena harganya lebih mahal",
+          "Karena tidak dapat dipastikan standar pengolahannya dan rantai distribusinya rentan kontaminasi",
+          "Karena rasanya berbeda dengan air ledeng",
+          "Karena penjual keliling tidak membayar pajak"
+        ],
+        correct: 1,
+        explanation: "Air dari penjual keliling tidak memiliki jaminan standar pengolahan yang terverifikasi. Rantai distribusi yang tidak terkontrol meningkatkan risiko kontaminasi biologis dan kimiawi selama penyimpanan dan pengangkutan."
+      },
+      {
+        id: 7,
+        question: "Berdasarkan potensi ekonomi pengolahan sampah (Rp16.379.472/bulan dari 48 ton), hitung perkiraan nilai ekonomi jika Indonesia berhasil mengolah 50% dari total sampah plastik yang dihasilkan!",
+        options: [
+          "Tidak dapat dihitung karena data tidak lengkap",
+          "Nilai ekonomi akan sangat besar dan dapat menciptakan lapangan kerja baru di sektor daur ulang",
+          "Nilai ekonomi tidak signifikan dibanding biaya pengolahan",
+          "Lebih baik membuang ke laut karena lebih murah"
+        ],
+        correct: 1,
+        explanation: "Dengan nilai Rp341.239/ton, pengolahan skala besar akan menghasilkan nilai ekonomi signifikan. Selain keuntungan finansial, ini menciptakan ekonomi sirkular, lapangan kerja hijau, dan mengurangi beban lingkungan."
+      },
+      {
+        id: 8,
+        question: "Sintesis strategi yang paling efektif untuk mengatasi status Indonesia sebagai penghasil sampah plastik laut terbesar kedua di dunia!",
+        options: [
+          "Melarang semua produk plastik tanpa alternatif",
+          "Kombinasi kebijakan reduce-reuse-recycle, edukasi masyarakat, dan pengembangan industri daur ulang",
+          "Memindahkan sampah ke negara lain",
+          "Menunggu teknologi baru yang dapat menghancurkan plastik secara instan"
+        ],
+        correct: 1,
+        explanation: "Pendekatan holistik yang menggabungkan kebijakan (regulasi plastik sekali pakai), edukasi (perubahan perilaku), ekonomi (insentif daur ulang), dan teknologi (inovasi pengolahan) adalah strategi paling efektif dan berkelanjutan."
+      },
+      {
+        id: 9,
+        question: "Prediksi dampak jangka panjang jika 10 besar penyakit di Puskesmas Indonesia terus didominasi oleh penyakit berbasis lingkungan!",
+        options: [
+          "Tidak ada dampak karena penyakit tersebut mudah diobati",
+          "Beban sistem kesehatan meningkat, produktivitas menurun, dan biaya kesehatan nasional membengkak",
+          "Masyarakat akan kebal terhadap penyakit tersebut",
+          "Puskesmas akan otomatis lebih berkembang"
+        ],
+        correct: 1,
+        explanation: "Dominasi penyakit berbasis lingkungan menunjukkan kegagalan preventif. Dampaknya meliputi: beban fiskal kesehatan tinggi, produktivitas ekonomi rendah, kualitas hidup menurun, dan sumber daya kesehatan terkuras untuk kuratif daripada preventif."
+      },
+      {
+        id: 10,
+        question: "Rancang argumentasi mengapa aturan jarak 10 meter antara sumber air dan penampungan limbah harus diterapkan secara ketat di pemukiman padat penduduk!",
+        options: [
+          "Tidak perlu diterapkan karena tanah sudah tercemar",
+          "Penting karena di pemukiman padat, risiko kontaminasi silang lebih tinggi dan dampaknya dapat menyebar cepat ke banyak orang",
+          "Cukup dengan merebus air sebelum diminum",
+          "Lebih baik menggunakan air kemasan saja"
+        ],
+        correct: 1,
+        explanation: "Pemukiman padat memiliki konsentrasi limbah tinggi dan jarak antar bangunan sempit. Pelanggaran aturan jarak berisiko menyebabkan wabah penyakit yang cepat menyebar. Penegakan regulasi ini adalah bentuk perlindungan kesehatan publik yang kritis."
+      }
+    ];
+
+    // Slide Content Data
+    const slides = [
+      // Slide 0: Judul
+      {
+        title: "Judul Presentasi",
+        content: `
+          <div class="text-center py-8">
+            <div class="mb-8 pulse-icon">
+              <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-teal-400 to-emerald-600 flex items-center justify-center shadow-2xl">
+                <span class="text-6xl">🌍</span>
+              </div>
+            </div>
+            <h1 id="main-title-display" class="text-3xl md:text-5xl font-extrabold text-white mb-4 leading-tight">Menjadi Penyelamat Bumi</h1>
+            <h2 id="subtitle-display" class="text-xl md:text-2xl text-teal-100 mb-8">Mengatasi Isu Lingkungan di Sekitar Kita</h2>
+            <div class="card-glass rounded-2xl p-6 max-w-2xl mx-auto shadow-xl">
+              <p class="text-teal-800 font-medium text-lg mb-4">📚 Fokus Pembelajaran:</p>
+              <div class="flex flex-wrap justify-center gap-3">
+                <span class="px-4 py-2 bg-teal-100 text-teal-800 rounded-full text-sm font-medium">🏥 Kesehatan Lingkungan</span>
+                <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">💧 Air Bersih</span>
+                <span class="px-4 py-2 bg-amber-100 text-amber-800 rounded-full text-sm font-medium">🗑️ Masalah Sampah</span>
+              </div>
+            </div>
+            <div class="mt-8">
+              <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=800&q=80" 
+                   alt="Bumi dan lingkungan hijau" 
+                   loading="lazy"
+                   class="rounded-2xl shadow-xl mx-auto max-w-md w-full object-cover h-48"
+                   onerror="this.style.background='linear-gradient(135deg, #0f766e, #064e3b)'; this.alt='Gambar tidak tersedia';">
+            </div>
+          </div>
+        `
+      },
+      // Slide 1: Mengapa Kita Harus Peduli?
+      {
+        title: "Mengapa Kita Harus Peduli?",
+        content: `
+          <div class="space-y-6">
+            <div class="card-glass rounded-2xl p-6 shadow-xl">
+              <h2 class="text-2xl md:text-3xl font-bold text-teal-800 mb-6 flex items-center gap-3">
+                <span class="text-3xl">🤔</span> Mengapa Kita Harus Peduli?
+              </h2>
+              
+              <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="fact-card bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-5 transition-all duration-300 border-l-4 border-red-500">
+                  <div class="flex items-start gap-3">
+                    <span class="text-3xl">⚠️</span>
+                    <div>
+                      <h3 class="font-bold text-red-800 mb-2">Fakta Mengejutkan</h3>
+                      <p class="text-red-700">Hal kecil seperti <strong>sedotan plastik</strong> yang sering diabaikan ternyata mampu merusak ekosistem bumi secara luas.</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="fact-card bg-gradient-to-br from-amber-50 to-yellow-50 rounded-xl p-5 transition-all duration-300 border-l-4 border-amber-500">
+                  <div class="flex items-start gap-3">
+                    <span class="text-3xl">🚨</span>
+                    <div>
+                      <h3 class="font-bold text-amber-800 mb-2">Ancaman Nyata</h3>
+                      <p class="text-amber-700">Aktivitas manusia yang tidak disadari terus mengancam <strong>keanekaragaman hayati</strong>.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-teal-50 rounded-xl p-5 border-2 border-teal-200">
+                <h3 class="font-bold text-teal-800 mb-3 flex items-center gap-2">
+                  <span>🎯</span> Tujuan Pembelajaran
+                </h3>
+                <ul class="space-y-2 text-teal-700">
+                  <li class="flex items-center gap-2"><span class="w-2 h-2 bg-teal-500 rounded-full"></span> Memahami isu kesehatan lingkungan</li>
+                  <li class="flex items-center gap-2"><span class="w-2 h-2 bg-teal-500 rounded-full"></span> Mengenal dampak pemanasan global</li>
+                  <li class="flex items-center gap-2"><span class="w-2 h-2 bg-teal-500 rounded-full"></span> Memahami krisis energi</li>
+                  <li class="flex items-center gap-2"><span class="w-2 h-2 bg-teal-500 rounded-full"></span> Menyadari pentingnya ketersediaan pangan</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-4">
+              <img src="https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=600&q=80" 
+                   alt="Polusi plastik di laut" 
+                   loading="lazy"
+                   class="rounded-xl shadow-lg w-full h-48 object-cover"
+                   onerror="this.style.background='#e5e7eb'; this.alt='Gambar tidak tersedia';">
+              <img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=600&q=80" 
+                   alt="Dampak polusi pada lingkungan" 
+                   loading="lazy"
+                   class="rounded-xl shadow-lg w-full h-48 object-cover"
+                   onerror="this.style.background='#e5e7eb'; this.alt='Gambar tidak tersedia';">
+            </div>
+
+            <!-- Interactive Activity -->
+            <div class="card-glass rounded-2xl p-6 shadow-xl">
+              <h3 class="font-bold text-teal-800 mb-4 flex items-center gap-2">
+                <span>✍️</span> Aktivitas: Refleksi Diri
+              </h3>
+              <p class="text-teal-700 mb-4">Berapa banyak sampah plastik yang kamu hasilkan dalam sehari? Coba hitung!</p>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="plastic-counter">
+                <button onclick="updateCounter('botol')" class="counter-btn bg-blue-100 hover:bg-blue-200 rounded-xl p-4 text-center transition-all">
+                  <span class="text-3xl block mb-2">🍶</span>
+                  <span class="text-sm font-medium text-blue-800">Botol Plastik</span>
+                  <span class="block text-2xl font-bold text-blue-600" id="count-botol">0</span>
+                </button>
+                <button onclick="updateCounter('kantong')" class="counter-btn bg-green-100 hover:bg-green-200 rounded-xl p-4 text-center transition-all">
+                  <span class="text-3xl block mb-2">🛍️</span>
+                  <span class="text-sm font-medium text-green-800">Kantong Plastik</span>
+                  <span class="block text-2xl font-bold text-green-600" id="count-kantong">0</span>
+                </button>
+                <button onclick="updateCounter('sedotan')" class="counter-btn bg-purple-100 hover:bg-purple-200 rounded-xl p-4 text-center transition-all">
+                  <span class="text-3xl block mb-2">🥤</span>
+                  <span class="text-sm font-medium text-purple-800">Sedotan</span>
+                  <span class="block text-2xl font-bold text-purple-600" id="count-sedotan">0</span>
+                </button>
+                <button onclick="updateCounter('kemasan')" class="counter-btn bg-orange-100 hover:bg-orange-200 rounded-xl p-4 text-center transition-all">
+                  <span class="text-3xl block mb-2">📦</span>
+                  <span class="text-sm font-medium text-orange-800">Kemasan</span>
+                  <span class="block text-2xl font-bold text-orange-600" id="count-kemasan">0</span>
+                </button>
+              </div>
+              <div class="mt-4 p-4 bg-teal-50 rounded-xl">
+                <p class="text-teal-800 font-medium">Total sampah plastik harianmu: <span id="total-plastic" class="text-2xl font-bold text-teal-600">0</span> item</p>
+                <p id="plastic-message" class="text-sm text-teal-600 mt-2"></p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 2: Kesehatan Lingkungan & Penyakit
+      {
+        title: "Isu 1 - Kesehatan Lingkungan & Penyakit",
+        content: `
+          <div class="space-y-6">
+            <div class="card-glass rounded-2xl p-6 shadow-xl">
+              <h2 class="text-2xl md:text-3xl font-bold text-teal-800 mb-6 flex items-center gap-3">
+                <span class="text-3xl">🏥</span> Isu 1: Kesehatan Lingkungan & Penyakit
+              </h2>
+              
+              <div class="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-xl p-5 mb-6 border-l-4 border-teal-500">
+                <h3 class="font-bold text-teal-800 mb-2">📖 Definisi</h3>
+                <p class="text-teal-700">Penyakit berbasis lingkungan terjadi karena <strong>interaksi manusia dengan lingkungan yang tidak sehat</strong>.</p>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="bg-white rounded-xl p-5 shadow-md border border-gray-100">
+                  <h3 class="font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <span>🇮🇩</span> Kondisi di Indonesia
+                  </h3>
+                  <ul class="space-y-3">
+                    <li class="flex items-start gap-3 p-3 bg-red-50 rounded-lg">
+                      <span class="text-xl">📊</span>
+                      <p class="text-red-800">Penyakit berbasis lingkungan selalu masuk dalam <strong>10 besar penyakit</strong> di Puskesmas</p>
+                    </li>
+                    <li class="flex items-start gap-3 p-3 bg-amber-50 rounded-lg">
+                      <span class="text-xl">🤒</span>
+                      <p class="text-amber-800">Contoh utama: <strong>Diare</strong> dan <strong>ISPA</strong> (Infeksi Saluran Pernapasan Akut)</p>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-5 shadow-md">
+                  <h3 class="font-bold text-blue-800 mb-3 flex items-center gap-2">
+                    <span>🦠</span> Pelajaran dari Pandemi
+                  </h3>
+                  <p class="text-blue-700 mb-3">Covid-19 menyadarkan pentingnya:</p>
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2 bg-white/70 rounded-lg px-3 py-2">
+                      <span>🧼</span>
+                      <span class="text-blue-800 font-medium">Mencuci tangan</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-white/70 rounded-lg px-3 py-2">
+                      <span>😷</span>
+                      <span class="text-blue-800 font-medium">Memakai masker</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-white/70 rounded-lg px-3 py-2">
+                      <span>🏠</span>
+                      <span class="text-blue-800 font-medium">Menjaga kebersihan rumah</span>
+                    </div>
+                  </div>
+                  <p class="mt-3 text-sm text-blue-600 font-medium">= Perilaku Hidup Bersih dan Sehat (PHBS)</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+              <img src="https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=600&q=80" 
+                   alt="Cuci tangan untuk kesehatan" 
+                   loading="lazy"
+                   class="rounded-xl shadow-lg w-full h-48 object-cover"
+                   onerror="this.style.background='#e5e7eb'; this.alt='Gambar tidak tersedia';">
+              <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80" 
+                   alt="Pelayanan kesehatan" 
+                   loading="lazy"
+                   class="rounded-xl shadow-lg w-full h-48 object-cover"
+                   onerror="this.style.background='#e5e7eb'; this.alt='Gambar tidak tersedia';">
+            </div>
+
+            <!-- Interactive PHBS Checklist -->
+            <div class="card-glass rounded-2xl p-6 shadow-xl">
+              <h3 class="font-bold text-teal-800 mb-4 flex items-center gap-2">
+                <span>✅</span> Aktivitas: Checklist PHBS Harianmu
+              </h3>
+              <p class="text-teal-700 mb-4">Centang kebiasaan PHBS yang sudah kamu lakukan hari ini!</p>
+              <div class="grid md:grid-cols-2 gap-3" id="phbs-checklist">
+                <label class="flex items-center gap-3 p-3 bg-white rounded-lg cursor-pointer hover:bg-teal-50 transition-colors border border-gray-200">
+                  <input type="checkbox" class="phbs-check w-5 h-5 text-teal-600 rounded" onchange="updatePHBS()">
+                  <span class="text-xl">🧼</span>
+                  <span class="text-gray-700">Mencuci tangan dengan sabun</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 bg-white rounded-lg cursor-pointer hover:bg-teal-50 transition-colors border border-gray-200">
+                  <input type="checkbox" class="phbs-check w-5 h-5 text-teal-600 rounded" onchange="updatePHBS()">
+                  <span class="text-xl">🚿</span>
+                  <span class="text-gray-700">Mandi 2x sehari</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 bg-white rounded-lg cursor-pointer hover:bg-teal-50 transition-colors border border-gray-200">
+                  <input type="checkbox" class="phbs-check w-5 h-5 text-teal-600 rounded" onchange="updatePHBS()">
+                  <span class="text-xl">🥗</span>
+                  <span class="text-gray-700">Makan sayur dan buah</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 bg-white rounded-lg cursor-pointer hover:bg-teal-50 transition-colors border border-gray-200">
+                  <input type="checkbox" class="phbs-check w-5 h-5 text-teal-600 rounded" onchange="updatePHBS()">
+                  <span class="text-xl">💧</span>
+                  <span class="text-gray-700">Minum air putih 8 gelas</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 bg-white rounded-lg cursor-pointer hover:bg-teal-50 transition-colors border border-gray-200">
+                  <input type="checkbox" class="phbs-check w-5 h-5 text-teal-600 rounded" onchange="updatePHBS()">
+                  <span class="text-xl">🚽</span>
+                  <span class="text-gray-700">Menggunakan jamban sehat</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 bg-white rounded-lg cursor-pointer hover:bg-teal-50 transition-colors border border-gray-200">
+                  <input type="checkbox" class="phbs-check w-5 h-5 text-teal-600 rounded" onchange="updatePHBS()">
+                  <span class="text-xl">🗑️</span>
+                  <span class="text-gray-700">Membuang sampah pada tempatnya</span>
+                </label>
+              </div>
+              <div class="mt-4 p-4 bg-teal-50 rounded-xl">
+                <p class="text-teal-800 font-medium">Skor PHBS-mu: <span id="phbs-score" class="text-2xl font-bold text-teal-600">0</span>/6</p>
+                <p id="phbs-message" class="text-sm text-teal-600 mt-2">Mulai centang kebiasaan baikmu!</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 3: Ketersediaan Air Bersih
+      {
+        title: "Isu 2 - Ketersediaan Air Bersih",
+        content: `
+          <div class="space-y-6">
+            <div class="card-glass rounded-2xl p-6 shadow-xl">
+              <h2 class="text-2xl md:text-3xl font-bold text-teal-800 mb-6 flex items-center gap-3">
+                <span class="text-3xl">💧</span> Isu 2: Ketersediaan Air Bersih
+              </h2>
+              
+              <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-5 mb-6 border-l-4 border-blue-500">
+                <h3 class="font-bold text-blue-800 mb-3">📋 Syarat Air Layak Minum (Permenkes No. 492/2010)</h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div class="bg-white/70 rounded-lg p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                      <span class="text-2xl">👁️</span>
+                      <span class="font-bold text-gray-800">Fisik</span>
+                    </div>
+                    <ul class="text-gray-700 space-y-1 ml-8">
+                      <li>✓ Tidak berbau</li>
+                      <li>✓ Tidak berasa</li>
+                      <li>✓ Tidak berwarna</li>
+                    </ul>
+                  </div>
+                  <div class="bg-white/70 rounded-lg p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                      <span class="text-2xl">🦠</span>
+                      <span class="font-bold text-gray-800">Biologis</span>
+                    </div>
+                    <p class="text-gray-700 ml-8">✓ Bebas mikroba berbahaya</p>
+                  </div>
+                  <div class="bg-white/70 rounded-lg p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                      <span class="text-2xl">⚗️</span>
+                      <span class="font-bold text-gray-800">Kimiawi</span>
+                    </div>
+                    <p class="text-gray-700 ml-8">✓ Tidak mengandung bahan kimia beracun</p>
+                  </div>
+                  <div class="bg-white/70 rounded-lg p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                      <span class="text-2xl">☢️</span>
+                      <span class="font-bold text-gray-800">Radioaktif</span>
+                    </div>
+                    <p class="text-gray-700 ml-8">✓ Tidak mengandung zat radioaktif melebihi batas</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Indonesia Map Visualization -->
+              <div class="bg-white rounded-xl p-5 shadow-md mb-6">
+                <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                  <span>🗺️</span> Fakta Akses Air di Indonesia
+                </h3>
+                <div class="text-center mb-4">
+                  <p class="text-gray-600 mb-2">Rata-rata nasional akses air layak minum:</p>
+                  <div class="text-5xl font-bold text-blue-600">73,65%</div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-4 mt-6">
+                  <div class="bg-green-50 rounded-xl p-4 border-2 border-green-200">
+                    <h4 class="font-bold text-green-800 mb-3 flex items-center gap-2">
+                      <span>🏆</span> Tertinggi
+                    </h4>
+                    <div class="space-y-3">
+                      <div>
+                        <div class="flex justify-between mb-1">
+                          <span class="text-green-700">Kalimantan Timur</span>
+                          <span class="font-bold text-green-800">93,77%</span>
+                        </div>
+                        <div class="w-full bg-green-200 rounded-full h-3">
+                          <div class="bg-green-500 h-3 rounded-full" style="width: 93.77%"></div>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="flex justify-between mb-1">
+                          <span class="text-green-700">Kepulauan Riau</span>
+                          <span class="font-bold text-green-800">91,53%</span>
+                        </div>
+                        <div class="w-full bg-green-200 rounded-full h-3">
+                          <div class="bg-green-500 h-3 rounded-full" style="width: 91.53%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-red-50 rounded-xl p-4 border-2 border-red-200">
+                    <h4 class="font-bold text-red-800 mb-3 flex items-center gap-2">
+                      <span>⚠️</span> Terendah
+                    </h4>
+                    <div class="space-y-3">
+                      <div>
+                        <div class="flex justify-between mb-1">
+                          <span class="text-red-700">Kalimantan Barat</span>
+                          <span class="font-bold text-red-800">37,37%</span>
+                        </div>
+                        <div class="w-full bg-red-200 rounded-full h-3">
+                          <div class="bg-red-500 h-3 rounded-full" style="width: 37.37%"></div>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="flex justify-between mb-1">
+                          <span class="text-red-700">Papua</span>
+                          <span class="font-bold text-red-800">39,05%</span>
+                        </div>
+                        <div class="w-full bg-red-200 rounded-full h-3">
+                          <div class="bg-red-500 h-3 rounded-full" style="width: 39.05%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <img src="https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=800&q=80" 
+                 alt="Air bersih yang jernih" 
+                 loading="lazy"
+                 class="rounded-xl shadow-lg w-full h-56 object-cover"
+                 onerror="this.style.background='#e5e7eb'; this.alt='Gambar tidak tersedia';">
+
+            <!-- Interactive Water Quality Check -->
+            <div class="card-glass rounded-2xl p-6 shadow-xl">
+              <h3 class="font-bold text-teal-800 mb-4 flex items-center gap-2">
+                <span>🔬</span> Aktivitas: Cek Kualitas Air di Rumahmu
+              </h3>
+              <p class="text-teal-700 mb-4">Jawab pertanyaan berikut untuk mengecek kualitas air di rumahmu!</p>
+              <div class="space-y-4" id="water-quality-check">
+                <div class="p-4 bg-white rounded-lg border border-gray-200">
+                  <p class="font-medium text-gray-800 mb-3">1. Apakah air di rumahmu berbau?</p>
+                  <div class="flex gap-4">
+                    <button onclick="checkWater(1, false)" class="water-btn px-4 py-2 rounded-lg bg-green-100 hover:bg-green-200 text-green-800 transition-colors">Tidak ✓</button>
+                    <button onclick="checkWater(1, true)" class="water-btn px-4 py-2 rounded-lg bg-red-100 hover:bg-red-200 text-red-800 transition-colors">Ya ✗</button>
+                  </div>
+                </div>
+                <div class="p-4 bg-white rounded-lg border border-gray-200">
+                  <p class="font-medium text-gray-800 mb-3">2. Apakah air di rumahmu berwarna?</p>
+                  <div class="flex gap-4">
+                    <button onclick="checkWater(2, false)" class="water-btn px-4 py-2 rounded-lg bg-green-100 hover:bg-green-200 text-green-800 transition-colors">Tidak ✓</button>
+                    <button onclick="checkWater(2, true)" class="water-btn px-4 py-2 rounded-lg bg-red-100 hover:bg-red-200 text-red-800 transition-colors">Ya ✗</button>
+                  </div>
+                </div>
+                <div class="p-4 bg-white rounded-lg border border-gray-200">
+                  <p class="font-medium text-gray-800 mb-3">3. Apakah sumber air berjarak lebih dari 10m dari septic tank?</p>
+                  <div class="flex gap-4">
+                    <button onclick="checkWater(3, false)" class="water-btn px-4 py-2 rounded-lg bg-green-100 hover:bg-green-200 text-green-800 transition-colors">Ya ✓</button>
+                    <button onclick="checkWater(3, true)" class="water-btn px-4 py-2 rounded-lg bg-red-100 hover:bg-red-200 text-red-800 transition-colors">Tidak ✗</button>
+                  </div>
+                </div>
+              </div>
+              <div id="water-result" class="mt-4 p-4 bg-gray-50 rounded-xl hidden">
+                <p class="text-gray-800 font-medium">Hasil pemeriksaan air:</p>
+                <p id="water-message" class="text-lg font-bold mt-2"></p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 4: Standar Keamanan Sumber Air
+      {
+        title: "Standar Keamanan Sumber Air",
+        content: `
+          <div class="space-y-6">
+            <div class="card-glass rounded-2xl p-6 shadow-xl">
+              <h2 class="text-2xl md:text-3xl font-bold text-teal-800 mb-6 flex items-center gap-3">
+                <span class="text-3xl">🚰</span> Standar Keamanan Sumber Air
+              </h2>
+              
+              <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-5 border-2 border-green-200">
+                  <h3 class="font-bold text-green-800 mb-4 flex items-center gap-2">
+                    <span class="text-2xl">✅</span> Sumber LAYAK
+                  </h3>
+                  <ul class="space-y-3">
+                    <li class="flex items-center gap-3 p-3 bg-white/70 rounded-lg">
+                      <span class="text-xl">🔧</span>
+                      <span class="text-green-800">Sumur bor</span>
+                    </li>
+                    <li class="flex items-center gap-3 p-3 bg-white/70 rounded-lg">
+                      <span class="text-xl">🚿</span>
+                      <span class="text-green-800">Ledeng (PAM)</span>
+                    </li>
+                    <li class="flex items-center gap-3 p-3 bg-white/70 rounded-lg">
+                      <span class="text-xl">⛲</span>
+                      <span class="text-green-800">Keran umum</span>
+                    </li>
+                    <li class="flex items-center gap-3 p-3 bg-white/70 rounded-lg">
+                      <span class="text-xl">🌧️</span>
+                      <span class="text-green-800">Penampungan air hujan</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-5 border-2 border-red-200">
+                  <h3 class="font-bold text-red-800 mb-4 flex items-center gap-2">
+                    <span class="text-2xl">❌</span> Sumber TIDAK LAYAK
+                  </h3>
+                  <ul class="space-y-3">
+                    <li class="flex items-center gap-3 p-3 bg-white/70 rounded-lg">
+                      <span class="text-xl">🚛</span>
+                      <span class="text-red-800">Air dari penjual keliling</span>
+                    </li>
+                    <li class="flex items-center gap-3 p-3 bg-white/70 rounded-lg">
+                      <span class="text-xl">📦</span>
+                      <span class="text-red-800">Air kemasan (kriteria akses lingkungan tertentu)</span>
+                    </li>
+                  </ul>
+                  <p class="mt-3 text-sm text-red-600 italic">*Menurut kriteria akses lingkungan tertentu</p>
+                </div>
+              </div>
+
+              <!-- Distance Rule Visualization -->
+              <div class="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-xl p-6 border-2 border-amber-300">
+                <h3 class="font-bold text-amber-800 mb-4 flex items-center gap-2">
+                  <span class="text-2xl">📏</span> Aturan Jarak Penting!
+                </h3>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                  <div class="text-center">
+                    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2 border-4 border-blue-400">
+                      <span class="text-3xl">💧</span>
+                    </div>
+                    <p class="text-blue-800 font-medium">Sumber Air</p>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="hidden md:block w-24 h-1 bg-amber-400"></div>
+                    <div class="md:hidden h-12 w-1 bg-amber-400"></div>
+                    <div class="bg-amber-400 text-amber-900 font-bold px-4 py-2 rounded-full text-lg">
+                      MIN. 10 METER
+                    </div>
+                    <div class="hidden md:block w-24 h-1 bg-amber-400"></div>
+                    <div class="md:hidden h-12 w-1 bg-amber-400"></div>
+                  </div>
+                  <div class="text-center">
+                    <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-2 border-4 border-red-400">
+                      <span class="text-3xl">🚽</span>
+                    </div>
+                    <p class="text-red-800 font-medium">Limbah/Sampah</p>
+                  </div>
+                </div>
+                <p class="text-center mt-4 text-amber-700 font-medium">Sumber air harus berjarak minimal 10 meter dari penampungan limbah/sampah/kotoran agar tidak tercemar!</p>
+              </div>
+            </div>
+
+            <img src="https://images.unsplash.com/photo-1597075687490-8f673c6c17f6?w=800&q=80" 
+                 alt="Sumur bor sebagai sumber air bersih" 
+                 loading="lazy"
+                 class="rounded-xl shadow-lg w-full h-56 object-cover"
+                 onerror="this.style.background='#e5e7eb'; this.alt='Gambar tidak tersedia';">
+
+            <!-- Interactive Distance Calculator -->
+            <div class="card-glass rounded-2xl p-6 shadow-xl">
+              <h3 class="font-bold text-teal-800 mb-4 flex items-center gap-2">
+                <span>📐</span> Aktivitas: Kalkulator Jarak Aman
+              </h3>
+              <p class="text-teal-700 mb-4">Masukkan jarak antara sumber air dan septic tank di rumahmu:</p>
+              <div class="flex flex-col md:flex-row items-center gap-4">
+                <div class="flex items-center gap-2">
+                  <input type="number" id="distance-input" placeholder="0" min="0" max="100" 
+                         class="w-24 px-4 py-3 text-2xl font-bold text-center border-2 border-teal-300 rounded-xl focus:outline-none focus:border-teal-500">
+                  <span class="text-xl font-medium text-teal-700">meter</span>
+                </div>
+                <button onclick="calculateDistance()" class="px-6 py-3 bg-teal-600 text-white rounded-xl font-semibold hover:bg-teal-700 transition-colors">
+                  Cek Keamanan
+                </button>
+              </div>
+              <div id="distance-result" class="mt-4 p-4 rounded-xl hidden">
+                <p id="distance-message" class="text-lg font-bold"></p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 5: Darurat Sampah Plastik
+      {
+        title: "Isu 3 - Darurat Sampah Plastik",
+        content: `
+          <div class="space-y-6">
+            <div class="card-glass rounded-2xl p-6 shadow-xl">
+              <h2 class="text-2xl md:text-3xl font-bold text-teal-800 mb-6 flex items-center gap-3">
+                <span class="text-3xl">🗑️</span> Isu 3: Darurat Sampah Plastik
+              </h2>
+              
+              <div class="bg-gradient-to-r from-red-100 to-orange-100 rounded-xl p-6 mb-6 border-2 border-red-300">
+                <div class="flex items-center gap-4 mb-4">
+                  <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center">
+                    <span class="text-3xl">🇮🇩</span>
+                  </div>
+                  <div>
+                    <p class="text-red-800 font-bold text-xl">Status Indonesia</p>
+                    <p class="text-red-700">Penghasil sampah plastik laut</p>
+                  </div>
+                </div>
+                <div class="text-center bg-white/70 rounded-xl p-4">
+                  <p class="text-5xl font-extrabold text-red-600">#2</p>
+                  <p class="text-red-800 font-medium">Terbesar di Dunia</p>
+                </div>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-5 border-l-4 border-amber-500">
+                  <h3 class="font-bold text-amber-800 mb-3 flex items-center gap-2">
+                    <span class="text-2xl">⚠️</span> Bahaya Plastik
+                  </h3>
+                  <ul class="space-y-3 text-amber-700">
+                    <li class="flex items-start gap-2">
+                      <span class="text-lg">🕐</span>
+                      <span><strong>Sulit terurai</strong> - membutuhkan ratusan tahun</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-lg">☠️</span>
+                      <span>Proses pengolahan bisa menghasilkan <strong>zat karsinogenik</strong> (pemicu kanker)</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-5 border-l-4 border-purple-500">
+                  <h3 class="font-bold text-purple-800 mb-3 flex items-center gap-2">
+                    <span class="text-2xl">🔬</span> Mikroplastik
+                  </h3>
+                  <div class="bg-white/70 rounded-lg p-4">
+                    <p class="text-purple-700 mb-2">Penelitian di Makassar:</p>
+                    <div class="flex items-center gap-3">
+                      <span class="text-4xl font-bold text-purple-600">23</span>
+                      <div>
+                        <p class="text-purple-800 font-medium">sampel ikan</p>
+                        <p class="text-purple-600 text-sm">memiliki plastik di perutnya</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Plastic Decomposition Timeline -->
+              <div class="bg-gray-50 rounded-xl p-5">
+                <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                  <span>⏳</span> Waktu Penguraian Sampah
+                </h3>
+                <div class="space-y-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                      <span class="text-xl">🍎</span>
+                    </div>
+                    <div class="flex-1">
+                      <div class="flex justify-between mb-1">
+                        <span class="text-gray-700">Sisa makanan</span>
+                        <span class="font-bold text-green-600">1-2 minggu</span>
+                      </div>
+                      <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-green-500 h-2 rounded-full" style="width: 5%"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center">
+                      <span class="text-xl">📰</span>
+                    </div>
+                    <div class="flex-1">
+                      <div class="flex justify-between mb-1">
+                        <span class="text-gray-700">Kertas</span>
+                        <span class="font-bold text-amber-600">2-6 bulan</span>
+                      </div>
+                      <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-amber-500 h-2 rounded-full" style="width: 10%"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                      <span class="text-xl">🍶</span>
+                    </div>
+                    <div class="flex-1">
+                      <div class="flex justify-between mb-1">
+                        <span class="text-gray-700">Botol plastik</span>
+                        <span class="font-bold text-red-600">450 tahun</span>
+                      </div>
+                      <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-red-500 h-2 rounded-full" style="width: 90%"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                      <span class="text-xl">🎣</span>
+                    </div>
+                    <div class="flex-1">
+                      <div class="flex justify-between mb-1">
+                        <span class="text-gray-700">Jaring ikan (nilon)</span>
+                        <span class="font-bold text-purple-600">600 tahun</span>
+                      </div>
+                      <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-purple-500 h-2 rounded-full" style="width: 100%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+              <img src="https://images.unsplash.com/photo-1604187351574-c75ca79f5807?w=600&q=80" 
+                   alt="Sampah plastik di pantai" 
+                   loading="lazy"
+                   class="rounded-xl shadow-lg w-full h-48 object-cover"
+                   onerror="this.style.background='#e5e7eb'; this.alt='Gambar tidak tersedia';">
+              <img src="https://images.unsplash.com/photo-1526951521990-620dc14c214b?w=600&q=80" 
+                   alt="Polusi plastik di laut" 
+                   loading="lazy"
+                   class="rounded-xl shadow-lg w-full h-48 object-cover"
+                   onerror="this.style.background='#e5e7eb'; this.alt='Gambar tidak tersedia';">
+            </div>
+
+            <!-- Interactive Plastic Impact Calculator -->
+            <div class="card-glass rounded-2xl p-6 shadow-xl">
+              <h3 class="font-bold text-teal-800 mb-4 flex items-center gap-2">
+                <span>🧮</span> Aktivitas: Kalkulator Dampak Plastik
+              </h3>
+              <p class="text-teal-700 mb-4">Jika kamu menggunakan 1 botol plastik per hari, berapa banyak botol yang akan kamu hasilkan?</p>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div class="bg-blue-50 rounded-xl p-4">
+                  <p class="text-3xl font-bold text-blue-600">7</p>
+                  <p class="text-blue-800 text-sm">Seminggu</p>
+                </div>
+                <div class="bg-green-50 rounded-xl p-4">
+                  <p class="text-3xl font-bold text-green-600">30</p>
+                  <p class="text-green-800 text-sm">Sebulan</p>
+                </div>
+                <div class="bg-amber-50 rounded-xl p-4">
+                  <p class="text-3xl font-bold text-amber-600">365</p>
+                  <p class="text-amber-800 text-sm">Setahun</p>
+                </div>
+                <div class="bg-red-50 rounded-xl p-4">
+                  <p class="text-3xl font-bold text-red-600">3.650</p>
+                  <p class="text-red-800 text-sm">10 tahun</p>
+                </div>
+              </div>
+              <p class="mt-4 text-center text-teal-700 font-medium bg-teal-50 p-3 rounded-xl">
+                💡 Bayangkan jika 270 juta penduduk Indonesia melakukan hal yang sama!
+              </p>
+            </div>
+          </div>
+        `
+      },
+      // Slide 6: Solusi Kreatif & Inovasi
+      {
+        title: "Solusi Kreatif & Inovasi",
+        content: `
+          <div class="space-y-6">
+            <div class="card-glass rounded-2xl p-6 shadow-xl">
+              <h2 class="text-2xl md:text-3xl font-bold text-teal-800 mb-6 flex items-center gap-3">
+                <span class="text-3xl">💡</span> Solusi Kreatif & Inovasi
+              </h2>
+              
+              <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl p-6 mb-6 border-2 border-emerald-300">
+                <h3 class="font-bold text-emerald-800 mb-4 flex items-center gap-2">
+                  <span class="text-2xl">💰</span> Potensi Ekonomi
+                </h3>
+                <div class="grid md:grid-cols-2 gap-4 items-center">
+                  <div class="text-center bg-white/70 rounded-xl p-4">
+                    <p class="text-gray-600">Pengolahan</p>
+                    <p class="text-4xl font-bold text-emerald-600">48 ton</p>
+                    <p class="text-gray-600">sampah plastik</p>
+                  </div>
+                  <div class="text-center bg-emerald-100 rounded-xl p-4">
+                    <p class="text-emerald-700">Bisa menghasilkan</p>
+                    <p class="text-3xl font-bold text-emerald-600">Rp 16.379.472</p>
+                    <p class="text-emerald-700">per bulan</p>
+                  </div>
+                </div>
+              </div>
+
+              <h3 class="font-bold text-teal-800 mb-4 flex items-center gap-2">
+                <span>🏆</span> Inovasi Daerah di Indonesia
+              </h3>
+              
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-5 border-l-4 border-blue-500 fact-card transition-all duration-300">
+                  <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+                      <span class="text-2xl">⛽</span>
+                    </div>
+                    <div>
+                      <p class="font-bold text-blue-800">Bandung & Bali</p>
+                      <p class="text-blue-600 text-sm">Plastik → BBM</p>
+                    </div>
+                  </div>
+                  <p class="text-blue-700">Mengolah plastik menjadi <strong>Bahan Bakar Minyak (BBM)</strong> melalui proses pirolisis.</p>
+                  <div class="mt-3 bg-white/70 rounded-lg p-3">
+                    <p class="text-sm text-blue-600">🔄 Ekonomi Sirkular: Sampah → Energi</p>
+                  </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-5 border-l-4 border-green-500 fact-card transition-all duration-300">
+                  <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                      <span class="text-2xl">🚌</span>
+                    </div>
+                    <div>
+                      <p class="font-bold text-green-800">Surabaya</p>
+                      <p class="text-green-600 text-sm">Suroboyo Bus</p>
+                    </div>
+                  </div>
+                  <p class="text-green-700">Tiket bus <strong>dibayar dengan botol plastik</strong>! 5 botol besar atau 10 gelas plastik = 1 tiket.</p>
+                  <div class="mt-3 bg-white/70 rounded-lg p-3">
+                    <p class="text-sm text-green-600">♻️ Insentif: Daur ulang → Transportasi gratis</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+              <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=600&q=80" 
+                   alt="Daur ulang plastik" 
+                   loading="lazy"
+                   class="rounded-xl shadow-lg w-full h-48 object-cover"
+                   onerror="this.style.background='#e5e7eb'; this.alt='Gambar tidak tersedia';">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" 
+                   alt="Transportasi ramah lingkungan" 
+                   loading="lazy"
+                   class="rounded-xl shadow-lg w-full h-48 object-cover"
+                   onerror="this.style.background='#e5e7eb'; this.alt='Gambar tidak tersedia';">
+            </div>
+
+            <!-- Interactive Innovation Ideas -->
+            <div class="card-glass rounded-2xl p-6 shadow-xl">
+              <h3 class="font-bold text-teal-800 mb-4 flex items-center gap-2">
+                <span>🎨</span> Aktivitas: Ide Inovasimu
+              </h3>
+              <p class="text-teal-700 mb-4">Pilih ide kreatif untuk mengurangi sampah plastik di sekolahmu:</p>
+              <div class="grid md:grid-cols-2 gap-4" id="innovation-ideas">
+                <button onclick="selectIdea(this, 'Kantin tanpa plastik')" class="idea-btn p-4 bg-white rounded-xl border-2 border-gray-200 text-left hover:border-teal-400 transition-all">
+                  <span class="text-2xl mb-2 block">🍱</span>
+                  <span class="font-medium text-gray-800">Kantin Tanpa Plastik</span>
+                  <p class="text-sm text-gray-600 mt-1">Menggunakan daun atau wadah ramah lingkungan</p>
+                </button>
+                <button onclick="selectIdea(this, 'Bank sampah sekolah')" class="idea-btn p-4 bg-white rounded-xl border-2 border-gray-200 text-left hover:border-teal-400 transition-all">
+                  <span class="text-2xl mb-2 block">🏦</span>
+                  <span class="font-medium text-gray-800">Bank Sampah Sekolah</span>
+                  <p class="text-sm text-gray-600 mt-1">Tukar sampah dengan poin atau hadiah</p>
+                </button>
+                <button onclick="selectIdea(this, 'Eco-brick project')" class="idea-btn p-4 bg-white rounded-xl border-2 border-gray-200 text-left hover:border-teal-400 transition-all">
+                  <span class="text-2xl mb-2 block">🧱</span>
+                  <span class="font-medium text-gray-800">Eco-Brick Project</span>
+                  <p class="text-sm text-gray-600 mt-1">Botol plastik diisi sampah jadi bata ramah lingkungan</p>
+                </button>
+                <button onclick="selectIdea(this, 'Tumbler challenge')" class="idea-btn p-4 bg-white rounded-xl border-2 border-gray-200 text-left hover:border-teal-400 transition-all">
+                  <span class="text-2xl mb-2 block">🥤</span>
+                  <span class="font-medium text-gray-800">Tumbler Challenge</span>
+                  <p class="text-sm text-gray-600 mt-1">Kompetisi membawa tumbler sendiri</p>
+                </button>
+              </div>
+              <div id="idea-result" class="mt-4 p-4 bg-teal-50 rounded-xl hidden">
+                <p class="text-teal-800 font-medium">Ide pilihanmu: <span id="selected-idea" class="font-bold"></span></p>
+                <p class="text-teal-600 text-sm mt-2">Hebat! Mulai dari langkah kecil untuk perubahan besar! 🌟</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 7: Kesimpulan & Aksi
+      {
+        title: "Kesimpulan & Aksi Kita",
+        content: `
+          <div class="space-y-6">
+            <div class="card-glass rounded-2xl p-6 shadow-xl">
+              <h2 class="text-2xl md:text-3xl font-bold text-teal-800 mb-6 flex items-center gap-3">
+                <span class="text-3xl">🎯</span> Kesimpulan & Aksi Kita
+              </h2>
+              
+              <div class="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-xl p-6 mb-6 border-2 border-teal-300">
+                <p class="text-xl text-teal-800 font-medium text-center leading-relaxed">
+                  "Kesehatan kita sangat bergantung pada kualitas lingkungan <br>
+                  <span class="text-teal-600">(air, udara, dan tanah)</span>"
+                </p>
+              </div>
+
+              <h3 class="font-bold text-teal-800 mb-4 flex items-center gap-2">
+                <span>🌟</span> Apa yang Bisa Kita Lakukan?
+              </h3>
+              
+              <div class="grid md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-5 text-center border-2 border-green-200 fact-card transition-all duration-300">
+                  <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span class="text-3xl">🚫</span>
+                  </div>
+                  <h4 class="font-bold text-green-800 mb-2">Kurangi Plastik</h4>
+                  <p class="text-green-700 text-sm">Kurangi penggunaan plastik sekali pakai</p>
+                </div>
+
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-5 text-center border-2 border-blue-200 fact-card transition-all duration-300">
+                  <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span class="text-3xl">🏠</span>
+                  </div>
+                  <h4 class="font-bold text-blue-800 mb-2">Jaga Sanitasi</h4>
+                  <p class="text-blue-700 text-sm">Pastikan sanitasi di rumah dikelola dengan baik</p>
+                </div>
+
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-5 text-center border-2 border-purple-200 fact-card transition-all duration-300">
+                  <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span class="text-3xl">💪</span>
+                  </div>
+                  <h4 class="font-bold text-purple-800 mb-2">Hidup Sehat</h4>
+                  <p class="text-purple-700 text-sm">Terapkan pola hidup bersih dan sehat setiap hari</p>
+                </div>
+              </div>
+
+              <!-- Commitment Section -->
+              <div class="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-xl p-6 border-2 border-amber-300">
+                <h3 class="font-bold text-amber-800 mb-4 flex items-center gap-2">
+                  <span class="text-2xl">✍️</span> Komitmen Penyelamat Bumi
+                </h3>
+                <div class="space-y-3" id="commitment-list">
+                  <label class="flex items-center gap-3 p-3 bg-white/70 rounded-lg cursor-pointer hover:bg-white transition-colors">
+                    <input type="checkbox" class="commitment-check w-5 h-5 text-amber-600 rounded" onchange="updateCommitment()">
+                    <span class="text-amber-800">Saya akan membawa tumbler sendiri</span>
+                  </label>
+                  <label class="flex items-center gap-3 p-3 bg-white/70 rounded-lg cursor-pointer hover:bg-white transition-colors">
+                    <input type="checkbox" class="commitment-check w-5 h-5 text-amber-600 rounded" onchange="updateCommitment()">
+                    <span class="text-amber-800">Saya akan membawa tas belanja sendiri</span>
+                  </label>
+                  <label class="flex items-center gap-3 p-3 bg-white/70 rounded-lg cursor-pointer hover:bg-white transition-colors">
+                    <input type="checkbox" class="commitment-check w-5 h-5 text-amber-600 rounded" onchange="updateCommitment()">
+                    <span class="text-amber-800">Saya akan memilah sampah di rumah</span>
+                  </label>
+                  <label class="flex items-center gap-3 p-3 bg-white/70 rounded-lg cursor-pointer hover:bg-white transition-colors">
+                    <input type="checkbox" class="commitment-check w-5 h-5 text-amber-600 rounded" onchange="updateCommitment()">
+                    <span class="text-amber-800">Saya akan menghemat air dan listrik</span>
+                  </label>
+                  <label class="flex items-center gap-3 p-3 bg-white/70 rounded-lg cursor-pointer hover:bg-white transition-colors">
+                    <input type="checkbox" class="commitment-check w-5 h-5 text-amber-600 rounded" onchange="updateCommitment()">
+                    <span class="text-amber-800">Saya akan mengajak teman untuk peduli lingkungan</span>
+                  </label>
+                </div>
+                <div class="mt-4 p-4 bg-amber-100 rounded-xl text-center">
+                  <p class="text-amber-800">Komitmenmu: <span id="commitment-count" class="text-2xl font-bold text-amber-600">0</span>/5</p>
+                  <p id="commitment-message" class="text-sm text-amber-600 mt-2">Pilih komitmenmu untuk menjadi penyelamat bumi!</p>
+                </div>
+              </div>
+            </div>
+
+            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80" 
+                 alt="Tangan memegang bumi" 
+                 loading="lazy"
+                 class="rounded-xl shadow-lg w-full h-56 object-cover"
+                 onerror="this.style.background='#e5e7eb'; this.alt='Gambar tidak tersedia';">
+          </div>
+        `
+      },
+      // Slide 8: Quiz
+      {
+        title: "Kuis HOTS",
+        content: `
+          <div class="space-y-6">
+            <div class="card-glass rounded-2xl p-6 shadow-xl">
+              <h2 class="text-2xl md:text-3xl font-bold text-teal-800 mb-4 flex items-center gap-3">
+                <span class="text-3xl">📝</span> Kuis HOTS - Uji Pemahamanmu!
+              </h2>
+              <p class="text-teal-600 mb-6">Jawab 10 soal berikut untuk menguji pemahaman tingkat tinggi tentang materi yang telah dipelajari.</p>
+              
+              <div id="quiz-container">
+                <!-- Quiz questions will be rendered here -->
+              </div>
+
+              <div id="quiz-navigation" class="flex justify-between items-center mt-6 pt-4 border-t border-gray-200">
+                <button id="quiz-prev" onclick="navigateQuiz(-1)" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors disabled:opacity-50" disabled>
+                  ← Sebelumnya
+                </button>
+                <span id="quiz-progress" class="text-teal-700 font-medium">Soal 1/10</span>
+                <button id="quiz-next" onclick="navigateQuiz(1)" class="px-4 py-2 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition-colors">
+                  Selanjutnya →
+                </button>
+              </div>
+
+              <div id="quiz-submit-section" class="mt-6 hidden">
+                <button id="submit-quiz" onclick="submitQuiz()" class="w-full px-6 py-4 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-xl font-bold text-lg hover:from-teal-700 hover:to-emerald-700 transition-all shadow-lg">
+                  📊 Kirim Jawaban & Lihat Hasil
+                </button>
+              </div>
+
+              <div id="quiz-result" class="mt-6 hidden">
+                <div class="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-xl p-6 border-2 border-teal-300">
+                  <h3 class="text-xl font-bold text-teal-800 mb-4 text-center">Hasil Kuismu</h3>
+                  <div class="text-center mb-4">
+                    <span id="quiz-score" class="text-6xl font-extrabold text-teal-600">0</span>
+                    <span class="text-2xl text-teal-600">/10</span>
+                  </div>
+                  <p id="quiz-feedback" class="text-center text-teal-700 font-medium"></p>
+                  <button onclick="reviewQuiz()" class="mt-4 w-full px-4 py-2 bg-teal-100 text-teal-800 rounded-lg font-medium hover:bg-teal-200 transition-colors">
+                    📖 Lihat Pembahasan
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      }
+    ];
+
+    // Counter states
+    let plasticCounts = { botol: 0, kantong: 0, sedotan: 0, kemasan: 0 };
+    let waterChecks = {};
+    let currentQuizQuestion = 0;
+
+    // Functions
+    function updateCounter(type) {
+      plasticCounts[type]++;
+      document.getElementById(`count-${type}`).textContent = plasticCounts[type];
+      const total = Object.values(plasticCounts).reduce((a, b) => a + b, 0);
+      document.getElementById('total-plastic').textContent = total;
+      
+      const messageEl = document.getElementById('plastic-message');
+      if (total === 0) {
+        messageEl.textContent = '';
+      } else if (total <= 3) {
+        messageEl.textContent = '👍 Bagus! Usahamu untuk mengurangi plastik sudah baik.';
+      } else if (total <= 6) {
+        messageEl.textContent = '⚠️ Lumayan, tapi coba kurangi lagi ya!';
+      } else {
+        messageEl.textContent = '🚨 Wah, cukup banyak! Yuk mulai kurangi plastik sekali pakai.';
+      }
+    }
+
+    function updatePHBS() {
+      const checks = document.querySelectorAll('.phbs-check:checked').length;
+      document.getElementById('phbs-score').textContent = checks;
+      
+      const messageEl = document.getElementById('phbs-message');
+      if (checks === 0) {
+        messageEl.textContent = 'Mulai centang kebiasaan baikmu!';
+      } else if (checks <= 2) {
+        messageEl.textContent = '🌱 Awal yang baik! Terus tingkatkan ya.';
+      } else if (checks <= 4) {
+        messageEl.textContent = '👏 Hebat! Kamu sudah menerapkan beberapa PHBS.';
+      } else if (checks === 5) {
+        messageEl.textContent = '🌟 Luar biasa! Hampir sempurna!';
+      } else {
+        messageEl.textContent = '🏆 SEMPURNA! Kamu adalah teladan PHBS!';
+      }
+    }
+
+    function checkWater(questionNum, isBad) {
+      waterChecks[questionNum] = isBad;
+      
+      const buttons = document.querySelectorAll(`#water-quality-check > div:nth-child(${questionNum}) .water-btn`);
+      buttons.forEach(btn => btn.classList.remove('ring-2', 'ring-offset-2'));
+      
+      if (isBad) {
+        buttons[1].classList.add('ring-2', 'ring-offset-2', 'ring-red-500');
+      } else {
+        buttons[0].classList.add('ring-2', 'ring-offset-2', 'ring-green-500');
+      }
+
+      if (Object.keys(waterChecks).length === 3) {
+        const resultEl = document.getElementById('water-result');
+        const messageEl = document.getElementById('water-message');
+        resultEl.classList.remove('hidden');
+        
+        const badCount = Object.values(waterChecks).filter(v => v).length;
+        if (badCount === 0) {
+          resultEl.className = 'mt-4 p-4 bg-green-50 rounded-xl';
+          messageEl.className = 'text-lg font-bold mt-2 text-green-700';
+          messageEl.textContent = '✅ Air di rumahmu terlihat memenuhi standar! Tetap jaga kebersihan sumber air.';
+        } else if (badCount <= 1) {
+          resultEl.className = 'mt-4 p-4 bg-amber-50 rounded-xl';
+          messageEl.className = 'text-lg font-bold mt-2 text-amber-700';
+          messageEl.textContent = '⚠️ Ada yang perlu diperbaiki. Konsultasikan dengan ahli sanitasi.';
+        } else {
+          resultEl.className = 'mt-4 p-4 bg-red-50 rounded-xl';
+          messageEl.className = 'text-lg font-bold mt-2 text-red-700';
+          messageEl.textContent = '🚨 Perhatian! Beberapa aspek air tidak memenuhi standar. Segera perbaiki!';
+        }
+      }
+    }
+
+    function calculateDistance() {
+      const distance = parseInt(document.getElementById('distance-input').value) || 0;
+      const resultEl = document.getElementById('distance-result');
+      const messageEl = document.getElementById('distance-message');
+      
+      resultEl.classList.remove('hidden');
+      
+      if (distance >= 10) {
+        resultEl.className = 'mt-4 p-4 bg-green-50 rounded-xl';
+        messageEl.className = 'text-lg font-bold text-green-700';
+        messageEl.textContent = `✅ AMAN! Jarak ${distance} meter sudah memenuhi standar minimal 10 meter.`;
+      } else if (distance > 0) {
+        resultEl.className = 'mt-4 p-4 bg-red-50 rounded-xl';
+        messageEl.className = 'text-lg font-bold text-red-700';
+        messageEl.textContent = `🚨 BAHAYA! Jarak ${distance} meter terlalu dekat. Harus minimal 10 meter!`;
+      } else {
+        resultEl.className = 'mt-4 p-4 bg-gray-50 rounded-xl';
+        messageEl.className = 'text-lg font-bold text-gray-700';
+        messageEl.textContent = 'Masukkan jarak yang valid.';
+      }
+    }
+
+    function selectIdea(button, idea) {
+      document.querySelectorAll('.idea-btn').forEach(btn => {
+        btn.classList.remove('border-teal-500', 'bg-teal-50');
+        btn.classList.add('border-gray-200');
+      });
+      
+      button.classList.remove('border-gray-200');
+      button.classList.add('border-teal-500', 'bg-teal-50');
+      
+      document.getElementById('idea-result').classList.remove('hidden');
+      document.getElementById('selected-idea').textContent = idea;
+    }
+
+    function updateCommitment() {
+      const checks = document.querySelectorAll('.commitment-check:checked').length;
+      document.getElementById('commitment-count').textContent = checks;
+      
+      const messageEl = document.getElementById('commitment-message');
+      if (checks === 0) {
+        messageEl.textContent = 'Pilih komitmenmu untuk menjadi penyelamat bumi!';
+      } else if (checks <= 2) {
+        messageEl.textContent = '🌱 Langkah awal yang bagus!';
+      } else if (checks <= 4) {
+        messageEl.textContent = '🌟 Hebat! Kamu serius menjaga bumi!';
+      } else {
+        messageEl.textContent = '🏆 LUAR BIASA! Kamu Pahlawan Lingkungan sejati!';
+      }
+    }
+
+    // Quiz Functions
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      if (!container) return;
+      
+      const q = quizQuestions[currentQuizQuestion];
+      const selectedAnswer = quizAnswers[q.id];
+      
+      let optionsHTML = q.options.map((opt, idx) => {
+        let classes = 'quiz-option p-4 rounded-xl border-2 border-gray-200 cursor-pointer transition-all text-left';
+        
+        if (quizSubmitted) {
+          if (idx === q.correct) {
+            classes += ' correct';
+          } else if (selectedAnswer === idx && idx !== q.correct) {
+            classes += ' incorrect';
+          }
+        } else if (selectedAnswer === idx) {
+          classes += ' selected';
+        }
+        
+        return `
+          <button onclick="selectQuizAnswer(${q.id}, ${idx})" class="${classes}" ${quizSubmitted ? 'disabled' : ''}>
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-gray-500">${String.fromCharCode(65 + idx)}.</span>
+              <span class="text-gray-700">${opt}</span>
+            </div>
+          </button>
+        `;
+      }).join('');
+
+      container.innerHTML = `
+        <div class="bg-teal-50 rounded-xl p-5 mb-4">
+          <p class="text-sm text-teal-600 font-medium mb-2">Soal ${currentQuizQuestion + 1} dari 10</p>
+          <p class="text-lg font-medium text-teal-800">${q.question}</p>
+        </div>
+        <div class="space-y-3">
+          ${optionsHTML}
+        </div>
+        ${quizSubmitted ? `
+          <div class="mt-4 p-4 bg-blue-50 rounded-xl border-l-4 border-blue-500">
+            <p class="font-bold text-blue-800 mb-2">💡 Pembahasan:</p>
+            <p class="text-blue-700">${q.explanation}</p>
+          </div>
+        ` : ''}
+      `;
+
+      // Update navigation
+      document.getElementById('quiz-progress').textContent = `Soal ${currentQuizQuestion + 1}/10`;
+      document.getElementById('quiz-prev').disabled = currentQuizQuestion === 0;
+      
+      const nextBtn = document.getElementById('quiz-next');
+      const submitSection = document.getElementById('quiz-submit-section');
+      
+      if (currentQuizQuestion === quizQuestions.length - 1) {
+        nextBtn.classList.add('hidden');
+        if (!quizSubmitted) {
+          submitSection.classList.remove('hidden');
+        }
+      } else {
+        nextBtn.classList.remove('hidden');
+        submitSection.classList.add('hidden');
+      }
+    }
+
+    function selectQuizAnswer(questionId, answerIndex) {
+      if (quizSubmitted) return;
+      quizAnswers[questionId] = answerIndex;
+      renderQuiz();
+    }
+
+    function navigateQuiz(direction) {
+      currentQuizQuestion += direction;
+      if (currentQuizQuestion < 0) currentQuizQuestion = 0;
+      if (currentQuizQuestion >= quizQuestions.length) currentQuizQuestion = quizQuestions.length - 1;
+      renderQuiz();
+    }
+
+    async function submitQuiz() {
+      if (quizSubmitted) return;
+      
+      const submitBtn = document.getElementById('submit-quiz');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Menyimpan...';
+      
+      let score = 0;
+      
+      for (const q of quizQuestions) {
+        const isCorrect = quizAnswers[q.id] === q.correct;
+        if (isCorrect) score++;
+        
+        // Save to Data SDK
+        if (window.dataSdk) {
+          if (savedAnswers.length >= 999) {
+            console.log('Data limit reached');
+            break;
+          }
+          
+          const result = await window.dataSdk.create({
+            question_id: q.id,
+            selected_answer: quizAnswers[q.id] !== undefined ? q.options[quizAnswers[q.id]] : 'Tidak dijawab',
+            is_correct: isCorrect,
+            answered_at: new Date().toISOString()
+          });
+          
+          if (!result.isOk) {
+            console.error('Failed to save answer');
+          }
+        }
+      }
+      
+      quizSubmitted = true;
+      
+      // Show result
+      document.getElementById('quiz-result').classList.remove('hidden');
+      document.getElementById('quiz-submit-section').classList.add('hidden');
+      document.getElementById('quiz-score').textContent = score;
+      
+      const feedbackEl = document.getElementById('quiz-feedback');
+      if (score >= 9) {
+        feedbackEl.textContent = '🏆 Luar Biasa! Kamu benar-benar memahami materi dengan sangat baik!';
+      } else if (score >= 7) {
+        feedbackEl.textContent = '🌟 Hebat! Pemahaman kamu sangat baik!';
+      } else if (score >= 5) {
+        feedbackEl.textContent = '👍 Bagus! Terus tingkatkan pemahamanmu.';
+      } else {
+        feedbackEl.textContent = '📚 Jangan menyerah! Pelajari lagi materinya ya.';
+      }
+      
+      renderQuiz();
+    }
+
+    function reviewQuiz() {
+      currentQuizQuestion = 0;
+      renderQuiz();
+      document.getElementById('quiz-container').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Navigation Functions
+    function navigateSlide(direction) {
+      const newSlide = currentSlide + direction;
+      if (newSlide >= 0 && newSlide < slides.length) {
+        goToSlide(newSlide);
+      }
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateSlide();
+    }
+
+    function updateSlide() {
+      const container = document.getElementById('content-container');
+      container.innerHTML = slides[currentSlide].content;
+      container.className = 'slide-enter';
+      
+      // Update progress
+      const progress = ((currentSlide + 1) / slides.length) * 100;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+      document.getElementById('current-section').textContent = `Materi ${currentSlide + 1}`;
+      
+      // Update nav dots
+      document.querySelectorAll('.nav-dot').forEach((dot, idx) => {
+        if (idx === currentSlide) {
+          dot.classList.remove('bg-teal-300');
+          dot.classList.add('bg-teal-600', 'scale-125');
+        } else {
+          dot.classList.add('bg-teal-300');
+          dot.classList.remove('bg-teal-600', 'scale-125');
+        }
+      });
+      
+      // Update nav buttons
+      document.getElementById('prev-btn').disabled = currentSlide === 0;
+      const nextBtn = document.getElementById('next-btn');
+      if (currentSlide === slides.length - 1) {
+        nextBtn.innerHTML = '<span class="hidden sm:inline">Selesai</span><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+        nextBtn.disabled = true;
+      } else {
+        nextBtn.innerHTML = '<span class="hidden sm:inline">Selanjutnya</span><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>';
+        nextBtn.disabled = false;
+      }
+      
+      // Initialize quiz if on quiz slide
+      if (currentSlide === 8) {
+        renderQuiz();
+      }
+      
+      // Update titles from config
+      updateTitles();
+    }
+
+    function updateTitles() {
+      const mainTitle = document.getElementById('main-title-display');
+      const subtitle = document.getElementById('subtitle-display');
+      
+      if (mainTitle) mainTitle.textContent = config.main_title;
+      if (subtitle) subtitle.textContent = config.subtitle;
+    }
+
+    // SDK Initialization
+    const dataHandler = {
+      onDataChanged(data) {
+        savedAnswers = data;
+      }
+    };
+
+    async function initApp() {
+      // Initialize Element SDK
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (newConfig) => {
+            config = { ...config, ...newConfig };
+            updateTitles();
+            applyStyles();
+          },
+          mapToCapabilities: (cfg) => ({
+            recolorables: [
+              {
+                get: () => cfg.background_color || defaultConfig.background_color,
+                set: (v) => { cfg.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
+              },
+              {
+                get: () => cfg.secondary_color || defaultConfig.secondary_color,
+                set: (v) => { cfg.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); }
+              },
+              {
+                get: () => cfg.text_color || defaultConfig.text_color,
+                set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+              },
+              {
+                get: () => cfg.primary_color || defaultConfig.primary_color,
+                set: (v) => { cfg.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); }
+              },
+              {
+                get: () => cfg.accent_color || defaultConfig.accent_color,
+                set: (v) => { cfg.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); }
+              }
+            ],
+            borderables: [],
+            fontEditable: {
+              get: () => cfg.font_family || defaultConfig.font_family,
+              set: (v) => { cfg.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+            },
+            fontSizeable: {
+              get: () => cfg.font_size || defaultConfig.font_size,
+              set: (v) => { cfg.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+            }
+          }),
+          mapToEditPanelValues: (cfg) => new Map([
+            ["main_title", cfg.main_title || defaultConfig.main_title],
+            ["subtitle", cfg.subtitle || defaultConfig.subtitle]
+          ])
+        });
+        
+        if (window.elementSdk.config) {
+          config = { ...config, ...window.elementSdk.config };
+        }
+      }
+
+      // Initialize Data SDK
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error('Failed to initialize Data SDK');
+        }
+      }
+
+      // Initialize first slide
+      updateSlide();
+      applyStyles();
+    }
+
+    function applyStyles() {
+      const fontFamily = config.font_family || defaultConfig.font_family;
+      const fontSize = config.font_size || defaultConfig.font_size;
+      
+      document.body.style.fontFamily = `${fontFamily}, sans-serif`;
+      document.body.style.fontSize = `${fontSize}px`;
+    }
+
+    // Initialize on load
+    initApp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cab5e887296b882',t:'MTc3MDU1NjI0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

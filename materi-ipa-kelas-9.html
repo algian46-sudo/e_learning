@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi IPA Kelas IX</title>
+    <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+    <style>
+        :root {
+            --ungu-tua: #4b0082;
+            --ungu-sedang: #6a0dad;
+            --ungu-muda: #f0f0ff;
+            --putih: #ffffff;
+            --gradasi: linear-gradient(135deg, #4b0082 0%, #9370db 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--ungu-muda);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* Navbar Ringkas */
+        .navbar {
+            background-color: var(--putih);
+            padding: 8px 5%;
+            display: flex;
+            justify-content: flex-end;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .btn-home {
+            text-decoration: none;
+            color: var(--ungu-tua);
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 6px 15px;
+            border: 1.5px solid var(--ungu-tua);
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        .btn-home:hover {
+            background-color: var(--ungu-tua);
+            color: white;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        /* Header Lebih Padat */
+        header {
+            text-align: center;
+            padding: 25px 15px; /* Padding dikurangi agar lebih ramping */
+            background: var(--gradasi);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .logo-smp {
+            width: 70px; /* Ukuran logo lebih proporsional */
+            height: 70px;
+            background-color: white;
+            padding: 8px;
+            border-radius: 50%;
+            margin-bottom: 12px;
+            object-fit: contain;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem; /* Ukuran teks dioptimalkan */
+            font-weight: 700;
+        }
+
+        header p {
+            margin: 5px 0 0 0;
+            font-size: 0.95rem;
+            opacity: 0.85;
+        }
+
+        /* Grid Materi */
+        .bab-section { margin-bottom: 40px; }
+        .bab-title {
+            color: var(--ungu-tua);
+            border-left: 5px solid var(--ungu-sedang);
+            padding-left: 12px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .grid-materi {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--ungu-sedang);
+        }
+
+        .card h3 { margin: 0 0 8px 0; color: var(--ungu-tua); font-size: 1.15rem; }
+        .card p { font-size: 0.9rem; color: #666; margin-bottom: 15px; line-height: 1.4; }
+
+        .btn-baca {
+            background: var(--gradasi);
+            color: white;
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            font-size: 0.85rem;
+            color: var(--ungu-tua);
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="elearning.html" class="btn-home">🏠 Kembali</a>
+</nav>
+
+<div class="container">
+    <header>
+        <img src="https://i.imgur.com/mRmw86t.jpeg" alt="Logo SMP" class="logo-smp">
+        <h1>Portal Materi IPA Kelas IX</h1>
+        <p>SMP NEGERI 8 CIKARANG UTARA</p>
+    </header>
+
+    <div class="bab-section">
+        <h2 class="bab-title">BAB 1: Pertumbuhan dan Perkembangan</h2>
+        <div class="grid-materi">
+            <a href="pertumbuhanmanusia.html" class="card">
+                <div>
+                    <h3>Subunit 1.1 </h3>
+                    <p>Pertumbuhan dan Perkembangan Manusia.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+            <a href="pertumbuhanhewan.html" class="card">
+                <div>
+                    <h3>Subunit 1.2 </h3>
+                    <p>Pertumbuhan dan Perkembangan Hewan.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+            <a href="pertumbuhantumbuhan.html" class="card">
+                <div>
+                    <h3>Subunit 1.3 </h3>
+                    <p>Pertumbuhan dan Perkembangan Tumbuhan</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+           </a>
+        </div>
+    </div>
+
+    <div class="bab-section">
+        <h2 class="bab-title">BAB II: Sistem Koordinasi, Reproduksi dan  
+Homeostasis Manusia</h2>
+        <div class="grid-materi">
+            <a href="koordinasimanusia.html" class="card">
+                <div>
+                    <h3>Subunit 2.1: </h3>
+                    <p>Sistem Koordinasi Manusia</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+            <a href="sistemreproduksimanusia.html" class="card">
+                <div>
+                    <h3>Subunit 2.2: </h3>
+                    <p>Sistem Reproduksi Manusia.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+            <a href="homeostatis.html" class="card">
+                <div>
+                    <h3>Subunit 2.3: </h3>
+                    <p>Homeostasis.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>     
+        </div>
+    </div>
+
+    <div class="bab-section">
+        <h2 class="bab-title">BAB III: Tekanan</h2>
+        <div class="grid-materi">
+            <a href="tekananzatpadat.html" class="card">
+                <div>
+                    <h3>Subunit 3.1: </h3>
+                    <p>Tekanan Zat Padat.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+            <a href="tekananzatcair.html" class="card">
+                <div>
+                    <h3>Subunit 3.2: </h3>
+                    <p>Tekanan Zat Cair.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+            <a href="tekanangas.html" class="card">
+                <div>
+                    <h3>Subunit 3.3: </h3>
+                    <p>Tekanan Gas.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a> 
+        </div>
+    </div>
+
+    <div class="bab-section">
+        <h2 class="bab-title">BAB IV: Listrik, Magnet, dan Sumber Energi Alternatif</h2>
+        <div class="grid-materi">
+            <a href="listrik.html" class="card">
+                <div>
+                    <h3>Subunit 4.1: </h3>
+                    <p> Listrik.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+            <a href="magnet.html" class="card">
+                <div>
+                    <h3>Subunit 4.2: </h3>
+                    <p> Magnet.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+            <a href="energialternatif.html" class="card">
+                <div>
+                    <h3>Subunit 4.3: </h3>
+                    <p> Energi Alternatif/Terbarukan.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="bab-section">
+        <h2 class="bab-title">BAB V: Reaksi-Reaksi Kimia dan Dinamikanya</h2>
+        <div class="grid-materi">
+            <a href="reaksikimia.html" class="card">
+                <div>
+                    <h3>Subunit 5.1: </h3>
+                    <p> Reaksi Kimia.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+            <a href="asambasa.html" class="card">
+                <div>
+                    <h3>Subunit 5.2: </h3>
+                    <p> Asam dan Basa.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+            <a href="lajureaksi.html" class="card">
+                <div>
+                    <h3>Subunit 5.3: </h3>
+                    <p> Energi dan Laju Reaksi Kimia.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="bab-section">
+        <h2 class="bab-title">BAB VI: Pewarisan Sifat dan Bioteknologi</h2>
+        <div class="grid-materi">
+            <a href="pewarisansifat.html" class="card">
+                <div>
+                    <h3>Subunit 6.1: </h3>
+                    <p> Kromosom, DNA, dan Gen.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+            <a href="persilanganmonohibrid.html" class="card">
+                <div>
+                    <h3>Subunit 6.2: </h3>
+                    <p> Persilangan Monohibrid dan Dihibrid.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+            <a href="bioteknologi.html" class="card">
+                <div>
+                    <h3>Subunit 6.3: </h3>
+                    <p> Bioteknologi.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="bab-section">
+        <h2 class="bab-title">BAB VII: Isu-Isu Lingkungan</h2>
+        <div class="grid-materi">
+            <a href="isulingkungan.html" class="card">
+                <div>
+                    <h3>Subunit 7.1: </h3>
+                    <p> Kesehatan Lingkungan di Indonesia.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+            <a href="pemanasanglobal.html" class="card">
+                <div>
+                    <h3>Subunit 7.2: </h3>
+                    <p> Pemanasan Global.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+            <a href="krisisenergi.html" class="card">
+                <div>
+                    <h3>Subunit 7.3: </h3>
+                    <p> Krisis Energi.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+            <a href="ketersediaanpangan.html" class="card">
+                <div>
+                    <h3>Subunit 7.4: </h3>
+                    <p> Ketersediaan Pangan.</p>
+                </div>
+                <div class="btn-baca">Mulai Belajar</div>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 SMP NEGERI 8 CIKARANG UTARA | Algian Manggara, S.Agr</p>
+    </footer>
+</div>
+
+</body>
+</html>

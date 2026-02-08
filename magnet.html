@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listrik, Magnet, dan Sumber Energi Alternatif</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 1.5em 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        nav {
+            background-color: #34495e;
+            padding: 0.8em 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        nav a {
+            color: #ecf0f1;
+            text-decoration: none;
+            padding: 0.8em 1.5em;
+            margin: 0 0.5em;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #2c3e50;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 2em auto;
+            padding: 1.5em;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5em;
+            margin-top: 1.5em;
+        }
+        h1 {
+            font-size: 2.5em;
+        }
+        h2 {
+            font-size: 1.8em;
+            color: #3498db;
+        }
+        h3 {
+            font-size: 1.4em;
+            color: #2980b9;
+            margin-top: 1em;
+        }
+        p {
+            margin-bottom: 1em;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1.5em 0;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .activity-box {
+            background-color: #e8f6f3;
+            border-left: 5px solid #2ecc71;
+            padding: 1em 1.5em;
+            margin: 2em 0;
+            border-radius: 5px;
+        }
+        .quiz-section {
+            background-color: #fef9e7;
+            border-top: 5px solid #f39c12;
+            padding: 2em;
+            margin-top: 3em;
+            border-radius: 8px;
+        }
+        .quiz-question {
+            margin-bottom: 1.5em;
+        }
+        .quiz-question p {
+            font-weight: bold;
+            color: #d35400;
+        }
+        .quiz-question ol {
+            list-style-type: lower-alpha;
+            margin-left: 1.5em;
+        }
+        .quiz-question li {
+            margin-bottom: 0.5em;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 1.5em 0;
+            margin-top: 3em;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Listrik, Magnet, dan Sumber Energi Alternatif</h1>
+        <p>Menjelajahi Dunia Gaya yang Tak Terlihat</p>
+    </header>
+
+    <nav>
+        <a href="#pengenalan-magnet">Pengenalan Magnet</a>
+        <a href="#medan-magnet">Medan Magnet</a>
+        <a href="#elektromagnet">Perkembangan Elektromagnet</a>
+        <a href="#gaya-lorentz">Gaya Lorentz & Induksi Elektromagnetik</a>
+        <a href="#generator">Aplikasi Teknologi - Generator</a>
+        <a href="#relevansi-sosial">Aktivitas & Relevansi Sosial</a>
+        <a href="#quiz">Uji Pemahaman</a>
+    </nav>
+
+    <div class="container">
+
+        <section id="pengenalan-magnet">
+            <h2>Bagian 1: Pengenalan Magnet</h2>
+            <p>Pernahkah kalian bermain dengan benda yang bisa menarik logam seperti klip kertas atau paku? Benda ajaib itu adalah magnet! Mari kita selami lebih dalam tentang magnet.</p>
+
+            <h3>Sejarah Singkat</h3>
+            <p>Konsep magnet bukanlah hal baru. Kata "magnet" sendiri berasal dari bahasa Yunani, yaitu <em>"magnítis líthos"</em> yang berarti "batu magnesia". Penemuan pertama kali diperkirakan terjadi pada abad ke-6 SM oleh seorang filsuf Yunani bernama Thales. Ia mengamati bahwa ada jenis bijih mineral metalik tertentu yang memiliki kemampuan unik untuk menarik besi. Ini adalah awal mula manusia memahami fenomena magnetisme.</p>
+            
+            <h3>Definisi & Sifat Dasar</h3>
+            <p>Magnet adalah benda yang mampu menarik benda-benda lain yang terbuat dari bahan tertentu, terutama logam seperti besi, baja, nikel, dan kobalt. Magnet memiliki beberapa sifat dasar yang sangat menarik:</p>
+            <ul>
+                <li>Magnet umumnya terbuat dari logam seperti besi dan baja.</li>
+                <li>Setiap magnet memiliki dua ujung yang disebut **kutub**, yaitu **Kutub Utara** (dilambangkan N - North) dan **Kutub Selatan** (dilambangkan S - South).</li>
+                <li>**Hukum Interaksi Kutub Magnet**:
+                    <ul>
+                        <li>Jika dua kutub magnet yang <strong>sejenis</strong> (misalnya Utara dengan Utara, atau Selatan dengan Selatan) didekatkan, keduanya akan **tolak-menolak**.</li>
+                        <li>Jika dua kutub magnet yang <strong>berbeda jenis</strong> (misalnya Utara dengan Selatan) didekatkan, keduanya akan **tarik-menarik**.</li>
+                    </ul>
+                </li>
+                <li>Menariknya, sifat kemagnetan ini tidak akan hilang meskipun magnet dipotong menjadi bagian-bagian yang lebih kecil. Setiap potongan kecil akan tetap memiliki kutub Utara dan Selatan.</li>
+            </ul>
+            <h4>Ilustrasi: Interaksi Kutub Magnet</h4>
+            
+            <p>Perhatikan bagaimana magnet bisa menarik benda-benda logam seperti kunci atau paku.</p>
+            
+            <h3>Teori Magnet Elementer</h3>
+            <p>Mengapa ada benda yang bisa jadi magnet dan ada yang tidak? Jawabannya ada pada susunan partikel-partikel sangat kecil di dalamnya yang disebut **magnet elementer** atau domain magnetik.</p>
+            <ul>
+                <li>Pada **benda bersifat magnet**, magnet elementernya tersusun secara teratur dan searah, sehingga menciptakan efek magnetik yang kuat.</li>
+                <li>Pada **benda non-magnetik**, magnet elementernya tersusun secara acak atau tidak beraturan, sehingga efek magnetiknya saling meniadakan.</li>
+            </ul>
+            <h4>Ilustrasi: Susunan Magnet Elementer</h4>
+            <p>
+            
+            </p>
+            <div class="activity-box">
+                <h3>Aktivitas Interaktif: "Mencari Benda Magnetik"</h3>
+                <p>Ambillah sebuah magnet kecil (misalnya magnet kulkas atau magnet mainan). Jelajahi seisi ruangan atau rumahmu dan coba tempelkan magnet ke berbagai benda:</p>
+                <ol>
+                    <li>Buku</li>
+                    <li>Sendok besi</li>
+                    <li>Pensil kayu</li>
+                    <li>Gunting</li>
+                    <li>Koin</li>
+                    <li>Kertas</li>
+                </ol>
+                <p>Catat benda mana yang ditarik oleh magnet dan benda mana yang tidak. Diskusikan mengapa hal itu bisa terjadi dengan teman atau gurumu!</p>
+            </div>
+        </section>
+
+        <section id="medan-magnet">
+            <h2>Bagian 2: Medan Magnet</h2>
+            <p>Kita tahu bahwa magnet bisa menarik benda dari jarak tertentu. Tapi bagaimana caranya? Ini terjadi karena adanya **medan magnet**.</p>
+
+            <h3>Definisi Medan Magnet</h3>
+            <p><strong>Medan magnet</strong> adalah daerah di sekitar suatu magnet (atau benda berarus listrik) di mana gaya magnet masih bekerja. Artinya, jika kita menaruh benda magnetik atau magnet lain di daerah tersebut, ia akan merasakan adanya gaya tarik atau tolak.</p>
+
+            <h3>Visualisasi Medan Magnet</h3>
+            <p>Untuk memahami medan magnet, kita bisa membayangkannya dengan **garis-garis gaya magnet**. Garis-garis ini memiliki beberapa karakteristik:</p>
+            <ul>
+                <li>Garis-garis gaya magnet selalu keluar dari Kutub Utara dan masuk ke Kutub Selatan.</li>
+                <li>Garis-garis gaya magnet tidak pernah saling berpotongan.</li>
+                <li>Semakin rapat garis-garis gaya magnet, semakin kuat medan magnetnya. Sebaliknya, semakin renggang, semakin lemah medan magnetnya.</li>
+            </ul>
+            <p>Kita bisa melihat pola medan magnet secara nyata dengan menaburkan serbuk besi di sekitar sebuah magnet. Serbuk besi akan membentuk pola garis-garis gaya magnet, dengan kerapatan tertinggi di ujung-ujung kutub.</p>
+            <h4>Ilustrasi: Pola Medan Magnet dengan Serbuk Besi</h4>
+            <p>
+            
+            </p>
+            <div class="activity-box">
+                <h3>Aktivitas Interaktif: "Menggambar Garis Gaya Magnet"</h3>
+                <p>Siapkan selembar kertas, sebuah magnet batang, dan serbuk besi (jika ada, atau bisa diganti dengan jarum kecil). Letakkan magnet di bawah kertas. Taburkan serbuk besi secara perlahan di atas kertas. Amati pola yang terbentuk dan cobalah menggambar ulang pola garis gaya magnet tersebut. Apa yang kalian amati di dekat kutub magnet?</p>
+            </div>
+        </section>
+
+        <section id="elektromagnet">
+            <h2>Bagian 3: Perkembangan Elektromagnet</h2>
+            <p>Sampai sekarang kita sudah belajar tentang magnet alami. Tapi, tahukah kalian bahwa listrik juga bisa menghasilkan magnet? Inilah yang kita sebut **elektromagnetisme**.</p>
+
+            <h3>Penemuan Oersted (1820)</h3>
+            <p>Seorang ilmuwan Denmark bernama Hans Christian Ørsted membuat penemuan penting secara tidak sengaja pada tahun 1820. Saat ia sedang mengajar, ia mengamati bahwa jarum kompas yang berada di dekat kawat penghantar listrik menyimpang ketika arus listrik dialirkan melalui kawat tersebut. Ini membuktikan bahwa **arus listrik dapat menghasilkan medan magnet**.</p>
+            <h4>Ilustrasi: Eksperimen Oersted</h4>
+            <p>
+            
+            </p>
+            <h3>Kontribusi Michael Faraday</h3>
+            <p>Penemuan Oersted membuka jalan bagi ilmuwan lain untuk meneliti hubungan antara listrik dan magnet. Salah satu yang paling berpengaruh adalah Michael Faraday, seorang ilmuwan Inggris.</p>
+            <ul>
+                <li>**Motor Listrik Pertama**: Faraday adalah penemu motor listrik pertama. Ia menunjukkan bahwa jika sebuah kawat dialiri arus listrik dan ditempatkan di dekat magnet, kawat tersebut akan berputar. Ini adalah prinsip dasar bagaimana motor listrik bekerja, mengubah energi listrik menjadi energi gerak.</li>
+                <li>**Hukum Faraday tentang Induksi Elektromagnetik**: Penemuan Faraday yang paling revolusioner adalah kebalikan dari penemuan Oersted. Ia menemukan bahwa perubahan medan magnet pada kumparan kawat dapat menghasilkan arus listrik atau **Gaya Gerak Listrik (GGL)**. Ini berarti, bukan hanya listrik yang bisa menghasilkan magnet, tapi magnet yang bergerak juga bisa menghasilkan listrik!</li>
+            </ul>
+            <h4>Ilustrasi: Motor Listrik Sederhana</h4>
+            <p>
+            
+            </p>
+        </section>
+
+        <section id="gaya-lorentz">
+            <h2>Bagian 4: Gaya Lorentz & Induksi Elektromagnetik</h2>
+            <p>Dua konsep penting yang muncul dari hubungan listrik dan magnet adalah Gaya Lorentz dan Induksi Elektromagnetik.</p>
+
+            <h3>Gaya Lorentz</h3>
+            <p><strong>Gaya Lorentz</strong> adalah gaya yang dialami oleh penghantar berarus listrik ketika ditempatkan dalam medan magnet. Dengan kata lain, jika ada kawat yang mengalirkan listrik dan kawat tersebut berada di lingkungan medan magnet, maka kawat itu akan mengalami gaya dorong atau tarik.</p>
+            <ul>
+                <li>**Aplikasi**: Gaya Lorentz menjadi prinsip kerja banyak peralatan listrik di rumah kita, seperti motor listrik pada kipas angin, blender, pengering rambut, hingga mesin cuci.</li>
+                <li>**Penentuan Arah**: Arah Gaya Lorentz dapat ditentukan menggunakan **Kaidah Tangan Kanan**. Dengan ibu jari menunjukkan arah arus listrik (I), jari telunjuk menunjukkan arah medan magnet (B), maka jari tengah akan menunjukkan arah Gaya Lorentz (F).</li>
+            </ul>
+            <h4>Ilustrasi: Kaidah Tangan Kanan untuk Gaya Lorentz</h4>
+            <p>
+            
+            </p>
+            <h3>Induksi Elektromagnetik</h3>
+            <p>Seperti yang ditemukan oleh Faraday, <strong>induksi elektromagnetik</strong> adalah fenomena munculnya arus listrik (atau GGL) akibat adanya perubahan fluks magnetik (jumlah garis gaya magnet) yang menembus suatu kumparan atau penghantar. Ini adalah prinsip dasar bahwa kita bisa menghasilkan listrik dari pergerakan magnet, bukan hanya dari sumber kimia seperti baterai.</p>
+            <p>Perubahan fluks magnetik bisa terjadi karena:</p>
+            <ul>
+                <li>Menggerakkan magnet keluar masuk kumparan.</li>
+                <li>Menggerakkan kumparan mendekati atau menjauhi magnet.</li>
+                <li>Mengubah kuat arus listrik pada kumparan primer yang berada di dekat kumparan sekunder (prinsip transformator).</li>
+            </ul>
+            <h4>Ilustrasi: Percobaan Induksi Elektromagnetik (Kumparan dan Magnet)</h4>
+            <p>
+            
+            </p>
+            <div class="activity-box">
+                <h3>Aktivitas Interaktif: "Generator Sederhana"</h3>
+                <p>Jika memungkinkan, coba buat generator sederhana. Kamu bisa mencari tutorialnya di internet atau buku sains. Bahan-bahannya biasanya melibatkan kawat tembaga, magnet, dan LED kecil. Dengan memutar magnet di dekat kumparan kawat, amati apakah LED menyala. Ini menunjukkan bagaimana energi gerak bisa diubah menjadi listrik melalui induksi elektromagnetik!</p>
+            </div>
+        </section>
+
+        <section id="generator">
+            <h2>Bagian 5: Aplikasi Teknologi - Generator</h2>
+            <p>Prinsip induksi elektromagnetik yang ditemukan Faraday adalah dasar dari salah satu mesin terpenting di dunia modern: **Generator**.</p>
+
+            <h3>Fungsi Generator</h3>
+            <p><strong>Generator</strong> adalah mesin yang berfungsi mengubah energi gerak (energi mekanik) menjadi energi listrik. Tanpa generator, sebagian besar listrik yang kita gunakan setiap hari tidak akan ada.</p>
+
+            <h3>Prinsip Kerja Generator</h3>
+            <p>Prinsip kerja generator secara umum adalah memanfaatkan Hukum Faraday. Pada dasarnya, generator memiliki kumparan kawat yang diputar di dalam medan magnet (atau magnet yang diputar di dekat kumparan kawat). Perputaran ini menyebabkan perubahan fluks magnetik yang menembus kumparan, sehingga menghasilkan GGL induksi dan akhirnya arus listrik.</p>
+            <h4>Ilustrasi: Struktur Dasar Generator</h4>
+            <p>
+            
+            </p>
+            <h3>Sumber Energi Penggerak Generator</h3>
+            <p>Untuk memutar kumparan atau magnet di dalam generator, dibutuhkan energi penggerak dari luar. Sumber energi ini bisa bermacam-macam, dan inilah yang menentukan jenis pembangkit listrik:</p>
+            <ul>
+                <li>**Angin (Kincir Angin/Turbin Angin)**: Energi kinetik angin memutar bilah turbin, yang kemudian memutar generator. Ini adalah salah satu sumber energi alternatif yang bersih.</li>
+                <li>**Air (Kincir Air/Turbin Air pada PLTA)**: Aliran air dari bendungan atau sungai memutar turbin air, yang terhubung ke generator.</li>
+                <li>**Uap (dari pembakaran bahan bakar fosil, nuklir, atau panas bumi)**: Panas dari pembakaran batu bara, gas alam, minyak bumi, atau reaksi nuklir, bahkan panas bumi, digunakan untuk memanaskan air hingga menghasilkan uap bertekanan tinggi. Uap ini kemudian diarahkan untuk memutar turbin uap, yang terhubung ke generator.</li>
+                <li>**Mesin Diesel/Bahan Bakar Fosil**: Mesin diesel membakar bahan bakar untuk menghasilkan energi gerak yang langsung memutar generator (sering digunakan untuk pembangkit cadangan atau di daerah terpencil).</li>
+            </ul>
+            <h4>Ilustrasi: Pembangkit Listrik Tenaga Angin (PLTA Bayu)</h4>
+            <p>
+            
+            </p>
+            <h4>Ilustrasi: Pembangkit Listrik Tenaga Air (PLTA)</h4>
+            <p>
+            
+            </p>
+        </section>
+
+        <section id="relevansi-sosial">
+            <h2>Bagian 6: Aktivitas Pembelajaran & Relevansi Sosial</h2>
+            <p>Memahami listrik dan magnet tidak hanya penting untuk pengetahuan dasar sains, tetapi juga memiliki dampak besar pada kehidupan kita sehari-hari dan masa depan bumi.</p>
+
+            <h3>Fakta Sains: Sampah Elektronik Global</h3>
+            <p>Perkembangan teknologi yang pesat membuat kita semakin tergantung pada perangkat elektronik. Namun, ada sisi gelapnya: **sampah elektronik (e-waste)**. Diprediksi, sampah elektronik global akan mencapai angka fantastis 74 juta ton pada tahun 2030. Di Indonesia sendiri, pada tahun 2019, tercatat ada 1.618 kilo ton sampah elektronik yang dihasilkan, dan sayangnya, sebagian besar belum didaur ulang dengan benar.</p>
+            <p>Banyak komponen elektronik mengandung logam-logam yang bisa didaur ulang, termasuk besi yang bersifat magnetik. Dengan mendaur ulang, kita bisa mengurangi penumpukan sampah dan menghemat sumber daya alam.</p>
+            <h4>Ilustrasi: Tumpukan Sampah Elektronik</h4>
+            <p>
+            
+            </p>
+            <h3>Proyek Siswa: "Mendesain Pemisah Sampah Magnetik"</h3>
+            <p>Sebagai bentuk dukungan terhadap **Tujuan Pembangunan Berkelanjutan (Sustainable Development Goals/SDGs)**, khususnya SDG 12 (Konsumsi dan Produksi yang Bertanggung Jawab) dan SDG 13 (Penanganan Perubahan Iklim), kalian diajak untuk merancang sebuah metode sederhana untuk memisahkan sampah besi dari tumpukan sampah lainnya (seperti plastik, kayu, atau aluminium) menggunakan prinsip magnet.</p>
+            <div class="activity-box">
+                <h4>Panduan Proyek:</h4>
+                <ol>
+                    <li>**Brainstorming**: Diskusikan dalam kelompok kecil bagaimana magnet dapat digunakan untuk memisahkan sampah besi. Apa tantangannya?</li>
+                    <li>**Desain**: Gambarlah sketsa atau buat prototipe alat pemisah sampah magnetik kalian. Pertimbangkan bahan apa saja yang dibutuhkan.</li>
+                    <li>**Presentasi**: Presentasikan desain atau prototipe kalian kepada teman-teman dan guru. Jelaskan prinsip kerja dan potensi manfaatnya bagi lingkungan.</li>
+                </ol>
+                <p>Proyek ini melatih kreativitas kalian dalam menerapkan ilmu fisika untuk mengatasi masalah nyata di lingkungan sekitar!</p>
+            </div>
+        </section>
+
+        <section id="quiz" class="quiz-section">
+            <h2>Uji Pemahaman: Soal HOTS (Higher Order Thinking Skills)</h2>
+            <p>Yuk, uji pemahamanmu dengan menjawab 10 soal HOTS berikut ini!</p>
+
+            <div class="quiz-question">
+                <p>1. Suatu tim peneliti ingin mengembangkan sistem kereta levitasi magnetik (maglev) yang lebih efisien. Mereka menemukan bahwa gaya tolak antar magnet permanen saja tidak cukup stabil untuk kecepatan tinggi. Bagaimana prinsip elektromagnetisme dapat diaplikasikan untuk mengatasi masalah stabilitas dan meningkatkan efisiensi sistem maglev tersebut, serta apa keuntungannya dibandingkan hanya menggunakan magnet permanen?</p>
+                <ol>
+                    <li>Dengan menggunakan elektromagnet yang dapat diatur polaritas dan kekuatannya secara dinamis untuk mengontrol levitasi dan pendorong, memungkinkan penyesuaian gaya tolak/tarik sesuai kecepatan dan kondisi lintasan, sehingga lebih stabil dan hemat energi.</li>
+                    <li>Dengan menumpuk lebih banyak magnet permanen untuk meningkatkan gaya tolak, meskipun ini akan menambah berat kereta dan biaya konstruksi.</li>
+                    <li>Dengan melapisi lintasan dengan material superkonduktor untuk mengurangi gesekan, tanpa perlu menggunakan elektromagnet.</li>
+                    <li>Dengan menggunakan sistem roda cadangan yang akan aktif jika levitasi gagal, mengurangi efisiensi dan kompleksitas desain.</li>
+                </ol>
+            </div>
+
+            <div class="quiz-question">
+                <p>2. Sebuah desa terpencil di pegunungan tidak memiliki akses listrik. Sumber daya alam utama di desa tersebut adalah sungai kecil dengan aliran yang stabil namun tidak terlalu deras. Jika desa tersebut ingin membangun pembangkit listrik mandiri, model generator jenis apa yang paling sesuai untuk kondisi tersebut, dan mengapa pilihan tersebut optimal dibandingkan dengan generator bertenaga angin atau diesel?</p>
+                <ol>
+                    <li>Generator hidroelektrik mikro (PLTMH) karena memanfaatkan aliran air yang stabil dan ramah lingkungan, serta biaya operasional yang rendah dibandingkan diesel dan lebih stabil dari angin.</li>
+                    <li>Generator diesel karena mudah dipasang dan bisa menghasilkan listrik dalam jumlah besar, meskipun biaya bahan bakar dan dampak lingkungannya tinggi.</li>
+                    <li>Generator tenaga angin karena desa di pegunungan biasanya berangin kencang, meskipun angin seringkali tidak stabil dan membutuhkan area luas.</li>
+                    <li>Generator tenaga surya karena energi matahari melimpah, meskipun memerlukan investasi awal yang besar dan penyimpanan energi untuk malam hari.</li>
+                </ol>
+            </div>
+
+            <div class="quiz-question">
+                <p>3. Seorang insinyur merancang sebuah perangkat yang menggunakan induksi elektromagnetik untuk mengisi daya baterai ponsel tanpa kabel (wireless charging). Jika ia ingin mempercepat proses pengisian daya, faktor-faktor apa saja yang paling efektif untuk dimodifikasi pada desainnya, dan mengapa?</p>
+                <ol>
+                    <li>Meningkatkan frekuensi perubahan fluks magnetik dan jumlah lilitan kumparan pada pemancar serta penerima, karena sesuai Hukum Faraday, laju perubahan fluks dan jumlah lilitan berbanding lurus dengan GGL induksi yang dihasilkan.</li>
+                    <li>Menggunakan kumparan kawat yang lebih tebal dan panjang untuk mengurangi hambatan, meskipun ini tidak secara langsung meningkatkan GGL induksi.</li>
+                    <li>Memperbesar ukuran baterai ponsel yang akan diisi, meskipun ini hanya meningkatkan kapasitas, bukan laju pengisian.</li>
+                    <li>Mengurangi jarak antara pemancar dan penerima, karena jarak yang lebih dekat akan meningkatkan efisiensi transfer energi, tetapi tidak langsung mempengaruhi laju induksi GGL.</li>
+                </ol>
+            </div>
+
+            <div class="quiz-question">
+                <p>4. Dalam sebuah eksperimen, seorang siswa mengamati bahwa jarum kompas menyimpang ketika diletakkan di dekat kawat lurus yang dialiri arus listrik. Jika siswa tersebut ingin menguatkan efek penyimpangan jarum kompas tanpa mengubah besar arus listrik, modifikasi apa yang paling tepat untuk dilakukan pada eksperimennya, dan mengapa?</p>
+                <ol>
+                    <li>Menggulung kawat lurus tersebut menjadi kumparan (solenoida) karena medan magnet kumparan lebih kuat dan terfokus daripada kawat lurus tunggal.</li>
+                    <li>Menggunakan kawat dengan diameter yang lebih besar untuk mengurangi hambatan, yang tidak secara langsung meningkatkan kekuatan medan magnet.</li>
+                    <li>Memperpanjang kawat lurus tersebut, yang tidak secara signifikan meningkatkan kekuatan medan magnet pada satu titik.</li>
+                    <li>Menggunakan jarum kompas yang lebih sensitif, yang hanya akan mendeteksi medan magnet yang sama kuatnya dengan lebih mudah.</li>
+                </ol>
+            </div>
+
+            <div class="quiz-question">
+                <p>5. Sebuah perusahaan daur ulang menghadapi masalah dalam memisahkan sampah elektronik yang mengandung berbagai jenis logam. Mereka ingin membangun sistem otomatis yang efisien untuk memisahkan komponen besi/baja dari material non-magnetik lainnya (seperti plastik, tembaga, atau aluminium). Desain sistem seperti apa yang paling efektif memanfaatkan prinsip magnetisme untuk mencapai tujuan tersebut?</p>
+                <ol>
+                    <li>Menggunakan ban berjalan dengan elektromagnet kuat di bagian akhir yang dapat dihidupkan/dimatikan untuk menarik material besi/baja, memungkinkan pemisahan otomatis dan terkontrol.</li>
+                    <li>Merekrut lebih banyak pekerja untuk melakukan pemisahan manual, yang tidak efisien dan rentan kesalahan.</li>
+                    <li>Menggunakan pemisah optik yang mengidentifikasi material berdasarkan warna, yang tidak cocok untuk pemisahan magnetik.</li>
+                    <li>Memanaskan semua sampah hingga meleleh dan memisahkan logam berdasarkan titik lelehnya, yang sangat mahal dan boros energi.</li>
+                </ol>
+            </div>
+
+            <div class="quiz-question">
+                <p>6. Seorang seniman ingin menciptakan patung bergerak yang elemen-elemennya berinteraksi tanpa sentuhan fisik, menggunakan prinsip tolak-menolak magnet. Jika ia hanya memiliki magnet permanen, tantangan utama apa yang akan ia hadapi dalam menjaga kestabilan dan dinamika gerak patung tersebut, dan bagaimana prinsip elektromagnetisme dapat memberikan solusi yang lebih baik?</p>
+                <ol>
+                    <li>Tantangan utamanya adalah sulitnya mencapai keseimbangan stabil dan kontrol gerak yang presisi dengan magnet permanen karena gaya tolaknya bersifat konstan. Elektromagnet dapat menawarkan solusi dengan memungkinkan pengaturan kekuatan dan polaritas medan magnet secara dinamis untuk kontrol gerak yang lebih baik.</li>
+                    <li>Tantangan utamanya adalah magnet permanen akan terlalu kuat, sehingga patung tidak bisa bergerak bebas. Elektromagnet akan lebih lemah sehingga lebih mudah dikendalikan.</li>
+                    <li>Tidak ada tantangan khusus, karena magnet permanen sudah cukup untuk menciptakan gerakan tanpa sentuhan. Elektromagnet hanya akan membuat desain lebih rumit.</li>
+                    <li>Tantangan utamanya adalah magnet permanen akan kehilangan kemagnetannya seiring waktu. Elektromagnet lebih awet dan tidak akan kehilangan daya.</li>
+                </ol>
+            </div>
+
+            <div class="quiz-question">
+                <p>7. Mengapa pembangkit listrik tenaga nuklir, meskipun menggunakan reaksi nuklir sebagai sumber panas utama, tetap membutuhkan generator yang bekerja berdasarkan prinsip induksi elektromagnetik untuk menghasilkan listrik?</p>
+                <ol>
+                    <li>Reaksi nuklir menghasilkan panas yang digunakan untuk memanaskan air menjadi uap bertekanan tinggi. Uap ini kemudian diarahkan untuk memutar turbin, dan turbin ini yang menggerakkan generator untuk menghasilkan listrik melalui induksi elektromagnetik.</li>
+                    <li>Reaksi nuklir secara langsung menghasilkan listrik tanpa perlu perantara uap atau turbin, sehingga generator hanya sebagai cadangan.</li>
+                    <li>Generator dalam PLTN berfungsi untuk mengubah energi nuklir menjadi energi mekanik, lalu menjadi listrik.</li>
+                    <li>Generator digunakan untuk menstabilkan reaksi nuklir, bukan untuk menghasilkan listrik.</li>
+                </ol>
+            </div>
+
+            <div class="quiz-question">
+                <p>8. Seorang astronot melakukan eksperimen di luar angkasa, jauh dari medan magnet bumi. Ia memiliki sebuah kumparan kawat dan sebuah magnet. Jika ia ingin menghasilkan arus listrik pada kumparan tersebut, tindakan minimal apa yang harus ia lakukan berdasarkan prinsip induksi elektromagnetik?</p>
+                <ol>
+                    <li>Menggerakkan magnet relatif terhadap kumparan (atau sebaliknya) sehingga terjadi perubahan fluks magnetik yang menembus kumparan.</li>
+                    <li>Memanaskan kumparan dan magnet agar partikelnya bergerak lebih cepat, sehingga menghasilkan arus.</li>
+                    <li>Menghubungkan kumparan ke sumber tegangan tinggi, meskipun ini bukan induksi elektromagnetik.</li>
+                    <li>Membiarkan magnet dan kumparan diam berdampingan, yang tidak akan menghasilkan arus.</li>
+                </ol>
+            </div>
+
+            <div class="quiz-question">
+                <p>9. Sebuah perusahaan teknologi sedang mengembangkan perangkat wearable yang dapat menghasilkan listrik dari gerakan tubuh penggunanya (misalnya, saat berjalan atau berlari). Prinsip fisika apa yang paling mendasari pengembangan perangkat ini, dan bagaimana ia dapat dioptimalkan?</p>
+                <ol>
+                    <li>Prinsip induksi elektromagnetik, di mana gerakan mekanis tubuh diubah menjadi listrik melalui pergerakan magnet relatif terhadap kumparan. Optimalisasi dapat dilakukan dengan meningkatkan efisiensi konversi gerak menjadi perubahan fluks magnetik, misalnya dengan desain kumparan dan magnet yang lebih efektif.</li>
+                    <li>Prinsip efek termoelektrik, di mana perbedaan suhu tubuh menghasilkan listrik, meskipun ini kurang relevan untuk gerakan mekanis.</li>
+                    <li>Prinsip fotovoltaik, di mana cahaya matahari diubah menjadi listrik, yang tidak relevan dengan gerakan tubuh.</li>
+                    <li>Prinsip baterai kimia, di mana reaksi kimia menghasilkan listrik, yang tidak memanfaatkan gerakan tubuh.</li>
+                </ol>
+            </div>
+
+            <div class="quiz-question">
+                <p>10. Mengapa penting bagi siswa untuk memahami konsep daur ulang sampah elektronik dengan memanfaatkan prinsip magnetisme, terutama dalam konteks Tujuan Pembangunan Berkelanjutan (SDGs)?</p>
+                <ol>
+                    <li>Memahami konsep ini penting karena mendorong siswa untuk menerapkan pengetahuan fisika dalam solusi praktis untuk masalah lingkungan (sampah elektronik), mendukung SDG 12 (konsumsi dan produksi bertanggung jawab) dan SDG 13 (penanganan perubahan iklim) dengan mengurangi limbah dan menghemat sumber daya.</li>
+                    <li>Hanya untuk menambah pengetahuan umum tentang magnet, tanpa relevansi langsung dengan masalah lingkungan atau SDGs.</li>
+                    <li>Daur ulang sampah elektronik tidak memerlukan prinsip magnetisme, sehingga pemahaman ini kurang relevan.</li>
+                    <li>Tujuan utamanya adalah agar siswa bisa membuat uang dari daur ulang, bukan untuk keberlanjutan lingkungan.</li>
+                </ol>
+            </div>
+
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Pembelajaran Fisika: Listrik, Magnet, dan Sumber Energi. Hak Cipta Dilindungi.</p>
+    </footer>
+
+</body>
+</html>
+```http://googleusercontent.com/image_generation_content/0
+
+Berikut adalah halaman web yang Anda minta, dirancang untuk menjadi media pembelajaran interaktif bagi siswa. Materi telah dilengkapi dan diperkaya, termasuk ilustrasi nyata untuk setiap bagian penting, aktivitas interaktif, dan 10 soal HOTS di bagian akhir.
+
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listrik, Magnet, dan Sumber Energi Alternatif</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 1.5em 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        nav {
+            background-color: #34495e;
+            padding: 0.8em 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        nav a {
+            color: #ecf0f1;
+            text-decoration: none;
+            padding: 0.8em 1.5em;
+            margin: 0 0.5em;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #2c3e50;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 2em auto;
+            padding: 1.5em;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5em;
+            margin-top: 1.5em;
+        }
+        h1 {
+            font-size: 2.5em;
+        }
+        h2 {
+            font-size: 1.8em;
+            color: #3498db;
+        }
+        h3 {
+            font-size: 1.4em;
+            color: #2980b9;
+            margin-top: 1em;
+        }
+        p {
+            margin-

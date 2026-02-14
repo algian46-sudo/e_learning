@@ -3,1485 +3,1440 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistem Koordinasi dan Alat Indera Manusia</title>
+  <title>Krisis Energi &amp; Solusi Masa Depan</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet">
   <script src="/_sdk/element_sdk.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
   <style>
     body {
       box-sizing: border-box;
     }
-    
     * {
-      font-family: 'Nunito', sans-serif;
-    }
-    
-    h1, h2, h3, h4 {
       font-family: 'Poppins', sans-serif;
     }
-    
-    .gradient-text {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .playfair {
+      font-family: 'Playfair Display', serif;
     }
-    
-    .card-hover {
-      transition: all 0.3s ease;
+    .gradient-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
     }
-    
-    .card-hover:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+    .card-gradient {
+      background: linear-gradient(145deg, rgba(30, 58, 95, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+      backdrop-filter: blur(10px);
     }
-    
-    .nav-item {
-      transition: all 0.2s ease;
+    .energy-glow {
+      box-shadow: 0 0 40px rgba(251, 191, 36, 0.3);
     }
-    
-    .nav-item:hover {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+    .slide-enter {
+      animation: slideIn 0.6s ease-out;
     }
-    
-    .nav-item.active {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-    }
-    
-    .pulse-animation {
-      animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-    
-    .neuron-path {
-      stroke-dasharray: 1000;
-      stroke-dashoffset: 1000;
-      animation: dash 3s linear infinite;
-    }
-    
-    @keyframes dash {
-      to { stroke-dashoffset: 0; }
-    }
-    
-    .stroop-word {
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-    
-    .stroop-word:hover {
-      transform: scale(1.1);
-    }
-    
-    .quiz-option {
-      transition: all 0.2s ease;
-    }
-    
-    .quiz-option:hover:not(:disabled) {
-      transform: translateX(5px);
-      border-color: #667eea;
-    }
-    
-    .progress-bar {
-      transition: width 0.5s ease;
-    }
-    
-    .fade-in {
-      animation: fadeIn 0.5s ease;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
-    .tooltip {
-      position: relative;
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.4); }
+      50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.8); }
     }
-    
-    .tooltip:hover .tooltip-text {
-      visibility: visible;
-      opacity: 1;
+    .pulse-animation {
+      animation: pulse-glow 2s infinite;
     }
-    
-    .tooltip-text {
-      visibility: hidden;
-      opacity: 0;
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    .progress-bar {
+      background: linear-gradient(90deg, #f59e0b, #ef4444, #22c55e);
+    }
+    .nav-dot {
       transition: all 0.3s ease;
-      position: absolute;
-      z-index: 50;
-      background: #1a1a2e;
-      color: white;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      white-space: nowrap;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      margin-bottom: 5px;
     }
-    
-    .organ-card {
-      position: relative;
-      overflow: hidden;
+    .nav-dot.active {
+      transform: scale(1.5);
+      background: #f59e0b;
     }
-    
-    .organ-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s ease;
+    .quiz-option {
+      transition: all 0.3s ease;
     }
-    
-    .organ-card:hover::before {
-      left: 100%;
+    .quiz-option:hover {
+      transform: translateX(10px);
+      background: rgba(251, 191, 36, 0.2);
     }
-    
-    .section-divider {
-      height: 4px;
-      background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
-      border-radius: 2px;
+    .quiz-option.correct {
+      background: rgba(34, 197, 94, 0.3);
+      border-color: #22c55e;
     }
-    
+    .quiz-option.incorrect {
+      background: rgba(239, 68, 68, 0.3);
+      border-color: #ef4444;
+    }
+    .interactive-card {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .interactive-card:hover {
+      transform: translateY(-10px) scale(1.02);
+    }
+    .chart-bar {
+      transition: height 1s ease-out;
+    }
     ::-webkit-scrollbar {
       width: 8px;
     }
-    
     ::-webkit-scrollbar-track {
-      background: #f1f5f9;
+      background: #1e3a5f;
     }
-    
     ::-webkit-scrollbar-thumb {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #f59e0b;
       border-radius: 4px;
     }
   </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
- <body class="h-full bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50">
-  <div id="app" class="h-full w-full overflow-auto"><!-- Header -->
-   <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-lg shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 py-4">
-     <div class="flex items-center justify-between">
-      <div class="flex items-center gap-3">
-       <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center"><span class="text-2xl">🧠</span>
-       </div>
-       <div>
-        <h1 id="mainTitle" class="text-xl md:text-2xl font-bold gradient-text">Sistem Koordinasi &amp; Alat Indera</h1>
-        <p class="text-xs text-gray-500">Pembelajaran Interaktif IPA - Algian Manggara, S.Agr</p>
-       </div>
-      </div>
-      <div class="hidden md:flex items-center gap-2"><span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">📚 Kelas 9</span> <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">⏱️ 45 Menit</span>
-      </div>
+ <body class="h-full gradient-bg text-white overflow-auto">
+  <div id="app" class="w-full min-h-full"><!-- Navigation Progress -->
+   <div class="fixed top-0 left-0 right-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-amber-500/30">
+    <div class="h-1 progress-bar" id="progressBar" style="width: 0%"></div>
+    <div class="flex items-center justify-between px-4 py-3 max-w-7xl mx-auto">
+     <div class="flex items-center gap-2"><span class="text-2xl">⚡</span> <span class="font-semibold text-amber-400" id="navTitle">Krisis Energi - Algian Manggara, S.Agr</span>
+     </div>
+     <div class="flex gap-2" id="navDots"></div>
+     <div class="text-sm text-slate-400">
+      Slide <span id="currentSlide">1</span>/<span id="totalSlides">10</span>
      </div>
     </div>
-   </header><!-- Navigation -->
-   <nav class="sticky top-20 z-30 bg-white/60 backdrop-blur-md border-b border-gray-100">
-    <div class="max-w-7xl mx-auto px-4">
-     <div class="flex overflow-x-auto gap-2 py-3 no-scrollbar"><button onclick="scrollToSection('pendahuluan')" class="nav-item px-4 py-2 rounded-full text-sm font-medium text-gray-600 whitespace-nowrap active">🏠 Pendahuluan</button> <button onclick="scrollToSection('saraf')" class="nav-item px-4 py-2 rounded-full text-sm font-medium text-gray-600 whitespace-nowrap">⚡ Sistem Saraf</button> <button onclick="scrollToSection('indera')" class="nav-item px-4 py-2 rounded-full text-sm font-medium text-gray-600 whitespace-nowrap">👁️ Alat Indera</button> <button onclick="scrollToSection('hormon')" class="nav-item px-4 py-2 rounded-full text-sm font-medium text-gray-600 whitespace-nowrap">💉 Sistem Hormon</button> <button onclick="scrollToSection('aktivitas')" class="nav-item px-4 py-2 rounded-full text-sm font-medium text-gray-600 whitespace-nowrap">🎮 Aktivitas</button> <button onclick="scrollToSection('quiz')" class="nav-item px-4 py-2 rounded-full text-sm font-medium text-gray-600 whitespace-nowrap">📝 Quiz HOTS</button>
+   </div><!-- Main Content Container -->
+   <div class="pt-20 pb-24 px-4 max-w-6xl mx-auto" id="contentContainer"><!-- Slide 1: Judul & Pendahuluan -->
+    <section class="slide-section min-h-screen flex flex-col justify-center py-12" data-slide="1">
+     <div class="text-center slide-enter">
+      <div class="mb-8"><span class="text-6xl float-animation inline-block">🌍</span>
+      </div>
+      <h1 class="playfair text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 bg-clip-text text-transparent" id="mainTitle">Menghadapi Krisis Energi</h1>
+      <p class="text-xl md:text-2xl text-slate-300 mb-8" id="subtitle">Tantangan dan Solusi Alternatif di Indonesia</p>
+      <div class="card-gradient rounded-2xl p-8 max-w-3xl mx-auto border border-amber-500/30 energy-glow">
+       <div class="flex items-center justify-center gap-4 mb-6"><span class="text-4xl">🛢️</span> <span class="text-4xl">➡️</span> <span class="text-4xl">⚠️</span>
+       </div>
+       <h2 class="text-2xl font-bold text-amber-400 mb-4">Poin Utama</h2>
+       <p class="text-lg text-slate-200 mb-6">Indonesia memiliki <span class="text-amber-400 font-semibold">ketergantungan tinggi</span> pada energi fosil yang semakin menipis</p>
+       <div class="bg-slate-800/50 rounded-xl p-6 border-l-4 border-amber-500">
+        <h3 class="font-semibold text-amber-300 mb-2">📚 Definisi Krisis Energi</h3>
+        <p class="text-slate-300">Kondisi <span class="text-white font-medium">kekurangan sumber energi</span> yang berdampak pada seluruh aspek kehidupan manusia, mulai dari transportasi, industri, hingga kehidupan sehari-hari.</p>
+       </div>
+      </div><!-- Interactive Element -->
+      <div class="mt-8 p-6 card-gradient rounded-xl border border-slate-600 max-w-2xl mx-auto">
+       <h3 class="text-lg font-semibold text-amber-400 mb-4">🎯 Aktivitas: Apa yang kamu ketahui?</h3>
+       <p class="text-slate-300 mb-4">Klik pada aktivitas yang menurutmu membutuhkan energi fosil:</p>
+       <div class="flex flex-wrap justify-center gap-3" id="fossilActivity"><button onclick="checkFossil(this, true)" class="px-4 py-2 bg-slate-700 rounded-full hover:bg-amber-600 transition-all">🚗 Berkendara</button> <button onclick="checkFossil(this, true)" class="px-4 py-2 bg-slate-700 rounded-full hover:bg-amber-600 transition-all">💡 Nyalakan Lampu</button> <button onclick="checkFossil(this, false)" class="px-4 py-2 bg-slate-700 rounded-full hover:bg-amber-600 transition-all">🚶 Berjalan Kaki</button> <button onclick="checkFossil(this, true)" class="px-4 py-2 bg-slate-700 rounded-full hover:bg-amber-600 transition-all">📱 Charge HP</button> <button onclick="checkFossil(this, false)" class="px-4 py-2 bg-slate-700 rounded-full hover:bg-amber-600 transition-all">🌳 Menanam Pohon</button> <button onclick="checkFossil(this, true)" class="px-4 py-2 bg-slate-700 rounded-full hover:bg-amber-600 transition-all">✈️ Naik Pesawat</button>
+       </div>
+       <p id="fossilFeedback" class="mt-4 text-sm text-slate-400"></p>
+      </div>
      </div>
-    </div>
-   </nav>
-   <main class="max-w-7xl mx-auto px-4 py-8"><!-- Section 1: Pendahuluan -->
-    <section id="pendahuluan" class="mb-16 fade-in">
-     <div class="text-center mb-10"><span class="inline-block px-4 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium mb-4">Bagian 1</span>
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Mengapa Tubuh Butuh Koordinasi?</h2>
-      <div class="section-divider w-32 mx-auto"></div>
-     </div><!-- Analogi Card -->
-     <div class="grid md:grid-cols-2 gap-6 mb-10">
-      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-purple-100">
-       <div class="flex items-start gap-4">
-        <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center flex-shrink-0"><span class="text-3xl">👓</span>
+    </section><!-- Slide 2: Kondisi Energi Nasional -->
+    <section class="slide-section min-h-screen flex flex-col justify-center py-12" data-slide="2">
+     <div class="slide-enter">
+      <div class="text-center mb-8"><span class="text-5xl">📊</span>
+       <h2 class="playfair text-3xl md:text-5xl font-bold mt-4 text-amber-400">Kondisi Energi Nasional</h2>
+       <p class="text-slate-400 mt-2">Analisis Data Produksi vs Konsumsi</p>
+      </div>
+      <div class="card-gradient rounded-2xl p-8 border border-red-500/30 mb-8">
+       <div class="flex items-center gap-3 mb-6"><span class="text-3xl">🚨</span>
+        <h3 class="text-2xl font-bold text-red-400">Fakta Kunci</h3>
+       </div>
+       <p class="text-xl text-white">Indonesia telah menjadi <span class="bg-red-500/30 px-2 py-1 rounded font-bold">NET IMPORTIR MINYAK</span> sejak tahun <span class="text-amber-400 font-bold text-2xl">2004</span></p>
+       <p class="text-slate-400 mt-2">Artinya: Indonesia lebih banyak mengimpor minyak dari luar negeri daripada memproduksi sendiri</p>
+      </div><!-- Interactive Chart -->
+      <div class="card-gradient rounded-2xl p-6 border border-slate-600">
+       <h3 class="text-xl font-semibold text-center mb-6 text-amber-300">📈 Grafik Produksi vs Konsumsi Minyak Indonesia</h3>
+       <div class="relative h-64 flex items-end justify-around gap-2 border-b-2 border-l-2 border-slate-600 p-4"><!-- Y-axis labels -->
+        <div class="absolute left-0 top-0 h-full flex flex-col justify-between text-xs text-slate-400 -ml-8"><span>Tinggi</span> <span>Sedang</span> <span>Rendah</span>
+        </div><!-- Bars -->
+        <div class="flex flex-col items-center gap-1">
+         <div class="chart-bar w-8 md:w-12 bg-gradient-to-t from-green-600 to-green-400 rounded-t" style="height: 90%"></div><span class="text-xs text-slate-400">1990</span> <span class="text-xs text-green-400">Produksi</span>
         </div>
-        <div>
-         <h3 class="text-lg font-bold text-gray-800 mb-2">Analogi Kacamata</h3>
-         <p class="text-gray-600 text-sm leading-relaxed">Ketika kamu memakai kacamata, matamu mengirim sinyal ke otak bahwa objek tidak terlihat jelas. Otak kemudian memproses informasi ini dan kamu secara sadar menggunakan kacamata untuk membantu penglihatan. Ini adalah contoh koordinasi sistem saraf!</p>
+        <div class="flex flex-col items-center gap-1">
+         <div class="chart-bar w-8 md:w-12 bg-gradient-to-t from-blue-600 to-blue-400 rounded-t" style="height: 40%"></div><span class="text-xs text-slate-400">1990</span> <span class="text-xs text-blue-400">Konsumsi</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+         <div class="chart-bar w-8 md:w-12 bg-gradient-to-t from-green-600 to-green-400 rounded-t" style="height: 70%"></div><span class="text-xs text-slate-400">2000</span> <span class="text-xs text-green-400">Produksi</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+         <div class="chart-bar w-8 md:w-12 bg-gradient-to-t from-blue-600 to-blue-400 rounded-t" style="height: 65%"></div><span class="text-xs text-slate-400">2000</span> <span class="text-xs text-blue-400">Konsumsi</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+         <div class="chart-bar w-8 md:w-12 bg-gradient-to-t from-green-600 to-green-400 rounded-t" style="height: 50%"></div><span class="text-xs text-slate-400">2010</span> <span class="text-xs text-green-400">Produksi</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+         <div class="chart-bar w-8 md:w-12 bg-gradient-to-t from-blue-600 to-blue-400 rounded-t" style="height: 80%"></div><span class="text-xs text-slate-400">2010</span> <span class="text-xs text-blue-400">Konsumsi</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+         <div class="chart-bar w-8 md:w-12 bg-gradient-to-t from-green-600 to-green-400 rounded-t" style="height: 35%"></div><span class="text-xs text-slate-400">2020</span> <span class="text-xs text-green-400">Produksi</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+         <div class="chart-bar w-8 md:w-12 bg-gradient-to-t from-blue-600 to-blue-400 rounded-t" style="height: 95%"></div><span class="text-xs text-slate-400">2020</span> <span class="text-xs text-blue-400">Konsumsi</span>
         </div>
        </div>
-      </div>
-      <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border border-pink-100">
-       <div class="flex items-start gap-4">
-        <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center flex-shrink-0"><span class="text-3xl">💊</span>
+       <div class="grid md:grid-cols-2 gap-4 mt-6">
+        <div class="bg-green-900/30 rounded-xl p-4 border border-green-500/30">
+         <h4 class="font-semibold text-green-400 flex items-center gap-2"><span>📉</span> Tren Produksi</h4>
+         <p class="text-slate-300 text-sm mt-2">Terus mengalami <span class="text-red-400 font-semibold">penurunan</span> sejak puncaknya di era 90-an karena cadangan minyak semakin menipis</p>
         </div>
-        <div>
-         <h3 class="text-lg font-bold text-gray-800 mb-2">Analogi Hormon</h3>
-         <p class="text-gray-600 text-sm leading-relaxed">Pil KB bekerja dengan memengaruhi hormon dalam tubuh untuk mengatur siklus reproduksi. Ini menunjukkan bagaimana sistem hormon mengontrol berbagai fungsi tubuh secara otomatis tanpa kita sadari!</p>
+        <div class="bg-blue-900/30 rounded-xl p-4 border border-blue-500/30">
+         <h4 class="font-semibold text-blue-400 flex items-center gap-2"><span>📈</span> Tren Konsumsi</h4>
+         <p class="text-slate-300 text-sm mt-2">Terus <span class="text-amber-400 font-semibold">meningkat tajam</span> seiring pertumbuhan penduduk dan aktivitas ekonomi</p>
         </div>
        </div>
+       <div class="mt-6 bg-red-900/20 rounded-xl p-4 border border-red-500/30">
+        <h4 class="font-semibold text-red-400 text-center">⚠️ Kesimpulan</h4>
+        <p class="text-center text-slate-300 mt-2">Ada <span class="text-red-400 font-bold">JURANG (GAP)</span> yang besar antara kemampuan produksi dan kebutuhan nasional yang harus ditutupi dengan <span class="text-amber-400">IMPOR</span></p>
+       </div>
       </div>
-     </div><!-- Homeostasis Explanation -->
-     <div class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl p-1">
-      <div class="bg-white rounded-3xl p-8">
+     </div>
+    </section><!-- Slide 3: Mengapa Kita Harus Khawatir -->
+    <section class="slide-section min-h-screen flex flex-col justify-center py-12" data-slide="3">
+     <div class="slide-enter">
+      <div class="text-center mb-8"><span class="text-5xl">😰</span>
+       <h2 class="playfair text-3xl md:text-5xl font-bold mt-4 text-red-400">Mengapa Kita Harus Khawatir?</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+       <div class="card-gradient rounded-2xl p-6 border border-orange-500/30 interactive-card">
+        <div class="text-center mb-4"><span class="text-5xl">🛢️</span>
+        </div>
+        <h3 class="text-xl font-bold text-orange-400 mb-4 text-center">Sifat Energi Fosil</h3>
+        <div class="space-y-3">
+         <div class="flex items-start gap-3"><span class="text-red-400">❌</span>
+          <p class="text-slate-300">Minyak bumi dan batubara adalah sumber daya yang <span class="text-red-400 font-semibold">TIDAK DAPAT DIPERBAHARUI</span></p>
+         </div>
+         <div class="flex items-start gap-3"><span class="text-red-400">❌</span>
+          <p class="text-slate-300">Sekali habis, <span class="text-red-400 font-semibold">TIDAK BISA</span> dibuat kembali dalam waktu singkat</p>
+         </div>
+         <div class="flex items-start gap-3"><span class="text-amber-400">⏰</span>
+          <p class="text-slate-300">Membutuhkan <span class="text-amber-400 font-semibold">jutaan tahun</span> untuk terbentuk kembali</p>
+         </div>
+        </div>
+       </div>
+       <div class="card-gradient rounded-2xl p-6 border border-red-500/30 interactive-card">
+        <div class="text-center mb-4"><span class="text-5xl">💥</span>
+        </div>
+        <h3 class="text-xl font-bold text-red-400 mb-4 text-center">Dampak Nyata</h3>
+        <div class="space-y-4">
+         <div class="bg-slate-800/50 rounded-lg p-4">
+          <p class="text-slate-300"><span class="text-amber-400 font-semibold">🔌 Pembatasan Listrik:</span> Di beberapa pulau terpencil, listrik hanya menyala beberapa jam sehari</p>
+         </div>
+         <div class="bg-slate-800/50 rounded-lg p-4">
+          <p class="text-slate-300"><span class="text-amber-400 font-semibold">📚 Gangguan Belajar:</span> Siswa kesulitan belajar di malam hari karena keterbatasan listrik</p>
+         </div>
+         <div class="bg-slate-800/50 rounded-lg p-4">
+          <p class="text-slate-300"><span class="text-amber-400 font-semibold">💰 Biaya Tinggi:</span> Harga BBM dan listrik terus meningkat</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Ilustrasi Proses Pembentukan Fosil -->
+      <div class="card-gradient rounded-2xl p-6 border border-slate-600">
+       <h3 class="text-xl font-semibold text-center mb-6 text-amber-300">🦕 Proses Pembentukan Minyak Bumi</h3>
+       <div class="flex flex-wrap justify-center items-center gap-4">
+        <div class="text-center p-4 bg-slate-800/50 rounded-xl"><span class="text-4xl block mb-2">🦠</span>
+         <p class="text-xs text-slate-400">Organisme Purba</p>
+         <p class="text-xs text-amber-400">300 juta tahun lalu</p>
+        </div><span class="text-2xl text-amber-400">→</span>
+        <div class="text-center p-4 bg-slate-800/50 rounded-xl"><span class="text-4xl block mb-2">🪨</span>
+         <p class="text-xs text-slate-400">Tertimbun Sedimen</p>
+         <p class="text-xs text-amber-400">Jutaan tahun</p>
+        </div><span class="text-2xl text-amber-400">→</span>
+        <div class="text-center p-4 bg-slate-800/50 rounded-xl"><span class="text-4xl block mb-2">🔥</span>
+         <p class="text-xs text-slate-400">Tekanan &amp; Panas</p>
+         <p class="text-xs text-amber-400">Dalam bumi</p>
+        </div><span class="text-2xl text-amber-400">→</span>
+        <div class="text-center p-4 bg-slate-800/50 rounded-xl"><span class="text-4xl block mb-2">🛢️</span>
+         <p class="text-xs text-slate-400">Minyak Bumi</p>
+         <p class="text-xs text-amber-400">Terbentuk!</p>
+        </div>
+       </div>
+       <p class="text-center text-slate-400 mt-4 text-sm">💡 Ingat: Proses ini membutuhkan <span class="text-amber-400 font-bold">ratusan juta tahun</span>, sementara kita menghabiskannya dalam <span class="text-red-400 font-bold">ratusan tahun</span> saja!</p>
+      </div><!-- Interactive Timer -->
+      <div class="mt-6 card-gradient rounded-xl p-6 border border-amber-500/30">
+       <h3 class="text-lg font-semibold text-amber-400 mb-4 text-center">⏱️ Simulasi: Seberapa Cepat Kita Menghabiskan Minyak?</h3>
        <div class="text-center">
-        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-purple-100 to-indigo-100 flex items-center justify-center mb-6"><span class="text-4xl">⚖️</span>
-        </div>
-        <h3 class="text-2xl font-bold text-gray-800 mb-4">Tujuan Utama: Homeostasis</h3>
-        <p class="text-gray-600 max-w-2xl mx-auto leading-relaxed"><strong class="text-purple-600">Homeostasis</strong> adalah kemampuan tubuh untuk menjaga keseimbangan internal meskipun kondisi eksternal berubah. Sistem koordinasi berperan untuk <span class="bg-yellow-100 px-2 py-1 rounded">menerima</span>, <span class="bg-blue-100 px-2 py-1 rounded">mengolah</span>, dan <span class="bg-green-100 px-2 py-1 rounded">merespons</span> rangsang dari dalam maupun luar tubuh.</p>
-       </div><!-- Homeostasis Diagram -->
-       <div class="mt-8 flex flex-wrap justify-center gap-4">
-        <div class="flex items-center gap-2">
-         <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center"><span class="text-xl">📡</span>
-         </div><span class="text-sm font-medium text-gray-700">Menerima Rangsang</span>
-        </div>
-        <div class="text-2xl text-purple-400">
-         →
-        </div>
-        <div class="flex items-center gap-2">
-         <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center"><span class="text-xl">🧠</span>
-         </div><span class="text-sm font-medium text-gray-700">Mengolah Informasi</span>
-        </div>
-        <div class="text-2xl text-purple-400">
-         →
-        </div>
-        <div class="flex items-center gap-2">
-         <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center"><span class="text-xl">💪</span>
-         </div><span class="text-sm font-medium text-gray-700">Memberikan Respons</span>
-        </div>
+        <p class="text-slate-300 mb-4">Jika 1 detik = 1 juta tahun pembentukan minyak...</p>
+        <div class="flex justify-center gap-8 items-center">
+         <div class="text-center">
+          <p class="text-4xl font-bold text-green-400" id="formationTime">300</p>
+          <p class="text-sm text-slate-400">detik pembentukan</p>
+         </div><span class="text-3xl">vs</span>
+         <div class="text-center">
+          <p class="text-4xl font-bold text-red-400">0.0002</p>
+          <p class="text-sm text-slate-400">detik penggunaan</p>
+         </div>
+        </div><button onclick="startOilSimulation()" class="mt-4 px-6 py-2 bg-amber-600 hover:bg-amber-500 rounded-full transition-all"> ▶️ Jalankan Simulasi </button>
+        <div id="oilSimResult" class="mt-4 text-slate-300"></div>
        </div>
       </div>
      </div>
-    </section><!-- Section 2: Sistem Saraf -->
-    <section id="saraf" class="mb-16 fade-in">
-     <div class="text-center mb-10"><span class="inline-block px-4 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">Bagian 2</span>
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Sistem Saraf: Jaringan Komunikasi Tubuh</h2>
-      <div class="section-divider w-32 mx-auto"></div>
-     </div><!-- Neuron Illustration -->
-     <div class="bg-white rounded-3xl shadow-xl p-8 mb-10 overflow-hidden">
-      <h3 class="text-xl font-bold text-gray-800 mb-6 text-center">🔬 Struktur Neuron (Sel Saraf)</h3>
-      <div class="relative"><!-- SVG Neuron -->
-       <svg viewbox="0 0 800 300" class="w-full max-w-4xl mx-auto"><!-- Dendrites --> <g class="tooltip" style="cursor: pointer;">
-         <path d="M50 150 Q80 100 120 120 Q140 80 160 100" stroke="#8b5cf6" stroke-width="4" fill="none" />
-         <path d="M50 150 Q80 150 120 140" stroke="#8b5cf6" stroke-width="4" fill="none" />
-         <path d="M50 150 Q80 200 120 180 Q140 220 160 200" stroke="#8b5cf6" stroke-width="4" fill="none" />
-         <circle cx="160" cy="100" r="8" fill="#8b5cf6" />
-         <circle cx="120" cy="140" r="8" fill="#8b5cf6" />
-         <circle cx="160" cy="200" r="8" fill="#8b5cf6" />
-         <text x="100" y="60" fill="#8b5cf6" font-size="14" font-weight="bold">
-          DENDRIT
-         </text>
-        </g> <!-- Cell Body --> <g class="tooltip" style="cursor: pointer;">
-         <ellipse cx="220" cy="150" rx="60" ry="50" fill="url(#cellGradient)" stroke="#6366f1" stroke-width="3" />
-         <circle cx="220" cy="150" r="20" fill="#4f46e5" opacity="0.5" />
-         <text x="195" y="155" fill="white" font-size="12" font-weight="bold">
-          INTI
-         </text>
-         <text x="180" y="230" fill="#6366f1" font-size="14" font-weight="bold">
-          BADAN SEL
-         </text>
-        </g> <!-- Axon --> <g class="tooltip" style="cursor: pointer;">
-         <line x1="280" y1="150" x2="600" y2="150" stroke="#10b981" stroke-width="6" />
-         <text x="400" y="130" fill="#10b981" font-size="14" font-weight="bold">
-          AKSON
-         </text>
-        </g> <!-- Myelin Sheath --> <g class="tooltip" style="cursor: pointer;">
-         <ellipse cx="340" cy="150" rx="25" ry="20" fill="#fbbf24" opacity="0.8" />
-         <ellipse cx="420" cy="150" rx="25" ry="20" fill="#fbbf24" opacity="0.8" />
-         <ellipse cx="500" cy="150" rx="25" ry="20" fill="#fbbf24" opacity="0.8" />
-         <text x="380" y="200" fill="#f59e0b" font-size="12" font-weight="bold">
-          SELUBUNG MIELIN
-         </text>
-        </g> <!-- Axon Terminals --> <g class="tooltip" style="cursor: pointer;">
-         <path d="M600 150 Q650 120 680 100" stroke="#ef4444" stroke-width="4" fill="none" />
-         <path d="M600 150 Q650 150 700 150" stroke="#ef4444" stroke-width="4" fill="none" />
-         <path d="M600 150 Q650 180 680 200" stroke="#ef4444" stroke-width="4" fill="none" />
-         <circle cx="680" cy="100" r="12" fill="#ef4444" />
-         <circle cx="700" cy="150" r="12" fill="#ef4444" />
-         <circle cx="680" cy="200" r="12" fill="#ef4444" />
-         <text x="640" y="250" fill="#ef4444" font-size="12" font-weight="bold">
-          TERMINAL AKSON
-         </text>
-        </g> <!-- Signal Animation --> <circle r="8" fill="#fbbf24" class="pulse-animation">
-         <animate attributename="cx" values="280;600" dur="2s" repeatcount="indefinite" />
-         <animate attributename="cy" values="150;150" dur="2s" repeatcount="indefinite" />
-        </circle> <!-- Gradient Definition --> <defs>
-         <lineargradient id="cellGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:#a78bfa" />
-          <stop offset="100%" style="stop-color:#6366f1" />
-         </lineargradient>
-        </defs>
-       </svg>
-      </div><!-- Neuron Parts Legend -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-       <div class="bg-purple-50 rounded-xl p-4 text-center">
-        <div class="w-10 h-10 rounded-full bg-purple-500 mx-auto mb-2 flex items-center justify-center"><span class="text-white text-lg">📡</span>
-        </div>
-        <h4 class="font-bold text-purple-700 text-sm">Dendrit</h4>
-        <p class="text-xs text-gray-600 mt-1">Menerima sinyal dari sel lain</p>
-       </div>
-       <div class="bg-indigo-50 rounded-xl p-4 text-center">
-        <div class="w-10 h-10 rounded-full bg-indigo-500 mx-auto mb-2 flex items-center justify-center"><span class="text-white text-lg">🏠</span>
-        </div>
-        <h4 class="font-bold text-indigo-700 text-sm">Badan Sel</h4>
-        <p class="text-xs text-gray-600 mt-1">Pusat pengolah informasi</p>
-       </div>
-       <div class="bg-green-50 rounded-xl p-4 text-center">
-        <div class="w-10 h-10 rounded-full bg-green-500 mx-auto mb-2 flex items-center justify-center"><span class="text-white text-lg">🔌</span>
-        </div>
-        <h4 class="font-bold text-green-700 text-sm">Akson</h4>
-        <p class="text-xs text-gray-600 mt-1">Meneruskan sinyal ke sel lain</p>
-       </div>
-       <div class="bg-yellow-50 rounded-xl p-4 text-center">
-        <div class="w-10 h-10 rounded-full bg-yellow-500 mx-auto mb-2 flex items-center justify-center"><span class="text-white text-lg">🛡️</span>
-        </div>
-        <h4 class="font-bold text-yellow-700 text-sm">Selubung Mielin</h4>
-        <p class="text-xs text-gray-600 mt-1">Mempercepat &amp; melindungi</p>
-       </div>
+    </section><!-- Slide 4: Solusi Masa Depan -->
+    <section class="slide-section min-h-screen flex flex-col justify-center py-12" data-slide="4">
+     <div class="slide-enter">
+      <div class="text-center mb-8"><span class="text-5xl">💡</span>
+       <h2 class="playfair text-3xl md:text-5xl font-bold mt-4 text-green-400">Solusi Masa Depan</h2>
+       <p class="text-slate-400 mt-2">Energi Alternatif untuk Indonesia</p>
       </div>
-     </div><!-- Types of Neurons -->
-     <div class="grid md:grid-cols-3 gap-6 mb-10">
-      <div class="card-hover bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white">
-       <div class="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center mb-4"><span class="text-3xl">👁️</span>
+      <div class="card-gradient rounded-2xl p-8 border border-green-500/30 mb-8">
+       <h3 class="text-xl font-bold text-green-400 mb-4">📖 Definisi Energi Alternatif</h3>
+       <p class="text-lg text-slate-200">Sumber energi <span class="text-green-400 font-semibold">pengganti</span> peran energi konvensional (fosil) yang dapat dimanfaatkan untuk memenuhi kebutuhan energi manusia.</p>
+       <div class="mt-6 bg-green-900/20 rounded-xl p-4 border border-green-500/30">
+        <h4 class="font-semibold text-green-300 flex items-center gap-2"><span>✅</span> Keunggulan Utama</h4>
+        <p class="text-slate-300 mt-2">Jauh lebih <span class="text-green-400 font-semibold">ramah lingkungan</span> karena menghasilkan emisi gas rumah kaca yang sangat sedikit dibandingkan energi fosil.</p>
        </div>
-       <h3 class="text-xl font-bold mb-2">Neuron Sensoris</h3>
-       <p class="text-blue-100 text-sm leading-relaxed">Membawa rangsang dari reseptor (alat indera) ke pusat saraf (otak/sumsum tulang belakang). Contoh: sinyal dari mata saat melihat cahaya.</p>
-       <div class="mt-4 flex items-center gap-2 text-xs bg-white/10 rounded-lg px-3 py-2"><span>📍</span> <span>Reseptor → Pusat Saraf</span>
+      </div><!-- Energy Types Grid -->
+      <h3 class="text-xl font-semibold text-center mb-6 text-amber-300">🌟 Jenis-Jenis Energi Alternatif</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+       <div class="card-gradient rounded-xl p-4 text-center border border-amber-500/30 interactive-card cursor-pointer" onclick="showEnergyDetail('matahari')"><span class="text-4xl block mb-2">☀️</span>
+        <h4 class="font-semibold text-amber-400">Matahari</h4>
+        <p class="text-xs text-slate-400 mt-1">Panel Surya</p>
        </div>
-      </div>
-      <div class="card-hover bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-6 text-white">
-       <div class="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center mb-4"><span class="text-3xl">💪</span>
+       <div class="card-gradient rounded-xl p-4 text-center border border-blue-500/30 interactive-card cursor-pointer" onclick="showEnergyDetail('angin')"><span class="text-4xl block mb-2">💨</span>
+        <h4 class="font-semibold text-blue-400">Angin</h4>
+        <p class="text-xs text-slate-400 mt-1">Turbin Angin</p>
        </div>
-       <h3 class="text-xl font-bold mb-2">Neuron Motoris</h3>
-       <p class="text-green-100 text-sm leading-relaxed">Membawa perintah dari pusat saraf ke efektor (otot atau kelenjar). Contoh: perintah otak untuk menggerakkan tangan.</p>
-       <div class="mt-4 flex items-center gap-2 text-xs bg-white/10 rounded-lg px-3 py-2"><span>📍</span> <span>Pusat Saraf → Efektor</span>
+       <div class="card-gradient rounded-xl p-4 text-center border border-cyan-500/30 interactive-card cursor-pointer" onclick="showEnergyDetail('air')"><span class="text-4xl block mb-2">💧</span>
+        <h4 class="font-semibold text-cyan-400">Air</h4>
+        <p class="text-xs text-slate-400 mt-1">PLTA</p>
        </div>
-      </div>
-      <div class="card-hover bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 text-white">
-       <div class="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center mb-4"><span class="text-3xl">🔗</span>
+       <div class="card-gradient rounded-xl p-4 text-center border border-orange-500/30 interactive-card cursor-pointer" onclick="showEnergyDetail('geotermal')"><span class="text-4xl block mb-2">🌋</span>
+        <h4 class="font-semibold text-orange-400">Geotermal</h4>
+        <p class="text-xs text-slate-400 mt-1">Panas Bumi</p>
        </div>
-       <h3 class="text-xl font-bold mb-2">Neuron Konektor</h3>
-       <p class="text-purple-100 text-sm leading-relaxed">Menghubungkan neuron sensoris dengan neuron motoris. Berfungsi sebagai penghubung dalam jalur refleks.</p>
-       <div class="mt-4 flex items-center gap-2 text-xs bg-white/10 rounded-lg px-3 py-2"><span>📍</span> <span>Sensoris ↔ Motoris</span>
+       <div class="card-gradient rounded-xl p-4 text-center border border-green-500/30 interactive-card cursor-pointer" onclick="showEnergyDetail('biogas')"><span class="text-4xl block mb-2">🐄</span>
+        <h4 class="font-semibold text-green-400">Biogas</h4>
+        <p class="text-xs text-slate-400 mt-1">Gas Metana</p>
        </div>
-      </div>
-     </div><!-- Control Centers -->
-     <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
-      <div class="bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-6">
-       <h3 class="text-2xl font-bold text-white text-center">🎮 Pusat Kendali Saraf</h3>
-      </div>
-      <div class="p-8">
-       <div class="grid md:grid-cols-2 gap-8"><!-- Brain -->
-        <div class="relative">
-         <div class="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-6">
-          <div class="text-center mb-4">
-           <svg viewbox="0 0 200 150" class="w-32 h-24 mx-auto"><ellipse cx="100" cy="70" rx="70" ry="50" fill="url(#brainGradient)" /> <path d="M50 70 Q60 50 80 55 Q100 40 120 55 Q140 50 150 70" stroke="#ec4899" stroke-width="3" fill="none" /> <path d="M60 80 Q80 90 100 85 Q120 90 140 80" stroke="#ec4899" stroke-width="2" fill="none" /> <path d="M70 65 Q85 75 100 70 Q115 75 130 65" stroke="#ec4899" stroke-width="2" fill="none" /> <defs>
-             <lineargradient id="brainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#f9a8d4" />
-              <stop offset="100%" style="stop-color:#c084fc" />
-             </lineargradient>
-            </defs>
-           </svg>
-          </div>
-          <h4 class="text-xl font-bold text-gray-800 text-center mb-3">🧠 Otak (Cerebrum)</h4>
-          <p class="text-gray-600 text-sm text-center mb-4">Pusat kendali utama untuk gerakan <strong>sadar</strong> dan fungsi kognitif tinggi.</p>
-          <div class="space-y-2">
-           <div class="flex items-center gap-2 bg-white rounded-lg px-4 py-2 shadow-sm"><span class="text-lg">💭</span> <span class="text-sm text-gray-700">Berpikir &amp; Mengingat</span>
-           </div>
-           <div class="flex items-center gap-2 bg-white rounded-lg px-4 py-2 shadow-sm"><span class="text-lg">🎨</span> <span class="text-sm text-gray-700">Kreativitas &amp; Emosi</span>
-           </div>
-           <div class="flex items-center gap-2 bg-white rounded-lg px-4 py-2 shadow-sm"><span class="text-lg">🏃</span> <span class="text-sm text-gray-700">Gerakan Sadar</span>
-           </div>
-          </div>
-         </div>
-        </div><!-- Spinal Cord -->
-        <div class="relative">
-         <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6">
-          <div class="text-center mb-4">
-           <svg viewbox="0 0 100 150" class="w-20 h-28 mx-auto"><rect x="35" y="10" width="30" height="130" rx="15" fill="url(#spineGradient)" /> <ellipse cx="50" cy="30" rx="20" ry="8" fill="#60a5fa" /> <ellipse cx="50" cy="60" rx="18" ry="7" fill="#60a5fa" /> <ellipse cx="50" cy="90" rx="16" ry="6" fill="#60a5fa" /> <ellipse cx="50" cy="120" rx="14" ry="5" fill="#60a5fa" /> <defs>
-             <lineargradient id="spineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#93c5fd" />
-              <stop offset="100%" style="stop-color:#3b82f6" />
-             </lineargradient>
-            </defs>
-           </svg>
-          </div>
-          <h4 class="text-xl font-bold text-gray-800 text-center mb-3">🦴 Sumsum Tulang Belakang</h4>
-          <p class="text-gray-600 text-sm text-center mb-4">Pusat kendali untuk <strong>gerak refleks</strong> dan jalur komunikasi otak-tubuh.</p>
-          <div class="space-y-2">
-           <div class="flex items-center gap-2 bg-white rounded-lg px-4 py-2 shadow-sm"><span class="text-lg">⚡</span> <span class="text-sm text-gray-700">Gerak Refleks Cepat</span>
-           </div>
-           <div class="flex items-center gap-2 bg-white rounded-lg px-4 py-2 shadow-sm"><span class="text-lg">🔄</span> <span class="text-sm text-gray-700">Jalur Sinyal Otak-Tubuh</span>
-           </div>
-           <div class="flex items-center gap-2 bg-white rounded-lg px-4 py-2 shadow-sm"><span class="text-lg">🛡️</span> <span class="text-sm text-gray-700">Respons Perlindungan</span>
-           </div>
-          </div>
-         </div>
-        </div>
-       </div><!-- Reflex vs Conscious -->
-       <div class="mt-8 bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6">
-        <h4 class="text-lg font-bold text-gray-800 mb-4 text-center">🔄 Perbedaan Gerak Sadar vs Refleks</h4>
-        <div class="grid md:grid-cols-2 gap-4">
-         <div class="bg-white rounded-xl p-4 shadow-sm">
-          <div class="flex items-center gap-3 mb-3">
-           <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center"><span class="text-xl">✋</span>
-           </div>
-           <h5 class="font-bold text-green-700">Gerak Sadar</h5>
-          </div>
-          <p class="text-sm text-gray-600 mb-2">Dikendalikan oleh <strong>otak</strong>, melalui proses berpikir.</p>
-          <p class="text-xs bg-green-50 rounded-lg px-3 py-2 text-green-700">Contoh: Menulis, berjalan, berbicara</p>
-         </div>
-         <div class="bg-white rounded-xl p-4 shadow-sm">
-          <div class="flex items-center gap-3 mb-3">
-           <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center"><span class="text-xl">⚡</span>
-           </div>
-           <h5 class="font-bold text-red-700">Gerak Refleks</h5>
-          </div>
-          <p class="text-sm text-gray-600 mb-2">Dikendalikan oleh <strong>sumsum tulang belakang</strong>, tanpa berpikir.</p>
-          <p class="text-xs bg-red-50 rounded-lg px-3 py-2 text-red-700">Contoh: Menarik tangan dari api, berkedip</p>
-         </div>
-        </div>
+       <div class="card-gradient rounded-xl p-4 text-center border border-lime-500/30 interactive-card cursor-pointer" onclick="showEnergyDetail('bioetanol')"><span class="text-4xl block mb-2">🌽</span>
+        <h4 class="font-semibold text-lime-400">Bioetanol</h4>
+        <p class="text-xs text-slate-400 mt-1">Bahan Bakar Nabati</p>
        </div>
+       <div class="card-gradient rounded-xl p-4 text-center border border-purple-500/30 interactive-card cursor-pointer" onclick="showEnergyDetail('nuklir')"><span class="text-4xl block mb-2">⚛️</span>
+        <h4 class="font-semibold text-purple-400">Nuklir</h4>
+        <p class="text-xs text-slate-400 mt-1">Fisi Atom</p>
+       </div>
+       <div class="card-gradient rounded-xl p-4 text-center border border-teal-500/30 interactive-card cursor-pointer" onclick="showEnergyDetail('ombak')"><span class="text-4xl block mb-2">🌊</span>
+        <h4 class="font-semibold text-teal-400">Ombak</h4>
+        <p class="text-xs text-slate-400 mt-1">Energi Laut</p>
+       </div>
+      </div><!-- Energy Detail Modal -->
+      <div id="energyDetailModal" class="hidden mt-6 card-gradient rounded-xl p-6 border border-amber-500/30">
+       <div class="flex justify-between items-start mb-4">
+        <h3 id="energyModalTitle" class="text-xl font-bold text-amber-400"></h3><button onclick="closeEnergyDetail()" class="text-slate-400 hover:text-white">✕</button>
+       </div>
+       <div id="energyModalContent"></div>
       </div>
      </div>
-    </section><!-- Section 3: Alat Indera -->
-    <section id="indera" class="mb-16 fade-in">
-     <div class="text-center mb-10"><span class="inline-block px-4 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium mb-4">Bagian 3</span>
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Alat Indera: Jendela Dunia Tubuh</h2>
-      <div class="section-divider w-32 mx-auto"></div>
-      <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Manusia memiliki lima indera utama yang bekerja sama dengan sistem saraf untuk menerima rangsang dari lingkungan.</p>
-     </div><!-- Sense Organs Grid -->
-     <div class="space-y-8"><!-- Eye -->
-      <div class="organ-card bg-white rounded-3xl shadow-xl overflow-hidden">
-       <div class="bg-gradient-to-r from-blue-500 to-cyan-500 px-8 py-4">
-        <div class="flex items-center gap-4">
-         <div class="w-16 h-16 rounded-xl bg-white/20 flex items-center justify-center"><span class="text-4xl">👁️</span>
+    </section><!-- Slide 5: Energi Matahari, Angin, Air -->
+    <section class="slide-section min-h-screen flex flex-col justify-center py-12" data-slide="5">
+     <div class="slide-enter">
+      <div class="text-center mb-8"><span class="text-5xl">☀️💨💧</span>
+       <h2 class="playfair text-3xl md:text-5xl font-bold mt-4 text-cyan-400">Pemanfaatan Energi Alam</h2>
+       <p class="text-slate-400 mt-2">Matahari, Angin, dan Air</p>
+      </div><!-- Energi Matahari -->
+      <div class="card-gradient rounded-2xl p-6 border border-amber-500/30 mb-6">
+       <div class="flex items-center gap-4 mb-4"><span class="text-5xl">☀️</span>
+        <div>
+         <h3 class="text-2xl font-bold text-amber-400">Energi Matahari</h3>
+         <p class="text-slate-400">Pembangkit Listrik Tenaga Surya (PLTS)</p>
+        </div>
+       </div>
+       <div class="grid md:grid-cols-2 gap-4">
+        <div>
+         <h4 class="font-semibold text-green-400 mb-2">✅ Cara Kerja</h4>
+         <p class="text-slate-300 text-sm">Panel surya (fotovoltaik) mengubah <span class="text-amber-400">cahaya matahari</span> langsung menjadi <span class="text-green-400">listrik</span> melalui efek fotoelektrik pada sel surya.</p><!-- Solar Panel Illustration -->
+         <div class="mt-4 bg-slate-800/50 rounded-xl p-4">
+          <div class="flex items-center justify-center gap-2">
+           <div class="text-center"><span class="text-3xl">☀️</span>
+            <p class="text-xs text-slate-400">Cahaya</p>
+           </div><span class="text-amber-400">→</span>
+           <div class="text-center bg-blue-900 p-2 rounded"><span class="text-2xl">⬛</span>
+            <p class="text-xs text-slate-400">Panel</p>
+           </div><span class="text-amber-400">→</span>
+           <div class="text-center"><span class="text-3xl">⚡</span>
+            <p class="text-xs text-slate-400">Listrik</p>
+           </div><span class="text-amber-400">→</span>
+           <div class="text-center"><span class="text-3xl">🏠</span>
+            <p class="text-xs text-slate-400">Rumah</p>
+           </div>
+          </div>
          </div>
+        </div>
+        <div>
+         <h4 class="font-semibold text-red-400 mb-2">⚠️ Kekurangan</h4>
+         <ul class="text-slate-300 text-sm space-y-2">
+          <li>• Hanya bisa menghasilkan listrik saat <span class="text-amber-400">siang hari</span></li>
+          <li>• Efisiensi menurun saat <span class="text-slate-400">cuaca mendung</span></li>
+          <li>• Membutuhkan <span class="text-amber-400">baterai penyimpan</span> untuk malam hari</li>
+          <li>• Biaya instalasi awal masih <span class="text-red-400">relatif mahal</span></li>
+         </ul>
+        </div>
+       </div>
+      </div><!-- Energi Angin & Air -->
+      <div class="grid md:grid-cols-2 gap-6">
+       <div class="card-gradient rounded-2xl p-6 border border-blue-500/30">
+        <div class="flex items-center gap-3 mb-4"><span class="text-4xl">💨</span>
          <div>
-          <h3 class="text-2xl font-bold text-white">Mata (Indera Penglihat)</h3>
-          <p class="text-blue-100">Mendeteksi cahaya dan membentuk bayangan visual</p>
+          <h3 class="text-xl font-bold text-blue-400">Energi Angin</h3>
+          <p class="text-xs text-slate-400">PLTB - Pembangkit Listrik Tenaga Bayu</p>
          </div>
+        </div><!-- Wind Turbine SVG -->
+        <div class="flex justify-center my-4">
+         <svg width="100" height="120" viewbox="0 0 100 120"><rect x="48" y="40" width="4" height="80" fill="#64748b" /> <circle cx="50" cy="40" r="8" fill="#334155" /> <g class="origin-center" style="transform-origin: 50px 40px; animation: spin 4s linear infinite;">
+           <rect x="48" y="5" width="4" height="35" rx="2" fill="#3b82f6" />
+           <rect x="48" y="5" width="4" height="35" rx="2" fill="#3b82f6" transform="rotate(120 50 40)" />
+           <rect x="48" y="5" width="4" height="35" rx="2" fill="#3b82f6" transform="rotate(240 50 40)" />
+          </g>
+         </svg>
+         <style>
+                  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+                </style>
+        </div>
+        <p class="text-slate-300 text-sm"><span class="text-blue-400 font-semibold">Angin</span> menggerakkan baling-baling turbin yang terhubung dengan <span class="text-green-400">generator</span> untuk menghasilkan listrik.</p>
+        <div class="mt-3 bg-blue-900/30 rounded-lg p-3">
+         <p class="text-xs text-blue-300">📍 <span class="font-semibold">Contoh di Indonesia:</span> PLTB Sidrap, Sulawesi Selatan (kapasitas 75 MW)</p>
         </div>
        </div>
-       <div class="p-8">
-        <div class="grid md:grid-cols-2 gap-8"><!-- Eye Diagram -->
-         <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6">
-          <svg viewbox="0 0 300 200" class="w-full max-w-sm mx-auto"><!-- Eye outline --> <ellipse cx="150" cy="100" rx="100" ry="70" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="3" /> <!-- Sclera (white) --> <ellipse cx="150" cy="100" rx="90" ry="60" fill="white" stroke="#94a3b8" stroke-width="2" /> <!-- Iris --> <circle cx="150" cy="100" r="35" fill="url(#irisGradient)" /> <!-- Pupil --> <circle cx="150" cy="100" r="15" fill="#1e293b" /> <!-- Light reflection --> <circle cx="145" cy="95" r="5" fill="white" opacity="0.8" /> <!-- Cornea indication --> <path d="M115 100 Q150 60 185 100" stroke="#06b6d4" stroke-width="2" fill="none" stroke-dasharray="5,5" /> <!-- Labels --> <text x="150" y="180" text-anchor="middle" fill="#0ea5e9" font-size="12" font-weight="bold">
-            STRUKTUR MATA
-           </text> <defs>
-            <radialgradient id="irisGradient" cx="50%" cy="50%" r="50%">
-             <stop offset="0%" style="stop-color:#60a5fa" />
-             <stop offset="100%" style="stop-color:#1d4ed8" />
-            </radialgradient>
-           </defs>
-          </svg>
-         </div><!-- Eye Parts -->
-         <div class="space-y-4">
-          <h4 class="font-bold text-gray-800 text-lg mb-4">Lapisan Mata:</h4>
-          <div class="space-y-3">
-           <div class="flex items-start gap-3 bg-blue-50 rounded-xl p-4">
-            <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 shadow-sm"><span class="text-sm">1</span>
-            </div>
-            <div>
-             <h5 class="font-bold text-blue-700">Sklera (Lapisan Luar)</h5>
-             <p class="text-sm text-gray-600">Lapisan putih pelindung mata yang kuat</p>
-            </div>
-           </div>
-           <div class="flex items-start gap-3 bg-purple-50 rounded-xl p-4">
-            <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 shadow-sm"><span class="text-sm">2</span>
-            </div>
-            <div>
-             <h5 class="font-bold text-purple-700">Koroid (Lapisan Tengah)</h5>
-             <p class="text-sm text-gray-600">Mengandung pembuluh darah untuk nutrisi</p>
-            </div>
-           </div>
-           <div class="flex items-start gap-3 bg-green-50 rounded-xl p-4">
-            <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 shadow-sm"><span class="text-sm">3</span>
-            </div>
-            <div>
-             <h5 class="font-bold text-green-700">Retina (Lapisan Dalam)</h5>
-             <p class="text-sm text-gray-600">Mengandung sel fotoreseptor untuk menangkap cahaya</p>
-            </div>
-           </div>
-          </div><!-- Photoreceptors -->
-          <div class="mt-6 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-4">
-           <h5 class="font-bold text-amber-700 mb-3">🔬 Sel Fotoreseptor pada Retina:</h5>
-           <div class="grid grid-cols-2 gap-3">
-            <div class="bg-white rounded-lg p-3 text-center shadow-sm"><span class="text-2xl">🌙</span>
-             <h6 class="font-bold text-gray-700 text-sm mt-1">Sel Batang</h6>
-             <p class="text-xs text-gray-500">Untuk cahaya redup</p>
-            </div>
-            <div class="bg-white rounded-lg p-3 text-center shadow-sm"><span class="text-2xl">🌈</span>
-             <h6 class="font-bold text-gray-700 text-sm mt-1">Sel Kerucut</h6>
-             <p class="text-xs text-gray-500">Untuk warna &amp; cahaya terang</p>
-            </div>
-           </div>
-          </div>
-         </div>
-        </div>
-       </div>
-      </div><!-- Ear -->
-      <div class="organ-card bg-white rounded-3xl shadow-xl overflow-hidden">
-       <div class="bg-gradient-to-r from-purple-500 to-pink-500 px-8 py-4">
-        <div class="flex items-center gap-4">
-         <div class="w-16 h-16 rounded-xl bg-white/20 flex items-center justify-center"><span class="text-4xl">👂</span>
-         </div>
+       <div class="card-gradient rounded-2xl p-6 border border-cyan-500/30">
+        <div class="flex items-center gap-3 mb-4"><span class="text-4xl">💧</span>
          <div>
-          <h3 class="text-2xl font-bold text-white">Telinga (Indera Pendengar &amp; Keseimbangan)</h3>
-          <p class="text-purple-100">Mendeteksi getaran suara dan menjaga keseimbangan tubuh</p>
+          <h3 class="text-xl font-bold text-cyan-400">Energi Air</h3>
+          <p class="text-xs text-slate-400">PLTA - Pembangkit Listrik Tenaga Air</p>
          </div>
+        </div><!-- Dam Illustration -->
+        <div class="bg-slate-800/50 rounded-xl p-4 my-4">
+         <div class="flex items-end justify-center gap-1">
+          <div class="w-4 h-16 bg-cyan-600 rounded-t"></div>
+          <div class="w-4 h-20 bg-cyan-500 rounded-t"></div>
+          <div class="w-8 h-12 bg-slate-600 rounded-t flex items-center justify-center"><span class="text-xs">🔄</span>
+          </div>
+          <div class="w-4 h-8 bg-cyan-400 rounded-t"></div>
+          <div class="w-4 h-4 bg-cyan-300 rounded-t"></div>
+         </div>
+         <p class="text-center text-xs text-slate-400 mt-2">Bendungan → Turbin → Listrik</p>
+        </div>
+        <p class="text-slate-300 text-sm"><span class="text-cyan-400 font-semibold">Air</span> yang jatuh dari ketinggian memutar turbin yang menghasilkan <span class="text-green-400">listrik</span>.</p>
+        <div class="mt-3 bg-cyan-900/30 rounded-lg p-3">
+         <p class="text-xs text-cyan-300">📍 <span class="font-semibold">Contoh di Indonesia:</span> PLTA Cirata (1.008 MW), PLTA Saguling (700 MW)</p>
         </div>
        </div>
-       <div class="p-8">
-        <div class="grid md:grid-cols-3 gap-6"><!-- Outer Ear -->
-         <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-5">
-          <div class="text-center mb-4">
-           <div class="w-16 h-16 rounded-full bg-blue-200 mx-auto flex items-center justify-center"><span class="text-3xl">🔊</span>
-           </div>
-          </div>
-          <h4 class="font-bold text-blue-700 text-center mb-3">Telinga Luar</h4>
-          <ul class="text-sm text-gray-600 space-y-2">
-           <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-400"></span> <span><strong>Daun telinga:</strong> Mengumpulkan suara</span></li>
-           <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-400"></span> <span><strong>Liang telinga:</strong> Menyalurkan suara</span></li>
-          </ul>
-         </div><!-- Middle Ear -->
-         <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-5">
-          <div class="text-center mb-4">
-           <div class="w-16 h-16 rounded-full bg-purple-200 mx-auto flex items-center justify-center"><span class="text-3xl">🔔</span>
-           </div>
-          </div>
-          <h4 class="font-bold text-purple-700 text-center mb-3">Telinga Tengah</h4>
-          <ul class="text-sm text-gray-600 space-y-2">
-           <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-purple-400"></span> <span><strong>Gendang telinga:</strong> Bergetar</span></li>
-           <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-purple-400"></span> <span><strong>Tulang pendengaran:</strong> Martil, Landasan, Sanggurdi</span></li>
-           <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-purple-400"></span> <span><strong>Saluran Eustachius:</strong> Menyeimbangkan tekanan</span></li>
-          </ul>
-         </div><!-- Inner Ear -->
-         <div class="bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl p-5">
-          <div class="text-center mb-4">
-           <div class="w-16 h-16 rounded-full bg-pink-200 mx-auto flex items-center justify-center"><span class="text-3xl">🐚</span>
-           </div>
-          </div>
-          <h4 class="font-bold text-pink-700 text-center mb-3">Telinga Dalam</h4>
-          <ul class="text-sm text-gray-600 space-y-2">
-           <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-pink-400"></span> <span><strong>Koklea (Rumah Siput):</strong> Mengubah getaran jadi sinyal saraf</span></li>
-           <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-pink-400"></span> <span><strong>Saluran Setengah Lingkaran:</strong> Menjaga keseimbangan</span></li>
-          </ul>
-         </div>
-        </div><!-- Sound Path -->
-        <div class="mt-6 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-4">
-         <h5 class="font-bold text-indigo-700 mb-3 text-center">🎵 Perjalanan Suara:</h5>
-         <div class="flex flex-wrap items-center justify-center gap-2 text-sm"><span class="bg-white px-3 py-1 rounded-full shadow-sm">Gelombang Suara</span> <span class="text-indigo-400">→</span> <span class="bg-white px-3 py-1 rounded-full shadow-sm">Daun Telinga</span> <span class="text-indigo-400">→</span> <span class="bg-white px-3 py-1 rounded-full shadow-sm">Gendang Telinga</span> <span class="text-indigo-400">→</span> <span class="bg-white px-3 py-1 rounded-full shadow-sm">Tulang Pendengaran</span> <span class="text-indigo-400">→</span> <span class="bg-white px-3 py-1 rounded-full shadow-sm">Koklea</span> <span class="text-indigo-400">→</span> <span class="bg-white px-3 py-1 rounded-full shadow-sm">Otak</span>
+      </div><!-- Status di Indonesia -->
+      <div class="mt-6 card-gradient rounded-xl p-6 border border-green-500/30">
+       <h3 class="font-semibold text-green-400 mb-4 text-center">🇮🇩 Status Pengembangan di Indonesia</h3>
+       <div class="grid md:grid-cols-3 gap-4 text-center">
+        <div class="bg-slate-800/50 rounded-lg p-4"><span class="text-3xl">☀️</span>
+         <p class="text-amber-400 font-semibold mt-2">Matahari</p>
+         <p class="text-xs text-slate-400">Mulai berkembang</p>
+         <div class="w-full bg-slate-700 rounded-full h-2 mt-2">
+          <div class="bg-amber-400 h-2 rounded-full" style="width: 30%"></div>
          </div>
         </div>
-       </div>
-      </div><!-- Other Senses (Compact) -->
-      <div class="grid md:grid-cols-3 gap-6"><!-- Nose -->
-       <div class="organ-card card-hover bg-white rounded-2xl shadow-lg overflow-hidden">
-        <div class="bg-gradient-to-r from-green-400 to-emerald-500 px-6 py-4">
-         <div class="flex items-center gap-3"><span class="text-3xl">👃</span>
-          <h3 class="text-xl font-bold text-white">Hidung</h3>
+        <div class="bg-slate-800/50 rounded-lg p-4"><span class="text-3xl">💨</span>
+         <p class="text-blue-400 font-semibold mt-2">Angin</p>
+         <p class="text-xs text-slate-400">Baru mulai</p>
+         <div class="w-full bg-slate-700 rounded-full h-2 mt-2">
+          <div class="bg-blue-400 h-2 rounded-full" style="width: 15%"></div>
          </div>
         </div>
-        <div class="p-6">
-         <p class="text-gray-600 text-sm mb-4">Indera pembau untuk mendeteksi partikel kimia di udara.</p>
-         <div class="bg-green-50 rounded-xl p-4">
-          <h5 class="font-bold text-green-700 text-sm mb-2">🔬 Sel Olfaktorius</h5>
-          <p class="text-xs text-gray-600">Reseptor bau di rongga hidung yang mengirim sinyal ke otak untuk diidentifikasi sebagai berbagai aroma.</p>
-         </div>
-         <div class="mt-4 flex flex-wrap gap-2"><span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">🌸 Bunga</span> <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">🍕 Makanan</span> <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">🔥 Asap</span>
-         </div>
-        </div>
-       </div><!-- Tongue -->
-       <div class="organ-card card-hover bg-white rounded-2xl shadow-lg overflow-hidden">
-        <div class="bg-gradient-to-r from-red-400 to-rose-500 px-6 py-4">
-         <div class="flex items-center gap-3"><span class="text-3xl">👅</span>
-          <h3 class="text-xl font-bold text-white">Lidah</h3>
-         </div>
-        </div>
-        <div class="p-6">
-         <p class="text-gray-600 text-sm mb-4">Indera pengecap dengan papila yang mengandung kuncup pengecap.</p>
-         <div class="bg-red-50 rounded-xl p-4">
-          <h5 class="font-bold text-red-700 text-sm mb-2">🎯 5 Rasa Dasar:</h5>
-          <div class="grid grid-cols-5 gap-1 text-center">
-           <div class="bg-white rounded-lg p-2"><span class="text-lg">🍬</span>
-            <p class="text-xs text-gray-600">Manis</p>
-           </div>
-           <div class="bg-white rounded-lg p-2"><span class="text-lg">🧂</span>
-            <p class="text-xs text-gray-600">Asin</p>
-           </div>
-           <div class="bg-white rounded-lg p-2"><span class="text-lg">🍋</span>
-            <p class="text-xs text-gray-600">Asam</p>
-           </div>
-           <div class="bg-white rounded-lg p-2"><span class="text-lg">🥬</span>
-            <p class="text-xs text-gray-600">Pahit</p>
-           </div>
-           <div class="bg-white rounded-lg p-2"><span class="text-lg">🍖</span>
-            <p class="text-xs text-gray-600">Umami</p>
-           </div>
-          </div>
-         </div>
-        </div>
-       </div><!-- Skin -->
-       <div class="organ-card card-hover bg-white rounded-2xl shadow-lg overflow-hidden">
-        <div class="bg-gradient-to-r from-amber-400 to-orange-500 px-6 py-4">
-         <div class="flex items-center gap-3"><span class="text-3xl">✋</span>
-          <h3 class="text-xl font-bold text-white">Kulit</h3>
-         </div>
-        </div>
-        <div class="p-6">
-         <p class="text-gray-600 text-sm mb-4">Indera peraba terbesar dengan berbagai jenis reseptor.</p>
-         <div class="bg-amber-50 rounded-xl p-4">
-          <h5 class="font-bold text-amber-700 text-sm mb-2">🔬 Jenis Reseptor:</h5>
-          <div class="space-y-2 text-xs">
-           <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-amber-400"></span> <span><strong>Sentuhan:</strong> Meissner</span>
-           </div>
-           <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-orange-400"></span> <span><strong>Tekanan:</strong> Pacini</span>
-           </div>
-           <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-red-400"></span> <span><strong>Nyeri:</strong> Ujung saraf bebas</span>
-           </div>
-           <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-400"></span> <span><strong>Suhu:</strong> Ruffini &amp; Krause</span>
-           </div>
-          </div>
+        <div class="bg-slate-800/50 rounded-lg p-4"><span class="text-3xl">💧</span>
+         <p class="text-cyan-400 font-semibold mt-2">Air</p>
+         <p class="text-xs text-slate-400">Sudah banyak</p>
+         <div class="w-full bg-slate-700 rounded-full h-2 mt-2">
+          <div class="bg-cyan-400 h-2 rounded-full" style="width: 70%"></div>
          </div>
         </div>
        </div>
       </div>
      </div>
-    </section><!-- Section 4: Sistem Hormon -->
-    <section id="hormon" class="mb-16 fade-in">
-     <div class="text-center mb-10"><span class="inline-block px-4 py-1 bg-pink-100 text-pink-700 rounded-full text-sm font-medium mb-4">Bagian 4</span>
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Sistem Hormon (Endokrin)</h2>
-      <div class="section-divider w-32 mx-auto"></div>
-     </div><!-- Hormone vs Nervous System -->
-     <div class="bg-white rounded-3xl shadow-xl p-8 mb-10">
-      <h3 class="text-xl font-bold text-gray-800 mb-6 text-center">⚖️ Perbandingan Sistem Saraf dan Hormon</h3>
-      <div class="overflow-x-auto">
+    </section><!-- Slide 6: Biogas & Bioetanol -->
+    <section class="slide-section min-h-screen flex flex-col justify-center py-12" data-slide="6">
+     <div class="slide-enter">
+      <div class="text-center mb-8"><span class="text-5xl">🌱</span>
+       <h2 class="playfair text-3xl md:text-5xl font-bold mt-4 text-green-400">Inovasi Energi Biomassa</h2>
+       <p class="text-slate-400 mt-2">Biogas dan Bioetanol</p>
+      </div><!-- Comparison Table -->
+      <div class="card-gradient rounded-2xl p-6 border border-green-500/30 mb-6 overflow-x-auto">
        <table class="w-full text-sm">
         <thead>
-         <tr class="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
-          <th class="px-6 py-4 text-left rounded-tl-xl">Aspek</th>
-          <th class="px-6 py-4 text-left">⚡ Sistem Saraf</th>
-          <th class="px-6 py-4 text-left rounded-tr-xl">💉 Sistem Hormon</th>
+         <tr class="border-b border-slate-600">
+          <th class="py-3 px-4 text-left text-amber-400">Aspek</th>
+          <th class="py-3 px-4 text-left text-green-400">🐄 Biogas</th>
+          <th class="py-3 px-4 text-left text-lime-400">🌽 Bioetanol</th>
          </tr>
         </thead>
         <tbody>
-         <tr class="bg-purple-50">
-          <td class="px-6 py-4 font-medium">Kecepatan</td>
-          <td class="px-6 py-4">Sangat cepat (milidetik)</td>
-          <td class="px-6 py-4">Lebih lambat (detik-jam)</td>
+         <tr class="border-b border-slate-700">
+          <td class="py-3 px-4 font-semibold text-slate-300">Bahan Baku</td>
+          <td class="py-3 px-4 text-slate-300">Kotoran manusia/hewan, limbah organik</td>
+          <td class="py-3 px-4 text-slate-300">Tanaman berpati (ubi, jagung) atau bergula (tebu, nira)</td>
          </tr>
-         <tr class="bg-white">
-          <td class="px-6 py-4 font-medium">Media</td>
-          <td class="px-6 py-4">Impuls listrik melalui neuron</td>
-          <td class="px-6 py-4">Hormon melalui darah</td>
+         <tr class="border-b border-slate-700">
+          <td class="py-3 px-4 font-semibold text-slate-300">Proses Utama</td>
+          <td class="py-3 px-4 text-slate-300">Fermentasi anaerob oleh bakteri Methanobacterium</td>
+          <td class="py-3 px-4 text-slate-300">Hidrolisis → Fermentasi → Distilasi → Dehidrasi</td>
          </tr>
-         <tr class="bg-purple-50">
-          <td class="px-6 py-4 font-medium">Durasi Efek</td>
-          <td class="px-6 py-4">Singkat, cepat berakhir</td>
-          <td class="px-6 py-4">Lama, bertahan lama</td>
+         <tr class="border-b border-slate-700">
+          <td class="py-3 px-4 font-semibold text-slate-300">Hasil</td>
+          <td class="py-3 px-4 text-green-400 font-semibold">Gas Metana (CH₄)</td>
+          <td class="py-3 px-4 text-lime-400 font-semibold">Etanol (C₂H₅OH)</td>
          </tr>
-         <tr class="bg-white">
-          <td class="px-6 py-4 font-medium">Pusat Kendali</td>
-          <td class="px-6 py-4">Otak &amp; Sumsum tulang belakang</td>
-          <td class="px-6 py-4">Kelenjar tersebar di tubuh</td>
-         </tr>
-         <tr class="bg-purple-50">
-          <td class="px-6 py-4 font-medium rounded-bl-xl">Contoh</td>
-          <td class="px-6 py-4">Gerak refleks, berpikir</td>
-          <td class="px-6 py-4 rounded-br-xl">Pertumbuhan, metabolisme</td>
+         <tr>
+          <td class="py-3 px-4 font-semibold text-slate-300">Kegunaan</td>
+          <td class="py-3 px-4 text-slate-300">Bahan bakar kompor, pembangkit listrik</td>
+          <td class="py-3 px-4 text-slate-300">Campuran BBM kendaraan (Pertamax Green)</td>
          </tr>
         </tbody>
        </table>
-      </div>
-     </div><!-- Endocrine Glands -->
-     <div class="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-3xl p-1">
-      <div class="bg-white rounded-3xl p-8">
-       <h3 class="text-xl font-bold text-gray-800 mb-6 text-center">🏥 Kelenjar Endokrin Utama</h3><!-- Human Body with Glands -->
-       <div class="grid md:grid-cols-2 gap-8"><!-- Body Diagram -->
-        <div class="relative bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-6">
-         <svg viewbox="0 0 200 400" class="w-full max-w-xs mx-auto"><!-- Simple human outline --> <ellipse cx="100" cy="40" rx="30" ry="35" fill="#fde68a" stroke="#f59e0b" stroke-width="2" /> <rect x="70" y="75" width="60" height="100" rx="10" fill="#fde68a" stroke="#f59e0b" stroke-width="2" /> <rect x="45" y="80" width="25" height="80" rx="8" fill="#fde68a" stroke="#f59e0b" stroke-width="2" /> <rect x="130" y="80" width="25" height="80" rx="8" fill="#fde68a" stroke="#f59e0b" stroke-width="2" /> <rect x="75" y="175" width="22" height="100" rx="8" fill="#fde68a" stroke="#f59e0b" stroke-width="2" /> <rect x="103" y="175" width="22" height="100" rx="8" fill="#fde68a" stroke="#f59e0b" stroke-width="2" /> <!-- Gland indicators --> <!-- Pineal --> <circle cx="100" cy="30" r="8" fill="#8b5cf6" class="pulse-animation" /> <text x="140" y="35" font-size="10" fill="#8b5cf6" font-weight="bold">
-           Pineal
-          </text> <!-- Pituitary --> <circle cx="100" cy="50" r="10" fill="#ec4899" class="pulse-animation" /> <text x="140" y="55" font-size="10" fill="#ec4899" font-weight="bold">
-           Pituitari
-          </text> <!-- Thyroid --> <ellipse cx="100" cy="80" rx="15" ry="8" fill="#06b6d4" class="pulse-animation" /> <text x="140" y="85" font-size="10" fill="#06b6d4" font-weight="bold">
-           Tiroid
-          </text> <!-- Thymus --> <ellipse cx="100" cy="100" rx="12" ry="15" fill="#10b981" class="pulse-animation" /> <text x="140" y="105" font-size="10" fill="#10b981" font-weight="bold">
-           Timus
-          </text> <!-- Adrenal --> <ellipse cx="85" cy="130" rx="8" ry="6" fill="#f59e0b" class="pulse-animation" /> <ellipse cx="115" cy="130" rx="8" ry="6" fill="#f59e0b" class="pulse-animation" /> <text x="140" y="135" font-size="10" fill="#f59e0b" font-weight="bold">
-           Adrenal
-          </text> <!-- Pancreas --> <ellipse cx="100" cy="150" rx="20" ry="8" fill="#3b82f6" class="pulse-animation" /> <text x="140" y="155" font-size="10" fill="#3b82f6" font-weight="bold">
-           Pankreas
-          </text> <!-- Gonads --> <circle cx="87" cy="180" r="8" fill="#ef4444" class="pulse-animation" /> <circle cx="113" cy="180" r="8" fill="#ef4444" class="pulse-animation" /> <text x="140" y="185" font-size="10" fill="#ef4444" font-weight="bold">
-           Gonad
-          </text>
-         </svg>
-        </div><!-- Gland Details -->
-        <div class="space-y-4">
-         <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4">
-          <div class="flex items-center gap-3 mb-2">
-           <div class="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center"><span class="text-white text-sm">👑</span>
-           </div>
-           <h4 class="font-bold text-pink-700">Kelenjar Pituitari (Hipofisis)</h4>
-          </div>
-          <p class="text-sm text-gray-600">Disebut "Master Gland" karena mengontrol kelenjar lain. Menghasilkan hormon pertumbuhan (GH), TSH, FSH, LH, dll.</p>
-         </div>
-         <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-4">
-          <div class="flex items-center gap-3 mb-2">
-           <div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center"><span class="text-white text-sm">🌙</span>
-           </div>
-           <h4 class="font-bold text-purple-700">Kelenjar Pineal</h4>
-          </div>
-          <p class="text-sm text-gray-600">Menghasilkan melatonin untuk mengatur jam biologis/siklus tidur (ritme sirkadian).</p>
-         </div>
-         <div class="bg-gradient-to-r from-cyan-50 to-blue-50 rounded-xl p-4">
-          <div class="flex items-center gap-3 mb-2">
-           <div class="w-8 h-8 rounded-full bg-cyan-500 flex items-center justify-center"><span class="text-white text-sm">🦋</span>
-           </div>
-           <h4 class="font-bold text-cyan-700">Kelenjar Tiroid</h4>
-          </div>
-          <p class="text-sm text-gray-600">Menghasilkan tiroksin untuk mengatur metabolisme tubuh.</p>
-         </div>
-         <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-4">
-          <div class="flex items-center gap-3 mb-2">
-           <div class="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center"><span class="text-white text-sm">⚡</span>
-           </div>
-           <h4 class="font-bold text-amber-700">Kelenjar Adrenal</h4>
-          </div>
-          <p class="text-sm text-gray-600">Menghasilkan adrenalin untuk respons "fight or flight" saat stres atau bahaya.</p>
-         </div>
-         <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4">
-          <div class="flex items-center gap-3 mb-2">
-           <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center"><span class="text-white text-sm">🍬</span>
-           </div>
-           <h4 class="font-bold text-blue-700">Pankreas</h4>
-          </div>
-          <p class="text-sm text-gray-600">Menghasilkan insulin dan glukagon untuk mengatur kadar gula darah.</p>
-         </div>
+      </div><!-- Biogas Process -->
+      <div class="card-gradient rounded-2xl p-6 border border-green-500/30 mb-6">
+       <h3 class="text-xl font-bold text-green-400 mb-4 flex items-center gap-2"><span>🐄</span> Proses Pembuatan Biogas</h3>
+       <div class="flex flex-wrap justify-center items-center gap-3">
+        <div class="text-center p-3 bg-slate-800/50 rounded-xl"><span class="text-3xl block">💩</span>
+         <p class="text-xs text-slate-400 mt-1">Kotoran</p>
+        </div><span class="text-xl text-green-400">→</span>
+        <div class="text-center p-3 bg-slate-800/50 rounded-xl"><span class="text-3xl block">🫙</span>
+         <p class="text-xs text-slate-400 mt-1">Digester</p>
+         <p class="text-xs text-green-400">(Tanpa O₂)</p>
+        </div><span class="text-xl text-green-400">→</span>
+        <div class="text-center p-3 bg-slate-800/50 rounded-xl"><span class="text-3xl block">🦠</span>
+         <p class="text-xs text-slate-400 mt-1">Bakteri</p>
+         <p class="text-xs text-green-400">Methanobacterium</p>
+        </div><span class="text-xl text-green-400">→</span>
+        <div class="text-center p-3 bg-green-900/50 rounded-xl border border-green-500"><span class="text-3xl block">💨</span>
+         <p class="text-xs text-green-400 mt-1 font-semibold">CH₄</p>
+         <p class="text-xs text-slate-400">Gas Metana</p>
+        </div><span class="text-xl text-green-400">→</span>
+        <div class="text-center p-3 bg-slate-800/50 rounded-xl"><span class="text-3xl block">🔥</span>
+         <p class="text-xs text-slate-400 mt-1">Kompor/Listrik</p>
         </div>
        </div>
-      </div>
-     </div>
-    </section><!-- Section 5: Interactive Activities -->
-    <section id="aktivitas" class="mb-16 fade-in">
-     <div class="text-center mb-10"><span class="inline-block px-4 py-1 bg-amber-100 text-amber-700 rounded-full text-sm font-medium mb-4">Bagian 5</span>
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">🎮 Aktivitas Interaktif</h2>
-      <div class="section-divider w-32 mx-auto"></div>
-      <p class="text-gray-600 mt-4">Uji pemahamanmu dengan aktivitas-aktivitas seru berikut!</p>
-     </div>
-     <div class="grid md:grid-cols-2 gap-8"><!-- Activity 1: Stroop Test -->
-      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
-       <div class="bg-gradient-to-r from-rose-500 to-pink-500 px-6 py-4">
-        <h3 class="text-xl font-bold text-white flex items-center gap-2"><span>🧠</span> Aktivitas 2.2: Efek Stroop</h3>
-        <p class="text-rose-100 text-sm">Uji koordinasi otak dan matamu!</p>
-       </div>
-       <div class="p-6">
-        <p class="text-gray-600 text-sm mb-4">Sebutkan <strong>WARNA TINTA</strong> dari kata-kata di bawah ini, bukan kata yang tertulis! Klik untuk cek jawabanmu.</p>
-        <div id="stroopGame" class="grid grid-cols-3 gap-3 mb-4"><!-- Words will be generated by JavaScript -->
-        </div>
-        <div class="flex gap-3"><button onclick="generateStroopWords()" class="flex-1 bg-gradient-to-r from-rose-500 to-pink-500 text-white py-3 rounded-xl font-bold hover:opacity-90 transition-all"> 🔄 Acak Ulang </button> <button onclick="toggleStroopAnswers()" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-xl font-bold hover:bg-gray-200 transition-all"> 👁️ Lihat Jawaban </button>
-        </div>
-        <div id="stroopScore" class="mt-4 bg-rose-50 rounded-xl p-4 hidden">
-         <p class="text-sm text-rose-700">💡 <strong>Penjelasan:</strong> Efek Stroop terjadi karena otak kita lebih cepat membaca kata daripada mengenali warna. Ini menunjukkan bagaimana sistem saraf mengolah informasi!</p>
-        </div>
-       </div>
-      </div><!-- Activity 2: Sensitivity Test -->
-      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
-       <div class="bg-gradient-to-r from-blue-500 to-cyan-500 px-6 py-4">
-        <h3 class="text-xl font-bold text-white flex items-center gap-2"><span>✋</span> Aktivitas 2.1: Cek Sensitivitas Kulit</h3>
-        <p class="text-blue-100 text-sm">Peta sensitivitas tubuhmu!</p>
-       </div>
-       <div class="p-6">
-        <p class="text-gray-600 text-sm mb-4">Sentuh berbagai bagian tubuh dan catat tingkat sensitivitasnya. Klik bagian tubuh untuk mencatat hasil!</p>
-        <div class="grid grid-cols-3 gap-3 mb-4"><button onclick="toggleSensitivity(this)" data-part="Ujung Jari" class="sensitivity-btn bg-gray-100 hover:bg-blue-100 rounded-xl p-4 text-center transition-all"> <span class="text-2xl block mb-1">👆</span> <span class="text-xs font-medium text-gray-700">Ujung Jari</span> </button> <button onclick="toggleSensitivity(this)" data-part="Telapak Tangan" class="sensitivity-btn bg-gray-100 hover:bg-blue-100 rounded-xl p-4 text-center transition-all"> <span class="text-2xl block mb-1">✋</span> <span class="text-xs font-medium text-gray-700">Telapak Tangan</span> </button> <button onclick="toggleSensitivity(this)" data-part="Lengan" class="sensitivity-btn bg-gray-100 hover:bg-blue-100 rounded-xl p-4 text-center transition-all"> <span class="text-2xl block mb-1">💪</span> <span class="text-xs font-medium text-gray-700">Lengan</span> </button> <button onclick="toggleSensitivity(this)" data-part="Punggung" class="sensitivity-btn bg-gray-100 hover:bg-blue-100 rounded-xl p-4 text-center transition-all"> <span class="text-2xl block mb-1">🔙</span> <span class="text-xs font-medium text-gray-700">Punggung</span> </button> <button onclick="toggleSensitivity(this)" data-part="Bibir" class="sensitivity-btn bg-gray-100 hover:bg-blue-100 rounded-xl p-4 text-center transition-all"> <span class="text-2xl block mb-1">👄</span> <span class="text-xs font-medium text-gray-700">Bibir</span> </button> <button onclick="toggleSensitivity(this)" data-part="Kaki" class="sensitivity-btn bg-gray-100 hover:bg-blue-100 rounded-xl p-4 text-center transition-all"> <span class="text-2xl block mb-1">🦶</span> <span class="text-xs font-medium text-gray-700">Telapak Kaki</span> </button>
-        </div>
-        <div id="sensitivityResult" class="bg-blue-50 rounded-xl p-4">
-         <p class="text-sm text-blue-700">💡 Klik bagian tubuh yang menurutmu paling sensitif! Bagian dengan reseptor lebih padat (ujung jari, bibir) lebih sensitif.</p>
+      </div><!-- Bioetanol Process -->
+      <div class="card-gradient rounded-2xl p-6 border border-lime-500/30">
+       <h3 class="text-xl font-bold text-lime-400 mb-4 flex items-center gap-2"><span>🌽</span> Proses Pembuatan Bioetanol</h3>
+       <div class="flex flex-wrap justify-center items-center gap-2">
+        <div class="text-center p-3 bg-slate-800/50 rounded-xl"><span class="text-3xl block">🌽</span>
+         <p class="text-xs text-slate-400 mt-1">Tanaman</p>
+         <p class="text-xs text-lime-400">(Pati/Gula)</p>
+        </div><span class="text-lg text-lime-400">→</span>
+        <div class="text-center p-3 bg-slate-800/50 rounded-xl"><span class="text-2xl block">💧</span>
+         <p class="text-xs text-slate-400 mt-1">Hidrolisis</p>
+        </div><span class="text-lg text-lime-400">→</span>
+        <div class="text-center p-3 bg-slate-800/50 rounded-xl"><span class="text-2xl block">🍞</span>
+         <p class="text-xs text-slate-400 mt-1">Fermentasi</p>
+         <p class="text-xs text-lime-400">(Ragi)</p>
+        </div><span class="text-lg text-lime-400">→</span>
+        <div class="text-center p-3 bg-slate-800/50 rounded-xl"><span class="text-2xl block">🔬</span>
+         <p class="text-xs text-slate-400 mt-1">Distilasi</p>
+        </div><span class="text-lg text-lime-400">→</span>
+        <div class="text-center p-3 bg-slate-800/50 rounded-xl"><span class="text-2xl block">💨</span>
+         <p class="text-xs text-slate-400 mt-1">Dehidrasi</p>
+        </div><span class="text-lg text-lime-400">→</span>
+        <div class="text-center p-3 bg-lime-900/50 rounded-xl border border-lime-500"><span class="text-3xl block">⛽</span>
+         <p class="text-xs text-lime-400 mt-1 font-semibold">C₂H₅OH</p>
+         <p class="text-xs text-slate-400">Bioetanol</p>
         </div>
        </div>
-      </div><!-- Activity 3: Sound Direction -->
-      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
-       <div class="bg-gradient-to-r from-purple-500 to-indigo-500 px-6 py-4">
-        <h3 class="text-xl font-bold text-white flex items-center gap-2"><span>👂</span> Aktivitas 2.3: Uji Arah Suara</h3>
-        <p class="text-purple-100 text-sm">Pentingnya dua telinga!</p>
+       <div class="mt-4 bg-lime-900/20 rounded-lg p-4">
+        <p class="text-sm text-slate-300"><span class="text-lime-400 font-semibold">💡 Tahukah kamu?</span> Bioetanol bisa dicampur dengan bensin. Di Indonesia, Pertamina memproduksi <span class="text-lime-400 font-semibold">Pertamax Green</span> yang mengandung bioetanol!</p>
        </div>
-       <div class="p-6">
-        <p class="text-gray-600 text-sm mb-4">Simulasi: Pilih kondisi telinga dan tebak dari mana suara berasal!</p>
-        <div class="flex gap-3 mb-4"><button onclick="setEarCondition('both')" id="earBoth" class="flex-1 bg-purple-500 text-white py-3 rounded-xl font-medium transition-all"> 👂👂 Dua Telinga </button> <button onclick="setEarCondition('one')" id="earOne" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-xl font-medium transition-all"> 👂 Satu Telinga </button>
+      </div><!-- Interactive Matching Game -->
+      <div class="mt-6 card-gradient rounded-xl p-6 border border-amber-500/30">
+       <h3 class="text-lg font-semibold text-amber-400 mb-4 text-center">🎮 Aktivitas: Cocokkan Bahan Baku!</h3>
+       <p class="text-center text-slate-400 mb-4 text-sm">Drag bahan baku ke jenis energi yang tepat</p>
+       <div class="flex flex-wrap justify-center gap-4 mb-4" id="dragItems"><span class="px-3 py-2 bg-slate-700 rounded-lg cursor-move" draggable="true" data-type="biogas">💩 Kotoran Sapi</span> <span class="px-3 py-2 bg-slate-700 rounded-lg cursor-move" draggable="true" data-type="bioetanol">🌽 Jagung</span> <span class="px-3 py-2 bg-slate-700 rounded-lg cursor-move" draggable="true" data-type="biogas">🗑️ Limbah Organik</span> <span class="px-3 py-2 bg-slate-700 rounded-lg cursor-move" draggable="true" data-type="bioetanol">🍬 Tebu</span>
+       </div>
+       <div class="grid grid-cols-2 gap-4">
+        <div class="p-4 border-2 border-dashed border-green-500 rounded-xl min-h-24 text-center" id="dropBiogas" ondrop="handleDrop(event, 'biogas')" ondragover="allowDrop(event)">
+         <p class="text-green-400 font-semibold mb-2">🐄 Biogas</p>
+         <div id="biogasItems" class="flex flex-wrap gap-2 justify-center"></div>
         </div>
-        <div id="soundGame" class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-6 text-center">
-         <div id="soundSource" class="text-6xl mb-4">
-          🔊
-         </div>
-         <p id="soundQuestion" class="text-gray-700 font-medium mb-4">Klik "Mulai" untuk memulai permainan!</p>
-         <div id="soundOptions" class="grid grid-cols-3 gap-3 hidden"><button onclick="checkSoundAnswer('kiri')" class="bg-white hover:bg-purple-100 py-3 rounded-xl font-medium transition-all shadow-sm">⬅️ Kiri</button> <button onclick="checkSoundAnswer('tengah')" class="bg-white hover:bg-purple-100 py-3 rounded-xl font-medium transition-all shadow-sm">⬆️ Depan</button> <button onclick="checkSoundAnswer('kanan')" class="bg-white hover:bg-purple-100 py-3 rounded-xl font-medium transition-all shadow-sm">➡️ Kanan</button>
-         </div><button onclick="startSoundGame()" id="startSoundBtn" class="mt-4 bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-8 py-3 rounded-xl font-bold hover:opacity-90 transition-all"> 🎮 Mulai </button>
-        </div>
-        <div id="soundExplanation" class="mt-4 bg-purple-50 rounded-xl p-4 hidden">
-         <p class="text-sm text-purple-700"></p>
+        <div class="p-4 border-2 border-dashed border-lime-500 rounded-xl min-h-24 text-center" id="dropBioetanol" ondrop="handleDrop(event, 'bioetanol')" ondragover="allowDrop(event)">
+         <p class="text-lime-400 font-semibold mb-2">🌽 Bioetanol</p>
+         <div id="bioetanolItems" class="flex flex-wrap gap-2 justify-center"></div>
         </div>
        </div>
-      </div><!-- Activity 4: Reflex Test -->
-      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
-       <div class="bg-gradient-to-r from-amber-500 to-orange-500 px-6 py-4">
-        <h3 class="text-xl font-bold text-white flex items-center gap-2"><span>⚡</span> Aktivitas Bonus: Uji Refleks</h3>
-        <p class="text-amber-100 text-sm">Seberapa cepat refleksmu?</p>
-       </div>
-       <div class="p-6">
-        <p class="text-gray-600 text-sm mb-4">Klik kotak secepat mungkin saat berubah warna!</p>
-        <div id="reflexGame" class="bg-gray-200 rounded-xl h-48 flex items-center justify-center cursor-pointer transition-all" onclick="reflexClick()">
-         <p id="reflexText" class="text-xl font-bold text-gray-500">Klik "Mulai" lalu tunggu...</p>
-        </div>
-        <div class="mt-4 flex gap-3"><button onclick="startReflexGame()" id="reflexStartBtn" class="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white py-3 rounded-xl font-bold hover:opacity-90 transition-all"> 🎮 Mulai </button>
-         <div id="reflexResult" class="flex-1 bg-amber-50 rounded-xl py-3 px-4 text-center hidden"><span class="text-amber-700 font-bold"></span>
-         </div>
-        </div>
-        <div class="mt-4 bg-amber-50 rounded-xl p-4">
-         <p class="text-sm text-amber-700">💡 Rata-rata waktu refleks manusia: 200-300ms. Di bawah 200ms = Sangat cepat!</p>
-        </div>
-       </div>
+       <p id="matchFeedback" class="text-center mt-4 text-sm"></p>
       </div>
      </div>
-    </section><!-- Section 6: HOTS Quiz -->
-    <section id="quiz" class="mb-16 fade-in">
-     <div class="text-center mb-10"><span class="inline-block px-4 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium mb-4">Bagian 6</span>
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">📝 Quiz HOTS (Higher Order Thinking Skills)</h2>
-      <div class="section-divider w-32 mx-auto"></div>
-      <p class="text-gray-600 mt-4">10 soal untuk menguji pemahaman tingkat tinggi!</p>
-     </div>
-     <div class="bg-white rounded-3xl shadow-xl overflow-hidden"><!-- Quiz Header -->
-      <div class="bg-gradient-to-r from-red-500 via-rose-500 to-pink-500 px-8 py-6">
-       <div class="flex items-center justify-between">
+    </section><!-- Slide 7: Energi Nuklir -->
+    <section class="slide-section min-h-screen flex flex-col justify-center py-12" data-slide="7">
+     <div class="slide-enter">
+      <div class="text-center mb-8"><span class="text-5xl">⚛️</span>
+       <h2 class="playfair text-3xl md:text-5xl font-bold mt-4 text-purple-400">Debat Energi Nuklir</h2>
+       <p class="text-slate-400 mt-2">Pro dan Kontra Penggunaannya</p>
+      </div>
+      <div class="card-gradient rounded-2xl p-6 border border-purple-500/30 mb-6">
+       <div class="flex items-center gap-4 mb-4"><span class="text-5xl">🔮</span>
         <div>
-         <h3 class="text-2xl font-bold text-white">🎯 Uji Kemampuanmu!</h3>
-         <p class="text-red-100">Analisis, Evaluasi, dan Kreasi</p>
+         <h3 class="text-xl font-bold text-purple-400">Potensi Masa Depan</h3>
+         <p class="text-slate-300">Diprediksi sebagai sumber energi utama masa depan karena efisiensinya yang sangat tinggi</p>
         </div>
-        <div id="quizProgress" class="bg-white/20 rounded-full px-6 py-2"><span class="text-white font-bold">Soal <span id="currentQuestion">1</span>/10</span>
+       </div><!-- Nuclear Fission Illustration -->
+       <div class="bg-slate-800/50 rounded-xl p-6 my-4">
+        <h4 class="text-center text-amber-300 mb-4">⚛️ Proses Fisi Nuklir</h4>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+         <div class="text-center">
+          <div class="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto"><span class="text-2xl">⚛️</span>
+          </div>
+          <p class="text-xs text-slate-400 mt-2">Atom Uranium</p>
+         </div>
+         <div class="text-center"><span class="text-2xl text-amber-400">+</span>
+          <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mx-auto"><span class="text-sm">n</span>
+          </div>
+          <p class="text-xs text-slate-400 mt-2">Neutron</p>
+         </div><span class="text-2xl text-amber-400">→</span>
+         <div class="text-center"><span class="text-4xl">💥</span>
+          <p class="text-xs text-slate-400 mt-2">Pembelahan</p>
+         </div><span class="text-2xl text-amber-400">→</span>
+         <div class="text-center"><span class="text-4xl">⚡🔥</span>
+          <p class="text-xs text-slate-400 mt-2">Energi Besar!</p>
+         </div>
         </div>
-       </div><!-- Progress Bar -->
-       <div class="mt-4 bg-white/20 rounded-full h-3">
-        <div id="progressBar" class="progress-bar bg-white rounded-full h-3" style="width: 10%"></div>
+        <p class="text-center text-sm text-slate-400 mt-4">1 kg Uranium = energi setara <span class="text-amber-400 font-bold">2.700 ton</span> batubara!</p>
        </div>
-      </div><!-- Quiz Content -->
-      <div id="quizContainer" class="p-8">
-       <div id="questionArea"><!-- Question will be loaded here -->
-       </div>
-       <div id="quizNavigation" class="mt-8 flex justify-between items-center"><button onclick="prevQuestion()" id="prevBtn" class="px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-all disabled:opacity-50" disabled> ← Sebelumnya </button> <button onclick="nextQuestion()" id="nextBtn" class="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-xl font-medium hover:opacity-90 transition-all"> Selanjutnya → </button>
-       </div>
-      </div><!-- Quiz Results (Hidden by default) -->
-      <div id="quizResults" class="p-8 hidden">
-       <div class="text-center">
-        <div id="resultIcon" class="text-8xl mb-4">
-         🎉
-        </div>
-        <h3 id="resultTitle" class="text-3xl font-bold text-gray-800 mb-2">Selamat!</h3>
-        <p id="resultScore" class="text-xl text-gray-600 mb-6">Skor: <span class="font-bold text-red-500">0</span>/10</p>
-        <div id="resultFeedback" class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 mb-6">
-         <p class="text-green-700"></p>
-        </div>
-        <div class="flex gap-4 justify-center"><button onclick="restartQuiz()" class="px-8 py-3 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-xl font-bold hover:opacity-90 transition-all"> 🔄 Ulangi Quiz </button> <button onclick="reviewAnswers()" class="px-8 py-3 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200 transition-all"> 📋 Lihat Pembahasan </button>
+      </div><!-- Status Indonesia -->
+      <div class="card-gradient rounded-2xl p-6 border border-amber-500/30 mb-6">
+       <h3 class="text-xl font-bold text-amber-400 mb-4">🇮🇩 Status di Indonesia</h3>
+       <div class="flex items-center gap-4"><span class="text-5xl">🏗️</span>
+        <div>
+         <p class="text-slate-300">Indonesia <span class="text-red-400 font-semibold">belum menggunakan</span> energi nuklir sebagai sumber energi utama.</p>
+         <p class="text-slate-400 text-sm mt-2">Meskipun ada reaktor penelitian (BATAN), belum ada PLTN untuk keperluan umum.</p>
         </div>
        </div>
-      </div><!-- Answer Review (Hidden by default) -->
-      <div id="answerReview" class="p-8 hidden">
-       <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">📋 Pembahasan Jawaban</h3>
-       <div id="reviewContent" class="space-y-6"><!-- Review items will be loaded here -->
+      </div><!-- Pro vs Kontra -->
+      <div class="grid md:grid-cols-2 gap-6">
+       <div class="card-gradient rounded-2xl p-6 border border-red-500/30">
+        <h3 class="text-xl font-bold text-red-400 mb-4 flex items-center gap-2"><span>👎</span> Kontra (Menentang)</h3>
+        <div class="space-y-3">
+         <div class="flex items-start gap-3 bg-red-900/20 p-3 rounded-lg"><span class="text-xl">☢️</span>
+          <div>
+           <p class="font-semibold text-red-300">Risiko Radiasi</p>
+           <p class="text-sm text-slate-400">Kebocoran bisa menyebabkan kerusakan lingkungan dan kesehatan jangka panjang</p>
+          </div>
+         </div>
+         <div class="flex items-start gap-3 bg-red-900/20 p-3 rounded-lg"><span class="text-xl">💀</span>
+          <div>
+           <p class="font-semibold text-red-300">Limbah Berbahaya</p>
+           <p class="text-sm text-slate-400">Limbah radioaktif tetap berbahaya selama ribuan tahun</p>
+          </div>
+         </div>
+         <div class="flex items-start gap-3 bg-red-900/20 p-3 rounded-lg"><span class="text-xl">🌋</span>
+          <div>
+           <p class="font-semibold text-red-300">Rawan Bencana</p>
+           <p class="text-sm text-slate-400">Indonesia berada di cincin api, rawan gempa dan tsunami</p>
+          </div>
+         </div>
+        </div>
+        <div class="mt-4 text-center text-sm text-slate-400">
+         📍 Contoh: Bencana Chernobyl (1986), Fukushima (2011)
+        </div>
        </div>
-       <div class="mt-8 text-center"><button onclick="backToResults()" class="px-8 py-3 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-xl font-bold hover:opacity-90 transition-all"> ← Kembali ke Hasil </button>
+       <div class="card-gradient rounded-2xl p-6 border border-green-500/30">
+        <h3 class="text-xl font-bold text-green-400 mb-4 flex items-center gap-2"><span>👍</span> Pro (Mendukung)</h3>
+        <div class="space-y-3">
+         <div class="flex items-start gap-3 bg-green-900/20 p-3 rounded-lg"><span class="text-xl">⚡</span>
+          <div>
+           <p class="font-semibold text-green-300">Efisiensi Sangat Tinggi</p>
+           <p class="text-sm text-slate-400">Menghasilkan energi jauh lebih besar dari sumber lain</p>
+          </div>
+         </div>
+         <div class="flex items-start gap-3 bg-green-900/20 p-3 rounded-lg"><span class="text-xl">🌱</span>
+          <div>
+           <p class="font-semibold text-green-300">Emisi Rendah</p>
+           <p class="text-sm text-slate-400">Tidak menghasilkan CO₂ saat beroperasi</p>
+          </div>
+         </div>
+         <div class="flex items-start gap-3 bg-green-900/20 p-3 rounded-lg"><span class="text-xl">🔒</span>
+          <div>
+           <p class="font-semibold text-green-300">Teknologi Makin Aman</p>
+           <p class="text-sm text-slate-400">Reaktor generasi baru memiliki sistem keamanan berlapis</p>
+          </div>
+         </div>
+        </div>
+        <div class="mt-4 text-center text-sm text-slate-400">
+         📍 Negara pengguna: Prancis (70% listrik), Jepang, Korea Selatan
+        </div>
+       </div>
+      </div><!-- Interactive Poll -->
+      <div class="mt-6 card-gradient rounded-xl p-6 border border-purple-500/30">
+       <h3 class="text-lg font-semibold text-purple-400 mb-4 text-center">🗳️ Polling: Menurutmu, haruskah Indonesia membangun PLTN?</h3>
+       <div class="flex justify-center gap-4"><button onclick="submitPoll('pro')" class="px-6 py-3 bg-green-600 hover:bg-green-500 rounded-xl transition-all flex items-center gap-2"> <span>👍</span> Ya, Setuju </button> <button onclick="submitPoll('kontra')" class="px-6 py-3 bg-red-600 hover:bg-red-500 rounded-xl transition-all flex items-center gap-2"> <span>👎</span> Tidak Setuju </button>
+       </div>
+       <div id="pollResult" class="mt-4 hidden">
+        <div class="flex justify-between text-sm mb-2"><span class="text-green-400">Setuju: <span id="proPercent">0</span>%</span> <span class="text-red-400">Tidak Setuju: <span id="kontraPercent">0</span>%</span>
+        </div>
+        <div class="w-full bg-slate-700 rounded-full h-4 overflow-hidden">
+         <div id="pollBar" class="h-full bg-gradient-to-r from-green-500 to-green-400 transition-all duration-500" style="width: 50%"></div>
+        </div>
+        <p class="text-center text-sm text-slate-400 mt-2">Total suara: <span id="totalVotes">0</span></p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 8: Panas Bumi & Energi Laut -->
+    <section class="slide-section min-h-screen flex flex-col justify-center py-12" data-slide="8">
+     <div class="slide-enter">
+      <div class="text-center mb-8"><span class="text-5xl">🌋🌊</span>
+       <h2 class="playfair text-3xl md:text-5xl font-bold mt-4 text-orange-400">Energi Geotermal &amp; Laut</h2>
+       <p class="text-slate-400 mt-2">Potensi Besar Indonesia</p>
+      </div><!-- Geotermal -->
+      <div class="card-gradient rounded-2xl p-6 border border-orange-500/30 mb-6">
+       <div class="flex items-center gap-4 mb-4"><span class="text-5xl">🌋</span>
+        <div>
+         <h3 class="text-2xl font-bold text-orange-400">Energi Panas Bumi (Geotermal)</h3>
+         <p class="text-slate-400">PLTP - Pembangkit Listrik Tenaga Panas Bumi</p>
+        </div>
+       </div>
+       <div class="grid md:grid-cols-2 gap-4">
+        <div>
+         <h4 class="font-semibold text-orange-300 mb-2">🔥 Cara Kerja</h4>
+         <p class="text-slate-300 text-sm mb-4">Panas dari dalam bumi digunakan untuk memanaskan air menjadi <span class="text-orange-400">uap</span>, yang kemudian menggerakkan turbin untuk menghasilkan listrik.</p><!-- Geothermal Illustration -->
+         <div class="bg-slate-800/50 rounded-xl p-4">
+          <div class="flex flex-col items-center">
+           <div class="flex items-end gap-2">
+            <div class="w-8 h-12 bg-slate-600 rounded-t"></div>
+            <div class="w-16 h-20 bg-slate-700 rounded-t flex flex-col items-center justify-end pb-2"><span class="text-xs">🏭</span>
+            </div>
+            <div class="w-8 h-12 bg-slate-600 rounded-t"></div>
+           </div>
+           <div class="w-full h-4 bg-gradient-to-b from-amber-900 to-amber-700"></div>
+           <div class="w-full h-8 bg-gradient-to-b from-orange-600 to-red-700 flex items-center justify-center"><span class="text-xl">🔥</span>
+           </div>
+           <p class="text-xs text-slate-400 mt-2">Panas dari magma bumi</p>
+          </div>
+         </div>
+        </div>
+        <div>
+         <h4 class="font-semibold text-green-400 mb-2">🇮🇩 Potensi Indonesia</h4>
+         <div class="bg-orange-900/20 rounded-lg p-4 mb-3">
+          <p class="text-orange-300 font-semibold text-lg">29.000 MW</p>
+          <p class="text-sm text-slate-400">Potensi panas bumi Indonesia (40% cadangan dunia!)</p>
+         </div>
+         <div class="space-y-2 text-sm">
+          <p class="text-slate-300">📍 <span class="text-orange-400">PLTP Kamojang</span> - Jawa Barat</p>
+          <p class="text-slate-300">📍 <span class="text-orange-400">PLTP Wayang Windu</span> - Jawa Barat</p>
+          <p class="text-slate-300">📍 <span class="text-orange-400">PLTP Lahendong</span> - Sulawesi Utara</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Energi Laut -->
+      <div class="card-gradient rounded-2xl p-6 border border-teal-500/30">
+       <div class="flex items-center gap-4 mb-4"><span class="text-5xl">🌊</span>
+        <div>
+         <h3 class="text-2xl font-bold text-teal-400">Energi Laut</h3>
+         <p class="text-slate-400">Ombak, Pasang Surut, dan Perbedaan Suhu</p>
+        </div>
+       </div>
+       <div class="grid md:grid-cols-3 gap-4">
+        <div class="bg-slate-800/50 rounded-xl p-4 text-center"><span class="text-4xl block mb-2">🌊</span>
+         <h4 class="font-semibold text-teal-400">Energi Ombak</h4>
+         <p class="text-xs text-slate-400 mt-2">Gerakan ombak menggerakkan pelampung atau turbin untuk menghasilkan listrik</p>
+        </div>
+        <div class="bg-slate-800/50 rounded-xl p-4 text-center"><span class="text-4xl block mb-2">🌙</span>
+         <h4 class="font-semibold text-teal-400">Pasang Surut</h4>
+         <p class="text-xs text-slate-400 mt-2">Perbedaan tinggi air saat pasang dan surut dimanfaatkan untuk memutar turbin</p>
+        </div>
+        <div class="bg-slate-800/50 rounded-xl p-4 text-center"><span class="text-4xl block mb-2">🌡️</span>
+         <h4 class="font-semibold text-teal-400">OTEC</h4>
+         <p class="text-xs text-slate-400 mt-2">Memanfaatkan perbedaan suhu air permukaan dan dasar laut</p>
+        </div>
+       </div>
+       <div class="mt-4 bg-teal-900/20 rounded-lg p-4">
+        <p class="text-sm text-slate-300"><span class="text-teal-400 font-semibold">💡 Fakta:</span> Indonesia memiliki garis pantai <span class="text-teal-400 font-bold">81.000 km</span> (terpanjang ke-2 di dunia), dengan potensi energi laut yang sangat besar namun masih belum banyak dimanfaatkan!</p>
+       </div>
+      </div><!-- Indonesia's Advantage -->
+      <div class="mt-6 card-gradient rounded-xl p-6 border border-green-500/30">
+       <h3 class="text-lg font-semibold text-green-400 mb-4 text-center">🌟 Keunggulan Geografis Indonesia</h3>
+       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+        <div class="bg-slate-800/50 rounded-lg p-3"><span class="text-3xl">🌋</span>
+         <p class="text-xs text-orange-400 mt-1">127 Gunung Api</p>
+         <p class="text-xs text-slate-500">Sumber geotermal</p>
+        </div>
+        <div class="bg-slate-800/50 rounded-lg p-3"><span class="text-3xl">🏝️</span>
+         <p class="text-xs text-teal-400 mt-1">17.000+ Pulau</p>
+         <p class="text-xs text-slate-500">Potensi angin &amp; laut</p>
+        </div>
+        <div class="bg-slate-800/50 rounded-lg p-3"><span class="text-3xl">☀️</span>
+         <p class="text-xs text-amber-400 mt-1">Garis Khatulistiwa</p>
+         <p class="text-xs text-slate-500">Sinar matahari optimal</p>
+        </div>
+        <div class="bg-slate-800/50 rounded-lg p-3"><span class="text-3xl">🌧️</span>
+         <p class="text-xs text-cyan-400 mt-1">Curah Hujan Tinggi</p>
+         <p class="text-xs text-slate-500">Sumber tenaga air</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 9: Aksi Nyata -->
+    <section class="slide-section min-h-screen flex flex-col justify-center py-12" data-slide="9">
+     <div class="slide-enter">
+      <div class="text-center mb-8"><span class="text-5xl float-animation inline-block">🤝</span>
+       <h2 class="playfair text-3xl md:text-5xl font-bold mt-4 bg-gradient-to-r from-green-400 to-teal-400 bg-clip-text text-transparent">Ini Aksiku, Mana Aksimu?</h2>
+       <p class="text-slate-400 mt-2">Mulai dari diri sendiri, untuk masa depan bersama</p>
+      </div>
+      <div class="card-gradient rounded-2xl p-8 border border-green-500/30 energy-glow mb-8">
+       <h3 class="text-2xl font-bold text-center text-green-400 mb-6">3 Pilar Aksi untuk Siswa</h3>
+       <div class="grid md:grid-cols-3 gap-6"><!-- Hemat Air -->
+        <div class="bg-slate-800/50 rounded-xl p-6 text-center interactive-card">
+         <div class="w-20 h-20 mx-auto bg-cyan-600 rounded-full flex items-center justify-center mb-4 pulse-animation"><span class="text-4xl">💧</span>
+         </div>
+         <h4 class="text-xl font-bold text-cyan-400 mb-3">Hemat Air</h4>
+         <ul class="text-left text-sm text-slate-300 space-y-2">
+          <li>✓ Matikan keran saat tidak digunakan</li>
+          <li>✓ Gunakan air secukupnya saat mandi</li>
+          <li>✓ Tampung air hujan untuk menyiram tanaman</li>
+          <li>✓ Perbaiki keran yang bocor</li>
+         </ul>
+        </div><!-- Zero Waste -->
+        <div class="bg-slate-800/50 rounded-xl p-6 text-center interactive-card">
+         <div class="w-20 h-20 mx-auto bg-green-600 rounded-full flex items-center justify-center mb-4 pulse-animation" style="animation-delay: 0.3s;"><span class="text-4xl">♻️</span>
+         </div>
+         <h4 class="text-xl font-bold text-green-400 mb-3">Zero Waste</h4>
+         <ul class="text-left text-sm text-slate-300 space-y-2">
+          <li>✓ Bawa tumbler sendiri</li>
+          <li>✓ Gunakan tas belanja kain</li>
+          <li>✓ Pilah sampah (organik &amp; anorganik)</li>
+          <li>✓ Daur ulang barang bekas</li>
+         </ul>
+        </div><!-- Hemat Energi -->
+        <div class="bg-slate-800/50 rounded-xl p-6 text-center interactive-card">
+         <div class="w-20 h-20 mx-auto bg-amber-600 rounded-full flex items-center justify-center mb-4 pulse-animation" style="animation-delay: 0.6s;"><span class="text-4xl">⚡</span>
+         </div>
+         <h4 class="text-xl font-bold text-amber-400 mb-3">Hemat Energi</h4>
+         <ul class="text-left text-sm text-slate-300 space-y-2">
+          <li>✓ Matikan lampu saat keluar ruangan</li>
+          <li>✓ Cabut charger jika sudah penuh</li>
+          <li>✓ Gunakan AC seperlunya</li>
+          <li>✓ Manfaatkan cahaya matahari</li>
+         </ul>
+        </div>
+       </div>
+      </div><!-- Commitment Form -->
+      <div class="card-gradient rounded-xl p-6 border border-amber-500/30">
+       <h3 class="text-lg font-semibold text-amber-400 mb-4 text-center">✍️ Komitmen Hemat Energi</h3>
+       <p class="text-center text-slate-400 mb-4 text-sm">Pilih aksi yang akan kamu lakukan mulai hari ini:</p>
+       <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4"><label class="flex items-center gap-2 bg-slate-800/50 p-3 rounded-lg cursor-pointer hover:bg-slate-700/50 transition-all"> <input type="checkbox" class="w-5 h-5 accent-green-500" onchange="updateCommitment()"> <span class="text-sm text-slate-300">💡 Matikan lampu</span> </label> <label class="flex items-center gap-2 bg-slate-800/50 p-3 rounded-lg cursor-pointer hover:bg-slate-700/50 transition-all"> <input type="checkbox" class="w-5 h-5 accent-green-500" onchange="updateCommitment()"> <span class="text-sm text-slate-300">🔌 Cabut charger</span> </label> <label class="flex items-center gap-2 bg-slate-800/50 p-3 rounded-lg cursor-pointer hover:bg-slate-700/50 transition-all"> <input type="checkbox" class="w-5 h-5 accent-green-500" onchange="updateCommitment()"> <span class="text-sm text-slate-300">🚰 Hemat air</span> </label> <label class="flex items-center gap-2 bg-slate-800/50 p-3 rounded-lg cursor-pointer hover:bg-slate-700/50 transition-all"> <input type="checkbox" class="w-5 h-5 accent-green-500" onchange="updateCommitment()"> <span class="text-sm text-slate-300">🛍️ Bawa tas kain</span> </label> <label class="flex items-center gap-2 bg-slate-800/50 p-3 rounded-lg cursor-pointer hover:bg-slate-700/50 transition-all"> <input type="checkbox" class="w-5 h-5 accent-green-500" onchange="updateCommitment()"> <span class="text-sm text-slate-300">🚶 Jalan kaki</span> </label> <label class="flex items-center gap-2 bg-slate-800/50 p-3 rounded-lg cursor-pointer hover:bg-slate-700/50 transition-all"> <input type="checkbox" class="w-5 h-5 accent-green-500" onchange="updateCommitment()"> <span class="text-sm text-slate-300">♻️ Pilah sampah</span> </label>
+       </div>
+       <div id="commitmentResult" class="text-center p-4 bg-green-900/20 rounded-lg border border-green-500/30 hidden">
+        <p class="text-green-400 font-semibold">🎉 Hebat! Kamu berkomitmen untuk <span id="commitCount">0</span> aksi!</p>
+        <p class="text-slate-400 text-sm mt-1">Setiap langkah kecil membawa perubahan besar!</p>
+       </div>
+      </div><!-- Carbon Footprint Calculator -->
+      <div class="mt-6 card-gradient rounded-xl p-6 border border-slate-600">
+       <h3 class="text-lg font-semibold text-amber-400 mb-4 text-center">🧮 Kalkulator Hemat Energi Sederhana</h3>
+       <p class="text-center text-slate-400 mb-4 text-sm">Berapa lama kamu menyalakan AC per hari?</p>
+       <div class="flex items-center justify-center gap-4 mb-4"><button onclick="adjustAC(-1)" class="w-10 h-10 bg-slate-700 rounded-full text-xl hover:bg-slate-600">-</button>
+        <div class="text-center"><span id="acHours" class="text-4xl font-bold text-amber-400">8</span>
+         <p class="text-sm text-slate-400">jam</p>
+        </div><button onclick="adjustAC(1)" class="w-10 h-10 bg-slate-700 rounded-full text-xl hover:bg-slate-600">+</button>
+       </div>
+       <div id="acResult" class="bg-slate-800/50 rounded-lg p-4 text-center">
+        <p class="text-slate-300">Jika kamu <span class="text-green-400 font-semibold">mengurangi 2 jam</span> per hari:</p>
+        <p class="text-amber-400 font-bold text-lg mt-2">💡 Hemat ~<span id="savingKwh">1.2</span> kWh/hari</p>
+        <p class="text-green-400 text-sm">≈ Rp <span id="savingRupiah">1.600</span>/hari atau Rp <span id="savingMonth">48.000</span>/bulan!</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 10: Quiz HOTS -->
+    <section class="slide-section min-h-screen py-12" data-slide="10">
+     <div class="slide-enter">
+      <div class="text-center mb-8"><span class="text-5xl">📝</span>
+       <h2 class="playfair text-3xl md:text-5xl font-bold mt-4 text-amber-400">Uji Pemahaman</h2>
+       <p class="text-slate-400 mt-2">10 Soal HOTS (Higher Order Thinking Skills)</p>
+      </div>
+      <div class="card-gradient rounded-2xl p-6 border border-amber-500/30 mb-6">
+       <div class="flex justify-between items-center mb-4"><span class="text-lg font-semibold text-amber-400">Soal <span id="quizNumber">1</span>/10</span> <span class="text-lg font-semibold text-green-400">Skor: <span id="quizScore">0</span></span>
+       </div>
+       <div class="w-full bg-slate-700 rounded-full h-2 mb-6">
+        <div id="quizProgress" class="bg-amber-400 h-2 rounded-full transition-all" style="width: 10%"></div>
+       </div>
+       <div id="quizContainer"><!-- Quiz questions will be rendered here -->
+       </div>
+       <div id="quizResult" class="hidden text-center py-8"><span class="text-6xl block mb-4" id="resultEmoji">🎉</span>
+        <h3 class="text-2xl font-bold text-amber-400 mb-2">Quiz Selesai!</h3>
+        <p class="text-xl text-slate-300">Skor akhir kamu: <span id="finalScore" class="text-green-400 font-bold">0</span>/10</p>
+        <p id="resultMessage" class="text-slate-400 mt-2"></p><button onclick="resetQuiz()" class="mt-6 px-8 py-3 bg-amber-600 hover:bg-amber-500 rounded-xl transition-all"> 🔄 Ulangi Quiz </button>
        </div>
       </div>
      </div>
     </section>
-   </main><!-- Footer -->
-   <footer class="bg-gradient-to-r from-indigo-900 via-purple-900 to-pink-900 text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-     <div class="flex items-center justify-center gap-3 mb-4">
-      <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center"><span class="text-2xl">🧠</span>
-      </div>
-      <h3 class="text-xl font-bold">Sistem Koordinasi &amp; Alat Indera Manusia</h3>
-     </div>
-     <p class="text-purple-200 text-sm mb-6">Materi Pembelajaran Interaktif IPA Kelas 9</p>
-     <div class="flex justify-center gap-4 flex-wrap"><span class="px-4 py-2 bg-white/10 rounded-full text-sm">📚 Kurikulum Merdeka</span> <span class="px-4 py-2 bg-white/10 rounded-full text-sm">🎯 HOTS Questions</span> <span class="px-4 py-2 bg-white/10 rounded-full text-sm">🎮 Interactive Learning</span>
-     </div>
-     <div class="mt-8 pt-8 border-t border-white/10">
-      <p class="text-purple-300 text-xs">© 2024 SMP Negeri 8 Cikarang Utara - Algian Manggara, S.Agr</p>
-     </div>
+   </div><!-- Navigation Buttons -->
+   <div class="fixed bottom-0 left-0 right-0 bg-slate-900/90 backdrop-blur-md border-t border-amber-500/30 p-4">
+    <div class="flex justify-between items-center max-w-4xl mx-auto"><button id="prevBtn" onclick="changeSlide(-1)" class="px-6 py-2 bg-slate-700 hover:bg-slate-600 rounded-xl transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"> <span>←</span> Sebelumnya </button>
+     <div class="flex gap-2" id="slideIndicators"></div><button id="nextBtn" onclick="changeSlide(1)" class="px-6 py-2 bg-amber-600 hover:bg-amber-500 rounded-xl transition-all flex items-center gap-2"> Selanjutnya <span>→</span> </button>
     </div>
-   </footer>
+   </div>
   </div>
   <script>
-    // Default config
+    // Configuration
     const defaultConfig = {
-      main_title: "Sistem Koordinasi & Alat Indera",
-      background_color: "#f8fafc",
-      primary_color: "#667eea",
-      text_color: "#1f2937",
-      accent_color: "#ec4899",
-      surface_color: "#ffffff"
+      main_title: "Menghadapi Krisis Energi",
+      subtitle: "Tantangan dan Solusi Alternatif di Indonesia",
+      primary_color: "#f59e0b",
+      secondary_color: "#1e3a5f",
+      text_color: "#ffffff",
+      font_family: "Poppins"
     };
 
-    // SDK Initialization
+    let config = { ...defaultConfig };
+    let currentSlide = 1;
+    const totalSlides = 10;
+
+    // Quiz Data - HOTS Questions
+    const quizData = [
+      {
+        question: "Berdasarkan data tren produksi dan konsumsi minyak Indonesia, mengapa Indonesia menjadi net importir minyak sejak 2004?",
+        options: [
+          "Karena Indonesia tidak memiliki cadangan minyak",
+          "Karena produksi menurun sementara konsumsi terus meningkat",
+          "Karena harga minyak dunia terlalu mahal",
+          "Karena Indonesia mengekspor semua minyaknya"
+        ],
+        correct: 1,
+        explanation: "Indonesia menjadi net importir karena terjadi gap antara produksi yang menurun (cadangan menipis) dan konsumsi yang terus meningkat seiring pertumbuhan penduduk dan ekonomi."
+      },
+      {
+        question: "Jika sebuah desa terpencil ingin mengembangkan energi alternatif dengan sumber daya: sungai kecil, peternakan sapi, dan lahan pertanian singkong. Kombinasi energi mana yang PALING efektif untuk dikembangkan?",
+        options: [
+          "PLTA dan biogas",
+          "PLTS dan bioetanol",
+          "Biogas dan bioetanol",
+          "PLTB dan PLTS"
+        ],
+        correct: 2,
+        explanation: "Biogas dari kotoran sapi dan bioetanol dari singkong adalah pilihan paling efektif karena sesuai dengan sumber daya yang tersedia (peternakan dan lahan pertanian)."
+      },
+      {
+        question: "Mengapa proses pembentukan minyak bumi membutuhkan waktu jutaan tahun, tetapi manusia bisa menghabiskannya dalam hitungan abad?",
+        options: [
+          "Karena proses pembentukan memerlukan tekanan dan panas tinggi dalam waktu lama, sementara ekstraksi dan pembakaran sangat cepat",
+          "Karena minyak bumi sebenarnya bisa dibuat dalam waktu singkat",
+          "Karena manusia tidak menggunakan minyak bumi dengan benar",
+          "Karena proses pembentukan minyak sudah berhenti"
+        ],
+        correct: 0,
+        explanation: "Pembentukan minyak bumi adalah proses geologis yang memerlukan jutaan tahun dengan tekanan dan panas khusus, sementara penggunaan manusia sangat cepat karena teknologi ekstraksi dan tingginya permintaan energi."
+      },
+      {
+        question: "Analisis kelebihan dan kekurangan: Mengapa PLTS (Panel Surya) di Indonesia memiliki potensi besar namun belum berkembang pesat?",
+        options: [
+          "Indonesia tidak memiliki sinar matahari yang cukup",
+          "Biaya instalasi tinggi dan ketergantungan pada cuaca, meski Indonesia di khatulistiwa",
+          "Teknologi panel surya belum ditemukan",
+          "Pemerintah melarang penggunaan panel surya"
+        ],
+        correct: 1,
+        explanation: "Meski Indonesia berada di khatulistiwa dengan sinar matahari melimpah, pengembangan PLTS terhambat oleh biaya instalasi awal yang tinggi dan efisiensi yang menurun saat mendung."
+      },
+      {
+        question: "Dalam debat energi nuklir di Indonesia, argumen mana yang PALING valid dari perspektif keamanan geografis?",
+        options: [
+          "Indonesia tidak memiliki uranium",
+          "Indonesia berada di cincin api pasifik yang rawan gempa dan tsunami",
+          "Indonesia tidak memiliki ahli nuklir",
+          "Indonesia terlalu panas untuk PLTN"
+        ],
+        correct: 1,
+        explanation: "Lokasi Indonesia di Cincin Api Pasifik menjadikannya rawan gempa dan tsunami, yang meningkatkan risiko kecelakaan PLTN seperti yang terjadi di Fukushima, Jepang."
+      },
+      {
+        question: "Seorang petani memiliki 10 ekor sapi dan lahan 1 hektar jagung. Evaluasi: energi alternatif mana yang memberikan manfaat ganda (energi + pendapatan tambahan)?",
+        options: [
+          "PLTS - karena bisa dijual ke PLN",
+          "Biogas - karena menghasilkan pupuk organik dari limbah fermentasi",
+          "PLTB - karena angin gratis",
+          "Bioetanol - karena jagung bisa dimakan"
+        ],
+        correct: 1,
+        explanation: "Biogas dari kotoran sapi memberikan manfaat ganda: gas metana untuk memasak/listrik DAN limbah fermentasi (slurry) yang menjadi pupuk organik berkualitas tinggi untuk dijual atau digunakan sendiri."
+      },
+      {
+        question: "Jika Indonesia mengalokasikan Rp 100 triliun untuk pengembangan energi alternatif, strategi mana yang PALING efektif berdasarkan potensi geografis Indonesia?",
+        options: [
+          "100% untuk PLTS karena Indonesia di khatulistiwa",
+          "100% untuk PLTN karena efisiensinya tinggi",
+          "Diversifikasi: PLTP (geotermal), PLTA, dan PLTS sesuai kondisi lokal",
+          "100% untuk biogas karena murah"
+        ],
+        correct: 2,
+        explanation: "Diversifikasi adalah strategi paling efektif karena Indonesia memiliki berbagai potensi: geotermal (40% cadangan dunia), banyak sungai untuk PLTA, dan sinar matahari melimpah. Setiap daerah bisa dikembangkan sesuai potensi lokalnya."
+      },
+      {
+        question: "Hubungkan konsep: Mengapa gerakan 'Zero Waste' siswa di sekolah secara tidak langsung membantu mengurangi krisis energi?",
+        options: [
+          "Karena sampah bisa dijadikan energi langsung",
+          "Karena mengurangi sampah berarti mengurangi energi untuk produksi, transportasi, dan pengolahan barang",
+          "Karena sampah tidak ada hubungannya dengan energi",
+          "Karena sampah bisa dijual untuk membeli energi"
+        ],
+        correct: 1,
+        explanation: "Zero waste mengurangi konsumsi barang, yang berarti mengurangi energi untuk: (1) produksi barang di pabrik, (2) transportasi distribusi, dan (3) pengolahan/pembuangan sampah. Semua proses tersebut membutuhkan energi fosil."
+      },
+      {
+        question: "Kritisi pernyataan: 'Energi nuklir adalah solusi terbaik karena tidak menghasilkan CO₂.' Apa kelemahan argumen ini?",
+        options: [
+          "Pernyataan ini sepenuhnya benar tanpa kelemahan",
+          "Pernyataan ini mengabaikan masalah limbah radioaktif yang tetap berbahaya ribuan tahun",
+          "Energi nuklir sebenarnya menghasilkan lebih banyak CO₂ dari batubara",
+          "Energi nuklir tidak bisa menghasilkan listrik"
+        ],
+        correct: 1,
+        explanation: "Meski benar nuklir tidak menghasilkan CO₂ saat beroperasi, argumen ini mengabaikan masalah krusial: limbah radioaktif yang tetap berbahaya selama ribuan tahun, risiko kecelakaan, dan tantangan pengelolaan limbah yang belum sepenuhnya terpecahkan."
+      },
+      {
+        question: "Sintesis: Berdasarkan seluruh materi, apa penyebab UTAMA krisis energi di Indonesia dan solusi paling komprehensif untuk mengatasinya?",
+        options: [
+          "Penyebab: Harga minyak mahal. Solusi: Subsidi BBM lebih besar",
+          "Penyebab: Ketergantungan pada energi fosil yang terbatas + konsumsi tinggi. Solusi: Diversifikasi energi alternatif + efisiensi konsumsi",
+          "Penyebab: Indonesia tidak punya sumber energi. Solusi: Impor lebih banyak",
+          "Penyebab: Teknologi kurang maju. Solusi: Beli teknologi dari luar negeri"
+        ],
+        correct: 1,
+        explanation: "Krisis energi Indonesia disebabkan oleh ketergantungan pada fosil yang tidak dapat diperbaharui + konsumsi yang terus meningkat. Solusi komprehensif: (1) diversifikasi ke berbagai energi alternatif sesuai potensi lokal, dan (2) efisiensi konsumsi melalui kesadaran hemat energi dari tingkat individu."
+      }
+    ];
+
+    let currentQuiz = 0;
+    let score = 0;
+    let answered = false;
+
+    // Poll data
+    let pollData = { pro: 45, kontra: 55 };
+
+    // Initialize
+    function init() {
+      renderNavDots();
+      renderSlideIndicators();
+      updateNavigation();
+      renderQuiz();
+      calculateACSavings();
+    }
+
+    // Navigation
+    function renderNavDots() {
+      const container = document.getElementById('navDots');
+      container.innerHTML = '';
+      for (let i = 1; i <= totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = `nav-dot w-2 h-2 rounded-full bg-slate-600 cursor-pointer ${i === currentSlide ? 'active' : ''}`;
+        dot.onclick = () => goToSlide(i);
+        container.appendChild(dot);
+      }
+    }
+
+    function renderSlideIndicators() {
+      const container = document.getElementById('slideIndicators');
+      container.innerHTML = '';
+      for (let i = 1; i <= totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = `w-2 h-2 rounded-full cursor-pointer transition-all ${i === currentSlide ? 'bg-amber-400 w-6' : 'bg-slate-600'}`;
+        dot.onclick = () => goToSlide(i);
+        container.appendChild(dot);
+      }
+    }
+
+    function changeSlide(direction) {
+      const newSlide = currentSlide + direction;
+      if (newSlide >= 1 && newSlide <= totalSlides) {
+        goToSlide(newSlide);
+      }
+    }
+
+    function goToSlide(slideNum) {
+      currentSlide = slideNum;
+      updateNavigation();
+      
+      const sections = document.querySelectorAll('.slide-section');
+      sections.forEach((section, index) => {
+        if (index + 1 === currentSlide) {
+          section.style.display = 'flex';
+          section.classList.add('slide-enter');
+        } else {
+          section.style.display = 'none';
+          section.classList.remove('slide-enter');
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateNavigation() {
+      const progress = (currentSlide / totalSlides) * 100;
+      document.getElementById('progressBar').style.width = `${progress}%`;
+      document.getElementById('currentSlide').textContent = currentSlide;
+      document.getElementById('totalSlides').textContent = totalSlides;
+      
+      document.getElementById('prevBtn').disabled = currentSlide === 1;
+      document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+      
+      renderNavDots();
+      renderSlideIndicators();
+    }
+
+    // Interactive Functions
+    function checkFossil(btn, usesFossil) {
+      if (usesFossil) {
+        btn.classList.remove('bg-slate-700');
+        btn.classList.add('bg-amber-600');
+        document.getElementById('fossilFeedback').textContent = '✅ Benar! Aktivitas ini membutuhkan energi yang sebagian besar masih berasal dari fosil.';
+        document.getElementById('fossilFeedback').className = 'mt-4 text-sm text-green-400';
+      } else {
+        btn.classList.remove('bg-slate-700');
+        btn.classList.add('bg-green-600');
+        document.getElementById('fossilFeedback').textContent = '🌱 Aktivitas ini tidak/minim membutuhkan energi fosil. Bagus!';
+        document.getElementById('fossilFeedback').className = 'mt-4 text-sm text-green-400';
+      }
+    }
+
+    function startOilSimulation() {
+      const result = document.getElementById('oilSimResult');
+      result.innerHTML = '<span class="text-amber-400">⏳ Simulasi berjalan...</span>';
+      
+      let count = 300;
+      const interval = setInterval(() => {
+        count -= 10;
+        document.getElementById('formationTime').textContent = count;
+        
+        if (count <= 0) {
+          clearInterval(interval);
+          result.innerHTML = `
+            <p class="text-red-400 font-semibold">💥 Dalam waktu nyata: Minyak yang terbentuk 300 juta tahun, habis dalam ~200 tahun penggunaan manusia!</p>
+            <p class="text-slate-400 text-sm mt-1">Rasio pembentukan vs penggunaan = 1.500.000 : 1</p>
+          `;
+          document.getElementById('formationTime').textContent = '0';
+        }
+      }, 100);
+    }
+
+    // Energy Detail Modal
+    const energyDetails = {
+      matahari: {
+        title: '☀️ Energi Matahari',
+        content: `
+          <p class="text-slate-300 mb-3">Panel surya mengubah cahaya matahari menjadi listrik melalui efek fotoelektrik.</p>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-green-900/30 p-3 rounded-lg">
+              <h5 class="text-green-400 font-semibold">Kelebihan</h5>
+              <ul class="text-sm text-slate-300 mt-1">
+                <li>• Sumber tak terbatas</li>
+                <li>• Tidak ada emisi CO₂</li>
+                <li>• Perawatan minimal</li>
+              </ul>
+            </div>
+            <div class="bg-red-900/30 p-3 rounded-lg">
+              <h5 class="text-red-400 font-semibold">Kekurangan</h5>
+              <ul class="text-sm text-slate-300 mt-1">
+                <li>• Bergantung cuaca</li>
+                <li>• Biaya awal tinggi</li>
+                <li>• Butuh lahan luas</li>
+              </ul>
+            </div>
+          </div>
+        `
+      },
+      angin: {
+        title: '💨 Energi Angin',
+        content: `
+          <p class="text-slate-300 mb-3">Turbin angin mengubah energi kinetik angin menjadi listrik melalui generator.</p>
+          <p class="text-slate-400 text-sm">📍 PLTB Sidrap di Sulawesi Selatan adalah salah satu yang terbesar di Asia Tenggara dengan kapasitas 75 MW.</p>
+        `
+      },
+      air: {
+        title: '💧 Energi Air',
+        content: `
+          <p class="text-slate-300 mb-3">PLTA memanfaatkan air yang jatuh dari ketinggian untuk memutar turbin dan menghasilkan listrik.</p>
+          <p class="text-slate-400 text-sm">📍 Indonesia memiliki banyak PLTA besar seperti Cirata dan Saguling di Jawa Barat.</p>
+        `
+      },
+      geotermal: {
+        title: '🌋 Energi Panas Bumi',
+        content: `
+          <p class="text-slate-300 mb-3">Indonesia memiliki 40% cadangan panas bumi dunia! Energi ini berasal dari panas magma di dalam bumi.</p>
+          <p class="text-amber-400 font-semibold">Potensi: 29.000 MW</p>
+        `
+      },
+      biogas: {
+        title: '🐄 Biogas',
+        content: `
+          <p class="text-slate-300 mb-3">Biogas dihasilkan dari fermentasi kotoran hewan/manusia oleh bakteri Methanobacterium.</p>
+          <p class="text-green-400">Hasil: Gas metana (CH₄) untuk memasak atau pembangkit listrik</p>
+        `
+      },
+      bioetanol: {
+        title: '🌽 Bioetanol',
+        content: `
+          <p class="text-slate-300 mb-3">Bioetanol dihasilkan dari fermentasi tanaman berpati (ubi, jagung) atau bergula (tebu).</p>
+          <p class="text-lime-400">Kegunaan: Campuran BBM kendaraan (Pertamax Green)</p>
+        `
+      },
+      nuklir: {
+        title: '⚛️ Energi Nuklir',
+        content: `
+          <p class="text-slate-300 mb-3">Energi nuklir dihasilkan dari pembelahan atom uranium yang melepaskan energi sangat besar.</p>
+          <p class="text-purple-400">1 kg uranium = 2.700 ton batubara!</p>
+        `
+      },
+      ombak: {
+        title: '🌊 Energi Laut',
+        content: `
+          <p class="text-slate-300 mb-3">Energi laut memanfaatkan ombak, pasang surut, dan perbedaan suhu air laut.</p>
+          <p class="text-teal-400">Indonesia: Garis pantai 81.000 km dengan potensi besar!</p>
+        `
+      }
+    };
+
+    function showEnergyDetail(type) {
+      const modal = document.getElementById('energyDetailModal');
+      const detail = energyDetails[type];
+      document.getElementById('energyModalTitle').textContent = detail.title;
+      document.getElementById('energyModalContent').innerHTML = detail.content;
+      modal.classList.remove('hidden');
+    }
+
+    function closeEnergyDetail() {
+      document.getElementById('energyDetailModal').classList.add('hidden');
+    }
+
+    // Drag and Drop
+    let draggedItem = null;
+
+    document.querySelectorAll('[draggable="true"]').forEach(item => {
+      item.addEventListener('dragstart', (e) => {
+        draggedItem = e.target;
+        e.target.style.opacity = '0.5';
+      });
+      item.addEventListener('dragend', (e) => {
+        e.target.style.opacity = '1';
+      });
+    });
+
+    function allowDrop(e) {
+      e.preventDefault();
+    }
+
+    function handleDrop(e, targetType) {
+      e.preventDefault();
+      if (draggedItem) {
+        const itemType = draggedItem.getAttribute('data-type');
+        const targetContainer = targetType === 'biogas' ? 'biogasItems' : 'bioetanolItems';
+        
+        if (itemType === targetType) {
+          document.getElementById(targetContainer).appendChild(draggedItem);
+          draggedItem.classList.remove('bg-slate-700');
+          draggedItem.classList.add('bg-green-600');
+          draggedItem.setAttribute('draggable', 'false');
+          document.getElementById('matchFeedback').textContent = '✅ Benar!';
+          document.getElementById('matchFeedback').className = 'text-center mt-4 text-sm text-green-400';
+        } else {
+          draggedItem.classList.add('shake');
+          document.getElementById('matchFeedback').textContent = '❌ Coba lagi! Perhatikan bahan bakunya.';
+          document.getElementById('matchFeedback').className = 'text-center mt-4 text-sm text-red-400';
+          setTimeout(() => draggedItem.classList.remove('shake'), 500);
+        }
+      }
+    }
+
+    // Poll
+    function submitPoll(vote) {
+      if (vote === 'pro') {
+        pollData.pro += Math.floor(Math.random() * 3) + 1;
+      } else {
+        pollData.kontra += Math.floor(Math.random() * 3) + 1;
+      }
+      
+      const total = pollData.pro + pollData.kontra;
+      const proPercent = Math.round((pollData.pro / total) * 100);
+      const kontraPercent = 100 - proPercent;
+      
+      document.getElementById('proPercent').textContent = proPercent;
+      document.getElementById('kontraPercent').textContent = kontraPercent;
+      document.getElementById('pollBar').style.width = `${proPercent}%`;
+      document.getElementById('totalVotes').textContent = total;
+      document.getElementById('pollResult').classList.remove('hidden');
+    }
+
+    // Commitment
+    function updateCommitment() {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+      const count = checkboxes.length;
+      const result = document.getElementById('commitmentResult');
+      
+      if (count > 0) {
+        document.getElementById('commitCount').textContent = count;
+        result.classList.remove('hidden');
+      } else {
+        result.classList.add('hidden');
+      }
+    }
+
+    // AC Calculator
+    let acHours = 8;
+    function adjustAC(delta) {
+      acHours = Math.max(0, Math.min(24, acHours + delta));
+      document.getElementById('acHours').textContent = acHours;
+      calculateACSavings();
+    }
+
+    function calculateACSavings() {
+      const reduction = 2;
+      const wattAC = 600;
+      const savingKwh = (reduction * wattAC / 1000).toFixed(1);
+      const pricePerKwh = 1352;
+      const savingPerDay = Math.round(savingKwh * pricePerKwh);
+      const savingPerMonth = savingPerDay * 30;
+      
+      document.getElementById('savingKwh').textContent = savingKwh;
+      document.getElementById('savingRupiah').textContent = savingPerDay.toLocaleString();
+      document.getElementById('savingMonth').textContent = savingPerMonth.toLocaleString();
+    }
+
+    // Quiz Functions
+    function renderQuiz() {
+      const container = document.getElementById('quizContainer');
+      if (currentQuiz >= quizData.length) {
+        showQuizResult();
+        return;
+      }
+
+      const q = quizData[currentQuiz];
+      answered = false;
+      
+      container.innerHTML = `
+        <div class="mb-6">
+          <h3 class="text-lg font-semibold text-white mb-4">${currentQuiz + 1}. ${q.question}</h3>
+          <div class="space-y-3" id="quizOptions">
+            ${q.options.map((opt, i) => `
+              <button onclick="checkAnswer(${i})" class="quiz-option w-full text-left p-4 bg-slate-800/50 border border-slate-600 rounded-xl hover:border-amber-500/50 transition-all">
+                <span class="text-amber-400 font-semibold mr-2">${String.fromCharCode(65 + i)}.</span>
+                <span class="text-slate-200">${opt}</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+        <div id="quizExplanation" class="hidden mt-4 p-4 rounded-xl"></div>
+        <button id="nextQuizBtn" onclick="nextQuestion()" class="hidden mt-4 px-6 py-2 bg-amber-600 hover:bg-amber-500 rounded-xl transition-all">
+          ${currentQuiz < quizData.length - 1 ? 'Soal Berikutnya →' : 'Lihat Hasil'}
+        </button>
+      `;
+
+      document.getElementById('quizNumber').textContent = currentQuiz + 1;
+      document.getElementById('quizProgress').style.width = `${((currentQuiz + 1) / quizData.length) * 100}%`;
+    }
+
+    function checkAnswer(selected) {
+      if (answered) return;
+      answered = true;
+
+      const q = quizData[currentQuiz];
+      const options = document.querySelectorAll('.quiz-option');
+      
+      options.forEach((opt, i) => {
+        opt.disabled = true;
+        if (i === q.correct) {
+          opt.classList.add('correct');
+        } else if (i === selected && selected !== q.correct) {
+          opt.classList.add('incorrect');
+        }
+      });
+
+      if (selected === q.correct) {
+        score++;
+        document.getElementById('quizScore').textContent = score;
+      }
+
+      const explanation = document.getElementById('quizExplanation');
+      explanation.innerHTML = `
+        <div class="${selected === q.correct ? 'bg-green-900/30 border-green-500' : 'bg-red-900/30 border-red-500'} border rounded-xl p-4">
+          <p class="font-semibold ${selected === q.correct ? 'text-green-400' : 'text-red-400'} mb-2">
+            ${selected === q.correct ? '✅ Benar!' : '❌ Kurang tepat'}
+          </p>
+          <p class="text-slate-300 text-sm">${q.explanation}</p>
+        </div>
+      `;
+      explanation.classList.remove('hidden');
+      document.getElementById('nextQuizBtn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQuiz++;
+      renderQuiz();
+    }
+
+    function showQuizResult() {
+      document.getElementById('quizContainer').classList.add('hidden');
+      document.getElementById('quizResult').classList.remove('hidden');
+      document.getElementById('finalScore').textContent = score;
+
+      let emoji, message;
+      if (score >= 9) {
+        emoji = '🏆';
+        message = 'Luar biasa! Kamu sangat memahami materi krisis energi!';
+      } else if (score >= 7) {
+        emoji = '🌟';
+        message = 'Bagus sekali! Pemahaman kamu sudah sangat baik!';
+      } else if (score >= 5) {
+        emoji = '👍';
+        message = 'Cukup baik! Terus pelajari lagi untuk hasil lebih baik.';
+      } else {
+        emoji = '📚';
+        message = 'Ayo belajar lagi! Baca ulang materinya ya.';
+      }
+
+      document.getElementById('resultEmoji').textContent = emoji;
+      document.getElementById('resultMessage').textContent = message;
+    }
+
+    function resetQuiz() {
+      currentQuiz = 0;
+      score = 0;
+      document.getElementById('quizScore').textContent = 0;
+      document.getElementById('quizContainer').classList.remove('hidden');
+      document.getElementById('quizResult').classList.add('hidden');
+      renderQuiz();
+    }
+
+    // Element SDK Integration
     if (window.elementSdk) {
       window.elementSdk.init({
         defaultConfig,
-        onConfigChange: async (config) => {
-          const mainTitle = document.getElementById('mainTitle');
-          if (mainTitle) {
-            mainTitle.textContent = config.main_title || defaultConfig.main_title;
-          }
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          document.getElementById('mainTitle').textContent = config.main_title;
+          document.getElementById('subtitle').textContent = config.subtitle;
         },
-        mapToCapabilities: (config) => ({
+        mapToCapabilities: (cfg) => ({
           recolorables: [
             {
-              get: () => config.background_color || defaultConfig.background_color,
-              set: (value) => window.elementSdk.setConfig({ background_color: value })
-            },
-            {
-              get: () => config.primary_color || defaultConfig.primary_color,
-              set: (value) => window.elementSdk.setConfig({ primary_color: value })
-            },
-            {
-              get: () => config.text_color || defaultConfig.text_color,
-              set: (value) => window.elementSdk.setConfig({ text_color: value })
-            },
-            {
-              get: () => config.accent_color || defaultConfig.accent_color,
-              set: (value) => window.elementSdk.setConfig({ accent_color: value })
-            },
-            {
-              get: () => config.surface_color || defaultConfig.surface_color,
-              set: (value) => window.elementSdk.setConfig({ surface_color: value })
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                cfg.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
             }
           ],
           borderables: [],
-          fontEditable: undefined,
+          fontEditable: {
+            get: () => cfg.font_family || defaultConfig.font_family,
+            set: (value) => {
+              cfg.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
           fontSizeable: undefined
         }),
-        mapToEditPanelValues: (config) => new Map([
-          ["main_title", config.main_title || defaultConfig.main_title]
+        mapToEditPanelValues: (cfg) => new Map([
+          ['main_title', cfg.main_title || defaultConfig.main_title],
+          ['subtitle', cfg.subtitle || defaultConfig.subtitle]
         ])
       });
     }
 
-    // Navigation
-    function scrollToSection(sectionId) {
-      const section = document.getElementById(sectionId);
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        
-        // Update active nav
-        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-        event.target.classList.add('active');
-      }
-    }
-
-    // Stroop Test
-    const stroopWords = [
-      { word: 'MERAH', colors: ['#3b82f6', '#10b981', '#8b5cf6', '#f59e0b'] },
-      { word: 'BIRU', colors: ['#ef4444', '#10b981', '#8b5cf6', '#f59e0b'] },
-      { word: 'HIJAU', colors: ['#ef4444', '#3b82f6', '#8b5cf6', '#f59e0b'] },
-      { word: 'KUNING', colors: ['#ef4444', '#3b82f6', '#10b981', '#8b5cf6'] },
-      { word: 'UNGU', colors: ['#ef4444', '#3b82f6', '#10b981', '#f59e0b'] },
-      { word: 'ORANYE', colors: ['#ef4444', '#3b82f6', '#10b981', '#8b5cf6'] }
-    ];
-
-    const colorNames = {
-      '#ef4444': 'Merah',
-      '#3b82f6': 'Biru',
-      '#10b981': 'Hijau',
-      '#f59e0b': 'Kuning/Oranye',
-      '#8b5cf6': 'Ungu'
-    };
-
-    let currentStroopWords = [];
-    let showAnswers = false;
-
-    function generateStroopWords() {
-      const container = document.getElementById('stroopGame');
-      container.innerHTML = '';
-      currentStroopWords = [];
-      showAnswers = false;
-      
-      for (let i = 0; i < 6; i++) {
-        const wordObj = stroopWords[Math.floor(Math.random() * stroopWords.length)];
-        const color = wordObj.colors[Math.floor(Math.random() * wordObj.colors.length)];
-        
-        currentStroopWords.push({ word: wordObj.word, color, colorName: colorNames[color] });
-        
-        const div = document.createElement('div');
-        div.className = 'stroop-word bg-gray-100 rounded-xl p-4 text-center';
-        div.innerHTML = `
-          <span class="text-2xl font-bold" style="color: ${color}">${wordObj.word}</span>
-          <p class="text-xs text-gray-400 mt-2 answer-text hidden">Jawaban: ${colorNames[color]}</p>
-        `;
-        container.appendChild(div);
-      }
-    }
-
-    function toggleStroopAnswers() {
-      showAnswers = !showAnswers;
-      document.querySelectorAll('.answer-text').forEach(el => {
-        el.classList.toggle('hidden', !showAnswers);
-      });
-      document.getElementById('stroopScore').classList.toggle('hidden', !showAnswers);
-    }
-
-    // Sensitivity Test
-    const sensitivityLevels = {
-      'Ujung Jari': { level: 'Sangat Tinggi', emoji: '🔥🔥🔥', reason: 'Memiliki kepadatan reseptor tertinggi' },
-      'Telapak Tangan': { level: 'Tinggi', emoji: '🔥🔥', reason: 'Banyak reseptor untuk genggaman' },
-      'Lengan': { level: 'Sedang', emoji: '🔥', reason: 'Reseptor lebih tersebar' },
-      'Punggung': { level: 'Rendah', emoji: '❄️', reason: 'Kepadatan reseptor rendah' },
-      'Bibir': { level: 'Sangat Tinggi', emoji: '🔥🔥🔥', reason: 'Area sensitif untuk makanan/minuman' },
-      'Kaki': { level: 'Tinggi', emoji: '🔥🔥', reason: 'Penting untuk keseimbangan' }
-    };
-
-    function toggleSensitivity(btn) {
-      const part = btn.dataset.part;
-      const info = sensitivityLevels[part];
-      
-      // Toggle visual state
-      btn.classList.toggle('bg-blue-200');
-      btn.classList.toggle('ring-2');
-      btn.classList.toggle('ring-blue-500');
-      
-      // Update result
-      const result = document.getElementById('sensitivityResult');
-      result.innerHTML = `
-        <div class="flex items-center gap-3">
-          <span class="text-3xl">${info.emoji}</span>
-          <div>
-            <h5 class="font-bold text-blue-700">${part}: ${info.level}</h5>
-            <p class="text-sm text-gray-600">${info.reason}</p>
-          </div>
-        </div>
-      `;
-    }
-
-    // Sound Direction Game
-    let earCondition = 'both';
-    let currentSoundDirection = '';
-    let soundScore = { correct: 0, total: 0 };
-
-    function setEarCondition(condition) {
-      earCondition = condition;
-      document.getElementById('earBoth').className = condition === 'both' 
-        ? 'flex-1 bg-purple-500 text-white py-3 rounded-xl font-medium transition-all'
-        : 'flex-1 bg-gray-200 text-gray-700 py-3 rounded-xl font-medium transition-all';
-      document.getElementById('earOne').className = condition === 'one'
-        ? 'flex-1 bg-purple-500 text-white py-3 rounded-xl font-medium transition-all'
-        : 'flex-1 bg-gray-200 text-gray-700 py-3 rounded-xl font-medium transition-all';
-    }
-
-    function startSoundGame() {
-      const directions = ['kiri', 'tengah', 'kanan'];
-      currentSoundDirection = directions[Math.floor(Math.random() * directions.length)];
-      
-      document.getElementById('soundSource').textContent = '🔊';
-      document.getElementById('soundQuestion').textContent = 'Dari mana arah suara tersebut?';
-      document.getElementById('soundOptions').classList.remove('hidden');
-      document.getElementById('startSoundBtn').classList.add('hidden');
-      document.getElementById('soundExplanation').classList.add('hidden');
-    }
-
-    function checkSoundAnswer(answer) {
-      soundScore.total++;
-      const isCorrect = answer === currentSoundDirection;
-      
-      // With one ear, make it harder (50% chance of wrong guess being "right")
-      const effectiveCorrect = earCondition === 'both' ? isCorrect : (Math.random() > 0.5 ? isCorrect : !isCorrect);
-      
-      if (effectiveCorrect) soundScore.correct++;
-      
-      const directionEmoji = { kiri: '⬅️', tengah: '⬆️', kanan: '➡️' };
-      const explanation = document.getElementById('soundExplanation');
-      
-      if (earCondition === 'both') {
-        explanation.innerHTML = `<p class="text-sm text-purple-700">✅ Dengan dua telinga, kamu bisa menentukan arah suara dengan akurat karena otak membandingkan waktu dan volume suara yang diterima kedua telinga!</p>`;
-      } else {
-        explanation.innerHTML = `<p class="text-sm text-purple-700">⚠️ Dengan satu telinga, sulit menentukan arah suara karena otak tidak bisa membandingkan informasi dari kedua telinga. Ini disebut <strong>lokalisasi suara</strong>!</p>`;
-      }
-      
-      explanation.classList.remove('hidden');
-      document.getElementById('soundOptions').classList.add('hidden');
-      document.getElementById('startSoundBtn').classList.remove('hidden');
-      document.getElementById('startSoundBtn').textContent = '🎮 Main Lagi';
-      document.getElementById('soundQuestion').textContent = `Suara dari: ${directionEmoji[currentSoundDirection]} ${currentSoundDirection.charAt(0).toUpperCase() + currentSoundDirection.slice(1)}`;
-    }
-
-    // Reflex Game
-    let reflexTimeout;
-    let reflexStartTime;
-    let reflexGameActive = false;
-    let reflexWaiting = false;
-
-    function startReflexGame() {
-      const game = document.getElementById('reflexGame');
-      const text = document.getElementById('reflexText');
-      const result = document.getElementById('reflexResult');
-      
-      result.classList.add('hidden');
-      game.style.backgroundColor = '#fca5a5';
-      text.textContent = 'Tunggu warna hijau...';
-      text.style.color = '#991b1b';
-      reflexGameActive = true;
-      reflexWaiting = true;
-      
-      // Random delay 1-4 seconds
-      const delay = 1000 + Math.random() * 3000;
-      
-      reflexTimeout = setTimeout(() => {
-        if (reflexGameActive) {
-          game.style.backgroundColor = '#86efac';
-          text.textContent = 'KLIK SEKARANG!';
-          text.style.color = '#166534';
-          reflexStartTime = Date.now();
-          reflexWaiting = false;
-        }
-      }, delay);
-    }
-
-    function reflexClick() {
-      if (!reflexGameActive) return;
-      
-      const game = document.getElementById('reflexGame');
-      const text = document.getElementById('reflexText');
-      const result = document.getElementById('reflexResult');
-      
-      if (reflexWaiting) {
-        // Too early!
-        clearTimeout(reflexTimeout);
-        game.style.backgroundColor = '#e5e7eb';
-        text.textContent = 'Terlalu cepat! Klik "Mulai" lagi.';
-        text.style.color = '#6b7280';
-        reflexGameActive = false;
-        reflexWaiting = false;
-      } else if (reflexStartTime) {
-        // Calculate reaction time
-        const reactionTime = Date.now() - reflexStartTime;
-        
-        game.style.backgroundColor = '#e5e7eb';
-        text.style.color = '#6b7280';
-        
-        let feedback = '';
-        if (reactionTime < 200) {
-          feedback = '🏆 Luar biasa cepat!';
-          text.textContent = 'WOW! Refleks super!';
-        } else if (reactionTime < 300) {
-          feedback = '⚡ Sangat bagus!';
-          text.textContent = 'Refleks yang bagus!';
-        } else if (reactionTime < 400) {
-          feedback = '👍 Cukup baik';
-          text.textContent = 'Refleks normal';
-        } else {
-          feedback = '🐢 Perlu latihan';
-          text.textContent = 'Coba lagi!';
-        }
-        
-        result.classList.remove('hidden');
-        result.innerHTML = `<span class="text-amber-700 font-bold">${reactionTime}ms ${feedback}</span>`;
-        
-        reflexGameActive = false;
-        reflexStartTime = null;
-      }
-    }
-
-    // Quiz Data - HOTS Questions
-    const quizQuestions = [
-      {
-        id: 1,
-        level: 'C4 - Analisis',
-        question: 'Seorang atlet tenis meja dapat mengembalikan bola dengan sangat cepat tanpa sempat berpikir. Analisis jalur saraf yang terlibat dan jelaskan mengapa respons ini bisa terjadi begitu cepat!',
-        options: [
-          'Gerak sadar melalui otak karena membutuhkan keputusan strategis',
-          'Gerak refleks melalui sumsum tulang belakang karena jalur lebih pendek',
-          'Kombinasi sistem hormon dan saraf untuk respons optimal',
-          'Gerak sadar yang sudah terlatih sehingga menjadi otomatis'
-        ],
-        correct: 1,
-        explanation: 'Respons cepat atlet merupakan gerak refleks yang melibatkan sumsum tulang belakang. Jalur refleks (reseptor → neuron sensoris → sumsum tulang belakang → neuron motoris → efektor) lebih pendek daripada jalur sadar yang harus melalui otak, sehingga respons lebih cepat.'
-      },
-      {
-        id: 2,
-        level: 'C5 - Evaluasi',
-        question: 'Pak Budi mengalami kecelakaan yang merusak selubung mielin pada neuronnya. Evaluasi dampak yang akan dialami Pak Budi terhadap sistem koordinasi tubuhnya!',
-        options: [
-          'Tidak ada dampak karena selubung mielin bukan bagian penting neuron',
-          'Sinyal saraf akan lebih cepat karena tidak ada hambatan',
-          'Sinyal saraf menjadi lambat dan koordinasi tubuh terganggu',
-          'Hanya mempengaruhi gerak refleks, gerak sadar tetap normal'
-        ],
-        correct: 2,
-        explanation: 'Selubung mielin berfungsi mempercepat penghantaran impuls saraf dan melindungi akson. Kerusakan mielin akan menyebabkan penghantaran sinyal menjadi lambat, tidak teratur, dan koordinasi tubuh terganggu. Kondisi ini mirip dengan penyakit Multiple Sclerosis.'
-      },
-      {
-        id: 3,
-        level: 'C4 - Analisis',
-        question: 'Perhatikan data berikut: Siti memiliki pupil yang terus membesar meskipun berada di ruangan terang. Analisis kemungkinan gangguan yang dialami Siti!',
-        options: [
-          'Gangguan pada sel kerucut retina',
-          'Gangguan pada saraf optik atau otot iris',
-          'Kelebihan sel batang pada retina',
-          'Gangguan pada kornea mata'
-        ],
-        correct: 1,
-        explanation: 'Pupil yang tidak merespons cahaya menunjukkan gangguan pada refleks pupil. Hal ini bisa disebabkan kerusakan saraf optik (yang membawa sinyal cahaya) atau otot iris (yang mengontrol ukuran pupil). Refleks pupil adalah respons otomatis yang melibatkan jalur saraf khusus.'
-      },
-      {
-        id: 4,
-        level: 'C6 - Mencipta',
-        question: 'Seorang ilmuwan ingin menciptakan robot yang dapat merespons lingkungan seperti manusia. Rancang sistem koordinasi minimal yang harus dimiliki robot tersebut berdasarkan prinsip kerja sistem koordinasi manusia!',
-        options: [
-          'Sensor (menerima rangsang), prosesor (mengolah), dan aktuator (merespons)',
-          'Hanya sensor yang canggih sudah cukup untuk merespons lingkungan',
-          'Prosesor pusat yang kuat tanpa perlu banyak sensor',
-          'Aktuator yang cepat tanpa perlu proses pengolahan'
-        ],
-        correct: 0,
-        explanation: 'Berdasarkan prinsip sistem koordinasi manusia, robot memerlukan: (1) Sensor sebagai reseptor untuk menerima rangsang, (2) Prosesor sebagai pusat pengolahan seperti otak/sumsum tulang belakang, (3) Aktuator sebagai efektor untuk memberikan respons. Ketiga komponen harus terintegrasi.'
-      },
-      {
-        id: 5,
-        level: 'C5 - Evaluasi',
-        question: 'Ani mengonsumsi obat yang menghambat produksi insulin dari pankreas. Evaluasi dampak jangka panjang yang mungkin terjadi pada tubuh Ani!',
-        options: [
-          'Kadar gula darah menurun drastis (hipoglikemia)',
-          'Kadar gula darah meningkat dan tidak terkontrol (diabetes)',
-          'Metabolisme tubuh meningkat pesat',
-          'Tidak ada dampak karena tubuh memiliki mekanisme kompensasi'
-        ],
-        correct: 1,
-        explanation: 'Insulin berfungsi menurunkan kadar gula darah dengan membantu sel menyerap glukosa. Tanpa insulin yang cukup, glukosa menumpuk di darah menyebabkan kondisi mirip diabetes melitus. Ini menunjukkan pentingnya hormon dalam homeostasis tubuh.'
-      },
-      {
-        id: 6,
-        level: 'C4 - Analisis',
-        question: 'Bandingkan respons tubuh saat menyentuh benda panas dengan respons saat merasa takut menonton film horor. Analisis perbedaan sistem yang terlibat!',
-        options: [
-          'Keduanya melibatkan sistem saraf dengan kecepatan yang sama',
-          'Menyentuh benda panas = refleks (saraf), takut = hormon (adrenalin)',
-          'Keduanya melibatkan sistem hormon karena membutuhkan waktu',
-          'Menyentuh benda panas = hormon, takut = saraf'
-        ],
-        correct: 1,
-        explanation: 'Menyentuh benda panas memicu gerak refleks (sistem saraf) yang sangat cepat untuk perlindungan. Rasa takut melibatkan sistem hormon (adrenalin dari kelenjar adrenal) yang efeknya lebih lambat namun bertahan lebih lama (jantung berdebar, berkeringat).'
-      },
-      {
-        id: 7,
-        level: 'C6 - Mencipta',
-        question: 'Buatlah hipotesis: Mengapa orang yang sering begadang cenderung mengalami gangguan mood dan kesulitan konsentrasi keesokan harinya? Kaitkan dengan sistem hormon!',
-        options: [
-          'Karena kelelahan fisik semata tanpa pengaruh hormon',
-          'Karena gangguan produksi melatonin dari kelenjar pineal yang mengatur ritme sirkadian',
-          'Karena kelebihan hormon insulin di malam hari',
-          'Karena sistem saraf tidak bekerja saat tidur'
-        ],
-        correct: 1,
-        explanation: 'Kelenjar pineal menghasilkan melatonin yang mengatur siklus tidur-bangun (ritme sirkadian). Begadang mengganggu produksi melatonin normal, yang berdampak pada mood, konsentrasi, dan kesehatan mental. Ini menunjukkan keterkaitan sistem hormon dengan fungsi kognitif.'
-      },
-      {
-        id: 8,
-        level: 'C5 - Evaluasi',
-        question: 'Evaluasi pernyataan berikut: "Penyelam yang naik terlalu cepat ke permukaan dapat mengalami gangguan pendengaran." Apakah pernyataan ini benar? Jelaskan mekanismenya!',
-        options: [
-          'Salah, karena telinga tidak terpengaruh oleh perubahan tekanan',
-          'Benar, karena perubahan tekanan cepat dapat merusak gendang telinga dan saluran Eustachius',
-          'Salah, karena hanya paru-paru yang terpengaruh',
-          'Benar, karena air masuk ke koklea dan merusak sel rambut'
-        ],
-        correct: 1,
-        explanation: 'Pernyataan benar. Perubahan tekanan yang drastis saat naik cepat dapat merusak gendang telinga dan mengganggu fungsi saluran Eustachius yang berperan menyeimbangkan tekanan. Ini bisa menyebabkan barotrauma telinga dengan gejala nyeri dan gangguan pendengaran.'
-      },
-      {
-        id: 9,
-        level: 'C4 - Analisis',
-        question: 'Seorang pasien tidak dapat membedakan rasa manis dan asin setelah mengalami cedera kepala. Analisis bagian otak mana yang kemungkinan mengalami kerusakan!',
-        options: [
-          'Otak kecil (cerebellum) karena mengatur keseimbangan',
-          'Korteks gustatori di otak besar karena mengolah sinyal pengecap',
-          'Sumsum tulang belakang karena menghantarkan sinyal',
-          'Batang otak karena mengatur fungsi vital'
-        ],
-        correct: 1,
-        explanation: 'Kemampuan membedakan rasa diolah di korteks gustatori yang terletak di otak besar (lobus parietal dan insula). Kerusakan pada area ini menyebabkan gangguan persepsi rasa meskipun lidah dan papila pengecap masih berfungsi normal.'
-      },
-      {
-        id: 10,
-        level: 'C6 - Mencipta',
-        question: 'Desain sebuah eksperimen sederhana untuk membuktikan bahwa ujung jari lebih sensitif daripada punggung tangan dalam merasakan sentuhan!',
-        options: [
-          'Mengukur ketebalan kulit di kedua area dengan penggaris',
-          'Menggunakan dua titik dengan jarak berbeda, tentukan jarak minimum yang dapat dibedakan',
-          'Menghitung jumlah bulu di kedua area',
-          'Mengukur suhu kulit di kedua area'
-        ],
-        correct: 1,
-        explanation: 'Eksperimen Two-Point Discrimination Test: Gunakan dua ujung peniti/tusuk gigi dengan jarak berbeda. Sentuhkan ke kulit dengan mata tertutup. Area dengan reseptor lebih padat (ujung jari) dapat membedakan dua titik pada jarak lebih kecil dibanding area dengan reseptor lebih jarang (punggung tangan).'
-      }
-    ];
-
-    let currentQuestionIndex = 0;
-    let userAnswers = new Array(quizQuestions.length).fill(null);
-
-    function loadQuestion(index) {
-      const question = quizQuestions[index];
-      const questionArea = document.getElementById('questionArea');
-      
-      let optionsHTML = question.options.map((option, i) => {
-        const isSelected = userAnswers[index] === i;
-        return `
-          <button onclick="selectAnswer(${i})" class="quiz-option w-full text-left p-4 rounded-xl border-2 ${isSelected ? 'border-red-500 bg-red-50' : 'border-gray-200 bg-white'} hover:border-red-300 transition-all">
-            <div class="flex items-start gap-3">
-              <span class="w-8 h-8 rounded-full ${isSelected ? 'bg-red-500 text-white' : 'bg-gray-100 text-gray-600'} flex items-center justify-center font-bold flex-shrink-0">
-                ${String.fromCharCode(65 + i)}
-              </span>
-              <span class="text-gray-700">${option}</span>
-            </div>
-          </button>
-        `;
-      }).join('');
-      
-      questionArea.innerHTML = `
-        <div class="mb-4">
-          <span class="inline-block px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">${question.level}</span>
-        </div>
-        <h4 class="text-xl font-bold text-gray-800 mb-6">${question.id}. ${question.question}</h4>
-        <div class="space-y-3">
-          ${optionsHTML}
-        </div>
-      `;
-      
-      // Update progress
-      document.getElementById('currentQuestion').textContent = index + 1;
-      document.getElementById('progressBar').style.width = `${((index + 1) / quizQuestions.length) * 100}%`;
-      
-      // Update navigation buttons
-      document.getElementById('prevBtn').disabled = index === 0;
-      document.getElementById('nextBtn').textContent = index === quizQuestions.length - 1 ? 'Selesai ✓' : 'Selanjutnya →';
-    }
-
-    function selectAnswer(answerIndex) {
-      userAnswers[currentQuestionIndex] = answerIndex;
-      loadQuestion(currentQuestionIndex);
-    }
-
-    function prevQuestion() {
-      if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        loadQuestion(currentQuestionIndex);
-      }
-    }
-
-    function nextQuestion() {
-      if (currentQuestionIndex < quizQuestions.length - 1) {
-        currentQuestionIndex++;
-        loadQuestion(currentQuestionIndex);
-      } else {
-        showResults();
-      }
-    }
-
-    function showResults() {
-      let score = 0;
-      userAnswers.forEach((answer, index) => {
-        if (answer === quizQuestions[index].correct) score++;
-      });
-      
-      document.getElementById('quizContainer').querySelector('#questionArea').classList.add('hidden');
-      document.getElementById('quizNavigation').classList.add('hidden');
-      document.getElementById('quizResults').classList.remove('hidden');
-      
-      const resultIcon = document.getElementById('resultIcon');
-      const resultTitle = document.getElementById('resultTitle');
-      const resultFeedback = document.getElementById('resultFeedback');
-      
-      document.getElementById('resultScore').innerHTML = `Skor: <span class="font-bold text-red-500">${score}</span>/10`;
-      
-      if (score >= 9) {
-        resultIcon.textContent = '🏆';
-        resultTitle.textContent = 'Luar Biasa!';
-        resultFeedback.innerHTML = '<p class="text-green-700">Penguasaan materimu sangat tinggi! Kamu memahami konsep HOTS dengan sangat baik. Terus pertahankan!</p>';
-        resultFeedback.className = 'bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 mb-6';
-      } else if (score >= 7) {
-        resultIcon.textContent = '🌟';
-        resultTitle.textContent = 'Bagus Sekali!';
-        resultFeedback.innerHTML = '<p class="text-blue-700">Pemahamanmu sudah baik! Dengan sedikit latihan lagi, kamu bisa mencapai skor sempurna!</p>';
-        resultFeedback.className = 'bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-6 mb-6';
-      } else if (score >= 5) {
-        resultIcon.textContent = '💪';
-        resultTitle.textContent = 'Cukup Baik!';
-        resultFeedback.innerHTML = '<p class="text-amber-700">Kamu sudah memahami dasar-dasarnya. Pelajari kembali bagian yang belum dikuasai dan coba lagi!</p>';
-        resultFeedback.className = 'bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 mb-6';
-      } else {
-        resultIcon.textContent = '📚';
-        resultTitle.textContent = 'Ayo Belajar Lagi!';
-        resultFeedback.innerHTML = '<p class="text-red-700">Jangan menyerah! Baca kembali materi di atas dengan teliti, lalu coba quiz ini lagi. Kamu pasti bisa!</p>';
-        resultFeedback.className = 'bg-gradient-to-r from-red-50 to-rose-50 rounded-2xl p-6 mb-6';
-      }
-    }
-
-    function restartQuiz() {
-      currentQuestionIndex = 0;
-      userAnswers = new Array(quizQuestions.length).fill(null);
-      
-      document.getElementById('quizContainer').querySelector('#questionArea').classList.remove('hidden');
-      document.getElementById('quizNavigation').classList.remove('hidden');
-      document.getElementById('quizResults').classList.add('hidden');
-      document.getElementById('answerReview').classList.add('hidden');
-      
-      loadQuestion(0);
-    }
-
-    function reviewAnswers() {
-      document.getElementById('quizResults').classList.add('hidden');
-      document.getElementById('answerReview').classList.remove('hidden');
-      
-      const reviewContent = document.getElementById('reviewContent');
-      reviewContent.innerHTML = quizQuestions.map((q, index) => {
-        const userAnswer = userAnswers[index];
-        const isCorrect = userAnswer === q.correct;
-        
-        return `
-          <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 ${isCorrect ? 'border-green-500' : 'border-red-500'}">
-            <div class="flex items-start gap-3 mb-4">
-              <span class="text-2xl">${isCorrect ? '✅' : '❌'}</span>
-              <div>
-                <span class="text-xs px-2 py-1 rounded-full ${isCorrect ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${q.level}</span>
-                <h5 class="font-bold text-gray-800 mt-2">${q.id}. ${q.question}</h5>
-              </div>
-            </div>
-            <div class="ml-11 space-y-2">
-              <p class="text-sm">
-                <span class="font-medium text-gray-600">Jawabanmu:</span> 
-                <span class="${isCorrect ? 'text-green-600' : 'text-red-600'}">${userAnswer !== null ? String.fromCharCode(65 + userAnswer) + '. ' + q.options[userAnswer] : 'Tidak dijawab'}</span>
-              </p>
-              ${!isCorrect ? `
-                <p class="text-sm">
-                  <span class="font-medium text-gray-600">Jawaban benar:</span> 
-                  <span class="text-green-600">${String.fromCharCode(65 + q.correct)}. ${q.options[q.correct]}</span>
-                </p>
-              ` : ''}
-              <div class="mt-4 bg-blue-50 rounded-xl p-4">
-                <p class="text-sm text-blue-700"><strong>💡 Pembahasan:</strong> ${q.explanation}</p>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function backToResults() {
-      document.getElementById('answerReview').classList.add('hidden');
-      document.getElementById('quizResults').classList.remove('hidden');
-    }
-
     // Initialize on load
-    document.addEventListener('DOMContentLoaded', function() {
-      generateStroopWords();
-      loadQuestion(0);
-    });
+    init();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ca9fd86752258ef',t:'MTc3MDU0MTc4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cab7759c7e4008f',t:'MTc3MDU1NzI2NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

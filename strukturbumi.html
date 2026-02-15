@@ -1,0 +1,1702 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menjelajah ke Pusat Bumi</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Fredoka+One&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    
+    .font-title { font-family: 'Fredoka One', cursive; }
+    .font-body { font-family: 'Nunito', sans-serif; }
+    
+    .gradient-earth {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+    
+    .layer-card {
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    
+    .layer-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .pulse-glow {
+      animation: pulseGlow 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 53, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(255, 107, 53, 0.6); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .rotate-slow {
+      animation: rotateSlow 20s linear infinite;
+    }
+    
+    @keyframes rotateSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .slide-nav {
+      scrollbar-width: none;
+    }
+    
+    .slide-nav::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .quiz-option.selected {
+      background: rgba(59, 130, 246, 0.5);
+      border-color: #3b82f6;
+    }
+    
+    .quiz-option.correct {
+      background: rgba(34, 197, 94, 0.5);
+      border-color: #22c55e;
+    }
+    
+    .quiz-option.incorrect {
+      background: rgba(239, 68, 68, 0.5);
+      border-color: #ef4444;
+    }
+    
+    .earth-cross-section {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      aspect-ratio: 1;
+    }
+    
+    .earth-layer {
+      position: absolute;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+    
+    .earth-layer:hover {
+      transform: scale(1.02);
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .tab-active {
+      background: linear-gradient(135deg, #ff6b35, #f7931e);
+    }
+    
+    .interactive-btn {
+      transition: all 0.2s ease;
+    }
+    
+    .interactive-btn:hover {
+      transform: scale(1.05);
+    }
+    
+    .interactive-btn:active {
+      transform: scale(0.95);
+    }
+    
+    .fact-card {
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(247, 147, 30, 0.1));
+      border-left: 4px solid #ff6b35;
+    }
+    
+    .comparison-item {
+      transition: all 0.3s ease;
+    }
+    
+    .comparison-item:hover {
+      transform: scale(1.02);
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body">
+  <div id="app" class="w-full h-full gradient-earth text-white overflow-auto"><!-- Header Navigation -->
+   <header class="sticky top-0 z-50 bg-gradient-to-r from-slate-900/95 to-slate-800/95 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center pulse-glow">
+        🌍
+       </div>
+       <div>
+        <h1 id="main-title" class="font-title text-lg md:text-xl text-orange-400">Menjelajah ke Pusat Bumi</h1>
+        <p id="subtitle" class="text-xs text-slate-400 hidden md:block">Struktur, Karakteristik, dan Misteri di Bawah Kaki Kita</p>
+       </div>
+      </div>
+      <div class="flex items-center gap-2"><span id="progress-text" class="text-sm text-slate-400">Slide 1/10</span>
+       <div class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden">
+        <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full" style="width: 10%"></div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </header><!-- Slide Navigation -->
+   <nav class="bg-slate-900/50 border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 py-2">
+     <div class="slide-nav flex gap-2 overflow-x-auto pb-2"><button onclick="goToSlide(0)" class="slide-btn px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all bg-orange-500/20 text-orange-400" data-slide="0"> 1. Bumi Dinamis </button> <button onclick="goToSlide(1)" class="slide-btn px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all bg-slate-700/50 text-slate-400 hover:bg-slate-700" data-slide="1"> 2. Tenaga Geologi </button> <button onclick="goToSlide(2)" class="slide-btn px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all bg-slate-700/50 text-slate-400 hover:bg-slate-700" data-slide="2"> 3. Analogi Telur </button> <button onclick="goToSlide(3)" class="slide-btn px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all bg-slate-700/50 text-slate-400 hover:bg-slate-700" data-slide="3"> 4. Kerak Bumi </button> <button onclick="goToSlide(4)" class="slide-btn px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all bg-slate-700/50 text-slate-400 hover:bg-slate-700" data-slide="4"> 5. Mantel Bumi </button> <button onclick="goToSlide(5)" class="slide-btn px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all bg-slate-700/50 text-slate-400 hover:bg-slate-700" data-slide="5"> 6. Inti Luar </button> <button onclick="goToSlide(6)" class="slide-btn px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all bg-slate-700/50 text-slate-400 hover:bg-slate-700" data-slide="6"> 7. Inti Dalam </button> <button onclick="goToSlide(7)" class="slide-btn px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all bg-slate-700/50 text-slate-400 hover:bg-slate-700" data-slide="7"> 8. Fakta Unik </button> <button onclick="goToSlide(8)" class="slide-btn px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all bg-slate-700/50 text-slate-400 hover:bg-slate-700" data-slide="8"> 9. Kesimpulan </button> <button onclick="goToSlide(9)" class="slide-btn px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all bg-slate-700/50 text-slate-400 hover:bg-slate-700" data-slide="9"> 🎯 Quiz HOTS </button>
+     </div>
+    </div>
+   </nav><!-- Main Content -->
+   <main class="max-w-7xl mx-auto px-4 py-6"><!-- Slide 1: Bumi Dinamis -->
+    <section id="slide-0" class="slide-content">
+     <div class="text-center mb-8"><span class="inline-block px-4 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm font-semibold mb-4">Slide 1</span>
+      <h2 class="font-title text-3xl md:text-4xl text-white mb-2">Apakah Bumi Kita "Diam"? 🌍</h2>
+      <p class="text-slate-400 text-lg">Bumi terus berubah secara perlahan namun pasti</p>
+     </div><!-- Interactive Earth Comparison -->
+     <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="layer-card bg-white/5 rounded-2xl p-6 border border-white/10">
+       <h3 class="font-title text-xl text-orange-400 mb-4">🦕 300 Juta Tahun Lalu</h3>
+       <div class="relative bg-gradient-to-br from-blue-900 to-blue-700 rounded-xl p-4 aspect-video flex items-center justify-center">
+        <svg viewbox="0 0 400 250" class="w-full h-full"><!-- Pangaea Supercontinent --> <ellipse cx="200" cy="125" rx="180" ry="100" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2" /> <!-- Single landmass (Pangaea) --> <path d="M100,80 Q150,60 200,70 Q280,65 320,100 Q340,140 300,180 Q250,200 180,190 Q120,185 90,150 Q70,120 100,80" fill="#8b5a2b" stroke="#a0522d" stroke-width="2" /> <text x="200" y="130" text-anchor="middle" fill="#f5deb3" font-size="16" font-weight="bold">
+          PANGAEA
+         </text> <!-- Dinos --> <text x="150" y="110" font-size="24">
+          🦕
+         </text> <text x="230" y="150" font-size="20">
+          🦖
+         </text>
+        </svg>
+       </div>
+       <p class="text-slate-300 mt-4 text-sm">Semua benua menyatu menjadi satu daratan raksasa bernama <strong class="text-orange-400">Pangaea</strong> (artinya "seluruh daratan").</p>
+      </div>
+      <div class="layer-card bg-white/5 rounded-2xl p-6 border border-white/10">
+       <h3 class="font-title text-xl text-green-400 mb-4">🌏 Bumi Sekarang</h3>
+       <div class="relative bg-gradient-to-br from-blue-900 to-blue-700 rounded-xl p-4 aspect-video flex items-center justify-center">
+        <svg viewbox="0 0 400 250" class="w-full h-full"><ellipse cx="200" cy="125" rx="180" ry="100" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2" /> <!-- Separate continents --> <path d="M50,70 Q70,50 100,55 Q110,80 90,100 Q60,95 50,70" fill="#228b22" stroke="#2e8b57" stroke-width="1" /> <text x="75" y="80" fill="#fff" font-size="8">
+          Amerika
+         </text> <path d="M160,50 Q200,40 230,55 Q240,90 200,100 Q160,95 160,50" fill="#228b22" stroke="#2e8b57" stroke-width="1" /> <text x="195" y="75" fill="#fff" font-size="8">
+          Eropa
+         </text> <path d="M150,100 Q190,90 220,110 Q230,150 190,170 Q150,160 150,100" fill="#228b22" stroke="#2e8b57" stroke-width="1" /> <text x="185" y="140" fill="#fff" font-size="8">
+          Afrika
+         </text> <path d="M250,60 Q320,50 350,90 Q360,140 310,160 Q270,150 260,110 Q250,80 250,60" fill="#228b22" stroke="#2e8b57" stroke-width="1" /> <text x="300" y="110" fill="#fff" font-size="8">
+          Asia
+         </text> <path d="M300,170 Q340,165 350,190 Q340,210 300,205 Q290,190 300,170" fill="#228b22" stroke="#2e8b57" stroke-width="1" /> <text x="320" y="192" fill="#fff" font-size="6">
+          Australia
+         </text> <!-- Indonesia highlighted --> <ellipse cx="320" cy="155" rx="15" ry="8" fill="#ff6b35" stroke="#ff8c00" stroke-width="1" /> <text x="320" y="158" text-anchor="middle" fill="#fff" font-size="6">
+          🇮🇩
+         </text>
+        </svg>
+       </div>
+       <p class="text-slate-300 mt-4 text-sm">Benua-benua terpisah dan Indonesia berada di pertemuan 3 lempeng besar: <strong class="text-orange-400">Eurasia, Indo-Australia, dan Pasifik</strong>.</p>
+      </div>
+     </div><!-- Key Points -->
+     <div class="bg-gradient-to-r from-orange-500/10 to-red-500/10 rounded-2xl p-6 border border-orange-500/20 mb-8">
+      <h3 class="font-title text-xl text-orange-400 mb-4">📚 Poin Penting</h3>
+      <div class="grid md:grid-cols-2 gap-4">
+       <div class="flex items-start gap-3"><span class="text-2xl">🔄</span>
+        <div>
+         <h4 class="font-semibold text-white">Lempeng Terus Bergerak</h4>
+         <p class="text-slate-400 text-sm">Lempeng bumi bergerak sekitar 2-10 cm per tahun (secepat kuku tumbuh!)</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-3"><span class="text-2xl">⛰️</span>
+        <div>
+         <h4 class="font-semibold text-white">Terbentuk Gunung</h4>
+         <p class="text-slate-400 text-sm">Pegunungan Himalaya masih "tumbuh" 1 cm per tahun akibat tumbukan lempeng</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-3"><span class="text-2xl">🌋</span>
+        <div>
+         <h4 class="font-semibold text-white">Gunung Berapi</h4>
+         <p class="text-slate-400 text-sm">Indonesia punya 127 gunung berapi aktif karena posisinya di "Ring of Fire"</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-3"><span class="text-2xl">🌊</span>
+        <div>
+         <h4 class="font-semibold text-white">Gempa Bumi</h4>
+         <p class="text-slate-400 text-sm">Terjadi ribuan gempa setiap hari di seluruh dunia, sebagian besar tidak terasa</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Interactive Question -->
+     <div class="fact-card rounded-xl p-6">
+      <h3 class="font-title text-lg text-orange-400 mb-3">🤔 Mari Berpikir!</h3>
+      <p class="text-white text-lg mb-4">"Jika kita menggali lubang menembus Bumi, apakah kita akan sampai ke sisi sebelah?"</p>
+      <div class="grid md:grid-cols-2 gap-4"><button onclick="showThinkingAnswer()" class="interactive-btn bg-orange-500/20 hover:bg-orange-500/30 text-orange-400 px-6 py-3 rounded-xl font-semibold border border-orange-500/30"> 💡 Lihat Jawabannya </button>
+      </div>
+      <div id="thinking-answer" class="hidden mt-4 p-4 bg-white/5 rounded-xl">
+       <p class="text-slate-300"><strong class="text-green-400">Jawabannya: Tidak bisa!</strong> Karena suhu di pusat Bumi mencapai 6.000°C (sepanas permukaan matahari!) dan tekanannya jutaan kali lebih besar dari permukaan. Manusia dan alat apapun akan meleleh jauh sebelum sampai ke tengah! 🔥</p>
+      </div>
+     </div>
+    </section><!-- Slide 2: Tenaga Geologi -->
+    <section id="slide-1" class="slide-content hidden">
+     <div class="text-center mb-8"><span class="inline-block px-4 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm font-semibold mb-4">Slide 2</span>
+      <h2 class="font-title text-3xl md:text-4xl text-white mb-2">Arsitek Bentang Alam 🏗️</h2>
+      <p class="text-slate-400 text-lg">Ada dua kekuatan utama yang membentuk wajah Bumi kita</p>
+     </div><!-- Two Forces -->
+     <div class="grid md:grid-cols-2 gap-6 mb-8"><!-- Eksogen -->
+      <div class="layer-card bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-2xl p-6 border border-blue-500/20">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-2xl">
+         🌬️
+        </div>
+        <div>
+         <h3 class="font-title text-xl text-blue-400">Tenaga Eksogen</h3>
+         <p class="text-slate-400 text-sm">Berasal dari LUAR Bumi</p>
+        </div>
+       </div>
+       <div class="space-y-4">
+        <div class="bg-white/5 rounded-xl p-4">
+         <div class="flex items-center gap-2 mb-2"><span class="text-xl">🪨</span>
+          <h4 class="font-semibold text-white">Pelapukan</h4>
+         </div>
+         <p class="text-slate-400 text-sm">Penghancuran batuan oleh air, udara, dan makhluk hidup</p>
+         <div class="mt-2 bg-slate-800/50 rounded-lg p-3">
+          <svg viewbox="0 0 300 80" class="w-full"><rect x="20" y="30" width="60" height="40" fill="#6b7280" rx="5" /> <text x="50" y="55" text-anchor="middle" fill="#fff" font-size="10">
+            Batu Utuh
+           </text> <path d="M100,50 L130,50" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrow)" /> <text x="115" y="40" fill="#3b82f6" font-size="8">
+            Air + Waktu
+           </text> <rect x="150" y="30" width="25" height="20" fill="#9ca3af" rx="3" /> <rect x="180" y="35" width="20" height="15" fill="#9ca3af" rx="3" /> <rect x="160" y="55" width="15" height="12" fill="#9ca3af" rx="2" /> <rect x="185" y="52" width="18" height="15" fill="#9ca3af" rx="2" /> <text x="180" y="25" fill="#fff" font-size="8">
+            Pecah-pecah
+           </text>
+          </svg>
+         </div>
+        </div>
+        <div class="bg-white/5 rounded-xl p-4">
+         <div class="flex items-center gap-2 mb-2"><span class="text-xl">💨</span>
+          <h4 class="font-semibold text-white">Erosi (Pengikisan)</h4>
+         </div>
+         <p class="text-slate-400 text-sm">Pengangkutan material oleh air, angin, atau es</p>
+        </div>
+        <div class="bg-white/5 rounded-xl p-4">
+         <div class="flex items-center gap-2 mb-2"><span class="text-xl">🏖️</span>
+          <h4 class="font-semibold text-white">Sedimentasi (Pengendapan)</h4>
+         </div>
+         <p class="text-slate-400 text-sm">Material yang tererosi mengendap di tempat baru</p>
+        </div>
+       </div>
+      </div><!-- Endogen -->
+      <div class="layer-card bg-gradient-to-br from-red-500/10 to-orange-500/10 rounded-2xl p-6 border border-red-500/20">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center text-2xl">
+         🔥
+        </div>
+        <div>
+         <h3 class="font-title text-xl text-red-400">Tenaga Endogen</h3>
+         <p class="text-slate-400 text-sm">Berasal dari DALAM Bumi</p>
+        </div>
+       </div>
+       <div class="space-y-4">
+        <div class="bg-white/5 rounded-xl p-4">
+         <div class="flex items-center gap-2 mb-2"><span class="text-xl">🗺️</span>
+          <h4 class="font-semibold text-white">Tektonisme</h4>
+         </div>
+         <p class="text-slate-400 text-sm">Pergerakan lempeng bumi yang membentuk pegunungan &amp; palung</p>
+         <div class="mt-2 bg-slate-800/50 rounded-lg p-3">
+          <svg viewbox="0 0 300 80" class="w-full"><!-- Tectonic plates colliding --> <rect x="20" y="40" width="100" height="30" fill="#8b4513" rx="3" /> <rect x="180" y="40" width="100" height="30" fill="#8b4513" rx="3" /> <path d="M120,55 L180,55" stroke="#ff6b35" stroke-width="2" stroke-dasharray="5,3" /> <text x="150" y="50" text-anchor="middle" fill="#ff6b35" font-size="10">
+            💥
+           </text> <!-- Mountain forming --> <path d="M130,40 L150,10 L170,40" fill="#6b8e23" stroke="#556b2f" stroke-width="2" /> <text x="150" y="75" text-anchor="middle" fill="#fff" font-size="8">
+            Tumbukan → Gunung
+           </text>
+          </svg>
+         </div>
+        </div>
+        <div class="bg-white/5 rounded-xl p-4">
+         <div class="flex items-center gap-2 mb-2"><span class="text-xl">🌋</span>
+          <h4 class="font-semibold text-white">Vulkanisme</h4>
+         </div>
+         <p class="text-slate-400 text-sm">Aktivitas gunung berapi dan keluarnya magma</p>
+         <div class="mt-2 bg-slate-800/50 rounded-lg p-3">
+          <svg viewbox="0 0 300 80" class="w-full"><!-- Volcano --> <path d="M100,70 L150,20 L200,70 Z" fill="#5d4037" /> <ellipse cx="150" cy="20" rx="15" ry="8" fill="#4a3728" /> <!-- Lava --> <path d="M145,20 Q148,5 150,0 Q152,5 155,20" fill="#ff4500" /> <circle cx="140" cy="10" r="3" fill="#ff6347" /> <circle cx="160" cy="8" r="4" fill="#ff6347" /> <circle cx="150" cy="5" r="3" fill="#ffa500" /> <!-- Magma chamber --> <ellipse cx="150" cy="75" rx="40" ry="10" fill="#ff4500" opacity="0.5" /> <text x="150" y="78" text-anchor="middle" fill="#fff" font-size="8">
+            Dapur Magma
+           </text>
+          </svg>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Indonesia Examples -->
+     <div class="bg-gradient-to-r from-red-500/10 to-white/5 rounded-2xl p-6 border border-red-500/20">
+      <h3 class="font-title text-xl text-white mb-4">🇮🇩 Contoh di Indonesia</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+       <div class="bg-white/5 rounded-xl p-4 text-center comparison-item">
+        <div class="text-3xl mb-2">
+         ⛰️
+        </div>
+        <h4 class="font-semibold text-white text-sm">Peg. Jaya Wijaya</h4>
+        <p class="text-slate-400 text-xs mt-1">Tektonisme (Papua)</p><span class="inline-block mt-2 px-2 py-0.5 bg-red-500/20 text-red-400 rounded text-xs">Endogen</span>
+       </div>
+       <div class="bg-white/5 rounded-xl p-4 text-center comparison-item">
+        <div class="text-3xl mb-2">
+         🌋
+        </div>
+        <h4 class="font-semibold text-white text-sm">Gunung Semeru</h4>
+        <p class="text-slate-400 text-xs mt-1">Vulkanisme (Jawa Timur)</p><span class="inline-block mt-2 px-2 py-0.5 bg-red-500/20 text-red-400 rounded text-xs">Endogen</span>
+       </div>
+       <div class="bg-white/5 rounded-xl p-4 text-center comparison-item">
+        <div class="text-3xl mb-2">
+         🏞️
+        </div>
+        <h4 class="font-semibold text-white text-sm">Ngarai Sianok</h4>
+        <p class="text-slate-400 text-xs mt-1">Erosi (Sumatera Barat)</p><span class="inline-block mt-2 px-2 py-0.5 bg-blue-500/20 text-blue-400 rounded text-xs">Eksogen</span>
+       </div>
+       <div class="bg-white/5 rounded-xl p-4 text-center comparison-item">
+        <div class="text-3xl mb-2">
+         💧
+        </div>
+        <h4 class="font-semibold text-white text-sm">Danau Kelimutu</h4>
+        <p class="text-slate-400 text-xs mt-1">Vulkanisme (NTT)</p><span class="inline-block mt-2 px-2 py-0.5 bg-red-500/20 text-red-400 rounded text-xs">Endogen</span>
+       </div>
+      </div>
+     </div><!-- Interactive Matching Game -->
+     <div class="mt-8 bg-white/5 rounded-2xl p-6 border border-white/10">
+      <h3 class="font-title text-lg text-orange-400 mb-4">🎮 Aktivitas: Cocokkan Tenaga Geologi!</h3>
+      <p class="text-slate-400 mb-4">Klik fenomena di bawah dan tentukan termasuk tenaga Eksogen atau Endogen:</p>
+      <div id="matching-game" class="space-y-3">
+       <div class="flex items-center gap-4 p-3 bg-white/5 rounded-xl" data-answer="endogen"><span class="text-xl">🌋</span> <span class="flex-1 text-white">Letusan Gunung Krakatau</span> <button onclick="checkGeoAnswer(this, 'endogen')" class="geo-btn px-3 py-1 bg-red-500/20 text-red-400 rounded-lg text-sm hover:bg-red-500/30">Endogen</button> <button onclick="checkGeoAnswer(this, 'eksogen')" class="geo-btn px-3 py-1 bg-blue-500/20 text-blue-400 rounded-lg text-sm hover:bg-blue-500/30">Eksogen</button>
+       </div>
+       <div class="flex items-center gap-4 p-3 bg-white/5 rounded-xl" data-answer="eksogen"><span class="text-xl">🌊</span> <span class="flex-1 text-white">Abrasi pantai oleh ombak</span> <button onclick="checkGeoAnswer(this, 'endogen')" class="geo-btn px-3 py-1 bg-red-500/20 text-red-400 rounded-lg text-sm hover:bg-red-500/30">Endogen</button> <button onclick="checkGeoAnswer(this, 'eksogen')" class="geo-btn px-3 py-1 bg-blue-500/20 text-blue-400 rounded-lg text-sm hover:bg-blue-500/30">Eksogen</button>
+       </div>
+       <div class="flex items-center gap-4 p-3 bg-white/5 rounded-xl" data-answer="endogen"><span class="text-xl">🌍</span> <span class="flex-1 text-white">Gempa bumi tektonik</span> <button onclick="checkGeoAnswer(this, 'endogen')" class="geo-btn px-3 py-1 bg-red-500/20 text-red-400 rounded-lg text-sm hover:bg-red-500/30">Endogen</button> <button onclick="checkGeoAnswer(this, 'eksogen')" class="geo-btn px-3 py-1 bg-blue-500/20 text-blue-400 rounded-lg text-sm hover:bg-blue-500/30">Eksogen</button>
+       </div>
+       <div class="flex items-center gap-4 p-3 bg-white/5 rounded-xl" data-answer="eksogen"><span class="text-xl">🏜️</span> <span class="flex-1 text-white">Batu jamur di gurun</span> <button onclick="checkGeoAnswer(this, 'endogen')" class="geo-btn px-3 py-1 bg-red-500/20 text-red-400 rounded-lg text-sm hover:bg-red-500/30">Endogen</button> <button onclick="checkGeoAnswer(this, 'eksogen')" class="geo-btn px-3 py-1 bg-blue-500/20 text-blue-400 rounded-lg text-sm hover:bg-blue-500/30">Eksogen</button>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 3: Analogi Telur Rebus -->
+    <section id="slide-2" class="slide-content hidden">
+     <div class="text-center mb-8"><span class="inline-block px-4 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm font-semibold mb-4">Slide 3</span>
+      <h2 class="font-title text-3xl md:text-4xl text-white mb-2">Analogi Telur Rebus 🥚</h2>
+      <p class="text-slate-400 text-lg">Memahami lapisan Bumi dengan benda sehari-hari</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8 items-center"><!-- Egg Diagram -->
+      <div class="relative">
+       <div class="bg-white/5 rounded-2xl p-6 border border-white/10">
+        <h3 class="font-title text-lg text-center text-orange-400 mb-4">Telur Rebus</h3>
+        <div class="relative w-full max-w-xs mx-auto aspect-square">
+         <svg viewbox="0 0 200 240" class="w-full h-full"><!-- Egg shell --> <ellipse cx="100" cy="120" rx="85" ry="110" fill="#f5f5dc" stroke="#d4c896" stroke-width="3" /> <!-- Egg white --> <ellipse cx="100" cy="120" rx="75" ry="95" fill="#ffffff" stroke="#e8e8e8" stroke-width="1" /> <!-- Egg yolk --> <circle cx="100" cy="120" r="40" fill="#ffd700" stroke="#e6c200" stroke-width="2" /> <!-- Labels --> <line x1="185" y1="50" x2="150" y2="70" stroke="#d4c896" stroke-width="2" /> <text x="188" y="50" fill="#d4c896" font-size="10" font-weight="bold">
+           Kulit Telur
+          </text> <line x1="185" y1="120" x2="155" y2="120" stroke="#e8e8e8" stroke-width="2" /> <text x="188" y="120" fill="#ffffff" font-size="10" font-weight="bold">
+           Putih Telur
+          </text> <line x1="100" y1="120" x2="100" y2="180" stroke="#ffd700" stroke-width="2" /> <text x="100" y="195" text-anchor="middle" fill="#ffd700" font-size="10" font-weight="bold">
+           Kuning Telur
+          </text>
+         </svg>
+        </div>
+       </div>
+      </div><!-- Earth Diagram -->
+      <div class="relative">
+       <div class="bg-white/5 rounded-2xl p-6 border border-white/10">
+        <h3 class="font-title text-lg text-center text-orange-400 mb-4">Bumi</h3>
+        <div class="earth-cross-section mx-auto"><!-- Outer core (orange/yellow) -->
+         <div class="earth-layer bg-gradient-to-br from-yellow-500 to-orange-600" style="inset: 0; cursor: pointer;" onclick="highlightLayer('outer')">
+         </div><!-- Mantle (red/brown) -->
+         <div class="earth-layer bg-gradient-to-br from-red-700 to-red-900" style="inset: 15%; cursor: pointer;" onclick="highlightLayer('mantle')">
+         </div><!-- Outer core liquid -->
+         <div class="earth-layer bg-gradient-to-br from-orange-500 to-yellow-600" style="inset: 35%; cursor: pointer;" onclick="highlightLayer('outer-core')">
+         </div><!-- Inner core (bright yellow) -->
+         <div class="earth-layer bg-gradient-to-br from-yellow-300 to-yellow-500 pulse-glow" style="inset: 55%; cursor: pointer;" onclick="highlightLayer('inner')">
+         </div><!-- Labels overlay -->
+         <div class="absolute inset-0 pointer-events-none"><span class="absolute top-2 left-1/2 -translate-x-1/2 text-xs font-bold text-slate-800 bg-white/80 px-2 py-0.5 rounded">Kerak</span> <span class="absolute top-1/4 right-2 text-xs font-bold text-white">Mantel</span> <span class="absolute top-1/2 right-4 -translate-y-1/2 text-xs font-bold text-white">Inti Luar</span> <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-bold text-slate-800">Inti Dalam</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Comparison Table -->
+     <div class="mt-8 bg-white/5 rounded-2xl p-6 border border-white/10 overflow-x-auto">
+      <h3 class="font-title text-lg text-orange-400 mb-4">📊 Perbandingan</h3>
+      <table class="w-full text-left">
+       <thead>
+        <tr class="border-b border-white/10">
+         <th class="py-3 px-4 text-slate-400 font-semibold">Telur 🥚</th>
+         <th class="py-3 px-4 text-slate-400 font-semibold">Bumi 🌍</th>
+         <th class="py-3 px-4 text-slate-400 font-semibold">Karakteristik</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr class="border-b border-white/5">
+         <td class="py-3 px-4 text-white">Kulit Telur</td>
+         <td class="py-3 px-4 text-orange-400 font-semibold">Kerak Bumi</td>
+         <td class="py-3 px-4 text-slate-300">Lapisan terluar, paling tipis, tempat kita berpijak</td>
+        </tr>
+        <tr class="border-b border-white/5">
+         <td class="py-3 px-4 text-white">Putih Telur</td>
+         <td class="py-3 px-4 text-red-400 font-semibold">Mantel Bumi</td>
+         <td class="py-3 px-4 text-slate-300">Lapisan tengah yang tebal, berbentuk semi-padat</td>
+        </tr>
+        <tr>
+         <td class="py-3 px-4 text-white">Kuning Telur</td>
+         <td class="py-3 px-4 text-yellow-400 font-semibold">Inti Bumi</td>
+         <td class="py-3 px-4 text-slate-300">Bagian pusat, terdiri dari inti luar (cair) &amp; inti dalam (padat)</td>
+        </tr>
+       </tbody>
+      </table>
+     </div><!-- Fun Fact -->
+     <div class="mt-6 fact-card rounded-xl p-6">
+      <h3 class="font-title text-lg text-orange-400 mb-2">💡 Tahukah Kamu?</h3>
+      <p class="text-slate-300">Jika Bumi sebesar bola basket, kerak bumi hanya setebal kertas! Begitu tipisnya lapisan tempat kita tinggal dibanding seluruh ukuran Bumi.</p>
+     </div>
+    </section><!-- Slide 4: Kerak Bumi -->
+    <section id="slide-3" class="slide-content hidden">
+     <div class="text-center mb-8"><span class="inline-block px-4 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm font-semibold mb-4">Slide 4</span>
+      <h2 class="font-title text-3xl md:text-4xl text-white mb-2">Kerak Bumi 🏔️</h2>
+      <p class="text-slate-400 text-lg">Tempat Kita Tinggal - Lapisan Paling Tipis</p>
+     </div><!-- Key Stats -->
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div class="bg-gradient-to-br from-blue-500/20 to-cyan-500/10 rounded-xl p-4 text-center">
+       <div class="text-3xl mb-2">
+        📏
+       </div>
+       <div class="text-2xl font-bold text-blue-400">
+        5-70 km
+       </div>
+       <div class="text-slate-400 text-sm">
+        Ketebalan
+       </div>
+      </div>
+      <div class="bg-gradient-to-br from-green-500/20 to-emerald-500/10 rounded-xl p-4 text-center">
+       <div class="text-3xl mb-2">
+        ⚖️
+       </div>
+       <div class="text-2xl font-bold text-green-400">
+        Terendah
+       </div>
+       <div class="text-slate-400 text-sm">
+        Massa Jenis
+       </div>
+      </div>
+      <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/10 rounded-xl p-4 text-center">
+       <div class="text-3xl mb-2">
+        🌡️
+       </div>
+       <div class="text-2xl font-bold text-purple-400">
+        0-400°C
+       </div>
+       <div class="text-slate-400 text-sm">
+        Suhu
+       </div>
+      </div>
+      <div class="bg-gradient-to-br from-orange-500/20 to-red-500/10 rounded-xl p-4 text-center">
+       <div class="text-3xl mb-2">
+        🎂
+       </div>
+       <div class="text-2xl font-bold text-orange-400">
+        &lt;1%
+       </div>
+       <div class="text-slate-400 text-sm">
+        Volume Bumi
+       </div>
+      </div>
+     </div><!-- Two Types of Crust -->
+     <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="layer-card bg-gradient-to-br from-green-500/10 to-emerald-500/5 rounded-2xl p-6 border border-green-500/20">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center text-2xl">
+         🏝️
+        </div>
+        <div>
+         <h3 class="font-title text-xl text-green-400">Kerak Benua</h3>
+         <p class="text-slate-400 text-sm">Continental Crust</p>
+        </div>
+       </div>
+       <div class="bg-slate-800/50 rounded-xl p-4 mb-4">
+        <svg viewbox="0 0 300 120" class="w-full"><!-- Continental crust cross-section --> <rect x="0" y="0" width="300" height="120" fill="#1e3a5f" /> <!-- Thick continental crust --> <path d="M0,20 Q50,10 100,25 Q150,15 200,30 Q250,20 300,25 L300,80 L0,80 Z" fill="#228b22" /> <path d="M20,35 L40,25 L60,40 L80,30 L100,45" stroke="#2e8b57" stroke-width="2" fill="none" /> <!-- Mountains --> <path d="M100,25 L130,0 L160,25" fill="#6b8e23" stroke="#556b2f" stroke-width="1" /> <path d="M180,30 L200,10 L220,30" fill="#6b8e23" stroke="#556b2f" stroke-width="1" /> <!-- Thickness indicator --> <line x1="270" y1="25" x2="270" y2="80" stroke="#22c55e" stroke-width="2" /> <text x="280" y="55" fill="#22c55e" font-size="10">
+          30-70 km
+         </text> <!-- Label --> <text x="150" y="100" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="bold">
+          KERAK BENUA (TEBAL)
+         </text>
+        </svg>
+       </div>
+       <ul class="space-y-2 text-slate-300 text-sm">
+        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Ketebalan: 30-70 km</li>
+        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Lokasi: Di daratan</li>
+        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Komposisi: Granit (SiAl)</li>
+        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Lebih ringan &amp; lebih tua</li>
+       </ul>
+      </div>
+      <div class="layer-card bg-gradient-to-br from-blue-500/10 to-cyan-500/5 rounded-2xl p-6 border border-blue-500/20">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-2xl">
+         🌊
+        </div>
+        <div>
+         <h3 class="font-title text-xl text-blue-400">Kerak Samudera</h3>
+         <p class="text-slate-400 text-sm">Oceanic Crust</p>
+        </div>
+       </div>
+       <div class="bg-slate-800/50 rounded-xl p-4 mb-4">
+        <svg viewbox="0 0 300 120" class="w-full"><!-- Oceanic crust cross-section --> <rect x="0" y="0" width="300" height="120" fill="#1e3a5f" /> <!-- Water --> <rect x="0" y="0" width="300" height="50" fill="#1e90ff" opacity="0.3" /> <!-- Thin oceanic crust --> <path d="M0,60 Q75,55 150,60 Q225,55 300,60 L300,75 L0,75 Z" fill="#2f4f4f" /> <!-- Underwater features --> <path d="M80,60 L100,50 L120,60" fill="#3d5c5c" /> <path d="M200,60 L220,45 L240,60" fill="#3d5c5c" /> <!-- Thickness indicator --> <line x1="270" y1="60" x2="270" y2="75" stroke="#3b82f6" stroke-width="2" /> <text x="280" y="70" fill="#3b82f6" font-size="10">
+          6-11 km
+         </text> <!-- Labels --> <text x="150" y="30" text-anchor="middle" fill="#60a5fa" font-size="10">
+          🌊 Air Laut
+         </text> <text x="150" y="100" text-anchor="middle" fill="#3b82f6" font-size="12" font-weight="bold">
+          KERAK SAMUDERA (TIPIS)
+         </text>
+        </svg>
+       </div>
+       <ul class="space-y-2 text-slate-300 text-sm">
+        <li class="flex items-center gap-2"><span class="text-blue-400">✓</span> Ketebalan: 6-11 km</li>
+        <li class="flex items-center gap-2"><span class="text-blue-400">✓</span> Lokasi: Di dasar laut</li>
+        <li class="flex items-center gap-2"><span class="text-blue-400">✓</span> Komposisi: Basalt (SiMa)</li>
+        <li class="flex items-center gap-2"><span class="text-blue-400">✓</span> Lebih berat &amp; lebih muda</li>
+       </ul>
+      </div>
+     </div><!-- Elements Found -->
+     <div class="bg-white/5 rounded-2xl p-6 border border-white/10">
+      <h3 class="font-title text-lg text-orange-400 mb-4">⚗️ Kandungan di Kerak Bumi</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+       <div class="bg-gradient-to-br from-blue-500/20 to-blue-600/10 rounded-xl p-3 text-center">
+        <div class="text-2xl mb-1">
+         💨
+        </div>
+        <div class="font-semibold text-white text-sm">
+         Oksigen
+        </div>
+        <div class="text-blue-400 text-xs">
+         46%
+        </div>
+       </div>
+       <div class="bg-gradient-to-br from-gray-500/20 to-gray-600/10 rounded-xl p-3 text-center">
+        <div class="text-2xl mb-1">
+         🔷
+        </div>
+        <div class="font-semibold text-white text-sm">
+         Silikon
+        </div>
+        <div class="text-gray-400 text-xs">
+         28%
+        </div>
+       </div>
+       <div class="bg-gradient-to-br from-orange-500/20 to-orange-600/10 rounded-xl p-3 text-center">
+        <div class="text-2xl mb-1">
+         🔶
+        </div>
+        <div class="font-semibold text-white text-sm">
+         Besi
+        </div>
+        <div class="text-orange-400 text-xs">
+         5%
+        </div>
+       </div>
+       <div class="bg-gradient-to-br from-yellow-500/20 to-yellow-600/10 rounded-xl p-3 text-center">
+        <div class="text-2xl mb-1">
+         🥇
+        </div>
+        <div class="font-semibold text-white text-sm">
+         Emas
+        </div>
+        <div class="text-yellow-400 text-xs">
+         Langka
+        </div>
+       </div>
+       <div class="bg-gradient-to-br from-slate-400/20 to-slate-500/10 rounded-xl p-3 text-center">
+        <div class="text-2xl mb-1">
+         🥈
+        </div>
+        <div class="font-semibold text-white text-sm">
+         Perak
+        </div>
+        <div class="text-slate-300 text-xs">
+         Langka
+        </div>
+       </div>
+       <div class="bg-gradient-to-br from-cyan-500/20 to-cyan-600/10 rounded-xl p-3 text-center">
+        <div class="text-2xl mb-1">
+         💎
+        </div>
+        <div class="font-semibold text-white text-sm">
+         Berlian
+        </div>
+        <div class="text-cyan-400 text-xs">
+         Sangat Langka
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 5: Mantel Bumi -->
+    <section id="slide-4" class="slide-content hidden">
+     <div class="text-center mb-8"><span class="inline-block px-4 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm font-semibold mb-4">Slide 5</span>
+      <h2 class="font-title text-3xl md:text-4xl text-white mb-2">Mantel Bumi 🔴</h2>
+      <p class="text-slate-400 text-lg">Si Raksasa Padat - Lapisan Paling Tebal &amp; Berat</p>
+     </div><!-- Key Stats -->
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div class="bg-gradient-to-br from-red-500/20 to-orange-500/10 rounded-xl p-4 text-center">
+       <div class="text-3xl mb-2">
+        📏
+       </div>
+       <div class="text-2xl font-bold text-red-400">
+        2.900 km
+       </div>
+       <div class="text-slate-400 text-sm">
+        Ketebalan
+       </div>
+      </div>
+      <div class="bg-gradient-to-br from-orange-500/20 to-yellow-500/10 rounded-xl p-4 text-center">
+       <div class="text-3xl mb-2">
+        ⚖️
+       </div>
+       <div class="text-2xl font-bold text-orange-400">
+        84%
+       </div>
+       <div class="text-slate-400 text-sm">
+        Volume Bumi
+       </div>
+      </div>
+      <div class="bg-gradient-to-br from-yellow-500/20 to-amber-500/10 rounded-xl p-4 text-center">
+       <div class="text-3xl mb-2">
+        🌡️
+       </div>
+       <div class="text-2xl font-bold text-yellow-400">
+        500-2500°C
+       </div>
+       <div class="text-slate-400 text-sm">
+        Suhu
+       </div>
+      </div>
+      <div class="bg-gradient-to-br from-amber-500/20 to-red-500/10 rounded-xl p-4 text-center">
+       <div class="text-3xl mb-2">
+        🧪
+       </div>
+       <div class="text-2xl font-bold text-amber-400">
+        Plastis
+       </div>
+       <div class="text-slate-400 text-sm">
+        Sifat
+       </div>
+      </div>
+     </div><!-- Mantel Layers -->
+     <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="layer-card bg-gradient-to-br from-orange-500/10 to-red-500/5 rounded-2xl p-6 border border-orange-500/20">
+       <h3 class="font-title text-xl text-orange-400 mb-4">Mantel Luar (Upper Mantle)</h3>
+       <div class="bg-slate-800/50 rounded-xl p-4 mb-4">
+        <svg viewbox="0 0 280 150" class="w-full"><!-- Cross section --> <rect x="0" y="0" width="280" height="150" fill="#1a1a2e" /> <!-- Crust --> <rect x="20" y="20" width="240" height="15" fill="#8b4513" rx="2" /> <text x="140" y="32" text-anchor="middle" fill="#fff" font-size="8">
+          Kerak
+         </text> <!-- Upper Mantle (plastic/flowing) --> <rect x="20" y="35" width="240" height="50" fill="url(#upperMantle)" rx="2" /> <!-- Convection arrows --> <path d="M60,55 Q80,45 100,55 Q120,65 140,55" stroke="#ff6b35" stroke-width="2" fill="none" marker-end="url(#arrowOrange)" /> <path d="M160,65 Q180,55 200,65 Q220,75 240,65" stroke="#ff6b35" stroke-width="2" fill="none" /> <text x="140" y="75" text-anchor="middle" fill="#ff6b35" font-size="10">
+          Arus Konveksi
+         </text> <!-- Lower boundary --> <line x1="20" y1="85" x2="260" y2="85" stroke="#ff4500" stroke-width="1" stroke-dasharray="5,3" /> <text x="140" y="100" text-anchor="middle" fill="#fff" font-size="9">
+          MANTEL LUAR
+         </text> <text x="140" y="115" text-anchor="middle" fill="#ff6b35" font-size="8">
+          Astenosfer (plastis/mudah mengalir)
+         </text> <defs>
+          <lineargradient id="upperMantle" x1="0%" y1="0%" x2="0%" y2="100%">
+           <stop offset="0%" stop-color="#cd5c5c" />
+           <stop offset="100%" stop-color="#8b0000" />
+          </lineargradient>
+         </defs>
+        </svg>
+       </div>
+       <ul class="space-y-2 text-slate-300 text-sm">
+        <li class="flex items-center gap-2"><span class="text-orange-400">•</span> Kedalaman: 35-670 km</li>
+        <li class="flex items-center gap-2"><span class="text-orange-400">•</span> Bersifat <strong class="text-orange-400">plastis</strong> (padat tapi bisa mengalir lambat)</li>
+        <li class="flex items-center gap-2"><span class="text-orange-400">•</span> Terjadi <strong class="text-orange-400">arus konveksi</strong> yang menggerakkan lempeng</li>
+        <li class="flex items-center gap-2"><span class="text-orange-400">•</span> Bagian ini disebut <strong class="text-orange-400">Astenosfer</strong></li>
+       </ul>
+      </div>
+      <div class="layer-card bg-gradient-to-br from-red-600/10 to-red-800/5 rounded-2xl p-6 border border-red-600/20">
+       <h3 class="font-title text-xl text-red-400 mb-4">Mantel Dalam (Lower Mantle)</h3>
+       <div class="bg-slate-800/50 rounded-xl p-4 mb-4">
+        <svg viewbox="0 0 280 150" class="w-full"><rect x="0" y="0" width="280" height="150" fill="#1a1a2e" /> <!-- Lower Mantle (more solid) --> <rect x="20" y="20" width="240" height="80" fill="url(#lowerMantle)" rx="2" /> <!-- Rock texture --> <circle cx="60" cy="50" r="8" fill="#4a0000" opacity="0.5" /> <circle cx="120" cy="70" r="10" fill="#4a0000" opacity="0.5" /> <circle cx="200" cy="45" r="7" fill="#4a0000" opacity="0.5" /> <circle cx="230" cy="75" r="9" fill="#4a0000" opacity="0.5" /> <!-- Lower boundary (core) --> <line x1="20" y1="100" x2="260" y2="100" stroke="#ff6347" stroke-width="2" /> <text x="140" y="60" text-anchor="middle" fill="#fff" font-size="9">
+          MANTEL DALAM
+         </text> <text x="140" y="115" text-anchor="middle" fill="#ff6347" font-size="8">
+          Lebih padat, suhu lebih tinggi
+         </text> <text x="140" y="130" text-anchor="middle" fill="#ffa500" font-size="8">
+          ↓ Batas dengan Inti Luar ↓
+         </text> <defs>
+          <lineargradient id="lowerMantle" x1="0%" y1="0%" x2="0%" y2="100%">
+           <stop offset="0%" stop-color="#8b0000" />
+           <stop offset="100%" stop-color="#4a0000" />
+          </lineargradient>
+         </defs>
+        </svg>
+       </div>
+       <ul class="space-y-2 text-slate-300 text-sm">
+        <li class="flex items-center gap-2"><span class="text-red-400">•</span> Kedalaman: 670-2.900 km</li>
+        <li class="flex items-center gap-2"><span class="text-red-400">•</span> Lebih <strong class="text-red-400">padat dan kaku</strong></li>
+        <li class="flex items-center gap-2"><span class="text-red-400">•</span> Suhu mencapai <strong class="text-red-400">2.500°C</strong></li>
+        <li class="flex items-center gap-2"><span class="text-red-400">•</span> Terdiri dari silikat besi &amp; magnesium</li>
+       </ul>
+      </div>
+     </div><!-- Litosfer Explanation -->
+     <div class="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-2xl p-6 border border-yellow-500/20">
+      <h3 class="font-title text-lg text-yellow-400 mb-4">🧩 Apa itu Litosfer?</h3>
+      <div class="grid md:grid-cols-2 gap-6 items-center">
+       <div>
+        <p class="text-slate-300 mb-4"><strong class="text-yellow-400">Litosfer</strong> adalah gabungan dari <strong>Kerak Bumi</strong> + <strong>Mantel Luar bagian atas</strong> (yang bersifat kaku).</p>
+        <p class="text-slate-300 mb-4">Litosfer inilah yang terpecah menjadi <strong class="text-orange-400">lempeng-lempeng tektonik</strong> yang terus bergerak di atas astenosfer yang plastis.</p>
+        <div class="bg-white/5 rounded-xl p-4">
+         <p class="text-sm text-slate-400">💡 <strong class="text-white">Analogi:</strong> Bayangkan litosfer seperti kulit jeruk yang retak-retak, mengapung di atas daging jeruk yang lembut (astenosfer).</p>
+        </div>
+       </div>
+       <div class="bg-slate-800/50 rounded-xl p-4">
+        <svg viewbox="0 0 250 150" class="w-full"><rect x="0" y="0" width="250" height="150" fill="#1a1a2e" /> <!-- Lithosphere bracket --> <rect x="30" y="20" width="190" height="50" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5,3" rx="5" /> <text x="125" y="15" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="bold">
+          LITOSFER
+         </text> <!-- Crust --> <rect x="40" y="30" width="170" height="15" fill="#8b4513" /> <text x="125" y="42" text-anchor="middle" fill="#fff" font-size="8">
+          Kerak
+         </text> <!-- Upper rigid mantle --> <rect x="40" y="45" width="170" height="20" fill="#b22222" /> <text x="125" y="58" text-anchor="middle" fill="#fff" font-size="8">
+          Mantel atas (kaku)
+         </text> <!-- Asthenosphere --> <rect x="40" y="75" width="170" height="30" fill="url(#asthenosphere)" /> <text x="125" y="93" text-anchor="middle" fill="#ff6b35" font-size="8">
+          ASTENOSFER (plastis)
+         </text> <!-- Arrows showing movement --> <path d="M60,90 Q80,85 100,90" stroke="#ff6b35" stroke-width="1.5" fill="none" /> <path d="M150,90 Q170,85 190,90" stroke="#ff6b35" stroke-width="1.5" fill="none" /> <!-- Legend --> <text x="125" y="120" text-anchor="middle" fill="#fff" font-size="8">
+          Lempeng bergerak di atas astenosfer
+         </text> <defs>
+          <lineargradient id="asthenosphere" x1="0%" y1="0%" x2="100%" y2="0%">
+           <stop offset="0%" stop-color="#ff4500" />
+           <stop offset="50%" stop-color="#ff6347" />
+           <stop offset="100%" stop-color="#ff4500" />
+          </lineargradient>
+         </defs>
+        </svg>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 6: Inti Luar -->
+    <section id="slide-5" class="slide-content hidden">
+     <div class="text-center mb-8"><span class="inline-block px-4 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm font-semibold mb-4">Slide 6</span>
+      <h2 class="font-title text-3xl md:text-4xl text-white mb-2">Inti Luar 🌊🔥</h2>
+      <p class="text-slate-400 text-lg">Samudera Logam Cair - Satu-satunya Lapisan Cair</p>
+     </div><!-- Key Stats -->
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div class="bg-gradient-to-br from-orange-500/20 to-yellow-500/10 rounded-xl p-4 text-center">
+       <div class="text-3xl mb-2">
+        📏
+       </div>
+       <div class="text-2xl font-bold text-orange-400">
+        2.200 km
+       </div>
+       <div class="text-slate-400 text-sm">
+        Ketebalan
+       </div>
+      </div>
+      <div class="bg-gradient-to-br from-yellow-500/20 to-amber-500/10 rounded-xl p-4 text-center">
+       <div class="text-3xl mb-2">
+        🌡️
+       </div>
+       <div class="text-2xl font-bold text-yellow-400">
+        3.800-6.000°C
+       </div>
+       <div class="text-slate-400 text-sm">
+        Suhu
+       </div>
+      </div>
+      <div class="bg-gradient-to-br from-amber-500/20 to-orange-500/10 rounded-xl p-4 text-center">
+       <div class="text-3xl mb-2">
+        💧
+       </div>
+       <div class="text-2xl font-bold text-amber-400">
+        Cair
+       </div>
+       <div class="text-slate-400 text-sm">
+        Bentuk
+       </div>
+      </div>
+      <div class="bg-gradient-to-br from-red-500/20 to-orange-500/10 rounded-xl p-4 text-center">
+       <div class="text-3xl mb-2">
+        🧲
+       </div>
+       <div class="text-2xl font-bold text-red-400">
+        Magnetik
+       </div>
+       <div class="text-slate-400 text-sm">
+        Sifat
+       </div>
+      </div>
+     </div><!-- Visual Representation -->
+     <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="layer-card bg-gradient-to-br from-orange-500/10 to-yellow-500/5 rounded-2xl p-6 border border-orange-500/20">
+       <h3 class="font-title text-xl text-orange-400 mb-4">🌊 Lautan Logam Cair</h3>
+       <div class="bg-slate-800/50 rounded-xl p-4 mb-4">
+        <svg viewbox="0 0 280 180" class="w-full"><rect x="0" y="0" width="280" height="180" fill="#1a1a2e" /> <!-- Outer core liquid representation --> <ellipse cx="140" cy="90" rx="120" ry="70" fill="url(#liquidCore)" /> <!-- Flowing effect --> <path d="M50,80 Q80,60 110,80 Q140,100 170,80 Q200,60 230,80" stroke="#ffa500" stroke-width="3" fill="none" opacity="0.7" /> <path d="M60,100 Q90,120 120,100 Q150,80 180,100 Q210,120 240,100" stroke="#ff8c00" stroke-width="2" fill="none" opacity="0.5" /> <!-- Iron and Nickel particles --> <circle cx="80" cy="75" r="6" fill="#ffd700" opacity="0.8" /> <circle cx="120" cy="95" r="5" fill="#ffc107" opacity="0.7" /> <circle cx="160" cy="70" r="7" fill="#ffd700" opacity="0.8" /> <circle cx="200" cy="100" r="5" fill="#ffc107" opacity="0.7" /> <circle cx="100" cy="110" r="4" fill="#ffd700" opacity="0.6" /> <circle cx="180" cy="85" r="6" fill="#ffc107" opacity="0.8" /> <!-- Labels --> <text x="140" y="150" text-anchor="middle" fill="#ffa500" font-size="10">
+          Besi (Fe) + Nikel (Ni) cair
+         </text> <text x="140" y="165" text-anchor="middle" fill="#ff6347" font-size="8">
+          ⚠️ Tidak ada air! Ini logam leleh!
+         </text> <defs>
+          <radialgradient id="liquidCore" cx="50%" cy="50%">
+           <stop offset="0%" stop-color="#ffa500" />
+           <stop offset="70%" stop-color="#ff6347" />
+           <stop offset="100%" stop-color="#dc143c" />
+          </radialgradient>
+         </defs>
+        </svg>
+       </div>
+       <div class="bg-red-500/10 rounded-xl p-4 border border-red-500/20">
+        <p class="text-slate-300 text-sm"><strong class="text-red-400">⚠️ Penting:</strong> Meskipun disebut "cair", ini bukan air! Ini adalah <strong class="text-orange-400">logam besi dan nikel yang meleleh</strong> karena suhu sangat tinggi.</p>
+       </div>
+      </div>
+      <div class="layer-card bg-gradient-to-br from-blue-500/10 to-purple-500/5 rounded-2xl p-6 border border-blue-500/20">
+       <h3 class="font-title text-xl text-blue-400 mb-4">🧲 Pembangkit Medan Magnet Bumi</h3>
+       <div class="bg-slate-800/50 rounded-xl p-4 mb-4">
+        <svg viewbox="0 0 280 180" class="w-full"><rect x="0" y="0" width="280" height="180" fill="#1a1a2e" /> <!-- Earth --> <circle cx="140" cy="90" r="50" fill="#4169e1" /> <!-- Outer core --> <circle cx="140" cy="90" r="35" fill="#ff6347" /> <!-- Inner core --> <circle cx="140" cy="90" r="15" fill="#ffd700" /> <!-- Magnetic field lines --> <path d="M140,20 Q200,50 200,90 Q200,130 140,160" stroke="#00ffff" stroke-width="2" fill="none" /> <path d="M140,20 Q80,50 80,90 Q80,130 140,160" stroke="#00ffff" stroke-width="2" fill="none" /> <path d="M140,10 Q220,40 220,90 Q220,140 140,170" stroke="#00ffff" stroke-width="1.5" fill="none" opacity="0.7" /> <path d="M140,10 Q60,40 60,90 Q60,140 140,170" stroke="#00ffff" stroke-width="1.5" fill="none" opacity="0.7" /> <!-- Poles --> <text x="140" y="8" text-anchor="middle" fill="#00ffff" font-size="8">
+          N
+         </text> <text x="140" y="178" text-anchor="middle" fill="#00ffff" font-size="8">
+          S
+         </text> <!-- Arrow --> <text x="230" y="90" fill="#00ffff" font-size="20">
+          🧭
+         </text>
+        </svg>
+       </div>
+       <div class="space-y-2 text-slate-300 text-sm">
+        <p>Pergerakan logam cair di inti luar menghasilkan <strong class="text-cyan-400">medan magnet Bumi</strong> yang:</p>
+        <ul class="space-y-1 ml-4">
+         <li>• Melindungi kita dari radiasi matahari berbahaya</li>
+         <li>• Membuat kompas bisa bekerja</li>
+         <li>• Menciptakan aurora di kutub</li>
+        </ul>
+       </div>
+      </div>
+     </div><!-- Key Characteristics -->
+     <div class="bg-white/5 rounded-2xl p-6 border border-white/10">
+      <h3 class="font-title text-lg text-orange-400 mb-4">📋 Karakteristik Inti Luar</h3>
+      <div class="grid md:grid-cols-3 gap-4">
+       <div class="bg-gradient-to-br from-orange-500/10 to-transparent rounded-xl p-4">
+        <div class="text-2xl mb-2">
+         🌡️
+        </div>
+        <h4 class="font-semibold text-white mb-1">Suhu Ekstrem</h4>
+        <p class="text-slate-400 text-sm">3.800°C - 6.000°C (hampir sepanas permukaan Matahari!)</p>
+       </div>
+       <div class="bg-gradient-to-br from-yellow-500/10 to-transparent rounded-xl p-4">
+        <div class="text-2xl mb-2">
+         💧
+        </div>
+        <h4 class="font-semibold text-white mb-1">Satu-satunya Cair</h4>
+        <p class="text-slate-400 text-sm">Lapisan ini berbentuk cair karena tekanan belum cukup tinggi untuk memadatkannya</p>
+       </div>
+       <div class="bg-gradient-to-br from-amber-500/10 to-transparent rounded-xl p-4">
+        <div class="text-2xl mb-2">
+         ⚗️
+        </div>
+        <h4 class="font-semibold text-white mb-1">Komposisi</h4>
+        <p class="text-slate-400 text-sm">85% Besi + 10% Nikel + sedikit unsur ringan (sulfur, oksigen)</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 7: Inti Dalam -->
+    <section id="slide-6" class="slide-content hidden">
+     <div class="text-center mb-8"><span class="inline-block px-4 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm font-semibold mb-4">Slide 7</span>
+      <h2 class="font-title text-3xl md:text-4xl text-white mb-2">Inti Dalam ⭐</h2>
+      <p class="text-slate-400 text-lg">Pusat yang Padat - Jantung Bumi yang Misterius</p>
+     </div><!-- Key Stats -->
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div class="bg-gradient-to-br from-yellow-500/20 to-amber-500/10 rounded-xl p-4 text-center pulse-glow">
+       <div class="text-3xl mb-2">
+        📏
+       </div>
+       <div class="text-2xl font-bold text-yellow-400">
+        1.220 km
+       </div>
+       <div class="text-slate-400 text-sm">
+        Jari-jari
+       </div>
+      </div>
+      <div class="bg-gradient-to-br from-amber-500/20 to-orange-500/10 rounded-xl p-4 text-center">
+       <div class="text-3xl mb-2">
+        🌡️
+       </div>
+       <div class="text-2xl font-bold text-amber-400">
+        5.000-7.000°C
+       </div>
+       <div class="text-slate-400 text-sm">
+        Suhu
+       </div>
+      </div>
+      <div class="bg-gradient-to-br from-orange-500/20 to-red-500/10 rounded-xl p-4 text-center">
+       <div class="text-3xl mb-2">
+        🪨
+       </div>
+       <div class="text-2xl font-bold text-orange-400">
+        Padat
+       </div>
+       <div class="text-slate-400 text-sm">
+        Bentuk
+       </div>
+      </div>
+      <div class="bg-gradient-to-br from-red-500/20 to-pink-500/10 rounded-xl p-4 text-center">
+       <div class="text-3xl mb-2">
+        💎
+       </div>
+       <div class="text-2xl font-bold text-red-400">
+        13 g/cm³
+       </div>
+       <div class="text-slate-400 text-sm">
+        Kepadatan
+       </div>
+      </div>
+     </div><!-- Visual + Paradox -->
+     <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="layer-card bg-gradient-to-br from-yellow-500/10 to-amber-500/5 rounded-2xl p-6 border border-yellow-500/20">
+       <h3 class="font-title text-xl text-yellow-400 mb-4">🔮 Visualisasi Inti Dalam</h3>
+       <div class="bg-slate-800/50 rounded-xl p-4 mb-4">
+        <svg viewbox="0 0 280 200" class="w-full"><rect x="0" y="0" width="280" height="200" fill="#1a1a2e" /> <!-- Outer core background --> <circle cx="140" cy="100" r="90" fill="url(#outerCoreGlow)" /> <!-- Inner core (solid, glowing) --> <circle cx="140" cy="100" r="50" fill="url(#innerCoreGlow)" /> <!-- Crystal structure pattern to show solid --> <line x1="140" y1="60" x2="140" y2="140" stroke="#fffacd" stroke-width="1" opacity="0.5" /> <line x1="100" y1="100" x2="180" y2="100" stroke="#fffacd" stroke-width="1" opacity="0.5" /> <line x1="110" y1="70" x2="170" y2="130" stroke="#fffacd" stroke-width="1" opacity="0.3" /> <line x1="170" y1="70" x2="110" y2="130" stroke="#fffacd" stroke-width="1" opacity="0.3" /> <!-- Labels --> <text x="50" y="60" fill="#ff6347" font-size="9">
+          Inti Luar (cair)
+         </text> <text x="140" y="105" text-anchor="middle" fill="#4a3728" font-size="10" font-weight="bold">
+          INTI DALAM
+         </text> <text x="140" y="118" text-anchor="middle" fill="#4a3728" font-size="8">
+          (padat)
+         </text> <!-- Temperature indicator --> <text x="140" y="175" text-anchor="middle" fill="#ffd700" font-size="10">
+          🔥 Sepanas permukaan Matahari!
+         </text> <defs>
+          <radialgradient id="outerCoreGlow" cx="50%" cy="50%">
+           <stop offset="0%" stop-color="#ff6347" />
+           <stop offset="100%" stop-color="#8b0000" />
+          </radialgradient>
+          <radialgradient id="innerCoreGlow" cx="30%" cy="30%">
+           <stop offset="0%" stop-color="#fff8dc" />
+           <stop offset="50%" stop-color="#ffd700" />
+           <stop offset="100%" stop-color="#daa520" />
+          </radialgradient>
+         </defs>
+        </svg>
+       </div>
+      </div>
+      <div class="layer-card bg-gradient-to-br from-purple-500/10 to-pink-500/5 rounded-2xl p-6 border border-purple-500/20">
+       <h3 class="font-title text-xl text-purple-400 mb-4">🤯 Paradoks yang Aneh!</h3>
+       <div class="space-y-4">
+        <div class="bg-white/5 rounded-xl p-4">
+         <p class="text-lg text-white mb-2"><strong class="text-yellow-400">Pertanyaan:</strong> Jika suhunya 7.000°C (lebih panas dari inti luar), mengapa inti dalam berbentuk <strong class="text-cyan-400">PADAT</strong>?</p>
+        </div>
+        <div class="bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-xl p-4 border border-cyan-500/20">
+         <p class="text-lg text-white mb-2"><strong class="text-cyan-400">Jawabannya:</strong> TEKANAN!</p>
+         <p class="text-slate-300 text-sm">Tekanan di inti dalam sangat <strong class="text-purple-400">LUAR BIASA TINGGI</strong> (3,6 juta atmosfer!) sehingga atom-atom besi dan nikel terkompresi sangat rapat dan tidak bisa bergerak bebas seperti cairan.</p>
+        </div>
+        <div class="bg-white/5 rounded-xl p-4">
+         <p class="text-slate-400 text-sm">💡 <strong class="text-white">Analogi:</strong> Bayangkan kamu menekan es batu dengan sangat kuat. Meski kamu panaskan, es tetap tidak bisa mencair karena tekanan menahannya tetap padat!</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Composition -->
+     <div class="bg-white/5 rounded-2xl p-6 border border-white/10">
+      <h3 class="font-title text-lg text-orange-400 mb-4">⚗️ Komposisi Inti Dalam</h3>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+       <div class="bg-gradient-to-br from-gray-500/20 to-gray-600/10 rounded-xl p-4 text-center">
+        <div class="text-3xl mb-2">
+         🔩
+        </div>
+        <div class="font-semibold text-white">
+         Besi (Fe)
+        </div>
+        <div class="text-gray-400 text-sm">
+         ~85%
+        </div>
+       </div>
+       <div class="bg-gradient-to-br from-slate-400/20 to-slate-500/10 rounded-xl p-4 text-center">
+        <div class="text-3xl mb-2">
+         ⚙️
+        </div>
+        <div class="font-semibold text-white">
+         Nikel (Ni)
+        </div>
+        <div class="text-slate-300 text-sm">
+         ~10%
+        </div>
+       </div>
+       <div class="bg-gradient-to-br from-yellow-500/20 to-yellow-600/10 rounded-xl p-4 text-center">
+        <div class="text-3xl mb-2">
+         💨
+        </div>
+        <div class="font-semibold text-white">
+         Belerang (S)
+        </div>
+        <div class="text-yellow-400 text-sm">
+         Sedikit
+        </div>
+       </div>
+       <div class="bg-gradient-to-br from-blue-500/20 to-blue-600/10 rounded-xl p-4 text-center">
+        <div class="text-3xl mb-2">
+         🫧
+        </div>
+        <div class="font-semibold text-white">
+         Oksigen (O)
+        </div>
+        <div class="text-blue-400 text-sm">
+         Sedikit
+        </div>
+       </div>
+       <div class="bg-gradient-to-br from-gray-600/20 to-gray-700/10 rounded-xl p-4 text-center">
+        <div class="text-3xl mb-2">
+         💎
+        </div>
+        <div class="font-semibold text-white">
+         Karbon (C)
+        </div>
+        <div class="text-gray-400 text-sm">
+         Sedikit
+        </div>
+       </div>
+      </div>
+     </div><!-- Fun Fact -->
+     <div class="mt-6 fact-card rounded-xl p-6">
+      <h3 class="font-title text-lg text-orange-400 mb-2">🌟 Fakta Menakjubkan!</h3>
+      <p class="text-slate-300">Inti dalam Bumi berputar sedikit lebih cepat daripada bagian Bumi lainnya! Dalam setahun, inti dalam "mendahului" permukaan Bumi sekitar 0,3-0,5 derajat. Fenomena ini disebut <strong class="text-yellow-400">"super-rotation"</strong>.</p>
+     </div>
+    </section><!-- Slide 8: Fakta Unik - Kola Superdeep Borehole -->
+    <section id="slide-7" class="slide-content hidden">
+     <div class="text-center mb-8"><span class="inline-block px-4 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm font-semibold mb-4">Slide 8</span>
+      <h2 class="font-title text-3xl md:text-4xl text-white mb-2">Fakta Unik 🕳️</h2>
+      <p class="text-slate-400 text-lg">Seberapa Dalam Kita Bisa Menggali?</p>
+     </div><!-- Kola Borehole Info -->
+     <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="layer-card bg-gradient-to-br from-blue-500/10 to-cyan-500/5 rounded-2xl p-6 border border-blue-500/20">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-2xl">
+         🏆
+        </div>
+        <div>
+         <h3 class="font-title text-xl text-blue-400">Rekor Dunia</h3>
+         <p class="text-slate-400 text-sm">Kola Superdeep Borehole</p>
+        </div>
+       </div>
+       <div class="bg-slate-800/50 rounded-xl p-4 mb-4">
+        <svg viewbox="0 0 280 250" class="w-full"><rect x="0" y="0" width="280" height="250" fill="#1a1a2e" /> <!-- Surface with trees --> <rect x="0" y="20" width="280" height="30" fill="#228b22" /> <text x="30" y="35" font-size="15">
+          🌲
+         </text> <text x="80" y="40" font-size="12">
+          🌲
+         </text> <text x="200" y="35" font-size="15">
+          🌲
+         </text> <text x="240" y="40" font-size="12">
+          🌲
+         </text> <!-- Russia flag indicator --> <rect x="120" y="5" width="40" height="12" fill="#fff" /> <rect x="120" y="5" width="40" height="4" fill="#fff" /> <rect x="120" y="9" width="40" height="4" fill="#0039a6" /> <rect x="120" y="13" width="40" height="4" fill="#d52b1e" /> <text x="140" y="3" text-anchor="middle" fill="#fff" font-size="6">
+          Rusia
+         </text> <!-- Drilling rig --> <rect x="130" y="25" width="20" height="25" fill="#666" stroke="#888" stroke-width="1" /> <rect x="137" y="15" width="6" height="10" fill="#444" /> <!-- Borehole --> <rect x="138" y="50" width="4" height="180" fill="#1a1a1a" /> <!-- Depth markers --> <line x1="100" y1="50" x2="115" y2="50" stroke="#666" stroke-width="1" /> <text x="95" y="55" text-anchor="end" fill="#888" font-size="7">
+          0 km
+         </text> <line x1="100" y1="80" x2="115" y2="80" stroke="#666" stroke-width="1" /> <text x="95" y="85" text-anchor="end" fill="#888" font-size="7">
+          3 km
+         </text> <line x1="100" y1="110" x2="115" y2="110" stroke="#666" stroke-width="1" /> <text x="95" y="115" text-anchor="end" fill="#888" font-size="7">
+          6 km
+         </text> <line x1="100" y1="140" x2="115" y2="140" stroke="#666" stroke-width="1" /> <text x="95" y="145" text-anchor="end" fill="#888" font-size="7">
+          9 km
+         </text> <line x1="100" y1="170" x2="115" y2="170" stroke="#666" stroke-width="1" /> <text x="95" y="175" text-anchor="end" fill="#3b82f6" font-size="8" font-weight="bold">
+          12.262 km
+         </text> <!-- Stop point --> <circle cx="140" cy="230" r="8" fill="#ef4444" /> <text x="140" y="234" text-anchor="middle" fill="#fff" font-size="8">
+          🛑
+         </text> <!-- Heat indicator --> <text x="165" y="175" fill="#ef4444" font-size="8">
+          🌡️ 180°C
+         </text> <text x="165" y="190" fill="#ff6b35" font-size="7">
+          Alat meleleh!
+         </text> <!-- Temperature gradient --> <defs>
+          <lineargradient id="tempGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+           <stop offset="0%" stop-color="#60a5fa" />
+           <stop offset="50%" stop-color="#f97316" />
+           <stop offset="100%" stop-color="#ef4444" />
+          </lineargradient>
+         </defs> <rect x="250" y="50" width="10" height="180" fill="url(#tempGradient)" rx="5" /> <text x="255" y="45" text-anchor="middle" fill="#60a5fa" font-size="6">
+          Dingin
+         </text> <text x="255" y="245" text-anchor="middle" fill="#ef4444" font-size="6">
+          Panas
+         </text>
+        </svg>
+       </div>
+      </div>
+      <div class="space-y-4">
+       <div class="layer-card bg-white/5 rounded-2xl p-6 border border-white/10">
+        <h3 class="font-title text-lg text-orange-400 mb-4">📊 Data Pengeboran</h3>
+        <div class="space-y-3">
+         <div class="flex justify-between items-center py-2 border-b border-white/10"><span class="text-slate-400">Lokasi</span> <span class="text-white font-semibold">Semenanjung Kola, Rusia</span>
+         </div>
+         <div class="flex justify-between items-center py-2 border-b border-white/10"><span class="text-slate-400">Tahun Mulai</span> <span class="text-white font-semibold">1970</span>
+         </div>
+         <div class="flex justify-between items-center py-2 border-b border-white/10"><span class="text-slate-400">Tahun Berhenti</span> <span class="text-white font-semibold">1992</span>
+         </div>
+         <div class="flex justify-between items-center py-2 border-b border-white/10"><span class="text-slate-400">Kedalaman</span> <span class="text-blue-400 font-bold">12.262 meter</span>
+         </div>
+         <div class="flex justify-between items-center py-2 border-b border-white/10"><span class="text-slate-400">Suhu di Dasar</span> <span class="text-red-400 font-bold">180°C</span>
+         </div>
+         <div class="flex justify-between items-center py-2"><span class="text-slate-400">Alasan Berhenti</span> <span class="text-orange-400 font-semibold">Alat bor meleleh!</span>
+         </div>
+        </div>
+       </div>
+       <div class="bg-red-500/10 rounded-xl p-4 border border-red-500/20">
+        <h4 class="font-semibold text-red-400 mb-2">❓ Mengapa Berhenti?</h4>
+        <p class="text-slate-300 text-sm">Pada kedalaman 12 km, suhu mencapai <strong class="text-red-400">180°C</strong>. Bor dan peralatan mulai meleleh dan tidak mampu bekerja lagi. Batuan juga menjadi lebih "plastis" seperti plastisin, sulit untuk ditembus.</p>
+       </div>
+      </div>
+     </div><!-- Comparison -->
+     <div class="bg-white/5 rounded-2xl p-6 border border-white/10">
+      <h3 class="font-title text-lg text-orange-400 mb-4">📐 Perbandingan Kedalaman</h3>
+      <div class="space-y-4">
+       <div class="relative">
+        <div class="flex items-center gap-4 mb-2"><span class="w-32 text-slate-400 text-sm">Kola Borehole</span>
+         <div class="flex-1 bg-slate-700 rounded-full h-6 overflow-hidden">
+          <div class="bg-gradient-to-r from-blue-500 to-blue-400 h-full rounded-full flex items-center justify-end pr-2" style="width: 100%"><span class="text-white text-xs font-bold">12,26 km</span>
+          </div>
+         </div>
+        </div>
+        <div class="flex items-center gap-4 mb-2"><span class="w-32 text-slate-400 text-sm">Palung Mariana</span>
+         <div class="flex-1 bg-slate-700 rounded-full h-6 overflow-hidden">
+          <div class="bg-gradient-to-r from-cyan-500 to-cyan-400 h-full rounded-full flex items-center justify-end pr-2" style="width: 89%"><span class="text-white text-xs font-bold">10,9 km</span>
+          </div>
+         </div>
+        </div>
+        <div class="flex items-center gap-4 mb-2"><span class="w-32 text-slate-400 text-sm">Kerak Benua</span>
+         <div class="flex-1 bg-slate-700 rounded-full h-6 overflow-hidden">
+          <div class="bg-gradient-to-r from-green-500 to-green-400 h-full rounded-full flex items-center justify-end pr-2" style="width: 100%"><span class="text-white text-xs font-bold">30-70 km</span>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="bg-yellow-500/10 rounded-xl p-4 border border-yellow-500/20">
+        <p class="text-slate-300 text-sm">💡 <strong class="text-yellow-400">Insight:</strong> Lubang Kola lebih dalam dari Palung Mariana, tapi baru mencapai <strong class="text-orange-400">sepertiga</strong> tebal kerak benua! Kita belum pernah menembus kerak bumi, apalagi mencapai mantel.</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 9: Kesimpulan -->
+    <section id="slide-8" class="slide-content hidden">
+     <div class="text-center mb-8"><span class="inline-block px-4 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm font-semibold mb-4">Slide 9</span>
+      <h2 class="font-title text-3xl md:text-4xl text-white mb-2">Kesimpulan 📝</h2>
+      <p class="text-slate-400 text-lg">Ringkasan Struktur Lapisan Bumi</p>
+     </div><!-- Complete Earth Diagram -->
+     <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="layer-card bg-white/5 rounded-2xl p-6 border border-white/10">
+       <h3 class="font-title text-lg text-orange-400 mb-4 text-center">🌍 Struktur Lengkap Bumi</h3>
+       <div class="earth-cross-section mx-auto" style="max-width: 350px;"><!-- Crust (brown) -->
+        <div class="earth-layer" style="inset: 0; background: linear-gradient(135deg, #8b4513, #654321); border-radius: 50%;"></div><!-- Mantle (red/orange) -->
+        <div class="earth-layer" style="inset: 3%; background: linear-gradient(135deg, #dc143c, #8b0000); border-radius: 50%;"></div><!-- Outer Core (orange/yellow liquid) -->
+        <div class="earth-layer" style="inset: 35%; background: linear-gradient(135deg, #ff6347, #ff4500); border-radius: 50%;"></div><!-- Inner Core (bright yellow solid) -->
+        <div class="earth-layer pulse-glow" style="inset: 58%; background: linear-gradient(135deg, #ffd700, #ffb347); border-radius: 50%;"></div><!-- Labels -->
+        <div class="absolute inset-0 pointer-events-none flex flex-col justify-between py-4">
+         <div class="text-center"><span class="bg-amber-900/80 text-amber-200 text-xs px-2 py-1 rounded">Kerak (5-70 km)</span>
+         </div>
+         <div class="flex justify-between px-2"><span class="bg-red-900/80 text-red-200 text-xs px-2 py-1 rounded">Mantel</span> <span class="bg-red-900/80 text-red-200 text-xs px-2 py-1 rounded">(2.900 km)</span>
+         </div>
+         <div class="text-center"><span class="bg-orange-900/80 text-orange-200 text-xs px-2 py-1 rounded">Inti Luar (2.200 km)</span>
+         </div>
+         <div class="text-center"><span class="bg-yellow-900/80 text-yellow-200 text-xs px-2 py-1 rounded">Inti Dalam (1.220 km)</span>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="space-y-4">
+       <div class="bg-gradient-to-r from-amber-500/10 to-transparent rounded-xl p-4 border-l-4 border-amber-500">
+        <h4 class="font-semibold text-amber-400 mb-1">1. Kerak Bumi</h4>
+        <p class="text-slate-300 text-sm">Lapisan paling tipis &amp; ringan. Tempat kita tinggal. Terdiri dari kerak benua (30-70 km) dan kerak samudera (6-11 km).</p>
+       </div>
+       <div class="bg-gradient-to-r from-red-500/10 to-transparent rounded-xl p-4 border-l-4 border-red-500">
+        <h4 class="font-semibold text-red-400 mb-1">2. Mantel Bumi</h4>
+        <p class="text-slate-300 text-sm">Lapisan paling tebal (84% volume). Bersifat plastis, bergerak lambat. Suhu 500-2.500°C.</p>
+       </div>
+       <div class="bg-gradient-to-r from-orange-500/10 to-transparent rounded-xl p-4 border-l-4 border-orange-500">
+        <h4 class="font-semibold text-orange-400 mb-1">3. Inti Luar</h4>
+        <p class="text-slate-300 text-sm">Satu-satunya lapisan CAIR. Terdiri dari besi &amp; nikel leleh. Menghasilkan medan magnet Bumi.</p>
+       </div>
+       <div class="bg-gradient-to-r from-yellow-500/10 to-transparent rounded-xl p-4 border-l-4 border-yellow-500">
+        <h4 class="font-semibold text-yellow-400 mb-1">4. Inti Dalam</h4>
+        <p class="text-slate-300 text-sm">Lapisan terpanas (7.000°C) tapi PADAT karena tekanan ekstrem. Seperti "jantung" Bumi.</p>
+       </div>
+      </div>
+     </div><!-- Key Takeaway -->
+     <div class="bg-gradient-to-r from-orange-500/10 to-red-500/10 rounded-2xl p-6 border border-orange-500/20 mb-8">
+      <h3 class="font-title text-xl text-orange-400 mb-4 text-center">🎯 Poin Utama</h3>
+      <div class="text-center">
+       <p class="text-xl text-white mb-2">Semakin ke <strong class="text-orange-400">dalam</strong>, suhu dan tekanan Bumi semakin <strong class="text-red-400">meningkat drastis</strong>!</p>
+       <div class="flex justify-center gap-8 mt-4">
+        <div class="text-center">
+         <div class="text-3xl">
+          🌡️
+         </div>
+         <p class="text-slate-400 text-sm">Suhu naik</p>
+         <p class="text-orange-400 font-bold">0°C → 7.000°C</p>
+        </div>
+        <div class="text-center">
+         <div class="text-3xl">
+          ⬇️
+         </div>
+         <p class="text-slate-400 text-sm">Tekanan naik</p>
+         <p class="text-red-400 font-bold">1 → 3.600.000 atm</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Project Activity -->
+     <div class="bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-2xl p-6 border border-purple-500/20">
+      <h3 class="font-title text-xl text-purple-400 mb-4">🎨 Tugas Proyek: Model Lapisan Bumi!</h3>
+      <div class="grid md:grid-cols-2 gap-6">
+       <div>
+        <h4 class="font-semibold text-white mb-3">Instruksi:</h4>
+        <ol class="space-y-2 text-slate-300 text-sm">
+         <li class="flex items-start gap-2"><span class="bg-purple-500/20 text-purple-400 w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">1</span> <span>Pilih bentuk model (bulat, setengah lingkaran, atau kotak)</span></li>
+         <li class="flex items-start gap-2"><span class="bg-purple-500/20 text-purple-400 w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">2</span> <span>Gunakan bahan yang tersedia (plastisin, kertas, atau digital)</span></li>
+         <li class="flex items-start gap-2"><span class="bg-purple-500/20 text-purple-400 w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">3</span> <span>Warnai setiap lapisan sesuai suhunya:</span></li>
+        </ol>
+       </div>
+       <div class="bg-white/5 rounded-xl p-4">
+        <h4 class="font-semibold text-white mb-3">Panduan Warna:</h4>
+        <div class="space-y-2">
+         <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded bg-amber-700"></div><span class="text-slate-300 text-sm">Kerak - Coklat (dingin relatif)</span>
+         </div>
+         <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded bg-red-700"></div><span class="text-slate-300 text-sm">Mantel - Merah (panas)</span>
+         </div>
+         <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded bg-orange-500"></div><span class="text-slate-300 text-sm">Inti Luar - Oranye (sangat panas)</span>
+         </div>
+         <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded bg-yellow-400"></div><span class="text-slate-300 text-sm">Inti Dalam - Kuning (terpanas!)</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Slide 10: Quiz HOTS -->
+    <section id="slide-9" class="slide-content hidden">
+     <div class="text-center mb-8"><span class="inline-block px-4 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm font-semibold mb-4">Quiz</span>
+      <h2 class="font-title text-3xl md:text-4xl text-white mb-2">🎯 Soal HOTS</h2>
+      <p class="text-slate-400 text-lg">10 Soal Berpikir Tingkat Tinggi</p>
+     </div><!-- Quiz Container -->
+     <div id="quiz-container" class="max-w-3xl mx-auto"><!-- Quiz will be rendered here by JavaScript -->
+     </div><!-- Quiz Results -->
+     <div id="quiz-results" class="hidden max-w-3xl mx-auto">
+      <div class="bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-2xl p-8 border border-green-500/20 text-center">
+       <div class="text-6xl mb-4">
+        🏆
+       </div>
+       <h3 class="font-title text-2xl text-green-400 mb-2">Quiz Selesai!</h3>
+       <p class="text-4xl font-bold text-white mb-2">Skor: <span id="final-score">0</span>/10</p>
+       <p id="score-message" class="text-slate-400 mb-6"></p><button onclick="restartQuiz()" class="interactive-btn bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-3 rounded-xl font-semibold"> 🔄 Ulangi Quiz </button>
+      </div>
+     </div>
+    </section>
+   </main><!-- Navigation Buttons -->
+   <div class="sticky bottom-0 bg-gradient-to-t from-slate-900 to-transparent pt-8 pb-4">
+    <div class="max-w-7xl mx-auto px-4 flex justify-between items-center"><button onclick="prevSlide()" id="prev-btn" class="interactive-btn bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled> <span>←</span> Sebelumnya </button> <button onclick="nextSlide()" id="next-btn" class="interactive-btn bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2"> Selanjutnya <span>→</span> </button>
+    </div>
+   </div><!-- Footer -->
+   <footer class="bg-slate-900/80 border-t border-white/10 py-6 mt-8">
+    <div class="max-w-7xl mx-auto px-4">
+     <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3"><img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-12 h-12 rounded-full object-cover border-2 border-orange-500" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #ff6b35, #f7931e)'; this.alt='Photo unavailable';">
+       <div>
+        <p class="text-white font-semibold">Algian Manggara, S.Agr</p>
+        <p class="text-slate-400 text-sm">Pembuat Materi Pembelajaran</p>
+       </div>
+      </div>
+      <div class="text-center md:text-right">
+       <p class="text-slate-400 text-sm">© 2026 Algian Manggara, S.Agr</p>
+       <p class="text-slate-500 text-xs">Menjelajah ke Pusat Bumi - Media Pembelajaran Interaktif</p>
+      </div>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_title: "Menjelajah ke Pusat Bumi",
+      subtitle: "Struktur, Karakteristik, dan Misteri di Bawah Kaki Kita",
+      primary_color: "#ff6b35",
+      secondary_color: "#1a1a2e",
+      text_color: "#ffffff",
+      accent_color: "#f7931e",
+      surface_color: "#16213e"
+    };
+
+    let currentSlide = 0;
+    const totalSlides = 10;
+
+    // Quiz Data - 10 HOTS Questions
+    const quizData = [
+      {
+        question: "Mengapa inti dalam Bumi berbentuk padat meskipun suhunya lebih tinggi daripada inti luar yang berbentuk cair?",
+        options: [
+          "Karena inti dalam terbuat dari bahan yang berbeda",
+          "Karena tekanan yang sangat tinggi di inti dalam memaksa atom-atom tetap rapat",
+          "Karena inti dalam lebih dekat dengan permukaan",
+          "Karena inti dalam sudah mendingin"
+        ],
+        correct: 1,
+        explanation: "Tekanan di inti dalam mencapai 3,6 juta atmosfer, memaksa atom besi dan nikel terkompresi sangat rapat sehingga tidak bisa bergerak bebas seperti cairan meskipun suhunya sangat tinggi."
+      },
+      {
+        question: "Jika tidak ada inti luar yang berbentuk cair, dampak apa yang paling mungkin terjadi pada kehidupan di Bumi?",
+        options: [
+          "Bumi akan berputar lebih cepat",
+          "Medan magnet Bumi akan hilang dan radiasi matahari berbahaya langsung mengenai permukaan",
+          "Gunung berapi akan lebih sering meletus",
+          "Suhu permukaan Bumi akan meningkat drastis"
+        ],
+        correct: 1,
+        explanation: "Pergerakan logam cair di inti luar menghasilkan medan magnet Bumi yang melindungi kita dari radiasi matahari berbahaya. Tanpa medan magnet, kehidupan di Bumi akan terancam."
+      },
+      {
+        question: "Mengapa kerak samudera lebih tipis daripada kerak benua, padahal keduanya terbentuk dari proses yang sama?",
+        options: [
+          "Kerak samudera lebih muda dan belum sempat menebal",
+          "Kerak samudera memiliki komposisi yang lebih padat (basalt) dan lebih berat, sehingga cenderung tenggelam",
+          "Air laut mengikis kerak samudera",
+          "Kerak benua mendapat lebih banyak material dari gunung berapi"
+        ],
+        correct: 1,
+        explanation: "Kerak samudera terdiri dari basalt yang lebih padat dan berat dibanding granit pada kerak benua. Karena lebih berat, kerak samudera cenderung tenggelam (subduksi) dan terus diperbaharui, sehingga tidak sempat menebal."
+      },
+      {
+        question: "Berdasarkan konsep arus konveksi di mantel, bagaimana proses ini dapat menjelaskan pergerakan benua?",
+        options: [
+          "Arus konveksi mendorong benua dari bawah seperti ban berjalan",
+          "Arus konveksi menciptakan gempa yang menggeser benua",
+          "Panas dari mantel membuat benua mengembang dan bergerak",
+          "Arus konveksi menarik benua ke arah pusat Bumi"
+        ],
+        correct: 0,
+        explanation: "Arus konveksi di astenosfer (mantel atas yang plastis) bergerak karena perbedaan suhu. Material panas naik, bergerak horizontal di bawah litosfer, lalu turun kembali. Gerakan horizontal ini mendorong lempeng tektonik seperti ban berjalan."
+      },
+      {
+        question: "Seorang ilmuwan mengklaim bahwa suhu di kedalaman 100 km adalah 1.500°C. Apakah klaim ini masuk akal? Berikan analisismu.",
+        options: [
+          "Tidak masuk akal karena suhu tersebut terlalu tinggi untuk kedalaman 100 km",
+          "Masuk akal karena kedalaman 100 km sudah memasuki mantel atas dengan suhu sekitar 500-1.500°C",
+          "Tidak masuk akal karena pada kedalaman tersebut masih kerak bumi yang suhunya rendah",
+          "Masuk akal karena suhu meningkat 100°C setiap 1 km kedalaman"
+        ],
+        correct: 1,
+        explanation: "Kedalaman 100 km sudah memasuki mantel atas (astenosfer). Gradien geothermal rata-rata sekitar 25-30°C per km di kerak, namun melambat di mantel. Suhu 1.500°C pada 100 km adalah estimasi yang masuk akal."
+      },
+      {
+        question: "Mengapa pengeboran Kola Superdeep Borehole harus dihentikan pada kedalaman 12,2 km? Apa hubungannya dengan sifat batuan?",
+        options: [
+          "Tim kehabisan dana untuk melanjutkan proyek",
+          "Batuan menjadi terlalu keras untuk ditembus",
+          "Suhu tinggi membuat batuan bersifat plastis dan alat bor tidak efektif bekerja",
+          "Ditemukan air tanah dalam jumlah besar yang berbahaya"
+        ],
+        correct: 2,
+        explanation: "Pada suhu 180°C, batuan mulai bersifat plastis (seperti plastisin) sehingga lubang bor cenderung menutup kembali. Selain itu, alat bor juga mulai tidak tahan dengan suhu tersebut."
+      },
+      {
+        question: "Jika kamu bisa membawa termometer ke pusat Bumi, prediksi apa yang akan kamu temukan tentang pola perubahan suhu dari permukaan ke pusat?",
+        options: [
+          "Suhu meningkat konstan dengan laju yang sama",
+          "Suhu meningkat cepat di awal lalu melambat, kemudian meningkat tajam lagi mendekati inti",
+          "Suhu meningkat lalu menurun di inti dalam",
+          "Suhu tetap sama setelah melewati mantel"
+        ],
+        correct: 1,
+        explanation: "Di kerak, suhu naik sekitar 25-30°C/km. Di mantel, kenaikan melambat karena konduksi panas kurang efisien. Mendekati inti, suhu kembali naik tajam karena panas dari radioaktif dan sisa panas pembentukan Bumi."
+      },
+      {
+        question: "Indonesia terletak di pertemuan 3 lempeng tektonik. Bagaimana posisi ini mempengaruhi aktivitas geologi Indonesia dibanding negara yang terletak di tengah lempeng?",
+        options: [
+          "Indonesia lebih stabil karena lempeng saling menopang",
+          "Indonesia memiliki lebih sedikit gunung berapi karena tekanan terdistribusi merata",
+          "Indonesia sangat aktif secara geologi dengan banyak gempa dan gunung berapi karena zona subduksi dan tumbukan lempeng",
+          "Posisi Indonesia tidak mempengaruhi aktivitas geologi"
+        ],
+        correct: 2,
+        explanation: "Pertemuan lempeng Eurasia, Indo-Australia, dan Pasifik menciptakan zona subduksi aktif di Indonesia. Ini menyebabkan Indonesia memiliki 127 gunung berapi aktif dan sering mengalami gempa tektonik."
+      },
+      {
+        question: "Seorang siswa berargumen bahwa karena berlian ditemukan di kerak bumi, maka berlian terbentuk di kerak bumi. Evaluasi argumen ini!",
+        options: [
+          "Argumen benar karena berlian memang terbentuk di kerak bumi",
+          "Argumen salah karena berlian terbentuk jauh di dalam mantel pada tekanan sangat tinggi, lalu terbawa ke permukaan oleh erupsi kimberlite",
+          "Argumen benar karena suhu di kerak cukup untuk membentuk berlian",
+          "Argumen salah karena berlian berasal dari luar angkasa"
+        ],
+        correct: 1,
+        explanation: "Berlian terbentuk pada kedalaman 150-200 km di mantel atas, di mana tekanan mencapai 50.000 atmosfer. Berlian kemudian terbawa ke permukaan dengan cepat oleh erupsi magma kimberlite."
+      },
+      {
+        question: "Bagaimana pengetahuan tentang struktur lapisan Bumi dapat membantu manusia dalam eksplorasi sumber daya alam?",
+        options: [
+          "Tidak ada hubungan antara struktur Bumi dan eksplorasi sumber daya",
+          "Dengan mengetahui bahwa logam berat terkonsentrasi di inti, manusia dapat menggali sampai ke inti",
+          "Pemahaman tentang proses geologi membantu memprediksi lokasi deposit mineral, minyak, dan panas bumi yang terbentuk pada kondisi tekanan dan suhu tertentu",
+          "Struktur Bumi hanya penting untuk studi akademis"
+        ],
+        correct: 2,
+        explanation: "Memahami bagaimana mineral terbentuk pada kondisi tekanan dan suhu tertentu membantu geolog memprediksi lokasi deposit. Misalnya, minyak terbentuk pada kedalaman dan suhu tertentu di cekungan sedimen."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answeredQuestions = new Array(quizData.length).fill(false);
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+          document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => { config.primary_color = value; window.elementSdk.setConfig({ primary_color: value }); }
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => { config.secondary_color = value; window.elementSdk.setConfig({ secondary_color: value }); }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => { config.accent_color = value; window.elementSdk.setConfig({ accent_color: value }); }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => { config.surface_color = value; window.elementSdk.setConfig({ surface_color: value }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["main_title", config.main_title || defaultConfig.main_title],
+          ["subtitle", config.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
+
+    // Navigation Functions
+    function goToSlide(index) {
+      // Hide all slides
+      document.querySelectorAll('.slide-content').forEach(slide => {
+        slide.classList.add('hidden');
+      });
+      
+      // Show target slide
+      document.getElementById(`slide-${index}`).classList.remove('hidden');
+      
+      // Update navigation buttons styling
+      document.querySelectorAll('.slide-btn').forEach((btn, i) => {
+        if (i === index) {
+          btn.classList.remove('bg-slate-700/50', 'text-slate-400', 'hover:bg-slate-700');
+          btn.classList.add('bg-orange-500/20', 'text-orange-400');
+        } else {
+          btn.classList.add('bg-slate-700/50', 'text-slate-400', 'hover:bg-slate-700');
+          btn.classList.remove('bg-orange-500/20', 'text-orange-400');
+        }
+      });
+      
+      currentSlide = index;
+      updateProgress();
+      updateNavigationButtons();
+      
+      // Initialize quiz if on quiz slide
+      if (index === 9 && document.getElementById('quiz-container').innerHTML === '') {
+        renderQuiz();
+      }
+      
+      // Scroll to top
+      document.getElementById('app').scrollTop = 0;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        goToSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        goToSlide(currentSlide - 1);
+      }
+    }
+
+    function updateProgress() {
+      const progress = ((currentSlide + 1) / totalSlides) * 100;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+      document.getElementById('progress-text').textContent = `Slide ${currentSlide + 1}/${totalSlides}`;
+    }
+
+    function updateNavigationButtons() {
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      
+      prevBtn.disabled = currentSlide === 0;
+      
+      if (currentSlide === totalSlides - 1) {
+        nextBtn.innerHTML = 'Selesai <span>✓</span>';
+      } else {
+        nextBtn.innerHTML = 'Selanjutnya <span>→</span>';
+      }
+    }
+
+    // Interactive Functions
+    function showThinkingAnswer() {
+      const answer = document.getElementById('thinking-answer');
+      answer.classList.toggle('hidden');
+    }
+
+    function checkGeoAnswer(btn, answer) {
+      const row = btn.closest('[data-answer]');
+      const correctAnswer = row.dataset.answer;
+      const buttons = row.querySelectorAll('.geo-btn');
+      
+      buttons.forEach(b => {
+        b.disabled = true;
+        b.classList.add('opacity-50');
+      });
+      
+      if (answer === correctAnswer) {
+        btn.classList.remove('opacity-50');
+        btn.classList.add('bg-green-500/30', 'text-green-400', 'ring-2', 'ring-green-500');
+        row.classList.add('bg-green-500/10');
+      } else {
+        btn.classList.remove('opacity-50');
+        btn.classList.add('bg-red-500/30', 'text-red-400', 'ring-2', 'ring-red-500');
+        row.classList.add('bg-red-500/10');
+        // Highlight correct answer
+        buttons.forEach(b => {
+          if (b.textContent.toLowerCase().includes(correctAnswer)) {
+            b.classList.remove('opacity-50');
+            b.classList.add('bg-green-500/30', 'text-green-400');
+          }
+        });
+      }
+    }
+
+    function highlightLayer(layer) {
+      // Visual feedback for earth layer clicks
+      const layers = document.querySelectorAll('.earth-layer');
+      layers.forEach(l => l.style.opacity = '0.5');
+      event.target.style.opacity = '1';
+      setTimeout(() => {
+        layers.forEach(l => l.style.opacity = '1');
+      }, 1000);
+    }
+
+    // Quiz Functions
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = `
+        <div class="bg-white/5 rounded-2xl p-6 border border-white/10">
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-slate-400">Soal ${currentQuestion + 1} dari ${quizData.length}</span>
+            <span class="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-sm">Skor: ${score}/${quizData.length}</span>
+          </div>
+          <div class="w-full bg-slate-700 rounded-full h-2 mb-6">
+            <div class="bg-gradient-to-r from-orange-500 to-yellow-500 h-2 rounded-full transition-all" style="width: ${((currentQuestion + 1) / quizData.length) * 100}%"></div>
+          </div>
+          <h3 class="text-xl text-white mb-6">${quizData[currentQuestion].question}</h3>
+          <div class="space-y-3" id="quiz-options">
+            ${quizData[currentQuestion].options.map((option, index) => `
+              <button onclick="selectAnswer(${index})" class="quiz-option w-full text-left p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all text-slate-300">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-slate-700 text-white mr-3 text-sm font-bold">${String.fromCharCode(65 + index)}</span>
+                ${option}
+              </button>
+            `).join('')}
+          </div>
+          <div id="quiz-feedback" class="hidden mt-6 p-4 rounded-xl"></div>
+          <div id="quiz-navigation" class="hidden mt-6 flex justify-end">
+            <button onclick="nextQuestion()" class="interactive-btn bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-xl font-semibold">
+              ${currentQuestion < quizData.length - 1 ? 'Soal Berikutnya →' : 'Lihat Hasil 🏆'}
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function selectAnswer(index) {
+      if (answeredQuestions[currentQuestion]) return;
+      
+      answeredQuestions[currentQuestion] = true;
+      const correct = quizData[currentQuestion].correct;
+      const options = document.querySelectorAll('.quiz-option');
+      
+      options.forEach((opt, i) => {
+        opt.classList.add('pointer-events-none');
+        if (i === correct) {
+          opt.classList.add('correct');
+        } else if (i === index && index !== correct) {
+          opt.classList.add('incorrect');
+        }
+      });
+      
+      if (index === correct) {
+        score++;
+      }
+      
+      // Show feedback
+      const feedback = document.getElementById('quiz-feedback');
+      feedback.classList.remove('hidden');
+      feedback.className = `mt-6 p-4 rounded-xl ${index === correct ? 'bg-green-500/20 border border-green-500/30' : 'bg-red-500/20 border border-red-500/30'}`;
+      feedback.innerHTML = `
+        <div class="flex items-start gap-3">
+          <span class="text-2xl">${index === correct ? '✅' : '❌'}</span>
+          <div>
+            <p class="font-semibold ${index === correct ? 'text-green-400' : 'text-red-400'} mb-1">
+              ${index === correct ? 'Benar!' : 'Kurang Tepat'}
+            </p>
+            <p class="text-slate-300 text-sm">${quizData[currentQuestion].explanation}</p>
+          </div>
+        </div>
+      `;
+      
+      // Show navigation
+      document.getElementById('quiz-navigation').classList.remove('hidden');
+      
+      // Update score display
+      document.querySelector('.bg-orange-500\\/20').innerHTML = `Skor: ${score}/${quizData.length}`;
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        renderQuiz();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-results').classList.remove('hidden');
+      document.getElementById('final-score').textContent = score;
+      
+      const percentage = (score / quizData.length) * 100;
+      let message = '';
+      if (percentage === 100) {
+        message = '🌟 Sempurna! Kamu benar-benar memahami struktur Bumi!';
+      } else if (percentage >= 80) {
+        message = '🎉 Luar biasa! Pemahaman yang sangat baik!';
+      } else if (percentage >= 60) {
+        message = '👍 Bagus! Terus tingkatkan pemahamanmu!';
+      } else if (percentage >= 40) {
+        message = '📚 Cukup baik, tapi masih perlu belajar lagi.';
+      } else {
+        message = '💪 Jangan menyerah! Pelajari lagi materinya ya!';
+      }
+      document.getElementById('score-message').textContent = message;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answeredQuestions = new Array(quizData.length).fill(false);
+      document.getElementById('quiz-results').classList.add('hidden');
+      document.getElementById('quiz-container').classList.remove('hidden');
+      renderQuiz();
+    }
+
+    // Initialize
+    updateProgress();
+    updateNavigationButtons();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce4d496c537457a',t:'MTc3MTE1ODc3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

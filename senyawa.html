@@ -1,0 +1,1060 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mengenal Senyawa dalam Kehidupan</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --secondary: #0891b2;
+      --accent: #f59e0b;
+      --bg-light: #f0f9ff;
+      --text-dark: #1e293b;
+    }
+    
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #ecfeff 100%);
+    }
+    
+    .font-heading {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .hero-gradient {
+      background: linear-gradient(135deg, #1e40af 0%, #0891b2 50%, #0d9488 100%);
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .molecule-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 5px rgba(37, 99, 235, 0.3); }
+      50% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.6); }
+    }
+    
+    .section-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    
+    .nav-item.active {
+      background: rgba(255,255,255,0.3);
+      font-weight: 700;
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .quiz-option:hover {
+      transform: scale(1.02);
+      border-color: #2563eb;
+    }
+    
+    .quiz-option.selected {
+      border-color: #2563eb;
+      background: #eff6ff;
+    }
+    
+    .quiz-option.correct {
+      border-color: #16a34a;
+      background: #dcfce7;
+    }
+    
+    .quiz-option.incorrect {
+      border-color: #dc2626;
+      background: #fee2e2;
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .illustration-container {
+      background: linear-gradient(145deg, #f8fafc, #e2e8f0);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    
+    .atom {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    
+    .bond-line {
+      background: #64748b;
+      height: 4px;
+      border-radius: 2px;
+    }
+    
+    .organic-tag {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+    }
+    
+    .inorganic-tag {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    }
+    
+    .drag-item {
+      cursor: grab;
+      transition: all 0.2s ease;
+    }
+    
+    .drag-item:active {
+      cursor: grabbing;
+    }
+    
+    .drop-zone {
+      border: 3px dashed #cbd5e1;
+      transition: all 0.3s ease;
+      min-height: 120px;
+    }
+    
+    .drop-zone.drag-over {
+      border-color: #2563eb;
+      background: #eff6ff;
+    }
+    
+    .drop-zone.correct-drop {
+      border-color: #16a34a;
+      background: #dcfce7;
+    }
+    
+    .scroll-smooth {
+      scroll-behavior: smooth;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full overflow-auto scroll-smooth">
+  <div id="app-container" class="w-full min-h-full"><!-- Navigation -->
+   <nav class="hero-gradient sticky top-0 z-50 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+     <div class="flex items-center justify-between flex-wrap gap-3">
+      <div class="flex items-center gap-3">
+       <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center molecule-animation"><span class="text-xl">⚗️</span>
+       </div><span class="text-white font-heading font-bold text-lg">Kimia Interaktif</span>
+      </div>
+      <div class="flex flex-wrap gap-2"><a href="#materi" class="nav-item text-white px-3 py-2 rounded-lg text-sm font-medium">📚 Materi</a> <a href="#aktivitas" class="nav-item text-white px-3 py-2 rounded-lg text-sm font-medium">🎮 Aktivitas</a> <a href="#quiz" class="nav-item text-white px-3 py-2 rounded-lg text-sm font-medium">📝 Quiz</a>
+      </div>
+     </div>
+    </div>
+   </nav><!-- Hero Section -->
+   <header class="hero-gradient py-16 px-4 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+     <div class="absolute top-10 left-10 w-20 h-20 bg-white rounded-full molecule-animation"></div>
+     <div class="absolute top-32 right-20 w-16 h-16 bg-white rounded-full molecule-animation" style="animation-delay: 0.5s;"></div>
+     <div class="absolute bottom-20 left-1/4 w-12 h-12 bg-white rounded-full molecule-animation" style="animation-delay: 1s;"></div>
+     <div class="absolute bottom-10 right-1/3 w-14 h-14 bg-white rounded-full molecule-animation" style="animation-delay: 1.5s;"></div>
+    </div>
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+     <div class="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full mb-6"><span class="text-yellow-300">⭐</span> <span class="text-white text-sm font-medium">Materi IPA Kelas VII</span>
+     </div>
+     <h1 id="main-title" class="font-heading text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">Mengenal Senyawa dalam Kehidupan</h1>
+     <p id="subtitle" class="text-xl text-cyan-100 mb-8 max-w-2xl mx-auto">Pelajari rahasia zat-zat kimia di sekitarmu dengan cara yang menyenangkan dan interaktif!</p>
+     <div class="flex flex-wrap justify-center gap-4"><a href="#materi" class="bg-white text-blue-600 px-6 py-3 rounded-full font-bold hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl"> 🚀 Mulai Belajar </a> <a href="#quiz" class="bg-amber-400 text-amber-900 px-6 py-3 rounded-full font-bold hover:bg-amber-300 transition-all shadow-lg hover:shadow-xl"> 📝 Langsung Quiz </a>
+     </div>
+    </div>
+   </header><!-- Main Content -->
+   <main id="materi" class="max-w-6xl mx-auto px-4 py-12 space-y-12"><!-- Section 1: Apa itu Senyawa? -->
+    <section class="section-card p-6 md:p-8 card-hover">
+     <div class="flex items-center gap-3 mb-6">
+      <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center text-2xl shadow-lg">
+       🔬
+      </div>
+      <div><span class="text-blue-600 text-sm font-semibold">BAB 1</span>
+       <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-800">Apa itu Senyawa?</h2>
+      </div>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div class="space-y-4">
+       <div class="bg-blue-50 p-5 rounded-xl border-l-4 border-blue-500">
+        <h3 class="font-heading font-bold text-blue-800 mb-2">📖 Definisi</h3>
+        <p class="text-slate-700">Senyawa adalah <strong>zat yang terbentuk dari dua unsur atau lebih</strong> yang berikatan secara kimia dengan komposisi tetap.</p>
+       </div>
+       <div class="space-y-3">
+        <div class="flex items-start gap-3 p-4 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl"><span class="text-2xl">✨</span>
+         <div>
+          <h4 class="font-bold text-emerald-800">Sifat Unik</h4>
+          <p class="text-slate-600 text-sm">Senyawa memiliki sifat yang berbeda total dengan unsur penyusunnya</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-3 p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl"><span class="text-2xl">⚖️</span>
+         <div>
+          <h4 class="font-bold text-amber-800">Komposisi Tetap</h4>
+          <p class="text-slate-600 text-sm">Perbandingan jumlah unsur dalam senyawa selalu tetap</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-3 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl"><span class="text-2xl">🧪</span>
+         <div>
+          <h4 class="font-bold text-purple-800">Pemisahan</h4>
+          <p class="text-slate-600 text-sm">Hanya bisa diuraikan melalui proses kimia</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Ilustrasi Air -->
+      <div class="illustration-container">
+       <h4 class="font-heading font-bold text-slate-700 text-center mb-4">🌊 Contoh: Molekul Air (H₂O)</h4>
+       <div class="flex flex-col items-center justify-center py-6">
+        <div class="relative"><!-- Molekul Air Visual -->
+         <div class="flex items-center justify-center">
+          <div class="atom w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 text-lg">
+           O
+          </div>
+         </div>
+         <div class="flex items-center justify-center gap-8 mt-2">
+          <div class="flex flex-col items-center">
+           <div class="w-1 h-6 bg-slate-400 -rotate-45 origin-top"></div>
+           <div class="atom w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 text-sm -mt-1">
+            H
+           </div>
+          </div>
+          <div class="flex flex-col items-center">
+           <div class="w-1 h-6 bg-slate-400 rotate-45 origin-top"></div>
+           <div class="atom w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 text-sm -mt-1">
+            H
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="mt-6 text-center">
+         <div class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-md"><span class="w-4 h-4 bg-red-500 rounded-full"></span> <span class="text-sm text-slate-600">Oksigen (O)</span> <span class="mx-2 text-slate-300">|</span> <span class="w-4 h-4 bg-blue-500 rounded-full"></span> <span class="text-sm text-slate-600">Hidrogen (H)</span>
+         </div>
+        </div>
+       </div>
+       <div class="bg-white p-4 rounded-xl mt-4">
+        <p class="text-sm text-slate-600 text-center"><strong class="text-blue-600">Fakta Menarik:</strong> Air (H₂O) berwujud cair, padahal Hidrogen dan Oksigen adalah gas!</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 2: Molekul -->
+    <section class="section-card p-6 md:p-8 card-hover">
+     <div class="flex items-center gap-3 mb-6">
+      <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-2xl shadow-lg">
+       ⚛️
+      </div>
+      <div><span class="text-purple-600 text-sm font-semibold">BAB 2</span>
+       <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-800">Molekul: Unit Terkecil Senyawa</h2>
+      </div>
+     </div>
+     <p class="text-slate-600 mb-6 text-lg">Molekul adalah gabungan <strong>2 atau lebih atom</strong> yang saling berikatan (kovalen atau ionik). Molekul dibagi menjadi dua jenis:</p>
+     <div class="grid md:grid-cols-2 gap-6"><!-- Molekul Unsur -->
+      <div class="bg-gradient-to-br from-cyan-50 to-blue-50 p-6 rounded-2xl border-2 border-cyan-200">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 bg-cyan-500 rounded-full flex items-center justify-center"><span class="text-white text-lg">🔵</span>
+        </div>
+        <h3 class="font-heading font-bold text-cyan-800 text-xl">Molekul Unsur</h3>
+       </div>
+       <p class="text-slate-600 mb-4">Atom penyusunnya berasal dari <strong>unsur yang sama</strong></p><!-- Ilustrasi O2 -->
+       <div class="bg-white p-4 rounded-xl mb-4">
+        <h4 class="text-sm font-bold text-slate-700 mb-3 text-center">Contoh: Oksigen (O₂)</h4>
+        <div class="flex items-center justify-center gap-2">
+         <div class="atom w-12 h-12 bg-gradient-to-br from-red-400 to-red-600">
+          O
+         </div>
+         <div class="bond-line w-8"></div>
+         <div class="bond-line w-8 -ml-6"></div>
+         <div class="atom w-12 h-12 bg-gradient-to-br from-red-400 to-red-600">
+          O
+         </div>
+        </div>
+       </div>
+       <div class="space-y-2">
+        <div class="flex items-center gap-2 text-sm"><span class="text-cyan-500">●</span> <span>Klorin (Cl₂)</span>
+        </div>
+        <div class="flex items-center gap-2 text-sm"><span class="text-cyan-500">●</span> <span>Ozon (O₃)</span>
+        </div>
+        <div class="flex items-center gap-2 text-sm"><span class="text-cyan-500">●</span> <span>Nitrogen (N₂)</span>
+        </div>
+       </div>
+      </div><!-- Molekul Senyawa -->
+      <div class="bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-2xl border-2 border-amber-200">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center"><span class="text-white text-lg">🟡</span>
+        </div>
+        <h3 class="font-heading font-bold text-amber-800 text-xl">Molekul Senyawa</h3>
+       </div>
+       <p class="text-slate-600 mb-4">Atom penyusunnya berasal dari <strong>unsur yang berbeda</strong></p><!-- Ilustrasi HCl -->
+       <div class="bg-white p-4 rounded-xl mb-4">
+        <h4 class="text-sm font-bold text-slate-700 mb-3 text-center">Contoh: Asam Klorida (HCl)</h4>
+        <div class="flex items-center justify-center gap-2">
+         <div class="atom w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 text-sm">
+          H
+         </div>
+         <div class="bond-line w-8"></div>
+         <div class="atom w-12 h-12 bg-gradient-to-br from-green-400 to-green-600">
+          Cl
+         </div>
+        </div>
+       </div>
+       <div class="space-y-2">
+        <div class="flex items-center gap-2 text-sm"><span class="text-amber-500">●</span> <span>Air (H₂O)</span>
+        </div>
+        <div class="flex items-center gap-2 text-sm"><span class="text-amber-500">●</span> <span>Glukosa (C₆H₁₂O₆)</span>
+        </div>
+        <div class="flex items-center gap-2 text-sm"><span class="text-amber-500">●</span> <span>Karbon Dioksida (CO₂)</span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 3: Klasifikasi Senyawa -->
+    <section class="section-card p-6 md:p-8 card-hover">
+     <div class="flex items-center gap-3 mb-6">
+      <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center text-2xl shadow-lg">
+       📊
+      </div>
+      <div><span class="text-emerald-600 text-sm font-semibold">BAB 3</span>
+       <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-800">Klasifikasi Senyawa</h2>
+      </div>
+     </div>
+     <p class="text-slate-600 mb-6 text-lg">Senyawa dikelompokkan menjadi <strong>dua kategori besar</strong> berdasarkan komponen penyusunnya:</p>
+     <div class="grid md:grid-cols-2 gap-6"><!-- Senyawa Organik -->
+      <div class="relative overflow-hidden bg-gradient-to-br from-green-500 to-emerald-600 p-6 rounded-2xl text-white">
+       <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-10 -mt-10"></div>
+       <div class="relative z-10">
+        <div class="flex items-center gap-3 mb-4"><span class="text-4xl">🌿</span>
+         <h3 class="font-heading font-bold text-2xl">Senyawa Organik</h3>
+        </div>
+        <div class="space-y-3 mb-4">
+         <div class="bg-white/20 p-3 rounded-lg">
+          <p class="text-sm"><strong>Penyusun Utama:</strong> Atom Karbon (C) dan Hidrogen (H)</p>
+         </div>
+         <div class="bg-white/20 p-3 rounded-lg">
+          <p class="text-sm"><strong>Asal:</strong> Umumnya dari makhluk hidup</p>
+         </div>
+         <div class="bg-white/20 p-3 rounded-lg">
+          <p class="text-sm"><strong>Sifat:</strong> Mudah terbakar dan rapuh</p>
+         </div>
+        </div>
+        <div class="bg-white/30 p-4 rounded-xl">
+         <h4 class="font-bold mb-2">Contoh:</h4>
+         <div class="flex flex-wrap gap-2"><span class="bg-white/40 px-3 py-1 rounded-full text-sm">Gula</span> <span class="bg-white/40 px-3 py-1 rounded-full text-sm">Protein</span> <span class="bg-white/40 px-3 py-1 rounded-full text-sm">Lemak</span> <span class="bg-white/40 px-3 py-1 rounded-full text-sm">Vitamin</span>
+         </div>
+        </div>
+       </div>
+      </div><!-- Senyawa Anorganik -->
+      <div class="relative overflow-hidden bg-gradient-to-br from-blue-500 to-indigo-600 p-6 rounded-2xl text-white">
+       <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-10 -mt-10"></div>
+       <div class="relative z-10">
+        <div class="flex items-center gap-3 mb-4"><span class="text-4xl">🪨</span>
+         <h3 class="font-heading font-bold text-2xl">Senyawa Anorganik</h3>
+        </div>
+        <div class="space-y-3 mb-4">
+         <div class="bg-white/20 p-3 rounded-lg">
+          <p class="text-sm"><strong>Penyusun:</strong> Atom logam + logam lain/nonlogam</p>
+         </div>
+         <div class="bg-white/20 p-3 rounded-lg">
+          <p class="text-sm"><strong>Asal:</strong> Umumnya dari mineral/batuan</p>
+         </div>
+         <div class="bg-white/20 p-3 rounded-lg">
+          <p class="text-sm"><strong>Struktur:</strong> Lebih sederhana</p>
+         </div>
+        </div>
+        <div class="bg-white/30 p-4 rounded-xl">
+         <h4 class="font-bold mb-2">Contoh:</h4>
+         <div class="flex flex-wrap gap-2"><span class="bg-white/40 px-3 py-1 rounded-full text-sm">Air</span> <span class="bg-white/40 px-3 py-1 rounded-full text-sm">Garam</span> <span class="bg-white/40 px-3 py-1 rounded-full text-sm">Asam</span> <span class="bg-white/40 px-3 py-1 rounded-full text-sm">Basa</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 4: Senyawa di Sekitar Kita -->
+    <section class="section-card p-6 md:p-8 card-hover">
+     <div class="flex items-center gap-3 mb-6">
+      <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center text-2xl shadow-lg">
+       🏠
+      </div>
+      <div><span class="text-amber-600 text-sm font-semibold">BAB 4</span>
+       <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-800">Senyawa di Sekitar Kita</h2>
+      </div>
+     </div>
+     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Air -->
+      <div class="bg-gradient-to-br from-sky-50 to-blue-100 p-5 rounded-2xl border border-sky-200 card-hover">
+       <div class="text-center mb-4">
+        <div class="w-20 h-20 mx-auto bg-gradient-to-br from-sky-400 to-blue-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-4xl">💧</span>
+        </div>
+       </div>
+       <h3 class="font-heading font-bold text-sky-800 text-lg text-center mb-2">Air (H₂O)</h3>
+       <div class="bg-white p-3 rounded-xl mb-3">
+        <p class="text-xs text-slate-500 text-center">Rumus Kimia</p>
+        <p class="text-lg font-bold text-sky-600 text-center">H₂O</p>
+       </div>
+       <p class="text-sm text-slate-600 text-center">Zat esensial penunjang kehidupan yang bisa berbentuk padat (es), cair, maupun gas (uap).</p>
+       <div class="mt-3 flex justify-center"><span class="inorganic-tag text-white text-xs px-3 py-1 rounded-full">Anorganik</span>
+       </div>
+      </div><!-- Gula -->
+      <div class="bg-gradient-to-br from-amber-50 to-yellow-100 p-5 rounded-2xl border border-amber-200 card-hover">
+       <div class="text-center mb-4">
+        <div class="w-20 h-20 mx-auto bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-4xl">🍬</span>
+        </div>
+       </div>
+       <h3 class="font-heading font-bold text-amber-800 text-lg text-center mb-2">Gula (Sukrosa)</h3>
+       <div class="bg-white p-3 rounded-xl mb-3">
+        <p class="text-xs text-slate-500 text-center">Rumus Kimia</p>
+        <p class="text-lg font-bold text-amber-600 text-center">C₁₂H₂₂O₁₁</p>
+       </div>
+       <p class="text-sm text-slate-600 text-center">Sumber energi yang dipecah menjadi glukosa dan fruktosa dalam tubuh.</p>
+       <div class="mt-3 flex justify-center"><span class="organic-tag text-white text-xs px-3 py-1 rounded-full">Organik</span>
+       </div>
+      </div><!-- Garam -->
+      <div class="bg-gradient-to-br from-slate-50 to-gray-100 p-5 rounded-2xl border border-slate-200 card-hover">
+       <div class="text-center mb-4">
+        <div class="w-20 h-20 mx-auto bg-gradient-to-br from-slate-400 to-gray-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-4xl">🧂</span>
+        </div>
+       </div>
+       <h3 class="font-heading font-bold text-slate-800 text-lg text-center mb-2">Garam Dapur</h3>
+       <div class="bg-white p-3 rounded-xl mb-3">
+        <p class="text-xs text-slate-500 text-center">Rumus Kimia</p>
+        <p class="text-lg font-bold text-slate-600 text-center">NaCl</p>
+       </div>
+       <p class="text-sm text-slate-600 text-center">Terbentuk dari Natrium (logam) dan Klor (nonlogam). Untuk bumbu dan pengawetan.</p>
+       <div class="mt-3 flex justify-center"><span class="inorganic-tag text-white text-xs px-3 py-1 rounded-full">Anorganik</span>
+       </div>
+      </div><!-- Vitamin D -->
+      <div class="bg-gradient-to-br from-orange-50 to-amber-100 p-5 rounded-2xl border border-orange-200 card-hover">
+       <div class="text-center mb-4">
+        <div class="w-20 h-20 mx-auto bg-gradient-to-br from-orange-400 to-amber-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-4xl">☀️</span>
+        </div>
+       </div>
+       <h3 class="font-heading font-bold text-orange-800 text-lg text-center mb-2">Vitamin D</h3>
+       <div class="bg-white p-3 rounded-xl mb-3">
+        <p class="text-xs text-slate-500 text-center">Penyusun</p>
+        <p class="text-lg font-bold text-orange-600 text-center">C, H, O</p>
+       </div>
+       <p class="text-sm text-slate-600 text-center">Berperan penting dalam penyerapan kalsium untuk tulang dan gigi yang sehat.</p>
+       <div class="mt-3 flex justify-center"><span class="organic-tag text-white text-xs px-3 py-1 rounded-full">Organik</span>
+       </div>
+      </div><!-- Magnesium Hidroksida -->
+      <div class="bg-gradient-to-br from-teal-50 to-cyan-100 p-5 rounded-2xl border border-teal-200 card-hover">
+       <div class="text-center mb-4">
+        <div class="w-20 h-20 mx-auto bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-4xl">💊</span>
+        </div>
+       </div>
+       <h3 class="font-heading font-bold text-teal-800 text-lg text-center mb-2">Mg Hidroksida</h3>
+       <div class="bg-white p-3 rounded-xl mb-3">
+        <p class="text-xs text-slate-500 text-center">Rumus Kimia</p>
+        <p class="text-lg font-bold text-teal-600 text-center">Mg(OH)₂</p>
+       </div>
+       <p class="text-sm text-slate-600 text-center">Senyawa dalam obat maag (antasida) yang menurunkan asam lambung.</p>
+       <div class="mt-3 flex justify-center"><span class="inorganic-tag text-white text-xs px-3 py-1 rounded-full">Anorganik</span>
+       </div>
+      </div><!-- Karbon Dioksida -->
+      <div class="bg-gradient-to-br from-emerald-50 to-green-100 p-5 rounded-2xl border border-emerald-200 card-hover">
+       <div class="text-center mb-4">
+        <div class="w-20 h-20 mx-auto bg-gradient-to-br from-emerald-400 to-green-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-4xl">🌬️</span>
+        </div>
+       </div>
+       <h3 class="font-heading font-bold text-emerald-800 text-lg text-center mb-2">Karbon Dioksida</h3>
+       <div class="bg-white p-3 rounded-xl mb-3">
+        <p class="text-xs text-slate-500 text-center">Rumus Kimia</p>
+        <p class="text-lg font-bold text-emerald-600 text-center">CO₂</p>
+       </div>
+       <p class="text-sm text-slate-600 text-center">Gas hasil pernapasan dan pembakaran. Digunakan tumbuhan untuk fotosintesis.</p>
+       <div class="mt-3 flex justify-center"><span class="inorganic-tag text-white text-xs px-3 py-1 rounded-full">Anorganik</span>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 5: Aktivitas Interaktif -->
+    <section id="aktivitas" class="section-card p-6 md:p-8 card-hover">
+     <div class="flex items-center gap-3 mb-6">
+      <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl flex items-center justify-center text-2xl shadow-lg">
+       🎮
+      </div>
+      <div><span class="text-pink-600 text-sm font-semibold">AKTIVITAS</span>
+       <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-800">Aktivitas Klasifikasi Senyawa</h2>
+      </div>
+     </div>
+     <p class="text-slate-600 mb-6"><strong>Instruksi:</strong> Seret dan lepaskan senyawa ke dalam kategori yang benar (Organik atau Anorganik)!</p><!-- Drag Items -->
+     <div id="drag-container" class="flex flex-wrap gap-3 mb-8 justify-center p-4 bg-slate-100 rounded-xl">
+      <div class="drag-item bg-white px-4 py-3 rounded-xl shadow-md border-2 border-slate-200 hover:border-blue-400" draggable="true" data-type="anorganik" data-name="Air">
+       💧 Air (H₂O)
+      </div>
+      <div class="drag-item bg-white px-4 py-3 rounded-xl shadow-md border-2 border-slate-200 hover:border-blue-400" draggable="true" data-type="organik" data-name="Gula">
+       🍬 Gula (C₁₂H₂₂O₁₁)
+      </div>
+      <div class="drag-item bg-white px-4 py-3 rounded-xl shadow-md border-2 border-slate-200 hover:border-blue-400" draggable="true" data-type="anorganik" data-name="Garam">
+       🧂 Garam (NaCl)
+      </div>
+      <div class="drag-item bg-white px-4 py-3 rounded-xl shadow-md border-2 border-slate-200 hover:border-blue-400" draggable="true" data-type="organik" data-name="Vitamin D">
+       ☀️ Vitamin D
+      </div>
+      <div class="drag-item bg-white px-4 py-3 rounded-xl shadow-md border-2 border-slate-200 hover:border-blue-400" draggable="true" data-type="anorganik" data-name="Mg Hidroksida">
+       💊 Mg(OH)₂
+      </div>
+     </div><!-- Drop Zones -->
+     <div class="grid md:grid-cols-2 gap-6">
+      <div class="drop-zone p-6 rounded-2xl bg-green-50" id="drop-organik" data-accepts="organik">
+       <div class="text-center mb-4"><span class="text-4xl">🌿</span>
+        <h3 class="font-heading font-bold text-green-700 text-xl mt-2">Senyawa Organik</h3>
+        <p class="text-sm text-green-600">Mengandung karbon dari makhluk hidup</p>
+       </div>
+       <div id="organik-items" class="space-y-2 min-h-[60px]"></div>
+      </div>
+      <div class="drop-zone p-6 rounded-2xl bg-blue-50" id="drop-anorganik" data-accepts="anorganik">
+       <div class="text-center mb-4"><span class="text-4xl">🪨</span>
+        <h3 class="font-heading font-bold text-blue-700 text-xl mt-2">Senyawa Anorganik</h3>
+        <p class="text-sm text-blue-600">Tidak mengandung karbon atau dari mineral</p>
+       </div>
+       <div id="anorganik-items" class="space-y-2 min-h-[60px]"></div>
+      </div>
+     </div><!-- Activity Result -->
+     <div id="activity-result" class="mt-6 hidden">
+      <div class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white p-6 rounded-2xl text-center"><span class="text-4xl mb-2 block">🎉</span>
+       <h3 class="font-heading font-bold text-2xl mb-2">Luar Biasa!</h3>
+       <p>Kamu berhasil mengklasifikasikan semua senyawa dengan benar!</p>
+      </div>
+     </div><button id="reset-activity" class="mt-6 w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-6 rounded-xl transition-all"> 🔄 Reset Aktivitas </button>
+    </section><!-- Section 6: Quiz HOTS -->
+    <section id="quiz" class="section-card p-6 md:p-8">
+     <div class="flex items-center gap-3 mb-6">
+      <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center text-2xl shadow-lg">
+       📝
+      </div>
+      <div><span class="text-indigo-600 text-sm font-semibold">EVALUASI</span>
+       <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-800">Quiz HOTS (10 Soal)</h2>
+      </div>
+     </div><!-- Progress Bar -->
+     <div class="mb-6">
+      <div class="flex justify-between text-sm text-slate-600 mb-2"><span>Progres</span> <span id="quiz-progress-text">0/10</span>
+      </div>
+      <div class="h-3 bg-slate-200 rounded-full overflow-hidden">
+       <div id="quiz-progress-bar" class="progress-bar h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" style="width: 0%"></div>
+      </div>
+     </div><!-- Quiz Container -->
+     <div id="quiz-container"><!-- Questions will be loaded here -->
+     </div><!-- Quiz Navigation -->
+     <div id="quiz-nav" class="flex gap-4 mt-6"><button id="prev-btn" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-6 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled> ← Sebelumnya </button> <button id="next-btn" class="flex-1 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold py-3 px-6 rounded-xl transition-all"> Selanjutnya → </button>
+     </div><!-- Quiz Result -->
+     <div id="quiz-result" class="hidden mt-6">
+      <div id="result-card" class="p-8 rounded-2xl text-center">
+       <div id="result-emoji" class="text-6xl mb-4"></div>
+       <h3 id="result-title" class="font-heading font-bold text-2xl mb-2"></h3>
+       <p id="result-score" class="text-lg mb-4"></p>
+       <p id="result-message" class="text-sm opacity-80"></p>
+      </div><button id="retry-quiz" class="mt-4 w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold py-3 px-6 rounded-xl transition-all"> 🔄 Ulangi Quiz </button>
+     </div>
+    </section>
+   </main><!-- Footer -->
+   <footer class="hero-gradient py-8 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+     <div class="flex items-center justify-center gap-3 mb-4"><img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-16 h-16 rounded-full border-4 border-white/30 shadow-lg object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #3b82f6, #8b5cf6)'; this.alt='AM'; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨‍🏫</text></svg>';">
+      <div class="text-left">
+       <p class="text-white font-heading font-bold">Algian Manggara, S.Agr</p>
+       <p class="text-cyan-200 text-sm">Pengembang Media Pembelajaran</p>
+      </div>
+     </div>
+     <div class="border-t border-white/20 pt-4 mt-4">
+      <p class="text-cyan-100 text-sm">© 2026 Algian Manggara, S.Agr</p>
+      <p class="text-cyan-200/60 text-xs mt-1">Media Pembelajaran Interaktif - Mengenal Senyawa dalam Kehidupan</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Mengenal Senyawa dalam Kehidupan',
+      subtitle: 'Pelajari rahasia zat-zat kimia di sekitarmu dengan cara yang menyenangkan dan interaktif!',
+      primary_color: '#2563eb',
+      secondary_color: '#0891b2',
+      accent_color: '#f59e0b',
+      text_color: '#1e293b',
+      background_color: '#f0f9ff'
+    };
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+          document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => window.elementSdk.setConfig({ primary_color: value })
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => window.elementSdk.setConfig({ secondary_color: value })
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => window.elementSdk.setConfig({ accent_color: value })
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['main_title', config.main_title || defaultConfig.main_title],
+          ['subtitle', config.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
+
+    // Quiz Data - 10 HOTS Questions
+    const quizData = [
+      {
+        question: "Air (H₂O) terdiri dari unsur Hidrogen (gas mudah terbakar) dan Oksigen (gas pendukung pembakaran), namun air justru digunakan untuk memadamkan api. Fenomena ini menunjukkan bahwa...",
+        options: [
+          "Senyawa memiliki sifat yang sama dengan unsur penyusunnya",
+          "Senyawa memiliki sifat yang berbeda dari unsur penyusunnya",
+          "Unsur-unsur dalam senyawa tidak berikatan secara kimia",
+          "Air adalah campuran, bukan senyawa"
+        ],
+        correct: 1,
+        explanation: "Senyawa memiliki sifat yang BERBEDA total dari unsur penyusunnya. Ini adalah karakteristik utama senyawa yang membedakannya dari campuran biasa."
+      },
+      {
+        question: "Seorang siswa menemukan zat X yang tersusun dari atom karbon dan hidrogen, mudah terbakar, dan berasal dari organisme hidup. Berdasarkan ciri-ciri tersebut, zat X kemungkinan besar termasuk...",
+        options: [
+          "Senyawa anorganik karena mengandung karbon",
+          "Molekul unsur karena hanya terdiri dari dua jenis atom",
+          "Senyawa organik karena mengandung C, H dan berasal dari makhluk hidup",
+          "Senyawa anorganik karena mudah terbakar"
+        ],
+        correct: 2,
+        explanation: "Senyawa organik memiliki ciri: mengandung atom C dan H, berasal dari makhluk hidup, dan mudah terbakar. Semua ciri ini terpenuhi pada zat X."
+      },
+      {
+        question: "Perhatikan molekul berikut: O₂, H₂O, Cl₂, CO₂, N₂. Manakah yang merupakan molekul unsur?",
+        options: [
+          "H₂O, CO₂",
+          "O₂, Cl₂, N₂",
+          "H₂O, O₂, N₂",
+          "CO₂, Cl₂, O₂"
+        ],
+        correct: 1,
+        explanation: "Molekul unsur adalah molekul yang atom penyusunnya berasal dari UNSUR YANG SAMA. O₂ (oksigen+oksigen), Cl₂ (klor+klor), dan N₂ (nitrogen+nitrogen) adalah molekul unsur."
+      },
+      {
+        question: "Garam dapur (NaCl) termasuk senyawa anorganik. Jika kita bandingkan dengan gula (C₁₂H₂₂O₁₁), perbedaan mendasar yang membuat keduanya berbeda klasifikasi adalah...",
+        options: [
+          "Garam berasal dari laut, gula berasal dari tebu",
+          "Garam berbentuk kristal, gula berbentuk serbuk",
+          "Garam tidak mengandung karbon, gula mengandung karbon dari makhluk hidup",
+          "Garam asin, gula manis"
+        ],
+        correct: 2,
+        explanation: "Perbedaan utama senyawa organik dan anorganik adalah keberadaan atom KARBON dari makhluk hidup. Gula (C₁₂H₂₂O₁₁) mengandung karbon dari tebu/makhluk hidup, sedangkan garam (NaCl) tidak."
+      },
+      {
+        question: "Seseorang mengalami maag dan mengonsumsi obat yang mengandung Mg(OH)₂. Bagaimana mekanisme kerja senyawa ini dalam mengatasi maag?",
+        options: [
+          "Menambah produksi asam lambung",
+          "Menebalkan dinding lambung",
+          "Menetralkan kelebihan asam lambung",
+          "Membunuh bakteri penyebab maag"
+        ],
+        correct: 2,
+        explanation: "Magnesium Hidroksida (Mg(OH)₂) adalah senyawa basa yang bekerja sebagai antasida dengan MENETRALKAN kelebihan asam lambung (HCl) sehingga mengurangi rasa sakit akibat maag."
+      },
+      {
+        question: "Vitamin D (Kalsiferol) tersusun dari atom C, H, dan O. Mengapa vitamin D diklasifikasikan sebagai senyawa organik meskipun strukturnya kompleks?",
+        options: [
+          "Karena diproduksi oleh pabrik farmasi",
+          "Karena mengandung atom karbon dan berasal dari/dibutuhkan makhluk hidup",
+          "Karena berbentuk tablet atau kapsul",
+          "Karena tidak mengandung logam"
+        ],
+        correct: 1,
+        explanation: "Vitamin D adalah senyawa organik karena DUA alasan utama: (1) mengandung atom KARBON sebagai penyusun utama, dan (2) berkaitan dengan makhluk hidup (dihasilkan tubuh dan dibutuhkan untuk kesehatan)."
+      },
+      {
+        question: "Dalam laboratorium, seorang siswa ingin memisahkan air (H₂O) menjadi unsur-unsur penyusunnya. Metode yang TEPAT untuk melakukan hal tersebut adalah...",
+        options: [
+          "Penyaringan menggunakan kertas saring",
+          "Penguapan dengan memanaskan air",
+          "Elektrolisis menggunakan arus listrik",
+          "Destilasi untuk memisahkan komponen"
+        ],
+        correct: 2,
+        explanation: "Senyawa HANYA bisa diuraikan menjadi unsur-unsur penyusunnya melalui PROSES KIMIA. Elektrolisis adalah proses kimia yang menggunakan arus listrik untuk menguraikan air menjadi gas H₂ dan O₂."
+      },
+      {
+        question: "Glukosa (C₆H₁₂O₆) dan Air (H₂O) sama-sama mengandung atom hidrogen dan oksigen. Namun, glukosa termasuk organik sedangkan air termasuk anorganik. Hal ini karena...",
+        options: [
+          "Glukosa lebih manis daripada air",
+          "Glukosa mengandung atom karbon sebagai penyusun utama",
+          "Air lebih banyak ditemukan di alam",
+          "Glukosa berbentuk padat, air berbentuk cair"
+        ],
+        correct: 1,
+        explanation: "Penentu utama klasifikasi organik adalah KEBERADAAN ATOM KARBON sebagai penyusun utama. Glukosa (C₆H₁₂O₆) mengandung 6 atom karbon, sedangkan air (H₂O) tidak mengandung karbon sama sekali."
+      },
+      {
+        question: "Ozon (O₃) dan Oksigen (O₂) sama-sama tersusun dari atom oksigen saja. Keduanya disebut molekul unsur karena...",
+        options: [
+          "Keduanya adalah gas di suhu ruang",
+          "Atom-atom penyusunnya berasal dari unsur yang SAMA",
+          "Keduanya dibutuhkan untuk pernapasan",
+          "Keduanya tidak berwarna"
+        ],
+        correct: 1,
+        explanation: "Definisi molekul unsur adalah molekul yang atom-atom penyusunnya berasal dari UNSUR YANG SAMA. O₂ dan O₃ sama-sama hanya tersusun dari atom oksigen, sehingga keduanya adalah molekul unsur."
+      },
+      {
+        question: "Seorang peneliti menemukan senyawa baru dengan rumus XY₂ yang memiliki sifat sangat berbeda dari unsur X dan unsur Y. Berdasarkan hukum komposisi tetap, jika peneliti membuat senyawa XY₂ di laboratorium lain dengan bahan yang sama, hasilnya akan...",
+        options: [
+          "Berbeda karena lokasi pembuatan berbeda",
+          "Berbeda karena penelitinya berbeda",
+          "SAMA karena perbandingan unsur dalam senyawa selalu tetap",
+          "Bergantung pada cuaca saat pembuatan"
+        ],
+        correct: 2,
+        explanation: "Hukum KOMPOSISI TETAP menyatakan bahwa perbandingan jumlah unsur dalam senyawa SELALU TETAP, tidak bergantung pada cara pembuatan, lokasi, atau siapa yang membuatnya. Senyawa XY₂ akan selalu memiliki perbandingan X:Y = 1:2."
+      }
+    ];
+
+    // Quiz State
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+    let quizCompleted = false;
+
+    // Initialize Quiz
+    function initQuiz() {
+      currentQuestion = 0;
+      userAnswers = new Array(quizData.length).fill(null);
+      quizCompleted = false;
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('quiz-nav').classList.remove('hidden');
+      document.getElementById('quiz-container').classList.remove('hidden');
+      renderQuestion();
+      updateProgress();
+    }
+
+    // Render Question
+    function renderQuestion() {
+      const q = quizData[currentQuestion];
+      const container = document.getElementById('quiz-container');
+      
+      let optionsHTML = q.options.map((opt, idx) => {
+        let classes = 'quiz-option p-4 rounded-xl border-2 border-slate-200 bg-white';
+        let icon = String.fromCharCode(65 + idx);
+        
+        if (userAnswers[currentQuestion] !== null) {
+          if (idx === q.correct) {
+            classes = 'quiz-option p-4 rounded-xl border-2 correct';
+            icon = '✓';
+          } else if (idx === userAnswers[currentQuestion] && idx !== q.correct) {
+            classes = 'quiz-option p-4 rounded-xl border-2 incorrect';
+            icon = '✗';
+          }
+        } else if (userAnswers[currentQuestion] === idx) {
+          classes += ' selected';
+        }
+        
+        return `
+          <div class="${classes}" data-index="${idx}" onclick="selectAnswer(${idx})">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 flex-shrink-0 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-600">
+                ${icon}
+              </div>
+              <p class="text-slate-700">${opt}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      let explanationHTML = '';
+      if (userAnswers[currentQuestion] !== null) {
+        const isCorrect = userAnswers[currentQuestion] === q.correct;
+        explanationHTML = `
+          <div class="mt-4 p-4 rounded-xl ${isCorrect ? 'bg-green-50 border border-green-200' : 'bg-amber-50 border border-amber-200'}">
+            <p class="font-bold ${isCorrect ? 'text-green-700' : 'text-amber-700'} mb-2">
+              ${isCorrect ? '✓ Benar!' : '✗ Kurang Tepat'}
+            </p>
+            <p class="text-sm text-slate-600">${q.explanation}</p>
+          </div>
+        `;
+      }
+      
+      container.innerHTML = `
+        <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-2xl mb-6">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="bg-indigo-500 text-white text-sm font-bold px-3 py-1 rounded-full">
+              Soal ${currentQuestion + 1}
+            </span>
+            <span class="text-indigo-600 text-sm font-medium">HOTS</span>
+          </div>
+          <p class="text-lg text-slate-800 font-medium">${q.question}</p>
+        </div>
+        <div class="space-y-3">
+          ${optionsHTML}
+        </div>
+        ${explanationHTML}
+      `;
+      
+      // Update navigation buttons
+      document.getElementById('prev-btn').disabled = currentQuestion === 0;
+      
+      const nextBtn = document.getElementById('next-btn');
+      if (currentQuestion === quizData.length - 1) {
+        nextBtn.textContent = 'Selesai ✓';
+      } else {
+        nextBtn.textContent = 'Selanjutnya →';
+      }
+    }
+
+    // Select Answer
+    function selectAnswer(index) {
+      if (userAnswers[currentQuestion] !== null) return;
+      
+      userAnswers[currentQuestion] = index;
+      renderQuestion();
+      updateProgress();
+    }
+
+    // Update Progress
+    function updateProgress() {
+      const answered = userAnswers.filter(a => a !== null).length;
+      const percentage = (answered / quizData.length) * 100;
+      
+      document.getElementById('quiz-progress-bar').style.width = `${percentage}%`;
+      document.getElementById('quiz-progress-text').textContent = `${answered}/${quizData.length}`;
+    }
+
+    // Navigation
+    document.getElementById('prev-btn').addEventListener('click', () => {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    });
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    });
+
+    // Show Result
+    function showResult() {
+      const correct = userAnswers.filter((ans, idx) => ans === quizData[idx].correct).length;
+      const percentage = Math.round((correct / quizData.length) * 100);
+      
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-nav').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      
+      const resultCard = document.getElementById('result-card');
+      const emoji = document.getElementById('result-emoji');
+      const title = document.getElementById('result-title');
+      const score = document.getElementById('result-score');
+      const message = document.getElementById('result-message');
+      
+      if (percentage >= 80) {
+        resultCard.className = 'p-8 rounded-2xl text-center bg-gradient-to-br from-emerald-500 to-teal-500 text-white';
+        emoji.textContent = '🏆';
+        title.textContent = 'Luar Biasa!';
+        message.textContent = 'Kamu sangat menguasai materi tentang senyawa!';
+      } else if (percentage >= 60) {
+        resultCard.className = 'p-8 rounded-2xl text-center bg-gradient-to-br from-blue-500 to-indigo-500 text-white';
+        emoji.textContent = '👍';
+        title.textContent = 'Bagus!';
+        message.textContent = 'Pemahaman yang baik! Terus tingkatkan ya!';
+      } else if (percentage >= 40) {
+        resultCard.className = 'p-8 rounded-2xl text-center bg-gradient-to-br from-amber-500 to-orange-500 text-white';
+        emoji.textContent = '📚';
+        title.textContent = 'Cukup Baik';
+        message.textContent = 'Coba pelajari lagi materinya dan ulangi quiz!';
+      } else {
+        resultCard.className = 'p-8 rounded-2xl text-center bg-gradient-to-br from-rose-500 to-pink-500 text-white';
+        emoji.textContent = '💪';
+        title.textContent = 'Tetap Semangat!';
+        message.textContent = 'Baca kembali materi dengan teliti, kamu pasti bisa!';
+      }
+      
+      score.textContent = `Skor: ${correct}/${quizData.length} (${percentage}%)`;
+    }
+
+    document.getElementById('retry-quiz').addEventListener('click', initQuiz);
+
+    // Drag and Drop Activity
+    const dragItems = document.querySelectorAll('.drag-item');
+    const dropZones = document.querySelectorAll('.drop-zone');
+    let correctPlacements = 0;
+
+    dragItems.forEach(item => {
+      item.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', JSON.stringify({
+          type: item.dataset.type,
+          name: item.dataset.name,
+          html: item.outerHTML
+        }));
+        item.style.opacity = '0.5';
+      });
+      
+      item.addEventListener('dragend', (e) => {
+        item.style.opacity = '1';
+      });
+    });
+
+    dropZones.forEach(zone => {
+      zone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        zone.classList.add('drag-over');
+      });
+      
+      zone.addEventListener('dragleave', (e) => {
+        zone.classList.remove('drag-over');
+      });
+      
+      zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.classList.remove('drag-over');
+        
+        const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+        const accepts = zone.dataset.accepts;
+        
+        if (data.type === accepts) {
+          const itemContainer = zone.id === 'drop-organik' 
+            ? document.getElementById('organik-items')
+            : document.getElementById('anorganik-items');
+          
+          const newItem = document.createElement('div');
+          newItem.className = 'bg-white p-3 rounded-lg shadow-sm border-2 border-green-300 flex items-center justify-between';
+          newItem.innerHTML = `
+            <span>${data.name}</span>
+            <span class="text-green-500">✓</span>
+          `;
+          itemContainer.appendChild(newItem);
+          
+          // Remove from drag container
+          const originalItem = document.querySelector(`.drag-item[data-name="${data.name}"]`);
+          if (originalItem) {
+            originalItem.remove();
+          }
+          
+          correctPlacements++;
+          checkActivityComplete();
+        } else {
+          // Wrong placement feedback
+          zone.style.animation = 'shake 0.5s';
+          setTimeout(() => {
+            zone.style.animation = '';
+          }, 500);
+        }
+      });
+    });
+
+    function checkActivityComplete() {
+      if (correctPlacements === 5) {
+        document.getElementById('activity-result').classList.remove('hidden');
+      }
+    }
+
+    // Reset Activity
+    document.getElementById('reset-activity').addEventListener('click', () => {
+      correctPlacements = 0;
+      document.getElementById('activity-result').classList.add('hidden');
+      document.getElementById('organik-items').innerHTML = '';
+      document.getElementById('anorganik-items').innerHTML = '';
+      
+      const dragContainer = document.getElementById('drag-container');
+      dragContainer.innerHTML = `
+        <div class="drag-item bg-white px-4 py-3 rounded-xl shadow-md border-2 border-slate-200 hover:border-blue-400" draggable="true" data-type="anorganik" data-name="Air">
+          💧 Air (H₂O)
+        </div>
+        <div class="drag-item bg-white px-4 py-3 rounded-xl shadow-md border-2 border-slate-200 hover:border-blue-400" draggable="true" data-type="organik" data-name="Gula">
+          🍬 Gula (C₁₂H₂₂O₁₁)
+        </div>
+        <div class="drag-item bg-white px-4 py-3 rounded-xl shadow-md border-2 border-slate-200 hover:border-blue-400" draggable="true" data-type="anorganik" data-name="Garam">
+          🧂 Garam (NaCl)
+        </div>
+        <div class="drag-item bg-white px-4 py-3 rounded-xl shadow-md border-2 border-slate-200 hover:border-blue-400" draggable="true" data-type="organik" data-name="Vitamin D">
+          ☀️ Vitamin D
+        </div>
+        <div class="drag-item bg-white px-4 py-3 rounded-xl shadow-md border-2 border-slate-200 hover:border-blue-400" draggable="true" data-type="anorganik" data-name="Mg Hidroksida">
+          💊 Mg(OH)₂
+        </div>
+      `;
+      
+      // Reattach drag listeners
+      document.querySelectorAll('.drag-item').forEach(item => {
+        item.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', JSON.stringify({
+            type: item.dataset.type,
+            name: item.dataset.name,
+            html: item.outerHTML
+          }));
+          item.style.opacity = '0.5';
+        });
+        
+        item.addEventListener('dragend', (e) => {
+          item.style.opacity = '1';
+        });
+      });
+    });
+
+    // Initialize Quiz on Load
+    initQuiz();
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce4b750166562b7',t:'MTc3MTE1NzU3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

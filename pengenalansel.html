@@ -1,0 +1,1651 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pembelajaran Sel dan Mikroskop</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; padding: 0; }
+    
+    .font-heading { font-family: 'Playfair Display', serif; }
+    .font-body { font-family: 'Nunito', sans-serif; }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+    }
+    
+    .card-glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .cell-pattern {
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.05) 0%, transparent 70%);
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:hover, .nav-item.active {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+    }
+    
+    .section-card {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .section-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      background: #f0fdf4;
+      border-color: #22c55e;
+      transform: translateX(5px);
+    }
+    
+    .quiz-option.selected {
+      background: #dbeafe;
+      border-color: #3b82f6;
+    }
+    
+    .quiz-option.correct {
+      background: #dcfce7;
+      border-color: #22c55e;
+    }
+    
+    .quiz-option.incorrect {
+      background: #fee2e2;
+      border-color: #ef4444;
+    }
+    
+    .microscope-part {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .microscope-part:hover {
+      filter: brightness(1.1);
+      transform: scale(1.02);
+    }
+    
+    .microscope-part.highlighted {
+      filter: drop-shadow(0 0 10px #22c55e);
+    }
+    
+    .cell-animation {
+      animation: pulse-cell 3s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-cell {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+    
+    .float-animation {
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .tooltip {
+      position: absolute;
+      background: #1e293b;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 100;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    
+    .tooltip.show {
+      opacity: 1;
+    }
+    
+    .scroll-container {
+      scroll-behavior: smooth;
+    }
+    
+    .timeline-dot {
+      transition: all 0.3s ease;
+    }
+    
+    .timeline-dot:hover {
+      transform: scale(1.3);
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+    }
+
+    .illustration-container {
+      background: linear-gradient(145deg, #f8fafc, #e2e8f0);
+      border-radius: 16px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cell-membrane {
+      stroke-dasharray: 10 5;
+      animation: dash-flow 2s linear infinite;
+    }
+
+    @keyframes dash-flow {
+      to { stroke-dashoffset: -30; }
+    }
+
+    .organelle-hover:hover {
+      filter: brightness(1.2);
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+    }
+
+    .magnification-demo {
+      transition: transform 0.5s ease;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body">
+  <div id="app" class="h-full overflow-auto scroll-container gradient-bg cell-pattern"><!-- Header -->
+   <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-slate-700/50">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg">
+        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2" /> <circle cx="12" cy="12" r="4" stroke-width="2" /> <circle cx="12" cy="8" r="1.5" fill="currentColor" />
+        </svg>
+       </div>
+       <div>
+        <h1 id="main-title" class="font-heading text-xl md:text-2xl text-white font-bold">Pengenalan Sel</h1>
+        <p id="subtitle" class="text-green-400 text-sm">Sel dan Mikroskop</p>
+       </div>
+      </div>
+      <div class="hidden md:flex items-center gap-2 bg-slate-800/50 rounded-full px-4 py-2"><span class="text-slate-400 text-sm">Progress:</span>
+       <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
+        <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full" style="width: 0%"></div>
+       </div><span id="progress-text" class="text-green-400 text-sm font-semibold">0%</span>
+      </div>
+     </div>
+    </div>
+   </header><!-- Navigation -->
+   <nav class="sticky top-[72px] z-40 bg-slate-800/90 backdrop-blur-md border-b border-slate-700/50">
+    <div class="max-w-7xl mx-auto px-4 py-2 overflow-x-auto">
+     <div class="flex gap-2 min-w-max"><button onclick="scrollToSection('intro')" class="nav-item px-4 py-2 rounded-lg text-white text-sm font-medium bg-slate-700/50">🏠 Beranda</button> <button onclick="scrollToSection('teori-sel')" class="nav-item px-4 py-2 rounded-lg text-white text-sm font-medium bg-slate-700/50">🧬 Teori Sel</button> <button onclick="scrollToSection('sejarah')" class="nav-item px-4 py-2 rounded-lg text-white text-sm font-medium bg-slate-700/50">📜 Sejarah</button> <button onclick="scrollToSection('mikroskop')" class="nav-item px-4 py-2 rounded-lg text-white text-sm font-medium bg-slate-700/50">🔬 Mikroskop</button> <button onclick="scrollToSection('bagian')" class="nav-item px-4 py-2 rounded-lg text-white text-sm font-medium bg-slate-700/50">⚙️ Bagian</button> <button onclick="scrollToSection('perbesaran')" class="nav-item px-4 py-2 rounded-lg text-white text-sm font-medium bg-slate-700/50">🔍 Perbesaran</button> <button onclick="scrollToSection('praktikum')" class="nav-item px-4 py-2 rounded-lg text-white text-sm font-medium bg-slate-700/50">🧪 Praktikum</button> <button onclick="scrollToSection('tokoh')" class="nav-item px-4 py-2 rounded-lg text-white text-sm font-medium bg-slate-700/50">👨‍🔬 Tokoh</button> <button onclick="scrollToSection('quiz')" class="nav-item px-4 py-2 rounded-lg text-white text-sm font-medium bg-slate-700/50">📝 Kuis HOTS</button>
+     </div>
+    </div>
+   </nav><!-- Main Content -->
+   <main class="max-w-7xl mx-auto px-4 py-8 space-y-12"><!-- Section 1: Introduction -->
+    <section id="intro" class="section-card card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+     <div class="flex flex-col lg:flex-row gap-8 items-center">
+      <div class="flex-1 space-y-6">
+       <div class="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold"><span>📚</span> BAB 1 - PENGENALAN SEL
+       </div>
+       <h2 class="font-heading text-3xl md:text-4xl text-slate-800 font-bold leading-tight">Apa itu Sel?</h2><!-- Analogy Box -->
+       <div class="bg-gradient-to-r from-amber-50 to-orange-50 border-l-4 border-amber-500 p-5 rounded-r-xl">
+        <p class="text-amber-800 font-medium flex items-start gap-3"><span class="text-2xl">🏗️</span> <span><strong>Analogi:</strong> Jika sebuah bangunan tersusun dari batu bata dan semen, maka makhluk hidup tersusun dari unit-unit kecil yang disebut <strong>SEL</strong>.</span></p>
+       </div>
+       <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-5 rounded-xl border border-blue-200">
+        <h3 class="text-blue-800 font-bold text-lg mb-2">📖 Definisi</h3>
+        <p class="text-slate-700 leading-relaxed"><strong>Sel</strong> adalah unit atau bagian terkecil yang menyusun tubuh makhluk hidup. Seluruh makhluk hidup, baik yang berukuran besar seperti gajah maupun yang sangat kecil seperti bakteri, tersusun atas sel.</p>
+       </div>
+       <div class="grid grid-cols-2 gap-4">
+        <div class="bg-green-50 p-4 rounded-xl text-center border border-green-200">
+         <div class="text-3xl mb-2">
+          🐘
+         </div>
+         <p class="text-sm text-green-800 font-medium">Makhluk Besar</p>
+         <p class="text-xs text-green-600">Triliunan sel</p>
+        </div>
+        <div class="bg-purple-50 p-4 rounded-xl text-center border border-purple-200">
+         <div class="text-3xl mb-2">
+          🦠
+         </div>
+         <p class="text-sm text-purple-800 font-medium">Makhluk Kecil</p>
+         <p class="text-xs text-purple-600">Satu sel</p>
+        </div>
+       </div>
+      </div><!-- Cell Illustration -->
+      <div class="flex-1 illustration-container">
+       <svg viewbox="0 0 300 300" class="w-full max-w-md mx-auto cell-animation"><!-- Cell Membrane --> <ellipse cx="150" cy="150" rx="130" ry="120" fill="none" stroke="#22c55e" stroke-width="4" class="cell-membrane" /> <ellipse cx="150" cy="150" rx="125" ry="115" fill="#dcfce7" opacity="0.5" /> <!-- Cytoplasm texture --> <circle cx="80" cy="100" r="8" fill="#bbf7d0" opacity="0.6" /> <circle cx="200" cy="180" r="10" fill="#bbf7d0" opacity="0.6" /> <circle cx="100" cy="200" r="6" fill="#bbf7d0" opacity="0.6" /> <circle cx="220" cy="100" r="7" fill="#bbf7d0" opacity="0.6" /> <!-- Nucleus --> <ellipse cx="150" cy="140" rx="50" ry="45" fill="#3b82f6" opacity="0.3" class="organelle-hover" /> <ellipse cx="150" cy="140" rx="50" ry="45" fill="none" stroke="#2563eb" stroke-width="3" /> <!-- Nucleolus --> <circle cx="150" cy="140" r="15" fill="#1d4ed8" class="organelle-hover" /> <!-- Mitochondria --> <g class="organelle-hover float-animation">
+         <ellipse cx="80" cy="160" rx="25" ry="12" fill="#f59e0b" opacity="0.8" />
+         <path d="M60 160 Q70 155 80 160 Q90 165 100 160" stroke="#d97706" stroke-width="2" fill="none" />
+        </g> <g class="organelle-hover" style="animation: float 4s ease-in-out infinite 1s">
+         <ellipse cx="220" cy="140" rx="22" ry="10" fill="#f59e0b" opacity="0.8" />
+         <path d="M202 140 Q212 135 222 140 Q232 145 240 140" stroke="#d97706" stroke-width="2" fill="none" />
+        </g> <!-- Endoplasmic Reticulum --> <path d="M100 80 Q120 70 140 85 Q160 100 180 85 Q200 70 220 80" stroke="#a855f7" stroke-width="3" fill="none" opacity="0.7" class="organelle-hover" /> <path d="M90 210 Q110 220 130 205 Q150 190 170 205 Q190 220 210 210" stroke="#a855f7" stroke-width="3" fill="none" opacity="0.7" /> <!-- Ribosomes --> <circle cx="110" cy="75" r="4" fill="#ec4899" /> <circle cx="150" cy="90" r="4" fill="#ec4899" /> <circle cx="190" cy="80" r="4" fill="#ec4899" /> <circle cx="100" cy="215" r="4" fill="#ec4899" /> <circle cx="140" cy="200" r="4" fill="#ec4899" /> <circle cx="180" cy="210" r="4" fill="#ec4899" /> <!-- Golgi Apparatus --> <g class="organelle-hover" transform="translate(60, 120)">
+         <path d="M0 0 Q15 -5 30 0 Q45 5 60 0" stroke="#06b6d4" stroke-width="4" fill="none" />
+         <path d="M5 10 Q20 5 35 10 Q50 15 55 10" stroke="#06b6d4" stroke-width="4" fill="none" />
+         <path d="M10 20 Q25 15 40 20 Q55 25 50 20" stroke="#06b6d4" stroke-width="4" fill="none" />
+        </g> <!-- Labels --> <text x="150" y="145" text-anchor="middle" fill="#1e3a8a" font-size="10" font-weight="bold">
+         Inti Sel
+        </text> <text x="80" y="175" text-anchor="middle" fill="#92400e" font-size="8">
+         Mitokondria
+        </text> <text x="90" y="145" text-anchor="middle" fill="#0891b2" font-size="8">
+         Badan Golgi
+        </text>
+       </svg>
+       <div class="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
+        <div class="bg-green-100 p-2 rounded-lg">
+         <div class="w-3 h-3 bg-green-500 rounded-full mx-auto mb-1"></div><span class="text-green-700">Membran Sel</span>
+        </div>
+        <div class="bg-blue-100 p-2 rounded-lg">
+         <div class="w-3 h-3 bg-blue-500 rounded-full mx-auto mb-1"></div><span class="text-blue-700">Inti Sel</span>
+        </div>
+        <div class="bg-amber-100 p-2 rounded-lg">
+         <div class="w-3 h-3 bg-amber-500 rounded-full mx-auto mb-1"></div><span class="text-amber-700">Mitokondria</span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 2: Teori Sel -->
+    <section id="teori-sel" class="section-card card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+     <div class="text-center mb-8"><span class="inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">🧬 TEORI SEL</span>
+      <h2 class="font-heading text-3xl md:text-4xl text-slate-800 font-bold">Tiga Poin Utama Teori Sel</h2>
+      <p class="text-slate-600 mt-2">Dasar pemahaman tentang sel dalam biologi modern</p>
+     </div>
+     <div class="grid md:grid-cols-3 gap-6"><!-- Point 1 -->
+      <div class="group relative bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-2xl border-2 border-green-200 hover:border-green-400 transition-all hover:shadow-xl">
+       <div class="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
+        1
+       </div>
+       <div class="pt-4">
+        <div class="w-16 h-16 mx-auto mb-4 bg-green-200 rounded-full flex items-center justify-center">
+         <svg class="w-10 h-10 text-green-600" viewbox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+         </svg>
+        </div>
+        <h3 class="text-green-800 font-bold text-lg text-center mb-3">Penyusun Makhluk Hidup</h3>
+        <p class="text-green-700 text-center leading-relaxed"><strong>Seluruh makhluk hidup</strong> tersusun atas sel, baik yang bersel satu (uniseluler) maupun bersel banyak (multiseluler).</p>
+       </div><!-- Illustration -->
+       <div class="mt-4 flex justify-center gap-2">
+        <div class="w-8 h-8 bg-green-300 rounded-full flex items-center justify-center text-xs">
+         🦠
+        </div>
+        <div class="text-green-600">
+         →
+        </div>
+        <div class="flex">
+         <div class="w-6 h-6 bg-green-400 rounded-full -mr-1"></div>
+         <div class="w-6 h-6 bg-green-500 rounded-full -mr-1"></div>
+         <div class="w-6 h-6 bg-green-600 rounded-full"></div>
+        </div>
+       </div>
+      </div><!-- Point 2 -->
+      <div class="group relative bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-2xl border-2 border-blue-200 hover:border-blue-400 transition-all hover:shadow-xl">
+       <div class="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
+        2
+       </div>
+       <div class="pt-4">
+        <div class="w-16 h-16 mx-auto mb-4 bg-blue-200 rounded-full flex items-center justify-center">
+         <svg class="w-10 h-10 text-blue-600" viewbox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" />
+         </svg>
+        </div>
+        <h3 class="text-blue-800 font-bold text-lg text-center mb-3">Unit Struktur &amp; Fungsi</h3>
+        <p class="text-blue-700 text-center leading-relaxed">Sel adalah <strong>unit dasar</strong> dari struktur dan fungsi semua makhluk hidup. Setiap fungsi kehidupan terjadi di dalam sel.</p>
+       </div><!-- Illustration -->
+       <div class="mt-4 flex justify-center">
+        <div class="relative">
+         <div class="w-16 h-16 border-2 border-blue-400 rounded-full flex items-center justify-center bg-blue-100"><span class="text-xs text-blue-600 font-bold">Struktur</span>
+         </div>
+         <div class="absolute -bottom-2 -right-2 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center"><span class="text-xs text-white">⚡</span>
+         </div>
+        </div>
+       </div>
+      </div><!-- Point 3 -->
+      <div class="group relative bg-gradient-to-br from-purple-50 to-pink-100 p-6 rounded-2xl border-2 border-purple-200 hover:border-purple-400 transition-all hover:shadow-xl">
+       <div class="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
+        3
+       </div>
+       <div class="pt-4">
+        <div class="w-16 h-16 mx-auto mb-4 bg-purple-200 rounded-full flex items-center justify-center">
+         <svg class="w-10 h-10 text-purple-600" viewbox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
+         </svg>
+        </div>
+        <h3 class="text-purple-800 font-bold text-lg text-center mb-3">Asal-usul Sel</h3>
+        <p class="text-purple-700 text-center leading-relaxed">Seluruh sel berasal dari <strong>sel sebelumnya</strong> melalui proses pembelahan. Sel tidak muncul secara spontan.</p>
+       </div><!-- Illustration: Cell Division -->
+       <div class="mt-4 flex justify-center items-center gap-1">
+        <div class="w-10 h-10 bg-purple-300 rounded-full"></div><span class="text-purple-500">→</span>
+        <div class="flex -space-x-1">
+         <div class="w-7 h-7 bg-purple-400 rounded-full"></div>
+         <div class="w-7 h-7 bg-purple-500 rounded-full"></div>
+        </div><span class="text-purple-500">→</span>
+        <div class="flex flex-wrap w-12 gap-0.5">
+         <div class="w-3 h-3 bg-purple-400 rounded-full"></div>
+         <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
+         <div class="w-3 h-3 bg-purple-400 rounded-full"></div>
+         <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Interactive Summary -->
+     <div class="mt-8 bg-gradient-to-r from-slate-100 to-slate-50 p-6 rounded-2xl border border-slate-200">
+      <h4 class="text-slate-800 font-bold text-lg mb-4 flex items-center gap-2"><span>💡</span> Rangkuman Interaktif</h4>
+      <p class="text-slate-700 leading-relaxed">Teori sel dikembangkan oleh beberapa ilmuwan, termasuk <strong>Matthias Schleiden</strong> (1838) yang mempelajari sel tumbuhan, <strong>Theodor Schwann</strong> (1839) yang mempelajari sel hewan, dan <strong>Rudolf Virchow</strong> (1855) yang menyatakan bahwa sel berasal dari sel sebelumnya dengan ungkapan terkenal: <em>"Omnis cellula e cellula"</em> (Semua sel berasal dari sel).</p>
+     </div>
+    </section><!-- Section 3: Sejarah Penemuan -->
+    <section id="sejarah" class="section-card card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+     <div class="text-center mb-8"><span class="inline-block bg-amber-100 text-amber-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">📜 SEJARAH</span>
+      <h2 class="font-heading text-3xl md:text-4xl text-slate-800 font-bold">Penemuan Sel &amp; Mikroskop</h2>
+      <p class="text-slate-600 mt-2">Perjalanan ilmuwan dalam mengungkap dunia mikroskopis</p>
+     </div><!-- Timeline -->
+     <div class="relative"><!-- Timeline Line -->
+      <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-amber-400 via-green-400 to-blue-400 rounded-full"></div>
+      <div class="space-y-8 md:space-y-0"><!-- Robert Hooke -->
+       <div class="relative md:flex md:items-center md:justify-between mb-8">
+        <div class="md:w-5/12 mb-4 md:mb-0">
+         <div class="bg-gradient-to-br from-amber-50 to-orange-100 p-6 rounded-2xl border border-amber-200 shadow-lg">
+          <div class="flex items-center gap-4 mb-4">
+           <div class="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-2xl">🔬</span>
+           </div>
+           <div>
+            <h3 class="font-bold text-xl text-amber-800">Robert Hooke</h3>
+            <p class="text-amber-600">Ilmuwan Inggris • 1663</p>
+           </div>
+          </div>
+          <p class="text-slate-700 leading-relaxed mb-4">Mengamati <strong>sayatan gabus</strong> (kulit pohon ek) di bawah mikroskop dan menemukan kotak-kotak kecil yang menyerupai ruangan-ruangan kecil. Ia menamakannya <strong>"cellulae"</strong> atau sel (dari bahasa Latin yang berarti ruangan kecil).</p><!-- Cork Cell Illustration -->
+          <div class="bg-white p-4 rounded-xl">
+           <svg viewbox="0 0 200 100" class="w-full"><rect x="10" y="10" width="25" height="25" fill="none" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="35" y="10" width="25" height="25" fill="none" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="60" y="10" width="25" height="25" fill="none" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="85" y="10" width="25" height="25" fill="none" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="110" y="10" width="25" height="25" fill="none" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="135" y="10" width="25" height="25" fill="none" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="160" y="10" width="25" height="25" fill="none" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="10" y="35" width="25" height="25" fill="none" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="35" y="35" width="25" height="25" fill="#fef3c7" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="60" y="35" width="25" height="25" fill="#fef3c7" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="85" y="35" width="25" height="25" fill="none" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="110" y="35" width="25" height="25" fill="#fef3c7" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="135" y="35" width="25" height="25" fill="none" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="160" y="35" width="25" height="25" fill="none" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="10" y="60" width="25" height="25" fill="none" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="35" y="60" width="25" height="25" fill="none" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="60" y="60" width="25" height="25" fill="none" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="85" y="60" width="25" height="25" fill="#fef3c7" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="110" y="60" width="25" height="25" fill="none" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="135" y="60" width="25" height="25" fill="#fef3c7" stroke="#d97706" stroke-width="2" rx="2" /> <rect x="160" y="60" width="25" height="25" fill="none" stroke="#d97706" stroke-width="2" rx="2" /> <text x="100" y="98" text-anchor="middle" fill="#92400e" font-size="10">
+             Sel-sel gabus (Cork cells)
+            </text>
+           </svg>
+          </div>
+         </div>
+        </div><!-- Timeline Dot -->
+        <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-amber-500 rounded-full items-center justify-center border-4 border-white shadow-lg timeline-dot z-10"><span class="text-white text-xs font-bold">1</span>
+        </div>
+        <div class="md:w-5/12"></div>
+       </div><!-- Antonie Van Leeuwenhoek -->
+       <div class="relative md:flex md:items-center md:justify-between">
+        <div class="md:w-5/12"></div><!-- Timeline Dot -->
+        <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-green-500 rounded-full items-center justify-center border-4 border-white shadow-lg timeline-dot z-10"><span class="text-white text-xs font-bold">2</span>
+        </div>
+        <div class="md:w-5/12">
+         <div class="bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-2xl border border-green-200 shadow-lg">
+          <div class="flex items-center gap-4 mb-4">
+           <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-lg"><span class="text-2xl">🌊</span>
+           </div>
+           <div>
+            <h3 class="font-bold text-xl text-green-800">Antonie Van Leeuwenhoek</h3>
+            <p class="text-green-600">Ilmuwan Belanda • 1674</p>
+           </div>
+          </div>
+          <p class="text-slate-700 leading-relaxed mb-4">Mengamati <strong>air danau</strong> dan menemukan organisme kecil bergerak-gerak yang ia sebut <strong>"animalcula"</strong> (hewan kecil). Ia juga pertama kali mengamati bakteri, sperma, dan sel darah merah.</p><!-- Animalcula Illustration -->
+          <div class="bg-white p-4 rounded-xl">
+           <svg viewbox="0 0 200 100" class="w-full"><!-- Water Background --> <rect x="0" y="0" width="200" height="100" fill="#e0f2fe" rx="8" /> <!-- Organisms --> <g class="float-animation"><!-- Paramecium-like -->
+             <ellipse cx="40" cy="40" rx="18" ry="8" fill="#22c55e" opacity="0.8" />
+             <circle cx="35" cy="40" r="3" fill="#15803d" />
+             <path d="M25 40 Q20 35 18 40 Q20 45 25 40" stroke="#22c55e" stroke-width="1" fill="none" />
+            </g> <g style="animation: float 3s ease-in-out infinite 0.5s"><!-- Amoeba-like -->
+             <path d="M80 60 Q70 50 85 45 Q100 40 105 55 Q110 70 95 75 Q80 80 75 70 Q70 60 80 60" fill="#3b82f6" opacity="0.7" />
+             <circle cx="88" cy="58" r="5" fill="#1d4ed8" />
+            </g> <g style="animation: float 4s ease-in-out infinite 1s"><!-- Bacteria-like -->
+             <ellipse cx="150" cy="35" rx="12" ry="5" fill="#a855f7" opacity="0.8" />
+             <line x1="140" y1="32" x2="135" y2="28" stroke="#a855f7" stroke-width="1" />
+             <line x1="160" y1="38" x2="165" y2="42" stroke="#a855f7" stroke-width="1" />
+            </g> <g style="animation: float 3.5s ease-in-out infinite 1.5s"><!-- Round organism -->
+             <circle cx="170" cy="70" r="10" fill="#f59e0b" opacity="0.7" />
+             <circle cx="168" cy="68" r="3" fill="#d97706" />
+            </g> <!-- Small organisms --> <circle cx="60" cy="80" r="3" fill="#22c55e" opacity="0.6" /> <circle cx="120" cy="25" r="2" fill="#3b82f6" opacity="0.6" /> <circle cx="130" cy="85" r="4" fill="#a855f7" opacity="0.6" /> <text x="100" y="98" text-anchor="middle" fill="#0369a1" font-size="10">
+             Animalcula dalam air danau
+            </text>
+           </svg>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Fun Fact -->
+     <div class="mt-8 bg-gradient-to-r from-indigo-100 to-purple-100 p-6 rounded-2xl border border-indigo-200">
+      <h4 class="text-indigo-800 font-bold text-lg mb-2 flex items-center gap-2"><span>🎯</span> Tahukah Kamu?</h4>
+      <p class="text-indigo-700">Leeuwenhoek membuat lebih dari <strong>500 mikroskop</strong> selama hidupnya! Mikroskopnya sangat kecil dan sederhana, tetapi mampu memperbesar objek hingga <strong>270 kali</strong>. Ia tidak pernah mengungkapkan rahasia cara membuat lensanya yang sangat jernih.</p>
+     </div>
+    </section><!-- Section 4: Jenis Mikroskop -->
+    <section id="mikroskop" class="section-card card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+     <div class="text-center mb-8"><span class="inline-block bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">🔬 JENIS MIKROSKOP</span>
+      <h2 class="font-heading text-3xl md:text-4xl text-slate-800 font-bold">Mengenal Jenis-Jenis Mikroskop</h2>
+      <p class="text-slate-600 mt-2">Alat bantu untuk melihat benda mikroskopis</p>
+     </div><!-- Tabs -->
+     <div class="flex flex-wrap justify-center gap-2 mb-8"><button onclick="switchMicroscopeTab('cahaya')" id="tab-cahaya" class="tab-btn px-6 py-3 rounded-xl font-semibold transition-all active bg-slate-200 text-slate-700"> 💡 Mikroskop Cahaya </button> <button onclick="switchMicroscopeTab('elektron')" id="tab-elektron" class="tab-btn px-6 py-3 rounded-xl font-semibold transition-all bg-slate-200 text-slate-700"> ⚡ Mikroskop Elektron </button>
+     </div><!-- Mikroskop Cahaya Content -->
+     <div id="content-cahaya" class="space-y-6">
+      <div class="bg-gradient-to-r from-yellow-50 to-amber-50 p-6 rounded-2xl border border-yellow-200">
+       <div class="flex flex-col lg:flex-row gap-8">
+        <div class="flex-1 space-y-4">
+         <h3 class="text-2xl font-bold text-amber-800">Mikroskop Cahaya</h3>
+         <p class="text-slate-700 leading-relaxed">Mikroskop cahaya menggunakan <strong>cahaya</strong> dan <strong>lensa</strong> untuk memperbesar bayangan objek. Jenis mikroskop ini paling umum digunakan di sekolah dan laboratorium.</p>
+         <div class="bg-white p-4 rounded-xl border border-amber-200">
+          <h4 class="font-bold text-amber-700 mb-3">📊 Perbesaran</h4>
+          <p class="text-slate-600">Hingga <strong>1.000 - 2.000 kali</strong></p>
+         </div>
+         <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white p-4 rounded-xl border border-amber-200">
+           <div class="text-3xl mb-2">
+            👁️
+           </div>
+           <h4 class="font-bold text-amber-700">Monokuler</h4>
+           <p class="text-sm text-slate-600">Memiliki <strong>satu</strong> lensa okuler</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border border-amber-200">
+           <div class="text-3xl mb-2">
+            👀
+           </div>
+           <h4 class="font-bold text-amber-700">Binokuler</h4>
+           <p class="text-sm text-slate-600">Memiliki <strong>dua</strong> lensa okuler</p>
+          </div>
+         </div>
+        </div><!-- Microscope Comparison Illustration -->
+        <div class="flex-1">
+         <div class="bg-white p-4 rounded-xl">
+          <svg viewbox="0 0 300 200" class="w-full"><!-- Monocular Microscope --> <g transform="translate(30, 10)"><!-- Base -->
+            <rect x="20" y="160" width="60" height="15" fill="#4b5563" rx="3" /> <!-- Arm -->
+            <path d="M50 160 L50 60 Q50 40 60 30 L60 10" stroke="#6b7280" stroke-width="8" fill="none" /> <!-- Stage -->
+            <rect x="25" y="110" width="50" height="5" fill="#374151" /> <!-- Objective -->
+            <rect x="45" y="80" width="12" height="25" fill="#3b82f6" rx="2" /> <!-- Single Eyepiece -->
+            <rect x="55" y="5" width="15" height="25" fill="#1f2937" rx="3" />
+            <ellipse cx="62" cy="5" rx="6" ry="3" fill="#374151" />
+            <text x="50" y="195" text-anchor="middle" fill="#4b5563" font-size="12" font-weight="bold">
+             Monokuler
+            </text>
+           </g> <!-- Binocular Microscope --> <g transform="translate(170, 10)"><!-- Base -->
+            <rect x="10" y="160" width="80" height="15" fill="#4b5563" rx="3" /> <!-- Arm -->
+            <path d="M50 160 L50 60 Q50 40 60 30" stroke="#6b7280" stroke-width="8" fill="none" /> <!-- Stage -->
+            <rect x="15" y="110" width="70" height="5" fill="#374151" /> <!-- Objectives -->
+            <rect x="42" y="80" width="16" height="25" fill="#3b82f6" rx="2" /> <!-- Binocular Head -->
+            <path d="M60 30 L40 10 M60 30 L80 10" stroke="#1f2937" stroke-width="6" /> <!-- Two Eyepieces -->
+            <rect x="32" y="0" width="12" height="20" fill="#1f2937" rx="2" />
+            <rect x="72" y="0" width="12" height="20" fill="#1f2937" rx="2" />
+            <ellipse cx="38" cy="0" rx="5" ry="2" fill="#374151" />
+            <ellipse cx="78" cy="0" rx="5" ry="2" fill="#374151" />
+            <text x="50" y="195" text-anchor="middle" fill="#4b5563" font-size="12" font-weight="bold">
+             Binokuler
+            </text>
+           </g> <!-- Light rays --> <path d="M80 180 L80 130" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4" /> <path d="M220 180 L220 130" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4" />
+          </svg>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Mikroskop Elektron Content -->
+     <div id="content-elektron" class="space-y-6 hidden">
+      <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-2xl border border-indigo-200">
+       <div class="flex flex-col lg:flex-row gap-8">
+        <div class="flex-1 space-y-4">
+         <h3 class="text-2xl font-bold text-indigo-800">Mikroskop Elektron</h3>
+         <p class="text-slate-700 leading-relaxed">Mikroskop elektron menggunakan <strong>radiasi elektron</strong> sebagai pengganti cahaya. Mampu memperbesar objek dengan detail yang sangat jelas dan resolusi tinggi.</p>
+         <div class="bg-white p-4 rounded-xl border border-indigo-200">
+          <h4 class="font-bold text-indigo-700 mb-3">📊 Perbesaran</h4>
+          <p class="text-slate-600">Hingga <strong>1.000.000 kali</strong> (satu juta kali!)</p>
+         </div>
+         <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white p-4 rounded-xl border border-indigo-200">
+           <div class="text-3xl mb-2">
+            📷
+           </div>
+           <h4 class="font-bold text-indigo-700">SEM</h4>
+           <p class="text-sm text-slate-600">Scanning Electron Microscope - melihat permukaan 3D</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border border-indigo-200">
+           <div class="text-3xl mb-2">
+            🔍
+           </div>
+           <h4 class="font-bold text-indigo-700">TEM</h4>
+           <p class="text-sm text-slate-600">Transmission EM - melihat struktur internal</p>
+          </div>
+         </div>
+        </div><!-- Electron Microscope Illustration -->
+        <div class="flex-1">
+         <div class="bg-white p-4 rounded-xl">
+          <svg viewbox="0 0 200 200" class="w-full"><!-- Main Body --> <rect x="60" y="20" width="80" height="150" fill="#374151" rx="8" /> <rect x="70" y="30" width="60" height="40" fill="#1f2937" rx="4" /> <!-- Electron Source --> <circle cx="100" cy="50" r="8" fill="#8b5cf6" /> <path d="M100 58 L100 80" stroke="#a78bfa" stroke-width="2" stroke-dasharray="3" /> <!-- Magnetic Lenses --> <rect x="75" y="85" width="50" height="10" fill="#6366f1" rx="2" /> <rect x="75" y="105" width="50" height="10" fill="#6366f1" rx="2" /> <rect x="75" y="125" width="50" height="10" fill="#6366f1" rx="2" /> <!-- Screen/Detector --> <rect x="75" y="145" width="50" height="15" fill="#22c55e" rx="2" /> <!-- Control Panel --> <rect x="145" y="60" width="35" height="80" fill="#4b5563" rx="4" /> <circle cx="162" cy="75" r="5" fill="#ef4444" /> <circle cx="162" cy="90" r="5" fill="#22c55e" /> <rect x="152" y="100" width="20" height="30" fill="#1f2937" rx="2" /> <!-- Labels --> <text x="100" y="190" text-anchor="middle" fill="#4b5563" font-size="11" font-weight="bold">
+            Mikroskop Elektron
+           </text> <!-- Electron beam glow --> <path d="M100 58 L100 145" stroke="#a78bfa" stroke-width="1" opacity="0.5">
+            <animate attributename="opacity" values="0.3;0.8;0.3" dur="1.5s" repeatcount="indefinite" />
+           </path>
+          </svg>
+         </div>
+        </div>
+       </div>
+      </div><!-- Comparison Table -->
+      <div class="bg-white p-4 rounded-xl border border-slate-200 overflow-x-auto">
+       <table class="w-full text-sm">
+        <thead>
+         <tr class="bg-slate-100">
+          <th class="p-3 text-left font-bold text-slate-700">Aspek</th>
+          <th class="p-3 text-left font-bold text-amber-700">Mikroskop Cahaya</th>
+          <th class="p-3 text-left font-bold text-indigo-700">Mikroskop Elektron</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr class="border-b">
+          <td class="p-3 font-medium">Sumber</td>
+          <td class="p-3">Cahaya tampak</td>
+          <td class="p-3">Berkas elektron</td>
+         </tr>
+         <tr class="border-b bg-slate-50">
+          <td class="p-3 font-medium">Perbesaran</td>
+          <td class="p-3">~2.000x</td>
+          <td class="p-3">~1.000.000x</td>
+         </tr>
+         <tr class="border-b">
+          <td class="p-3 font-medium">Spesimen</td>
+          <td class="p-3">Hidup/mati</td>
+          <td class="p-3">Harus mati &amp; kering</td>
+         </tr>
+         <tr class="border-b bg-slate-50">
+          <td class="p-3 font-medium">Warna</td>
+          <td class="p-3">Warna asli</td>
+          <td class="p-3">Hitam putih</td>
+         </tr>
+         <tr>
+          <td class="p-3 font-medium">Harga</td>
+          <td class="p-3">Terjangkau</td>
+          <td class="p-3">Sangat mahal</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </section><!-- Section 5: Bagian-Bagian Mikroskop -->
+    <section id="bagian" class="section-card card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+     <div class="text-center mb-8"><span class="inline-block bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">⚙️ BAGIAN MIKROSKOP</span>
+      <h2 class="font-heading text-3xl md:text-4xl text-slate-800 font-bold">Bagian-Bagian Mikroskop Cahaya</h2>
+      <p class="text-slate-600 mt-2">Klik pada bagian mikroskop untuk mempelajari fungsinya</p>
+     </div>
+     <div class="flex flex-col lg:flex-row gap-8"><!-- Interactive Microscope Diagram -->
+      <div class="flex-1 bg-gradient-to-br from-slate-50 to-slate-100 p-6 rounded-2xl">
+       <svg viewbox="0 0 300 400" class="w-full max-w-md mx-auto" id="microscope-diagram"><!-- Base --> <g class="microscope-part" data-part="kaki" onclick="showPartInfo('kaki')">
+         <rect x="80" y="340" width="140" height="25" fill="#374151" rx="5" />
+         <text x="150" y="357" text-anchor="middle" fill="white" font-size="10">
+          Kaki
+         </text>
+        </g> <!-- Arm --> <g class="microscope-part" data-part="lengan" onclick="showPartInfo('lengan')">
+         <path d="M150 340 L150 120 Q150 80 170 60 L170 30" stroke="#4b5563" stroke-width="20" fill="none" stroke-linecap="round" />
+         <text x="120" y="200" fill="#4b5563" font-size="10" transform="rotate(-90, 120, 200)">
+          Lengan
+         </text>
+        </g> <!-- Eyepiece / Okuler --> <g class="microscope-part" data-part="okuler" onclick="showPartInfo('okuler')">
+         <rect x="158" y="15" width="30" height="45" fill="#1f2937" rx="5" />
+         <ellipse cx="173" cy="15" rx="12" ry="5" fill="#374151" />
+         <text x="200" y="40" fill="#1f2937" font-size="10">
+          Okuler
+         </text>
+        </g> <!-- Tube --> <g class="microscope-part" data-part="tabung" onclick="showPartInfo('tabung')">
+         <rect x="163" y="55" width="20" height="50" fill="#6b7280" />
+         <text x="195" y="85" fill="#4b5563" font-size="10">
+          Tabung
+         </text>
+        </g> <!-- Revolver --> <g class="microscope-part" data-part="revolver" onclick="showPartInfo('revolver')">
+         <circle cx="173" cy="120" r="20" fill="#9ca3af" />
+         <text x="205" y="125" fill="#4b5563" font-size="10">
+          Revolver
+         </text>
+        </g> <!-- Objective Lenses --> <g class="microscope-part" data-part="objektif" onclick="showPartInfo('objektif')">
+         <rect x="155" y="140" width="12" height="30" fill="#3b82f6" rx="2" />
+         <rect x="170" y="140" width="12" height="40" fill="#22c55e" rx="2" />
+         <rect x="185" y="140" width="12" height="50" fill="#ef4444" rx="2" />
+         <text x="220" y="165" fill="#4b5563" font-size="10">
+          Objektif
+         </text>
+        </g> <!-- Stage --> <g class="microscope-part" data-part="meja" onclick="showPartInfo('meja')">
+         <rect x="100" y="200" width="100" height="10" fill="#374151" />
+         <rect x="145" y="195" width="10" height="20" fill="#1f2937" />
+         <text x="95" y="210" fill="#4b5563" font-size="10" text-anchor="end">
+          Meja Objek
+         </text>
+        </g> <!-- Stage Clips --> <g class="microscope-part" data-part="penjepit" onclick="showPartInfo('penjepit')">
+         <rect x="115" y="195" width="20" height="5" fill="#6b7280" rx="1" />
+         <rect x="165" y="195" width="20" height="5" fill="#6b7280" rx="1" />
+        </g> <!-- Condenser --> <g class="microscope-part" data-part="kondensor" onclick="showPartInfo('kondensor')">
+         <ellipse cx="150" cy="230" rx="25" ry="10" fill="#60a5fa" />
+         <text x="95" y="235" fill="#4b5563" font-size="10" text-anchor="end">
+          Kondensor
+         </text>
+        </g> <!-- Diaphragm --> <g class="microscope-part" data-part="diafragma" onclick="showPartInfo('diafragma')">
+         <rect x="135" y="245" width="30" height="8" fill="#94a3b8" rx="2" />
+         <text x="95" y="252" fill="#4b5563" font-size="10" text-anchor="end">
+          Diafragma
+         </text>
+        </g> <!-- Mirror/Light --> <g class="microscope-part" data-part="cermin" onclick="showPartInfo('cermin')">
+         <ellipse cx="150" cy="290" rx="30" ry="15" fill="#fbbf24" />
+         <text x="95" y="295" fill="#4b5563" font-size="10" text-anchor="end">
+          Cermin/Lampu
+         </text>
+        </g> <!-- Coarse Focus (Makrometer) --> <g class="microscope-part" data-part="makrometer" onclick="showPartInfo('makrometer')">
+         <circle cx="115" cy="170" r="15" fill="#6b7280" />
+         <circle cx="115" cy="170" r="8" fill="#4b5563" />
+         <text x="85" y="175" fill="#4b5563" font-size="9" text-anchor="end">
+          Makrometer
+         </text>
+        </g> <!-- Fine Focus (Mikrometer) --> <g class="microscope-part" data-part="mikrometer" onclick="showPartInfo('mikrometer')">
+         <circle cx="115" cy="200" r="10" fill="#9ca3af" />
+         <circle cx="115" cy="200" r="5" fill="#6b7280" />
+         <text x="85" y="205" fill="#4b5563" font-size="9" text-anchor="end">
+          Mikrometer
+         </text>
+        </g>
+       </svg>
+      </div><!-- Part Information Panel -->
+      <div class="flex-1">
+       <div id="part-info" class="bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-2xl border border-green-200 min-h-[300px]">
+        <div class="text-center text-slate-500">
+         <div class="text-6xl mb-4">
+          👆
+         </div>
+         <p class="text-lg">Klik pada bagian mikroskop di sebelah kiri untuk melihat informasi lengkapnya</p>
+        </div>
+       </div><!-- Quick Reference -->
+       <div class="mt-6 bg-white p-4 rounded-xl border border-slate-200">
+        <h4 class="font-bold text-slate-700 mb-3">📋 Ringkasan Fungsi Utama</h4>
+        <div class="grid grid-cols-2 gap-2 text-sm">
+         <div class="flex items-center gap-2 p-2 bg-blue-50 rounded-lg">
+          <div class="w-3 h-3 bg-blue-500 rounded-full"></div><span>Okuler: Perbesaran akhir</span>
+         </div>
+         <div class="flex items-center gap-2 p-2 bg-green-50 rounded-lg">
+          <div class="w-3 h-3 bg-green-500 rounded-full"></div><span>Objektif: Perbesaran utama</span>
+         </div>
+         <div class="flex items-center gap-2 p-2 bg-amber-50 rounded-lg">
+          <div class="w-3 h-3 bg-amber-500 rounded-full"></div><span>Makrometer: Fokus kasar</span>
+         </div>
+         <div class="flex items-center gap-2 p-2 bg-purple-50 rounded-lg">
+          <div class="w-3 h-3 bg-purple-500 rounded-full"></div><span>Mikrometer: Fokus halus</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 6: Perbesaran -->
+    <section id="perbesaran" class="section-card card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+     <div class="text-center mb-8"><span class="inline-block bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">🔍 PERBESARAN</span>
+      <h2 class="font-heading text-3xl md:text-4xl text-slate-800 font-bold">Menghitung Perbesaran Total</h2>
+      <p class="text-slate-600 mt-2">Simulasi interaktif perhitungan perbesaran mikroskop</p>
+     </div><!-- Formula Box -->
+     <div class="bg-gradient-to-r from-orange-100 to-amber-100 p-6 rounded-2xl border-2 border-orange-300 mb-8">
+      <div class="text-center">
+       <h3 class="text-2xl font-bold text-orange-800 mb-4">📐 Rumus Perbesaran</h3>
+       <div class="bg-white p-6 rounded-xl inline-block shadow-lg">
+        <p class="text-3xl font-bold text-slate-800"><span class="text-orange-600">Perbesaran Total</span> = <span class="text-blue-600">Okuler</span> × <span class="text-green-600">Objektif</span></p>
+       </div>
+      </div>
+     </div><!-- Interactive Calculator -->
+     <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-lg">
+      <h3 class="text-xl font-bold text-slate-800 mb-6 text-center">🧮 Kalkulator Perbesaran Interaktif</h3>
+      <div class="flex flex-col md:flex-row gap-8 items-center justify-center"><!-- Ocular Selection -->
+       <div class="text-center"><label class="block text-blue-700 font-bold mb-3">Lensa Okuler</label>
+        <div class="flex gap-2 justify-center flex-wrap"><button onclick="setOcular(5)" class="ocular-btn px-4 py-2 rounded-lg border-2 border-blue-300 bg-blue-50 hover:bg-blue-200 transition-all" data-value="5">5x</button> <button onclick="setOcular(10)" class="ocular-btn px-4 py-2 rounded-lg border-2 border-blue-500 bg-blue-100 hover:bg-blue-200 transition-all active-lens" data-value="10">10x</button> <button onclick="setOcular(15)" class="ocular-btn px-4 py-2 rounded-lg border-2 border-blue-300 bg-blue-50 hover:bg-blue-200 transition-all" data-value="15">15x</button>
+        </div>
+        <div id="ocular-display" class="mt-3 text-3xl font-bold text-blue-600">
+         10x
+        </div>
+       </div><!-- Multiplication Symbol -->
+       <div class="text-4xl font-bold text-slate-400">
+        ×
+       </div><!-- Objective Selection -->
+       <div class="text-center"><label class="block text-green-700 font-bold mb-3">Lensa Objektif</label>
+        <div class="flex gap-2 justify-center flex-wrap"><button onclick="setObjective(4)" class="objective-btn px-4 py-2 rounded-lg border-2 border-green-300 bg-green-50 hover:bg-green-200 transition-all" data-value="4">4x</button> <button onclick="setObjective(10)" class="objective-btn px-4 py-2 rounded-lg border-2 border-green-300 bg-green-50 hover:bg-green-200 transition-all" data-value="10">10x</button> <button onclick="setObjective(40)" class="objective-btn px-4 py-2 rounded-lg border-2 border-green-500 bg-green-100 hover:bg-green-200 transition-all active-lens" data-value="40">40x</button> <button onclick="setObjective(100)" class="objective-btn px-4 py-2 rounded-lg border-2 border-green-300 bg-green-50 hover:bg-green-200 transition-all" data-value="100">100x</button>
+        </div>
+        <div id="objective-display" class="mt-3 text-3xl font-bold text-green-600">
+         40x
+        </div>
+       </div><!-- Equals Symbol -->
+       <div class="text-4xl font-bold text-slate-400">
+        =
+       </div><!-- Result -->
+       <div class="text-center bg-gradient-to-br from-orange-100 to-amber-100 p-6 rounded-2xl"><label class="block text-orange-700 font-bold mb-3">Perbesaran Total</label>
+        <div id="magnification-result" class="text-5xl font-bold text-orange-600">
+         400x
+        </div>
+       </div>
+      </div><!-- Visual Demo -->
+      <div class="mt-8 bg-slate-50 p-6 rounded-xl">
+       <h4 class="text-center font-bold text-slate-700 mb-4">📷 Visualisasi Perbesaran</h4>
+       <div class="flex items-center justify-center gap-8">
+        <div class="text-center">
+         <div class="w-16 h-16 bg-green-200 rounded-full flex items-center justify-center border-2 border-green-400"><span class="text-xl">🧅</span>
+         </div>
+         <p class="text-sm text-slate-600 mt-2">Objek Asli</p>
+        </div>
+        <div class="text-2xl text-slate-400">
+         →
+        </div>
+        <div class="text-center magnification-demo" id="magnified-view">
+         <div class="w-32 h-32 bg-green-100 rounded-full flex items-center justify-center border-4 border-green-500 overflow-hidden">
+          <svg viewbox="0 0 100 100" class="w-full h-full"><!-- Onion cell pattern --> <rect x="5" y="5" width="30" height="20" fill="none" stroke="#22c55e" stroke-width="2" /> <rect x="35" y="5" width="30" height="20" fill="none" stroke="#22c55e" stroke-width="2" /> <rect x="65" y="5" width="30" height="20" fill="none" stroke="#22c55e" stroke-width="2" /> <rect x="5" y="25" width="30" height="20" fill="none" stroke="#22c55e" stroke-width="2" /> <rect x="35" y="25" width="30" height="20" fill="none" stroke="#22c55e" stroke-width="2" /> <rect x="65" y="25" width="30" height="20" fill="none" stroke="#22c55e" stroke-width="2" /> <rect x="5" y="45" width="30" height="20" fill="none" stroke="#22c55e" stroke-width="2" /> <rect x="35" y="45" width="30" height="20" fill="none" stroke="#22c55e" stroke-width="2" /> <rect x="65" y="45" width="30" height="20" fill="none" stroke="#22c55e" stroke-width="2" /> <rect x="5" y="65" width="30" height="20" fill="none" stroke="#22c55e" stroke-width="2" /> <rect x="35" y="65" width="30" height="20" fill="none" stroke="#22c55e" stroke-width="2" /> <rect x="65" y="65" width="30" height="20" fill="none" stroke="#22c55e" stroke-width="2" /> <!-- Nuclei --> <circle cx="20" cy="15" r="4" fill="#3b82f6" opacity="0.7" /> <circle cx="50" cy="35" r="4" fill="#3b82f6" opacity="0.7" /> <circle cx="80" cy="55" r="4" fill="#3b82f6" opacity="0.7" /> <circle cx="20" cy="75" r="4" fill="#3b82f6" opacity="0.7" />
+          </svg>
+         </div>
+         <p class="text-sm text-slate-600 mt-2">Tampak di Mikroskop</p>
+         <p id="scale-text" class="text-xs text-orange-600 font-semibold">Diperbesar 400x</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Examples -->
+     <div class="mt-8 grid md:grid-cols-3 gap-4">
+      <div class="bg-green-50 p-4 rounded-xl border border-green-200">
+       <h4 class="font-bold text-green-800 mb-2">✅ Contoh 1</h4>
+       <p class="text-sm text-slate-700">Okuler 10x × Objektif 4x = <strong>40x</strong></p>
+       <p class="text-xs text-slate-500 mt-1">Perbesaran rendah, untuk melihat keseluruhan</p>
+      </div>
+      <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
+       <h4 class="font-bold text-blue-800 mb-2">✅ Contoh 2</h4>
+       <p class="text-sm text-slate-700">Okuler 10x × Objektif 40x = <strong>400x</strong></p>
+       <p class="text-xs text-slate-500 mt-1">Perbesaran tinggi, untuk melihat detail sel</p>
+      </div>
+      <div class="bg-purple-50 p-4 rounded-xl border border-purple-200">
+       <h4 class="font-bold text-purple-800 mb-2">✅ Contoh 3</h4>
+       <p class="text-sm text-slate-700">Okuler 15x × Objektif 100x = <strong>1500x</strong></p>
+       <p class="text-xs text-slate-500 mt-1">Perbesaran maksimum, untuk bakteri</p>
+      </div>
+     </div>
+    </section><!-- Section 7: Praktikum -->
+    <section id="praktikum" class="section-card card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+     <div class="text-center mb-8"><span class="inline-block bg-teal-100 text-teal-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">🧪 PRAKTIKUM</span>
+      <h2 class="font-heading text-3xl md:text-4xl text-slate-800 font-bold">Membuat Preparat Basah</h2>
+      <p class="text-slate-600 mt-2">Ikuti langkah-langkah berikut untuk membuat preparat pengamatan</p>
+     </div><!-- Step by Step Guide -->
+     <div class="space-y-4" id="praktikum-steps"><!-- Step 1 -->
+      <div class="praktikum-step bg-gradient-to-r from-cyan-50 to-teal-50 p-5 rounded-2xl border-l-4 border-cyan-500 flex gap-4 items-start cursor-pointer hover:shadow-lg transition-all" onclick="toggleStep(1)">
+       <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-full flex items-center justify-center text-white font-bold text-xl flex-shrink-0">
+        1
+       </div>
+       <div class="flex-1">
+        <h4 class="font-bold text-teal-800 text-lg">Siapkan Bahan</h4>
+        <p class="text-slate-700 mt-1">Siapkan potongan huruf kecil dari koran atau majalah bekas. Pilih huruf yang jelas dan tidak terlalu besar.</p>
+        <div class="mt-3 hidden step-detail" id="step-detail-1">
+         <div class="bg-white p-4 rounded-xl">
+          <svg viewbox="0 0 200 80" class="w-full max-w-xs"><rect x="10" y="10" width="180" height="60" fill="#f5f5f5" stroke="#d4d4d4" rx="4" /> <text x="30" y="50" fill="#374151" font-size="24" font-family="serif">
+            a b c d e
+           </text> <rect x="25" y="30" width="25" height="30" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4" /> <text x="100" y="78" text-anchor="middle" fill="#6b7280" font-size="10">
+            Pilih huruf kecil
+           </text>
+          </svg>
+         </div>
+        </div>
+       </div><span class="text-teal-500 text-2xl">▼</span>
+      </div><!-- Step 2 -->
+      <div class="praktikum-step bg-gradient-to-r from-blue-50 to-indigo-50 p-5 rounded-2xl border-l-4 border-blue-500 flex gap-4 items-start cursor-pointer hover:shadow-lg transition-all" onclick="toggleStep(2)">
+       <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-xl flex-shrink-0">
+        2
+       </div>
+       <div class="flex-1">
+        <h4 class="font-bold text-blue-800 text-lg">Letakkan pada Kaca Preparat</h4>
+        <p class="text-slate-700 mt-1">Letakkan potongan huruf di tengah kaca preparat (object glass) dan teteskan satu tetes air di atasnya.</p>
+        <div class="mt-3 hidden step-detail" id="step-detail-2">
+         <div class="bg-white p-4 rounded-xl">
+          <svg viewbox="0 0 200 80" class="w-full max-w-xs"><!-- Glass slide --> <rect x="20" y="25" width="160" height="40" fill="#e0f2fe" stroke="#93c5fd" rx="2" /> <!-- Letter --> <text x="100" y="52" text-anchor="middle" fill="#374151" font-size="16">
+            e
+           </text> <!-- Water drop --> <ellipse cx="100" cy="45" rx="20" ry="10" fill="#60a5fa" opacity="0.4" /> <!-- Dropper --> <path d="M130 10 L130 25" stroke="#6b7280" stroke-width="3" /> <ellipse cx="130" cy="28" rx="4" ry="6" fill="#60a5fa" /> <text x="100" y="78" text-anchor="middle" fill="#6b7280" font-size="10">
+            Teteskan 1 tetes air
+           </text>
+          </svg>
+         </div>
+        </div>
+       </div><span class="text-blue-500 text-2xl">▼</span>
+      </div><!-- Step 3 -->
+      <div class="praktikum-step bg-gradient-to-r from-purple-50 to-pink-50 p-5 rounded-2xl border-l-4 border-purple-500 flex gap-4 items-start cursor-pointer hover:shadow-lg transition-all" onclick="toggleStep(3)">
+       <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-xl flex-shrink-0">
+        3
+       </div>
+       <div class="flex-1">
+        <h4 class="font-bold text-purple-800 text-lg">Tutup dengan Gelas Penutup</h4>
+        <p class="text-slate-700 mt-1">Letakkan gelas penutup (cover glass) secara perlahan dengan sudut 45° untuk menghindari gelembung udara.</p>
+        <div class="mt-3 hidden step-detail" id="step-detail-3">
+         <div class="bg-white p-4 rounded-xl">
+          <svg viewbox="0 0 200 100" class="w-full max-w-xs"><!-- Glass slide --> <rect x="20" y="50" width="160" height="30" fill="#e0f2fe" stroke="#93c5fd" rx="2" /> <!-- Letter with water --> <text x="100" y="72" text-anchor="middle" fill="#374151" font-size="14">
+            e
+           </text> <ellipse cx="100" cy="65" rx="15" ry="8" fill="#60a5fa" opacity="0.3" /> <!-- Cover glass at angle --> <rect x="80" y="25" width="60" height="3" fill="#c7d2fe" stroke="#a5b4fc" transform="rotate(-30, 80, 25)" /> <!-- Arrow showing direction --> <path d="M140 20 L120 45" stroke="#9333ea" stroke-width="2" marker-end="url(#arrow)" /> <defs>
+            <marker id="arrow" markerwidth="10" markerheight="10" refx="9" refy="3" orient="auto">
+             <path d="M0,0 L0,6 L9,3 z" fill="#9333ea" />
+            </marker>
+           </defs> <text x="100" y="95" text-anchor="middle" fill="#6b7280" font-size="10">
+            Tutup perlahan dari sudut 45°
+           </text>
+          </svg>
+         </div>
+        </div>
+       </div><span class="text-purple-500 text-2xl">▼</span>
+      </div><!-- Step 4 -->
+      <div class="praktikum-step bg-gradient-to-r from-green-50 to-emerald-50 p-5 rounded-2xl border-l-4 border-green-500 flex gap-4 items-start cursor-pointer hover:shadow-lg transition-all" onclick="toggleStep(4)">
+       <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-white font-bold text-xl flex-shrink-0">
+        4
+       </div>
+       <div class="flex-1">
+        <h4 class="font-bold text-green-800 text-lg">Amati dengan Mikroskop</h4>
+        <p class="text-slate-700 mt-1">Letakkan preparat di meja objek dan amati mulai dari perbesaran terkecil (objektif 4x), lalu tingkatkan secara bertahap.</p>
+        <div class="mt-3 hidden step-detail" id="step-detail-4">
+         <div class="bg-white p-4 rounded-xl">
+          <svg viewbox="0 0 200 100" class="w-full max-w-xs"><!-- Microscope view circles --> <circle cx="50" cy="50" r="35" fill="#dcfce7" stroke="#22c55e" stroke-width="2" /> <text x="50" y="55" text-anchor="middle" fill="#374151" font-size="20">
+            ə
+           </text> <text x="50" y="95" text-anchor="middle" fill="#6b7280" font-size="9">
+            4x objektif
+           </text> <circle cx="150" cy="50" r="35" fill="#dcfce7" stroke="#22c55e" stroke-width="2" /> <text x="150" y="60" text-anchor="middle" fill="#374151" font-size="35">
+            ə
+           </text> <text x="150" y="95" text-anchor="middle" fill="#6b7280" font-size="9">
+            40x objektif
+           </text> <!-- Arrow --> <path d="M90 50 L110 50" stroke="#22c55e" stroke-width="2" marker-end="url(#arrow2)" /> <defs>
+            <marker id="arrow2" markerwidth="10" markerheight="10" refx="9" refy="3" orient="auto">
+             <path d="M0,0 L0,6 L9,3 z" fill="#22c55e" />
+            </marker>
+           </defs>
+          </svg>
+          <p class="text-sm text-center text-amber-600 mt-2">⚠️ Perhatikan: Bayangan terlihat terbalik!</p>
+         </div>
+        </div>
+       </div><span class="text-green-500 text-2xl">▼</span>
+      </div>
+     </div><!-- Important Notes -->
+     <div class="mt-8 bg-gradient-to-r from-amber-50 to-orange-50 p-6 rounded-2xl border border-amber-200">
+      <h4 class="font-bold text-amber-800 flex items-center gap-2 mb-3"><span>⚠️</span> Catatan Penting</h4>
+      <ul class="space-y-2 text-slate-700">
+       <li class="flex items-start gap-2"><span class="text-amber-500">•</span> <span>Bayangan yang terlihat di mikroskop akan <strong>terbalik</strong> (huruf "e" terlihat seperti "ə")</span></li>
+       <li class="flex items-start gap-2"><span class="text-amber-500">•</span> <span>Selalu mulai pengamatan dari perbesaran <strong>terendah</strong> terlebih dahulu</span></li>
+       <li class="flex items-start gap-2"><span class="text-amber-500">•</span> <span>Hindari gelembung udara saat menutup preparat</span></li>
+       <li class="flex items-start gap-2"><span class="text-amber-500">•</span> <span>Jangan menyentuh lensa dengan jari</span></li>
+      </ul>
+     </div>
+    </section><!-- Section 8: Tokoh Sains Indonesia -->
+    <section id="tokoh" class="section-card card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+     <div class="text-center mb-8"><span class="inline-block bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">👨‍🔬 TOKOH SAINS</span>
+      <h2 class="font-heading text-3xl md:text-4xl text-slate-800 font-bold">Tokoh Sains Indonesia</h2>
+      <p class="text-slate-600 mt-2">Mengenal ilmuwan Indonesia di bidang biologi sel</p>
+     </div>
+     <div class="max-w-3xl mx-auto">
+      <div class="bg-gradient-to-br from-red-50 to-rose-100 p-8 rounded-3xl border border-red-200 shadow-xl">
+       <div class="flex flex-col md:flex-row gap-8 items-center"><!-- Portrait -->
+        <div class="flex-shrink-0">
+         <div class="w-40 h-40 bg-gradient-to-br from-red-400 to-rose-500 rounded-full flex items-center justify-center shadow-xl">
+          <svg viewbox="0 0 100 100" class="w-32 h-32"><!-- Stylized portrait --> <circle cx="50" cy="35" r="25" fill="#fecaca" /> <ellipse cx="50" cy="90" rx="35" ry="25" fill="#1f2937" /> <!-- Glasses --> <circle cx="40" cy="35" r="8" fill="none" stroke="#374151" stroke-width="2" /> <circle cx="60" cy="35" r="8" fill="none" stroke="#374151" stroke-width="2" /> <line x1="48" y1="35" x2="52" y2="35" stroke="#374151" stroke-width="2" /> <!-- Smile --> <path d="M42 42 Q50 48 58 42" stroke="#374151" stroke-width="2" fill="none" /> <!-- Hair --> <path d="M25 30 Q30 15 50 12 Q70 15 75 30" fill="#1f2937" />
+          </svg>
+         </div>
+        </div><!-- Bio -->
+        <div class="flex-1 text-center md:text-left">
+         <h3 class="text-3xl font-bold text-red-800 mb-2">Dr. Joe Hin Tjio</h3>
+         <p class="text-red-600 font-medium mb-4">Pakar Genetika Kelahiran Indonesia</p>
+         <p class="text-slate-700 leading-relaxed mb-4">Joe Hin Tjio adalah seorang pakar genetika yang lahir di <strong>Pekalongan, Jawa Tengah</strong> pada tahun 1919. Ia melakukan penemuan yang sangat penting dalam ilmu biologi sel dunia.</p>
+         <div class="bg-white p-4 rounded-xl shadow-md">
+          <h4 class="font-bold text-red-700 mb-2">🏆 Penemuan Penting</h4>
+          <p class="text-slate-700">Pada tahun <strong>1956</strong>, bersama Albert Levan, ia menemukan bahwa jumlah kromosom manusia yang benar adalah <strong>46 buah (23 pasang)</strong>, bukan 48 seperti yang dipercaya sebelumnya selama lebih dari 30 tahun.</p>
+         </div>
+        </div>
+       </div><!-- Chromosome Illustration -->
+       <div class="mt-8 bg-white p-6 rounded-xl">
+        <h4 class="text-center font-bold text-slate-700 mb-4">🧬 Visualisasi 23 Pasang Kromosom Manusia</h4>
+        <div class="flex flex-wrap justify-center gap-1"><!-- Generate 23 pairs -->
+         <svg viewbox="0 0 600 120" class="w-full"><!-- Chromosomes grouped in pairs --> <g transform="translate(10, 10)"><!-- Pair 1-5 (large) -->
+           <g class="chromosome-pair">
+            <path d="M0 0 L0 50 Q5 55 10 50 L10 0 Q5 -5 0 0" fill="#ef4444" />
+            <path d="M15 0 L15 50 Q20 55 25 50 L25 0 Q20 -5 15 0" fill="#ef4444" />
+            <text x="12" y="70" text-anchor="middle" font-size="8" fill="#6b7280">
+             1
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(35, 0)">
+            <path d="M0 0 L0 48 Q5 53 10 48 L10 0 Q5 -5 0 0" fill="#f97316" />
+            <path d="M15 0 L15 48 Q20 53 25 48 L25 0 Q20 -5 15 0" fill="#f97316" />
+            <text x="12" y="70" text-anchor="middle" font-size="8" fill="#6b7280">
+             2
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(70, 0)">
+            <path d="M0 0 L0 45 Q5 50 10 45 L10 0 Q5 -5 0 0" fill="#eab308" />
+            <path d="M15 0 L15 45 Q20 50 25 45 L25 0 Q20 -5 15 0" fill="#eab308" />
+            <text x="12" y="70" text-anchor="middle" font-size="8" fill="#6b7280">
+             3
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(105, 0)">
+            <path d="M0 0 L0 42 Q5 47 10 42 L10 0 Q5 -5 0 0" fill="#84cc16" />
+            <path d="M15 0 L15 42 Q20 47 25 42 L25 0 Q20 -5 15 0" fill="#84cc16" />
+            <text x="12" y="70" text-anchor="middle" font-size="8" fill="#6b7280">
+             4
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(140, 0)">
+            <path d="M0 0 L0 40 Q5 45 10 40 L10 0 Q5 -5 0 0" fill="#22c55e" />
+            <path d="M15 0 L15 40 Q20 45 25 40 L25 0 Q20 -5 15 0" fill="#22c55e" />
+            <text x="12" y="70" text-anchor="middle" font-size="8" fill="#6b7280">
+             5
+            </text>
+           </g> <!-- Pair 6-12 (medium) -->
+           <g class="chromosome-pair" transform="translate(175, 5)">
+            <path d="M0 0 L0 35 Q4 40 8 35 L8 0 Q4 -5 0 0" fill="#14b8a6" />
+            <path d="M12 0 L12 35 Q16 40 20 35 L20 0 Q16 -5 12 0" fill="#14b8a6" />
+            <text x="10" y="65" text-anchor="middle" font-size="8" fill="#6b7280">
+             6
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(205, 5)">
+            <path d="M0 0 L0 33 Q4 38 8 33 L8 0 Q4 -5 0 0" fill="#06b6d4" />
+            <path d="M12 0 L12 33 Q16 38 20 33 L20 0 Q16 -5 12 0" fill="#06b6d4" />
+            <text x="10" y="65" text-anchor="middle" font-size="8" fill="#6b7280">
+             7
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(235, 5)">
+            <path d="M0 0 L0 31 Q4 36 8 31 L8 0 Q4 -5 0 0" fill="#0ea5e9" />
+            <path d="M12 0 L12 31 Q16 36 20 31 L20 0 Q16 -5 12 0" fill="#0ea5e9" />
+            <text x="10" y="65" text-anchor="middle" font-size="8" fill="#6b7280">
+             8
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(265, 5)">
+            <path d="M0 0 L0 29 Q4 34 8 29 L8 0 Q4 -5 0 0" fill="#3b82f6" />
+            <path d="M12 0 L12 29 Q16 34 20 29 L20 0 Q16 -5 12 0" fill="#3b82f6" />
+            <text x="10" y="65" text-anchor="middle" font-size="8" fill="#6b7280">
+             9
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(295, 5)">
+            <path d="M0 0 L0 27 Q4 32 8 27 L8 0 Q4 -5 0 0" fill="#6366f1" />
+            <path d="M12 0 L12 27 Q16 32 20 27 L20 0 Q16 -5 12 0" fill="#6366f1" />
+            <text x="10" y="65" text-anchor="middle" font-size="8" fill="#6b7280">
+             10
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(325, 5)">
+            <path d="M0 0 L0 25 Q4 30 8 25 L8 0 Q4 -5 0 0" fill="#8b5cf6" />
+            <path d="M12 0 L12 25 Q16 30 20 25 L20 0 Q16 -5 12 0" fill="#8b5cf6" />
+            <text x="10" y="65" text-anchor="middle" font-size="8" fill="#6b7280">
+             11
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(355, 5)">
+            <path d="M0 0 L0 23 Q4 28 8 23 L8 0 Q4 -5 0 0" fill="#a855f7" />
+            <path d="M12 0 L12 23 Q16 28 20 23 L20 0 Q16 -5 12 0" fill="#a855f7" />
+            <text x="10" y="65" text-anchor="middle" font-size="8" fill="#6b7280">
+             12
+            </text>
+           </g> <!-- Pair 13-18 (small) -->
+           <g class="chromosome-pair" transform="translate(385, 10)">
+            <path d="M0 0 L0 20 Q3 25 6 20 L6 0 Q3 -5 0 0" fill="#d946ef" />
+            <path d="M10 0 L10 20 Q13 25 16 20 L16 0 Q13 -5 10 0" fill="#d946ef" />
+            <text x="8" y="55" text-anchor="middle" font-size="8" fill="#6b7280">
+             13
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(410, 10)">
+            <path d="M0 0 L0 18 Q3 23 6 18 L6 0 Q3 -5 0 0" fill="#ec4899" />
+            <path d="M10 0 L10 18 Q13 23 16 18 L16 0 Q13 -5 10 0" fill="#ec4899" />
+            <text x="8" y="55" text-anchor="middle" font-size="8" fill="#6b7280">
+             14
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(435, 10)">
+            <path d="M0 0 L0 16 Q3 21 6 16 L6 0 Q3 -5 0 0" fill="#f43f5e" />
+            <path d="M10 0 L10 16 Q13 21 16 16 L16 0 Q13 -5 10 0" fill="#f43f5e" />
+            <text x="8" y="55" text-anchor="middle" font-size="8" fill="#6b7280">
+             15
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(460, 10)">
+            <path d="M0 0 L0 15 Q3 20 6 15 L6 0 Q3 -5 0 0" fill="#fb7185" />
+            <path d="M10 0 L10 15 Q13 20 16 15 L16 0 Q13 -5 10 0" fill="#fb7185" />
+            <text x="8" y="55" text-anchor="middle" font-size="8" fill="#6b7280">
+             16
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(485, 10)">
+            <path d="M0 0 L0 14 Q3 19 6 14 L6 0 Q3 -5 0 0" fill="#fda4af" />
+            <path d="M10 0 L10 14 Q13 19 16 14 L16 0 Q13 -5 10 0" fill="#fda4af" />
+            <text x="8" y="55" text-anchor="middle" font-size="8" fill="#6b7280">
+             17
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(510, 10)">
+            <path d="M0 0 L0 13 Q3 18 6 13 L6 0 Q3 -5 0 0" fill="#fecdd3" />
+            <path d="M10 0 L10 13 Q13 18 16 13 L16 0 Q13 -5 10 0" fill="#fecdd3" />
+            <text x="8" y="55" text-anchor="middle" font-size="8" fill="#6b7280">
+             18
+            </text>
+           </g> <!-- Pair 19-22 (very small) -->
+           <g class="chromosome-pair" transform="translate(535, 15)">
+            <path d="M0 0 L0 10 Q2 15 4 10 L4 0 Q2 -5 0 0" fill="#94a3b8" />
+            <path d="M8 0 L8 10 Q10 15 12 10 L12 0 Q10 -5 8 0" fill="#94a3b8" />
+            <text x="6" y="50" text-anchor="middle" font-size="8" fill="#6b7280">
+             19
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(555, 15)">
+            <path d="M0 0 L0 9 Q2 14 4 9 L4 0 Q2 -5 0 0" fill="#64748b" />
+            <path d="M8 0 L8 9 Q10 14 12 9 L12 0 Q10 -5 8 0" fill="#64748b" />
+            <text x="6" y="50" text-anchor="middle" font-size="8" fill="#6b7280">
+             20
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(575, 15)">
+            <path d="M0 0 L0 8 Q2 13 4 8 L4 0 Q2 -5 0 0" fill="#475569" />
+            <path d="M8 0 L8 8 Q10 13 12 8 L12 0 Q10 -5 8 0" fill="#475569" />
+            <text x="6" y="50" text-anchor="middle" font-size="8" fill="#6b7280">
+             21
+            </text>
+           </g>
+           <g class="chromosome-pair" transform="translate(595, 15)">
+            <path d="M0 0 L0 7 Q2 12 4 7 L4 0 Q2 -5 0 0" fill="#334155" />
+            <path d="M8 0 L8 7 Q10 12 12 7 L12 0 Q10 -5 8 0" fill="#334155" />
+            <text x="6" y="50" text-anchor="middle" font-size="8" fill="#6b7280">
+             22
+            </text>
+           </g>
+          </g> <!-- Sex chromosomes --> <g transform="translate(530, 85)">
+           <path d="M0 0 L0 25 Q4 30 8 25 L8 0 Q4 -5 0 0" fill="#3b82f6" />
+           <path d="M15 5 L15 20 Q18 25 21 20 L21 5 Q18 0 15 5" fill="#ec4899" />
+           <text x="10" y="45" text-anchor="middle" font-size="10" fill="#6b7280">
+            XY / XX
+           </text>
+          </g> <text x="300" y="115" text-anchor="middle" font-size="10" fill="#6b7280">
+           Total: 46 kromosom (23 pasang)
+          </text>
+         </svg>
+        </div>
+       </div><!-- Impact -->
+       <div class="mt-6 bg-gradient-to-r from-red-100 to-rose-100 p-4 rounded-xl">
+        <h4 class="font-bold text-red-700 mb-2">💡 Dampak Penemuan</h4>
+        <p class="text-slate-700 text-sm">Penemuan ini sangat penting karena membuka jalan untuk memahami penyakit genetik seperti Sindrom Down (trisomi 21) dan kelainan kromosom lainnya. Sebelum penemuan Joe Hin Tjio, para ilmuwan salah mengira manusia memiliki 48 kromosom.</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 9: Refleksi -->
+    <section class="section-card card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+     <div class="text-center mb-8"><span class="inline-block bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">💭 REFLEKSI</span>
+      <h2 class="font-heading text-3xl md:text-4xl text-slate-800 font-bold">Refleksi &amp; Tugas</h2>
+     </div>
+     <div class="grid md:grid-cols-2 gap-6"><!-- Discussion Question -->
+      <div class="bg-gradient-to-br from-indigo-50 to-purple-50 p-6 rounded-2xl border border-indigo-200">
+       <h3 class="font-bold text-indigo-800 text-lg mb-4 flex items-center gap-2"><span class="text-2xl">🤔</span> Pertanyaan Diskusi</h3>
+       <div class="bg-white p-4 rounded-xl">
+        <p class="text-slate-700 font-medium mb-4">"Apa perbedaan antara <strong>perbesaran</strong> dan <strong>resolusi</strong> dalam mikroskop?"</p>
+        <div class="space-y-3 text-sm">
+         <div class="bg-blue-50 p-3 rounded-lg">
+          <p class="text-blue-800"><strong>Perbesaran:</strong> Kemampuan memperbesar ukuran bayangan objek</p>
+         </div>
+         <div class="bg-green-50 p-3 rounded-lg">
+          <p class="text-green-800"><strong>Resolusi:</strong> Kemampuan membedakan dua titik yang berdekatan sebagai objek terpisah</p>
+         </div>
+        </div>
+        <p class="text-xs text-slate-500 mt-3 italic">💡 Tip: Perbesaran tinggi tanpa resolusi yang baik menghasilkan gambar besar tapi buram!</p>
+       </div>
+      </div><!-- Creative Task -->
+      <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-2xl border border-green-200">
+       <h3 class="font-bold text-green-800 text-lg mb-4 flex items-center gap-2"><span class="text-2xl">🎨</span> Tugas Kreatif</h3>
+       <div class="bg-white p-4 rounded-xl">
+        <p class="text-slate-700 font-medium mb-4">Buatlah <strong>purwarupa mikroskop sederhana</strong> secara berkelompok!</p>
+        <div class="space-y-2 text-sm">
+         <p class="text-slate-600">Bahan yang bisa digunakan:</p>
+         <ul class="list-disc list-inside text-slate-600 space-y-1">
+          <li>Tabung karton bekas</li>
+          <li>Lensa kaca pembesar</li>
+          <li>Kertas hitam</li>
+          <li>Lampu senter kecil</li>
+         </ul>
+        </div>
+        <div class="mt-4 bg-amber-50 p-3 rounded-lg">
+         <p class="text-amber-800 text-sm">⭐ Tantangan: Cobalah untuk melihat serat kain atau sel bawang merah dengan mikroskop buatanmu!</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 10: Quiz HOTS -->
+    <section id="quiz" class="section-card card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+     <div class="text-center mb-8"><span class="inline-block bg-rose-100 text-rose-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">📝 KUIS HOTS</span>
+      <h2 class="font-heading text-3xl md:text-4xl text-slate-800 font-bold">Uji Pemahamanmu!</h2>
+      <p class="text-slate-600 mt-2">10 Soal Higher Order Thinking Skills (HOTS)</p>
+     </div><!-- Quiz Progress -->
+     <div class="bg-slate-100 p-4 rounded-xl mb-6">
+      <div class="flex justify-between items-center mb-2"><span class="text-slate-700 font-medium">Progress Kuis</span> <span id="quiz-progress-text" class="text-rose-600 font-bold">0/10 soal dijawab</span>
+      </div>
+      <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
+       <div id="quiz-progress-bar" class="h-full bg-gradient-to-r from-rose-500 to-pink-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+      </div>
+     </div><!-- Quiz Container -->
+     <div id="quiz-container" class="space-y-6"><!-- Questions will be rendered here -->
+     </div><!-- Quiz Results -->
+     <div id="quiz-results" class="hidden mt-8 bg-gradient-to-br from-green-50 to-emerald-100 p-8 rounded-2xl text-center">
+      <div class="text-6xl mb-4">
+       🎉
+      </div>
+      <h3 class="text-2xl font-bold text-green-800 mb-2">Kuis Selesai!</h3>
+      <p class="text-xl text-green-700">Skor kamu: <span id="final-score" class="font-bold">0</span>/10</p>
+      <p id="score-message" class="text-green-600 mt-2"></p><button onclick="resetQuiz()" class="mt-6 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold rounded-xl hover:shadow-lg transition-all"> 🔄 Ulangi Kuis </button>
+     </div>
+    </section>
+   </main><!-- Footer -->
+   <footer class="bg-slate-900 border-t border-slate-700 mt-12">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+     <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3"><img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-12 h-12 rounded-full object-cover border-2 border-green-500" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='#22c55e'; this.alt='Profile';">
+       <div>
+        <p class="text-white font-semibold">Algian Manggara, S.Agr</p>
+        <p class="text-slate-400 text-sm">Pembuat Media Pembelajaran</p>
+       </div>
+      </div>
+      <div class="text-center md:text-right">
+       <p class="text-slate-400 text-sm">© 2026 Algian Manggara, S.Agr</p>
+       <p class="text-slate-500 text-xs mt-1">Media Pembelajaran Sel dan Mikroskop</p>
+      </div>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_title: "Pengenalan Sel",
+      subtitle: "Sel dan Mikroskop",
+      background_color: "#0f172a",
+      surface_color: "#ffffff",
+      text_color: "#1e293b",
+      primary_color: "#22c55e",
+      secondary_color: "#3b82f6"
+    };
+
+    let config = { ...defaultConfig };
+
+    // Quiz Data - 10 HOTS Questions
+    const quizData = [
+      {
+        id: 1,
+        question: "Seorang peneliti mengamati organisme uniseluler yang dapat bergerak dan mencari makan sendiri di air danau. Berdasarkan teori sel, organisme tersebut...",
+        options: [
+          "A. Tidak tersusun atas sel karena terlalu kecil",
+          "B. Tersusun atas sel dan merupakan unit kehidupan yang mandiri",
+          "C. Bukan makhluk hidup karena hanya satu sel",
+          "D. Tidak dapat melakukan fungsi kehidupan"
+        ],
+        correct: 1,
+        explanation: "Menurut teori sel, semua makhluk hidup tersusun atas sel. Organisme uniseluler seperti amoeba atau paramecium adalah contoh makhluk hidup yang terdiri dari satu sel namun dapat melakukan semua fungsi kehidupan secara mandiri."
+      },
+      {
+        id: 2,
+        question: "Robert Hooke menyebut struktur yang dilihatnya sebagai 'cellulae' karena...",
+        options: [
+          "A. Ia menemukan organisme hidup di dalamnya",
+          "B. Strukturnya menyerupai kamar-kamar kecil seperti biara",
+          "C. Ia menemukan inti sel di dalamnya",
+          "D. Bentuknya bulat seperti bola"
+        ],
+        correct: 1,
+        explanation: "Robert Hooke melihat struktur berbentuk kotak-kotak pada gabus yang mengingatkannya pada cellulae atau ruangan-ruangan kecil di biara. Yang ia lihat sebenarnya adalah dinding sel yang sudah mati, bukan sel hidup."
+      },
+      {
+        id: 3,
+        question: "Jika seorang siswa ingin mengamati detail ultrastruktur virus, mikroskop apa yang paling tepat digunakan?",
+        options: [
+          "A. Mikroskop cahaya binokuler",
+          "B. Mikroskop stereo",
+          "C. Mikroskop elektron",
+          "D. Mikroskop cahaya monokuler"
+        ],
+        correct: 2,
+        explanation: "Virus berukuran sangat kecil (20-300 nanometer) sehingga tidak dapat dilihat dengan mikroskop cahaya. Mikroskop elektron dengan perbesaran hingga 1.000.000x diperlukan untuk melihat detail struktur virus."
+      },
+      {
+        id: 4,
+        question: "Dalam pengamatan mikroskopis, bayangan huruf 'p' akan terlihat seperti...",
+        options: [
+          "A. Huruf 'p' (tetap sama)",
+          "B. Huruf 'd' (terbalik horizontal)",
+          "C. Huruf 'b' (terbalik vertikal)",
+          "D. Huruf 'd' terbalik (terbalik horizontal dan vertikal)"
+        ],
+        correct: 3,
+        explanation: "Mikroskop cahaya menghasilkan bayangan yang terbalik secara horizontal dan vertikal. Huruf 'p' akan terlihat seperti huruf 'd' yang terbalik karena mengalami pembalikan pada kedua sumbu."
+      },
+      {
+        id: 5,
+        question: "Seorang peneliti menggunakan lensa okuler 15x dan lensa objektif 40x untuk mengamati sel. Jika ia mengganti lensa objektif menjadi 100x, perbesaran totalnya menjadi...",
+        options: [
+          "A. 115x",
+          "B. 600x",
+          "C. 1500x",
+          "D. 4000x"
+        ],
+        correct: 2,
+        explanation: "Perbesaran total = Perbesaran okuler × Perbesaran objektif. Dengan okuler 15x dan objektif 100x, perbesaran total = 15 × 100 = 1500x."
+      },
+      {
+        id: 6,
+        question: "Mengapa kita harus memulai pengamatan mikroskop dari perbesaran terendah terlebih dahulu?",
+        options: [
+          "A. Agar lebih hemat waktu",
+          "B. Untuk mendapatkan gambaran keseluruhan dan menemukan objek lebih mudah",
+          "C. Karena lensa perbesaran rendah lebih mahal",
+          "D. Agar mikroskop tidak rusak"
+        ],
+        correct: 1,
+        explanation: "Memulai dari perbesaran terendah membantu kita melihat gambaran keseluruhan preparat, menemukan area yang ingin diamati, dan memfokuskan objek dengan lebih mudah sebelum meningkatkan perbesaran untuk melihat detail."
+      },
+      {
+        id: 7,
+        question: "Pernyataan 'Omnis cellula e cellula' yang dikemukakan Rudolf Virchow berarti...",
+        options: [
+          "A. Semua sel memiliki bentuk yang sama",
+          "B. Semua sel berasal dari sel sebelumnya",
+          "C. Semua makhluk hidup tersusun atas sel",
+          "D. Semua sel memiliki fungsi yang sama"
+        ],
+        correct: 1,
+        explanation: "'Omnis cellula e cellula' adalah bahasa Latin yang berarti 'setiap sel berasal dari sel sebelumnya'. Ini menegaskan bahwa sel tidak muncul secara spontan tetapi melalui pembelahan sel yang sudah ada."
+      },
+      {
+        id: 8,
+        question: "Penemuan Joe Hin Tjio tentang jumlah kromosom manusia sangat penting karena...",
+        options: [
+          "A. Membuktikan bahwa manusia berbeda dari hewan",
+          "B. Membuka jalan untuk memahami penyakit genetik",
+          "C. Menunjukkan bahwa kromosom tidak penting",
+          "D. Membuktikan teori evolusi Darwin"
+        ],
+        correct: 1,
+        explanation: "Penemuan bahwa manusia memiliki 46 kromosom (bukan 48) membuka pemahaman tentang kelainan kromosom seperti Sindrom Down (trisomi 21), Sindrom Turner, dan penyakit genetik lainnya."
+      },
+      {
+        id: 9,
+        question: "Saat membuat preparat basah, gelas penutup diletakkan dengan sudut 45° bertujuan untuk...",
+        options: [
+          "A. Memperbesar objek",
+          "B. Menghindari terbentuknya gelembung udara",
+          "C. Membuat preparat lebih indah",
+          "D. Menghemat air"
+        ],
+        correct: 1,
+        explanation: "Meletakkan gelas penutup dengan sudut 45° dan menurunkannya perlahan membantu mendorong udara keluar sehingga tidak terbentuk gelembung udara yang dapat mengganggu pengamatan."
+      },
+      {
+        id: 10,
+        question: "Mengapa mikroskop elektron tidak dapat digunakan untuk mengamati sel hidup?",
+        options: [
+          "A. Karena terlalu mahal",
+          "B. Karena spesimen harus diproses dalam ruang hampa udara",
+          "C. Karena perbesarannya terlalu tinggi",
+          "D. Karena mikroskop elektron hanya ada di luar negeri"
+        ],
+        correct: 1,
+        explanation: "Mikroskop elektron memerlukan ruang vakum (hampa udara) untuk berkas elektronnya. Sel hidup akan mati dalam kondisi vakum karena tidak ada air dan oksigen. Selain itu, proses preparasi seperti pewarnaan dan pengeringan juga membunuh sel."
+      }
+    ];
+
+    let currentAnswers = {};
+    let ocularValue = 10;
+    let objectiveValue = 40;
+
+    // Microscope Part Information
+    const partInfo = {
+      okuler: {
+        title: "Lensa Okuler",
+        description: "Lensa yang terletak di bagian atas mikroskop, dekat dengan mata pengamat. Berfungsi untuk memperbesar bayangan yang dibentuk oleh lensa objektif.",
+        fact: "Perbesaran okuler umumnya 5x, 10x, atau 15x",
+        color: "blue"
+      },
+      objektif: {
+        title: "Lensa Objektif",
+        description: "Lensa yang terletak dekat dengan objek/preparat yang diamati. Berfungsi memperbesar objek yang diamati secara langsung.",
+        fact: "Tersedia dalam berbagai perbesaran: 4x (merah), 10x (kuning), 40x (biru), 100x (putih)",
+        color: "green"
+      },
+      makrometer: {
+        title: "Makrometer (Pemutar Kasar)",
+        description: "Tombol pengatur fokus yang digunakan untuk menggerakkan tabung atau meja objek secara cepat untuk mendapatkan fokus awal.",
+        fact: "Digunakan saat mencari fokus pertama kali dengan perbesaran rendah",
+        color: "amber"
+      },
+      mikrometer: {
+        title: "Mikrometer (Pemutar Halus)",
+        description: "Tombol pengatur fokus yang digunakan untuk mempertajam bayangan secara perlahan dan presisi setelah fokus kasar diperoleh.",
+        fact: "Sangat penting saat menggunakan perbesaran tinggi",
+        color: "purple"
+      },
+      meja: {
+        title: "Meja Objek (Stage)",
+        description: "Tempat untuk meletakkan kaca preparat yang akan diamati. Terdapat lubang di tengahnya untuk cahaya masuk.",
+        fact: "Dilengkapi dengan penjepit untuk menahan preparat agar tidak bergeser",
+        color: "slate"
+      },
+      revolver: {
+        title: "Revolver (Pemutar Objektif)",
+        description: "Bagian yang menghubungkan lensa-lensa objektif dan dapat diputar untuk mengganti perbesaran.",
+        fact: "Selalu putar ke arah perbesaran lebih tinggi secara bertahap",
+        color: "gray"
+      },
+      tabung: {
+        title: "Tabung Mikroskop",
+        description: "Bagian yang menghubungkan lensa okuler dengan lensa objektif. Berfungsi sebagai jalur cahaya.",
+        fact: "Panjang tabung standar sekitar 16 cm",
+        color: "slate"
+      },
+      kondensor: {
+        title: "Kondensor",
+        description: "Lensa yang berfungsi untuk mengumpulkan dan memfokuskan cahaya dari cermin/lampu ke objek yang diamati.",
+        fact: "Dapat diatur naik-turun untuk mengatur intensitas cahaya",
+        color: "cyan"
+      },
+      diafragma: {
+        title: "Diafragma",
+        description: "Bagian yang berfungsi mengatur banyaknya cahaya yang masuk ke kondensor. Dapat dibuka atau ditutup.",
+        fact: "Cahaya yang tepat menghasilkan bayangan yang jelas",
+        color: "slate"
+      },
+      cermin: {
+        title: "Cermin/Lampu",
+        description: "Sumber cahaya untuk menerangi objek yang diamati. Mikroskop modern menggunakan lampu LED.",
+        fact: "Cermin memiliki 2 sisi: datar (cahaya terang) dan cekung (cahaya redup)",
+        color: "amber"
+      },
+      lengan: {
+        title: "Lengan Mikroskop",
+        description: "Bagian untuk memegang mikroskop saat memindahkannya. Menghubungkan bagian atas dengan kaki mikroskop.",
+        fact: "Selalu pegang lengan mikroskop dengan satu tangan dan kaki dengan tangan lainnya",
+        color: "slate"
+      },
+      kaki: {
+        title: "Kaki Mikroskop",
+        description: "Bagian dasar yang menopang seluruh bagian mikroskop. Memberikan kestabilan saat mikroskop digunakan.",
+        fact: "Kaki harus selalu diletakkan di permukaan yang rata dan stabil",
+        color: "slate"
+      },
+      penjepit: {
+        title: "Penjepit Preparat",
+        description: "Klip yang berfungsi menjepit dan menahan kaca preparat agar tidak bergeser saat pengamatan.",
+        fact: "Letakkan preparat dengan hati-hati agar tidak pecah",
+        color: "slate"
+      }
+    };
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          updateUI();
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => { config.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => { config.surface_color = value; window.elementSdk.setConfig({ surface_color: value }); }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+            },
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => { config.primary_color = value; window.elementSdk.setConfig({ primary_color: value }); }
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => { config.secondary_color = value; window.elementSdk.setConfig({ secondary_color: value }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["main_title", config.main_title || defaultConfig.main_title],
+          ["subtitle", config.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
+
+    function updateUI() {
+      document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+      document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+    }
+
+    // Navigation
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // Microscope Tab Switching
+    function switchMicroscopeTab(tab) {
+      const tabs = ['cahaya', 'elektron'];
+      tabs.forEach(t => {
+        document.getElementById(`tab-${t}`).classList.remove('active');
+        document.getElementById(`content-${t}`).classList.add('hidden');
+      });
+      document.getElementById(`tab-${tab}`).classList.add('active');
+      document.getElementById(`content-${tab}`).classList.remove('hidden');
+    }
+
+    // Show Microscope Part Info
+    function showPartInfo(partName) {
+      const info = partInfo[partName];
+      if (!info) return;
+      
+      // Remove highlight from all parts
+      document.querySelectorAll('.microscope-part').forEach(part => {
+        part.classList.remove('highlighted');
+      });
+      
+      // Add highlight to selected part
+      document.querySelector(`[data-part="${partName}"]`)?.classList.add('highlighted');
+      
+      const infoPanel = document.getElementById('part-info');
+      infoPanel.innerHTML = `
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-${info.color}-100 rounded-full flex items-center justify-center">
+              <div class="w-6 h-6 bg-${info.color}-500 rounded-full"></div>
+            </div>
+            <h3 class="text-xl font-bold text-${info.color}-800">${info.title}</h3>
+          </div>
+          <p class="text-slate-700 leading-relaxed">${info.description}</p>
+          <div class="bg-${info.color}-50 p-4 rounded-xl border border-${info.color}-200">
+            <p class="text-${info.color}-700 text-sm">
+              <span class="font-bold">💡 Fakta:</span> ${info.fact}
+            </p>
+          </div>
+        </div>
+      `;
+    }
+
+    // Magnification Calculator
+    function setOcular(value) {
+      ocularValue = value;
+      document.querySelectorAll('.ocular-btn').forEach(btn => {
+        btn.classList.remove('active-lens', 'border-blue-500', 'bg-blue-100');
+        btn.classList.add('border-blue-300', 'bg-blue-50');
+      });
+      document.querySelector(`.ocular-btn[data-value="${value}"]`).classList.add('active-lens', 'border-blue-500', 'bg-blue-100');
+      document.getElementById('ocular-display').textContent = `${value}x`;
+      updateMagnification();
+    }
+
+    function setObjective(value) {
+      objectiveValue = value;
+      document.querySelectorAll('.objective-btn').forEach(btn => {
+        btn.classList.remove('active-lens', 'border-green-500', 'bg-green-100');
+        btn.classList.add('border-green-300', 'bg-green-50');
+      });
+      document.querySelector(`.objective-btn[data-value="${value}"]`).classList.add('active-lens', 'border-green-500', 'bg-green-100');
+      document.getElementById('objective-display').textContent = `${value}x`;
+      updateMagnification();
+    }
+
+    function updateMagnification() {
+      const total = ocularValue * objectiveValue;
+      document.getElementById('magnification-result').textContent = `${total}x`;
+      document.getElementById('scale-text').textContent = `Diperbesar ${total}x`;
+      
+      // Update visual demo
+      const scale = Math.min(2, 0.5 + (total / 400));
+      document.getElementById('magnified-view').style.transform = `scale(${scale})`;
+    }
+
+    // Praktikum Steps
+    function toggleStep(stepNum) {
+      const detail = document.getElementById(`step-detail-${stepNum}`);
+      if (detail) {
+        detail.classList.toggle('hidden');
+      }
+    }
+
+    // Quiz Functions
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = quizData.map((q, index) => `
+        <div class="quiz-question bg-white p-6 rounded-2xl border border-slate-200 shadow-md" id="question-${q.id}">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-10 h-10 bg-gradient-to-br from-rose-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+              ${q.id}
+            </div>
+            <p class="text-slate-800 font-medium leading-relaxed">${q.question}</p>
+          </div>
+          <div class="space-y-3 ml-14">
+            ${q.options.map((opt, i) => `
+              <div class="quiz-option p-4 rounded-xl border-2 border-slate-200 transition-all" 
+                   onclick="selectAnswer(${q.id}, ${i})"
+                   data-question="${q.id}" 
+                   data-option="${i}">
+                <span class="text-slate-700">${opt}</span>
+              </div>
+            `).join('')}
+          </div>
+          <div id="explanation-${q.id}" class="hidden mt-4 ml-14 p-4 rounded-xl bg-blue-50 border border-blue-200">
+            <p class="text-blue-800 text-sm"><strong>Penjelasan:</strong> ${q.explanation}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function selectAnswer(questionId, optionIndex) {
+      const question = quizData.find(q => q.id === questionId);
+      if (!question) return;
+      
+      // Check if already answered
+      if (currentAnswers[questionId] !== undefined) return;
+      
+      currentAnswers[questionId] = optionIndex;
+      
+      // Update UI
+      const options = document.querySelectorAll(`[data-question="${questionId}"]`);
+      options.forEach((opt, i) => {
+        opt.classList.remove('selected');
+        if (i === optionIndex) {
+          if (i === question.correct) {
+            opt.classList.add('correct');
+          } else {
+            opt.classList.add('incorrect');
+          }
+        }
+        if (i === question.correct) {
+          opt.classList.add('correct');
+        }
+      });
+      
+      // Show explanation
+      document.getElementById(`explanation-${questionId}`).classList.remove('hidden');
+      
+      // Update progress
+      updateQuizProgress();
+    }
+
+    function updateQuizProgress() {
+      const answered = Object.keys(currentAnswers).length;
+      const percentage = (answered / 10) * 100;
+      
+      document.getElementById('quiz-progress-bar').style.width = `${percentage}%`;
+      document.getElementById('quiz-progress-text').textContent = `${answered}/10 soal dijawab`;
+      
+      // Update main progress bar
+      updateMainProgress();
+      
+      // Check if quiz is complete
+      if (answered === 10) {
+        setTimeout(showResults, 1000);
+      }
+    }
+
+    function showResults() {
+      let score = 0;
+      quizData.forEach(q => {
+        if (currentAnswers[q.id] === q.correct) {
+          score++;
+        }
+      });
+      
+      document.getElementById('final-score').textContent = score;
+      
+      let message = '';
+      if (score === 10) {
+        message = '🌟 Sempurna! Kamu menguasai materi dengan sangat baik!';
+      } else if (score >= 8) {
+        message = '👏 Hebat! Pemahaman kamu sangat baik!';
+      } else if (score >= 6) {
+        message = '👍 Bagus! Terus tingkatkan pemahamanmu!';
+      } else if (score >= 4) {
+        message = '💪 Cukup baik! Coba pelajari lagi materi yang belum dipahami.';
+      } else {
+        message = '📚 Jangan menyerah! Pelajari kembali materinya ya!';
+      }
+      
+      document.getElementById('score-message').textContent = message;
+      document.getElementById('quiz-results').classList.remove('hidden');
+    }
+
+    function resetQuiz() {
+      currentAnswers = {};
+      document.getElementById('quiz-results').classList.add('hidden');
+      renderQuiz();
+      updateQuizProgress();
+    }
+
+    function updateMainProgress() {
+      // Calculate overall progress based on scroll position and quiz completion
+      const scrollProgress = Math.min(50, (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 50);
+      const quizProgress = (Object.keys(currentAnswers).length / 10) * 50;
+      const totalProgress = Math.min(100, scrollProgress + quizProgress);
+      
+      document.getElementById('progress-bar').style.width = `${totalProgress}%`;
+      document.getElementById('progress-text').textContent = `${Math.round(totalProgress)}%`;
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderQuiz();
+      updateUI();
+      
+      // Track scroll progress
+      window.addEventListener('scroll', updateMainProgress);
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce0e266b1ecb581',t:'MTc3MTExNzM5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>el

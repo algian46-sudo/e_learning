@@ -1,0 +1,2130 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mengenal Spesialisasi Sel dan Organisme</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=Nunito:wght@400;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { font-family: 'Nunito', sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    .nav-item:hover {
+      transform: translateX(5px);
+    }
+    .nav-item.active {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    }
+    
+    .card-hover {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .cell-animation {
+      animation: pulse-cell 3s ease-in-out infinite;
+    }
+    @keyframes pulse-cell {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+    
+    .float-animation {
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .slide-in {
+      animation: slideIn 0.5s ease-out forwards;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+    }
+    .quiz-option:hover:not(.selected):not(.correct):not(.wrong) {
+      border-color: #10b981;
+      background: #ecfdf5;
+    }
+    .quiz-option.selected {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+    .quiz-option.correct {
+      border-color: #10b981;
+      background: #d1fae5;
+    }
+    .quiz-option.wrong {
+      border-color: #ef4444;
+      background: #fee2e2;
+    }
+    
+    .diagram-label {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .hierarchy-level {
+      transition: all 0.3s ease;
+    }
+    .hierarchy-level:hover {
+      transform: scale(1.05);
+    }
+
+    .interactive-cell {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .interactive-cell:hover {
+      filter: brightness(1.1);
+    }
+    
+    .tooltip {
+      position: absolute;
+      background: #1f2937;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      z-index: 100;
+      max-width: 200px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .tooltip.show {
+      opacity: 1;
+    }
+    
+    .drag-item {
+      cursor: grab;
+      user-select: none;
+      transition: all 0.2s ease;
+    }
+    .drag-item:active {
+      cursor: grabbing;
+    }
+    .drag-item.dragging {
+      opacity: 0.5;
+      transform: scale(1.05);
+    }
+    
+    .drop-zone {
+      transition: all 0.3s ease;
+    }
+    .drop-zone.drag-over {
+      background: #d1fae5;
+      border-color: #10b981;
+    }
+    
+    .tab-btn {
+      transition: all 0.3s ease;
+    }
+    .tab-btn.active {
+      background: #10b981;
+      color: white;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
+  <div id="app" class="h-full flex flex-col overflow-auto"><!-- Header -->
+   <header class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white py-4 px-6 shadow-lg">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+     <div class="flex items-center gap-4">
+      <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+       <svg class="w-8 h-8" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /> <circle cx="12" cy="12" r="4" /> <circle cx="8" cy="8" r="2" fill="currentColor" /> <circle cx="16" cy="10" r="1.5" fill="currentColor" />
+       </svg>
+      </div>
+      <div>
+       <h1 id="main-title" class="text-xl md:text-2xl font-bold">Mengenal Spesialisasi Sel</h1>
+       <p id="subtitle" class="text-emerald-100 text-sm">dan Organisme - Media Pembelajaran Interaktif</p>
+      </div>
+     </div>
+     <div class="hidden md:flex items-center gap-2 bg-white/10 rounded-full px-4 py-2"><span class="text-sm">Progress:</span>
+      <div class="w-32 h-2 bg-white/20 rounded-full overflow-hidden">
+       <div id="progress-bar" class="progress-bar h-full bg-yellow-400 rounded-full" style="width: 0%"></div>
+      </div><span id="progress-text" class="text-sm font-semibold">0%</span>
+     </div>
+    </div>
+   </header>
+   <div class="flex-1 flex flex-col md:flex-row overflow-hidden"><!-- Sidebar Navigation -->
+    <nav class="md:w-72 bg-white shadow-xl md:overflow-y-auto">
+     <div class="p-4">
+      <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">📚 Daftar Materi</h2>
+      <div id="nav-menu" class="space-y-2"><!-- Navigation items will be inserted here -->
+      </div>
+     </div>
+    </nav><!-- Main Content Area -->
+    <main id="content-area" class="flex-1 overflow-y-auto p-4 md:p-8"><!-- Content will be dynamically loaded here -->
+    </main>
+   </div><!-- Footer -->
+   <footer class="bg-gray-800 text-white py-4 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+     <div class="flex items-center gap-3"><img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-10 h-10 rounded-full object-cover border-2 border-emerald-400" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #10b981, #059669)'; this.alt='AM';">
+      <div>
+       <p class="font-semibold">Algian Manggara, S.Agr</p>
+       <p class="text-gray-400 text-sm">Pengembang Media Pembelajaran</p>
+      </div>
+     </div>
+     <p class="text-gray-400 text-sm">© 2026 Algian Manggara, S.Agr. All Rights Reserved.</p>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_title: "Mengenal Spesialisasi Sel",
+      subtitle: "dan Organisme - Media Pembelajaran Interaktif"
+    };
+
+    // Slides data
+    const slides = [
+      {
+        id: 1,
+        title: "Pengantar Uniseluler vs Multiseluler",
+        icon: "🧬",
+        content: "intro"
+      },
+      {
+        id: 2,
+        title: "Apa itu Spesialisasi Sel?",
+        icon: "🔬",
+        content: "specialization"
+      },
+      {
+        id: 3,
+        title: "Spesialisasi Sel Tumbuhan",
+        icon: "🌱",
+        content: "plant"
+      },
+      {
+        id: 4,
+        title: "Spesialisasi Sel Hewan",
+        icon: "🦠",
+        content: "animal"
+      },
+      {
+        id: 5,
+        title: "Tingkat Organisasi Kehidupan",
+        icon: "📊",
+        content: "hierarchy"
+      },
+      {
+        id: 6,
+        title: "Sistem Organ Manusia",
+        icon: "🫀",
+        content: "systems"
+      },
+      {
+        id: 7,
+        title: "Sel Punca (Stem Cell)",
+        icon: "✨",
+        content: "stemcell"
+      },
+      {
+        id: 8,
+        title: "Aktivitas Interaktif",
+        icon: "🎮",
+        content: "activity"
+      },
+      {
+        id: 9,
+        title: "Evaluasi HOTS",
+        icon: "📝",
+        content: "quiz"
+      }
+    ];
+
+    // Quiz questions (HOTS)
+    const quizQuestions = [
+      {
+        id: 1,
+        question: "Mengapa sel darah merah manusia dewasa tidak memiliki nukleus? Bagaimana hal ini berkaitan dengan fungsinya?",
+        options: [
+          "Agar sel dapat bergerak lebih cepat dalam pembuluh darah",
+          "Untuk menyediakan ruang lebih banyak bagi hemoglobin sehingga dapat mengikat lebih banyak oksigen",
+          "Karena sel darah merah tidak memerlukan DNA untuk reproduksi",
+          "Supaya sel darah merah dapat menembus dinding kapiler"
+        ],
+        correct: 1,
+        explanation: "Tanpa nukleus, sel darah merah memiliki ruang internal lebih besar untuk hemoglobin, protein pengikat oksigen. Ini memaksimalkan kapasitas pengangkutan oksigen ke seluruh tubuh."
+      },
+      {
+        id: 2,
+        question: "Jika seorang petani ingin meningkatkan penyerapan air pada tanamannya, bagian sel tumbuhan mana yang harus dioptimalkan dan mengapa?",
+        options: [
+          "Sel penjaga stomata karena mengatur pertukaran gas",
+          "Sel akar rambut karena memiliki bentuk memanjang untuk meningkatkan luas permukaan penyerapan",
+          "Sel xilem karena berfungsi mengangkut air",
+          "Sel floem karena mendistribusikan nutrisi"
+        ],
+        correct: 1,
+        explanation: "Sel akar rambut dengan bentuk memanjang memiliki luas permukaan yang lebih besar, memungkinkan penyerapan air dan mineral dari tanah secara maksimal."
+      },
+      {
+        id: 3,
+        question: "Apa yang akan terjadi pada organisme multiseluler jika sel-selnya tidak mengalami spesialisasi?",
+        options: [
+          "Organisme akan lebih efisien dalam menjalankan fungsinya",
+          "Organisme tidak dapat menjalankan fungsi kompleks karena tidak ada pembagian tugas yang spesifik",
+          "Organisme akan menjadi lebih besar",
+          "Organisme akan berubah menjadi uniseluler"
+        ],
+        correct: 1,
+        explanation: "Spesialisasi sel memungkinkan pembagian tugas yang efisien. Tanpa spesialisasi, tidak ada sel yang dapat menjalankan fungsi khusus seperti pencernaan, pernapasan, atau transmisi saraf secara optimal."
+      },
+      {
+        id: 4,
+        question: "Bagaimana sel saraf (neuron) dengan perpanjangan sitoplasma yang panjang mendukung fungsi koordinasi tubuh?",
+        options: [
+          "Mempercepat pembelahan sel untuk regenerasi",
+          "Memungkinkan transmisi sinyal listrik jarak jauh dari reseptor ke otak dan sebaliknya",
+          "Meningkatkan produksi energi untuk aktivitas tubuh",
+          "Menyimpan lebih banyak nutrisi untuk sel"
+        ],
+        correct: 1,
+        explanation: "Perpanjangan sitoplasma (akson dan dendrit) pada neuron memungkinkan transmisi impuls saraf dalam jarak jauh, menghubungkan berbagai bagian tubuh dengan sistem saraf pusat untuk koordinasi yang cepat dan efisien."
+      },
+      {
+        id: 5,
+        question: "Mengapa sel otot memiliki banyak mitokondria? Hubungkan dengan fungsi utamanya!",
+        options: [
+          "Untuk menyimpan lebih banyak kalsium",
+          "Untuk menghasilkan ATP dalam jumlah besar yang diperlukan untuk kontraksi otot",
+          "Untuk meningkatkan sintesis protein",
+          "Untuk mempercepat pembelahan sel"
+        ],
+        correct: 1,
+        explanation: "Mitokondria adalah 'pembangkit tenaga' sel yang menghasilkan ATP. Sel otot memerlukan energi besar untuk kontraksi, sehingga memiliki banyak mitokondria untuk memenuhi kebutuhan energi tersebut."
+      },
+      {
+        id: 6,
+        question: "Dalam konteks tingkat organisasi kehidupan, mengapa kegagalan fungsi pada tingkat jaringan dapat mempengaruhi seluruh organisme?",
+        options: [
+          "Karena jaringan adalah unit terbesar dalam tubuh",
+          "Karena jaringan membentuk organ, dan gangguan pada jaringan akan mengganggu fungsi organ dan sistem organ secara keseluruhan",
+          "Karena jaringan dapat bereproduksi sendiri",
+          "Karena jaringan tidak terhubung dengan organ lain"
+        ],
+        correct: 1,
+        explanation: "Tingkat organisasi kehidupan saling terkait secara hierarkis. Jaringan membentuk organ, organ membentuk sistem organ. Gangguan pada satu tingkat akan berdampak pada tingkat di atasnya seperti efek domino."
+      },
+      {
+        id: 7,
+        question: "Apa potensi terbesar dari penelitian sel punca dalam bidang kedokteran regeneratif?",
+        options: [
+          "Menciptakan organisme baru yang lebih sempurna",
+          "Menggantikan sel atau jaringan yang rusak dengan sel baru yang sehat melalui diferensiasi terkontrol",
+          "Menghentikan proses penuaan secara total",
+          "Menggandakan organ tanpa batas"
+        ],
+        correct: 1,
+        explanation: "Sel punca dapat berdiferensiasi menjadi berbagai jenis sel. Dalam terapi regeneratif, sel punca dapat diarahkan untuk menjadi sel spesifik yang dibutuhkan untuk menggantikan sel atau jaringan yang rusak akibat penyakit atau cedera."
+      },
+      {
+        id: 8,
+        question: "Bandingkan keuntungan dan kerugian antara organisme uniseluler dan multiseluler. Mana pernyataan yang paling tepat?",
+        options: [
+          "Uniseluler lebih efisien karena tidak perlu koordinasi antar sel",
+          "Multiseluler memiliki keunggulan dalam melakukan fungsi kompleks melalui spesialisasi, namun lebih rentan jika satu sistem mengalami kerusakan",
+          "Uniseluler dapat hidup di semua lingkungan sedangkan multiseluler tidak",
+          "Multiseluler selalu lebih besar dan kuat dari uniseluler"
+        ],
+        correct: 1,
+        explanation: "Organisme multiseluler dapat melakukan fungsi yang lebih kompleks berkat spesialisasi sel, namun ketergantungan antar sistem membuat mereka rentan jika ada bagian yang rusak. Uniseluler lebih sederhana namun terbatas dalam kemampuannya."
+      },
+      {
+        id: 9,
+        question: "Bagaimana mekanisme buka-tutup stomata oleh sel penjaga membantu tumbuhan bertahan dalam kondisi kekeringan?",
+        options: [
+          "Dengan membuka stomata lebih lebar untuk menyerap lebih banyak CO₂",
+          "Dengan menutup stomata untuk mengurangi kehilangan air melalui transpirasi",
+          "Dengan memperbanyak jumlah stomata di permukaan daun",
+          "Dengan memindahkan stomata ke bagian akar"
+        ],
+        correct: 1,
+        explanation: "Sel penjaga dapat menutup stomata saat kondisi kering untuk mencegah kehilangan air berlebihan melalui transpirasi, membantu tumbuhan menghemat air dan bertahan dalam kondisi kekeringan."
+      },
+      {
+        id: 10,
+        question: "Seorang ilmuwan menemukan sel yang dapat membelah tanpa batas dan berdiferensiasi menjadi berbagai jenis sel. Berdasarkan karakteristik ini, sel apakah yang ditemukan dan apa implikasinya bagi dunia medis?",
+        options: [
+          "Sel darah merah - dapat digunakan untuk transfusi darah unlimited",
+          "Sel punca - berpotensi untuk terapi regeneratif berbagai penyakit degeneratif",
+          "Sel saraf - dapat menyembuhkan semua gangguan neurologis",
+          "Sel otot - dapat meningkatkan kekuatan tubuh tanpa batas"
+        ],
+        correct: 1,
+        explanation: "Sel punca memiliki kemampuan untuk membelah dan berdiferensiasi menjadi berbagai jenis sel. Penemuan ini membuka peluang besar untuk terapi regeneratif, di mana sel yang rusak akibat penyakit dapat digantikan dengan sel baru yang sehat."
+      }
+    ];
+
+    let currentSlide = 0;
+    let visitedSlides = new Set([0]);
+    let quizAnswers = {};
+    let quizSubmitted = false;
+
+    // Initialize navigation
+    function initNavigation() {
+      const navMenu = document.getElementById('nav-menu');
+      navMenu.innerHTML = slides.map((slide, index) => `
+        <button onclick="goToSlide(${index})" 
+                class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 ${index === currentSlide ? 'active' : 'bg-gray-50 hover:bg-gray-100'}"
+                id="nav-${index}">
+          <span class="text-xl">${slide.icon}</span>
+          <span class="text-sm font-medium ${index === currentSlide ? 'text-white' : 'text-gray-700'}">${slide.title}</span>
+          ${visitedSlides.has(index) ? '<span class="ml-auto text-xs">✓</span>' : ''}
+        </button>
+      `).join('');
+    }
+
+    // Update progress
+    function updateProgress() {
+      const progress = Math.round((visitedSlides.size / slides.length) * 100);
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+      document.getElementById('progress-text').textContent = `${progress}%`;
+    }
+
+    // Go to specific slide
+    function goToSlide(index) {
+      currentSlide = index;
+      visitedSlides.add(index);
+      initNavigation();
+      updateProgress();
+      renderContent();
+    }
+
+    // Render content based on current slide
+    function renderContent() {
+      const slide = slides[currentSlide];
+      const contentArea = document.getElementById('content-area');
+      
+      let html = '';
+      
+      switch(slide.content) {
+        case 'intro':
+          html = renderIntroSlide();
+          break;
+        case 'specialization':
+          html = renderSpecializationSlide();
+          break;
+        case 'plant':
+          html = renderPlantSlide();
+          break;
+        case 'animal':
+          html = renderAnimalSlide();
+          break;
+        case 'hierarchy':
+          html = renderHierarchySlide();
+          break;
+        case 'systems':
+          html = renderSystemsSlide();
+          break;
+        case 'stemcell':
+          html = renderStemCellSlide();
+          break;
+        case 'activity':
+          html = renderActivitySlide();
+          break;
+        case 'quiz':
+          html = renderQuizSlide();
+          break;
+      }
+      
+      contentArea.innerHTML = `
+        <div class="slide-in max-w-5xl mx-auto">
+          <div class="mb-6">
+            <span class="text-4xl mb-2 block">${slide.icon}</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800">${slide.title}</h2>
+          </div>
+          ${html}
+          <div class="flex justify-between mt-8 pt-6 border-t border-gray-200">
+            <button onclick="goToSlide(${Math.max(0, currentSlide - 1)})" 
+                    class="px-6 py-3 bg-gray-200 hover:bg-gray-300 rounded-xl font-semibold transition-all ${currentSlide === 0 ? 'opacity-50 cursor-not-allowed' : ''}"
+                    ${currentSlide === 0 ? 'disabled' : ''}>
+              ← Sebelumnya
+            </button>
+            <button onclick="goToSlide(${Math.min(slides.length - 1, currentSlide + 1)})" 
+                    class="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-semibold transition-all ${currentSlide === slides.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}"
+                    ${currentSlide === slides.length - 1 ? 'disabled' : ''}>
+              Selanjutnya →
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Slide 1: Intro
+    function renderIntroSlide() {
+      return `
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Uniseluler Card -->
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border-l-4 border-blue-500">
+            <h3 class="text-xl font-bold text-blue-600 mb-4 flex items-center gap-2">
+              <span class="text-2xl">🦠</span> Organisme Uniseluler
+            </h3>
+            <p class="text-gray-600 mb-4">Makhluk hidup yang hanya terdiri dari <strong>satu sel</strong> untuk menjalankan seluruh aktivitas hidupnya.</p>
+            
+            <!-- Animated Single Cell SVG -->
+            <div class="relative h-48 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl overflow-hidden mb-4">
+              <svg class="w-full h-full cell-animation" viewBox="0 0 200 150">
+                <!-- Amoeba -->
+                <ellipse cx="60" cy="75" rx="35" ry="30" fill="#60a5fa" opacity="0.7">
+                  <animate attributeName="rx" values="35;38;35" dur="3s" repeatCount="indefinite"/>
+                </ellipse>
+                <circle cx="55" cy="70" r="8" fill="#1e40af" opacity="0.8"/>
+                <text x="60" y="120" text-anchor="middle" class="text-xs font-semibold fill-blue-700">Amoeba</text>
+                
+                <!-- Paramecium -->
+                <ellipse cx="140" cy="55" rx="25" ry="12" fill="#34d399" opacity="0.7" transform="rotate(-20 140 55)"/>
+                <ellipse cx="138" cy="53" r="4" fill="#065f46"/>
+                <text x="140" y="85" text-anchor="middle" class="text-xs font-semibold fill-green-700">Paramecium</text>
+                
+                <!-- Euglena -->
+                <ellipse cx="140" cy="115" rx="20" ry="8" fill="#a78bfa" opacity="0.7"/>
+                <line x1="160" y1="115" x2="175" y2="110" stroke="#7c3aed" stroke-width="2"/>
+                <circle cx="135" cy="113" r="3" fill="#5b21b6"/>
+                <text x="140" y="140" text-anchor="middle" class="text-xs font-semibold fill-purple-700">Euglena</text>
+              </svg>
+            </div>
+            
+            <div class="bg-blue-50 rounded-xl p-4">
+              <h4 class="font-semibold text-blue-700 mb-2">Contoh:</h4>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>🔹 Bakteri (E. coli, Salmonella)</li>
+                <li>🔹 Protista (Amoeba, Euglena, Paramecium)</li>
+                <li>🔹 Beberapa jenis jamur (Yeast)</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Multiseluler Card -->
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg border-l-4 border-green-500">
+            <h3 class="text-xl font-bold text-green-600 mb-4 flex items-center gap-2">
+              <span class="text-2xl">🌳</span> Organisme Multiseluler
+            </h3>
+            <p class="text-gray-600 mb-4">Makhluk hidup yang tersusun dari <strong>banyak sel</strong> yang bekerja sama membentuk struktur kompleks.</p>
+            
+            <!-- Multicellular Illustration -->
+            <div class="relative h-48 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl overflow-hidden mb-4">
+              <svg class="w-full h-full" viewBox="0 0 200 150">
+                <!-- Human silhouette -->
+                <g transform="translate(30, 10)">
+                  <circle cx="25" cy="15" r="12" fill="#f59e0b"/>
+                  <rect x="15" y="28" width="20" height="35" rx="5" fill="#f59e0b"/>
+                  <rect x="5" y="30" width="8" height="25" rx="3" fill="#f59e0b"/>
+                  <rect x="37" y="30" width="8" height="25" rx="3" fill="#f59e0b"/>
+                  <rect x="17" y="63" width="8" height="30" rx="3" fill="#f59e0b"/>
+                  <rect x="27" y="63" width="8" height="30" rx="3" fill="#f59e0b"/>
+                  <text x="25" y="110" text-anchor="middle" class="text-xs font-semibold fill-amber-700">Manusia</text>
+                </g>
+                
+                <!-- Tree -->
+                <g transform="translate(90, 20)">
+                  <rect x="18" y="60" width="14" height="30" fill="#92400e"/>
+                  <ellipse cx="25" cy="40" rx="25" ry="30" fill="#22c55e"/>
+                  <ellipse cx="15" cy="35" rx="15" ry="20" fill="#16a34a"/>
+                  <ellipse cx="35" cy="35" rx="15" ry="20" fill="#16a34a"/>
+                  <text x="25" y="105" text-anchor="middle" class="text-xs font-semibold fill-green-700">Tumbuhan</text>
+                </g>
+                
+                <!-- Animal (dog) -->
+                <g transform="translate(150, 50)">
+                  <ellipse cx="20" cy="30" rx="18" ry="12" fill="#fb923c"/>
+                  <circle cx="35" cy="22" r="8" fill="#fb923c"/>
+                  <polygon points="30,15 33,8 38,15" fill="#fb923c"/>
+                  <polygon points="38,15 41,8 46,15" fill="#fb923c"/>
+                  <circle cx="37" cy="22" r="2" fill="#1f2937"/>
+                  <rect x="8" y="38" width="4" height="15" rx="2" fill="#fb923c"/>
+                  <rect x="18" y="38" width="4" height="15" rx="2" fill="#fb923c"/>
+                  <text x="20" y="70" text-anchor="middle" class="text-xs font-semibold fill-orange-700">Hewan</text>
+                </g>
+              </svg>
+            </div>
+            
+            <div class="bg-green-50 rounded-xl p-4">
+              <h4 class="font-semibold text-green-700 mb-2">Karakteristik:</h4>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>🔹 Terdiri dari triliunan sel</li>
+                <li>🔹 Sel-sel memiliki fungsi berbeda</li>
+                <li>🔹 Membentuk jaringan, organ, dan sistem</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="mt-6 bg-white rounded-2xl p-6 shadow-lg">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">📊 Perbandingan</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white">
+                  <th class="px-4 py-3 text-left rounded-tl-xl">Aspek</th>
+                  <th class="px-4 py-3 text-left">Uniseluler</th>
+                  <th class="px-4 py-3 text-left rounded-tr-xl">Multiseluler</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b hover:bg-gray-50">
+                  <td class="px-4 py-3 font-medium">Jumlah Sel</td>
+                  <td class="px-4 py-3">Satu sel</td>
+                  <td class="px-4 py-3">Banyak sel (triliunan)</td>
+                </tr>
+                <tr class="border-b hover:bg-gray-50 bg-gray-50">
+                  <td class="px-4 py-3 font-medium">Kompleksitas</td>
+                  <td class="px-4 py-3">Sederhana</td>
+                  <td class="px-4 py-3">Kompleks</td>
+                </tr>
+                <tr class="border-b hover:bg-gray-50">
+                  <td class="px-4 py-3 font-medium">Ukuran</td>
+                  <td class="px-4 py-3">Mikroskopis</td>
+                  <td class="px-4 py-3">Makroskopis</td>
+                </tr>
+                <tr class="hover:bg-gray-50 bg-gray-50">
+                  <td class="px-4 py-3 font-medium">Spesialisasi</td>
+                  <td class="px-4 py-3">Tidak ada</td>
+                  <td class="px-4 py-3">Ada pembagian tugas</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // Slide 2: Specialization
+    function renderSpecializationSlide() {
+      return `
+        <div class="bg-white rounded-2xl p-6 shadow-lg mb-6">
+          <div class="flex items-start gap-4 mb-6">
+            <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white text-2xl flex-shrink-0">
+              🎯
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-800 mb-2">Definisi Spesialisasi Sel</h3>
+              <p class="text-gray-600 leading-relaxed">
+                Proses di mana sel-sel dalam organisme multiseluler <strong>berubah bentuk</strong> dan memiliki 
+                <strong>fungsi yang berbeda-beda</strong> untuk mendukung kelangsungan hidup organisme secara keseluruhan.
+              </p>
+            </div>
+          </div>
+
+          <!-- Analogy Illustration -->
+          <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-6 mb-6">
+            <h4 class="font-bold text-amber-700 mb-4 flex items-center gap-2">
+              <span class="text-xl">💡</span> Analogi: Tim Kerja
+            </h4>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+              <div class="text-center p-3 bg-white rounded-xl shadow-sm">
+                <div class="text-3xl mb-2">👨‍🍳</div>
+                <p class="text-xs font-medium text-gray-600">Koki</p>
+                <p class="text-xs text-gray-400">Memasak</p>
+              </div>
+              <div class="text-center p-3 bg-white rounded-xl shadow-sm">
+                <div class="text-3xl mb-2">👨‍⚕️</div>
+                <p class="text-xs font-medium text-gray-600">Dokter</p>
+                <p class="text-xs text-gray-400">Menyembuhkan</p>
+              </div>
+              <div class="text-center p-3 bg-white rounded-xl shadow-sm">
+                <div class="text-3xl mb-2">👨‍🏫</div>
+                <p class="text-xs font-medium text-gray-600">Guru</p>
+                <p class="text-xs text-gray-400">Mengajar</p>
+              </div>
+              <div class="text-center p-3 bg-white rounded-xl shadow-sm">
+                <div class="text-3xl mb-2">👷</div>
+                <p class="text-xs font-medium text-gray-600">Pekerja</p>
+                <p class="text-xs text-gray-400">Membangun</p>
+              </div>
+              <div class="text-center p-3 bg-white rounded-xl shadow-sm">
+                <div class="text-3xl mb-2">🧑‍🔬</div>
+                <p class="text-xs font-medium text-gray-600">Ilmuwan</p>
+                <p class="text-xs text-gray-400">Meneliti</p>
+              </div>
+            </div>
+            <p class="text-sm text-amber-600 mt-4 text-center italic">
+              "Seperti anggota tim dengan keahlian berbeda, sel-sel dalam tubuh juga memiliki spesialisasi masing-masing!"
+            </p>
+          </div>
+        </div>
+
+        <!-- Benefits & Adaptation -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-2xl mb-4">✅</div>
+            <h3 class="text-lg font-bold text-gray-800 mb-3">Manfaat Spesialisasi</h3>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
+                <span class="text-gray-600">Pembagian tugas yang jelas dan efisien</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
+                <span class="text-gray-600">Fungsi tubuh dapat berjalan lebih optimal</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
+                <span class="text-gray-600">Memungkinkan organisme melakukan aktivitas kompleks</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl mb-4">🔄</div>
+            <h3 class="text-lg font-bold text-gray-800 mb-3">Adaptasi Sel</h3>
+            <p class="text-gray-600 mb-4">
+              Struktur luar dan dalam sel mengalami penyesuaian untuk menjalankan fungsi khususnya:
+            </p>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-xl">
+                <span class="text-xl">📐</span>
+                <span class="text-sm text-gray-600"><strong>Bentuk</strong> - menyesuaikan fungsi</span>
+              </div>
+              <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-xl">
+                <span class="text-xl">🔬</span>
+                <span class="text-sm text-gray-600"><strong>Organel</strong> - jumlah & jenis berbeda</span>
+              </div>
+              <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-xl">
+                <span class="text-xl">📏</span>
+                <span class="text-sm text-gray-600"><strong>Ukuran</strong> - sesuai kebutuhan</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive: Cell Specialization Process -->
+        <div class="mt-6 bg-white rounded-2xl p-6 shadow-lg">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">🔄 Proses Diferensiasi Sel</h3>
+          <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+            <div class="text-center p-4 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl">
+              <svg class="w-16 h-16 mx-auto mb-2" viewBox="0 0 64 64">
+                <circle cx="32" cy="32" r="25" fill="#9ca3af"/>
+                <circle cx="32" cy="32" r="8" fill="#4b5563"/>
+              </svg>
+              <p class="text-sm font-medium">Sel Awal</p>
+              <p class="text-xs text-gray-500">(Belum terspesialisasi)</p>
+            </div>
+            <div class="text-3xl">→</div>
+            <div class="text-center p-4 bg-gradient-to-br from-emerald-100 to-green-200 rounded-xl">
+              <div class="text-4xl mb-2">🔀</div>
+              <p class="text-sm font-medium">Diferensiasi</p>
+              <p class="text-xs text-gray-500">(Proses perubahan)</p>
+            </div>
+            <div class="text-3xl">→</div>
+            <div class="grid grid-cols-3 gap-2">
+              <div class="text-center p-2 bg-red-100 rounded-lg">
+                <div class="text-2xl">🔴</div>
+                <p class="text-xs">Sel Darah</p>
+              </div>
+              <div class="text-center p-2 bg-yellow-100 rounded-lg">
+                <div class="text-2xl">⚡</div>
+                <p class="text-xs">Sel Saraf</p>
+              </div>
+              <div class="text-center p-2 bg-pink-100 rounded-lg">
+                <div class="text-2xl">💪</div>
+                <p class="text-xs">Sel Otot</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Slide 3: Plant Cells
+    function renderPlantSlide() {
+      return `
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Root Hair Cell -->
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center text-2xl">🌿</div>
+              <h3 class="text-lg font-bold text-gray-800">Sel Akar Rambut</h3>
+            </div>
+            
+            <!-- Root Hair Cell Illustration -->
+            <div class="relative h-56 bg-gradient-to-b from-amber-50 to-amber-100 rounded-xl overflow-hidden mb-4">
+              <svg class="w-full h-full" viewBox="0 0 200 180">
+                <!-- Soil particles -->
+                <circle cx="30" cy="140" r="8" fill="#92400e" opacity="0.6"/>
+                <circle cx="60" cy="160" r="10" fill="#78350f" opacity="0.5"/>
+                <circle cx="100" cy="150" r="7" fill="#92400e" opacity="0.6"/>
+                <circle cx="150" cy="165" r="9" fill="#78350f" opacity="0.5"/>
+                <circle cx="180" cy="145" r="6" fill="#92400e" opacity="0.6"/>
+                
+                <!-- Root structure -->
+                <rect x="85" y="20" width="30" height="80" rx="5" fill="#d97706"/>
+                
+                <!-- Root hair cells (elongated) -->
+                <g class="float-animation">
+                  <path d="M85 50 Q50 55 35 70" stroke="#f59e0b" stroke-width="6" fill="none" stroke-linecap="round"/>
+                  <path d="M85 70 Q45 78 30 100" stroke="#f59e0b" stroke-width="5" fill="none" stroke-linecap="round"/>
+                  <path d="M85 90 Q55 100 45 120" stroke="#f59e0b" stroke-width="5" fill="none" stroke-linecap="round"/>
+                  
+                  <path d="M115 50 Q150 55 165 70" stroke="#f59e0b" stroke-width="6" fill="none" stroke-linecap="round"/>
+                  <path d="M115 70 Q155 78 170 100" stroke="#f59e0b" stroke-width="5" fill="none" stroke-linecap="round"/>
+                  <path d="M115 90 Q145 100 155 120" stroke="#f59e0b" stroke-width="5" fill="none" stroke-linecap="round"/>
+                </g>
+                
+                <!-- Water arrows -->
+                <g fill="#3b82f6">
+                  <polygon points="25,85 35,80 35,90"/>
+                  <polygon points="175,85 165,80 165,90"/>
+                </g>
+                <text x="15" y="80" class="text-xs fill-blue-500">💧</text>
+                <text x="175" y="80" class="text-xs fill-blue-500">💧</text>
+                
+                <!-- Label -->
+                <text x="100" y="15" text-anchor="middle" class="text-xs font-bold fill-amber-700">Bentuk Memanjang</text>
+              </svg>
+            </div>
+            
+            <div class="space-y-3">
+              <div class="p-3 bg-amber-50 rounded-xl">
+                <p class="text-sm font-semibold text-amber-700">🔑 Ciri Khas:</p>
+                <p class="text-sm text-gray-600">Bentuk memanjang seperti rambut</p>
+              </div>
+              <div class="p-3 bg-blue-50 rounded-xl">
+                <p class="text-sm font-semibold text-blue-700">⚡ Fungsi:</p>
+                <p class="text-sm text-gray-600">Meningkatkan luas permukaan untuk penyerapan air dan mineral dari tanah</p>
+              </div>
+              <div class="p-3 bg-green-50 rounded-xl">
+                <p class="text-sm font-semibold text-green-700">✨ Keuntungan:</p>
+                <p class="text-sm text-gray-600">Penyerapan air menjadi lebih maksimal dan efisien</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stomata & Guard Cells -->
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-2xl">🍃</div>
+              <h3 class="text-lg font-bold text-gray-800">Stomata & Sel Penjaga</h3>
+            </div>
+            
+            <!-- Stomata Illustration -->
+            <div class="relative h-56 bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl overflow-hidden mb-4">
+              <svg class="w-full h-full" viewBox="0 0 200 180">
+                <!-- Leaf surface cells -->
+                <rect x="10" y="10" width="180" height="160" fill="#86efac" rx="10"/>
+                <g stroke="#22c55e" stroke-width="1" fill="none">
+                  <rect x="20" y="20" width="35" height="30" rx="3"/>
+                  <rect x="60" y="20" width="35" height="30" rx="3"/>
+                  <rect x="145" y="20" width="35" height="30" rx="3"/>
+                  <rect x="20" y="130" width="35" height="30" rx="3"/>
+                  <rect x="145" y="130" width="35" height="30" rx="3"/>
+                </g>
+                
+                <!-- Stomata (center) -->
+                <g transform="translate(100, 90)">
+                  <!-- Guard cells -->
+                  <ellipse cx="-20" cy="0" rx="25" ry="35" fill="#16a34a" transform="rotate(-15)"/>
+                  <ellipse cx="20" cy="0" rx="25" ry="35" fill="#16a34a" transform="rotate(15)"/>
+                  
+                  <!-- Stomatal pore -->
+                  <ellipse cx="0" cy="0" rx="8" ry="20" fill="#064e3b"/>
+                  
+                  <!-- Chloroplasts in guard cells -->
+                  <circle cx="-25" cy="-10" r="4" fill="#84cc16"/>
+                  <circle cx="-20" cy="5" r="3" fill="#84cc16"/>
+                  <circle cx="-28" cy="10" r="3" fill="#84cc16"/>
+                  <circle cx="25" cy="-10" r="4" fill="#84cc16"/>
+                  <circle cx="20" cy="5" r="3" fill="#84cc16"/>
+                  <circle cx="28" cy="10" r="3" fill="#84cc16"/>
+                </g>
+                
+                <!-- Gas exchange arrows -->
+                <text x="100" y="45" text-anchor="middle" class="text-sm">CO₂ ↓</text>
+                <text x="100" y="155" text-anchor="middle" class="text-sm">O₂ ↑</text>
+                
+                <!-- Labels -->
+                <text x="45" y="95" text-anchor="middle" class="text-xs fill-green-800 font-semibold">Sel Penjaga</text>
+                <text x="155" y="95" text-anchor="middle" class="text-xs fill-green-800 font-semibold">Sel Penjaga</text>
+              </svg>
+            </div>
+            
+            <div class="space-y-3">
+              <div class="p-3 bg-green-50 rounded-xl">
+                <p class="text-sm font-semibold text-green-700">🌬️ Stomata:</p>
+                <p class="text-sm text-gray-600">Lubang kecil di permukaan daun untuk mengambil CO₂ dan melepaskan O₂</p>
+              </div>
+              <div class="p-3 bg-teal-50 rounded-xl">
+                <p class="text-sm font-semibold text-teal-700">🛡️ Sel Penjaga:</p>
+                <p class="text-sm text-gray-600">Mengatur buka-tutup stomata untuk mengurangi penguapan air berlebihan</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive: Stomata Simulation -->
+        <div class="mt-6 bg-white rounded-2xl p-6 shadow-lg">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">🎮 Simulasi Interaktif: Buka-Tutup Stomata</h3>
+          <div class="flex flex-col md:flex-row items-center gap-6">
+            <div id="stomata-container" class="flex-1 h-48 bg-gradient-to-br from-green-100 to-emerald-200 rounded-xl flex items-center justify-center">
+              <svg id="stomata-svg" class="w-48 h-48" viewBox="0 0 100 100">
+                <ellipse id="guard-left" cx="35" cy="50" rx="15" ry="30" fill="#16a34a"/>
+                <ellipse id="guard-right" cx="65" cy="50" rx="15" ry="30" fill="#16a34a"/>
+                <ellipse id="pore" cx="50" cy="50" rx="5" ry="15" fill="#064e3b"/>
+              </svg>
+            </div>
+            <div class="flex-1 space-y-4">
+              <p class="text-gray-600 text-sm">Klik tombol untuk melihat bagaimana sel penjaga mengatur stomata:</p>
+              <div class="flex gap-3">
+                <button onclick="openStomata()" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-medium transition-all">
+                  ☀️ Siang (Buka)
+                </button>
+                <button onclick="closeStomata()" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-medium transition-all">
+                  🌙 Malam (Tutup)
+                </button>
+              </div>
+              <div id="stomata-info" class="p-4 bg-gray-100 rounded-xl">
+                <p class="text-sm text-gray-600">Klik tombol di atas untuk melihat simulasi!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Stomata simulation functions
+    function openStomata() {
+      const pore = document.getElementById('pore');
+      const guardLeft = document.getElementById('guard-left');
+      const guardRight = document.getElementById('guard-right');
+      const info = document.getElementById('stomata-info');
+      
+      pore.setAttribute('rx', '10');
+      pore.setAttribute('ry', '20');
+      guardLeft.setAttribute('cx', '30');
+      guardRight.setAttribute('cx', '70');
+      
+      info.innerHTML = `
+        <p class="text-sm font-semibold text-emerald-700 mb-2">☀️ Stomata TERBUKA</p>
+        <ul class="text-sm text-gray-600 space-y-1">
+          <li>✓ CO₂ masuk untuk fotosintesis</li>
+          <li>✓ O₂ dilepaskan ke udara</li>
+          <li>✓ Air menguap (transpirasi)</li>
+        </ul>
+      `;
+    }
+
+    function closeStomata() {
+      const pore = document.getElementById('pore');
+      const guardLeft = document.getElementById('guard-left');
+      const guardRight = document.getElementById('guard-right');
+      const info = document.getElementById('stomata-info');
+      
+      pore.setAttribute('rx', '2');
+      pore.setAttribute('ry', '10');
+      guardLeft.setAttribute('cx', '40');
+      guardRight.setAttribute('cx', '60');
+      
+      info.innerHTML = `
+        <p class="text-sm font-semibold text-amber-700 mb-2">🌙 Stomata TERTUTUP</p>
+        <ul class="text-sm text-gray-600 space-y-1">
+          <li>✓ Mencegah kehilangan air</li>
+          <li>✓ Melindungi tumbuhan dari kekeringan</li>
+          <li>✓ Fotosintesis berkurang</li>
+        </ul>
+      `;
+    }
+
+    // Slide 4: Animal Cells
+    function renderAnimalSlide() {
+      return `
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Red Blood Cell -->
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center text-2xl mb-4">🔴</div>
+            <h3 class="text-lg font-bold text-gray-800 mb-3">Sel Darah Merah</h3>
+            
+            <div class="h-40 bg-gradient-to-br from-red-50 to-pink-100 rounded-xl flex items-center justify-center mb-4">
+              <svg class="w-32 h-32 cell-animation" viewBox="0 0 100 100">
+                <!-- Red blood cell (biconcave disc shape) -->
+                <ellipse cx="50" cy="50" rx="40" ry="25" fill="#ef4444"/>
+                <ellipse cx="50" cy="50" rx="30" ry="15" fill="#fca5a5"/>
+                <ellipse cx="50" cy="50" rx="15" ry="8" fill="#fee2e2"/>
+                <!-- O2 molecules -->
+                <text x="20" y="30" class="text-xs fill-blue-600 font-bold">O₂</text>
+                <text x="70" y="75" class="text-xs fill-blue-600 font-bold">O₂</text>
+              </svg>
+            </div>
+            
+            <div class="space-y-2">
+              <div class="p-2 bg-red-50 rounded-lg">
+                <p class="text-xs"><strong>Bentuk:</strong> Pipih cekung (bikontaf)</p>
+              </div>
+              <div class="p-2 bg-pink-50 rounded-lg">
+                <p class="text-xs"><strong>Ciri:</strong> Tidak memiliki nukleus (dewasa)</p>
+              </div>
+              <div class="p-2 bg-orange-50 rounded-lg">
+                <p class="text-xs"><strong>Fungsi:</strong> Mengikat lebih banyak oksigen dengan hemoglobin</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nerve Cell -->
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center text-2xl mb-4">⚡</div>
+            <h3 class="text-lg font-bold text-gray-800 mb-3">Sel Saraf (Neuron)</h3>
+            
+            <div class="h-40 bg-gradient-to-br from-yellow-50 to-amber-100 rounded-xl flex items-center justify-center mb-4 overflow-hidden">
+              <svg class="w-full h-32" viewBox="0 0 150 80">
+                <!-- Cell body -->
+                <circle cx="25" cy="40" r="15" fill="#f59e0b"/>
+                <circle cx="25" cy="40" r="6" fill="#92400e"/>
+                
+                <!-- Dendrites -->
+                <line x1="15" y1="28" x2="5" y2="15" stroke="#fbbf24" stroke-width="3"/>
+                <line x1="10" y1="35" x2="0" y2="30" stroke="#fbbf24" stroke-width="2"/>
+                <line x1="15" y1="52" x2="5" y2="65" stroke="#fbbf24" stroke-width="3"/>
+                <line x1="10" y1="45" x2="0" y2="50" stroke="#fbbf24" stroke-width="2"/>
+                
+                <!-- Axon (long extension) -->
+                <line x1="40" y1="40" x2="130" y2="40" stroke="#f59e0b" stroke-width="4"/>
+                
+                <!-- Myelin sheath -->
+                <ellipse cx="55" cy="40" rx="8" ry="6" fill="#fef3c7" stroke="#f59e0b"/>
+                <ellipse cx="75" cy="40" rx="8" ry="6" fill="#fef3c7" stroke="#f59e0b"/>
+                <ellipse cx="95" cy="40" rx="8" ry="6" fill="#fef3c7" stroke="#f59e0b"/>
+                <ellipse cx="115" cy="40" rx="8" ry="6" fill="#fef3c7" stroke="#f59e0b"/>
+                
+                <!-- Axon terminals -->
+                <line x1="130" y1="40" x2="140" y2="30" stroke="#f59e0b" stroke-width="2"/>
+                <line x1="130" y1="40" x2="145" y2="40" stroke="#f59e0b" stroke-width="2"/>
+                <line x1="130" y1="40" x2="140" y2="50" stroke="#f59e0b" stroke-width="2"/>
+                
+                <!-- Signal arrow -->
+                <text x="75" y="60" text-anchor="middle" class="text-xs fill-amber-700">→ Sinyal →</text>
+              </svg>
+            </div>
+            
+            <div class="space-y-2">
+              <div class="p-2 bg-yellow-50 rounded-lg">
+                <p class="text-xs"><strong>Bentuk:</strong> Memanjang dengan cabang</p>
+              </div>
+              <div class="p-2 bg-amber-50 rounded-lg">
+                <p class="text-xs"><strong>Ciri:</strong> Memiliki akson panjang</p>
+              </div>
+              <div class="p-2 bg-orange-50 rounded-lg">
+                <p class="text-xs"><strong>Fungsi:</strong> Menghantarkan sinyal listrik dari indra ke otak</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Muscle Cell -->
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center text-2xl mb-4">💪</div>
+            <h3 class="text-lg font-bold text-gray-800 mb-3">Sel Otot</h3>
+            
+            <div class="h-40 bg-gradient-to-br from-pink-50 to-rose-100 rounded-xl flex items-center justify-center mb-4">
+              <svg class="w-full h-32" viewBox="0 0 150 80">
+                <!-- Muscle fiber (elongated with multiple nuclei) -->
+                <rect x="10" y="25" width="130" height="30" rx="15" fill="#ec4899"/>
+                
+                <!-- Striations -->
+                <g stroke="#be185d" stroke-width="1">
+                  <line x1="30" y1="28" x2="30" y2="52"/>
+                  <line x1="50" y1="28" x2="50" y2="52"/>
+                  <line x1="70" y1="28" x2="70" y2="52"/>
+                  <line x1="90" y1="28" x2="90" y2="52"/>
+                  <line x1="110" y1="28" x2="110" y2="52"/>
+                </g>
+                
+                <!-- Multiple nuclei -->
+                <ellipse cx="40" cy="40" rx="6" ry="4" fill="#9d174d"/>
+                <ellipse cx="75" cy="40" rx="6" ry="4" fill="#9d174d"/>
+                <ellipse cx="110" cy="40" rx="6" ry="4" fill="#9d174d"/>
+                
+                <!-- Mitochondria symbols -->
+                <text x="55" y="68" class="text-xs fill-pink-600">⚡⚡⚡</text>
+                
+                <!-- Contraction arrows -->
+                <text x="5" y="42" class="text-sm">←</text>
+                <text x="142" y="42" class="text-sm">→</text>
+              </svg>
+            </div>
+            
+            <div class="space-y-2">
+              <div class="p-2 bg-pink-50 rounded-lg">
+                <p class="text-xs"><strong>Bentuk:</strong> Memanjang & berlurik</p>
+              </div>
+              <div class="p-2 bg-rose-50 rounded-lg">
+                <p class="text-xs"><strong>Ciri:</strong> Banyak nukleus & mitokondria</p>
+              </div>
+              <div class="p-2 bg-fuchsia-50 rounded-lg">
+                <p class="text-xs"><strong>Fungsi:</strong> Menghasilkan energi besar untuk kontraksi dan pergerakan</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="mt-6 bg-white rounded-2xl p-6 shadow-lg">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">📊 Perbandingan Adaptasi Sel</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white">
+                  <th class="px-4 py-3 text-left rounded-tl-xl">Jenis Sel</th>
+                  <th class="px-4 py-3 text-left">Adaptasi Struktur</th>
+                  <th class="px-4 py-3 text-left">Alasan Adaptasi</th>
+                  <th class="px-4 py-3 text-left rounded-tr-xl">Manfaat</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b hover:bg-gray-50">
+                  <td class="px-4 py-3 font-medium">🔴 Sel Darah Merah</td>
+                  <td class="px-4 py-3">Tanpa nukleus, bentuk bikontaf</td>
+                  <td class="px-4 py-3">Ruang lebih untuk hemoglobin</td>
+                  <td class="px-4 py-3">Kapasitas oksigen maksimal</td>
+                </tr>
+                <tr class="border-b hover:bg-gray-50 bg-gray-50">
+                  <td class="px-4 py-3 font-medium">⚡ Sel Saraf</td>
+                  <td class="px-4 py-3">Akson panjang, bercabang</td>
+                  <td class="px-4 py-3">Transmisi jarak jauh</td>
+                  <td class="px-4 py-3">Koordinasi cepat seluruh tubuh</td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="px-4 py-3 font-medium">💪 Sel Otot</td>
+                  <td class="px-4 py-3">Banyak mitokondria & nukleus</td>
+                  <td class="px-4 py-3">Produksi energi tinggi</td>
+                  <td class="px-4 py-3">Kontraksi kuat & tahan lama</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // Slide 5: Hierarchy
+    function renderHierarchySlide() {
+      return `
+        <div class="bg-white rounded-2xl p-6 shadow-lg mb-6">
+          <h3 class="text-lg font-bold text-gray-800 mb-6 text-center">Urutan Tingkat Organisasi Kehidupan</h3>
+          
+          <!-- Pyramid Visualization -->
+          <div class="max-w-2xl mx-auto">
+            <div class="space-y-3">
+              <!-- Organism -->
+              <div class="hierarchy-level bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl p-4 mx-0 cursor-pointer" onclick="showHierarchyDetail('organisme')">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="text-2xl">🧑</span>
+                    <div>
+                      <p class="font-bold">ORGANISME</p>
+                      <p class="text-xs text-purple-200">Individu lengkap</p>
+                    </div>
+                  </div>
+                  <span class="text-xl">→</span>
+                </div>
+              </div>
+              
+              <!-- System -->
+              <div class="hierarchy-level bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl p-4 mx-6 cursor-pointer" onclick="showHierarchyDetail('sistem')">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="text-2xl">🫀</span>
+                    <div>
+                      <p class="font-bold">SISTEM ORGAN</p>
+                      <p class="text-xs text-blue-200">Kumpulan organ bekerja sama</p>
+                    </div>
+                  </div>
+                  <span class="text-xl">→</span>
+                </div>
+              </div>
+              
+              <!-- Organ -->
+              <div class="hierarchy-level bg-gradient-to-r from-teal-500 to-teal-600 text-white rounded-xl p-4 mx-12 cursor-pointer" onclick="showHierarchyDetail('organ')">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="text-2xl">🫁</span>
+                    <div>
+                      <p class="font-bold">ORGAN</p>
+                      <p class="text-xs text-teal-200">Gabungan jaringan</p>
+                    </div>
+                  </div>
+                  <span class="text-xl">→</span>
+                </div>
+              </div>
+              
+              <!-- Tissue -->
+              <div class="hierarchy-level bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl p-4 mx-16 cursor-pointer" onclick="showHierarchyDetail('jaringan')">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="text-2xl">🧫</span>
+                    <div>
+                      <p class="font-bold">JARINGAN</p>
+                      <p class="text-xs text-green-200">Kumpulan sel sejenis</p>
+                    </div>
+                  </div>
+                  <span class="text-xl">→</span>
+                </div>
+              </div>
+              
+              <!-- Cell -->
+              <div class="hierarchy-level bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-xl p-4 mx-20 cursor-pointer" onclick="showHierarchyDetail('sel')">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="text-2xl">🔬</span>
+                    <div>
+                      <p class="font-bold">SEL</p>
+                      <p class="text-xs text-amber-200">Unit terkecil kehidupan</p>
+                    </div>
+                  </div>
+                  <span class="text-xl">→</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail Box -->
+        <div id="hierarchy-detail" class="bg-white rounded-2xl p-6 shadow-lg">
+          <p class="text-gray-500 text-center">👆 Klik salah satu tingkatan di atas untuk melihat penjelasan detail!</p>
+        </div>
+
+        <!-- Quick Facts -->
+        <div class="mt-6 grid md:grid-cols-2 gap-4">
+          <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl p-4 border border-emerald-200">
+            <h4 class="font-bold text-emerald-700 mb-2">💡 Tahukah Kamu?</h4>
+            <p class="text-sm text-gray-600">Tubuh manusia terdiri dari sekitar <strong>37 triliun sel</strong> yang bekerja sama membentuk berbagai jaringan, organ, dan sistem organ!</p>
+          </div>
+          <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-200">
+            <h4 class="font-bold text-blue-700 mb-2">🔗 Keterkaitan</h4>
+            <p class="text-sm text-gray-600">Setiap tingkatan saling bergantung. Jika satu tingkat terganggu, akan mempengaruhi tingkat lainnya secara berantai.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function showHierarchyDetail(level) {
+      const details = {
+        sel: {
+          title: "🔬 Sel - Unit Terkecil Kehidupan",
+          color: "amber",
+          content: `
+            <p class="mb-3">Sel adalah unit struktural dan fungsional terkecil dari makhluk hidup yang dapat menjalankan semua proses kehidupan.</p>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="p-3 bg-amber-50 rounded-lg">
+                <p class="text-xs font-semibold text-amber-700">Contoh:</p>
+                <p class="text-xs text-gray-600">Sel darah, sel saraf, sel otot</p>
+              </div>
+              <div class="p-3 bg-amber-50 rounded-lg">
+                <p class="text-xs font-semibold text-amber-700">Ukuran:</p>
+                <p class="text-xs text-gray-600">1-100 mikrometer</p>
+              </div>
+            </div>
+          `
+        },
+        jaringan: {
+          title: "🧫 Jaringan - Kumpulan Sel Sejenis",
+          color: "green",
+          content: `
+            <p class="mb-3">Jaringan adalah kumpulan sel dengan bentuk dan fungsi yang sama, bekerja bersama untuk tugas tertentu.</p>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="p-3 bg-green-50 rounded-lg">
+                <p class="text-xs font-semibold text-green-700">4 Jenis Utama:</p>
+                <p class="text-xs text-gray-600">Epitel, Ikat, Otot, Saraf</p>
+              </div>
+              <div class="p-3 bg-green-50 rounded-lg">
+                <p class="text-xs font-semibold text-green-700">Contoh:</p>
+                <p class="text-xs text-gray-600">Jaringan otot jantung</p>
+              </div>
+            </div>
+          `
+        },
+        organ: {
+          title: "🫁 Organ - Gabungan Jaringan",
+          color: "teal",
+          content: `
+            <p class="mb-3">Organ adalah gabungan beberapa jaringan berbeda yang bekerja sama menjalankan fungsi tertentu.</p>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="p-3 bg-teal-50 rounded-lg">
+                <p class="text-xs font-semibold text-teal-700">Contoh:</p>
+                <p class="text-xs text-gray-600">Jantung, Paru-paru, Ginjal</p>
+              </div>
+              <div class="p-3 bg-teal-50 rounded-lg">
+                <p class="text-xs font-semibold text-teal-700">Komposisi:</p>
+                <p class="text-xs text-gray-600">Minimal 2 jenis jaringan</p>
+              </div>
+            </div>
+          `
+        },
+        sistem: {
+          title: "🫀 Sistem Organ - Koordinasi Organ",
+          color: "blue",
+          content: `
+            <p class="mb-3">Sistem organ adalah sekelompok organ yang bekerja sama menjalankan fungsi kompleks dalam tubuh.</p>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="p-3 bg-blue-50 rounded-lg">
+                <p class="text-xs font-semibold text-blue-700">Contoh:</p>
+                <p class="text-xs text-gray-600">Sistem pencernaan, pernapasan</p>
+              </div>
+              <div class="p-3 bg-blue-50 rounded-lg">
+                <p class="text-xs font-semibold text-blue-700">Jumlah di Tubuh:</p>
+                <p class="text-xs text-gray-600">11 sistem organ utama</p>
+              </div>
+            </div>
+          `
+        },
+        organisme: {
+          title: "🧑 Organisme - Individu Lengkap",
+          color: "purple",
+          content: `
+            <p class="mb-3">Organisme adalah makhluk hidup utuh yang terbentuk dari semua sistem organ yang bekerja secara terkoordinasi.</p>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="p-3 bg-purple-50 rounded-lg">
+                <p class="text-xs font-semibold text-purple-700">Karakteristik:</p>
+                <p class="text-xs text-gray-600">Dapat hidup mandiri</p>
+              </div>
+              <div class="p-3 bg-purple-50 rounded-lg">
+                <p class="text-xs font-semibold text-purple-700">Contoh:</p>
+                <p class="text-xs text-gray-600">Manusia, hewan, tumbuhan</p>
+              </div>
+            </div>
+          `
+        }
+      };
+
+      const detail = details[level];
+      document.getElementById('hierarchy-detail').innerHTML = `
+        <div class="border-l-4 border-${detail.color}-500 pl-4">
+          <h4 class="text-lg font-bold text-gray-800 mb-3">${detail.title}</h4>
+          ${detail.content}
+        </div>
+      `;
+    }
+
+    // Slide 6: Organ Systems
+    function renderSystemsSlide() {
+      return `
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Digestive System -->
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center text-3xl">🍽️</div>
+              <div>
+                <h3 class="text-lg font-bold text-gray-800">Sistem Pencernaan</h3>
+                <p class="text-xs text-gray-500">Digestive System</p>
+              </div>
+            </div>
+            
+            <div class="h-48 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl flex items-center justify-center mb-4">
+              <svg class="w-40 h-40" viewBox="0 0 100 100">
+                <!-- Human silhouette outline -->
+                <ellipse cx="50" cy="15" rx="12" ry="10" fill="none" stroke="#d97706" stroke-width="1" stroke-dasharray="2"/>
+                
+                <!-- Mouth -->
+                <circle cx="50" cy="15" r="3" fill="#ea580c"/>
+                <text x="65" y="17" class="text-xs fill-orange-600">Mulut</text>
+                
+                <!-- Esophagus -->
+                <line x1="50" y1="18" x2="50" y2="35" stroke="#ea580c" stroke-width="3"/>
+                
+                <!-- Stomach -->
+                <path d="M45 35 Q35 45 40 55 Q45 65 55 60 Q65 55 60 45 Q55 35 50 35 Z" fill="#fb923c"/>
+                <text x="65" y="50" class="text-xs fill-orange-600">Lambung</text>
+                
+                <!-- Small intestine -->
+                <path d="M50 60 Q40 65 45 70 Q55 75 50 80 Q40 85 50 88" stroke="#f97316" stroke-width="4" fill="none" stroke-linecap="round"/>
+                <text x="60" y="78" class="text-xs fill-orange-600">Usus</text>
+                
+                <!-- Food path arrow -->
+                <path d="M50 5 L50 10" stroke="#22c55e" stroke-width="2" marker-end="url(#arrow)"/>
+              </svg>
+            </div>
+            
+            <div class="space-y-2">
+              <p class="text-sm text-gray-600"><strong>Fungsi:</strong> Memproses makanan menjadi nutrisi dan energi</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">Mulut</span>
+                <span class="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">Kerongkongan</span>
+                <span class="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">Lambung</span>
+                <span class="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">Usus</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Respiratory System -->
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-14 h-14 bg-cyan-100 rounded-xl flex items-center justify-center text-3xl">🫁</div>
+              <div>
+                <h3 class="text-lg font-bold text-gray-800">Sistem Pernapasan</h3>
+                <p class="text-xs text-gray-500">Respiratory System</p>
+              </div>
+            </div>
+            
+            <div class="h-48 bg-gradient-to-br from-cyan-50 to-blue-50 rounded-xl flex items-center justify-center mb-4">
+              <svg class="w-40 h-40" viewBox="0 0 100 100">
+                <!-- Nose -->
+                <ellipse cx="50" cy="12" rx="5" ry="4" fill="#67e8f9"/>
+                <text x="60" y="14" class="text-xs fill-cyan-600">Hidung</text>
+                
+                <!-- Trachea -->
+                <rect x="47" y="16" width="6" height="20" rx="2" fill="#22d3ee"/>
+                
+                <!-- Bronchi -->
+                <line x1="50" y1="36" x2="35" y2="50" stroke="#06b6d4" stroke-width="4" stroke-linecap="round"/>
+                <line x1="50" y1="36" x2="65" y2="50" stroke="#06b6d4" stroke-width="4" stroke-linecap="round"/>
+                
+                <!-- Left Lung -->
+                <ellipse cx="30" cy="60" rx="18" ry="25" fill="#a5f3fc"/>
+                <ellipse cx="28" cy="55" rx="8" ry="12" fill="#67e8f9"/>
+                
+                <!-- Right Lung -->
+                <ellipse cx="70" cy="60" rx="18" ry="25" fill="#a5f3fc"/>
+                <ellipse cx="72" cy="55" rx="8" ry="12" fill="#67e8f9"/>
+                
+                <!-- Labels -->
+                <text x="30" y="90" text-anchor="middle" class="text-xs fill-cyan-700">Paru-paru</text>
+                
+                <!-- O2 and CO2 -->
+                <text x="10" y="50" class="text-xs fill-blue-600">O₂→</text>
+                <text x="80" y="50" class="text-xs fill-red-400">←CO₂</text>
+              </svg>
+            </div>
+            
+            <div class="space-y-2">
+              <p class="text-sm text-gray-600"><strong>Fungsi:</strong> Mengalirkan oksigen dan membuang karbon dioksida</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 bg-cyan-100 text-cyan-700 text-xs rounded-full">Hidung</span>
+                <span class="px-2 py-1 bg-cyan-100 text-cyan-700 text-xs rounded-full">Trakea</span>
+                <span class="px-2 py-1 bg-cyan-100 text-cyan-700 text-xs rounded-full">Bronkus</span>
+                <span class="px-2 py-1 bg-cyan-100 text-cyan-700 text-xs rounded-full">Paru-paru</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Circulatory System -->
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center text-3xl">❤️</div>
+              <div>
+                <h3 class="text-lg font-bold text-gray-800">Sistem Peredaran Darah</h3>
+                <p class="text-xs text-gray-500">Circulatory System</p>
+              </div>
+            </div>
+            
+            <div class="h-48 bg-gradient-to-br from-red-50 to-pink-50 rounded-xl flex items-center justify-center mb-4">
+              <svg class="w-40 h-40" viewBox="0 0 100 100">
+                <!-- Heart -->
+                <path d="M50 25 C30 5 5 25 25 50 L50 80 L75 50 C95 25 70 5 50 25" fill="#ef4444" class="cell-animation"/>
+                <text x="50" y="95" text-anchor="middle" class="text-xs fill-red-600 font-semibold">Jantung</text>
+                
+                <!-- Blood vessels -->
+                <line x1="30" y1="45" x2="10" y2="30" stroke="#dc2626" stroke-width="3"/>
+                <line x1="70" y1="45" x2="90" y2="30" stroke="#3b82f6" stroke-width="3"/>
+                <line x1="40" y1="70" x2="25" y2="85" stroke="#dc2626" stroke-width="2"/>
+                <line x1="60" y1="70" x2="75" y2="85" stroke="#3b82f6" stroke-width="2"/>
+                
+                <!-- Blood flow arrows -->
+                <circle cx="15" cy="35" r="3" fill="#dc2626"/>
+                <circle cx="85" cy="35" r="3" fill="#3b82f6"/>
+              </svg>
+            </div>
+            
+            <div class="space-y-2">
+              <p class="text-sm text-gray-600"><strong>Fungsi:</strong> Mengalirkan darah ke seluruh tubuh</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full">Jantung</span>
+                <span class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full">Arteri</span>
+                <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Vena</span>
+                <span class="px-2 py-1 bg-pink-100 text-pink-700 text-xs rounded-full">Kapiler</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Excretory System -->
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-14 h-14 bg-yellow-100 rounded-xl flex items-center justify-center text-3xl">🫘</div>
+              <div>
+                <h3 class="text-lg font-bold text-gray-800">Sistem Ekskresi</h3>
+                <p class="text-xs text-gray-500">Excretory System</p>
+              </div>
+            </div>
+            
+            <div class="h-48 bg-gradient-to-br from-yellow-50 to-amber-50 rounded-xl flex items-center justify-center mb-4">
+              <svg class="w-40 h-40" viewBox="0 0 100 100">
+                <!-- Kidneys -->
+                <ellipse cx="30" cy="35" rx="12" ry="18" fill="#fbbf24" transform="rotate(-15 30 35)"/>
+                <ellipse cx="70" cy="35" rx="12" ry="18" fill="#fbbf24" transform="rotate(15 70 35)"/>
+                <text x="50" y="15" text-anchor="middle" class="text-xs fill-yellow-700">Ginjal</text>
+                
+                <!-- Ureters -->
+                <path d="M30 53 Q35 65 40 75" stroke="#f59e0b" stroke-width="3" fill="none"/>
+                <path d="M70 53 Q65 65 60 75" stroke="#f59e0b" stroke-width="3" fill="none"/>
+                
+                <!-- Bladder -->
+                <ellipse cx="50" cy="82" rx="15" ry="10" fill="#fde047"/>
+                <text x="50" y="98" text-anchor="middle" class="text-xs fill-yellow-700">Kandung Kemih</text>
+                
+                <!-- Waste arrow -->
+                <text x="85" y="35" class="text-xs fill-amber-600">→💧</text>
+              </svg>
+            </div>
+            
+            <div class="space-y-2">
+              <p class="text-sm text-gray-600"><strong>Fungsi:</strong> Membuang sisa metabolisme dari tubuh</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">Ginjal</span>
+                <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">Kulit</span>
+                <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">Hati</span>
+                <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">Paru-paru</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Slide 7: Stem Cells
+    function renderStemCellSlide() {
+      return `
+        <div class="bg-white rounded-2xl p-6 shadow-lg mb-6">
+          <div class="flex items-start gap-4 mb-6">
+            <div class="w-16 h-16 bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl flex items-center justify-center text-white text-2xl flex-shrink-0 cell-animation">
+              ✨
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-800 mb-2">Apa itu Sel Punca?</h3>
+              <p class="text-gray-600 leading-relaxed">
+                Sel punca (stem cell) adalah <strong>sel awal yang belum mengalami spesialisasi</strong>. 
+                Sel ini memiliki kemampuan unik untuk membelah diri dan berubah menjadi berbagai jenis sel dengan fungsi khusus.
+              </p>
+            </div>
+          </div>
+
+          <!-- Stem Cell Potential Diagram -->
+          <div class="bg-gradient-to-br from-violet-50 to-purple-50 rounded-xl p-6">
+            <h4 class="font-bold text-purple-700 mb-4 text-center">🔄 Potensi Sel Punca</h4>
+            <div class="flex flex-col items-center">
+              <!-- Stem Cell -->
+              <div class="w-24 h-24 bg-gradient-to-br from-violet-400 to-purple-500 rounded-full flex items-center justify-center text-white text-3xl shadow-lg cell-animation mb-4">
+                🌟
+              </div>
+              <p class="text-sm font-semibold text-purple-700 mb-4">Sel Punca</p>
+              
+              <!-- Arrows -->
+              <div class="flex items-center gap-4 mb-4">
+                <span class="text-2xl">↙️</span>
+                <span class="text-2xl">⬇️</span>
+                <span class="text-2xl">↘️</span>
+              </div>
+              
+              <!-- Differentiated Cells -->
+              <div class="grid grid-cols-3 gap-4 w-full max-w-md">
+                <div class="text-center p-4 bg-white rounded-xl shadow-sm">
+                  <div class="text-3xl mb-2">🔴</div>
+                  <p class="text-xs font-medium">Sel Darah</p>
+                </div>
+                <div class="text-center p-4 bg-white rounded-xl shadow-sm">
+                  <div class="text-3xl mb-2">⚡</div>
+                  <p class="text-xs font-medium">Sel Saraf</p>
+                </div>
+                <div class="text-center p-4 bg-white rounded-xl shadow-sm">
+                  <div class="text-3xl mb-2">💪</div>
+                  <p class="text-xs font-medium">Sel Otot</p>
+                </div>
+                <div class="text-center p-4 bg-white rounded-xl shadow-sm">
+                  <div class="text-3xl mb-2">🦴</div>
+                  <p class="text-xs font-medium">Sel Tulang</p>
+                </div>
+                <div class="text-center p-4 bg-white rounded-xl shadow-sm">
+                  <div class="text-3xl mb-2">🫀</div>
+                  <p class="text-xs font-medium">Sel Jantung</p>
+                </div>
+                <div class="text-center p-4 bg-white rounded-xl shadow-sm">
+                  <div class="text-3xl mb-2">🧠</div>
+                  <p class="text-xs font-medium">Sel Otak</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Features -->
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-2xl mb-4">🔄</div>
+            <h3 class="text-lg font-bold text-gray-800 mb-3">Kemampuan Unik</h3>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
+                <span class="text-gray-600"><strong>Self-renewal:</strong> Dapat membelah menjadi sel punca baru</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
+                <span class="text-gray-600"><strong>Diferensiasi:</strong> Dapat berubah menjadi sel dengan fungsi khusus</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
+                <span class="text-gray-600"><strong>Potensi:</strong> Dapat menjadi berbagai jenis sel tubuh</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl mb-4">🏥</div>
+            <h3 class="text-lg font-bold text-gray-800 mb-3">Aplikasi Medis</h3>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <span class="text-xl">💉</span>
+                <span class="text-gray-600"><strong>Terapi Regeneratif:</strong> Memperbaiki jaringan yang rusak</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-xl">🩸</span>
+                <span class="text-gray-600"><strong>Transplantasi:</strong> Pengobatan leukemia dan kanker darah</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-xl">🔬</span>
+                <span class="text-gray-600"><strong>Penelitian:</strong> Pengembangan obat baru</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Types of Stem Cells -->
+        <div class="bg-white rounded-2xl p-6 shadow-lg">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">📊 Jenis-jenis Sel Punca</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-gradient-to-r from-purple-500 to-violet-500 text-white">
+                  <th class="px-4 py-3 text-left rounded-tl-xl">Jenis</th>
+                  <th class="px-4 py-3 text-left">Sumber</th>
+                  <th class="px-4 py-3 text-left rounded-tr-xl">Potensi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b hover:bg-gray-50">
+                  <td class="px-4 py-3 font-medium">Sel Punca Embrionik</td>
+                  <td class="px-4 py-3">Embrio awal</td>
+                  <td class="px-4 py-3">Dapat menjadi semua jenis sel</td>
+                </tr>
+                <tr class="border-b hover:bg-gray-50 bg-gray-50">
+                  <td class="px-4 py-3 font-medium">Sel Punca Dewasa</td>
+                  <td class="px-4 py-3">Sumsum tulang, darah</td>
+                  <td class="px-4 py-3">Terbatas pada jenis tertentu</td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="px-4 py-3 font-medium">Sel Punca Tali Pusat</td>
+                  <td class="px-4 py-3">Darah tali pusat bayi</td>
+                  <td class="px-4 py-3">Dapat menjadi sel darah</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // Slide 8: Activity
+    function renderActivitySlide() {
+      return `
+        <div class="space-y-6">
+          <!-- Activity 1: Drag and Drop -->
+          <div class="bg-white rounded-2xl p-6 shadow-lg">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">🎯 Aktivitas 1: Urutkan Tingkat Organisasi</h3>
+            <p class="text-gray-600 mb-4">Seret dan susun dari yang TERBESAR ke TERKECIL:</p>
+            
+            <div id="drag-container" class="flex flex-wrap gap-3 mb-4 min-h-16 p-4 bg-gray-100 rounded-xl">
+              <div class="drag-item px-4 py-2 bg-blue-500 text-white rounded-lg font-medium" draggable="true" data-value="sel">Sel</div>
+              <div class="drag-item px-4 py-2 bg-green-500 text-white rounded-lg font-medium" draggable="true" data-value="organisme">Organisme</div>
+              <div class="drag-item px-4 py-2 bg-purple-500 text-white rounded-lg font-medium" draggable="true" data-value="jaringan">Jaringan</div>
+              <div class="drag-item px-4 py-2 bg-amber-500 text-white rounded-lg font-medium" draggable="true" data-value="sistem">Sistem Organ</div>
+              <div class="drag-item px-4 py-2 bg-pink-500 text-white rounded-lg font-medium" draggable="true" data-value="organ">Organ</div>
+            </div>
+            
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="text-sm text-gray-500">Urutan Anda:</span>
+              <div id="answer-slots" class="flex flex-wrap gap-2">
+                <div class="drop-zone w-28 h-10 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center text-xs text-gray-400">1</div>
+                <div class="drop-zone w-28 h-10 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center text-xs text-gray-400">2</div>
+                <div class="drop-zone w-28 h-10 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center text-xs text-gray-400">3</div>
+                <div class="drop-zone w-28 h-10 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center text-xs text-gray-400">4</div>
+                <div class="drop-zone w-28 h-10 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center text-xs text-gray-400">5</div>
+              </div>
+            </div>
+            
+            <div class="flex gap-3">
+              <button onclick="checkDragAnswer()" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-medium transition-all">
+                ✓ Periksa Jawaban
+              </button>
+              <button onclick="resetDragActivity()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-xl font-medium transition-all">
+                ↺ Reset
+              </button>
+            </div>
+            
+            <div id="drag-result" class="mt-4"></div>
+          </div>
+
+          <!-- Activity 2: Reflection -->
+          <div class="bg-white rounded-2xl p-6 shadow-lg">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">💭 Aktivitas 2: Refleksi</h3>
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6">
+              <p class="text-gray-700 mb-4 font-medium">
+                "Apa kelebihan dan kekurangan jika suatu sel mengalami spesialisasi dibandingkan dengan organisme satu sel (uniseluler)?"
+              </p>
+              
+              <div class="grid md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label class="block text-sm font-semibold text-green-700 mb-2">✅ Kelebihan Spesialisasi:</label>
+                  <textarea id="reflection-pros" class="w-full h-24 p-3 border border-gray-300 rounded-xl resize-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Tuliskan pendapatmu tentang kelebihan spesialisasi sel..."></textarea>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-red-700 mb-2">❌ Kekurangan Spesialisasi:</label>
+                  <textarea id="reflection-cons" class="w-full h-24 p-3 border border-gray-300 rounded-xl resize-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Tuliskan pendapatmu tentang kekurangan spesialisasi sel..."></textarea>
+                </div>
+              </div>
+              
+              <button onclick="showReflectionHint()" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl font-medium transition-all">
+                💡 Lihat Petunjuk
+              </button>
+              
+              <div id="reflection-hint" class="hidden mt-4 p-4 bg-white rounded-xl border border-indigo-200">
+                <h4 class="font-semibold text-indigo-700 mb-2">💡 Petunjuk:</h4>
+                <div class="grid md:grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <p class="font-medium text-green-600 mb-1">Kelebihan:</p>
+                    <ul class="text-gray-600 space-y-1 list-disc list-inside">
+                      <li>Efisiensi kerja lebih tinggi</li>
+                      <li>Dapat melakukan fungsi kompleks</li>
+                      <li>Pembagian tugas yang jelas</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p class="font-medium text-red-600 mb-1">Kekurangan:</p>
+                    <ul class="text-gray-600 space-y-1 list-disc list-inside">
+                      <li>Ketergantungan antar sel tinggi</li>
+                      <li>Rentan jika ada kerusakan</li>
+                      <li>Tidak bisa mandiri seperti uniseluler</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity 3: Cell Matching -->
+          <div class="bg-white rounded-2xl p-6 shadow-lg">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">🔗 Aktivitas 3: Cocokkan Sel dengan Fungsinya</h3>
+            <p class="text-gray-600 mb-4">Klik sel, lalu klik fungsi yang sesuai:</p>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="space-y-3">
+                <h4 class="font-semibold text-gray-700">Jenis Sel:</h4>
+                <button onclick="selectCell('rbc')" id="cell-rbc" class="w-full p-3 bg-red-100 hover:bg-red-200 rounded-xl text-left transition-all flex items-center gap-3">
+                  <span class="text-2xl">🔴</span>
+                  <span>Sel Darah Merah</span>
+                </button>
+                <button onclick="selectCell('nerve')" id="cell-nerve" class="w-full p-3 bg-yellow-100 hover:bg-yellow-200 rounded-xl text-left transition-all flex items-center gap-3">
+                  <span class="text-2xl">⚡</span>
+                  <span>Sel Saraf</span>
+                </button>
+                <button onclick="selectCell('root')" id="cell-root" class="w-full p-3 bg-amber-100 hover:bg-amber-200 rounded-xl text-left transition-all flex items-center gap-3">
+                  <span class="text-2xl">🌿</span>
+                  <span>Sel Akar Rambut</span>
+                </button>
+                <button onclick="selectCell('guard')" id="cell-guard" class="w-full p-3 bg-green-100 hover:bg-green-200 rounded-xl text-left transition-all flex items-center gap-3">
+                  <span class="text-2xl">🍃</span>
+                  <span>Sel Penjaga</span>
+                </button>
+              </div>
+              
+              <div class="space-y-3">
+                <h4 class="font-semibold text-gray-700">Fungsi:</h4>
+                <button onclick="selectFunction('oxygen')" id="func-oxygen" class="w-full p-3 bg-gray-100 hover:bg-gray-200 rounded-xl text-left transition-all">
+                  Mengangkut oksigen ke seluruh tubuh
+                </button>
+                <button onclick="selectFunction('signal')" id="func-signal" class="w-full p-3 bg-gray-100 hover:bg-gray-200 rounded-xl text-left transition-all">
+                  Menghantarkan sinyal/impuls saraf
+                </button>
+                <button onclick="selectFunction('water')" id="func-water" class="w-full p-3 bg-gray-100 hover:bg-gray-200 rounded-xl text-left transition-all">
+                  Menyerap air dari tanah
+                </button>
+                <button onclick="selectFunction('stomata')" id="func-stomata" class="w-full p-3 bg-gray-100 hover:bg-gray-200 rounded-xl text-left transition-all">
+                  Mengatur buka-tutup stomata
+                </button>
+              </div>
+            </div>
+            
+            <div id="matching-result" class="mt-4"></div>
+            <button onclick="resetMatching()" class="mt-3 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-xl font-medium transition-all">
+              ↺ Reset
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Activity functions
+    let selectedCell = null;
+    let matchedPairs = {};
+    const correctMatches = {
+      rbc: 'oxygen',
+      nerve: 'signal',
+      root: 'water',
+      guard: 'stomata'
+    };
+
+    function selectCell(cell) {
+      document.querySelectorAll('[id^="cell-"]').forEach(el => el.classList.remove('ring-4', 'ring-emerald-500'));
+      document.getElementById(`cell-${cell}`).classList.add('ring-4', 'ring-emerald-500');
+      selectedCell = cell;
+    }
+
+    function selectFunction(func) {
+      if (!selectedCell) {
+        showMatchingMessage('⚠️ Pilih sel terlebih dahulu!', 'amber');
+        return;
+      }
+      
+      const isCorrect = correctMatches[selectedCell] === func;
+      
+      if (isCorrect) {
+        matchedPairs[selectedCell] = func;
+        document.getElementById(`cell-${selectedCell}`).classList.add('bg-green-300', 'opacity-50');
+        document.getElementById(`cell-${selectedCell}`).disabled = true;
+        document.getElementById(`func-${func}`).classList.add('bg-green-300', 'opacity-50');
+        document.getElementById(`func-${func}`).disabled = true;
+        showMatchingMessage('✅ Benar! Pasangan cocok!', 'green');
+        
+        if (Object.keys(matchedPairs).length === 4) {
+          showMatchingMessage('🎉 Selamat! Semua pasangan benar!', 'emerald');
+        }
+      } else {
+        showMatchingMessage('❌ Kurang tepat, coba lagi!', 'red');
+      }
+      
+      document.querySelectorAll('[id^="cell-"]').forEach(el => el.classList.remove('ring-4', 'ring-emerald-500'));
+      selectedCell = null;
+    }
+
+    function showMatchingMessage(msg, color) {
+      document.getElementById('matching-result').innerHTML = `
+        <div class="p-3 bg-${color}-100 text-${color}-700 rounded-xl font-medium">${msg}</div>
+      `;
+    }
+
+    function resetMatching() {
+      selectedCell = null;
+      matchedPairs = {};
+      document.querySelectorAll('[id^="cell-"], [id^="func-"]').forEach(el => {
+        el.classList.remove('ring-4', 'ring-emerald-500', 'bg-green-300', 'opacity-50');
+        el.disabled = false;
+      });
+      document.getElementById('matching-result').innerHTML = '';
+    }
+
+    function showReflectionHint() {
+      document.getElementById('reflection-hint').classList.toggle('hidden');
+    }
+
+    // Drag and drop functionality
+    let draggedItem = null;
+    let userOrder = [];
+
+    function initDragDrop() {
+      const dragItems = document.querySelectorAll('.drag-item');
+      const dropZones = document.querySelectorAll('.drop-zone');
+      
+      dragItems.forEach(item => {
+        item.addEventListener('dragstart', (e) => {
+          draggedItem = e.target;
+          e.target.classList.add('dragging');
+        });
+        
+        item.addEventListener('dragend', (e) => {
+          e.target.classList.remove('dragging');
+        });
+      });
+      
+      dropZones.forEach((zone, index) => {
+        zone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          zone.classList.add('drag-over');
+        });
+        
+        zone.addEventListener('dragleave', () => {
+          zone.classList.remove('drag-over');
+        });
+        
+        zone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          zone.classList.remove('drag-over');
+          
+          if (draggedItem && zone.children.length === 0) {
+            const clone = draggedItem.cloneNode(true);
+            clone.classList.remove('dragging');
+            clone.draggable = false;
+            zone.innerHTML = '';
+            zone.appendChild(clone);
+            draggedItem.style.display = 'none';
+          }
+        });
+      });
+    }
+
+    function checkDragAnswer() {
+      const zones = document.querySelectorAll('.drop-zone');
+      const correctOrder = ['organisme', 'sistem', 'organ', 'jaringan', 'sel'];
+      let userAnswer = [];
+      
+      zones.forEach(zone => {
+        const item = zone.querySelector('.drag-item');
+        if (item) {
+          userAnswer.push(item.dataset.value);
+        }
+      });
+      
+      if (userAnswer.length < 5) {
+        document.getElementById('drag-result').innerHTML = `
+          <div class="p-4 bg-amber-100 text-amber-700 rounded-xl">
+            ⚠️ Lengkapi semua urutan terlebih dahulu!
+          </div>
+        `;
+        return;
+      }
+      
+      const isCorrect = JSON.stringify(userAnswer) === JSON.stringify(correctOrder);
+      
+      document.getElementById('drag-result').innerHTML = isCorrect ? `
+        <div class="p-4 bg-green-100 text-green-700 rounded-xl">
+          🎉 <strong>Benar!</strong> Urutan dari terbesar ke terkecil adalah:<br>
+          Organisme → Sistem Organ → Organ → Jaringan → Sel
+        </div>
+      ` : `
+        <div class="p-4 bg-red-100 text-red-700 rounded-xl">
+          ❌ <strong>Belum tepat.</strong> Coba ingat kembali hierarki tingkat organisasi kehidupan!<br>
+          <small>Petunjuk: Mulai dari yang paling kompleks (individu lengkap)</small>
+        </div>
+      `;
+    }
+
+    function resetDragActivity() {
+      const container = document.getElementById('drag-container');
+      const zones = document.querySelectorAll('.drop-zone');
+      
+      container.innerHTML = `
+        <div class="drag-item px-4 py-2 bg-blue-500 text-white rounded-lg font-medium" draggable="true" data-value="sel">Sel</div>
+        <div class="drag-item px-4 py-2 bg-green-500 text-white rounded-lg font-medium" draggable="true" data-value="organisme">Organisme</div>
+        <div class="drag-item px-4 py-2 bg-purple-500 text-white rounded-lg font-medium" draggable="true" data-value="jaringan">Jaringan</div>
+        <div class="drag-item px-4 py-2 bg-amber-500 text-white rounded-lg font-medium" draggable="true" data-value="sistem">Sistem Organ</div>
+        <div class="drag-item px-4 py-2 bg-pink-500 text-white rounded-lg font-medium" draggable="true" data-value="organ">Organ</div>
+      `;
+      
+      zones.forEach((zone, i) => {
+        zone.innerHTML = i + 1;
+      });
+      
+      document.getElementById('drag-result').innerHTML = '';
+      initDragDrop();
+    }
+
+    // Slide 9: Quiz
+    function renderQuizSlide() {
+      return `
+        <div class="bg-white rounded-2xl p-6 shadow-lg mb-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold text-gray-800">📝 Evaluasi HOTS (Higher Order Thinking Skills)</h3>
+            <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium">10 Soal</span>
+          </div>
+          <p class="text-gray-600 mb-4">Jawab pertanyaan berikut dengan memilih jawaban yang paling tepat. Soal-soal ini dirancang untuk menguji kemampuan berpikir tingkat tinggi.</p>
+          
+          <div id="quiz-container">
+            ${quizQuestions.map((q, idx) => `
+              <div class="quiz-question mb-6 p-4 bg-gray-50 rounded-xl" data-question="${q.id}">
+                <p class="font-semibold text-gray-800 mb-3">
+                  <span class="inline-block w-8 h-8 bg-emerald-500 text-white rounded-full text-center leading-8 mr-2">${idx + 1}</span>
+                  ${q.question}
+                </p>
+                <div class="space-y-2">
+                  ${q.options.map((opt, optIdx) => `
+                    <button onclick="selectQuizAnswer(${q.id}, ${optIdx})" 
+                            class="quiz-option w-full p-3 border-2 border-gray-200 rounded-xl text-left transition-all hover:border-emerald-400"
+                            data-question="${q.id}" data-option="${optIdx}">
+                      <span class="inline-block w-6 h-6 bg-gray-200 text-gray-600 rounded-full text-center text-sm leading-6 mr-2 font-medium">
+                        ${String.fromCharCode(65 + optIdx)}
+                      </span>
+                      ${opt}
+                    </button>
+                  `).join('')}
+                </div>
+                <div id="explanation-${q.id}" class="hidden mt-3 p-3 bg-blue-50 rounded-xl text-sm text-blue-700"></div>
+              </div>
+            `).join('')}
+          </div>
+          
+          <div class="flex gap-4 mt-6">
+            <button onclick="submitQuiz()" id="submit-quiz-btn" class="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-semibold transition-all">
+              📊 Submit & Lihat Hasil
+            </button>
+            <button onclick="resetQuiz()" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 rounded-xl font-semibold transition-all">
+              ↺ Reset Quiz
+            </button>
+          </div>
+          
+          <div id="quiz-result" class="mt-6"></div>
+        </div>
+      `;
+    }
+
+    function selectQuizAnswer(questionId, optionIdx) {
+      if (quizSubmitted) return;
+      
+      quizAnswers[questionId] = optionIdx;
+      
+      const options = document.querySelectorAll(`[data-question="${questionId}"]`);
+      options.forEach(opt => {
+        if (opt.classList.contains('quiz-option')) {
+          opt.classList.remove('selected');
+          if (parseInt(opt.dataset.option) === optionIdx) {
+            opt.classList.add('selected');
+          }
+        }
+      });
+    }
+
+    function submitQuiz() {
+      if (Object.keys(quizAnswers).length < quizQuestions.length) {
+        document.getElementById('quiz-result').innerHTML = `
+          <div class="p-4 bg-amber-100 text-amber-700 rounded-xl">
+            ⚠️ Jawab semua pertanyaan terlebih dahulu! (${Object.keys(quizAnswers).length}/${quizQuestions.length} terjawab)
+          </div>
+        `;
+        return;
+      }
+      
+      quizSubmitted = true;
+      let correct = 0;
+      
+      quizQuestions.forEach(q => {
+        const userAnswer = quizAnswers[q.id];
+        const isCorrect = userAnswer === q.correct;
+        if (isCorrect) correct++;
+        
+        const options = document.querySelectorAll(`button[data-question="${q.id}"]`);
+        options.forEach(opt => {
+          opt.disabled = true;
+          const optIdx = parseInt(opt.dataset.option);
+          if (optIdx === q.correct) {
+            opt.classList.add('correct');
+          } else if (optIdx === userAnswer && !isCorrect) {
+            opt.classList.add('wrong');
+          }
+        });
+        
+        document.getElementById(`explanation-${q.id}`).classList.remove('hidden');
+        document.getElementById(`explanation-${q.id}`).innerHTML = `
+          <strong>${isCorrect ? '✅ Benar!' : '❌ Salah.'}</strong> ${q.explanation}
+        `;
+      });
+      
+      const percentage = Math.round((correct / quizQuestions.length) * 100);
+      let grade = '';
+      let gradeColor = '';
+      
+      if (percentage >= 90) { grade = 'A (Sangat Baik)'; gradeColor = 'emerald'; }
+      else if (percentage >= 80) { grade = 'B (Baik)'; gradeColor = 'green'; }
+      else if (percentage >= 70) { grade = 'C (Cukup)'; gradeColor = 'yellow'; }
+      else if (percentage >= 60) { grade = 'D (Kurang)'; gradeColor = 'orange'; }
+      else { grade = 'E (Perlu Belajar Lagi)'; gradeColor = 'red'; }
+      
+      document.getElementById('quiz-result').innerHTML = `
+        <div class="p-6 bg-gradient-to-r from-${gradeColor}-100 to-${gradeColor}-50 rounded-2xl border-2 border-${gradeColor}-300">
+          <h3 class="text-xl font-bold text-gray-800 mb-3">📊 Hasil Evaluasi</h3>
+          <div class="grid grid-cols-3 gap-4 text-center mb-4">
+            <div class="p-3 bg-white rounded-xl">
+              <p class="text-2xl font-bold text-emerald-600">${correct}</p>
+              <p class="text-xs text-gray-500">Benar</p>
+            </div>
+            <div class="p-3 bg-white rounded-xl">
+              <p class="text-2xl font-bold text-red-600">${quizQuestions.length - correct}</p>
+              <p class="text-xs text-gray-500">Salah</p>
+            </div>
+            <div class="p-3 bg-white rounded-xl">
+              <p class="text-2xl font-bold text-blue-600">${percentage}%</p>
+              <p class="text-xs text-gray-500">Skor</p>
+            </div>
+          </div>
+          <p class="text-center text-lg font-semibold">
+            Nilai: <span class="text-${gradeColor}-600">${grade}</span>
+          </p>
+        </div>
+      `;
+      
+      document.getElementById('submit-quiz-btn').disabled = true;
+      document.getElementById('submit-quiz-btn').classList.add('opacity-50', 'cursor-not-allowed');
+    }
+
+    function resetQuiz() {
+      quizAnswers = {};
+      quizSubmitted = false;
+      renderContent();
+    }
+
+    // Initialize SDK
+    async function initializeApp() {
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (config) => {
+            document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+            document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+          },
+          mapToCapabilities: (config) => ({
+            recolorables: [],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ["main_title", config.main_title || defaultConfig.main_title],
+            ["subtitle", config.subtitle || defaultConfig.subtitle]
+          ])
+        });
+      }
+      
+      initNavigation();
+      updateProgress();
+      renderContent();
+    }
+
+    // Wait for SDK to be available, then initialize
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeApp);
+    } else {
+      initializeApp();
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce1be9633a6b581',t:'MTc3MTEyNjQxNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,2215 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Pernapasan Manusia - Media Pembelajaran Interaktif</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    
+    .font-heading { font-family: 'Poppins', sans-serif; }
+    .font-body { font-family: 'Nunito', sans-serif; }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0c4a6e 100%);
+    }
+    
+    .card-glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+    
+    .lung-pulse {
+      animation: lungPulse 3s ease-in-out infinite;
+    }
+    
+    @keyframes lungPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .float-animation {
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .breathe-in {
+      animation: breatheIn 2s ease-out forwards;
+    }
+    
+    .breathe-out {
+      animation: breatheOut 2s ease-out forwards;
+    }
+    
+    @keyframes breatheIn {
+      0% { transform: scale(0.9); opacity: 0.7; }
+      100% { transform: scale(1.1); opacity: 1; }
+    }
+    
+    @keyframes breatheOut {
+      0% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.7; }
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:hover {
+      transform: translateX(5px);
+    }
+    
+    .nav-item.active {
+      background: linear-gradient(90deg, #0ea5e9, #0284c7);
+      color: white;
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .smoke-particle {
+      animation: smokeRise 3s ease-out infinite;
+      opacity: 0;
+    }
+    
+    @keyframes smokeRise {
+      0% { transform: translateY(0) scale(1); opacity: 0.6; }
+      100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
+    }
+    
+    .heartbeat {
+      animation: heartbeat 1s ease-in-out infinite;
+    }
+    
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.1); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.05); }
+    }
+    
+    .section-fade {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+    
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.wrong) {
+      transform: translateX(5px);
+      background: #e0f2fe;
+    }
+    
+    .quiz-option.selected {
+      background: #0ea5e9;
+      color: white;
+      border-color: #0284c7;
+    }
+    
+    .quiz-option.correct {
+      background: #22c55e;
+      color: white;
+      border-color: #16a34a;
+    }
+    
+    .quiz-option.wrong {
+      background: #ef4444;
+      color: white;
+      border-color: #dc2626;
+    }
+    
+    .tooltip {
+      position: relative;
+    }
+    
+    .tooltip::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293b;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+    
+    .tooltip:hover::after {
+      opacity: 1;
+      visibility: visible;
+      bottom: calc(100% + 10px);
+    }
+    
+    .organ-card {
+      transition: all 0.3s ease;
+    }
+    
+    .organ-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -30px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      background: #0ea5e9;
+      border-radius: 50%;
+      border: 4px solid white;
+      box-shadow: 0 0 0 4px #0ea5e9;
+    }
+    
+    .alveolus-animation {
+      animation: alveolusBreathe 2s ease-in-out infinite;
+    }
+    
+    @keyframes alveolusBreathe {
+      0%, 100% { r: 25; fill: #fecaca; }
+      50% { r: 30; fill: #fca5a5; }
+    }
+    
+    .o2-particle {
+      animation: o2Move 2s ease-in-out infinite;
+    }
+    
+    @keyframes o2Move {
+      0% { transform: translateX(0); opacity: 1; }
+      100% { transform: translateX(40px); opacity: 0; }
+    }
+    
+    .co2-particle {
+      animation: co2Move 2s ease-in-out infinite;
+    }
+    
+    @keyframes co2Move {
+      0% { transform: translateX(0); opacity: 0; }
+      100% { transform: translateX(-40px); opacity: 1; }
+    }
+    
+    .cigarette-glow {
+      animation: glow 1s ease-in-out infinite alternate;
+    }
+    
+    @keyframes glow {
+      0% { fill: #f97316; filter: drop-shadow(0 0 3px #f97316); }
+      100% { fill: #ef4444; filter: drop-shadow(0 0 8px #ef4444); }
+    }
+    
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      outline: none;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #0ea5e9;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(14, 165, 233, 0.4);
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body">
+  <div id="app" class="h-full w-full gradient-bg overflow-auto"><!-- Header -->
+   <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-slate-700/50 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-400 to-cyan-500 flex items-center justify-center shadow-lg">
+        <svg class="w-7 h-7 text-white lung-pulse" viewbox="0 0 24 24" fill="currentColor"><path d="M12 2C10.5 2 9.5 3 9 4.5C8.5 6 8 7 7 8C6 9 4 11 4 14C4 17 6 20 9 21C10 21.3 11 21.5 12 21.5C13 21.5 14 21.3 15 21C18 20 20 17 20 14C20 11 18 9 17 8C16 7 15.5 6 15 4.5C14.5 3 13.5 2 12 2Z" />
+        </svg>
+       </div>
+       <div>
+        <h1 id="headerTitle" class="font-heading font-bold text-white text-lg">Sistem Pernapasan Manusia</h1>
+        <p class="text-sky-400 text-xs">Media Pembelajaran Interaktif</p>
+       </div>
+      </div>
+      <div class="hidden md:flex items-center gap-2">
+       <div class="bg-slate-800 rounded-full px-4 py-2 flex items-center gap-2"><span class="text-slate-400 text-sm">Progress:</span>
+        <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
+         <div id="progressBar" class="progress-bar h-full bg-gradient-to-r from-sky-400 to-cyan-400 rounded-full" style="width: 0%"></div>
+        </div><span id="progressText" class="text-sky-400 text-sm font-semibold">0%</span>
+       </div>
+      </div>
+     </div>
+    </div>
+   </header>
+   <div class="max-w-7xl mx-auto px-4 py-6">
+    <div class="flex flex-col lg:flex-row gap-6"><!-- Sidebar Navigation -->
+     <aside class="lg:w-72 flex-shrink-0">
+      <div class="card-glass rounded-2xl p-4 shadow-xl sticky top-24">
+       <h3 class="font-heading font-bold text-slate-800 mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-sky-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg> Daftar Materi</h3>
+       <nav id="navMenu" class="space-y-2"><!-- Navigation items will be generated by JS -->
+       </nav>
+      </div>
+     </aside><!-- Main Content -->
+     <main class="flex-1 min-w-0">
+      <div id="contentArea" class="space-y-6"><!-- Content sections will be generated by JS -->
+      </div>
+     </main>
+    </div>
+   </div><!-- Footer -->
+   <footer class="mt-12 border-t border-slate-700/50 bg-slate-900/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+     <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3"><img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-12 h-12 rounded-full object-cover border-2 border-sky-400 shadow-lg" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #0ea5e9, #0284c7)'; this.alt='AM';">
+       <div>
+        <p id="authorName" class="text-white font-semibold">Algian Manggara, S.Agr</p>
+        <p class="text-slate-400 text-sm">Pembuat Materi Pembelajaran</p>
+       </div>
+      </div>
+      <div class="text-center md:text-right">
+       <p class="text-slate-400 text-sm">© 2026 <span id="footerAuthor">Algian Manggara, S.Agr</span></p>
+       <p class="text-slate-500 text-xs mt-1">Media Pembelajaran Sistem Pernapasan Manusia</p>
+      </div>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_title: 'Sistem Pernapasan Manusia',
+      author_name: 'Algian Manggara, S.Agr',
+      primary_color: '#0ea5e9',
+      secondary_color: '#0f172a',
+      text_color: '#1e293b',
+      accent_color: '#22c55e',
+      surface_color: '#ffffff'
+    };
+
+    let config = { ...defaultConfig };
+    let currentSection = 0;
+    let visitedSections = new Set([0]);
+    let quizAnswers = {};
+    let quizSubmitted = false;
+
+    // Learning content data
+    const sections = [
+      {
+        id: 'intro',
+        title: 'Pendahuluan',
+        icon: '🫁',
+        content: 'introduction'
+      },
+      {
+        id: 'struktur',
+        title: 'Struktur Organ Pernapasan',
+        icon: '🔬',
+        content: 'structure'
+      },
+      {
+        id: 'paru',
+        title: 'Paru-Paru & Alveolus',
+        icon: '💨',
+        content: 'lungs'
+      },
+      {
+        id: 'mekanisme',
+        title: 'Mekanisme Bernapas',
+        icon: '🌬️',
+        content: 'mechanism'
+      },
+      {
+        id: 'bahaya',
+        title: 'Bahaya Merokok',
+        icon: '🚭',
+        content: 'smoking'
+      },
+      {
+        id: 'penyakit',
+        title: 'Penyakit Akibat Rokok',
+        icon: '🏥',
+        content: 'diseases'
+      },
+      {
+        id: 'pasif',
+        title: 'Perokok Pasif',
+        icon: '👨‍👩‍👧‍👦',
+        content: 'passive'
+      },
+      {
+        id: 'manfaat',
+        title: 'Manfaat Berhenti Merokok',
+        icon: '✨',
+        content: 'benefits'
+      },
+      {
+        id: 'quiz',
+        title: 'Kuis HOTS',
+        icon: '📝',
+        content: 'quiz'
+      }
+    ];
+
+    // Quiz questions (HOTS - Higher Order Thinking Skills)
+    const quizQuestions = [
+      {
+        id: 1,
+        question: 'Seorang atlet marathon mengalami kesulitan bernapas saat berlari di dataran tinggi. Berdasarkan pemahaman tentang sistem pernapasan, apa penyebab utama kondisi ini?',
+        options: [
+          'A. Tekanan oksigen parsial lebih rendah di dataran tinggi',
+          'B. Suhu udara yang lebih dingin mengganggu fungsi alveolus',
+          'C. Kelembaban udara yang rendah menyebabkan dehidrasi paru-paru',
+          'D. Gravitasi yang berbeda mempengaruhi kerja diafragma'
+        ],
+        correct: 0,
+        explanation: 'Di dataran tinggi, tekanan udara lebih rendah sehingga tekanan parsial oksigen juga berkurang. Hal ini menyebabkan lebih sedikit oksigen yang dapat berdifusi ke dalam darah melalui alveolus.'
+      },
+      {
+        id: 2,
+        question: 'Pak Ahmad, perokok berat selama 20 tahun, mengeluh napasnya menjadi pendek-pendek dan batuk terus-menerus. Hasil rontgen menunjukkan paru-parunya tampak lebih gelap dari normal. Analisis hubungan antara kebiasaan merokok dengan kondisi paru-paru Pak Ahmad!',
+        options: [
+          'A. Tar menumpuk dan merusak silia sehingga kotoran tidak tersaring',
+          'B. Nikotin menyebabkan paru-paru membesar secara permanen',
+          'C. Karbon monoksida mengubah warna paru-paru menjadi gelap',
+          'D. Asap rokok menyebabkan penebalan dinding bronkus saja'
+        ],
+        correct: 0,
+        explanation: 'Tar dalam rokok menggumpalkan silia (rambut halus) di saluran napas sehingga tidak bisa menyaring kotoran. Penumpukan tar dan partikel berbahaya menyebabkan batuk kronis dan gambaran gelap pada rontgen.'
+      },
+      {
+        id: 3,
+        question: 'Dalam percobaan sederhana, ketika seseorang menghembuskan napas ke air kapur, air tersebut menjadi keruh. Jika percobaan yang sama dilakukan pada perokok aktif, prediksi dan jelaskan hasil yang mungkin berbeda!',
+        options: [
+          'A. Air kapur akan lebih cepat keruh karena CO₂ lebih banyak',
+          'B. Air kapur akan sama keruhnya karena proses respirasi sama',
+          'C. Air kapur akan kurang keruh karena CO terikat di hemoglobin',
+          'D. Air kapur akan berubah warna karena ada tar dalam napas'
+        ],
+        correct: 2,
+        explanation: 'Karbon monoksida (CO) dari rokok mengikat hemoglobin 200x lebih kuat dari oksigen. Ini mengurangi kapasitas darah membawa O₂ dan mengeluarkan CO₂, sehingga CO₂ yang dihembuskan mungkin berkurang.'
+      },
+      {
+        id: 4,
+        question: 'Bu Siti tidak merokok, namun suaminya adalah perokok berat yang sering merokok di dalam rumah. Setelah 15 tahun, Bu Siti didiagnosis mengalami gangguan pernapasan kronis. Evaluasi faktor risiko yang dialami Bu Siti!',
+        options: [
+          'A. Bu Siti terkena dampak sebagai perokok pasif dengan risiko setara perokok aktif',
+          'B. Kondisi Bu Siti tidak berhubungan dengan rokok karena ia tidak merokok langsung',
+          'C. Gangguan pernapasan Bu Siti disebabkan oleh alergi terhadap asap',
+          'D. Bu Siti hanya mengalami iritasi ringan yang tidak berbahaya'
+        ],
+        correct: 0,
+        explanation: 'Perokok pasif menghirup asap sampingan yang mengandung 4.000+ zat kimia berbahaya. Penelitian menunjukkan risiko penyakit jantung, stroke, dan kanker paru-paru pada perokok pasif setara dengan perokok aktif.'
+      },
+      {
+        id: 5,
+        question: 'Seorang pasien emfisema kesulitan menghembuskan napas meskipun menarik napas tidak terlalu sulit. Berdasarkan pengetahuan tentang mekanisme pernapasan, mengapa hal ini terjadi?',
+        options: [
+          'A. Alveolus yang rusak kehilangan elastisitasnya sehingga tidak bisa mengempis',
+          'B. Diafragma tidak mampu berkontraksi dengan baik saat ekspirasi',
+          'C. Bronkus tersumbat oleh lendir yang mengental',
+          'D. Otot-otot tulang rusuk menjadi lemah akibat emfisema'
+        ],
+        correct: 0,
+        explanation: 'Emfisema merusak dinding alveolus dan menghilangkan elastisitasnya. Paru-paru normal mengempis secara pasif saat ekspirasi karena elastisitas alveolus, tetapi pada emfisema, udara terperangkap karena alveolus tidak bisa mengempis.'
+      },
+      {
+        id: 6,
+        question: 'Seseorang yang baru berhenti merokok melaporkan bahwa setelah 12 jam, ia merasa lebih segar dan tidak pusing. Analisis perubahan fisiologis yang terjadi dalam tubuhnya!',
+        options: [
+          'A. Kadar CO dalam darah kembali normal, hemoglobin mengikat O₂ lebih efektif',
+          'B. Nikotin sudah sepenuhnya hilang dari tubuh',
+          'C. Silia di saluran napas sudah pulih sepenuhnya',
+          'D. Tekanan darah sudah kembali seperti non-perokok'
+        ],
+        correct: 0,
+        explanation: 'Setelah 12 jam berhenti merokok, kadar karbon monoksida (CO) dalam darah kembali normal. CO yang tadinya mengikat hemoglobin digantikan oleh oksigen, sehingga pasokan oksigen ke otak dan seluruh tubuh meningkat.'
+      },
+      {
+        id: 7,
+        question: 'Dalam situasi darurat, seseorang tersedak makanan dan tidak bisa bernapas. Berdasarkan pemahaman anatomi sistem pernapasan, struktur apa yang tidak berfungsi dengan baik?',
+        options: [
+          'A. Epiglotis gagal menutup trakea saat menelan',
+          'B. Faring tersumbat oleh makanan yang terlalu besar',
+          'C. Laring tidak dapat menghasilkan suara untuk batuk',
+          'D. Silia di trakea tidak mampu mendorong makanan keluar'
+        ],
+        correct: 0,
+        explanation: 'Epiglotis adalah katup yang menutup trakea saat menelan untuk mencegah makanan masuk ke saluran napas. Jika epiglotis tidak menutup sempurna atau tersedak tiba-tiba, makanan bisa masuk ke trakea dan menyumbat jalan napas.'
+      },
+      {
+        id: 8,
+        question: 'Penelitian menunjukkan bahwa bayi yang lahir dari ibu perokok cenderung memiliki berat lahir rendah. Sintesis hubungan antara merokok saat hamil dengan kondisi janin berdasarkan pemahaman sistem pernapasan dan peredaran darah!',
+        options: [
+          'A. CO mengurangi O₂ ke janin dan nikotin menyempitkan pembuluh darah plasenta',
+          'B. Tar menumpuk di plasenta dan menghalangi nutrisi ke janin',
+          'C. Nikotin langsung masuk ke janin dan mengganggu pertumbuhannya',
+          'D. Asap rokok merusak paru-paru janin secara langsung'
+        ],
+        correct: 0,
+        explanation: 'CO dari rokok mengikat hemoglobin ibu sehingga oksigen yang dibawa ke janin berkurang. Nikotin menyebabkan vasokonstriksi (penyempitan pembuluh darah) termasuk di plasenta, mengurangi aliran darah dan nutrisi ke janin.'
+      },
+      {
+        id: 9,
+        question: 'Seorang penyelam mengalami "the bends" (penyakit dekompresi) setelah naik ke permukaan terlalu cepat. Bagaimana kondisi ini berkaitan dengan prinsip pertukaran gas di alveolus?',
+        options: [
+          'A. Gas nitrogen yang terlarut dalam darah membentuk gelembung saat tekanan turun drastis',
+          'B. Oksigen berlebih di darah menyebabkan keracunan oksigen',
+          'C. CO₂ tidak dapat dikeluarkan karena perbedaan tekanan',
+          'D. Alveolus pecah karena perbedaan tekanan yang tiba-tiba'
+        ],
+        correct: 0,
+        explanation: 'Saat menyelam, tekanan tinggi menyebabkan lebih banyak nitrogen terlarut dalam darah. Naik terlalu cepat menyebabkan tekanan turun drastis, nitrogen membentuk gelembung dalam darah (seperti membuka soda), menyumbat pembuluh dan menyebabkan nyeri hebat.'
+      },
+      {
+        id: 10,
+        question: 'Sebuah kampanye anti-rokok menampilkan gambar paru-paru perokok yang menghitam dibanding non-perokok. Beberapa orang berpendapat gambar tersebut berlebihan. Evaluasi kebenaran ilmiah dari kampanye tersebut!',
+        options: [
+          'A. Benar, tar dan partikel karbon memang menumpuk di paru-paru perokok',
+          'B. Berlebihan, warna hitam hanya karena efek fotografi',
+          'C. Tidak akurat, paru-paru perokok hanya sedikit lebih gelap',
+          'D. Salah, warna paru-paru tidak berubah akibat merokok'
+        ],
+        correct: 0,
+        explanation: 'Gambar tersebut akurat secara ilmiah. Tar dari asap rokok benar-benar menumpuk di jaringan paru-paru seiring waktu. Partikel karbon dan zat kimia lain menyebabkan perubahan warna yang permanen, terlihat jelas pada otopsi perokok jangka panjang.'
+      }
+    ];
+
+    // Render navigation menu
+    function renderNavigation() {
+      const nav = document.getElementById('navMenu');
+      nav.innerHTML = sections.map((section, index) => `
+        <button onclick="goToSection(${index})" class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 ${currentSection === index ? 'active' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'}">
+          <span class="text-xl">${section.icon}</span>
+          <span class="font-medium text-sm">${section.title}</span>
+          ${visitedSections.has(index) ? '<svg class="w-4 h-4 ml-auto text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>' : ''}
+        </button>
+      `).join('');
+    }
+
+    // Update progress bar
+    function updateProgress() {
+      const progress = Math.round((visitedSections.size / sections.length) * 100);
+      document.getElementById('progressBar').style.width = `${progress}%`;
+      document.getElementById('progressText').textContent = `${progress}%`;
+    }
+
+    // Go to specific section
+    function goToSection(index) {
+      currentSection = index;
+      visitedSections.add(index);
+      renderNavigation();
+      renderContent();
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Render content based on current section
+    function renderContent() {
+      const contentArea = document.getElementById('contentArea');
+      const section = sections[currentSection];
+      
+      let html = '';
+      
+      switch(section.content) {
+        case 'introduction':
+          html = renderIntroduction();
+          break;
+        case 'structure':
+          html = renderStructure();
+          break;
+        case 'lungs':
+          html = renderLungs();
+          break;
+        case 'mechanism':
+          html = renderMechanism();
+          break;
+        case 'smoking':
+          html = renderSmoking();
+          break;
+        case 'diseases':
+          html = renderDiseases();
+          break;
+        case 'passive':
+          html = renderPassive();
+          break;
+        case 'benefits':
+          html = renderBenefits();
+          break;
+        case 'quiz':
+          html = renderQuiz();
+          break;
+      }
+      
+      contentArea.innerHTML = html;
+      
+      // Initialize any interactive elements
+      if (section.content === 'mechanism') {
+        initBreathingSimulation();
+      }
+    }
+
+    // Section: Introduction
+    function renderIntroduction() {
+      return `
+        <div class="section-fade">
+          <div class="card-glass rounded-3xl p-8 shadow-xl mb-6">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+              <div class="flex-1">
+                <span class="inline-block px-4 py-2 bg-sky-100 text-sky-700 rounded-full text-sm font-semibold mb-4">Materi 1 dari 9</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-slate-800 mb-4">Sistem Pernapasan Manusia</h2>
+                <p class="text-slate-600 text-lg leading-relaxed mb-6">
+                  Sistem pernapasan adalah salah satu sistem organ vital yang bertugas menyediakan oksigen bagi tubuh dan membuang karbon dioksida hasil metabolisme.
+                </p>
+                <div class="bg-gradient-to-r from-amber-50 to-orange-50 border-l-4 border-amber-500 p-4 rounded-r-xl">
+                  <p class="font-semibold text-amber-800 mb-2">🤔 Pertanyaan Pemantik:</p>
+                  <p class="text-amber-700 italic">"Apa hubungan antara berhenti merokok dengan kesehatan sistem pernapasan dan peredaran darah?"</p>
+                </div>
+              </div>
+              <div class="w-64 h-64 relative">
+                <svg class="w-full h-full float-animation" viewBox="0 0 200 200">
+                  <!-- Body outline -->
+                  <ellipse cx="100" cy="90" rx="60" ry="80" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+                  
+                  <!-- Trachea -->
+                  <path d="M100 20 L100 60" stroke="#94a3b8" stroke-width="8" stroke-linecap="round"/>
+                  
+                  <!-- Bronchi -->
+                  <path d="M100 60 Q80 80 65 100" stroke="#94a3b8" stroke-width="6" fill="none"/>
+                  <path d="M100 60 Q120 80 135 100" stroke="#94a3b8" stroke-width="6" fill="none"/>
+                  
+                  <!-- Left lung -->
+                  <ellipse cx="65" cy="110" rx="35" ry="45" fill="#fecaca" stroke="#ef4444" stroke-width="2" class="lung-pulse"/>
+                  
+                  <!-- Right lung -->
+                  <ellipse cx="135" cy="110" rx="35" ry="45" fill="#fecaca" stroke="#ef4444" stroke-width="2" class="lung-pulse" style="animation-delay: 0.5s"/>
+                  
+                  <!-- Heart -->
+                  <path d="M100 95 C90 85 75 90 75 105 C75 120 100 135 100 135 C100 135 125 120 125 105 C125 90 110 85 100 95" fill="#ef4444" class="heartbeat"/>
+                  
+                  <!-- O2 particles -->
+                  <circle cx="40" cy="70" r="5" fill="#3b82f6" opacity="0.8">
+                    <animate attributeName="cx" values="40;100;40" dur="3s" repeatCount="indefinite"/>
+                    <animate attributeName="cy" values="70;110;70" dur="3s" repeatCount="indefinite"/>
+                  </circle>
+                  <circle cx="160" cy="70" r="5" fill="#3b82f6" opacity="0.8">
+                    <animate attributeName="cx" values="160;100;160" dur="3s" repeatCount="indefinite" begin="0.5s"/>
+                    <animate attributeName="cy" values="70;110;70" dur="3s" repeatCount="indefinite" begin="0.5s"/>
+                  </circle>
+                  
+                  <!-- CO2 particles going out -->
+                  <circle cx="100" cy="110" r="4" fill="#64748b" opacity="0.6">
+                    <animate attributeName="cy" values="110;20" dur="2s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" values="0.6;0" dur="2s" repeatCount="indefinite"/>
+                  </circle>
+                  
+                  <!-- Labels -->
+                  <text x="100" y="15" text-anchor="middle" font-size="10" fill="#64748b">O₂ masuk</text>
+                  <text x="65" cy="110" text-anchor="middle" font-size="8" fill="#dc2626">Paru-paru</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card-glass rounded-3xl p-8 shadow-xl">
+            <h3 class="font-heading text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+              <span class="w-10 h-10 bg-sky-100 rounded-xl flex items-center justify-center">⚡</span>
+              Fungsi Utama Sistem Pernapasan
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="bg-gradient-to-br from-sky-50 to-cyan-50 rounded-2xl p-6 border border-sky-200">
+                <div class="w-16 h-16 bg-sky-500 rounded-2xl flex items-center justify-center mb-4">
+                  <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                  </svg>
+                </div>
+                <h4 class="font-heading font-bold text-slate-800 text-lg mb-2">Menyediakan Oksigen</h4>
+                <p class="text-slate-600">Tubuh membutuhkan oksigen untuk <strong>respirasi seluler</strong>, yaitu proses pemecahan glukosa untuk menghasilkan energi (ATP) bagi aktivitas tubuh.</p>
+              </div>
+              <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 border border-emerald-200">
+                <div class="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center mb-4">
+                  <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                  </svg>
+                </div>
+                <h4 class="font-heading font-bold text-slate-800 text-lg mb-2">Membuang CO₂</h4>
+                <p class="text-slate-600">Karbon dioksida adalah <strong>sisa metabolisme</strong> yang harus dikeluarkan dari tubuh karena bersifat racun jika menumpuk di dalam darah.</p>
+              </div>
+            </div>
+            
+            <div class="mt-8 bg-slate-50 rounded-2xl p-6">
+              <h4 class="font-heading font-semibold text-slate-800 mb-4">📊 Fakta Menarik:</h4>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center">
+                  <div class="text-3xl font-bold text-sky-600">20.000</div>
+                  <div class="text-sm text-slate-500">Napas per hari</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-3xl font-bold text-emerald-600">6 liter</div>
+                  <div class="text-sm text-slate-500">Kapasitas paru-paru</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-3xl font-bold text-amber-600">300 juta</div>
+                  <div class="text-sm text-slate-500">Alveolus</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-3xl font-bold text-rose-600">70 m²</div>
+                  <div class="text-sm text-slate-500">Luas permukaan</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          ${renderNavigationButtons()}
+        </div>
+      `;
+    }
+
+    // Section: Structure
+    function renderStructure() {
+      return `
+        <div class="section-fade">
+          <div class="card-glass rounded-3xl p-8 shadow-xl mb-6">
+            <span class="inline-block px-4 py-2 bg-sky-100 text-sky-700 rounded-full text-sm font-semibold mb-4">Materi 2 dari 9</span>
+            <h2 class="font-heading text-3xl font-bold text-slate-800 mb-4">🔬 Struktur dan Organ Pernapasan</h2>
+            <p class="text-slate-600 text-lg mb-8">Perjalanan udara saat bernapas melewati beberapa organ penting sebelum sampai ke paru-paru.</p>
+            
+            <div class="flex flex-col lg:flex-row gap-8">
+              <!-- Anatomy illustration -->
+              <div class="lg:w-1/2">
+                <div class="bg-gradient-to-br from-slate-50 to-sky-50 rounded-2xl p-6 sticky top-32">
+                  <svg viewBox="0 0 300 400" class="w-full max-w-sm mx-auto">
+                    <!-- Head outline -->
+                    <ellipse cx="150" cy="60" rx="50" ry="55" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+                    
+                    <!-- Nose -->
+                    <path d="M150 35 L140 55 L145 60 L155 60 L160 55 Z" fill="#fcd34d" stroke="#f59e0b" stroke-width="1"/>
+                    <circle cx="145" cy="52" r="3" fill="#1e293b"/>
+                    <circle cx="155" cy="52" r="3" fill="#1e293b"/>
+                    
+                    <!-- Nasal cavity -->
+                    <rect x="138" y="40" width="24" height="30" rx="5" fill="#fecaca" stroke="#ef4444" stroke-width="1"/>
+                    <text x="150" y="58" text-anchor="middle" font-size="6" fill="#dc2626">Hidung</text>
+                    
+                    <!-- Pharynx -->
+                    <rect x="140" y="75" width="20" height="25" rx="3" fill="#c4b5fd" stroke="#7c3aed" stroke-width="2"/>
+                    <text x="150" y="90" text-anchor="middle" font-size="6" fill="#6d28d9">Faring</text>
+                    
+                    <!-- Larynx -->
+                    <path d="M140 105 L160 105 L165 125 L155 130 L145 130 L135 125 Z" fill="#fde047" stroke="#ca8a04" stroke-width="2"/>
+                    <text x="150" y="120" text-anchor="middle" font-size="6" fill="#a16207">Laring</text>
+                    
+                    <!-- Epiglottis -->
+                    <ellipse cx="150" cy="102" rx="8" ry="5" fill="#fb923c" stroke="#ea580c" stroke-width="1"/>
+                    <text x="175" y="100" font-size="5" fill="#c2410c">Epiglotis</text>
+                    
+                    <!-- Trachea -->
+                    <rect x="142" y="135" width="16" height="60" rx="5" fill="#93c5fd" stroke="#3b82f6" stroke-width="2"/>
+                    <line x1="144" y1="145" x2="156" y2="145" stroke="#60a5fa" stroke-width="1"/>
+                    <line x1="144" y1="155" x2="156" y2="155" stroke="#60a5fa" stroke-width="1"/>
+                    <line x1="144" y1="165" x2="156" y2="165" stroke="#60a5fa" stroke-width="1"/>
+                    <line x1="144" y1="175" x2="156" y2="175" stroke="#60a5fa" stroke-width="1"/>
+                    <line x1="144" y1="185" x2="156" y2="185" stroke="#60a5fa" stroke-width="1"/>
+                    <text x="150" y="170" text-anchor="middle" font-size="6" fill="#2563eb">Trakea</text>
+                    
+                    <!-- Bronchi -->
+                    <path d="M150 195 Q120 220 100 250" stroke="#2563eb" stroke-width="8" fill="none" stroke-linecap="round"/>
+                    <path d="M150 195 Q180 220 200 250" stroke="#2563eb" stroke-width="8" fill="none" stroke-linecap="round"/>
+                    <text x="75" y="235" font-size="6" fill="#2563eb">Bronkus</text>
+                    <text x="200" y="235" font-size="6" fill="#2563eb">Bronkus</text>
+                    
+                    <!-- Left lung -->
+                    <ellipse cx="85" cy="300" rx="55" ry="70" fill="#fecaca" stroke="#ef4444" stroke-width="3"/>
+                    <text x="85" y="300" text-anchor="middle" font-size="10" fill="#dc2626">Paru-paru</text>
+                    <text x="85" y="315" text-anchor="middle" font-size="8" fill="#dc2626">Kiri</text>
+                    
+                    <!-- Right lung -->
+                    <ellipse cx="215" cy="300" rx="55" ry="70" fill="#fecaca" stroke="#ef4444" stroke-width="3"/>
+                    <text x="215" y="300" text-anchor="middle" font-size="10" fill="#dc2626">Paru-paru</text>
+                    <text x="215" y="315" text-anchor="middle" font-size="8" fill="#dc2626">Kanan</text>
+                    
+                    <!-- Airflow arrows -->
+                    <path d="M150 10 L150 30" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowhead)"/>
+                    <defs>
+                      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+                      </marker>
+                    </defs>
+                    <text x="150" y="8" text-anchor="middle" font-size="8" fill="#3b82f6">Udara masuk</text>
+                  </svg>
+                </div>
+              </div>
+              
+              <!-- Organ details -->
+              <div class="lg:w-1/2 space-y-4">
+                <div class="organ-card bg-gradient-to-r from-rose-50 to-pink-50 rounded-2xl p-5 border border-rose-200">
+                  <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-rose-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <span class="text-2xl">👃</span>
+                    </div>
+                    <div>
+                      <h4 class="font-heading font-bold text-slate-800 text-lg">1. Hidung</h4>
+                      <p class="text-slate-600 mt-2">Menyaring partikel besar dengan <strong>rambut hidung (vibrissae)</strong> dan melembapkan udara dengan <strong>lendir (mukus)</strong>. Menghangatkan udara sebelum masuk ke paru-paru.</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="organ-card bg-gradient-to-r from-purple-50 to-violet-50 rounded-2xl p-5 border border-purple-200">
+                  <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <span class="text-2xl">🔗</span>
+                    </div>
+                    <div>
+                      <h4 class="font-heading font-bold text-slate-800 text-lg">2. Faring (Tenggorokan)</h4>
+                      <p class="text-slate-600 mt-2">Saluran penghubung untuk <strong>udara dan makanan</strong>. Merupakan persimpangan antara saluran pernapasan dan pencernaan.</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="organ-card bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl p-5 border border-amber-200">
+                  <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <span class="text-2xl">🎤</span>
+                    </div>
+                    <div>
+                      <h4 class="font-heading font-bold text-slate-800 text-lg">3. Laring</h4>
+                      <p class="text-slate-600 mt-2">Terdapat <strong>pita suara</strong> untuk menghasilkan suara. Dilindungi oleh <strong>epiglotis</strong> yang menutup trakea saat menelan agar makanan tidak masuk ke saluran napas.</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="organ-card bg-gradient-to-r from-sky-50 to-blue-50 rounded-2xl p-5 border border-sky-200">
+                  <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-sky-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <span class="text-2xl">🫧</span>
+                    </div>
+                    <div>
+                      <h4 class="font-heading font-bold text-slate-800 text-lg">4. Trakea (Batang Tenggorok)</h4>
+                      <p class="text-slate-600 mt-2">Dilapisi oleh <strong>silia (rambut halus)</strong> yang menyapu kotoran keluar melalui mekanisme batuk. Diperkuat oleh cincin tulang rawan berbentuk huruf C.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Interactive: Air flow animation -->
+          <div class="card-glass rounded-3xl p-8 shadow-xl">
+            <h3 class="font-heading text-xl font-bold text-slate-800 mb-6">🎮 Aktivitas Interaktif: Lacak Perjalanan Udara</h3>
+            <p class="text-slate-600 mb-6">Klik tombol di bawah untuk melihat animasi perjalanan udara dari hidung hingga paru-paru!</p>
+            
+            <div id="airflowDemo" class="bg-slate-100 rounded-2xl p-6 min-h-64 relative overflow-hidden">
+              <div class="flex justify-center gap-4 mb-6">
+                <button onclick="startAirflowAnimation()" class="px-6 py-3 bg-sky-500 hover:bg-sky-600 text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl">
+                  ▶️ Mulai Animasi
+                </button>
+                <button onclick="resetAirflowAnimation()" class="px-6 py-3 bg-slate-500 hover:bg-slate-600 text-white rounded-xl font-semibold transition-all">
+                  🔄 Reset
+                </button>
+              </div>
+              <div id="airflowSteps" class="flex flex-wrap justify-center gap-3">
+                <div data-step="1" class="airflow-step px-4 py-2 bg-white rounded-lg border-2 border-slate-200 text-slate-400 transition-all">👃 Hidung</div>
+                <div class="text-slate-300 self-center">→</div>
+                <div data-step="2" class="airflow-step px-4 py-2 bg-white rounded-lg border-2 border-slate-200 text-slate-400 transition-all">🔗 Faring</div>
+                <div class="text-slate-300 self-center">→</div>
+                <div data-step="3" class="airflow-step px-4 py-2 bg-white rounded-lg border-2 border-slate-200 text-slate-400 transition-all">🎤 Laring</div>
+                <div class="text-slate-300 self-center">→</div>
+                <div data-step="4" class="airflow-step px-4 py-2 bg-white rounded-lg border-2 border-slate-200 text-slate-400 transition-all">🫧 Trakea</div>
+                <div class="text-slate-300 self-center">→</div>
+                <div data-step="5" class="airflow-step px-4 py-2 bg-white rounded-lg border-2 border-slate-200 text-slate-400 transition-all">🌿 Bronkus</div>
+                <div class="text-slate-300 self-center">→</div>
+                <div data-step="6" class="airflow-step px-4 py-2 bg-white rounded-lg border-2 border-slate-200 text-slate-400 transition-all">🫁 Paru-paru</div>
+              </div>
+              <p id="airflowDescription" class="text-center mt-6 text-slate-600 font-medium"></p>
+            </div>
+          </div>
+          
+          ${renderNavigationButtons()}
+        </div>
+      `;
+    }
+
+    // Airflow animation functions
+    let airflowInterval = null;
+    
+    function startAirflowAnimation() {
+      resetAirflowAnimation();
+      const steps = document.querySelectorAll('.airflow-step');
+      const descriptions = [
+        'Udara masuk melalui hidung, disaring dan dilembapkan',
+        'Udara melewati faring (tenggorokan)',
+        'Melewati laring yang dilindungi epiglotis',
+        'Turun ke trakea yang diperkuat tulang rawan',
+        'Udara terbagi ke bronkus kanan dan kiri',
+        'Sampai di paru-paru untuk pertukaran gas!'
+      ];
+      
+      let currentStep = 0;
+      airflowInterval = setInterval(() => {
+        if (currentStep < steps.length) {
+          steps[currentStep].classList.add('bg-sky-500', 'text-white', 'border-sky-500', 'scale-110');
+          steps[currentStep].classList.remove('bg-white', 'text-slate-400', 'border-slate-200');
+          document.getElementById('airflowDescription').textContent = descriptions[currentStep];
+          currentStep++;
+        } else {
+          clearInterval(airflowInterval);
+        }
+      }, 800);
+    }
+    
+    function resetAirflowAnimation() {
+      if (airflowInterval) clearInterval(airflowInterval);
+      const steps = document.querySelectorAll('.airflow-step');
+      steps.forEach(step => {
+        step.classList.remove('bg-sky-500', 'text-white', 'border-sky-500', 'scale-110');
+        step.classList.add('bg-white', 'text-slate-400', 'border-slate-200');
+      });
+      document.getElementById('airflowDescription').textContent = '';
+    }
+
+    // Section: Lungs
+    function renderLungs() {
+      return `
+        <div class="section-fade">
+          <div class="card-glass rounded-3xl p-8 shadow-xl mb-6">
+            <span class="inline-block px-4 py-2 bg-sky-100 text-sky-700 rounded-full text-sm font-semibold mb-4">Materi 3 dari 9</span>
+            <h2 class="font-heading text-3xl font-bold text-slate-800 mb-4">💨 Paru-Paru dan Alveolus</h2>
+            <p class="text-slate-600 text-lg mb-8">Paru-paru adalah organ utama pernapasan tempat terjadinya pertukaran gas antara udara dan darah.</p>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+              <div>
+                <h3 class="font-heading text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                  <span class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">🌿</span>
+                  Bronkus
+                </h3>
+                <div class="bg-blue-50 rounded-2xl p-6 border border-blue-200 mb-6">
+                  <p class="text-slate-700">Bronkus adalah <strong>cabang trakea</strong> yang menuju paru-paru kanan dan kiri. Di dalam paru-paru, bronkus bercabang menjadi bronkiolus yang semakin kecil hingga berujung di alveolus.</p>
+                  
+                  <div class="mt-4 flex justify-center">
+                    <svg viewBox="0 0 200 150" class="w-full max-w-xs">
+                      <!-- Trachea -->
+                      <rect x="90" y="10" width="20" height="30" rx="5" fill="#93c5fd" stroke="#3b82f6" stroke-width="2"/>
+                      <text x="100" y="28" text-anchor="middle" font-size="8" fill="#1e40af">Trakea</text>
+                      
+                      <!-- Main bronchi -->
+                      <path d="M100 40 Q70 60 50 80" stroke="#3b82f6" stroke-width="6" fill="none"/>
+                      <path d="M100 40 Q130 60 150 80" stroke="#3b82f6" stroke-width="6" fill="none"/>
+                      
+                      <!-- Bronchioles left -->
+                      <path d="M50 80 Q35 95 30 110" stroke="#60a5fa" stroke-width="3" fill="none"/>
+                      <path d="M50 80 Q55 100 45 120" stroke="#60a5fa" stroke-width="3" fill="none"/>
+                      <path d="M50 80 Q65 100 70 115" stroke="#60a5fa" stroke-width="3" fill="none"/>
+                      
+                      <!-- Bronchioles right -->
+                      <path d="M150 80 Q165 95 170 110" stroke="#60a5fa" stroke-width="3" fill="none"/>
+                      <path d="M150 80 Q145 100 155 120" stroke="#60a5fa" stroke-width="3" fill="none"/>
+                      <path d="M150 80 Q135 100 130 115" stroke="#60a5fa" stroke-width="3" fill="none"/>
+                      
+                      <!-- Alveoli clusters -->
+                      <circle cx="30" cy="115" r="8" fill="#fecaca" stroke="#ef4444"/>
+                      <circle cx="45" cy="125" r="8" fill="#fecaca" stroke="#ef4444"/>
+                      <circle cx="70" cy="120" r="8" fill="#fecaca" stroke="#ef4444"/>
+                      
+                      <circle cx="170" cy="115" r="8" fill="#fecaca" stroke="#ef4444"/>
+                      <circle cx="155" cy="125" r="8" fill="#fecaca" stroke="#ef4444"/>
+                      <circle cx="130" cy="120" r="8" fill="#fecaca" stroke="#ef4444"/>
+                      
+                      <text x="100" y="145" text-anchor="middle" font-size="8" fill="#64748b">Bronkiolus → Alveolus</text>
+                    </svg>
+                  </div>
+                </div>
+                
+                <h3 class="font-heading text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                  <span class="w-8 h-8 bg-rose-100 rounded-lg flex items-center justify-center">🔴</span>
+                  Alveolus
+                </h3>
+                <div class="bg-rose-50 rounded-2xl p-6 border border-rose-200">
+                  <p class="text-slate-700 mb-4"><strong>Alveolus (jamak: alveoli)</strong> adalah kantong udara kecil di ujung bronkiolus yang dikelilingi oleh pembuluh darah kapiler. Inilah tempat terjadinya pertukaran gas!</p>
+                  <ul class="space-y-2 text-slate-600">
+                    <li class="flex items-start gap-2">
+                      <span class="text-rose-500">•</span>
+                      Jumlah: sekitar <strong>300 juta</strong> alveolus di kedua paru-paru
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-rose-500">•</span>
+                      Luas permukaan total: sekitar <strong>70 m²</strong> (seluas lapangan tenis!)
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-rose-500">•</span>
+                      Dinding sangat tipis (0,5 mikrometer) untuk mempermudah difusi gas
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div>
+                <h3 class="font-heading text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                  <span class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">🔄</span>
+                  Pertukaran Gas di Alveolus
+                </h3>
+                <div class="bg-gradient-to-br from-slate-50 to-emerald-50 rounded-2xl p-6 border border-emerald-200">
+                  <svg viewBox="0 0 300 250" class="w-full">
+                    <!-- Alveolus -->
+                    <circle cx="150" cy="100" r="60" fill="#fef3c7" stroke="#f59e0b" stroke-width="3"/>
+                    <text x="150" y="90" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">ALVEOLUS</text>
+                    <text x="150" y="108" text-anchor="middle" font-size="9" fill="#b45309">(Kantong Udara)</text>
+                    
+                    <!-- Capillary -->
+                    <path d="M80 170 Q150 200 220 170" stroke="#ef4444" stroke-width="15" fill="none" stroke-linecap="round"/>
+                    <text x="150" y="195" text-anchor="middle" font-size="9" fill="#dc2626">Kapiler Darah</text>
+                    
+                    <!-- O2 arrows (into blood) -->
+                    <path d="M120 130 L110 160" stroke="#3b82f6" stroke-width="3" marker-end="url(#blueArrow)"/>
+                    <path d="M150 135 L150 165" stroke="#3b82f6" stroke-width="3" marker-end="url(#blueArrow)"/>
+                    <path d="M180 130 L190 160" stroke="#3b82f6" stroke-width="3" marker-end="url(#blueArrow)"/>
+                    
+                    <!-- CO2 arrows (out of blood) -->
+                    <path d="M100 155 L95 130" stroke="#64748b" stroke-width="3" marker-end="url(#grayArrow)"/>
+                    <path d="M200 155 L205 130" stroke="#64748b" stroke-width="3" marker-end="url(#grayArrow)"/>
+                    
+                    <!-- O2 label -->
+                    <circle cx="60" cy="80" r="18" fill="#3b82f6"/>
+                    <text x="60" y="85" text-anchor="middle" font-size="10" fill="white" font-weight="bold">O₂</text>
+                    <text x="60" y="110" text-anchor="middle" font-size="7" fill="#3b82f6">Oksigen masuk</text>
+                    <text x="60" y="120" text-anchor="middle" font-size="7" fill="#3b82f6">ke darah</text>
+                    
+                    <!-- CO2 label -->
+                    <circle cx="240" cy="80" r="18" fill="#64748b"/>
+                    <text x="240" y="85" text-anchor="middle" font-size="10" fill="white" font-weight="bold">CO₂</text>
+                    <text x="240" y="110" text-anchor="middle" font-size="7" fill="#64748b">Karbon dioksida</text>
+                    <text x="240" y="120" text-anchor="middle" font-size="7" fill="#64748b">keluar dari darah</text>
+                    
+                    <!-- Blood flow arrows -->
+                    <path d="M50 180 L80 175" stroke="#ef4444" stroke-width="2" marker-end="url(#redArrow)"/>
+                    <path d="M220 175 L250 180" stroke="#7f1d1d" stroke-width="2" marker-end="url(#darkRedArrow)"/>
+                    
+                    <text x="45" y="195" font-size="7" fill="#ef4444">Darah kaya CO₂</text>
+                    <text x="45" y="205" font-size="7" fill="#ef4444">(dari jantung)</text>
+                    <text x="220" y="195" font-size="7" fill="#7f1d1d">Darah kaya O₂</text>
+                    <text x="220" y="205" font-size="7" fill="#7f1d1d">(ke jantung)</text>
+                    
+                    <defs>
+                      <marker id="blueArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+                      </marker>
+                      <marker id="grayArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+                      </marker>
+                      <marker id="redArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+                      </marker>
+                      <marker id="darkRedArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#7f1d1d"/>
+                      </marker>
+                    </defs>
+                  </svg>
+                  
+                  <div class="mt-4 bg-white rounded-xl p-4">
+                    <h4 class="font-semibold text-slate-800 mb-2">Proses Difusi:</h4>
+                    <ol class="text-slate-600 text-sm space-y-1">
+                      <li>1. Darah miskin O₂ dan kaya CO₂ datang dari jantung</li>
+                      <li>2. O₂ dari alveolus berdifusi ke dalam darah kapiler</li>
+                      <li>3. CO₂ dari darah berdifusi ke alveolus</li>
+                      <li>4. Darah kaya O₂ kembali ke jantung untuk dipompa ke seluruh tubuh</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          ${renderNavigationButtons()}
+        </div>
+      `;
+    }
+
+    // Section: Mechanism
+    function renderMechanism() {
+      return `
+        <div class="section-fade">
+          <div class="card-glass rounded-3xl p-8 shadow-xl mb-6">
+            <span class="inline-block px-4 py-2 bg-sky-100 text-sky-700 rounded-full text-sm font-semibold mb-4">Materi 4 dari 9</span>
+            <h2 class="font-heading text-3xl font-bold text-slate-800 mb-4">🌬️ Mekanisme Bernapas</h2>
+            <p class="text-slate-600 text-lg mb-8">Proses bernapas melibatkan kerja otot diafragma dan otot tulang rusuk yang bekerja secara bergantian.</p>
+            
+            <div class="grid lg:grid-cols-2 gap-8 mb-8">
+              <!-- Inspiration -->
+              <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 border border-emerald-200">
+                <h3 class="font-heading text-xl font-bold text-emerald-800 mb-4 flex items-center gap-2">
+                  <span class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-white text-xl">↓</span>
+                  Inspirasi (Menarik Napas)
+                </h3>
+                
+                <div class="bg-white rounded-xl p-4 mb-4">
+                  <svg viewBox="0 0 200 180" class="w-full max-w-xs mx-auto" id="inspirationSvg">
+                    <!-- Rib cage expanded -->
+                    <ellipse cx="100" cy="80" rx="70" ry="60" fill="none" stroke="#14b8a6" stroke-width="3" stroke-dasharray="5,3"/>
+                    
+                    <!-- Lungs expanded -->
+                    <ellipse cx="70" cy="75" rx="30" ry="40" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+                    <ellipse cx="130" cy="75" rx="30" ry="40" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+                    
+                    <!-- Diaphragm flat -->
+                    <path d="M30 130 Q100 145 170 130" stroke="#f59e0b" stroke-width="4" fill="none"/>
+                    <text x="100" y="160" text-anchor="middle" font-size="9" fill="#b45309">Diafragma mendatar</text>
+                    
+                    <!-- Air in arrow -->
+                    <path d="M100 10 L100 35" stroke="#10b981" stroke-width="3" marker-end="url(#greenArrow)"/>
+                    <text x="100" y="8" text-anchor="middle" font-size="8" fill="#10b981">Udara masuk</text>
+                    
+                    <!-- Labels -->
+                    <text x="100" y="80" text-anchor="middle" font-size="8" fill="#059669">Paru-paru</text>
+                    <text x="100" y="92" text-anchor="middle" font-size="8" fill="#059669">MENGEMBANG</text>
+                    
+                    <defs>
+                      <marker id="greenArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#10b981"/>
+                      </marker>
+                    </defs>
+                  </svg>
+                </div>
+                
+                <div class="space-y-3 text-slate-700">
+                  <div class="flex items-start gap-3">
+                    <span class="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+                    <p>Otot tulang rusuk dan diafragma <strong>berkontraksi</strong></p>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span class="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                    <p>Diafragma <strong>mendatar</strong> (bergerak ke bawah)</p>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span class="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                    <p>Rongga dada <strong>mengembang</strong></p>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span class="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                    <p>Tekanan dalam paru-paru <strong>mengecil</strong></p>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span class="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+                    <p>Udara <strong>masuk</strong> ke paru-paru</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Expiration -->
+              <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200">
+                <h3 class="font-heading text-xl font-bold text-amber-800 mb-4 flex items-center gap-2">
+                  <span class="w-10 h-10 bg-amber-500 rounded-xl flex items-center justify-center text-white text-xl">↑</span>
+                  Ekspirasi (Menghembuskan Napas)
+                </h3>
+                
+                <div class="bg-white rounded-xl p-4 mb-4">
+                  <svg viewBox="0 0 200 180" class="w-full max-w-xs mx-auto" id="expirationSvg">
+                    <!-- Rib cage contracted -->
+                    <ellipse cx="100" cy="85" rx="55" ry="50" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="5,3"/>
+                    
+                    <!-- Lungs contracted -->
+                    <ellipse cx="75" cy="82" rx="22" ry="32" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+                    <ellipse cx="125" cy="82" rx="22" ry="32" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+                    
+                    <!-- Diaphragm curved up -->
+                    <path d="M40 115 Q100 90 160 115" stroke="#ef4444" stroke-width="4" fill="none"/>
+                    <text x="100" y="145" text-anchor="middle" font-size="9" fill="#dc2626">Diafragma melengkung</text>
+                    
+                    <!-- Air out arrow -->
+                    <path d="M100 35 L100 10" stroke="#f59e0b" stroke-width="3" marker-end="url(#orangeArrow)"/>
+                    <text x="100" y="50" text-anchor="middle" font-size="8" fill="#f59e0b">Udara keluar</text>
+                    
+                    <!-- Labels -->
+                    <text x="100" y="80" text-anchor="middle" font-size="8" fill="#b45309">Paru-paru</text>
+                    <text x="100" y="92" text-anchor="middle" font-size="8" fill="#b45309">MENGEMPIS</text>
+                    
+                    <defs>
+                      <marker id="orangeArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#f59e0b"/>
+                      </marker>
+                    </defs>
+                  </svg>
+                </div>
+                
+                <div class="space-y-3 text-slate-700">
+                  <div class="flex items-start gap-3">
+                    <span class="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+                    <p>Otot tulang rusuk dan diafragma <strong>berelaksasi</strong></p>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span class="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                    <p>Diafragma <strong>melengkung</strong> kembali ke atas</p>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span class="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                    <p>Rongga dada <strong>mengecil</strong></p>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span class="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                    <p>Tekanan dalam paru-paru <strong>membesar</strong></p>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span class="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+                    <p>Udara <strong>keluar</strong> dari paru-paru</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Interactive breathing simulation -->
+            <div class="bg-slate-50 rounded-2xl p-6">
+              <h3 class="font-heading text-xl font-bold text-slate-800 mb-4">🎮 Simulasi Pernapasan Interaktif</h3>
+              <p class="text-slate-600 mb-6">Klik tombol untuk mensimulasikan proses bernapas. Perhatikan perubahan pada paru-paru dan diafragma!</p>
+              
+              <div class="flex flex-col md:flex-row items-center gap-8">
+                <div id="breathingSimulation" class="w-64 h-64 bg-white rounded-2xl flex items-center justify-center">
+                  <svg viewBox="0 0 200 200" class="w-full h-full">
+                    <!-- Body outline -->
+                    <ellipse cx="100" cy="100" rx="80" ry="85" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+                    
+                    <!-- Lungs -->
+                    <ellipse id="leftLung" cx="65" cy="85" rx="25" ry="35" fill="#fecaca" stroke="#ef4444" stroke-width="2" class="transition-all duration-500"/>
+                    <ellipse id="rightLung" cx="135" cy="85" rx="25" ry="35" fill="#fecaca" stroke="#ef4444" stroke-width="2" class="transition-all duration-500"/>
+                    
+                    <!-- Diaphragm -->
+                    <path id="diaphragm" d="M30 140 Q100 155 170 140" stroke="#f59e0b" stroke-width="4" fill="none" class="transition-all duration-500"/>
+                    
+                    <!-- Air indicator -->
+                    <g id="airIndicator" class="transition-all duration-500">
+                      <circle cx="100" cy="30" r="8" fill="#3b82f6" opacity="0"/>
+                      <text x="100" y="35" text-anchor="middle" font-size="8" fill="white">O₂</text>
+                    </g>
+                    
+                    <!-- State label -->
+                    <text id="breathState" x="100" y="180" text-anchor="middle" font-size="12" fill="#64748b">Tekan tombol untuk mulai</text>
+                  </svg>
+                </div>
+                
+                <div class="flex flex-col gap-4">
+                  <button id="breatheInBtn" onclick="simulateBreatheIn()" class="px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-xl flex items-center gap-3">
+                    <span class="text-2xl">↓</span>
+                    Tarik Napas
+                  </button>
+                  <button id="breatheOutBtn" onclick="simulateBreatheOut()" class="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-xl flex items-center gap-3">
+                    <span class="text-2xl">↑</span>
+                    Hembuskan
+                  </button>
+                  <button onclick="autoBreathing()" class="px-8 py-4 bg-sky-500 hover:bg-sky-600 text-white rounded-xl font-semibold transition-all flex items-center gap-3">
+                    <span class="text-xl">🔄</span>
+                    Otomatis
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          ${renderNavigationButtons()}
+        </div>
+      `;
+    }
+
+    // Breathing simulation
+    let breathingInterval = null;
+    let isBreathingIn = false;
+
+    function initBreathingSimulation() {
+      // Reset state
+      if (breathingInterval) {
+        clearInterval(breathingInterval);
+        breathingInterval = null;
+      }
+    }
+
+    function simulateBreatheIn() {
+      const leftLung = document.getElementById('leftLung');
+      const rightLung = document.getElementById('rightLung');
+      const diaphragm = document.getElementById('diaphragm');
+      const breathState = document.getElementById('breathState');
+      const airIndicator = document.getElementById('airIndicator');
+      
+      if (leftLung && rightLung && diaphragm && breathState) {
+        // Expand lungs
+        leftLung.setAttribute('rx', '32');
+        leftLung.setAttribute('ry', '45');
+        rightLung.setAttribute('rx', '32');
+        rightLung.setAttribute('ry', '45');
+        leftLung.style.fill = '#d1fae5';
+        rightLung.style.fill = '#d1fae5';
+        
+        // Flatten diaphragm
+        diaphragm.setAttribute('d', 'M30 150 Q100 165 170 150');
+        
+        // Show air coming in
+        if (airIndicator) {
+          const circle = airIndicator.querySelector('circle');
+          if (circle) {
+            circle.style.opacity = '1';
+            circle.setAttribute('cy', '30');
+          }
+        }
+        
+        breathState.textContent = 'INSPIRASI - Udara Masuk';
+        breathState.style.fill = '#059669';
+        isBreathingIn = true;
+      }
+    }
+
+    function simulateBreatheOut() {
+      const leftLung = document.getElementById('leftLung');
+      const rightLung = document.getElementById('rightLung');
+      const diaphragm = document.getElementById('diaphragm');
+      const breathState = document.getElementById('breathState');
+      const airIndicator = document.getElementById('airIndicator');
+      
+      if (leftLung && rightLung && diaphragm && breathState) {
+        // Contract lungs
+        leftLung.setAttribute('rx', '20');
+        leftLung.setAttribute('ry', '28');
+        rightLung.setAttribute('rx', '20');
+        rightLung.setAttribute('ry', '28');
+        leftLung.style.fill = '#fecaca';
+        rightLung.style.fill = '#fecaca';
+        
+        // Curve diaphragm up
+        diaphragm.setAttribute('d', 'M30 130 Q100 105 170 130');
+        
+        // Hide air indicator
+        if (airIndicator) {
+          const circle = airIndicator.querySelector('circle');
+          if (circle) {
+            circle.style.opacity = '0';
+          }
+        }
+        
+        breathState.textContent = 'EKSPIRASI - Udara Keluar';
+        breathState.style.fill = '#b45309';
+        isBreathingIn = false;
+      }
+    }
+
+    function autoBreathing() {
+      if (breathingInterval) {
+        clearInterval(breathingInterval);
+        breathingInterval = null;
+        return;
+      }
+      
+      breathingInterval = setInterval(() => {
+        if (isBreathingIn) {
+          simulateBreatheOut();
+        } else {
+          simulateBreatheIn();
+        }
+      }, 2000);
+      
+      simulateBreatheIn();
+    }
+
+    // Section: Smoking Dangers
+    function renderSmoking() {
+      return `
+        <div class="section-fade">
+          <div class="card-glass rounded-3xl p-8 shadow-xl mb-6">
+            <span class="inline-block px-4 py-2 bg-rose-100 text-rose-700 rounded-full text-sm font-semibold mb-4">Materi 5 dari 9</span>
+            <h2 class="font-heading text-3xl font-bold text-slate-800 mb-4">🚭 Bahaya Merokok bagi Sistem Pernapasan</h2>
+            <p class="text-slate-600 text-lg mb-8">Satu isapan rokok mengandung sekitar <strong>4.000 zat kimia berbahaya</strong>, banyak di antaranya bersifat karsinogenik (menyebabkan kanker).</p>
+            
+            <!-- Cigarette illustration with chemicals -->
+            <div class="bg-slate-800 rounded-2xl p-8 mb-8">
+              <div class="flex flex-col lg:flex-row items-center gap-8">
+                <div class="w-full lg:w-1/3">
+                  <svg viewBox="0 0 150 300" class="w-full max-w-xs mx-auto">
+                    <!-- Cigarette body -->
+                    <rect x="50" y="100" width="50" height="150" rx="3" fill="#fff" stroke="#e2e8f0" stroke-width="2"/>
+                    
+                    <!-- Filter -->
+                    <rect x="50" y="220" width="50" height="30" rx="3" fill="#f59e0b"/>
+                    <line x1="50" y1="225" x2="100" y2="225" stroke="#fcd34d" stroke-width="1"/>
+                    <line x1="50" y1="230" x2="100" y2="230" stroke="#fcd34d" stroke-width="1"/>
+                    <line x1="50" y1="235" x2="100" y2="235" stroke="#fcd34d" stroke-width="1"/>
+                    <line x1="50" y1="240" x2="100" y2="240" stroke="#fcd34d" stroke-width="1"/>
+                    
+                    <!-- Burning tip -->
+                    <rect x="50" y="90" width="50" height="15" rx="3" fill="#1e293b"/>
+                    <rect x="52" y="92" width="46" height="8" rx="2" class="cigarette-glow"/>
+                    
+                    <!-- Smoke particles -->
+                    <g class="smoke-particle" style="animation-delay: 0s;">
+                      <circle cx="75" cy="70" r="10" fill="#9ca3af" opacity="0.4"/>
+                    </g>
+                    <g class="smoke-particle" style="animation-delay: 0.5s;">
+                      <circle cx="65" cy="50" r="8" fill="#9ca3af" opacity="0.3"/>
+                    </g>
+                    <g class="smoke-particle" style="animation-delay: 1s;">
+                      <circle cx="85" cy="30" r="12" fill="#9ca3af" opacity="0.2"/>
+                    </g>
+                    <g class="smoke-particle" style="animation-delay: 1.5s;">
+                      <circle cx="70" cy="15" r="6" fill="#9ca3af" opacity="0.15"/>
+                    </g>
+                    
+                    <!-- Label -->
+                    <text x="75" y="280" text-anchor="middle" font-size="10" fill="#94a3b8">Rokok</text>
+                  </svg>
+                </div>
+                
+                <div class="w-full lg:w-2/3 text-white">
+                  <h3 class="font-heading text-xl font-bold text-rose-400 mb-4">⚠️ Zat Kimia Berbahaya dalam Rokok:</h3>
+                  <div class="text-5xl font-bold text-rose-500 mb-4">4.000+</div>
+                  <p class="text-slate-300 mb-4">zat kimia berbahaya dalam satu isapan rokok</p>
+                  <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm text-slate-400">
+                    <div class="bg-slate-700/50 rounded px-3 py-2">☠️ Arsenik (racun)</div>
+                    <div class="bg-slate-700/50 rounded px-3 py-2">🔋 Kadmium (baterai)</div>
+                    <div class="bg-slate-700/50 rounded px-3 py-2">🧪 Formaldehida</div>
+                    <div class="bg-slate-700/50 rounded px-3 py-2">⚗️ Amonia</div>
+                    <div class="bg-slate-700/50 rounded px-3 py-2">🛢️ Benzena</div>
+                    <div class="bg-slate-700/50 rounded px-3 py-2">☢️ Polonium-210</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Three main harmful substances -->
+            <div class="grid md:grid-cols-3 gap-6">
+              <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 text-white">
+                <div class="w-16 h-16 bg-slate-700 rounded-2xl flex items-center justify-center mb-4">
+                  <svg class="w-10 h-10" viewBox="0 0 40 40">
+                    <circle cx="20" cy="20" r="15" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                    <path d="M12 25 Q20 15 28 25" fill="#475569"/>
+                  </svg>
+                </div>
+                <h4 class="font-heading font-bold text-xl mb-2">TAR</h4>
+                <p class="text-slate-300 text-sm leading-relaxed">Zat lengket berwarna cokelat kehitaman yang <strong class="text-rose-400">menggumpalkan silia</strong> (rambut halus) di saluran napas sehingga tidak bisa menyaring kotoran. Menyebabkan <strong class="text-rose-400">kanker paru-paru</strong>.</p>
+                <div class="mt-4 p-3 bg-slate-700/50 rounded-xl">
+                  <p class="text-xs text-slate-400">💡 Bayangkan: Seperti minyak lengket yang melapisi seluruh saluran napas Anda!</p>
+                </div>
+              </div>
+              
+              <div class="bg-gradient-to-br from-slate-600 to-slate-700 rounded-2xl p-6 text-white">
+                <div class="w-16 h-16 bg-slate-500 rounded-2xl flex items-center justify-center mb-4">
+                  <span class="text-3xl">💨</span>
+                </div>
+                <h4 class="font-heading font-bold text-xl mb-2">Karbon Monoksida (CO)</h4>
+                <p class="text-slate-200 text-sm leading-relaxed">Gas beracun yang <strong class="text-amber-300">mengikat hemoglobin 200x lebih kuat</strong> daripada oksigen. Akibatnya, pasokan oksigen ke seluruh tubuh <strong class="text-amber-300">berkurang drastis</strong>.</p>
+                <div class="mt-4 p-3 bg-slate-600/50 rounded-xl">
+                  <p class="text-xs text-slate-300">💡 Sama seperti knalpot mobil yang meracuni darah Anda!</p>
+                </div>
+              </div>
+              
+              <div class="bg-gradient-to-br from-rose-700 to-rose-800 rounded-2xl p-6 text-white">
+                <div class="w-16 h-16 bg-rose-600 rounded-2xl flex items-center justify-center mb-4">
+                  <span class="text-3xl">⚡</span>
+                </div>
+                <h4 class="font-heading font-bold text-xl mb-2">Nikotin</h4>
+                <p class="text-rose-100 text-sm leading-relaxed">Zat <strong class="text-yellow-300">adiktif (menyebabkan kecanduan)</strong> yang bekerja sangat cepat ke otak. Meningkatkan <strong class="text-yellow-300">detak jantung dan tekanan darah</strong>, membebani sistem peredaran darah.</p>
+                <div class="mt-4 p-3 bg-rose-600/50 rounded-xl">
+                  <p class="text-xs text-rose-200">💡 Efeknya sampai ke otak hanya dalam 10 detik!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Interactive: Compare lungs -->
+          <div class="card-glass rounded-3xl p-8 shadow-xl">
+            <h3 class="font-heading text-xl font-bold text-slate-800 mb-6">🔬 Bandingkan: Paru-Paru Sehat vs Perokok</h3>
+            
+            <div class="flex flex-col lg:flex-row items-center gap-8">
+              <div class="flex-1 text-center">
+                <div class="bg-emerald-50 rounded-2xl p-6 border-2 border-emerald-200 mb-4">
+                  <svg viewBox="0 0 150 150" class="w-full max-w-xs mx-auto">
+                    <!-- Healthy lungs -->
+                    <ellipse cx="50" cy="75" rx="35" ry="50" fill="#fecdd3" stroke="#f43f5e" stroke-width="2"/>
+                    <ellipse cx="100" cy="75" rx="35" ry="50" fill="#fecdd3" stroke="#f43f5e" stroke-width="2"/>
+                    <!-- Bronchi pattern healthy -->
+                    <path d="M50 35 L50 55 Q45 75 40 95" stroke="#f43f5e" stroke-width="1" fill="none"/>
+                    <path d="M50 55 Q55 75 60 95" stroke="#f43f5e" stroke-width="1" fill="none"/>
+                    <path d="M100 35 L100 55 Q105 75 110 95" stroke="#f43f5e" stroke-width="1" fill="none"/>
+                    <path d="M100 55 Q95 75 90 95" stroke="#f43f5e" stroke-width="1" fill="none"/>
+                  </svg>
+                </div>
+                <h4 class="font-heading font-bold text-emerald-700 text-lg">✅ Paru-Paru Sehat</h4>
+                <ul class="text-sm text-slate-600 mt-2 text-left max-w-xs mx-auto">
+                  <li>• Warna merah muda cerah</li>
+                  <li>• Elastis dan mengembang baik</li>
+                  <li>• Silia berfungsi normal</li>
+                  <li>• Pertukaran gas optimal</li>
+                </ul>
+              </div>
+              
+              <div class="text-4xl text-slate-400">⚔️</div>
+              
+              <div class="flex-1 text-center">
+                <div class="bg-slate-100 rounded-2xl p-6 border-2 border-slate-300 mb-4">
+                  <svg viewBox="0 0 150 150" class="w-full max-w-xs mx-auto">
+                    <!-- Damaged lungs -->
+                    <ellipse cx="50" cy="75" rx="35" ry="50" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                    <ellipse cx="100" cy="75" rx="35" ry="50" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                    <!-- Tar spots -->
+                    <circle cx="40" cy="60" r="5" fill="#0f172a"/>
+                    <circle cx="55" cy="80" r="7" fill="#0f172a"/>
+                    <circle cx="45" cy="95" r="4" fill="#0f172a"/>
+                    <circle cx="95" cy="55" r="6" fill="#0f172a"/>
+                    <circle cx="110" cy="75" r="5" fill="#0f172a"/>
+                    <circle cx="100" cy="100" r="8" fill="#0f172a"/>
+                    <!-- Damaged bronchi -->
+                    <path d="M50 35 L50 55" stroke="#475569" stroke-width="1" fill="none" stroke-dasharray="3,2"/>
+                    <path d="M100 35 L100 55" stroke="#475569" stroke-width="1" fill="none" stroke-dasharray="3,2"/>
+                  </svg>
+                </div>
+                <h4 class="font-heading font-bold text-slate-700 text-lg">❌ Paru-Paru Perokok</h4>
+                <ul class="text-sm text-slate-600 mt-2 text-left max-w-xs mx-auto">
+                  <li>• Warna hitam karena tar</li>
+                  <li>• Kaku, kehilangan elastisitas</li>
+                  <li>• Silia rusak/menggumpal</li>
+                  <li>• Pertukaran gas terganggu</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          ${renderNavigationButtons()}
+        </div>
+      `;
+    }
+
+    // Section: Diseases
+    function renderDiseases() {
+      return `
+        <div class="section-fade">
+          <div class="card-glass rounded-3xl p-8 shadow-xl mb-6">
+            <span class="inline-block px-4 py-2 bg-rose-100 text-rose-700 rounded-full text-sm font-semibold mb-4">Materi 6 dari 9</span>
+            <h2 class="font-heading text-3xl font-bold text-slate-800 mb-4">🏥 Penyakit Akibat Rokok</h2>
+            <p class="text-slate-600 text-lg mb-8">Merokok menyebabkan berbagai penyakit serius yang dapat mengancam jiwa. Berikut adalah penyakit utama yang disebabkan oleh rokok:</p>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+              <!-- Bronchitis -->
+              <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200">
+                <div class="flex items-start gap-4">
+                  <div class="w-20 h-20 flex-shrink-0">
+                    <svg viewBox="0 0 80 80" class="w-full h-full">
+                      <!-- Bronchus with inflammation -->
+                      <ellipse cx="40" cy="40" rx="30" ry="25" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+                      <path d="M25 30 Q40 25 55 30" stroke="#ef4444" stroke-width="3" fill="none"/>
+                      <path d="M25 40 Q40 35 55 40" stroke="#ef4444" stroke-width="3" fill="none"/>
+                      <path d="M25 50 Q40 45 55 50" stroke="#ef4444" stroke-width="3" fill="none"/>
+                      <!-- Mucus -->
+                      <circle cx="32" cy="35" r="4" fill="#fbbf24" opacity="0.7"/>
+                      <circle cx="48" cy="45" r="5" fill="#fbbf24" opacity="0.7"/>
+                      <circle cx="38" cy="52" r="3" fill="#fbbf24" opacity="0.7"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-heading font-bold text-xl text-amber-800">Bronkitis</h4>
+                    <p class="text-slate-700 mt-2">Iritasi dan peradangan saluran bronkus karena <strong>penumpukan lendir berlebihan</strong>. Menyebabkan batuk berdahak berkepanjangan dan sulit bernapas.</p>
+                    <div class="mt-3 flex flex-wrap gap-2">
+                      <span class="px-2 py-1 bg-amber-100 text-amber-700 text-xs rounded-full">Batuk kronis</span>
+                      <span class="px-2 py-1 bg-amber-100 text-amber-700 text-xs rounded-full">Sesak napas</span>
+                      <span class="px-2 py-1 bg-amber-100 text-amber-700 text-xs rounded-full">Dahak berlebih</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Emphysema -->
+              <div class="bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl p-6 border border-purple-200">
+                <div class="flex items-start gap-4">
+                  <div class="w-20 h-20 flex-shrink-0">
+                    <svg viewBox="0 0 80 80" class="w-full h-full">
+                      <!-- Damaged alveoli -->
+                      <circle cx="25" cy="25" r="12" fill="#fecaca" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,2"/>
+                      <circle cx="55" cy="25" r="10" fill="#fecaca" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,2"/>
+                      <circle cx="20" cy="50" r="8" fill="#fecaca" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,2"/>
+                      <circle cx="45" cy="55" r="15" fill="#fecaca" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,2"/>
+                      <circle cx="65" cy="50" r="6" fill="#fecaca" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,2"/>
+                      <!-- Break marks -->
+                      <line x1="35" y1="25" x2="45" y2="25" stroke="#ef4444" stroke-width="2"/>
+                      <line x1="30" y1="45" x2="32" y2="55" stroke="#ef4444" stroke-width="2"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-heading font-bold text-xl text-purple-800">Emfisema</h4>
+                    <p class="text-slate-700 mt-2"><strong>Kerusakan permanen pada dinding alveolus</strong> yang menghilangkan elastisitasnya. Alveolus membesar dan menyatu, mengurangi luas permukaan pertukaran gas.</p>
+                    <div class="mt-3 flex flex-wrap gap-2">
+                      <span class="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">Napas pendek</span>
+                      <span class="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">Tidak reversibel</span>
+                      <span class="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">Dada barrel</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Lung Cancer -->
+              <div class="bg-gradient-to-br from-rose-50 to-red-50 rounded-2xl p-6 border border-rose-200">
+                <div class="flex items-start gap-4">
+                  <div class="w-20 h-20 flex-shrink-0">
+                    <svg viewBox="0 0 80 80" class="w-full h-full">
+                      <!-- Lung with tumor -->
+                      <ellipse cx="40" cy="40" rx="30" ry="35" fill="#fecaca" stroke="#ef4444" stroke-width="2"/>
+                      <!-- Tumor -->
+                      <circle cx="50" cy="35" r="12" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+                      <!-- Spreading cells -->
+                      <circle cx="35" cy="50" r="5" fill="#374151"/>
+                      <circle cx="55" cy="55" r="4" fill="#374151"/>
+                      <circle cx="28" cy="35" r="3" fill="#374151"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-heading font-bold text-xl text-rose-800">Kanker Paru-Paru</h4>
+                    <p class="text-slate-700 mt-2">Sel kanker tumbuh tidak terkendali dan <strong>mengambil alih tempat pertukaran gas</strong>. 85% kasus kanker paru-paru disebabkan oleh merokok.</p>
+                    <div class="mt-3 flex flex-wrap gap-2">
+                      <span class="px-2 py-1 bg-rose-100 text-rose-700 text-xs rounded-full">Mematikan</span>
+                      <span class="px-2 py-1 bg-rose-100 text-rose-700 text-xs rounded-full">Menyebar</span>
+                      <span class="px-2 py-1 bg-rose-100 text-rose-700 text-xs rounded-full">Batuk darah</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Atherosclerosis -->
+              <div class="bg-gradient-to-br from-slate-50 to-gray-100 rounded-2xl p-6 border border-slate-200">
+                <div class="flex items-start gap-4">
+                  <div class="w-20 h-20 flex-shrink-0">
+                    <svg viewBox="0 0 80 80" class="w-full h-full">
+                      <!-- Blood vessel -->
+                      <rect x="10" y="25" width="60" height="30" rx="15" fill="#fecaca" stroke="#ef4444" stroke-width="2"/>
+                      <!-- Plaque buildup -->
+                      <path d="M15 35 Q25 25 35 35 Q45 45 55 35 Q60 30 65 35" fill="#fbbf24" stroke="#f59e0b" stroke-width="1"/>
+                      <path d="M15 45 Q25 55 35 45 Q45 35 55 45 Q60 50 65 45" fill="#fbbf24" stroke="#f59e0b" stroke-width="1"/>
+                      <!-- Narrowed passage -->
+                      <ellipse cx="40" cy="40" rx="5" ry="8" fill="#ef4444"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-heading font-bold text-xl text-slate-800">Aterosklerosis</h4>
+                    <p class="text-slate-700 mt-2">Zat kimia rokok memicu <strong>penumpukan lemak (plak) pada dinding pembuluh darah</strong>, mempersempit aliran darah. Meningkatkan risiko serangan jantung dan stroke.</p>
+                    <div class="mt-3 flex flex-wrap gap-2">
+                      <span class="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded-full">Penyumbatan</span>
+                      <span class="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded-full">Jantung</span>
+                      <span class="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded-full">Stroke</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Statistics -->
+          <div class="card-glass rounded-3xl p-8 shadow-xl">
+            <h3 class="font-heading text-xl font-bold text-slate-800 mb-6">📊 Statistik Mengejutkan</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div class="text-center p-4 bg-rose-50 rounded-2xl">
+                <div class="text-4xl font-bold text-rose-600">8 juta</div>
+                <div class="text-sm text-slate-600 mt-2">Kematian per tahun akibat rokok di dunia</div>
+              </div>
+              <div class="text-center p-4 bg-amber-50 rounded-2xl">
+                <div class="text-4xl font-bold text-amber-600">85%</div>
+                <div class="text-sm text-slate-600 mt-2">Kanker paru-paru disebabkan rokok</div>
+              </div>
+              <div class="text-center p-4 bg-purple-50 rounded-2xl">
+                <div class="text-4xl font-bold text-purple-600">10 tahun</div>
+                <div class="text-sm text-slate-600 mt-2">Lebih pendek usia harapan hidup perokok</div>
+              </div>
+              <div class="text-center p-4 bg-sky-50 rounded-2xl">
+                <div class="text-4xl font-bold text-sky-600">70%</div>
+                <div class="text-sm text-slate-600 mt-2">Perokok ingin berhenti tapi kesulitan</div>
+              </div>
+            </div>
+          </div>
+          
+          ${renderNavigationButtons()}
+        </div>
+      `;
+    }
+
+    // Section: Passive Smoking
+    function renderPassive() {
+      return `
+        <div class="section-fade">
+          <div class="card-glass rounded-3xl p-8 shadow-xl mb-6">
+            <span class="inline-block px-4 py-2 bg-sky-100 text-sky-700 rounded-full text-sm font-semibold mb-4">Materi 7 dari 9</span>
+            <h2 class="font-heading text-3xl font-bold text-slate-800 mb-4">👨‍👩‍👧‍👦 Perokok Pasif & Dampak Lingkungan</h2>
+            <p class="text-slate-600 text-lg mb-8">Tidak merokok bukan berarti aman dari bahaya rokok. Menghirup asap rokok orang lain sama berbahayanya!</p>
+            
+            <div class="flex flex-col lg:flex-row gap-8">
+              <div class="lg:w-1/2">
+                <div class="bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl p-6 mb-6">
+                  <svg viewBox="0 0 300 200" class="w-full">
+                    <!-- Background -->
+                    <rect x="0" y="0" width="300" height="200" fill="#f1f5f9" rx="10"/>
+                    
+                    <!-- Smoker -->
+                    <circle cx="80" cy="100" r="30" fill="#fef3c7"/>
+                    <circle cx="80" cy="80" r="20" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+                    <circle cx="75" cy="75" r="3" fill="#1e293b"/>
+                    <circle cx="85" cy="75" r="3" fill="#1e293b"/>
+                    <path d="M75 83 Q80 88 85 83" stroke="#1e293b" stroke-width="2" fill="none"/>
+                    
+                    <!-- Cigarette -->
+                    <rect x="95" y="78" width="25" height="5" fill="#fff" stroke="#e2e8f0"/>
+                    <rect x="118" y="78" width="4" height="5" fill="#f97316"/>
+                    
+                    <!-- Smoke cloud -->
+                    <ellipse cx="150" cy="60" rx="40" ry="25" fill="#94a3b8" opacity="0.4"/>
+                    <ellipse cx="180" cy="50" rx="30" ry="20" fill="#94a3b8" opacity="0.3"/>
+                    <ellipse cx="200" cy="70" rx="25" ry="15" fill="#94a3b8" opacity="0.2"/>
+                    
+                    <!-- Passive smoker (child) -->
+                    <circle cx="220" cy="120" r="20" fill="#fef3c7"/>
+                    <circle cx="220" cy="105" r="15" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+                    <circle cx="215" cy="102" r="2" fill="#1e293b"/>
+                    <circle cx="225" cy="102" r="2" fill="#1e293b"/>
+                    <path d="M215 110 Q220 108 225 110" stroke="#1e293b" stroke-width="2" fill="none"/>
+                    
+                    <!-- Breathing in smoke -->
+                    <path d="M200 80 Q210 95 205 105" stroke="#94a3b8" stroke-width="2" fill="none" stroke-dasharray="4,2">
+                      <animate attributeName="d" values="M200 80 Q210 95 205 105;M195 75 Q205 90 205 105;M200 80 Q210 95 205 105" dur="2s" repeatCount="indefinite"/>
+                    </path>
+                    
+                    <!-- Labels -->
+                    <text x="80" y="155" text-anchor="middle" font-size="10" fill="#64748b">Perokok Aktif</text>
+                    <text x="220" y="155" text-anchor="middle" font-size="10" fill="#64748b">Perokok Pasif</text>
+                    
+                    <!-- Warning icon on child -->
+                    <circle cx="240" cy="95" r="10" fill="#ef4444"/>
+                    <text x="240" y="99" text-anchor="middle" font-size="12" fill="white" font-weight="bold">!</text>
+                  </svg>
+                </div>
+                
+                <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl">
+                  <h4 class="font-semibold text-amber-800 mb-2">⚠️ Definisi Perokok Pasif:</h4>
+                  <p class="text-amber-700">Orang yang <strong>tidak merokok</strong> tetapi menghirup asap rokok dari orang lain (secondhand smoke). Asap sampingan ini mengandung konsentrasi zat berbahaya yang lebih tinggi!</p>
+                </div>
+              </div>
+              
+              <div class="lg:w-1/2 space-y-4">
+                <div class="bg-rose-50 rounded-2xl p-5 border border-rose-200">
+                  <h4 class="font-heading font-bold text-rose-800 mb-3 flex items-center gap-2">
+                    <span class="text-2xl">❤️</span> Risiko pada Dewasa
+                  </h4>
+                  <ul class="space-y-2 text-slate-700">
+                    <li class="flex items-start gap-2">
+                      <span class="text-rose-500 mt-1">•</span>
+                      <span><strong>Penyakit jantung koroner</strong> - risiko meningkat 25-30%</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-rose-500 mt-1">•</span>
+                      <span><strong>Stroke</strong> - risiko meningkat 20-30%</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-rose-500 mt-1">•</span>
+                      <span><strong>Kanker paru-paru</strong> - risiko meningkat 20-30%</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div class="bg-sky-50 rounded-2xl p-5 border border-sky-200">
+                  <h4 class="font-heading font-bold text-sky-800 mb-3 flex items-center gap-2">
+                    <span class="text-2xl">👶</span> Dampak pada Anak-Anak
+                  </h4>
+                  <ul class="space-y-2 text-slate-700">
+                    <li class="flex items-start gap-2">
+                      <span class="text-sky-500 mt-1">•</span>
+                      <span><strong>Gangguan pertumbuhan paru-paru</strong> - perkembangan tidak optimal</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-sky-500 mt-1">•</span>
+                      <span><strong>Memicu dan memperparah asma</strong> - serangan lebih sering</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-sky-500 mt-1">•</span>
+                      <span><strong>Pneumonia & bronkitis</strong> - risiko infeksi meningkat</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-sky-500 mt-1">•</span>
+                      <span><strong>Infeksi telinga (otitis media)</strong> - sering kambuh</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-sky-500 mt-1">•</span>
+                      <span><strong>SIDS</strong> (Sudden Infant Death Syndrome) pada bayi</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card-glass rounded-3xl p-8 shadow-xl">
+            <h3 class="font-heading text-xl font-bold text-slate-800 mb-6">🏠 Lindungi Keluarga dari Asap Rokok</h3>
+            <div class="grid md:grid-cols-3 gap-6">
+              <div class="bg-emerald-50 rounded-2xl p-5 text-center border border-emerald-200">
+                <div class="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span class="text-3xl">🏡</span>
+                </div>
+                <h4 class="font-semibold text-emerald-800">Rumah Bebas Asap</h4>
+                <p class="text-sm text-slate-600 mt-2">Tetapkan aturan tidak merokok di dalam rumah untuk melindungi semua anggota keluarga</p>
+              </div>
+              <div class="bg-sky-50 rounded-2xl p-5 text-center border border-sky-200">
+                <div class="w-16 h-16 bg-sky-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span class="text-3xl">🚗</span>
+                </div>
+                <h4 class="font-semibold text-sky-800">Mobil Bebas Asap</h4>
+                <p class="text-sm text-slate-600 mt-2">Jangan merokok di dalam kendaraan, terutama jika ada anak-anak</p>
+              </div>
+              <div class="bg-amber-50 rounded-2xl p-5 text-center border border-amber-200">
+                <div class="w-16 h-16 bg-amber-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span class="text-3xl">🚫</span>
+                </div>
+                <h4 class="font-semibold text-amber-800">Hindari Area Merokok</h4>
+                <p class="text-sm text-slate-600 mt-2">Jauhkan anak-anak dari area di mana orang merokok</p>
+              </div>
+            </div>
+          </div>
+          
+          ${renderNavigationButtons()}
+        </div>
+      `;
+    }
+
+    // Section: Benefits of Quitting
+    function renderBenefits() {
+      return `
+        <div class="section-fade">
+          <div class="card-glass rounded-3xl p-8 shadow-xl mb-6">
+            <span class="inline-block px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-semibold mb-4">Materi 8 dari 9</span>
+            <h2 class="font-heading text-3xl font-bold text-slate-800 mb-4">✨ Manfaat Berhenti Merokok</h2>
+            <p class="text-slate-600 text-lg mb-8">Kabar baiknya: tubuh mulai memperbaiki diri segera setelah Anda berhenti merokok! Berikut timeline pemulihannya:</p>
+            
+            <div class="relative">
+              <!-- Timeline line -->
+              <div class="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-400 via-sky-400 to-purple-400 hidden md:block"></div>
+              
+              <div class="space-y-6">
+                <!-- 20 minutes -->
+                <div class="timeline-item relative md:pl-16 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-6 border border-emerald-200">
+                  <div class="flex flex-col md:flex-row items-start gap-4">
+                    <div class="w-20 h-20 bg-emerald-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                      <div class="text-center text-white">
+                        <div class="text-2xl font-bold">20</div>
+                        <div class="text-xs">menit</div>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="font-heading font-bold text-xl text-emerald-800">Tekanan Darah Membaik</h4>
+                      <p class="text-slate-700 mt-2">Tekanan darah dan denyut nadi mulai <strong>turun ke level normal</strong>. Sirkulasi darah ke tangan dan kaki membaik, terasa lebih hangat.</p>
+                      <div class="mt-3 flex items-center gap-2">
+                        <span class="heartbeat text-2xl">💓</span>
+                        <span class="text-sm text-emerald-600 font-medium">Jantung mulai bernapas lega!</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- 12 hours -->
+                <div class="timeline-item relative md:pl-16 bg-gradient-to-r from-sky-50 to-cyan-50 rounded-2xl p-6 border border-sky-200">
+                  <div class="flex flex-col md:flex-row items-start gap-4">
+                    <div class="w-20 h-20 bg-sky-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                      <div class="text-center text-white">
+                        <div class="text-2xl font-bold">12</div>
+                        <div class="text-xs">jam</div>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="font-heading font-bold text-xl text-sky-800">Karbon Monoksida Hilang</h4>
+                      <p class="text-slate-700 mt-2">Kadar <strong>karbon monoksida (CO) dalam darah kembali normal</strong>. Hemoglobin kini bisa mengikat oksigen dengan lebih efektif, tubuh terasa lebih segar dan berenergi.</p>
+                      <div class="mt-3 flex items-center gap-2">
+                        <span class="text-2xl">🩸</span>
+                        <span class="text-sm text-sky-600 font-medium">Darah kini membawa lebih banyak O₂!</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- 5 days -->
+                <div class="timeline-item relative md:pl-16 bg-gradient-to-r from-purple-50 to-violet-50 rounded-2xl p-6 border border-purple-200">
+                  <div class="flex flex-col md:flex-row items-start gap-4">
+                    <div class="w-20 h-20 bg-purple-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                      <div class="text-center text-white">
+                        <div class="text-2xl font-bold">5</div>
+                        <div class="text-xs">hari</div>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="font-heading font-bold text-xl text-purple-800">Nikotin Berkurang</h4>
+                      <p class="text-slate-700 mt-2"><strong>Sebagian besar nikotin sudah hilang</strong> dari tubuh. Fungsi indra perasa dan penciuman mulai membaik - makanan terasa lebih nikmat!</p>
+                      <div class="mt-3 flex items-center gap-2">
+                        <span class="text-2xl">👃</span>
+                        <span class="text-sm text-purple-600 font-medium">Dunia terasa lebih wangi!</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- 2-3 weeks -->
+                <div class="timeline-item relative md:pl-16 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-200">
+                  <div class="flex flex-col md:flex-row items-start gap-4">
+                    <div class="w-20 h-20 bg-amber-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                      <div class="text-center text-white">
+                        <div class="text-xl font-bold">2-3</div>
+                        <div class="text-xs">minggu</div>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="font-heading font-bold text-xl text-amber-800">Fungsi Paru Membaik</h4>
+                      <p class="text-slate-700 mt-2">Sirkulasi darah dan <strong>fungsi paru-paru meningkat signifikan</strong>. Berjalan dan berolahraga terasa lebih mudah, tidak mudah lelah.</p>
+                      <div class="mt-3 flex items-center gap-2">
+                        <span class="text-2xl">🏃</span>
+                        <span class="text-sm text-amber-600 font-medium">Aktivitas fisik jadi lebih ringan!</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- 1-9 months -->
+                <div class="timeline-item relative md:pl-16 bg-gradient-to-r from-rose-50 to-pink-50 rounded-2xl p-6 border border-rose-200">
+                  <div class="flex flex-col md:flex-row items-start gap-4">
+                    <div class="w-20 h-20 bg-rose-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                      <div class="text-center text-white">
+                        <div class="text-xl font-bold">1-9</div>
+                        <div class="text-xs">bulan</div>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="font-heading font-bold text-xl text-rose-800">Silia Pulih</h4>
+                      <p class="text-slate-700 mt-2"><strong>Silia (rambut halus) di saluran napas mulai pulih</strong> dan berfungsi normal. Batuk dan sesak napas berkurang, risiko infeksi menurun.</p>
+                      <div class="mt-3 flex items-center gap-2">
+                        <span class="text-2xl">🫁</span>
+                        <span class="text-sm text-rose-600 font-medium">Paru-paru membersihkan diri!</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- 1 year -->
+                <div class="timeline-item relative md:pl-16 bg-gradient-to-r from-green-100 to-emerald-100 rounded-2xl p-6 border-2 border-emerald-400">
+                  <div class="flex flex-col md:flex-row items-start gap-4">
+                    <div class="w-20 h-20 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                      <div class="text-center text-white">
+                        <div class="text-2xl font-bold">1</div>
+                        <div class="text-xs">tahun</div>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="font-heading font-bold text-xl text-emerald-800">🎉 Risiko Jantung Setengahnya!</h4>
+                      <p class="text-slate-700 mt-2"><strong>Risiko penyakit jantung koroner turun 50%</strong> dibanding saat masih merokok. Ini adalah pencapaian luar biasa untuk kesehatan Anda!</p>
+                      <div class="mt-3 flex items-center gap-2">
+                        <span class="text-2xl">🏆</span>
+                        <span class="text-sm text-emerald-600 font-medium">Selamat! Jantung Anda jauh lebih sehat!</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          ${renderNavigationButtons()}
+        </div>
+      `;
+    }
+
+    // Section: Quiz
+    function renderQuiz() {
+      return `
+        <div class="section-fade">
+          <div class="card-glass rounded-3xl p-8 shadow-xl mb-6">
+            <span class="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold mb-4">Evaluasi Pembelajaran</span>
+            <h2 class="font-heading text-3xl font-bold text-slate-800 mb-4">📝 Kuis HOTS (Higher Order Thinking Skills)</h2>
+            <p class="text-slate-600 text-lg mb-8">Uji pemahaman Anda dengan 10 soal berikut. Soal-soal ini dirancang untuk mengukur kemampuan berpikir tingkat tinggi (analisis, evaluasi, dan sintesis).</p>
+            
+            <div id="quizContainer" class="space-y-8">
+              ${quizQuestions.map((q, index) => `
+                <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200" data-question="${q.id}">
+                  <div class="flex items-start gap-4 mb-4">
+                    <span class="w-10 h-10 bg-purple-500 text-white rounded-xl flex items-center justify-center font-bold flex-shrink-0">${index + 1}</span>
+                    <p class="text-slate-800 font-medium leading-relaxed">${q.question}</p>
+                  </div>
+                  <div class="space-y-3 ml-14">
+                    ${q.options.map((opt, optIndex) => `
+                      <button 
+                        onclick="selectAnswer(${q.id}, ${optIndex})" 
+                        class="quiz-option w-full text-left p-4 rounded-xl border-2 border-slate-200 bg-white hover:border-sky-300 transition-all ${quizAnswers[q.id] === optIndex ? 'selected' : ''}"
+                        data-question="${q.id}"
+                        data-option="${optIndex}"
+                        ${quizSubmitted ? 'disabled' : ''}
+                      >
+                        ${opt}
+                      </button>
+                    `).join('')}
+                  </div>
+                  <div id="explanation-${q.id}" class="hidden mt-4 ml-14 p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+                    <p class="text-emerald-800"><strong>💡 Penjelasan:</strong> ${q.explanation}</p>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-6 bg-slate-100 rounded-2xl">
+              <div id="quizProgress" class="text-slate-600">
+                <span class="font-semibold">Dijawab:</span> <span id="answeredCount">0</span>/10 soal
+              </div>
+              <button 
+                id="submitQuizBtn"
+                onclick="submitQuiz()" 
+                class="px-8 py-4 bg-purple-600 hover:bg-purple-700 disabled:bg-slate-400 disabled:cursor-not-allowed text-white rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-xl"
+                ${Object.keys(quizAnswers).length < 10 ? 'disabled' : ''}
+              >
+                📊 Lihat Hasil
+              </button>
+            </div>
+            
+            <div id="quizResults" class="hidden mt-8 p-8 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl text-white">
+              <h3 class="font-heading text-2xl font-bold mb-4">🎯 Hasil Kuis Anda</h3>
+              <div class="flex items-center gap-8">
+                <div class="text-center">
+                  <div id="scoreDisplay" class="text-6xl font-bold">0</div>
+                  <div class="text-purple-200">dari 10</div>
+                </div>
+                <div class="flex-1">
+                  <div id="scoreMessage" class="text-xl mb-2"></div>
+                  <div id="scoreBar" class="h-4 bg-purple-400/30 rounded-full overflow-hidden">
+                    <div id="scoreProgress" class="h-full bg-white rounded-full transition-all duration-1000" style="width: 0%"></div>
+                  </div>
+                </div>
+              </div>
+              <button onclick="resetQuiz()" class="mt-6 px-6 py-3 bg-white/20 hover:bg-white/30 rounded-xl font-semibold transition-all">
+                🔄 Ulangi Kuis
+              </button>
+            </div>
+          </div>
+          
+          ${renderNavigationButtons()}
+        </div>
+      `;
+    }
+
+    // Quiz functions
+    function selectAnswer(questionId, optionIndex) {
+      if (quizSubmitted) return;
+      
+      quizAnswers[questionId] = optionIndex;
+      
+      // Update UI
+      const questionEl = document.querySelector(`[data-question="${questionId}"]`);
+      const options = questionEl.querySelectorAll('.quiz-option');
+      options.forEach((opt, idx) => {
+        opt.classList.remove('selected');
+        if (idx === optionIndex) {
+          opt.classList.add('selected');
+        }
+      });
+      
+      // Update progress
+      const answeredCount = Object.keys(quizAnswers).length;
+      document.getElementById('answeredCount').textContent = answeredCount;
+      
+      // Enable submit button if all answered
+      const submitBtn = document.getElementById('submitQuizBtn');
+      if (answeredCount >= 10) {
+        submitBtn.disabled = false;
+      }
+    }
+
+    function submitQuiz() {
+      if (Object.keys(quizAnswers).length < 10) return;
+      
+      quizSubmitted = true;
+      let score = 0;
+      
+      quizQuestions.forEach(q => {
+        const userAnswer = quizAnswers[q.id];
+        const questionEl = document.querySelector(`[data-question="${q.id}"]`);
+        const options = questionEl.querySelectorAll('.quiz-option');
+        
+        options.forEach((opt, idx) => {
+          opt.disabled = true;
+          if (idx === q.correct) {
+            opt.classList.add('correct');
+            opt.classList.remove('selected');
+          } else if (idx === userAnswer && idx !== q.correct) {
+            opt.classList.add('wrong');
+            opt.classList.remove('selected');
+          }
+        });
+        
+        if (userAnswer === q.correct) {
+          score++;
+        }
+        
+        // Show explanation
+        document.getElementById(`explanation-${q.id}`).classList.remove('hidden');
+      });
+      
+      // Show results
+      const resultsEl = document.getElementById('quizResults');
+      resultsEl.classList.remove('hidden');
+      document.getElementById('scoreDisplay').textContent = score;
+      document.getElementById('scoreProgress').style.width = `${(score / 10) * 100}%`;
+      
+      let message = '';
+      if (score >= 9) {
+        message = '🌟 Luar biasa! Pemahaman Anda sangat baik!';
+      } else if (score >= 7) {
+        message = '👍 Bagus! Anda memahami materi dengan baik.';
+      } else if (score >= 5) {
+        message = '📚 Cukup baik. Coba pelajari lagi bagian yang kurang dipahami.';
+      } else {
+        message = '💪 Terus semangat! Pelajari ulang materinya ya.';
+      }
+      document.getElementById('scoreMessage').textContent = message;
+      
+      // Disable submit button
+      document.getElementById('submitQuizBtn').disabled = true;
+      
+      // Scroll to results
+      resultsEl.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function resetQuiz() {
+      quizAnswers = {};
+      quizSubmitted = false;
+      renderContent();
+    }
+
+    // Navigation buttons
+    function renderNavigationButtons() {
+      const prevSection = currentSection > 0 ? sections[currentSection - 1] : null;
+      const nextSection = currentSection < sections.length - 1 ? sections[currentSection + 1] : null;
+      
+      return `
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t border-slate-200">
+          ${prevSection ? `
+            <button onclick="goToSection(${currentSection - 1})" class="flex items-center gap-3 px-6 py-3 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-700 transition-all">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+              </svg>
+              <span class="font-medium">${prevSection.icon} ${prevSection.title}</span>
+            </button>
+          ` : '<div></div>'}
+          
+          ${nextSection ? `
+            <button onclick="goToSection(${currentSection + 1})" class="flex items-center gap-3 px-6 py-3 bg-sky-500 hover:bg-sky-600 rounded-xl text-white font-semibold transition-all shadow-lg hover:shadow-xl">
+              <span>${nextSection.icon} ${nextSection.title}</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </button>
+          ` : `
+            <button onclick="goToSection(0)" class="flex items-center gap-3 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 rounded-xl text-white font-semibold transition-all shadow-lg hover:shadow-xl">
+              <span>🏠 Kembali ke Awal</span>
+            </button>
+          `}
+        </div>
+      `;
+    }
+
+    // Config change handler for Element SDK
+    async function onConfigChange(newConfig) {
+      config = { ...config, ...newConfig };
+      
+      // Update title
+      const headerTitle = document.getElementById('headerTitle');
+      if (headerTitle) {
+        headerTitle.textContent = config.main_title || defaultConfig.main_title;
+      }
+      
+      // Update author
+      const authorName = document.getElementById('authorName');
+      if (authorName) {
+        authorName.textContent = config.author_name || defaultConfig.author_name;
+      }
+      
+      const footerAuthor = document.getElementById('footerAuthor');
+      if (footerAuthor) {
+        footerAuthor.textContent = config.author_name || defaultConfig.author_name;
+      }
+    }
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                config.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => {
+                config.secondary_color = value;
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => {
+                config.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['main_title', config.main_title || defaultConfig.main_title],
+          ['author_name', config.author_name || defaultConfig.author_name]
+        ])
+      });
+    }
+
+    // Initialize app
+    function init() {
+      renderNavigation();
+      renderContent();
+      updateProgress();
+    }
+
+    init();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce3a6bd7232ccfd',t:'MTc3MTE0NjQwOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

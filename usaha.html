@@ -1,0 +1,1137 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usaha, Energi, dan Pesawat Sederhana</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+        :root {
+            --primary-bg: #0f172a;
+            --secondary-surface: #1e293b;
+            --text-color: #f1f5f9;
+            --primary-action: #3b82f6;
+            --secondary-action: #22d3ee;
+        }
+        * { font-family: 'Poppins', sans-serif; }
+        .title-font { font-family: 'Playfair Display', serif; }
+        
+        html, body { height: 100%; margin: 0; }
+        
+        .app-wrapper {
+            min-height: 100%;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #1a1a2e 50%, var(--primary-bg) 100%);
+        }
+        
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-action), var(--secondary-action));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-pattern {
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(34, 211, 238, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.1) 0%, transparent 40%);
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
+        }
+        
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover {
+            transform: translateX(5px);
+            color: var(--secondary-action);
+        }
+        
+        .nav-item.active {
+            color: var(--secondary-action);
+            border-left: 3px solid var(--secondary-action);
+            padding-left: 12px;
+        }
+        
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .quiz-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .quiz-option:hover {
+            transform: scale(1.02);
+            border-color: var(--primary-action);
+        }
+        
+        .quiz-option.selected {
+            border-color: var(--primary-action);
+            background: rgba(59, 130, 246, 0.2);
+        }
+        
+        .quiz-option.correct {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.2);
+        }
+        
+        .quiz-option.incorrect {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.2);
+        }
+        
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        
+        .interactive-demo {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+        }
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        
+        input[type="range"]::-webkit-slider-runnable-track {
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary-action), var(--secondary-action));
+            border-radius: 4px;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            margin-top: -6px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+        
+        .formula-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(34, 211, 238, 0.1));
+            border-left: 4px solid var(--primary-action);
+        }
+        
+        .fact-card {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.15));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        .waterwheel {
+            animation: rotate 8s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .water-drop {
+            animation: drop 2s ease-in-out infinite;
+        }
+        
+        @keyframes drop {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(20px); opacity: 0.5; }
+        }
+        
+        .gerobak-move {
+            animation: gerobakMove 3s ease-in-out infinite;
+        }
+        
+        @keyframes gerobakMove {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(30px); }
+        }
+
+        .scroll-container {
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div class="app-wrapper hero-pattern scroll-container">
+   <div class="w-full max-w-7xl mx-auto px-4 py-8"><!-- Header -->
+    <header class="text-center mb-12">
+     <div class="inline-block mb-4">
+      <div class="flex items-center justify-center gap-3 mb-2">
+       <svg class="w-12 h-12 text-cyan-400 floating" viewbox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="2" /> <path d="M32 8 L38 32 L32 56 L26 32 Z" fill="currentColor" opacity="0.3" /> <path d="M8 32 L32 26 L56 32 L32 38 Z" fill="currentColor" opacity="0.3" /> <circle cx="32" cy="32" r="6" fill="currentColor" />
+       </svg>
+       <h1 id="mainTitle" class="title-font text-4xl md:text-5xl font-bold gradient-text">Usaha, Energi &amp; Daya</h1>
+      </div>
+      <p class="text-cyan-300 text-lg">Mengenal Konsep Usaha dan Daya dalam Sains</p>
+     </div><!-- Navigation Pills -->
+     <nav class="flex flex-wrap justify-center gap-2 mt-6"><button onclick="showSection('intro')" class="nav-btn px-4 py-2 rounded-full glass-card text-white text-sm hover:bg-blue-500/30 transition-all" data-section="intro"> 🎯 Pendahuluan </button> <button onclick="showSection('usaha')" class="nav-btn px-4 py-2 rounded-full glass-card text-white text-sm hover:bg-blue-500/30 transition-all" data-section="usaha"> 💪 Usaha </button> <button onclick="showSection('daya')" class="nav-btn px-4 py-2 rounded-full glass-card text-white text-sm hover:bg-blue-500/30 transition-all" data-section="daya"> ⚡ Daya </button> <button onclick="showSection('simulasi')" class="nav-btn px-4 py-2 rounded-full glass-card text-white text-sm hover:bg-blue-500/30 transition-all" data-section="simulasi"> 🔬 Simulasi </button> <button onclick="showSection('aktivitas')" class="nav-btn px-4 py-2 rounded-full glass-card text-white text-sm hover:bg-blue-500/30 transition-all" data-section="aktivitas"> 🎮 Aktivitas </button> <button onclick="showSection('quiz')" class="nav-btn px-4 py-2 rounded-full glass-card text-white text-sm hover:bg-blue-500/30 transition-all" data-section="quiz"> 📝 Kuis HOTS </button>
+     </nav>
+    </header><!-- Main Content -->
+    <main><!-- Section: Introduction -->
+     <section id="intro" class="content-section active">
+      <div class="glass-card rounded-2xl p-6 md:p-8 mb-8">
+       <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 flex items-center gap-3"><span class="text-3xl">🎡</span> Inspirasi dari "Laxey Wheel"</h2>
+       <div class="grid md:grid-cols-2 gap-8"><!-- Laxey Wheel Illustration -->
+        <div class="relative">
+         <div class="bg-gradient-to-b from-sky-900/50 to-slate-900/50 rounded-xl p-6 border border-sky-500/20">
+          <svg viewbox="0 0 300 280" class="w-full max-w-sm mx-auto"><!-- Background Mountains --> <path d="M0 200 L50 140 L100 180 L150 120 L200 160 L250 100 L300 150 L300 280 L0 280 Z" fill="#1e3a5f" opacity="0.5" /> <!-- Support Structure --> <rect x="135" y="100" width="30" height="150" fill="#4a5568" /> <polygon points="100,250 200,250 170,100 130,100" fill="#2d3748" stroke="#4a5568" stroke-width="2" /> <!-- Water Channel --> <path d="M0 180 Q75 160 150 180" stroke="#38bdf8" stroke-width="4" fill="none" /> <path d="M150 180 Q225 200 300 180" stroke="#38bdf8" stroke-width="4" fill="none" /> <!-- Main Wheel --> <g class="waterwheel" style="transform-origin: 150px 140px;">
+            <circle cx="150" cy="140" r="70" fill="none" stroke="#8b5a2b" stroke-width="8" />
+            <circle cx="150" cy="140" r="60" fill="none" stroke="#a0522d" stroke-width="3" /> <!-- Spokes -->
+            <line x1="150" y1="70" x2="150" y2="210" stroke="#8b4513" stroke-width="4" />
+            <line x1="80" y1="140" x2="220" y2="140" stroke="#8b4513" stroke-width="4" />
+            <line x1="100" y1="90" x2="200" y2="190" stroke="#8b4513" stroke-width="4" />
+            <line x1="100" y1="190" x2="200" y2="90" stroke="#8b4513" stroke-width="4" /> <!-- Buckets -->
+            <rect x="145" y="68" width="10" height="15" fill="#654321" rx="2" />
+            <rect x="145" y="197" width="10" height="15" fill="#654321" rx="2" />
+            <rect x="78" y="135" width="15" height="10" fill="#654321" rx="2" />
+            <rect x="207" y="135" width="15" height="10" fill="#654321" rx="2" />
+            <rect x="98" y="85" width="12" height="12" fill="#654321" rx="2" transform="rotate(45 104 91)" />
+            <rect x="190" y="85" width="12" height="12" fill="#654321" rx="2" transform="rotate(45 196 91)" />
+            <rect x="98" y="183" width="12" height="12" fill="#654321" rx="2" transform="rotate(45 104 189)" />
+            <rect x="190" y="183" width="12" height="12" fill="#654321" rx="2" transform="rotate(45 196 189)" /> <!-- Center Hub -->
+            <circle cx="150" cy="140" r="12" fill="#4a3728" />
+            <circle cx="150" cy="140" r="6" fill="#2d1f14" />
+           </g> <!-- Water Drops --> <g class="water-drop">
+            <ellipse cx="90" cy="170" rx="4" ry="6" fill="#38bdf8" opacity="0.8" />
+            <ellipse cx="210" cy="175" rx="3" ry="5" fill="#38bdf8" opacity="0.6" />
+           </g> <!-- Building --> <rect x="230" y="180" width="50" height="70" fill="#374151" /> <rect x="240" y="200" width="15" height="20" fill="#fbbf24" opacity="0.5" /> <polygon points="230,180 255,160 280,180" fill="#1f2937" /> <!-- Label --> <text x="150" y="270" text-anchor="middle" fill="#94a3b8" font-size="12">
+            Laxey Wheel - Isle of Man
+           </text>
+          </svg>
+         </div>
+        </div><!-- Facts -->
+        <div class="space-y-4">
+         <div class="fact-card rounded-xl p-5">
+          <h3 class="text-cyan-300 font-semibold mb-2 flex items-center gap-2"><span>📊</span> Fakta Menarik</h3>
+          <p class="text-gray-300 leading-relaxed"><strong class="text-white">Laxey Wheel</strong> adalah kincir air terbesar di dunia dengan diameter <span class="text-cyan-400 font-bold">22,1 meter</span> yang dibangun tahun <span class="text-cyan-400 font-bold">1854</span> di Pulau Isle of Man, Inggris.</p>
+         </div>
+         <div class="fact-card rounded-xl p-5">
+          <h3 class="text-cyan-300 font-semibold mb-2 flex items-center gap-2"><span>⚙️</span> Fungsi</h3>
+          <p class="text-gray-300 leading-relaxed">Alat ini bekerja untuk <strong class="text-white">memompa air</strong> dari tambang di pegunungan. Air jatuh ke ember-ember di roda, beratnya memutar kincir yang menggerakkan pompa.</p>
+         </div>
+         <div class="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl p-5 border border-blue-400/30">
+          <h3 class="text-yellow-300 font-semibold mb-2 flex items-center gap-2"><span>❓</span> Pertanyaan Pemantik</h3>
+          <p class="text-gray-200 italic leading-relaxed">"Bagaimana cara kerja kincir tersebut? Konsep fisika apa yang membuatnya bisa bergerak memompa air?"</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Gerobak Sawit Section -->
+      <div class="glass-card rounded-2xl p-6 md:p-8">
+       <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3"><span class="text-3xl">🌴</span> Analogi: Gerobak Kelapa Sawit</h2>
+       <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div>
+         <svg viewbox="0 0 400 200" class="w-full max-w-md mx-auto"><!-- Ground --> <rect x="0" y="160" width="400" height="40" fill="#3d2914" /> <line x1="0" y1="160" x2="400" y2="160" stroke="#5d4224" stroke-width="2" /> <!-- Path marks --> <ellipse cx="50" cy="170" rx="20" ry="5" fill="#2d1f10" opacity="0.5" /> <ellipse cx="150" cy="175" rx="25" ry="6" fill="#2d1f10" opacity="0.5" /> <ellipse cx="280" cy="172" rx="22" ry="5" fill="#2d1f10" opacity="0.5" /> <!-- Cart Group with Animation --> <g class="gerobak-move"><!-- Cart Body -->
+           <rect x="150" y="90" width="100" height="60" fill="#8b4513" rx="3" />
+           <rect x="155" y="95" width="90" height="50" fill="#a0522d" rx="2" /> <!-- Palm Fruits -->
+           <ellipse cx="175" cy="100" rx="12" ry="10" fill="#ff6b35" />
+           <ellipse cx="200" cy="95" rx="14" ry="12" fill="#ff8c42" />
+           <ellipse cx="225" cy="100" rx="12" ry="10" fill="#ff6b35" />
+           <ellipse cx="188" cy="115" rx="10" ry="8" fill="#ff9f1c" />
+           <ellipse cx="212" cy="112" rx="11" ry="9" fill="#ff6b35" /> <!-- Wheels -->
+           <circle cx="175" cy="155" r="18" fill="#4a4a4a" stroke="#2d2d2d" stroke-width="3" />
+           <circle cx="175" cy="155" r="8" fill="#6b6b6b" />
+           <circle cx="225" cy="155" r="18" fill="#4a4a4a" stroke="#2d2d2d" stroke-width="3" />
+           <circle cx="225" cy="155" r="8" fill="#6b6b6b" /> <!-- Cart Handle -->
+           <line x1="150" y1="120" x2="100" y2="130" stroke="#8b4513" stroke-width="6" stroke-linecap="round" />
+           <line x1="100" y1="130" x2="90" y2="145" stroke="#8b4513" stroke-width="4" stroke-linecap="round" />
+          </g> <!-- Person Pushing --> <g transform="translate(60, 0)"><!-- Body -->
+           <ellipse cx="40" cy="70" rx="12" ry="14" fill="#ffd5b4" />
+           <rect x="28" y="82" width="24" height="45" fill="#2563eb" rx="3" /> <!-- Arms pushing -->
+           <line x1="52" y1="95" x2="85" y2="110" stroke="#ffd5b4" stroke-width="6" stroke-linecap="round" />
+           <line x1="52" y1="105" x2="85" y2="115" stroke="#ffd5b4" stroke-width="6" stroke-linecap="round" /> <!-- Legs -->
+           <line x1="35" y1="127" x2="30" y2="158" stroke="#1e3a5f" stroke-width="8" stroke-linecap="round" />
+           <line x1="45" y1="127" x2="55" y2="158" stroke="#1e3a5f" stroke-width="8" stroke-linecap="round" /> <!-- Face -->
+           <circle cx="36" cy="67" r="2" fill="#333" />
+           <circle cx="44" cy="67" r="2" fill="#333" />
+           <path d="M37 74 Q40 77 43 74" stroke="#333" stroke-width="1.5" fill="none" /> <!-- Hair -->
+           <ellipse cx="40" cy="58" rx="10" ry="6" fill="#333" />
+          </g> <!-- Force Arrow --> <g>
+           <line x1="120" y1="50" x2="180" y2="50" stroke="#22d3ee" stroke-width="3" />
+           <polygon points="180,50 170,45 170,55" fill="#22d3ee" />
+           <text x="150" y="40" text-anchor="middle" fill="#22d3ee" font-size="14" font-weight="bold">
+            F (Gaya)
+           </text>
+          </g> <!-- Distance Arrow --> <line x1="150" y1="180" x2="280" y2="180" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5,5" /> <text x="215" y="195" text-anchor="middle" fill="#fbbf24" font-size="12">
+           s (Perpindahan)
+          </text>
+         </svg>
+        </div>
+        <div class="space-y-4">
+         <p class="text-gray-300 leading-relaxed text-lg">Saat seseorang <span class="text-cyan-400 font-semibold">mendorong gerobak</span> berisi kelapa sawit hingga berpindah posisi, orang tersebut sedang <span class="text-yellow-400 font-semibold">melakukan usaha</span>.</p>
+         <div class="bg-red-500/10 border border-red-400/30 rounded-xl p-4">
+          <p class="text-red-300 flex items-start gap-2"><span class="text-xl">⚠️</span> <span><strong>Penting!</strong> Jika kamu mendorong gerobak sekuat tenaga tapi gerobak <em>tidak bergerak sama sekali</em>, maka dalam fisika usaha kamu bernilai <strong class="text-red-400">NOL</strong>.</span></p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section: Usaha -->
+     <section id="usaha" class="content-section">
+      <div class="glass-card rounded-2xl p-6 md:p-8 mb-8">
+       <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 flex items-center gap-3"><span class="text-3xl">💪</span> Apa itu Usaha (Work)?</h2>
+       <div class="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-xl p-6 mb-8 border-l-4 border-blue-500">
+        <h3 class="text-xl font-semibold text-cyan-300 mb-3">📖 Definisi Sains</h3>
+        <p class="text-gray-200 text-lg leading-relaxed"><strong class="text-white">Usaha</strong> adalah upaya untuk <span class="text-cyan-400">memindahkan suatu benda atau beban</span> pada <span class="text-yellow-400">jarak tertentu</span>.</p>
+       </div>
+       <h3 class="text-xl font-semibold text-white mb-4">✅ Syarat Terjadinya Usaha:</h3>
+       <div class="grid md:grid-cols-2 gap-4 mb-8">
+        <div class="glass-card rounded-xl p-5 flex items-center gap-4">
+         <div class="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-3xl">🏋️</span>
+         </div>
+         <div>
+          <h4 class="text-cyan-300 font-semibold text-lg">Ada Gaya (F)</h4>
+          <p class="text-gray-400">Gaya yang diberikan pada benda</p>
+         </div>
+        </div>
+        <div class="glass-card rounded-xl p-5 flex items-center gap-4">
+         <div class="w-16 h-16 rounded-full bg-yellow-500/20 flex items-center justify-center"><span class="text-3xl">📏</span>
+         </div>
+         <div>
+          <h4 class="text-yellow-300 font-semibold text-lg">Ada Perpindahan (s)</h4>
+          <p class="text-gray-400">Benda berpindah dari posisi awal</p>
+         </div>
+        </div>
+       </div><!-- Formula Box -->
+       <div class="formula-box rounded-xl p-6 mb-8">
+        <h3 class="text-xl font-semibold text-white mb-4">📐 Rumus Matematis Usaha</h3>
+        <div class="text-center py-6">
+         <div class="text-4xl md:text-5xl text-white mb-6">
+          $$W = F \cdot s$$
+         </div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4">
+         <div class="bg-white/5 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-cyan-400">
+           W
+          </div>
+          <div class="text-gray-300">
+           Work (Usaha)
+          </div>
+          <div class="text-yellow-400 text-sm mt-1">
+           Satuan: <strong>Joule (J)</strong>
+          </div>
+         </div>
+         <div class="bg-white/5 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-cyan-400">
+           F
+          </div>
+          <div class="text-gray-300">
+           Force (Gaya)
+          </div>
+          <div class="text-yellow-400 text-sm mt-1">
+           Satuan: <strong>Newton (N)</strong>
+          </div>
+         </div>
+         <div class="bg-white/5 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-cyan-400">
+           s
+          </div>
+          <div class="text-gray-300">
+           Distance (Perpindahan)
+          </div>
+          <div class="text-yellow-400 text-sm mt-1">
+           Satuan: <strong>Meter (m)</strong>
+          </div>
+         </div>
+        </div>
+       </div><!-- Examples -->
+       <h3 class="text-xl font-semibold text-white mb-4">📚 Contoh dalam Kehidupan:</h3>
+       <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-card rounded-xl p-4 text-center hover:scale-105 transition-transform">
+         <div class="text-4xl mb-3">
+          🧹
+         </div>
+         <h4 class="text-white font-semibold">Menyapu Lantai</h4>
+         <p class="text-gray-400 text-sm mt-2">Gaya tangan + sapu berpindah = Usaha</p>
+        </div>
+        <div class="glass-card rounded-xl p-4 text-center hover:scale-105 transition-transform">
+         <div class="text-4xl mb-3">
+          📦
+         </div>
+         <h4 class="text-white font-semibold">Mengangkat Kardus</h4>
+         <p class="text-gray-400 text-sm mt-2">Gaya angkat + kardus naik = Usaha</p>
+        </div>
+        <div class="glass-card rounded-xl p-4 text-center hover:scale-105 transition-transform">
+         <div class="text-4xl mb-3">
+          🚲
+         </div>
+         <h4 class="text-white font-semibold">Mengayuh Sepeda</h4>
+         <p class="text-gray-400 text-sm mt-2">Gaya kaki + sepeda maju = Usaha</p>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section: Daya -->
+     <section id="daya" class="content-section">
+      <div class="glass-card rounded-2xl p-6 md:p-8 mb-8">
+       <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 flex items-center gap-3"><span class="text-3xl">⚡</span> Apa itu Daya (Power)?</h2>
+       <div class="bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-xl p-6 mb-8 border-l-4 border-purple-500">
+        <h3 class="text-xl font-semibold text-purple-300 mb-3">📖 Definisi</h3>
+        <p class="text-gray-200 text-lg leading-relaxed"><strong class="text-white">Daya (laju energi)</strong> adalah besar total <span class="text-cyan-400">energi atau usaha</span> yang dilakukan dalam <span class="text-yellow-400">setiap detik</span>.</p>
+       </div><!-- Comparison Illustration -->
+       <h3 class="text-xl font-semibold text-white mb-4">🏃 Logika Sederhana:</h3>
+       <div class="bg-slate-800/50 rounded-xl p-6 mb-8">
+        <p class="text-gray-300 mb-6 text-center text-lg">Dua orang mendorong gerobak dengan <span class="text-cyan-400">beban dan jarak yang sama</span>:</p>
+        <div class="grid md:grid-cols-2 gap-6"><!-- Person A -->
+         <div class="bg-green-500/10 border border-green-400/30 rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-4">
+           <div class="w-12 h-12 rounded-full bg-green-500/30 flex items-center justify-center text-2xl">
+            🏃
+           </div>
+           <h4 class="text-green-400 font-bold text-xl">Orang A</h4>
+          </div>
+          <p class="text-gray-300 mb-3"><strong>Berlari</strong> sehingga sampai dengan cepat</p>
+          <div class="flex items-center gap-2 text-yellow-400"><span>⏱️</span> <span>Waktu singkat</span> <span class="text-2xl">→</span> <span class="text-green-400 font-bold text-lg">Daya BESAR ⬆️</span>
+          </div>
+         </div><!-- Person B -->
+         <div class="bg-red-500/10 border border-red-400/30 rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-4">
+           <div class="w-12 h-12 rounded-full bg-red-500/30 flex items-center justify-center text-2xl">
+            🚶
+           </div>
+           <h4 class="text-red-400 font-bold text-xl">Orang B</h4>
+          </div>
+          <p class="text-gray-300 mb-3"><strong>Berjalan santai</strong> sehingga sampai lebih lama</p>
+          <div class="flex items-center gap-2 text-yellow-400"><span>⏱️</span> <span>Waktu lama</span> <span class="text-2xl">→</span> <span class="text-red-400 font-bold text-lg">Daya KECIL ⬇️</span>
+          </div>
+         </div>
+        </div>
+       </div><!-- Formula Box -->
+       <div class="formula-box rounded-xl p-6 mb-8" style="border-left-color: #a855f7;">
+        <h3 class="text-xl font-semibold text-white mb-4">📐 Rumus Matematis Daya</h3>
+        <div class="text-center py-6">
+         <div class="text-4xl md:text-5xl text-white mb-6">
+          $$P = \frac{W}{t}$$
+         </div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4">
+         <div class="bg-white/5 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-purple-400">
+           P
+          </div>
+          <div class="text-gray-300">
+           Power (Daya)
+          </div>
+          <div class="text-yellow-400 text-sm mt-1">
+           Satuan: <strong>Watt (W)</strong>
+          </div>
+         </div>
+         <div class="bg-white/5 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-purple-400">
+           W
+          </div>
+          <div class="text-gray-300">
+           Work (Usaha/Energi)
+          </div>
+          <div class="text-yellow-400 text-sm mt-1">
+           Satuan: <strong>Joule (J)</strong>
+          </div>
+         </div>
+         <div class="bg-white/5 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-purple-400">
+           t
+          </div>
+          <div class="text-gray-300">
+           Time (Waktu)
+          </div>
+          <div class="text-yellow-400 text-sm mt-1">
+           Satuan: <strong>Sekon (s)</strong>
+          </div>
+         </div>
+        </div>
+       </div><!-- Insight Box -->
+       <div class="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-xl p-6 border border-cyan-400/30">
+        <h4 class="text-cyan-300 font-semibold mb-3 flex items-center gap-2"><span>💡</span> Insight Penting</h4>
+        <p class="text-gray-200 leading-relaxed">Semakin <span class="text-yellow-400 font-semibold">singkat waktu</span> yang dibutuhkan untuk melakukan usaha yang sama, semakin <span class="text-green-400 font-semibold">besar dayanya</span>. Inilah mengapa mobil sport dengan mesin berdaya tinggi bisa berakselerasi lebih cepat!</p>
+       </div>
+      </div>
+     </section><!-- Section: Simulasi Interaktif -->
+     <section id="simulasi" class="content-section">
+      <div class="glass-card rounded-2xl p-6 md:p-8 mb-8">
+       <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 flex items-center gap-3"><span class="text-3xl">🔬</span> Simulasi Interaktif</h2>
+       <p class="text-gray-300 mb-8">Geser slider untuk mengubah nilai dan lihat bagaimana Usaha dan Daya berubah!</p><!-- Simulator -->
+       <div class="interactive-demo rounded-xl p-6 border border-blue-500/30">
+        <div class="grid md:grid-cols-2 gap-8"><!-- Controls -->
+         <div class="space-y-6">
+          <div><label class="flex items-center justify-between text-white mb-2"> <span>🏋️ Gaya (F)</span> <span id="forceValue" class="text-cyan-400 font-bold">50 N</span> </label> <input type="range" id="forceSlider" min="10" max="200" value="50" class="w-full">
+          </div>
+          <div><label class="flex items-center justify-between text-white mb-2"> <span>📏 Perpindahan (s)</span> <span id="distanceValue" class="text-yellow-400 font-bold">10 m</span> </label> <input type="range" id="distanceSlider" min="1" max="50" value="10" class="w-full">
+          </div>
+          <div><label class="flex items-center justify-between text-white mb-2"> <span>⏱️ Waktu (t)</span> <span id="timeValue" class="text-purple-400 font-bold">5 s</span> </label> <input type="range" id="timeSlider" min="1" max="30" value="5" class="w-full">
+          </div>
+         </div><!-- Results -->
+         <div class="space-y-4">
+          <div class="bg-blue-500/20 rounded-xl p-5 border border-blue-400/30">
+           <div class="flex items-center justify-between mb-2"><span class="text-gray-300">Usaha (W)</span> <span class="text-xs text-gray-500">W = F × s</span>
+           </div>
+           <div class="text-3xl font-bold text-cyan-400" id="workResult">
+            500 J
+           </div>
+          </div>
+          <div class="bg-purple-500/20 rounded-xl p-5 border border-purple-400/30">
+           <div class="flex items-center justify-between mb-2"><span class="text-gray-300">Daya (P)</span> <span class="text-xs text-gray-500">P = W ÷ t</span>
+           </div>
+           <div class="text-3xl font-bold text-purple-400" id="powerResult">
+            100 W
+           </div>
+          </div>
+          <div class="bg-green-500/10 rounded-lg p-4 border border-green-400/20">
+           <p class="text-green-300 text-sm" id="simInsight">💡 Dengan gaya 50 N dan perpindahan 10 m, usaha yang dilakukan adalah 500 Joule. Dalam waktu 5 detik, dayanya adalah 100 Watt.</p>
+          </div>
+         </div>
+        </div><!-- Visual Animation -->
+        <div class="mt-8 bg-slate-900/50 rounded-xl p-6">
+         <div class="relative h-32 overflow-hidden"><!-- Ground -->
+          <div class="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-amber-900/50 to-transparent"></div><!-- Animated Box -->
+          <div id="simBox" class="absolute bottom-8 transition-all duration-1000 ease-out" style="left: 10%;">
+           <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg shadow-lg flex items-center justify-center text-2xl">
+            📦
+           </div>
+          </div><!-- Force Arrow -->
+          <div id="forceArrow" class="absolute bottom-14 transition-all duration-500" style="left: calc(10% + 70px);">
+           <svg width="60" height="20" class="text-cyan-400"><line x1="0" y1="10" x2="45" y2="10" stroke="currentColor" stroke-width="3" /> <polygon points="45,10 35,5 35,15" fill="currentColor" />
+           </svg><span class="text-cyan-400 text-xs absolute -top-4 left-0">F</span>
+          </div><!-- Distance Marker -->
+          <div class="absolute bottom-2 left-[10%] right-[10%] flex items-center">
+           <div class="flex-1 border-t-2 border-dashed border-yellow-400/50"></div>
+          </div>
+         </div><button id="runSimBtn" onclick="runSimulation()" class="mt-4 w-full py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-cyan-600 transition-all"> ▶️ Jalankan Simulasi </button>
+        </div>
+       </div>
+      </div>
+     </section><!-- Section: Aktivitas -->
+     <section id="aktivitas" class="content-section">
+      <div class="glass-card rounded-2xl p-6 md:p-8 mb-8">
+       <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 flex items-center gap-3"><span class="text-3xl">🎮</span> Aktivitas Seru - Balap 'Ski' Lantai</h2>
+       <div class="bg-gradient-to-r from-orange-500/10 to-yellow-500/10 rounded-xl p-6 mb-8 border border-orange-400/30">
+        <h3 class="text-xl font-semibold text-orange-300 mb-3">🎯 Tujuan</h3>
+        <p class="text-gray-200 text-lg">Mempraktikkan konsep <span class="text-cyan-400 font-semibold">Usaha</span> dan <span class="text-purple-400 font-semibold">Daya</span> secara langsung dengan aktivitas yang menyenangkan!</p>
+       </div><!-- Illustration -->
+       <div class="bg-slate-800/50 rounded-xl p-6 mb-8">
+        <svg viewbox="0 0 500 200" class="w-full max-w-2xl mx-auto"><!-- Floor --> <rect x="0" y="160" width="500" height="40" fill="#374151" /> <line x1="0" y1="160" x2="500" y2="160" stroke="#4b5563" stroke-width="2" /> <!-- Lane markers --> <line x1="50" y1="165" x2="50" y2="195" stroke="#9ca3af" stroke-width="2" /> <line x1="450" y1="165" x2="450" y2="195" stroke="#9ca3af" stroke-width="2" /> <text x="50" y="185" fill="#9ca3af" font-size="10" text-anchor="middle">
+          START
+         </text> <text x="450" y="185" fill="#9ca3af" font-size="10" text-anchor="middle">
+          FINISH
+         </text> <!-- Rope --> <line x1="170" y1="100" x2="280" y2="100" stroke="#fbbf24" stroke-width="4" stroke-linecap="round" /> <!-- Puller (Left person) --> <g transform="translate(120, 60)">
+          <circle cx="25" cy="20" r="15" fill="#ffd5b4" />
+          <rect x="10" y="35" width="30" height="50" fill="#ef4444" rx="5" />
+          <line x1="40" y1="50" x2="70" y2="40" stroke="#ffd5b4" stroke-width="8" stroke-linecap="round" />
+          <line x1="15" y1="85" x2="5" y2="120" stroke="#1e3a5f" stroke-width="10" stroke-linecap="round" />
+          <line x1="30" y1="85" x2="40" y2="120" stroke="#1e3a5f" stroke-width="10" stroke-linecap="round" />
+          <text x="25" y="150" fill="#ef4444" font-size="12" text-anchor="middle" font-weight="bold">
+           Penarik
+          </text>
+         </g> <!-- Racer (Right person on slippery surface) --> <g transform="translate(280, 60)">
+          <circle cx="25" cy="20" r="15" fill="#ffd5b4" />
+          <rect x="10" y="35" width="30" height="50" fill="#3b82f6" rx="5" />
+          <line x1="10" y1="50" x2="-20" y2="45" stroke="#ffd5b4" stroke-width="8" stroke-linecap="round" />
+          <line x1="15" y1="85" x2="10" y2="120" stroke="#1e3a5f" stroke-width="10" stroke-linecap="round" />
+          <line x1="30" y1="85" x2="35" y2="120" stroke="#1e3a5f" stroke-width="10" stroke-linecap="round" /> <!-- Slippery shoes -->
+          <ellipse cx="10" cy="125" rx="15" ry="6" fill="#64748b" />
+          <ellipse cx="35" cy="125" rx="15" ry="6" fill="#64748b" />
+          <text x="25" y="150" fill="#3b82f6" font-size="12" text-anchor="middle" font-weight="bold">
+           Pembalap
+          </text>
+         </g> <!-- Motion arrows --> <g>
+          <line x1="200" y1="40" x2="130" y2="40" stroke="#22d3ee" stroke-width="3" />
+          <polygon points="130,40 140,35 140,45" fill="#22d3ee" />
+          <text x="165" y="30" fill="#22d3ee" font-size="11" text-anchor="middle">
+           Arah Tarik
+          </text>
+         </g> <!-- Stopwatch --> <g transform="translate(420, 50)">
+          <circle cx="30" cy="30" r="25" fill="#1f2937" stroke="#fbbf24" stroke-width="3" />
+          <line x1="30" y1="30" x2="30" y2="15" stroke="#fbbf24" stroke-width="2" />
+          <line x1="30" y1="30" x2="40" y2="30" stroke="#22d3ee" stroke-width="2" />
+          <circle cx="30" cy="30" r="3" fill="#fbbf24" />
+          <text x="30" y="75" fill="#fbbf24" font-size="10" text-anchor="middle">
+           Stopwatch
+          </text>
+         </g>
+        </svg>
+       </div><!-- Instructions -->
+       <h3 class="text-xl font-semibold text-white mb-4">📋 Cara Bermain:</h3>
+       <div class="grid md:grid-cols-3 gap-4 mb-8">
+        <div class="glass-card rounded-xl p-5 text-center">
+         <div class="w-12 h-12 rounded-full bg-blue-500/30 flex items-center justify-center mx-auto mb-3 text-2xl">
+          1️⃣
+         </div>
+         <h4 class="text-white font-semibold mb-2">Bentuk Tim</h4>
+         <p class="text-gray-400 text-sm">Pilih satu orang sebagai <strong class="text-red-400">Penarik</strong> dan satu orang sebagai <strong class="text-blue-400">Pembalap</strong></p>
+        </div>
+        <div class="glass-card rounded-xl p-5 text-center">
+         <div class="w-12 h-12 rounded-full bg-yellow-500/30 flex items-center justify-center mx-auto mb-3 text-2xl">
+          2️⃣
+         </div>
+         <h4 class="text-white font-semibold mb-2">Persiapan</h4>
+         <p class="text-gray-400 text-sm">Gunakan <strong class="text-cyan-400">alas kaki licin</strong> di lantai yang licin (bisa pakai kaus kaki)</p>
+        </div>
+        <div class="glass-card rounded-xl p-5 text-center">
+         <div class="w-12 h-12 rounded-full bg-green-500/30 flex items-center justify-center mx-auto mb-3 text-2xl">
+          3️⃣
+         </div>
+         <h4 class="text-white font-semibold mb-2">Balapan!</h4>
+         <p class="text-gray-400 text-sm">Tarik temanmu <strong class="text-yellow-400">bolak-balik</strong> lintasan dan <strong class="text-purple-400">ukur waktunya</strong></p>
+        </div>
+       </div><!-- Data Table -->
+       <h3 class="text-xl font-semibold text-white mb-4">📊 Tabel Analisis Data:</h3>
+       <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+         <thead>
+          <tr class="bg-slate-700/50">
+           <th class="p-3 border border-slate-600 text-cyan-300">Tim</th>
+           <th class="p-3 border border-slate-600 text-cyan-300">Massa (kg)</th>
+           <th class="p-3 border border-slate-600 text-cyan-300">Gaya (N)</th>
+           <th class="p-3 border border-slate-600 text-cyan-300">Jarak (m)</th>
+           <th class="p-3 border border-slate-600 text-cyan-300">Usaha (J)</th>
+           <th class="p-3 border border-slate-600 text-cyan-300">Waktu (s)</th>
+           <th class="p-3 border border-slate-600 text-cyan-300">Daya (W)</th>
+          </tr>
+         </thead>
+         <tbody id="activityTable" class="text-gray-300">
+          <tr class="bg-slate-800/30">
+           <td class="p-3 border border-slate-600">Tim A</td>
+           <td class="p-3 border border-slate-600"><input type="number" class="w-20 bg-slate-700 rounded px-2 py-1 text-white" placeholder="0" onchange="calculateRow(this)"></td>
+           <td class="p-3 border border-slate-600"><input type="number" class="w-20 bg-slate-700 rounded px-2 py-1 text-white" placeholder="0" onchange="calculateRow(this)"></td>
+           <td class="p-3 border border-slate-600"><input type="number" class="w-20 bg-slate-700 rounded px-2 py-1 text-white" placeholder="0" onchange="calculateRow(this)"></td>
+           <td class="p-3 border border-slate-600 result-work text-cyan-400 font-bold">-</td>
+           <td class="p-3 border border-slate-600"><input type="number" class="w-20 bg-slate-700 rounded px-2 py-1 text-white" placeholder="0" onchange="calculateRow(this)"></td>
+           <td class="p-3 border border-slate-600 result-power text-purple-400 font-bold">-</td>
+          </tr>
+          <tr class="bg-slate-800/50">
+           <td class="p-3 border border-slate-600">Tim B</td>
+           <td class="p-3 border border-slate-600"><input type="number" class="w-20 bg-slate-700 rounded px-2 py-1 text-white" placeholder="0" onchange="calculateRow(this)"></td>
+           <td class="p-3 border border-slate-600"><input type="number" class="w-20 bg-slate-700 rounded px-2 py-1 text-white" placeholder="0" onchange="calculateRow(this)"></td>
+           <td class="p-3 border border-slate-600"><input type="number" class="w-20 bg-slate-700 rounded px-2 py-1 text-white" placeholder="0" onchange="calculateRow(this)"></td>
+           <td class="p-3 border border-slate-600 result-work text-cyan-400 font-bold">-</td>
+           <td class="p-3 border border-slate-600"><input type="number" class="w-20 bg-slate-700 rounded px-2 py-1 text-white" placeholder="0" onchange="calculateRow(this)"></td>
+           <td class="p-3 border border-slate-600 result-power text-purple-400 font-bold">-</td>
+          </tr>
+          <tr class="bg-slate-800/30">
+           <td class="p-3 border border-slate-600">Tim C</td>
+           <td class="p-3 border border-slate-600"><input type="number" class="w-20 bg-slate-700 rounded px-2 py-1 text-white" placeholder="0" onchange="calculateRow(this)"></td>
+           <td class="p-3 border border-slate-600"><input type="number" class="w-20 bg-slate-700 rounded px-2 py-1 text-white" placeholder="0" onchange="calculateRow(this)"></td>
+           <td class="p-3 border border-slate-600"><input type="number" class="w-20 bg-slate-700 rounded px-2 py-1 text-white" placeholder="0" onchange="calculateRow(this)"></td>
+           <td class="p-3 border border-slate-600 result-work text-cyan-400 font-bold">-</td>
+           <td class="p-3 border border-slate-600"><input type="number" class="w-20 bg-slate-700 rounded px-2 py-1 text-white" placeholder="0" onchange="calculateRow(this)"></td>
+           <td class="p-3 border border-slate-600 result-power text-purple-400 font-bold">-</td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+       <div id="winnerAnnouncement" class="mt-6 hidden bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-xl p-6 border border-yellow-400/30 text-center"><span class="text-4xl">🏆</span>
+        <h4 class="text-2xl font-bold text-yellow-400 mt-2">Pemenang!</h4>
+        <p id="winnerText" class="text-white mt-2">-</p>
+       </div>
+      </div>
+     </section><!-- Section: Quiz HOTS -->
+     <section id="quiz" class="content-section">
+      <div class="glass-card rounded-2xl p-6 md:p-8">
+       <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 flex items-center gap-3"><span class="text-3xl">📝</span> Kuis HOTS (Higher Order Thinking Skills)</h2><!-- Progress Bar -->
+       <div class="mb-8">
+        <div class="flex items-center justify-between mb-2"><span class="text-gray-400">Progress</span> <span id="quizProgress" class="text-cyan-400 font-semibold">0/10</span>
+        </div>
+        <div class="h-3 bg-slate-700 rounded-full overflow-hidden">
+         <div id="progressBar" class="h-full bg-gradient-to-r from-blue-500 to-cyan-500 progress-bar" style="width: 0%"></div>
+        </div>
+       </div><!-- Quiz Container -->
+       <div id="quizContainer"><!-- Questions will be rendered here -->
+       </div><!-- Quiz Results -->
+       <div id="quizResults" class="hidden text-center py-10">
+        <div class="text-6xl mb-4">
+         🎉
+        </div>
+        <h3 class="text-3xl font-bold text-white mb-4">Kuis Selesai!</h3>
+        <div class="inline-block bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-2xl p-8 border border-blue-400/30">
+         <p class="text-gray-300 mb-2">Skor Kamu:</p>
+         <p id="finalScore" class="text-5xl font-bold gradient-text">0/10</p>
+         <p id="scoreMessage" class="text-gray-400 mt-4">-</p>
+        </div><button onclick="resetQuiz()" class="mt-8 px-8 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-cyan-600 transition-all"> 🔄 Ulangi Kuis </button>
+       </div>
+      </div>
+     </section><!-- Kesimpulan -->
+     <section class="glass-card rounded-2xl p-6 md:p-8 mt-8">
+      <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 flex items-center gap-3"><span class="text-3xl">📌</span> Kesimpulan</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+       <div class="bg-blue-500/10 rounded-xl p-5 border border-blue-400/30">
+        <div class="text-3xl mb-3">
+         💪
+        </div>
+        <h4 class="text-cyan-300 font-semibold mb-2">Usaha</h4>
+        <p class="text-gray-300">Bergantung pada <strong class="text-white">gaya</strong> dan seberapa jauh <strong class="text-white">benda berpindah</strong>.</p>
+       </div>
+       <div class="bg-purple-500/10 rounded-xl p-5 border border-purple-400/30">
+        <div class="text-3xl mb-3">
+         ⚡
+        </div>
+        <h4 class="text-purple-300 font-semibold mb-2">Daya</h4>
+        <p class="text-gray-300">Bergantung pada seberapa <strong class="text-white">cepat usaha</strong> tersebut diselesaikan.</p>
+       </div>
+       <div class="bg-green-500/10 rounded-xl p-5 border border-green-400/30">
+        <div class="text-3xl mb-3">
+         ⏱️
+        </div>
+        <h4 class="text-green-300 font-semibold mb-2">Hubungan</h4>
+        <p class="text-gray-300">Semakin <strong class="text-white">singkat waktu</strong> untuk usaha yang sama = <strong class="text-white">daya makin besar</strong>.</p>
+       </div>
+      </div>
+     </section>
+    </main><!-- Footer -->
+    <footer class="mt-12 text-center py-8 border-t border-slate-700/50">
+     <div class="flex items-center justify-center gap-3 mb-4"><img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-12 h-12 rounded-full object-cover border-2 border-cyan-400" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #3b82f6, #22d3ee)'; this.alt='AM';">
+      <div class="text-left">
+       <p id="teacherName" class="text-white font-semibold">Algian Manggara, S.Agr</p>
+       <p class="text-gray-500 text-sm">Pembuat Materi</p>
+      </div>
+     </div>
+     <p class="text-gray-500 text-sm">© 2026 Algian Manggara, S.Agr | Media Pembelajaran Interaktif</p>
+     <p class="text-gray-600 text-xs mt-2">Usaha, Energi &amp; Daya dalam Sains</p>
+    </footer>
+   </div>
+  </div>
+  <script>
+        // Default Configuration
+        const defaultConfig = {
+            main_title: 'Usaha, Energi & Daya',
+            teacher_name: 'Algian Manggara, S.Agr',
+            primary_color: '#3b82f6',
+            secondary_color: '#22d3ee',
+            text_color: '#f1f5f9',
+            bg_color: '#0f172a',
+            accent_color: '#a855f7'
+        };
+
+        let config = { ...defaultConfig };
+
+        // Element SDK Implementation
+        async function onConfigChange(cfg) {
+            config = { ...defaultConfig, ...cfg };
+            
+            const mainTitle = document.getElementById('mainTitle');
+            if (mainTitle) mainTitle.textContent = config.main_title || defaultConfig.main_title;
+            
+            const teacherName = document.getElementById('teacherName');
+            if (teacherName) teacherName.textContent = config.teacher_name || defaultConfig.teacher_name;
+        }
+
+        function mapToCapabilities(cfg) {
+            return {
+                recolorables: [
+                    {
+                        get: () => cfg.bg_color || defaultConfig.bg_color,
+                        set: (value) => { cfg.bg_color = value; if(window.elementSdk) window.elementSdk.setConfig({ bg_color: value }); }
+                    },
+                    {
+                        get: () => cfg.primary_color || defaultConfig.primary_color,
+                        set: (value) => { cfg.primary_color = value; if(window.elementSdk) window.elementSdk.setConfig({ primary_color: value }); }
+                    },
+                    {
+                        get: () => cfg.text_color || defaultConfig.text_color,
+                        set: (value) => { cfg.text_color = value; if(window.elementSdk) window.elementSdk.setConfig({ text_color: value }); }
+                    },
+                    {
+                        get: () => cfg.secondary_color || defaultConfig.secondary_color,
+                        set: (value) => { cfg.secondary_color = value; if(window.elementSdk) window.elementSdk.setConfig({ secondary_color: value }); }
+                    },
+                    {
+                        get: () => cfg.accent_color || defaultConfig.accent_color,
+                        set: (value) => { cfg.accent_color = value; if(window.elementSdk) window.elementSdk.setConfig({ accent_color: value }); }
+                    }
+                ],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+
+        function mapToEditPanelValues(cfg) {
+            return new Map([
+                ['main_title', cfg.main_title || defaultConfig.main_title],
+                ['teacher_name', cfg.teacher_name || defaultConfig.teacher_name]
+            ]);
+        }
+
+        // Initialize SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+
+        // Navigation
+        function showSection(sectionId) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('bg-blue-500/30'));
+            
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelector(`[data-section="${sectionId}"]`).classList.add('bg-blue-500/30');
+        }
+
+        // Simulation
+        const forceSlider = document.getElementById('forceSlider');
+        const distanceSlider = document.getElementById('distanceSlider');
+        const timeSlider = document.getElementById('timeSlider');
+
+        function updateSimulation() {
+            const force = parseInt(forceSlider.value);
+            const distance = parseInt(distanceSlider.value);
+            const time = parseInt(timeSlider.value);
+            
+            const work = force * distance;
+            const power = (work / time).toFixed(1);
+            
+            document.getElementById('forceValue').textContent = force + ' N';
+            document.getElementById('distanceValue').textContent = distance + ' m';
+            document.getElementById('timeValue').textContent = time + ' s';
+            document.getElementById('workResult').textContent = work + ' J';
+            document.getElementById('powerResult').textContent = power + ' W';
+            
+            document.getElementById('simInsight').textContent = 
+                `💡 Dengan gaya ${force} N dan perpindahan ${distance} m, usaha yang dilakukan adalah ${work} Joule. Dalam waktu ${time} detik, dayanya adalah ${power} Watt.`;
+        }
+
+        forceSlider.addEventListener('input', updateSimulation);
+        distanceSlider.addEventListener('input', updateSimulation);
+        timeSlider.addEventListener('input', updateSimulation);
+
+        function runSimulation() {
+            const box = document.getElementById('simBox');
+            const distance = parseInt(distanceSlider.value);
+            const time = parseInt(timeSlider.value);
+            
+            const targetPosition = 10 + (distance * 1.5);
+            box.style.transition = `left ${time * 0.1}s ease-out`;
+            box.style.left = targetPosition + '%';
+            
+            setTimeout(() => {
+                box.style.left = '10%';
+            }, time * 100 + 500);
+        }
+
+        // Activity Table Calculation
+        function calculateRow(input) {
+            const row = input.closest('tr');
+            const inputs = row.querySelectorAll('input');
+            const force = parseFloat(inputs[1].value) || 0;
+            const distance = parseFloat(inputs[2].value) || 0;
+            const time = parseFloat(inputs[3].value) || 0;
+            
+            const work = force * distance;
+            const power = time > 0 ? (work / time).toFixed(2) : 0;
+            
+            row.querySelector('.result-work').textContent = work > 0 ? work + ' J' : '-';
+            row.querySelector('.result-power').textContent = power > 0 ? power + ' W' : '-';
+            
+            checkWinner();
+        }
+
+        function checkWinner() {
+            const rows = document.querySelectorAll('#activityTable tr');
+            let maxPower = 0;
+            let winner = '';
+            
+            rows.forEach(row => {
+                const powerText = row.querySelector('.result-power').textContent;
+                if (powerText !== '-') {
+                    const power = parseFloat(powerText);
+                    if (power > maxPower) {
+                        maxPower = power;
+                        winner = row.cells[0].textContent;
+                    }
+                }
+            });
+            
+            if (maxPower > 0) {
+                document.getElementById('winnerAnnouncement').classList.remove('hidden');
+                document.getElementById('winnerText').textContent = 
+                    `${winner} memiliki daya terbesar: ${maxPower} Watt!`;
+            }
+        }
+
+        // Quiz System
+        const quizQuestions = [
+            {
+                question: "Sebuah mobil bermassa 1000 kg bergerak dengan kecepatan 20 m/s. Jika mobil tersebut berhenti dalam waktu 10 detik, berapakah daya pengereman rata-rata yang diperlukan?",
+                options: [
+                    "20.000 Watt",
+                    "40.000 Watt",
+                    "10.000 Watt",
+                    "5.000 Watt"
+                ],
+                correct: 0,
+                explanation: "Energi kinetik = ½mv² = ½(1000)(20)² = 200.000 J. Daya = W/t = 200.000/10 = 20.000 Watt"
+            },
+            {
+                question: "Seorang pekerja mengangkat karung beras 50 kg ke ketinggian 2 meter dalam waktu 4 detik. Pekerja lain mengangkat beban yang sama ke ketinggian yang sama dalam waktu 2 detik. Perbandingan daya kedua pekerja adalah...",
+                options: [
+                    "1 : 1",
+                    "1 : 2",
+                    "2 : 1",
+                    "4 : 1"
+                ],
+                correct: 1,
+                explanation: "Usaha sama (W = mgh), waktu berbeda. P1 : P2 = (W/4) : (W/2) = 1 : 2"
+            },
+            {
+                question: "Mengapa kincir air Laxey Wheel dapat bekerja memompa air dari tambang? Konsep fisika utama yang mendasarinya adalah...",
+                options: [
+                    "Energi potensial air diubah menjadi energi kinetik kincir yang menghasilkan usaha mekanik",
+                    "Energi kinetik air langsung mengangkat air dari tambang",
+                    "Gaya gravitasi langsung memompa air ke atas",
+                    "Tekanan air di dalam kincir mendorong air ke atas"
+                ],
+                correct: 0,
+                explanation: "Air jatuh memiliki energi potensial yang dikonversi menjadi energi kinetik kincir, lalu menjadi usaha mekanik untuk memompa."
+            },
+            {
+                question: "Dua buah traktor dengan daya berbeda menarik beban yang sama sejauh 100 meter. Traktor A memiliki daya 5000 W dan traktor B memiliki daya 2500 W. Jika gaya tarik sama, perbandingan waktu yang dibutuhkan adalah...",
+                options: [
+                    "A lebih cepat 2 kali dari B",
+                    "B lebih cepat 2 kali dari A",
+                    "Waktu keduanya sama",
+                    "A lebih cepat 4 kali dari B"
+                ],
+                correct: 0,
+                explanation: "P = W/t, jika W sama maka t berbanding terbalik dengan P. PA : PB = 2 : 1, maka tA : tB = 1 : 2"
+            },
+            {
+                question: "Seseorang mendorong tembok dengan gaya 500 N selama 5 menit. Berapa usaha yang dilakukan?",
+                options: [
+                    "2500 Joule",
+                    "150.000 Joule",
+                    "0 Joule",
+                    "100 Joule"
+                ],
+                correct: 2,
+                explanation: "Usaha = 0 karena tidak ada perpindahan. W = F × s, jika s = 0 maka W = 0"
+            },
+            {
+                question: "Sebuah pompa air dapat memindahkan 500 liter air (500 kg) ke ketinggian 10 meter dalam 5 menit. Berapakah daya minimum pompa tersebut? (g = 10 m/s²)",
+                options: [
+                    "1000 Watt",
+                    "500 Watt",
+                    "166,67 Watt",
+                    "250 Watt"
+                ],
+                correct: 2,
+                explanation: "W = mgh = 500 × 10 × 10 = 50.000 J. t = 5 × 60 = 300 s. P = W/t = 50.000/300 = 166,67 W"
+            },
+            {
+                question: "Dalam permainan 'Ski Lantai', tim yang memiliki daya paling besar adalah tim yang...",
+                options: [
+                    "Menggunakan gaya tarik paling besar",
+                    "Menempuh jarak paling jauh",
+                    "Menyelesaikan usaha yang sama dalam waktu paling singkat",
+                    "Memiliki massa pembalap paling ringan"
+                ],
+                correct: 2,
+                explanation: "Daya = Usaha/Waktu. Dengan usaha sama, waktu lebih singkat menghasilkan daya lebih besar."
+            },
+            {
+                question: "Sebuah derek mengangkat peti seberat 2000 N setinggi 15 meter dengan kecepatan konstan 0,5 m/s. Daya derek tersebut adalah...",
+                options: [
+                    "30.000 Watt",
+                    "1.000 Watt",
+                    "15.000 Watt",
+                    "60.000 Watt"
+                ],
+                correct: 1,
+                explanation: "P = F × v = 2000 × 0,5 = 1000 Watt. Rumus alternatif: P = W/t = (F×s)/(s/v) = F×v"
+            },
+            {
+                question: "Seorang atlet berlari menanjak dengan kemiringan 30° sejauh 100 meter dalam 20 detik. Jika massa atlet 60 kg, berapa daya yang dikeluarkan untuk melawan gravitasi? (g = 10 m/s², sin 30° = 0,5)",
+                options: [
+                    "1500 Watt",
+                    "3000 Watt",
+                    "750 Watt",
+                    "1000 Watt"
+                ],
+                correct: 0,
+                explanation: "Tinggi = 100 × sin 30° = 50 m. W = mgh = 60 × 10 × 50 = 30.000 J. P = 30.000/20 = 1500 W"
+            },
+            {
+                question: "Perhatikan grafik berikut: Dua mesin A dan B melakukan usaha yang sama. Mesin A membutuhkan waktu 10 detik, mesin B membutuhkan waktu 5 detik. Analisis yang BENAR adalah...",
+                options: [
+                    "Mesin B lebih efisien karena dayanya lebih besar",
+                    "Mesin A lebih baik karena bekerja lebih lama",
+                    "Kedua mesin sama baiknya karena usahanya sama",
+                    "Mesin B membutuhkan bahan bakar lebih sedikit"
+                ],
+                correct: 0,
+                explanation: "Daya B = 2 × Daya A. Mesin dengan daya lebih besar mampu menyelesaikan pekerjaan lebih cepat, menunjukkan efisiensi waktu yang lebih baik."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = [];
+
+        function renderQuiz() {
+            const container = document.getElementById('quizContainer');
+            const q = quizQuestions[currentQuestion];
+            
+            container.innerHTML = `
+                <div class="mb-6">
+                    <span class="text-cyan-400 font-semibold">Soal ${currentQuestion + 1} dari 10</span>
+                </div>
+                <div class="bg-slate-800/50 rounded-xl p-6 mb-6">
+                    <p class="text-white text-lg leading-relaxed">${q.question}</p>
+                </div>
+                <div class="space-y-3">
+                    ${q.options.map((opt, i) => `
+                        <div class="quiz-option glass-card rounded-xl p-4 border-2 border-transparent ${answered[currentQuestion] === i ? 'selected' : ''}" onclick="selectAnswer(${i})">
+                            <span class="text-cyan-400 font-bold mr-3">${String.fromCharCode(65 + i)}.</span>
+                            <span class="text-gray-200">${opt}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div id="feedback" class="mt-6 hidden"></div>
+                <div class="flex justify-between mt-8">
+                    <button onclick="prevQuestion()" class="px-6 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-all ${currentQuestion === 0 ? 'opacity-50 cursor-not-allowed' : ''}" ${currentQuestion === 0 ? 'disabled' : ''}>
+                        ← Sebelumnya
+                    </button>
+                    <button id="nextBtn" onclick="nextQuestion()" class="px-6 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-lg hover:from-blue-600 hover:to-cyan-600 transition-all">
+                        ${currentQuestion === 9 ? 'Selesai ✓' : 'Selanjutnya →'}
+                    </button>
+                </div>
+            `;
+            
+            updateProgress();
+        }
+
+        function selectAnswer(index) {
+            answered[currentQuestion] = index;
+            const q = quizQuestions[currentQuestion];
+            const isCorrect = index === q.correct;
+            
+            if (isCorrect) score = answered.filter((ans, i) => ans === quizQuestions[i].correct).length;
+            
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach((opt, i) => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+                if (i === q.correct) opt.classList.add('correct');
+                else if (i === index && !isCorrect) opt.classList.add('incorrect');
+            });
+            
+            const feedback = document.getElementById('feedback');
+            feedback.classList.remove('hidden');
+            feedback.innerHTML = `
+                <div class="p-4 rounded-xl ${isCorrect ? 'bg-green-500/20 border border-green-400/30' : 'bg-red-500/20 border border-red-400/30'}">
+                    <p class="font-semibold ${isCorrect ? 'text-green-400' : 'text-red-400'} mb-2">
+                        ${isCorrect ? '✓ Benar!' : '✗ Kurang tepat'}
+                    </p>
+                    <p class="text-gray-300 text-sm">${q.explanation}</p>
+                </div>
+            `;
+            
+            updateProgress();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < 9) {
+                currentQuestion++;
+                renderQuiz();
+            } else {
+                showResults();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuiz();
+            }
+        }
+
+        function updateProgress() {
+            const answeredCount = answered.filter(a => a !== undefined).length;
+            document.getElementById('quizProgress').textContent = `${answeredCount}/10`;
+            document.getElementById('progressBar').style.width = `${answeredCount * 10}%`;
+        }
+
+        function showResults() {
+            score = answered.filter((ans, i) => ans === quizQuestions[i].correct).length;
+            document.getElementById('quizContainer').classList.add('hidden');
+            document.getElementById('quizResults').classList.remove('hidden');
+            document.getElementById('finalScore').textContent = `${score}/10`;
+            
+            let message = '';
+            if (score >= 9) message = '🌟 Luar biasa! Kamu menguasai materi dengan sangat baik!';
+            else if (score >= 7) message = '👏 Bagus! Pemahaman kamu sudah baik.';
+            else if (score >= 5) message = '📚 Cukup baik, terus belajar ya!';
+            else message = '💪 Jangan menyerah, pelajari lagi materinya!';
+            
+            document.getElementById('scoreMessage').textContent = message;
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answered = [];
+            document.getElementById('quizContainer').classList.remove('hidden');
+            document.getElementById('quizResults').classList.add('hidden');
+            renderQuiz();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('intro');
+            renderQuiz();
+            updateSimulation();
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce40d32577ad515',t:'MTc3MTE1MDYwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

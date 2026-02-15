@@ -1,0 +1,1624 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Pembelajaran: Campuran dan Pemisahannya</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Quicksand:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    
+    .font-heading { font-family: 'Quicksand', sans-serif; }
+    .font-body { font-family: 'Nunito', sans-serif; }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0c4a6e 100%);
+    }
+    
+    .card-glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:hover, .nav-item.active {
+      background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+    }
+    
+    .content-card {
+      animation: fadeInUp 0.5s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .interactive-btn {
+      transition: all 0.3s ease;
+    }
+    
+    .interactive-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 20px rgba(6, 182, 212, 0.5);
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .quiz-option:hover {
+      transform: translateX(5px);
+      background: #e0f2fe;
+    }
+    
+    .quiz-option.selected {
+      background: #0891b2;
+      color: white;
+    }
+    
+    .quiz-option.correct {
+      background: #10b981;
+      color: white;
+    }
+    
+    .quiz-option.incorrect {
+      background: #ef4444;
+      color: white;
+    }
+    
+    .illustration-box {
+      background: linear-gradient(145deg, #f0f9ff 0%, #e0f2fe 100%);
+      border: 2px solid #0891b2;
+    }
+    
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(180deg); }
+    }
+    
+    .beaker {
+      position: relative;
+      width: 120px;
+      height: 150px;
+      border: 4px solid #0891b2;
+      border-top: none;
+      border-radius: 0 0 20px 20px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    
+    .liquid {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      transition: all 0.5s ease;
+    }
+    
+    .bubble {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: rise 2s ease-in infinite;
+    }
+    
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+    }
+    
+    .progress-ring {
+      transform: rotate(-90deg);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    .magnet-demo {
+      cursor: pointer;
+    }
+    
+    .iron-particle {
+      transition: all 0.5s ease;
+    }
+    
+    .iron-particle.attracted {
+      transform: translateX(60px);
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body">
+  <div id="app" class="h-full w-full gradient-bg overflow-auto"><!-- Header -->
+   <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-sm shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-teal-500 flex items-center justify-center">
+        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+        </svg>
+       </div>
+       <div>
+        <h1 id="main-title" class="font-heading text-xl md:text-2xl font-bold text-white">Campuran &amp; Pemisahannya</h1>
+        <p class="text-cyan-300 text-sm">Materi IPA Kelas 7</p>
+       </div>
+      </div>
+      <div class="hidden md:flex items-center gap-2"><span class="text-slate-400 text-sm">Progress:</span>
+       <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-cyan-400 to-teal-400 transition-all duration-500" style="width: 0%"></div>
+       </div><span id="progress-text" class="text-cyan-300 text-sm font-semibold">0%</span>
+      </div>
+     </div>
+    </div>
+   </header><!-- Navigation -->
+   <nav class="sticky top-20 z-40 bg-slate-800/90 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+     <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide"><button onclick="showSection(0)" class="nav-item active flex-shrink-0 px-4 py-2 rounded-lg text-white text-sm font-semibold" data-section="0"> 📚 Pengantar </button> <button onclick="showSection(1)" class="nav-item flex-shrink-0 px-4 py-2 rounded-lg text-slate-300 text-sm font-semibold" data-section="1"> 🧪 Jenis Campuran </button> <button onclick="showSection(2)" class="nav-item flex-shrink-0 px-4 py-2 rounded-lg text-slate-300 text-sm font-semibold" data-section="2"> 📊 Konsentrasi </button> <button onclick="showSection(3)" class="nav-item flex-shrink-0 px-4 py-2 rounded-lg text-slate-300 text-sm font-semibold" data-section="3"> 🔬 Pemisahan I </button> <button onclick="showSection(4)" class="nav-item flex-shrink-0 px-4 py-2 rounded-lg text-slate-300 text-sm font-semibold" data-section="4"> ⚗️ Pemisahan II </button> <button onclick="showSection(5)" class="nav-item flex-shrink-0 px-4 py-2 rounded-lg text-slate-300 text-sm font-semibold" data-section="5"> 🧫 Praktikum </button> <button onclick="showSection(6)" class="nav-item flex-shrink-0 px-4 py-2 rounded-lg text-slate-300 text-sm font-semibold" data-section="6"> ✍️ Kuis HOTS </button>
+     </div>
+    </div>
+   </nav><!-- Main Content -->
+   <main class="max-w-7xl mx-auto px-4 py-8"><!-- Section 0: Pengantar -->
+    <section id="section-0" class="content-card">
+     <div class="card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">📚</span>
+       <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-800">Apa itu Campuran?</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+       <div class="space-y-6">
+        <div class="bg-gradient-to-r from-cyan-50 to-teal-50 rounded-2xl p-6 border-l-4 border-cyan-500">
+         <h3 class="font-heading text-lg font-bold text-cyan-700 mb-3">📖 Definisi</h3>
+         <p class="text-slate-700 leading-relaxed"><strong>Campuran</strong> terdiri atas <span class="bg-yellow-200 px-1 rounded">dua atau lebih zat</span> yang bergabung <strong>tanpa membentuk zat baru</strong>. Zat-zat penyusunnya tetap mempertahankan sifat masing-masing.</p>
+        </div>
+        <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border-l-4 border-purple-500">
+         <h3 class="font-heading text-lg font-bold text-purple-700 mb-3">⚡ Perbedaan dengan Senyawa</h3>
+         <p class="text-slate-700 leading-relaxed">Meskipun secara fisik terlihat berbeda dari zat penyusunnya, campuran dapat <span class="bg-purple-200 px-1 rounded">dipisahkan kembali</span> menjadi zat-zat penyusunnya dengan metode yang tepat <strong>tanpa melalui perubahan kimia</strong>.</p>
+        </div>
+        <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 border-l-4 border-amber-500">
+         <h3 class="font-heading text-lg font-bold text-amber-700 mb-3">🔍 Sifat Campuran</h3>
+         <p class="text-slate-700 leading-relaxed">Campuran tetap membawa <span class="bg-amber-200 px-1 rounded">sifat-sifat dari zat penyusunnya</span>. Contohnya, larutan gula tetap memiliki sifat air dan sifat manis dari gula.</p>
+        </div>
+       </div>
+       <div class="space-y-6"><!-- Interactive Illustration -->
+        <div class="illustration-box rounded-2xl p-6">
+         <h4 class="font-heading text-lg font-bold text-cyan-700 mb-4 text-center">🎨 Ilustrasi Interaktif: Membuat Campuran</h4>
+         <div class="flex justify-center items-end gap-4 mb-4">
+          <div class="text-center">
+           <div class="w-16 h-20 bg-white border-2 border-slate-400 rounded-b-lg relative overflow-hidden">
+            <div class="absolute bottom-0 w-full h-12 bg-blue-300"></div>
+           </div>
+           <p class="text-sm mt-2 font-semibold">Air</p>
+          </div><span class="text-2xl mb-4">+</span>
+          <div class="text-center">
+           <div class="w-16 h-16 bg-white border-2 border-slate-400 rounded-lg flex items-center justify-center">
+            <div class="w-8 h-8 bg-amber-100 rounded transform rotate-45"></div>
+           </div>
+           <p class="text-sm mt-2 font-semibold">Gula</p>
+          </div><span class="text-2xl mb-4">=</span>
+          <div class="text-center">
+           <div id="mixture-demo" class="w-16 h-20 bg-white border-2 border-slate-400 rounded-b-lg relative overflow-hidden cursor-pointer" onclick="toggleMixture()">
+            <div id="mixture-liquid" class="absolute bottom-0 w-full h-12 bg-blue-200 transition-all duration-500"></div>
+            <div id="sugar-particles" class="absolute bottom-2 left-1/2 transform -translate-x-1/2 opacity-100 transition-all duration-500">
+             <div class="w-2 h-2 bg-amber-200 rounded-full absolute" style="left: -5px;"></div>
+             <div class="w-2 h-2 bg-amber-200 rounded-full absolute" style="left: 5px; top: 3px;"></div>
+             <div class="w-2 h-2 bg-amber-200 rounded-full absolute" style="left: 0; top: -3px;"></div>
+            </div>
+           </div>
+           <p class="text-sm mt-2 font-semibold">Larutan Gula</p>
+          </div>
+         </div>
+         <p class="text-center text-sm text-cyan-600 font-medium">👆 Klik gelas untuk mengaduk!</p>
+         <p id="mixture-status" class="text-center text-sm text-slate-600 mt-2 font-medium">Status: Gula belum larut sempurna</p>
+        </div><!-- Real-world Examples -->
+        <div class="bg-white rounded-2xl p-6 shadow-lg">
+         <h4 class="font-heading text-lg font-bold text-slate-800 mb-4">🌍 Contoh Campuran di Kehidupan Sehari-hari</h4>
+         <div class="grid grid-cols-2 gap-3">
+          <div class="flex items-center gap-2 bg-cyan-50 p-3 rounded-xl"><span class="text-2xl">☕</span> <span class="text-sm font-medium">Kopi Susu</span>
+          </div>
+          <div class="flex items-center gap-2 bg-orange-50 p-3 rounded-xl"><span class="text-2xl">🍹</span> <span class="text-sm font-medium">Jus Buah</span>
+          </div>
+          <div class="flex items-center gap-2 bg-blue-50 p-3 rounded-xl"><span class="text-2xl">🌊</span> <span class="text-sm font-medium">Air Laut</span>
+          </div>
+          <div class="flex items-center gap-2 bg-yellow-50 p-3 rounded-xl"><span class="text-2xl">🥗</span> <span class="text-sm font-medium">Salad Sayur</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="mt-8 flex justify-end"><button onclick="showSection(1)" class="interactive-btn bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2"> Lanjut: Jenis Campuran 
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg></button>
+      </div>
+     </div>
+    </section><!-- Section 1: Jenis Campuran -->
+    <section id="section-1" class="content-card hidden">
+     <div class="card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">🧪</span>
+       <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-800">Jenis-Jenis Campuran</h2>
+      </div>
+      <p class="text-slate-600 mb-8 text-lg">Berdasarkan sifat fisiknya, campuran dibedakan menjadi tiga jenis utama:</p><!-- Interactive Tabs -->
+      <div class="flex flex-wrap gap-2 mb-6"><button onclick="showMixtureType('larutan')" class="mixture-tab active bg-cyan-500 text-white px-5 py-2 rounded-full font-semibold transition-all" data-tab="larutan"> 💧 Larutan </button> <button onclick="showMixtureType('suspensi')" class="mixture-tab bg-slate-200 text-slate-700 px-5 py-2 rounded-full font-semibold transition-all" data-tab="suspensi"> 🪨 Suspensi </button> <button onclick="showMixtureType('koloid')" class="mixture-tab bg-slate-200 text-slate-700 px-5 py-2 rounded-full font-semibold transition-all" data-tab="koloid"> 🥛 Koloid </button>
+      </div><!-- Tab Contents -->
+      <div id="tab-larutan" class="tab-content active">
+       <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-2xl p-6">
+         <h3 class="font-heading text-xl font-bold text-cyan-700 mb-4">💧 Larutan (Homogen)</h3>
+         <p class="text-slate-700 mb-4 leading-relaxed">Larutan terbentuk dari zat terlarut yang <strong>menyatu sempurna</strong> dengan zat pelarutnya. Partikel-partikelnya tersebar merata dan tidak dapat dilihat mata telanjang.</p>
+         <div class="bg-white rounded-xl p-4 mb-4">
+          <p class="text-sm font-semibold text-cyan-600 mb-2">📐 Rumus Massa Larutan:</p>
+          <p class="text-center text-lg font-bold text-slate-800 bg-cyan-100 py-2 rounded-lg">Massa Larutan = Massa Zat Terlarut + Massa Pelarut</p>
+         </div>
+         <div class="space-y-2">
+          <p class="font-semibold text-slate-700">✨ Ciri-ciri Larutan:</p>
+          <ul class="list-disc list-inside text-slate-600 space-y-1 ml-2">
+           <li>Jernih/transparan</li>
+           <li>Homogen (satu fase)</li>
+           <li>Tidak mengendap</li>
+           <li>Partikel &lt; 1 nm</li>
+          </ul>
+         </div>
+        </div>
+        <div class="space-y-4"><!-- Interactive Beaker -->
+         <div class="illustration-box rounded-2xl p-6">
+          <h4 class="font-heading font-bold text-cyan-700 mb-4 text-center">Simulasi Larutan Gula</h4>
+          <div class="beaker">
+           <div class="liquid bg-gradient-to-t from-blue-300 to-blue-200" style="height: 70%;">
+            <div class="bubble" style="width: 6px; height: 6px; left: 20%; animation-delay: 0s;"></div>
+            <div class="bubble" style="width: 4px; height: 4px; left: 50%; animation-delay: 0.5s;"></div>
+            <div class="bubble" style="width: 5px; height: 5px; left: 80%; animation-delay: 1s;"></div>
+           </div>
+          </div>
+          <p class="text-center text-sm text-slate-600 mt-4">Partikel gula tersebar merata → <strong>Homogen</strong></p>
+         </div>
+         <div class="bg-white rounded-xl p-4 shadow">
+          <p class="font-semibold text-slate-700 mb-3">🌟 Contoh Larutan:</p>
+          <div class="flex flex-wrap gap-2"><span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-sm">Air gula</span> <span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-sm">Air garam</span> <span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-sm">Sirup</span> <span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-sm">Cuka</span> <span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-sm">Alkohol 70%</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div id="tab-suspensi" class="tab-content">
+       <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6">
+         <h3 class="font-heading text-xl font-bold text-amber-700 mb-4">🪨 Suspensi (Heterogen Kasar)</h3>
+         <p class="text-slate-700 mb-4 leading-relaxed">Suspensi adalah campuran yang partikel zat terlarutnya <strong>lebih besar</strong> sehingga tidak menyatu sempurna dan akan <strong>membentuk endapan</strong> jika didiamkan.</p>
+         <div class="space-y-2">
+          <p class="font-semibold text-slate-700">✨ Ciri-ciri Suspensi:</p>
+          <ul class="list-disc list-inside text-slate-600 space-y-1 ml-2">
+           <li>Keruh/tidak jernih</li>
+           <li>Heterogen (dua fase)</li>
+           <li>Mengendap jika didiamkan</li>
+           <li>Partikel &gt; 100 nm</li>
+           <li>Dapat disaring</li>
+          </ul>
+         </div>
+        </div>
+        <div class="space-y-4">
+         <div class="illustration-box rounded-2xl p-6">
+          <h4 class="font-heading font-bold text-amber-700 mb-4 text-center">Simulasi Suspensi</h4>
+          <div id="suspension-demo" class="beaker cursor-pointer" onclick="shakeSuspension()">
+           <div class="liquid bg-gradient-to-t from-amber-200 to-amber-100" style="height: 70%;">
+            <div id="sediment" class="absolute bottom-0 w-full h-8 bg-gradient-to-t from-amber-600 to-amber-400 transition-all duration-1000"></div>
+           </div>
+          </div>
+          <p class="text-center text-sm text-slate-600 mt-4">👆 Klik untuk mengaduk! Lihat endapan terbentuk kembali</p>
+          <p id="suspension-status" class="text-center text-sm font-semibold text-amber-600 mt-2">Status: Pasir mengendap di dasar</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 shadow">
+          <p class="font-semibold text-slate-700 mb-3">🌟 Contoh Suspensi:</p>
+          <div class="flex flex-wrap gap-2"><span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-sm">Air + Pasir</span> <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-sm">Air + Tanah</span> <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-sm">Air sungai keruh</span> <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-sm">Jus dengan ampas</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div id="tab-koloid" class="tab-content">
+       <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6">
+         <h3 class="font-heading text-xl font-bold text-purple-700 mb-4">🥛 Koloid (Heterogen Halus)</h3>
+         <p class="text-slate-700 mb-4 leading-relaxed">Koloid adalah jenis campuran di antara larutan dan suspensi. Koloid memiliki kemampuan <strong>menahan zat terlarut lebih lama</strong> daripada suspensi karena ukuran partikelnya lebih kecil.</p>
+         <div class="space-y-2">
+          <p class="font-semibold text-slate-700">✨ Ciri-ciri Koloid:</p>
+          <ul class="list-disc list-inside text-slate-600 space-y-1 ml-2">
+           <li>Tampak homogen tapi sebenarnya heterogen</li>
+           <li>Stabil, tidak mudah mengendap</li>
+           <li>Partikel 1-100 nm</li>
+           <li>Tidak dapat disaring biasa</li>
+           <li>Menghamburkan cahaya (Efek Tyndall)</li>
+          </ul>
+         </div>
+        </div>
+        <div class="space-y-4">
+         <div class="illustration-box rounded-2xl p-6">
+          <h4 class="font-heading font-bold text-purple-700 mb-4 text-center">Efek Tyndall pada Koloid</h4>
+          <div class="relative">
+           <div class="beaker">
+            <div class="liquid bg-gradient-to-t from-purple-200 to-purple-100 opacity-80" style="height: 70%;"></div>
+           </div><!-- Light beam -->
+           <div id="light-beam" class="absolute top-4 -left-4 w-32 h-2 bg-gradient-to-r from-yellow-400 to-transparent transform rotate-12 opacity-0 transition-opacity duration-500"></div>
+           <div id="scattered-light" class="absolute top-6 left-8 w-20 h-16 bg-yellow-200 opacity-0 rounded-full blur-md transition-opacity duration-500"></div>
+          </div><button onclick="toggleTyndall()" class="mt-4 w-full bg-purple-500 text-white py-2 rounded-lg font-semibold hover:bg-purple-600 transition-colors"> 🔦 Nyalakan/Matikan Senter </button>
+          <p id="tyndall-status" class="text-center text-sm text-slate-600 mt-2">Cahaya akan terlihat terhambar pada koloid</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 shadow">
+          <p class="font-semibold text-slate-700 mb-3">🌟 Contoh Koloid:</p>
+          <div class="flex flex-wrap gap-2"><span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">Susu</span> <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">Mayones</span> <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">Kabut</span> <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">Asap</span> <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">Cat</span> <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">Agar-agar</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Comparison Table -->
+      <div class="mt-8 bg-white rounded-2xl p-6 shadow-lg overflow-x-auto">
+       <h3 class="font-heading text-xl font-bold text-slate-800 mb-4">📊 Perbandingan Jenis Campuran</h3>
+       <table class="w-full min-w-[600px]">
+        <thead>
+         <tr class="bg-gradient-to-r from-cyan-500 to-teal-500 text-white">
+          <th class="p-3 text-left rounded-tl-lg">Aspek</th>
+          <th class="p-3 text-center">Larutan</th>
+          <th class="p-3 text-center">Koloid</th>
+          <th class="p-3 text-center rounded-tr-lg">Suspensi</th>
+         </tr>
+        </thead>
+        <tbody class="text-slate-700">
+         <tr class="bg-cyan-50">
+          <td class="p-3 font-semibold">Ukuran Partikel</td>
+          <td class="p-3 text-center">&lt; 1 nm</td>
+          <td class="p-3 text-center">1 - 100 nm</td>
+          <td class="p-3 text-center">&gt; 100 nm</td>
+         </tr>
+         <tr>
+          <td class="p-3 font-semibold">Kestabilan</td>
+          <td class="p-3 text-center">Sangat Stabil</td>
+          <td class="p-3 text-center">Stabil</td>
+          <td class="p-3 text-center">Tidak Stabil</td>
+         </tr>
+         <tr class="bg-cyan-50">
+          <td class="p-3 font-semibold">Penampilan</td>
+          <td class="p-3 text-center">Jernih</td>
+          <td class="p-3 text-center">Keruh</td>
+          <td class="p-3 text-center">Sangat Keruh</td>
+         </tr>
+         <tr>
+          <td class="p-3 font-semibold">Penyaringan</td>
+          <td class="p-3 text-center">Tidak tersaring</td>
+          <td class="p-3 text-center">Tersaring ultrafilter</td>
+          <td class="p-3 text-center">Tersaring biasa</td>
+         </tr>
+         <tr class="bg-cyan-50">
+          <td class="p-3 font-semibold">Efek Tyndall</td>
+          <td class="p-3 text-center">❌ Tidak</td>
+          <td class="p-3 text-center">✅ Ya</td>
+          <td class="p-3 text-center">✅ Ya</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+      <div class="mt-8 flex justify-between"><button onclick="showSection(0)" class="interactive-btn bg-slate-500 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg> Kembali </button> <button onclick="showSection(2)" class="interactive-btn bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2"> Lanjut: Konsentrasi 
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg></button>
+      </div>
+     </div>
+    </section><!-- Section 2: Konsentrasi Larutan -->
+    <section id="section-2" class="content-card hidden">
+     <div class="card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">📊</span>
+       <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-800">Memahami Konsentrasi Larutan</h2>
+      </div>
+      <p class="text-slate-600 mb-8 text-lg">Larutan memiliki tingkat konsentrasi yang berbeda-beda tergantung jumlah zat terlarut di dalamnya.</p>
+      <div class="grid md:grid-cols-3 gap-6 mb-8"><!-- Larutan Encer -->
+       <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 border-2 border-blue-200 hover:border-blue-400 transition-colors">
+        <div class="text-center mb-4">
+         <div class="inline-block p-4 bg-blue-100 rounded-full mb-3">
+          <svg class="w-12 h-12 text-blue-500" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" opacity="0.3" />
+          </svg>
+         </div>
+         <h3 class="font-heading text-xl font-bold text-blue-700">Larutan Encer</h3>
+        </div>
+        <div class="beaker mx-auto" style="width: 80px; height: 100px;">
+         <div class="liquid bg-gradient-to-t from-blue-200 to-blue-100" style="height: 70%;">
+          <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2">
+           <div class="w-1 h-1 bg-blue-400 rounded-full absolute" style="left: -8px;"></div>
+           <div class="w-1 h-1 bg-blue-400 rounded-full absolute" style="left: 8px;"></div>
+          </div>
+         </div>
+        </div>
+        <p class="text-slate-600 text-center mt-4 text-sm">Jumlah zat terlarut <strong>sedikit</strong></p>
+        <div class="mt-3 bg-white rounded-lg p-3 text-center"><span class="text-blue-600 font-semibold">Contoh: Teh tawar</span>
+        </div>
+       </div><!-- Larutan Pekat -->
+       <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border-2 border-amber-200 hover:border-amber-400 transition-colors">
+        <div class="text-center mb-4">
+         <div class="inline-block p-4 bg-amber-100 rounded-full mb-3">
+          <svg class="w-12 h-12 text-amber-500" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
+          </svg>
+         </div>
+         <h3 class="font-heading text-xl font-bold text-amber-700">Larutan Pekat</h3>
+        </div>
+        <div class="beaker mx-auto" style="width: 80px; height: 100px;">
+         <div class="liquid bg-gradient-to-t from-amber-400 to-amber-200" style="height: 70%;">
+          <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2">
+           <div class="w-1.5 h-1.5 bg-amber-600 rounded-full absolute" style="left: -10px;"></div>
+           <div class="w-1.5 h-1.5 bg-amber-600 rounded-full absolute" style="left: 0;"></div>
+           <div class="w-1.5 h-1.5 bg-amber-600 rounded-full absolute" style="left: 10px;"></div>
+           <div class="w-1.5 h-1.5 bg-amber-600 rounded-full absolute" style="left: -5px; top: -8px;"></div>
+           <div class="w-1.5 h-1.5 bg-amber-600 rounded-full absolute" style="left: 5px; top: -8px;"></div>
+          </div>
+         </div>
+        </div>
+        <p class="text-slate-600 text-center mt-4 text-sm">Jumlah zat terlarut <strong>banyak</strong></p>
+        <div class="mt-3 bg-white rounded-lg p-3 text-center"><span class="text-amber-600 font-semibold">Contoh: Sirup kental</span>
+        </div>
+       </div><!-- Larutan Jenuh -->
+       <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 border-2 border-purple-200 hover:border-purple-400 transition-colors">
+        <div class="text-center mb-4">
+         <div class="inline-block p-4 bg-purple-100 rounded-full mb-3">
+          <svg class="w-12 h-12 text-purple-500" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" /> <path d="M12 8l-4 4h3v4h2v-4h3z" fill="white" />
+          </svg>
+         </div>
+         <h3 class="font-heading text-xl font-bold text-purple-700">Larutan Jenuh</h3>
+        </div>
+        <div class="beaker mx-auto" style="width: 80px; height: 100px;">
+         <div class="liquid bg-gradient-to-t from-purple-500 to-purple-300" style="height: 70%;">
+          <div class="absolute bottom-0 w-full h-3 bg-purple-700"></div>
+         </div>
+        </div>
+        <p class="text-slate-600 text-center mt-4 text-sm">Pelarut <strong>tidak mampu</strong> melarutkan lagi</p>
+        <div class="mt-3 bg-white rounded-lg p-3 text-center"><span class="text-purple-600 font-semibold">Contoh: Karamel</span>
+        </div>
+       </div>
+      </div><!-- Interactive Concentration Demo -->
+      <div class="bg-white rounded-2xl p-6 shadow-lg">
+       <h3 class="font-heading text-xl font-bold text-slate-800 mb-4 text-center">🧪 Simulasi Interaktif: Ubah Konsentrasi</h3>
+       <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+        <div class="text-center">
+         <div id="concentration-beaker" class="beaker mx-auto" style="width: 120px; height: 150px;">
+          <div id="concentration-liquid" class="liquid bg-gradient-to-t from-cyan-300 to-cyan-100 transition-all duration-500" style="height: 70%;">
+          </div>
+         </div>
+         <p id="concentration-label" class="mt-4 text-lg font-bold text-cyan-600">Larutan Encer</p>
+        </div>
+        <div class="space-y-4 w-full md:w-64"><label class="block"> <span class="text-slate-700 font-semibold">Jumlah Zat Terlarut:</span> <input type="range" id="concentration-slider" min="0" max="100" value="20" class="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer mt-2" oninput="updateConcentration(this.value)">
+          <div class="flex justify-between text-sm text-slate-500 mt-1"><span>Sedikit</span> <span>Banyak</span>
+          </div></label>
+         <div id="concentration-info" class="bg-cyan-50 rounded-xl p-4 text-center">
+          <p class="text-slate-600">Konsentrasi: <span id="concentration-value" class="font-bold text-cyan-600">20%</span></p>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="mt-8 flex justify-between"><button onclick="showSection(1)" class="interactive-btn bg-slate-500 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg> Kembali </button> <button onclick="showSection(3)" class="interactive-btn bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2"> Lanjut: Pemisahan I 
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg></button>
+      </div>
+     </div>
+    </section><!-- Section 3: Pemisahan Campuran I -->
+    <section id="section-3" class="content-card hidden">
+     <div class="card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">🔬</span>
+       <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-800">Pemisahan Campuran (Partikel Tidak Larut)</h2>
+      </div>
+      <p class="text-slate-600 mb-8 text-lg">Metode ini digunakan untuk memisahkan suspensi atau koloid karena partikelnya yang besar.</p>
+      <div class="grid md:grid-cols-2 gap-6"><!-- Dekantasi -->
+       <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-200">
+        <div class="flex items-center gap-3 mb-4"><span class="text-3xl">🫗</span>
+         <h3 class="font-heading text-xl font-bold text-blue-700">Dekantasi</h3>
+        </div>
+        <p class="text-slate-700 mb-4">Memisahkan sedimen/endapan dengan <strong>menuangkan cairan</strong> secara hati-hati ke wadah lain, meninggalkan endapan di dasar.</p><!-- Dekantasi Animation -->
+        <div class="illustration-box rounded-xl p-4 relative h-40">
+         <div id="decant-container1" class="absolute left-4 bottom-4 w-16 h-24 border-2 border-blue-500 rounded-b-lg bg-white overflow-hidden transition-transform duration-1000" style="transform-origin: bottom right;">
+          <div class="absolute bottom-0 w-full h-16 bg-blue-200"></div>
+          <div class="absolute bottom-0 w-full h-4 bg-amber-400"></div>
+         </div>
+         <div class="absolute right-4 bottom-4 w-16 h-24 border-2 border-blue-500 rounded-b-lg bg-white overflow-hidden">
+          <div id="decant-liquid2" class="absolute bottom-0 w-full h-0 bg-blue-200 transition-all duration-1000"></div>
+         </div><button onclick="animateDecant()" class="absolute top-2 right-2 bg-blue-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-blue-600"> ▶️ Jalankan </button>
+        </div>
+        <div class="mt-3 flex flex-wrap gap-2"><span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-sm">Air &amp; pasir</span> <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-sm">Air cucian beras</span>
+        </div>
+       </div><!-- Penyaringan -->
+       <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-200">
+        <div class="flex items-center gap-3 mb-4"><span class="text-3xl">🧫</span>
+         <h3 class="font-heading text-xl font-bold text-green-700">Pengayakan &amp; Penyaringan</h3>
+        </div>
+        <p class="text-slate-700 mb-4">Memisahkan partikel berdasarkan <strong>perbedaan ukuran</strong> menggunakan ayakan atau kertas saring.</p><!-- Filter Animation -->
+        <div class="illustration-box rounded-xl p-4 relative h-40">
+         <svg viewbox="0 0 150 120" class="w-full h-full"><!-- Funnel --> <polygon points="45,20 105,20 85,60 65,60" fill="#e5e7eb" stroke="#6b7280" stroke-width="2" /> <!-- Filter paper --> <polygon points="50,25 100,25 82,55 68,55" fill="#fef3c7" stroke="#d97706" stroke-width="1" /> <!-- Glass below --> <rect x="60" y="65" width="30" height="45" fill="none" stroke="#6b7280" stroke-width="2" rx="2" /> <!-- Particles on filter --> <g id="filter-particles">
+           <circle cx="65" cy="35" r="3" fill="#78350f" />
+           <circle cx="75" cy="32" r="2" fill="#78350f" />
+           <circle cx="85" cy="38" r="3" fill="#78350f" />
+           <circle cx="70" cy="42" r="2" fill="#78350f" />
+           <circle cx="80" cy="45" r="2" fill="#78350f" />
+          </g> <!-- Filtered liquid --> <rect id="filtered-liquid" x="62" y="100" width="26" height="0" fill="#bfdbfe" class="transition-all duration-1000" /> <!-- Drip --> <circle id="filter-drip" cx="75" cy="60" r="2" fill="#60a5fa" class="opacity-0" />
+         </svg><button onclick="animateFilter()" class="absolute top-2 right-2 bg-green-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-green-600"> ▶️ Jalankan </button>
+        </div>
+        <div class="mt-3 flex flex-wrap gap-2"><span class="bg-green-100 text-green-700 px-2 py-1 rounded text-sm">Kopi tubruk</span> <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-sm">Santan kelapa</span>
+        </div>
+       </div><!-- Sentrifugasi -->
+       <div class="bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl p-6 border border-purple-200">
+        <div class="flex items-center gap-3 mb-4"><span class="text-3xl">🌀</span>
+         <h3 class="font-heading text-xl font-bold text-purple-700">Sentrifugasi</h3>
+        </div>
+        <p class="text-slate-700 mb-4">Menggunakan <strong>gerakan putaran cepat</strong> untuk memisahkan partikel berdasarkan massa jenis.</p><!-- Centrifuge Animation -->
+        <div class="illustration-box rounded-xl p-4 relative h-40 flex items-center justify-center">
+         <div id="centrifuge" class="relative w-24 h-24">
+          <div class="absolute inset-0 border-4 border-purple-400 rounded-full"></div>
+          <div id="centrifuge-arm" class="absolute inset-0 flex items-center justify-center transition-transform duration-100">
+           <div class="w-20 h-2 bg-purple-500 rounded-full relative">
+            <div class="absolute -left-1 top-1/2 transform -translate-y-1/2 w-4 h-6 bg-purple-300 rounded border border-purple-500">
+             <div id="tube1-sediment" class="absolute bottom-0 w-full h-1 bg-red-400 transition-all duration-500"></div>
+            </div>
+            <div class="absolute -right-1 top-1/2 transform -translate-y-1/2 w-4 h-6 bg-purple-300 rounded border border-purple-500">
+             <div id="tube2-sediment" class="absolute bottom-0 w-full h-1 bg-red-400 transition-all duration-500"></div>
+            </div>
+           </div>
+          </div>
+         </div><button onclick="animateCentrifuge()" class="absolute top-2 right-2 bg-purple-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-purple-600"> ▶️ Putar </button>
+        </div>
+        <div class="mt-3 flex flex-wrap gap-2"><span class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-sm">Pemisahan darah</span> <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-sm">Mesin cuci</span>
+        </div>
+       </div><!-- Pemisahan Magnetis -->
+       <div class="bg-gradient-to-br from-red-50 to-rose-50 rounded-2xl p-6 border border-red-200">
+        <div class="flex items-center gap-3 mb-4"><span class="text-3xl">🧲</span>
+         <h3 class="font-heading text-xl font-bold text-red-700">Pemisahan Magnetis</h3>
+        </div>
+        <p class="text-slate-700 mb-4">Menggunakan <strong>magnet</strong> untuk menarik benda berbahan besi atau baja dari bahan non-magnet.</p><!-- Magnet Animation -->
+        <div class="illustration-box rounded-xl p-4 relative h-40">
+         <div class="absolute bottom-4 left-4 right-4 h-8 bg-amber-200 rounded flex items-center justify-around px-4">
+          <div id="iron1" class="iron-particle w-3 h-3 bg-slate-600 rounded-full transition-all duration-500"></div>
+          <div class="w-2 h-2 bg-amber-400 rounded-full"></div>
+          <div id="iron2" class="iron-particle w-3 h-3 bg-slate-600 rounded-full transition-all duration-500"></div>
+          <div class="w-2 h-2 bg-amber-400 rounded-full"></div>
+          <div id="iron3" class="iron-particle w-3 h-3 bg-slate-600 rounded-full transition-all duration-500"></div>
+         </div>
+         <div id="magnet" class="absolute top-4 right-8 cursor-pointer transition-all duration-500" onclick="animateMagnet()">
+          <div class="w-16 h-8 bg-gradient-to-r from-red-500 to-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-xs"><span class="mr-2">N</span> <span>S</span>
+          </div>
+          <p class="text-xs text-center mt-1 text-slate-600">Klik magnet!</p>
+         </div>
+         <div id="attracted-particles" class="absolute top-6 right-10 space-y-1 opacity-0 transition-opacity duration-500">
+          <div class="w-3 h-3 bg-slate-600 rounded-full"></div>
+          <div class="w-3 h-3 bg-slate-600 rounded-full"></div>
+          <div class="w-3 h-3 bg-slate-600 rounded-full"></div>
+         </div>
+        </div>
+        <div class="mt-3 flex flex-wrap gap-2"><span class="bg-red-100 text-red-700 px-2 py-1 rounded text-sm">Pasir &amp; besi</span> <span class="bg-red-100 text-red-700 px-2 py-1 rounded text-sm">Daur ulang logam</span>
+        </div>
+       </div>
+      </div>
+      <div class="mt-8 flex justify-between"><button onclick="showSection(2)" class="interactive-btn bg-slate-500 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg> Kembali </button> <button onclick="showSection(4)" class="interactive-btn bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2"> Lanjut: Pemisahan II 
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg></button>
+      </div>
+     </div>
+    </section><!-- Section 4: Pemisahan Campuran II -->
+    <section id="section-4" class="content-card hidden">
+     <div class="card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">⚗️</span>
+       <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-800">Pemisahan Campuran (Partikel Larut)</h2>
+      </div>
+      <p class="text-slate-600 mb-8 text-lg">Metode ini digunakan untuk memisahkan zat yang sudah terlarut secara sempurna.</p>
+      <div class="space-y-6"><!-- Evaporasi & Kristalisasi -->
+       <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-200">
+        <div class="flex items-center gap-3 mb-4"><span class="text-3xl">🔥</span>
+         <h3 class="font-heading text-xl font-bold text-amber-700">Evaporasi &amp; Kristalisasi</h3>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+         <div>
+          <p class="text-slate-700 mb-4">Penguapan pelarut melalui <strong>pemanasan</strong> hingga menyisakan kristal murni (<em>residu</em>). Proses ini banyak digunakan dalam industri garam.</p>
+          <div class="bg-white rounded-xl p-4 mb-4">
+           <p class="font-semibold text-amber-700 mb-2">📝 Langkah-langkah:</p>
+           <ol class="list-decimal list-inside text-slate-600 space-y-1 text-sm">
+            <li>Panaskan larutan dalam wadah terbuka</li>
+            <li>Pelarut menguap ke udara</li>
+            <li>Zat terlarut tertinggal sebagai kristal</li>
+            <li>Kristal murni terbentuk (residu)</li>
+           </ol>
+          </div>
+          <div class="flex flex-wrap gap-2"><span class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-sm">Pembuatan garam</span> <span class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-sm">Gula kristal</span>
+          </div>
+         </div>
+         <div class="illustration-box rounded-xl p-4 relative">
+          <svg viewbox="0 0 200 150" class="w-full h-full"><!-- Heat source --> <rect x="50" y="120" width="100" height="20" fill="#ef4444" rx="5" /> <g id="flames">
+            <path d="M70 120 Q75 100 80 120" fill="#fbbf24" class="animate-pulse" />
+            <path d="M90 120 Q95 95 100 120" fill="#f97316" class="animate-pulse" style="animation-delay: 0.2s" />
+            <path d="M110 120 Q115 100 120 120" fill="#fbbf24" class="animate-pulse" style="animation-delay: 0.4s" />
+            <path d="M130 120 Q135 105 140 120" fill="#f97316" class="animate-pulse" style="animation-delay: 0.6s" />
+           </g> <!-- Pan --> <ellipse cx="100" cy="100" rx="60" ry="15" fill="#94a3b8" /> <rect x="40" y="85" width="120" height="15" fill="#94a3b8" /> <!-- Liquid --> <ellipse id="evap-liquid" cx="100" cy="88" rx="55" ry="10" fill="#bfdbfe" class="transition-all duration-1000" /> <!-- Steam --> <g id="steam" class="opacity-0 transition-opacity duration-500">
+            <path d="M70 70 Q75 50 80 70" fill="none" stroke="#cbd5e1" stroke-width="2" class="animate-pulse" />
+            <path d="M100 65 Q105 40 110 65" fill="none" stroke="#cbd5e1" stroke-width="2" class="animate-pulse" style="animation-delay: 0.3s" />
+            <path d="M125 70 Q130 45 135 70" fill="none" stroke="#cbd5e1" stroke-width="2" class="animate-pulse" style="animation-delay: 0.6s" />
+           </g> <!-- Crystals --> <g id="crystals" class="opacity-0 transition-opacity duration-1000">
+            <rect x="75" y="82" width="6" height="6" fill="#fef3c7" stroke="#d97706" transform="rotate(45 78 85)" />
+            <rect x="95" y="80" width="8" height="8" fill="#fef3c7" stroke="#d97706" transform="rotate(45 99 84)" />
+            <rect x="115" y="82" width="5" height="5" fill="#fef3c7" stroke="#d97706" transform="rotate(45 117 84)" />
+            <rect x="85" y="78" width="4" height="4" fill="#fef3c7" stroke="#d97706" transform="rotate(45 87 80)" />
+            <rect x="108" y="79" width="6" height="6" fill="#fef3c7" stroke="#d97706" transform="rotate(45 111 82)" />
+           </g>
+          </svg><button onclick="animateEvaporation()" class="absolute top-2 right-2 bg-amber-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-amber-600"> ▶️ Panaskan </button>
+         </div>
+        </div>
+       </div><!-- Distilasi -->
+       <div class="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-2xl p-6 border border-cyan-200">
+        <div class="flex items-center gap-3 mb-4"><span class="text-3xl">⚗️</span>
+         <h3 class="font-heading text-xl font-bold text-cyan-700">Distilasi (Penyulingan)</h3>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+         <div>
+          <p class="text-slate-700 mb-4">Proses <strong>penguapan</strong> yang diikuti dengan <strong>pendinginan kembali</strong> uap tersebut (<em>kondensasi</em>) untuk mendapatkan cairan murni yang disebut <em>distilat</em>.</p>
+          <div class="bg-white rounded-xl p-4 mb-4">
+           <p class="font-semibold text-cyan-700 mb-2">📝 Proses Distilasi:</p>
+           <ol class="list-decimal list-inside text-slate-600 space-y-1 text-sm">
+            <li>Larutan dipanaskan hingga mendidih</li>
+            <li>Uap naik ke kondensor</li>
+            <li>Uap didinginkan menjadi cairan (kondensasi)</li>
+            <li>Cairan murni (distilat) ditampung</li>
+           </ol>
+          </div>
+          <div class="flex flex-wrap gap-2"><span class="bg-cyan-100 text-cyan-700 px-2 py-1 rounded text-sm">Air murni (aquades)</span> <span class="bg-cyan-100 text-cyan-700 px-2 py-1 rounded text-sm">Minyak atsiri</span> <span class="bg-cyan-100 text-cyan-700 px-2 py-1 rounded text-sm">Penyulingan minyak</span>
+          </div>
+         </div>
+         <div class="illustration-box rounded-xl p-4">
+          <svg viewbox="0 0 250 150" class="w-full h-full"><!-- Flask --> <path d="M30 130 L30 80 Q30 60 50 60 L50 40 L70 40 L70 60 Q90 60 90 80 L90 130 Z" fill="#e0f2fe" stroke="#0891b2" stroke-width="2" /> <ellipse cx="60" cy="100" rx="25" ry="8" fill="#60a5fa" /> <!-- Heat --> <rect x="25" y="135" width="70" height="10" fill="#ef4444" rx="2" /> <!-- Condenser tube --> <path d="M75 50 Q100 50 120 30 L180 30" fill="none" stroke="#0891b2" stroke-width="4" /> <path d="M75 50 Q100 50 120 30 L180 30" fill="none" stroke="#bfdbfe" stroke-width="2" /> <!-- Cooling coils --> <rect x="130" y="15" width="40" height="30" fill="none" stroke="#06b6d4" stroke-width="2" rx="3" /> <text x="150" y="35" font-size="8" fill="#0891b2" text-anchor="middle">
+            Kondensor
+           </text> <!-- Collection flask --> <path d="M190 30 L190 50 Q190 60 200 70 L200 110 Q200 120 210 120 L230 120 Q240 120 240 110 L240 70 Q240 60 230 50 L230 30" fill="#e0f2fe" stroke="#0891b2" stroke-width="2" /> <!-- Distillate --> <ellipse id="distillate" cx="220" cy="100" rx="15" ry="5" fill="#60a5fa" class="opacity-0 transition-opacity duration-1000" /> <!-- Steam animation --> <g id="distill-steam" class="opacity-0">
+            <circle cx="60" cy="70" r="3" fill="#93c5fd" class="animate-ping" />
+            <circle cx="80" cy="45" r="2" fill="#93c5fd" class="animate-ping" style="animation-delay: 0.2s" />
+            <circle cx="110" cy="35" r="2" fill="#93c5fd" class="animate-ping" style="animation-delay: 0.4s" />
+           </g> <!-- Labels --> <text x="60" y="145" font-size="7" fill="#64748b" text-anchor="middle">
+            Labu didih
+           </text> <text x="220" y="135" font-size="7" fill="#64748b" text-anchor="middle">
+            Distilat
+           </text>
+          </svg><button onclick="animateDistillation()" class="absolute top-2 right-2 bg-cyan-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-cyan-600"> ▶️ Jalankan </button>
+         </div>
+        </div>
+       </div><!-- Kromatografi -->
+       <div class="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-6 border border-pink-200">
+        <div class="flex items-center gap-3 mb-4"><span class="text-3xl">🎨</span>
+         <h3 class="font-heading text-xl font-bold text-pink-700">Kromatografi</h3>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+         <div>
+          <p class="text-slate-700 mb-4">Teknik untuk <strong>memisahkan berbagai warna</strong> pada tinta atau pewarna makanan menggunakan media kertas saring dan pelarut.</p>
+          <div class="bg-white rounded-xl p-4 mb-4">
+           <p class="font-semibold text-pink-700 mb-2">📝 Prinsip Kerja:</p>
+           <ul class="list-disc list-inside text-slate-600 space-y-1 text-sm">
+            <li>Zat warna memiliki kelarutan berbeda</li>
+            <li>Pelarut membawa zat warna naik</li>
+            <li>Warna terpisah berdasarkan kelarutan</li>
+            <li>Warna paling larut bergerak paling jauh</li>
+           </ul>
+          </div>
+          <div class="flex flex-wrap gap-2"><span class="bg-pink-100 text-pink-700 px-2 py-1 rounded text-sm">Analisis pewarna</span> <span class="bg-pink-100 text-pink-700 px-2 py-1 rounded text-sm">Pemisahan tinta</span>
+          </div>
+         </div>
+         <div class="illustration-box rounded-xl p-4 relative">
+          <svg viewbox="0 0 150 150" class="w-full h-full"><!-- Glass container --> <rect x="30" y="20" width="90" height="120" fill="none" stroke="#6b7280" stroke-width="2" rx="5" /> <!-- Solvent --> <rect x="32" y="120" width="86" height="18" fill="#bfdbfe" /> <!-- Filter paper --> <rect id="chromo-paper" x="70" y="25" width="10" height="110" fill="#fef3c7" stroke="#d97706" /> <!-- Initial spot --> <circle id="chromo-spot" cx="75" cy="115" r="4" fill="#1f2937" /> <!-- Separated colors (hidden initially) --> <g id="chromo-colors" class="opacity-0 transition-opacity duration-1000">
+            <ellipse cx="75" cy="105" rx="4" ry="2" fill="#ef4444" />
+            <ellipse cx="75" cy="90" rx="4" ry="2" fill="#f97316" />
+            <ellipse cx="75" cy="75" rx="4" ry="2" fill="#eab308" />
+            <ellipse cx="75" cy="60" rx="4" ry="2" fill="#22c55e" />
+            <ellipse cx="75" cy="45" rx="4" ry="2" fill="#3b82f6" />
+           </g> <!-- Solvent front --> <line id="solvent-front" x1="65" y1="118" x2="85" y2="118" stroke="#60a5fa" stroke-width="2" stroke-dasharray="4" class="transition-all duration-2000" />
+          </svg><button onclick="animateChromatography()" class="absolute top-2 right-2 bg-pink-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-pink-600"> ▶️ Jalankan </button>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="mt-8 flex justify-between"><button onclick="showSection(3)" class="interactive-btn bg-slate-500 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg> Kembali </button> <button onclick="showSection(5)" class="interactive-btn bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2"> Lanjut: Praktikum 
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg></button>
+      </div>
+     </div>
+    </section><!-- Section 5: Praktikum -->
+    <section id="section-5" class="content-card hidden">
+     <div class="card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">🧫</span>
+       <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-800">Aktivitas Praktikum Siswa</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8"><!-- Praktikum 1 -->
+       <div class="bg-gradient-to-br from-cyan-50 to-teal-50 rounded-2xl p-6 border-2 border-cyan-300">
+        <div class="flex items-center gap-3 mb-4">
+         <div class="w-10 h-10 bg-cyan-500 rounded-full flex items-center justify-center text-white font-bold">
+          1
+         </div>
+         <h3 class="font-heading text-xl font-bold text-cyan-700">Eksperimen: Mengamati Jenis Campuran</h3>
+        </div>
+        <div class="bg-white rounded-xl p-4 mb-4">
+         <p class="font-semibold text-slate-700 mb-2">🎯 Tujuan:</p>
+         <p class="text-slate-600 text-sm">Mengamati perbedaan campuran air dengan gula, air dengan minyak, dan air dengan pasir.</p>
+        </div>
+        <div class="bg-white rounded-xl p-4 mb-4">
+         <p class="font-semibold text-slate-700 mb-2">🔧 Alat &amp; Bahan:</p>
+         <ul class="text-slate-600 text-sm space-y-1">
+          <li>• 3 gelas bening</li>
+          <li>• Air bersih</li>
+          <li>• Gula pasir</li>
+          <li>• Minyak goreng</li>
+          <li>• Pasir halus</li>
+          <li>• Sendok pengaduk</li>
+         </ul>
+        </div><!-- Interactive Experiment -->
+        <div class="illustration-box rounded-xl p-4">
+         <p class="font-semibold text-center text-cyan-700 mb-4">🧪 Simulasi Eksperimen</p>
+         <div class="flex justify-around items-end">
+          <div class="text-center">
+           <div id="exp-glass1" class="w-14 h-20 border-2 border-cyan-500 rounded-b-lg bg-white relative overflow-hidden cursor-pointer" onclick="mixExperiment(1)">
+            <div class="absolute bottom-0 w-full h-12 bg-blue-200">
+             <div id="sugar-dissolved" class="absolute inset-0 bg-blue-300 opacity-0 transition-opacity duration-1000"></div>
+            </div>
+            <div id="exp-sugar" class="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white border border-amber-300 rounded transition-all duration-1000"></div>
+           </div>
+           <p class="text-xs mt-2 font-medium">Air + Gula</p>
+           <p id="exp1-result" class="text-xs text-cyan-600 font-semibold mt-1">Klik untuk aduk!</p>
+          </div>
+          <div class="text-center">
+           <div id="exp-glass2" class="w-14 h-20 border-2 border-cyan-500 rounded-b-lg bg-white relative overflow-hidden cursor-pointer" onclick="mixExperiment(2)">
+            <div class="absolute bottom-0 w-full h-8 bg-blue-200"></div>
+            <div id="exp-oil" class="absolute top-2 w-full h-4 bg-yellow-300 transition-all duration-1000"></div>
+           </div>
+           <p class="text-xs mt-2 font-medium">Air + Minyak</p>
+           <p id="exp2-result" class="text-xs text-cyan-600 font-semibold mt-1">Klik untuk aduk!</p>
+          </div>
+          <div class="text-center">
+           <div id="exp-glass3" class="w-14 h-20 border-2 border-cyan-500 rounded-b-lg bg-white relative overflow-hidden cursor-pointer" onclick="mixExperiment(3)">
+            <div class="absolute bottom-0 w-full h-12 bg-blue-200"></div>
+            <div id="exp-sand" class="absolute bottom-0 w-full h-3 bg-amber-400 transition-all duration-1000"></div>
+           </div>
+           <p class="text-xs mt-2 font-medium">Air + Pasir</p>
+           <p id="exp3-result" class="text-xs text-cyan-600 font-semibold mt-1">Klik untuk aduk!</p>
+          </div>
+         </div>
+        </div>
+        <div class="bg-cyan-100 rounded-xl p-4 mt-4">
+         <p class="font-semibold text-cyan-800 mb-2">📋 Pertanyaan Diskusi:</p>
+         <ol class="text-slate-700 text-sm space-y-2 list-decimal list-inside">
+          <li>Campuran mana yang membentuk larutan?</li>
+          <li>Mengapa minyak tidak bercampur dengan air?</li>
+          <li>Apa yang terjadi pada pasir setelah didiamkan?</li>
+         </ol>
+        </div>
+       </div><!-- Praktikum 2 -->
+       <div class="bg-gradient-to-br from-red-50 to-rose-50 rounded-2xl p-6 border-2 border-red-300">
+        <div class="flex items-center gap-3 mb-4">
+         <div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white font-bold">
+          2
+         </div>
+         <h3 class="font-heading text-xl font-bold text-red-700">Eksperimen: Pemisahan Magnetis</h3>
+        </div>
+        <div class="bg-white rounded-xl p-4 mb-4">
+         <p class="font-semibold text-slate-700 mb-2">🎯 Tujuan:</p>
+         <p class="text-slate-600 text-sm">Mencoba memisahkan campuran pasir dan serbuk besi menggunakan magnet yang dibungkus plastik.</p>
+        </div>
+        <div class="bg-white rounded-xl p-4 mb-4">
+         <p class="font-semibold text-slate-700 mb-2">🔧 Alat &amp; Bahan:</p>
+         <ul class="text-slate-600 text-sm space-y-1">
+          <li>• Pasir halus</li>
+          <li>• Serbuk besi (dari kikiran besi)</li>
+          <li>• Magnet batang</li>
+          <li>• Plastik/kantong plastik</li>
+          <li>• Wadah/nampan</li>
+         </ul>
+        </div><!-- Interactive Magnet Experiment -->
+        <div class="illustration-box rounded-xl p-4">
+         <p class="font-semibold text-center text-red-700 mb-4">🧲 Simulasi Pemisahan</p>
+         <div class="relative h-32"><!-- Sand mixture -->
+          <div class="absolute bottom-0 left-4 right-4 h-10 bg-gradient-to-t from-amber-300 to-amber-200 rounded-lg flex items-center justify-around px-4">
+           <div id="mag-iron1" class="w-2 h-2 bg-slate-700 rounded-full transition-all duration-700"></div>
+           <div class="w-2 h-2 bg-amber-400 rounded-full"></div>
+           <div id="mag-iron2" class="w-2 h-2 bg-slate-700 rounded-full transition-all duration-700"></div>
+           <div class="w-2 h-2 bg-amber-400 rounded-full"></div>
+           <div id="mag-iron3" class="w-2 h-2 bg-slate-700 rounded-full transition-all duration-700"></div>
+           <div class="w-2 h-2 bg-amber-400 rounded-full"></div>
+           <div id="mag-iron4" class="w-2 h-2 bg-slate-700 rounded-full transition-all duration-700"></div>
+          </div><!-- Magnet with plastic -->
+          <div id="exp-magnet" class="absolute top-2 left-1/2 transform -translate-x-1/2 cursor-pointer transition-all duration-500" onclick="runMagnetExperiment()">
+           <div class="relative">
+            <div class="w-20 h-10 bg-gradient-to-r from-red-500 via-slate-300 to-blue-500 rounded-lg border-2 border-slate-400 flex items-center justify-center"><span class="text-xs font-bold text-white mr-4">N</span> <span class="text-xs font-bold text-white">S</span>
+            </div>
+            <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-16 h-3 bg-white/50 rounded-b-lg border border-slate-300"></div>
+           </div>
+           <p class="text-xs text-center mt-1 text-slate-600">Klik magnet!</p>
+          </div><!-- Collected iron -->
+          <div id="collected-iron" class="absolute top-14 left-1/2 transform -translate-x-1/2 flex gap-1 opacity-0 transition-all duration-500">
+           <div class="w-2 h-2 bg-slate-700 rounded-full"></div>
+           <div class="w-2 h-2 bg-slate-700 rounded-full"></div>
+           <div class="w-2 h-2 bg-slate-700 rounded-full"></div>
+           <div class="w-2 h-2 bg-slate-700 rounded-full"></div>
+          </div>
+         </div>
+         <p id="magnet-exp-status" class="text-center text-sm text-slate-600 mt-2">Dekatkan magnet ke campuran pasir dan besi</p>
+        </div>
+        <div class="bg-red-100 rounded-xl p-4 mt-4">
+         <p class="font-semibold text-red-800 mb-2">📋 Pertanyaan Diskusi:</p>
+         <ol class="text-slate-700 text-sm space-y-2 list-decimal list-inside">
+          <li>Mengapa besi menempel pada magnet?</li>
+          <li>Apa fungsi plastik pembungkus magnet?</li>
+          <li>Sebutkan contoh penerapan pemisahan magnetis dalam kehidupan!</li>
+         </ol>
+        </div>
+       </div>
+      </div><!-- Tips Box -->
+      <div class="mt-8 bg-gradient-to-r from-yellow-100 to-amber-100 rounded-2xl p-6 border-2 border-yellow-300">
+       <div class="flex items-start gap-4"><span class="text-4xl">💡</span>
+        <div>
+         <h4 class="font-heading text-lg font-bold text-amber-800 mb-2">Tips Keselamatan Praktikum</h4>
+         <ul class="text-slate-700 space-y-2">
+          <li class="flex items-center gap-2"><span class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">✓</span> Gunakan jas laboratorium atau celemek</li>
+          <li class="flex items-center gap-2"><span class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">✓</span> Jangan makan atau minum di laboratorium</li>
+          <li class="flex items-center gap-2"><span class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">✓</span> Cuci tangan setelah selesai praktikum</li>
+          <li class="flex items-center gap-2"><span class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">✓</span> Bersihkan dan rapikan alat setelah digunakan</li>
+         </ul>
+        </div>
+       </div>
+      </div>
+      <div class="mt-8 flex justify-between"><button onclick="showSection(4)" class="interactive-btn bg-slate-500 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg> Kembali </button> <button onclick="showSection(6)" class="interactive-btn bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2"> Lanjut: Kuis HOTS 
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg></button>
+      </div>
+     </div>
+    </section><!-- Section 6: Kuis HOTS -->
+    <section id="section-6" class="content-card hidden">
+     <div class="card-glass rounded-3xl p-6 md:p-8 shadow-2xl">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">✍️</span>
+       <h2 class="font-heading text-2xl md:text-3xl font-bold text-slate-800">Kuis HOTS (Higher Order Thinking Skills)</h2>
+      </div>
+      <div class="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-4 mb-6">
+       <p class="text-slate-700"><strong>Instruksi:</strong> Jawab 10 soal berikut untuk menguji pemahaman mendalam tentang materi campuran dan pemisahannya. Soal-soal ini dirancang untuk melatih kemampuan berpikir tingkat tinggi (analisis, evaluasi, dan kreasi).</p>
+      </div><!-- Quiz Progress -->
+      <div class="flex items-center justify-between mb-6 bg-white rounded-xl p-4 shadow">
+       <div class="flex items-center gap-3"><span class="text-2xl">📊</span>
+        <div>
+         <p class="text-sm text-slate-600">Progress Kuis</p>
+         <p id="quiz-progress-text" class="font-bold text-slate-800">Soal 1 dari 10</p>
+        </div>
+       </div>
+       <div class="flex items-center gap-3">
+        <div class="text-right">
+         <p class="text-sm text-slate-600">Skor</p>
+         <p id="quiz-score" class="font-bold text-cyan-600">0/10</p>
+        </div>
+       </div>
+      </div><!-- Quiz Container -->
+      <div id="quiz-container"><!-- Questions will be rendered here -->
+      </div><!-- Quiz Result (Hidden initially) -->
+      <div id="quiz-result" class="hidden">
+       <div class="bg-gradient-to-br from-cyan-500 to-teal-500 rounded-2xl p-8 text-white text-center"><span class="text-6xl mb-4 block" id="result-emoji">🎉</span>
+        <h3 class="font-heading text-3xl font-bold mb-2">Kuis Selesai!</h3>
+        <p class="text-xl mb-4">Skor Akhir Kamu:</p>
+        <p id="final-score" class="text-5xl font-bold mb-4">0/10</p>
+        <p id="score-message" class="text-lg mb-6">Luar biasa!</p><button onclick="restartQuiz()" class="bg-white text-cyan-600 px-6 py-3 rounded-xl font-semibold hover:bg-cyan-50 transition-colors"> 🔄 Ulangi Kuis </button>
+       </div>
+      </div>
+      <div class="mt-8 flex justify-between"><button onclick="showSection(5)" class="interactive-btn bg-slate-500 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg> Kembali ke Materi </button>
+      </div>
+     </div>
+    </section>
+   </main><!-- Footer -->
+   <footer class="bg-slate-900 text-white py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4">
+     <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3"><img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-12 h-12 rounded-full object-cover border-2 border-cyan-400" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #06b6d4, #0891b2)'; this.alt='Profile';">
+       <div>
+        <p id="footer-name" class="font-heading font-bold text-lg">Algian Manggara, S.Agr</p>
+        <p class="text-cyan-300 text-sm">Pengembang Media Pembelajaran</p>
+       </div>
+      </div>
+      <div class="text-center md:text-right">
+       <p class="text-slate-400 text-sm">© 2026 Algian Manggara, S.Agr</p>
+       <p class="text-slate-500 text-xs mt-1">Media Pembelajaran Interaktif - IPA Kelas 7</p>
+      </div>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      page_title: 'Campuran & Pemisahannya',
+      teacher_name: 'Algian Manggara, S.Agr'
+    };
+    
+    let config = { ...defaultConfig };
+    let currentSection = 0;
+    let visitedSections = new Set([0]);
+    
+    // Quiz Data - 10 HOTS Questions
+    const quizQuestions = [
+      {
+        id: 1,
+        question: "Seorang petani garam tradisional menggunakan metode penguapan air laut di bawah sinar matahari. Jika cuaca mendung selama berhari-hari, apa yang akan terjadi dan solusi apa yang dapat diterapkan?",
+        options: [
+          "Garam tetap terbentuk karena angin sudah cukup",
+          "Proses pembentukan garam melambat; solusinya menggunakan pemanasan buatan atau menunggu cuaca cerah",
+          "Air laut akan membeku dan garam mengendap",
+          "Tidak ada pengaruh karena garam sudah terlarut sempurna"
+        ],
+        correct: 1,
+        explanation: "Evaporasi bergantung pada panas. Tanpa sinar matahari, laju penguapan menurun drastis. Solusi praktisnya adalah menggunakan pemanasan buatan atau menunggu cuaca cerah."
+      },
+      {
+        id: 2,
+        question: "Sebuah pabrik pengolahan limbah menerima air limbah yang mengandung partikel logam berat dan minyak. Urutan metode pemisahan yang PALING efisien adalah...",
+        options: [
+          "Penyaringan → Dekantasi → Evaporasi",
+          "Pemisahan magnetis → Dekantasi → Penyaringan",
+          "Dekantasi (minyak) → Pemisahan magnetis (logam) → Penyaringan (partikel halus)",
+          "Sentrifugasi → Kromatografi → Distilasi"
+        ],
+        correct: 2,
+        explanation: "Dekantasi memisahkan minyak yang mengapung, pemisahan magnetis untuk logam berat yang bersifat magnetis, lalu penyaringan untuk partikel halus yang tersisa."
+      },
+      {
+        id: 3,
+        question: "Mengapa susu dikategorikan sebagai koloid, padahal secara visual tampak homogen seperti larutan?",
+        options: [
+          "Karena susu mengandung air yang banyak",
+          "Karena partikel lemak susu berukuran 1-100 nm, tersebar merata tapi tidak larut sempurna, dan dapat menghamburkan cahaya (efek Tyndall)",
+          "Karena susu berasal dari hewan",
+          "Karena susu berwarna putih"
+        ],
+        correct: 1,
+        explanation: "Koloid memiliki partikel berukuran 1-100 nm. Partikel lemak susu tersebar merata dalam air tapi tidak larut sempurna, sehingga dapat menghamburkan cahaya (efek Tyndall)."
+      },
+      {
+        id: 4,
+        question: "Dalam pembuatan parfum dari bunga melati, metode distilasi uap digunakan. Mengapa tidak menggunakan evaporasi biasa untuk mengekstrak minyak atsiri?",
+        options: [
+          "Karena evaporasi lebih mahal",
+          "Karena minyak atsiri mudah rusak pada suhu tinggi; distilasi uap memungkinkan ekstraksi pada suhu lebih rendah dengan bantuan uap air",
+          "Karena bunga melati tidak mengandung air",
+          "Karena evaporasi hanya untuk garam"
+        ],
+        correct: 1,
+        explanation: "Minyak atsiri bersifat volatil dan mudah rusak pada suhu tinggi. Distilasi uap memungkinkan ekstraksi pada suhu lebih rendah karena uap air membantu menguapkan minyak."
+      },
+      {
+        id: 5,
+        question: "Seorang siswa mencampurkan tepung dengan air dan mengaduknya. Setelah 10 menit didiamkan, tepung mengendap di dasar. Berdasarkan percobaan ini, siswa menyimpulkan bahwa campuran tersebut adalah...",
+        options: [
+          "Larutan, karena awalnya tercampur merata",
+          "Koloid, karena tampak keruh",
+          "Suspensi, karena partikel mengendap setelah didiamkan",
+          "Senyawa, karena terbentuk zat baru"
+        ],
+        correct: 2,
+        explanation: "Ciri khas suspensi adalah partikelnya yang besar (>100 nm) tidak dapat tersebar merata dan akan mengendap jika didiamkan karena pengaruh gravitasi."
+      },
+      {
+        id: 6,
+        question: "Dalam industri daur ulang, campuran plastik, aluminium, dan besi perlu dipisahkan. Jika hanya tersedia magnet dan mesin sentrifugasi, bagaimana urutan pemisahan yang tepat?",
+        options: [
+          "Sentrifugasi semua bahan → Pemisahan magnetis",
+          "Pemisahan magnetis (besi) → Sentrifugasi (aluminium dan plastik berdasarkan massa jenis)",
+          "Tidak mungkin dipisahkan dengan kedua alat tersebut",
+          "Pemisahan magnetis untuk semua logam"
+        ],
+        correct: 1,
+        explanation: "Besi bersifat magnetis sehingga dipisahkan dulu dengan magnet. Aluminium tidak magnetis, tetapi bisa dipisahkan dari plastik menggunakan sentrifugasi karena perbedaan massa jenis."
+      },
+      {
+        id: 7,
+        question: "Air laut memiliki kadar garam sekitar 3,5%. Jika seorang nelayan ingin mendapatkan 35 gram garam, berapa liter air laut minimum yang harus diuapkan? (Asumsikan 1 liter air laut = 1000 gram)",
+        options: [
+          "0,5 liter",
+          "1 liter",
+          "3,5 liter",
+          "10 liter"
+        ],
+        correct: 1,
+        explanation: "Jika 3,5% adalah garam, maka dalam 1000 gram air laut terdapat 35 gram garam. Jadi, dibutuhkan minimal 1 liter (1000 gram) air laut untuk mendapatkan 35 gram garam."
+      },
+      {
+        id: 8,
+        question: "Pada percobaan kromatografi, tinta hitam ternyata menghasilkan beberapa warna yang terpisah. Fenomena ini membuktikan bahwa...",
+        options: [
+          "Tinta hitam adalah senyawa murni",
+          "Tinta hitam adalah campuran beberapa zat warna dengan kelarutan berbeda dalam pelarut",
+          "Kertas saring mengubah warna tinta",
+          "Tinta hitam mengalami reaksi kimia"
+        ],
+        correct: 1,
+        explanation: "Kromatografi memisahkan zat berdasarkan perbedaan kelarutan. Warna yang terpisah menunjukkan tinta hitam adalah campuran beberapa pigmen, bukan zat tunggal."
+      },
+      {
+        id: 9,
+        question: "Seorang koki membuat karamel dengan memanaskan gula dan air. Pada titik tertentu, koki menambahkan gula lagi tetapi gula tidak larut. Kondisi larutan pada saat itu adalah...",
+        options: [
+          "Larutan encer",
+          "Larutan pekat",
+          "Larutan jenuh",
+          "Larutan lewat jenuh"
+        ],
+        correct: 2,
+        explanation: "Larutan jenuh adalah kondisi di mana pelarut tidak mampu lagi melarutkan zat terlarut tambahan pada suhu tertentu. Gula yang tidak larut menandakan larutan sudah jenuh."
+      },
+      {
+        id: 10,
+        question: "Evaluasi pernyataan berikut: 'Semua metode pemisahan campuran melibatkan perubahan fisika, bukan kimia.' Pernyataan ini...",
+        options: [
+          "Salah, karena distilasi melibatkan reaksi kimia",
+          "Benar, karena zat-zat penyusun campuran tidak berubah menjadi zat baru, hanya dipisahkan berdasarkan sifat fisika",
+          "Salah, karena evaporasi mengubah air menjadi zat baru",
+          "Benar, hanya jika menggunakan penyaringan"
+        ],
+        correct: 1,
+        explanation: "Pemisahan campuran memanfaatkan perbedaan sifat fisika (ukuran partikel, titik didih, kelarutan, sifat magnetis) tanpa mengubah identitas kimia zat penyusunnya."
+      }
+    ];
+    
+    let currentQuizIndex = 0;
+    let quizScore = 0;
+    let answeredQuestions = new Set();
+    
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          updateUI();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['page_title', cfg.page_title || defaultConfig.page_title],
+          ['teacher_name', cfg.teacher_name || defaultConfig.teacher_name]
+        ])
+      });
+    }
+    
+    function updateUI() {
+      const mainTitle = document.getElementById('main-title');
+      const footerName = document.getElementById('footer-name');
+      
+      if (mainTitle) mainTitle.textContent = config.page_title || defaultConfig.page_title;
+      if (footerName) footerName.textContent = config.teacher_name || defaultConfig.teacher_name;
+    }
+    
+    // Section Navigation
+    function showSection(index) {
+      document.querySelectorAll('[id^="section-"]').forEach(section => {
+        section.classList.add('hidden');
+      });
+      
+      document.getElementById(`section-${index}`).classList.remove('hidden');
+      
+      document.querySelectorAll('.nav-item').forEach(btn => {
+        btn.classList.remove('active');
+        btn.classList.remove('bg-gradient-to-r', 'from-cyan-500', 'to-teal-500');
+        btn.classList.add('bg-slate-700');
+      });
+      
+      const activeBtn = document.querySelector(`.nav-item[data-section="${index}"]`);
+      if (activeBtn) {
+        activeBtn.classList.add('active');
+      }
+      
+      visitedSections.add(index);
+      currentSection = index;
+      updateProgress();
+      
+      if (index === 6) {
+        renderQuiz();
+      }
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function updateProgress() {
+      const totalSections = 7;
+      const progress = Math.round((visitedSections.size / totalSections) * 100);
+      
+      const progressBar = document.getElementById('progress-bar');
+      const progressText = document.getElementById('progress-text');
+      
+      if (progressBar) progressBar.style.width = `${progress}%`;
+      if (progressText) progressText.textContent = `${progress}%`;
+    }
+    
+    // Mixture Type Tabs
+    function showMixtureType(type) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      document.getElementById(`tab-${type}`).classList.add('active');
+      
+      document.querySelectorAll('.mixture-tab').forEach(btn => {
+        btn.classList.remove('bg-cyan-500', 'text-white');
+        btn.classList.add('bg-slate-200', 'text-slate-700');
+      });
+      
+      const activeTab = document.querySelector(`.mixture-tab[data-tab="${type}"]`);
+      if (activeTab) {
+        activeTab.classList.remove('bg-slate-200', 'text-slate-700');
+        activeTab.classList.add('bg-cyan-500', 'text-white');
+      }
+    }
+    
+    // Interactive Animations
+    let mixtureMixed = false;
+    function toggleMixture() {
+      mixtureMixed = !mixtureMixed;
+      const particles = document.getElementById('sugar-particles');
+      const liquid = document.getElementById('mixture-liquid');
+      const status = document.getElementById('mixture-status');
+      
+      if (mixtureMixed) {
+        particles.style.opacity = '0';
+        liquid.classList.remove('bg-blue-200');
+        liquid.classList.add('bg-blue-300');
+        status.textContent = 'Status: Gula sudah larut sempurna! ✓';
+      } else {
+        particles.style.opacity = '1';
+        liquid.classList.remove('bg-blue-300');
+        liquid.classList.add('bg-blue-200');
+        status.textContent = 'Status: Gula belum larut sempurna';
+      }
+    }
+    
+    let suspensionShaken = false;
+    function shakeSuspension() {
+      const sediment = document.getElementById('sediment');
+      const status = document.getElementById('suspension-status');
+      
+      suspensionShaken = !suspensionShaken;
+      
+      if (suspensionShaken) {
+        sediment.style.height = '50px';
+        sediment.style.opacity = '0.5';
+        status.textContent = 'Status: Pasir tersebar (diaduk)';
+        
+        setTimeout(() => {
+          sediment.style.height = '32px';
+          sediment.style.opacity = '1';
+          status.textContent = 'Status: Pasir mengendap kembali!';
+          suspensionShaken = false;
+        }, 2000);
+      }
+    }
+    
+    let tyndallOn = false;
+    function toggleTyndall() {
+      tyndallOn = !tyndallOn;
+      const beam = document.getElementById('light-beam');
+      const scattered = document.getElementById('scattered-light');
+      const status = document.getElementById('tyndall-status');
+      
+      if (tyndallOn) {
+        beam.style.opacity = '1';
+        scattered.style.opacity = '0.6';
+        status.textContent = 'Cahaya terhambar! (Efek Tyndall terlihat)';
+      } else {
+        beam.style.opacity = '0';
+        scattered.style.opacity = '0';
+        status.textContent = 'Cahaya akan terlihat terhambar pada koloid';
+      }
+    }
+    
+    // Concentration Slider
+    function updateConcentration(value) {
+      const liquid = document.getElementById('concentration-liquid');
+      const label = document.getElementById('concentration-label');
+      const valueText = document.getElementById('concentration-value');
+      const info = document.getElementById('concentration-info');
+      
+      valueText.textContent = `${value}%`;
+      
+      if (value < 30) {
+        liquid.className = 'liquid bg-gradient-to-t from-cyan-200 to-cyan-100 transition-all duration-500';
+        label.textContent = 'Larutan Encer';
+        label.className = 'mt-4 text-lg font-bold text-cyan-600';
+      } else if (value < 70) {
+        liquid.className = 'liquid bg-gradient-to-t from-cyan-400 to-cyan-200 transition-all duration-500';
+        label.textContent = 'Larutan Pekat';
+        label.className = 'mt-4 text-lg font-bold text-amber-600';
+      } else {
+        liquid.className = 'liquid bg-gradient-to-t from-cyan-600 to-cyan-400 transition-all duration-500';
+        label.textContent = 'Larutan Jenuh';
+        label.className = 'mt-4 text-lg font-bold text-purple-600';
+      }
+    }
+    
+    // Separation Animations
+    function animateDecant() {
+      const container1 = document.getElementById('decant-container1');
+      const liquid2 = document.getElementById('decant-liquid2');
+      
+      container1.style.transform = 'rotate(-45deg)';
+      
+      setTimeout(() => {
+        liquid2.style.height = '40px';
+      }, 500);
+      
+      setTimeout(() => {
+        container1.style.transform = 'rotate(0deg)';
+      }, 2000);
+    }
+    
+    function animateFilter() {
+      const filteredLiquid = document.getElementById('filtered-liquid');
+      const drip = document.getElementById('filter-drip');
+      
+      drip.classList.remove('opacity-0');
+      drip.classList.add('animate-bounce');
+      
+      setTimeout(() => {
+        filteredLiquid.setAttribute('height', '30');
+        filteredLiquid.setAttribute('y', '78');
+      }, 1000);
+      
+      setTimeout(() => {
+        drip.classList.add('opacity-0');
+        drip.classList.remove('animate-bounce');
+      }, 2000);
+    }
+    
+    let centrifugeRunning = false;
+    function animateCentrifuge() {
+      if (centrifugeRunning) return;
+      centrifugeRunning = true;
+      
+      const arm = document.getElementById('centrifuge-arm');
+      const tube1 = document.getElementById('tube1-sediment');
+      const tube2 = document.getElementById('tube2-sediment');
+      
+      let rotation = 0;
+      const spin = setInterval(() => {
+        rotation += 30;
+        arm.style.transform = `rotate(${rotation}deg)`;
+      }, 50);
+      
+      setTimeout(() => {
+        clearInterval(spin);
+        tube1.style.height = '12px';
+        tube2.style.height = '12px';
+        centrifugeRunning = false;
+      }, 2000);
+    }
+    
+    let magnetActive = false;
+    function animateMagnet() {
+      magnetActive = !magnetActive;
+      const particles = document.getElementById('attracted-particles');
+      const irons = ['iron1', 'iron2', 'iron3'];
+      
+      if (magnetActive) {
+        irons.forEach(id => {
+          document.getElementById(id).classList.add('attracted');
+        });
+        particles.style.opacity = '1';
+      } else {
+        irons.forEach(id => {
+          document.getElementById(id).classList.remove('attracted');
+        });
+        particles.style.opacity = '0';
+      }
+    }
+    
+    function animateEvaporation() {
+      const liquid = document.getElementById('evap-liquid');
+      const steam = document.getElementById('steam');
+      const crystals = document.getElementById('crystals');
+      
+      steam.classList.remove('opacity-0');
+      
+      setTimeout(() => {
+        liquid.setAttribute('ry', '5');
+      }, 1000);
+      
+      setTimeout(() => {
+        liquid.setAttribute('ry', '2');
+        crystals.classList.remove('opacity-0');
+      }, 2000);
+      
+      setTimeout(() => {
+        steam.classList.add('opacity-0');
+      }, 3000);
+    }
+    
+    function animateDistillation() {
+      const steam = document.getElementById('distill-steam');
+      const distillate = document.getElementById('distillate');
+      
+      steam.classList.remove('opacity-0');
+      
+      setTimeout(() => {
+        distillate.classList.remove('opacity-0');
+      }, 1500);
+      
+      setTimeout(() => {
+        steam.classList.add('opacity-0');
+      }, 3000);
+    }
+    
+    function animateChromatography() {
+      const spot = document.getElementById('chromo-spot');
+      const colors = document.getElementById('chromo-colors');
+      const front = document.getElementById('solvent-front');
+      
+      spot.style.opacity = '0.3';
+      colors.classList.remove('opacity-0');
+      front.setAttribute('y1', '40');
+      front.setAttribute('y2', '40');
+    }
+    
+    // Experiment Animations
+    function mixExperiment(num) {
+      if (num === 1) {
+        const sugar = document.getElementById('exp-sugar');
+        const dissolved = document.getElementById('sugar-dissolved');
+        const result = document.getElementById('exp1-result');
+        sugar.style.opacity = '0';
+        dissolved.style.opacity = '1';
+        result.textContent = 'LARUTAN! ✓';
+        result.className = 'text-xs text-green-600 font-semibold mt-1';
+      } else if (num === 2) {
+        const oil = document.getElementById('exp-oil');
+        const result = document.getElementById('exp2-result');
+        oil.style.top = '2px';
+        result.textContent = 'KOLOID! (tidak bercampur)';
+        result.className = 'text-xs text-purple-600 font-semibold mt-1';
+      } else if (num === 3) {
+        const sand = document.getElementById('exp-sand');
+        const result = document.getElementById('exp3-result');
+        sand.style.height = '6px';
+        setTimeout(() => {
+          sand.style.height = '12px';
+          result.textContent = 'SUSPENSI! (mengendap)';
+          result.className = 'text-xs text-amber-600 font-semibold mt-1';
+        }, 1500);
+      }
+    }
+    
+    let magnetExpActive = false;
+    function runMagnetExperiment() {
+      magnetExpActive = !magnetExpActive;
+      const magnet = document.getElementById('exp-magnet');
+      const collected = document.getElementById('collected-iron');
+      const irons = ['mag-iron1', 'mag-iron2', 'mag-iron3', 'mag-iron4'];
+      const status = document.getElementById('magnet-exp-status');
+      
+      if (magnetExpActive) {
+        magnet.style.top = '60px';
+        
+        setTimeout(() => {
+          irons.forEach(id => {
+            const el = document.getElementById(id);
+            el.style.transform = 'translateY(-50px)';
+            el.style.opacity = '0';
+          });
+          collected.style.opacity = '1';
+          status.textContent = 'Besi tertarik ke magnet! Pasir tetap di bawah.';
+        }, 500);
+      } else {
+        magnet.style.top = '8px';
+        irons.forEach(id => {
+          const el = document.getElementById(id);
+          el.style.transform = 'translateY(0)';
+          el.style.opacity = '1';
+        });
+        collected.style.opacity = '0';
+        status.textContent = 'Dekatkan magnet ke campuran pasir dan besi';
+      }
+    }
+    
+    // Quiz Functions
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      const resultDiv = document.getElementById('quiz-result');
+      
+      if (currentQuizIndex >= quizQuestions.length) {
+        container.classList.add('hidden');
+        resultDiv.classList.remove('hidden');
+        showQuizResult();
+        return;
+      }
+      
+      container.classList.remove('hidden');
+      resultDiv.classList.add('hidden');
+      
+      const q = quizQuestions[currentQuizIndex];
+      
+      container.innerHTML = `
+        <div class="bg-white rounded-2xl p-6 shadow-lg">
+          <div class="flex items-start gap-4 mb-6">
+            <div class="w-10 h-10 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+              ${q.id}
+            </div>
+            <p class="text-slate-800 text-lg leading-relaxed">${q.question}</p>
+          </div>
+          
+          <div class="space-y-3 mb-6">
+            ${q.options.map((opt, idx) => `
+              <div class="quiz-option p-4 rounded-xl border-2 border-slate-200 ${answeredQuestions.has(currentQuizIndex) ? 'pointer-events-none' : ''}" 
+                   data-index="${idx}" 
+                   onclick="selectAnswer(${idx})">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center font-semibold text-slate-600">
+                    ${String.fromCharCode(65 + idx)}
+                  </span>
+                  <span class="text-slate-700">${opt}</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          
+          <div id="explanation-box" class="hidden bg-gradient-to-r from-cyan-50 to-teal-50 rounded-xl p-4 mb-6 border-l-4 border-cyan-500">
+            <p class="font-semibold text-cyan-700 mb-2">💡 Penjelasan:</p>
+            <p class="text-slate-700">${q.explanation}</p>
+          </div>
+          
+          <div class="flex justify-between items-center">
+            <button onclick="prevQuestion()" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg font-semibold hover:bg-slate-300 transition-colors ${currentQuizIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}" ${currentQuizIndex === 0 ? 'disabled' : ''}>
+              ← Sebelumnya
+            </button>
+            <button id="next-btn" onclick="nextQuestion()" class="px-6 py-2 bg-gradient-to-r from-cyan-500 to-teal-500 text-white rounded-lg font-semibold hover:opacity-90 transition-opacity ${!answeredQuestions.has(currentQuizIndex) ? 'opacity-50 cursor-not-allowed' : ''}" ${!answeredQuestions.has(currentQuizIndex) ? 'disabled' : ''}>
+              ${currentQuizIndex === quizQuestions.length - 1 ? 'Lihat Hasil' : 'Selanjutnya →'}
+            </button>
+          </div>
+        </div>
+      `;
+      
+      updateQuizProgress();
+      
+      if (answeredQuestions.has(currentQuizIndex)) {
+        showPreviousAnswer();
+      }
+    }
+    
+    function selectAnswer(selectedIdx) {
+      if (answeredQuestions.has(currentQuizIndex)) return;
+      
+      const q = quizQuestions[currentQuizIndex];
+      const options = document.querySelectorAll('.quiz-option');
+      const explanationBox = document.getElementById('explanation-box');
+      const nextBtn = document.getElementById('next-btn');
+      
+      answeredQuestions.add(currentQuizIndex);
+      
+      options.forEach((opt, idx) => {
+        opt.classList.add('pointer-events-none');
+        
+        if (idx === q.correct) {
+          opt.classList.add('correct');
+          opt.classList.remove('border-slate-200');
+        } else if (idx === selectedIdx && selectedIdx !== q.correct) {
+          opt.classList.add('incorrect');
+          opt.classList.remove('border-slate-200');
+        }
+      });
+      
+      if (selectedIdx === q.correct) {
+        quizScore++;
+      }
+      
+      explanationBox.classList.remove('hidden');
+      nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      nextBtn.disabled = false;
+      
+      updateQuizProgress();
+    }
+    
+    function showPreviousAnswer() {
+      const q = quizQuestions[currentQuizIndex];
+      const options = document.querySelectorAll('.quiz-option');
+      const explanationBox = document.getElementById('explanation-box');
+      
+      options.forEach((opt, idx) => {
+        if (idx === q.correct) {
+          opt.classList.add('correct');
+          opt.classList.remove('border-slate-200');
+        }
+      });
+      
+      explanationBox.classList.remove('hidden');
+    }
+    
+    function nextQuestion() {
+      if (!answeredQuestions.has(currentQuizIndex)) return;
+      currentQuizIndex++;
+      renderQuiz();
+    }
+    
+    function prevQuestion() {
+      if (currentQuizIndex > 0) {
+        currentQuizIndex--;
+        renderQuiz();
+      }
+    }
+    
+    function updateQuizProgress() {
+      const progressText = document.getElementById('quiz-progress-text');
+      const scoreText = document.getElementById('quiz-score');
+      
+      progressText.textContent = `Soal ${currentQuizIndex + 1} dari ${quizQuestions.length}`;
+      scoreText.textContent = `${quizScore}/${quizQuestions.length}`;
+    }
+    
+    function showQuizResult() {
+      const emoji = document.getElementById('result-emoji');
+      const finalScore = document.getElementById('final-score');
+      const message = document.getElementById('score-message');
+      
+      finalScore.textContent = `${quizScore}/${quizQuestions.length}`;
+      
+      const percentage = (quizScore / quizQuestions.length) * 100;
+      
+      if (percentage >= 90) {
+        emoji.textContent = '🏆';
+        message.textContent = 'Luar biasa! Kamu menguasai materi dengan sangat baik!';
+      } else if (percentage >= 70) {
+        emoji.textContent = '🎉';
+        message.textContent = 'Bagus! Pemahaman kamu sudah baik!';
+      } else if (percentage >= 50) {
+        emoji.textContent = '👍';
+        message.textContent = 'Cukup baik! Terus belajar untuk meningkatkan!';
+      } else {
+        emoji.textContent = '📚';
+        message.textContent = 'Jangan menyerah! Pelajari kembali materinya ya!';
+      }
+    }
+    
+    function restartQuiz() {
+      currentQuizIndex = 0;
+      quizScore = 0;
+      answeredQuestions.clear();
+      renderQuiz();
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      updateUI();
+      updateProgress();
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce4c5831095051a',t:'MTc3MTE1ODE1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

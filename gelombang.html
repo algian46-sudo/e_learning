@@ -1,0 +1,1352 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menjelajahi Dunia Gelombang</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Quicksand:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { box-sizing: border-box; }
+    
+    .wave-bg {
+      background: linear-gradient(135deg, #0c4a6e 0%, #075985 25%, #0369a1 50%, #0284c7 75%, #0ea5e9 100%);
+    }
+    
+    .card-glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:hover {
+      transform: translateX(5px);
+    }
+    
+    .nav-item.active {
+      background: linear-gradient(90deg, #0ea5e9, #06b6d4);
+      color: white;
+      box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+    }
+    
+    .content-section {
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes waveMove {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .wave-animation {
+      animation: waveMove 2s ease-in-out infinite;
+    }
+    
+    .pulse-animation {
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .interactive-btn {
+      transition: all 0.3s ease;
+    }
+    
+    .interactive-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .quiz-option:hover {
+      transform: translateX(10px);
+      background: #e0f2fe;
+    }
+    
+    .quiz-option.selected {
+      background: #0ea5e9;
+      color: white;
+    }
+    
+    .quiz-option.correct {
+      background: #10b981;
+      color: white;
+    }
+    
+    .quiz-option.incorrect {
+      background: #ef4444;
+      color: white;
+    }
+    
+    .illustration-container {
+      background: linear-gradient(145deg, #f0f9ff, #e0f2fe);
+      border: 2px solid #bae6fd;
+    }
+    
+    .wave-path {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: drawWave 3s ease forwards;
+    }
+    
+    @keyframes drawWave {
+      to { stroke-dashoffset: 0; }
+    }
+    
+    .info-card {
+      background: linear-gradient(135deg, #fff 0%, #f0f9ff 100%);
+      border-left: 4px solid #0ea5e9;
+    }
+    
+    .experiment-card {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border-left: 4px solid #10b981;
+    }
+    
+    .scroll-container {
+      scrollbar-width: thin;
+      scrollbar-color: #0ea5e9 #e0f2fe;
+    }
+    
+    .scroll-container::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-track {
+      background: #e0f2fe;
+      border-radius: 10px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb {
+      background: #0ea5e9;
+      border-radius: 10px;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full m-0 p-0 overflow-hidden">
+  <div id="app-container" class="h-full w-full wave-bg flex flex-col"><!-- Header -->
+   <header class="bg-white/10 backdrop-blur-md border-b border-white/20 px-4 py-3 flex-shrink-0">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg"><span class="text-2xl">🌊</span>
+      </div>
+      <div>
+       <h1 id="main-title" class="text-white font-bold text-xl" style="font-family: 'Quicksand', sans-serif;">Menjelajahi Dunia Gelombang</h1>
+       <p class="text-cyan-200 text-sm">Media Pembelajaran Interaktif IPA</p>
+      </div>
+     </div>
+     <div class="flex items-center gap-2"><span id="progress-text" class="text-white text-sm">Progres: 0/10</span>
+      <div class="w-32 h-2 bg-white/20 rounded-full overflow-hidden">
+       <div id="progress-bar" class="h-full bg-gradient-to-r from-cyan-400 to-emerald-400 transition-all duration-500" style="width: 0%"></div>
+      </div>
+     </div>
+    </div>
+   </header><!-- Main Content -->
+   <div class="flex-1 flex overflow-hidden"><!-- Sidebar Navigation -->
+    <nav class="w-72 bg-white/10 backdrop-blur-md border-r border-white/20 p-4 overflow-y-auto scroll-container flex-shrink-0">
+     <div class="space-y-2"><button onclick="showSection(0)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 font-medium flex items-center gap-3 active" data-section="0"> <span class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">🎯</span> <span class="text-sm">Pendahuluan</span> </button> <button onclick="showSection(1)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 font-medium flex items-center gap-3" data-section="1"> <span class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">📊</span> <span class="text-sm">Jenis Gelombang</span> </button> <button onclick="showSection(2)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 font-medium flex items-center gap-3" data-section="2"> <span class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">📐</span> <span class="text-sm">Besaran Gelombang</span> </button> <button onclick="showSection(3)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 font-medium flex items-center gap-3" data-section="3"> <span class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">⚡</span> <span class="text-sm">Mekanik vs Elektromagnetik</span> </button> <button onclick="showSection(4)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 font-medium flex items-center gap-3" data-section="4"> <span class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">🔬</span> <span class="text-sm">Sinar-X (Rontgen)</span> </button> <button onclick="showSection(5)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 font-medium flex items-center gap-3" data-section="5"> <span class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">🔊</span> <span class="text-sm">Bunyi &amp; Pendengaran</span> </button> <button onclick="showSection(6)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 font-medium flex items-center gap-3" data-section="6"> <span class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">🦇</span> <span class="text-sm">Ekolokasi</span> </button> <button onclick="showSection(7)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 font-medium flex items-center gap-3" data-section="7"> <span class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">🧪</span> <span class="text-sm">Aktivitas Interaktif</span> </button> <button onclick="showSection(8)" class="nav-item w-full text-left px-4 py-3 rounded-xl text-white/90 font-medium flex items-center gap-3" data-section="8"> <span class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">📝</span> <span class="text-sm">Soal HOTS</span> </button>
+     </div>
+    </nav><!-- Content Area -->
+    <main class="flex-1 overflow-y-auto scroll-container p-6">
+     <div id="content-container" class="max-w-4xl mx-auto"><!-- Section 0: Pendahuluan -->
+      <section id="section-0" class="content-section">
+       <div class="card-glass rounded-3xl p-8 shadow-2xl">
+        <div class="text-center mb-8">
+         <h2 class="text-3xl font-bold text-slate-800 mb-4" style="font-family: 'Quicksand', sans-serif;">🌊 Getaran yang Merambat</h2>
+         <p class="text-lg text-slate-600">Memahami Gelombang dalam Kehidupan</p>
+        </div><!-- Ilustrasi Batu di Kolam -->
+        <div class="illustration-container rounded-2xl p-6 mb-8">
+         <h3 class="text-lg font-bold text-slate-700 mb-4 text-center">🪨 Apersepsi: Batu di Kolam</h3>
+         <div class="relative h-64 bg-gradient-to-b from-sky-200 via-sky-300 to-blue-400 rounded-xl overflow-hidden"><!-- Air -->
+          <div class="absolute bottom-0 w-full h-40 bg-gradient-to-b from-blue-400 to-blue-600"></div><!-- Gelombang konsentris -->
+          <svg class="absolute bottom-20 left-1/2 transform -translate-x-1/2" width="300" height="100" viewbox="0 0 300 100"><circle cx="150" cy="50" r="20" fill="none" stroke="#93c5fd" stroke-width="2" class="wave-animation" style="animation-delay: 0s; opacity: 0.9;" /> <circle cx="150" cy="50" r="40" fill="none" stroke="#93c5fd" stroke-width="2" class="wave-animation" style="animation-delay: 0.3s; opacity: 0.7;" /> <circle cx="150" cy="50" r="60" fill="none" stroke="#93c5fd" stroke-width="2" class="wave-animation" style="animation-delay: 0.6s; opacity: 0.5;" /> <circle cx="150" cy="50" r="80" fill="none" stroke="#93c5fd" stroke-width="2" class="wave-animation" style="animation-delay: 0.9s; opacity: 0.3;" /> <circle cx="150" cy="50" r="100" fill="none" stroke="#93c5fd" stroke-width="2" class="wave-animation" style="animation-delay: 1.2s; opacity: 0.2;" />
+          </svg><!-- Batu jatuh -->
+          <div class="absolute top-10 left-1/2 transform -translate-x-1/2 text-3xl wave-animation">
+           🪨
+          </div><!-- Daun di pojok -->
+          <div class="absolute bottom-24 right-8 text-2xl wave-animation" style="animation-delay: 1.5s;">
+           🍃
+          </div>
+          <div class="absolute bottom-20 left-8 text-2xl wave-animation" style="animation-delay: 1.8s;">
+           🍂
+          </div>
+         </div>
+         <p class="text-center text-slate-600 mt-4 italic">"Perhatikan bagaimana dedaunan di pojok kolam ikut bergerak naik-turun!"</p>
+        </div>
+        <div class="info-card rounded-xl p-6 mb-6">
+         <h3 class="text-lg font-bold text-cyan-700 mb-3">💡 Pertanyaan Pemantik</h3>
+         <p class="text-slate-700 leading-relaxed">Pernahkah kalian melempar batu ke kolam? Apa yang terjadi pada dedaunan di pojok kolam?</p>
+        </div>
+        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl p-6 text-white">
+         <h3 class="text-xl font-bold mb-3">🎯 Konsep Utama</h3>
+         <p class="text-lg leading-relaxed"><strong>Gelombang adalah peristiwa perambatan getaran.</strong></p>
+         <div class="mt-4 bg-white/20 rounded-lg p-4">
+          <p class="text-white/95">Yang merambat adalah <strong>ENERGI</strong>, bukan mediumnya!</p>
+          <p class="text-sm mt-2 text-white/80">Airnya tetap di tempat, hanya bergerak naik-turun 🌊</p>
+         </div>
+        </div>
+        <div class="mt-6 flex justify-end"><button onclick="showSection(1)" class="interactive-btn bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2"> Selanjutnya <span>→</span> </button>
+        </div>
+       </div>
+      </section><!-- Section 1: Jenis Gelombang -->
+      <section id="section-1" class="content-section hidden">
+       <div class="card-glass rounded-3xl p-8 shadow-2xl">
+        <h2 class="text-3xl font-bold text-slate-800 mb-6 text-center" style="font-family: 'Quicksand', sans-serif;">📊 Jenis Gelombang Berdasarkan Bentuknya</h2>
+        <p class="text-slate-600 text-center mb-8">Berdasarkan arah rambat dan arah getarnya, gelombang dibagi menjadi dua:</p><!-- Gelombang Transversal -->
+        <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 mb-6 border-l-4 border-purple-500">
+         <h3 class="text-xl font-bold text-purple-700 mb-4 flex items-center gap-2"><span class="text-2xl">〰️</span> Gelombang Transversal</h3>
+         <div class="illustration-container rounded-xl p-4 mb-4">
+          <svg width="100%" height="150" viewbox="0 0 500 150"><!-- Garis tengah --> <line x1="0" y1="75" x2="500" y2="75" stroke="#94a3b8" stroke-width="1" stroke-dasharray="5,5" /> <!-- Gelombang --> <path class="wave-path" d="M0,75 Q62.5,0 125,75 T250,75 T375,75 T500,75" fill="none" stroke="#9333ea" stroke-width="4" /> <!-- Label Bukit --> <text x="62.5" y="25" fill="#9333ea" font-size="12" text-anchor="middle" font-weight="bold">
+            BUKIT
+           </text> <line x1="62.5" y1="30" x2="62.5" y2="45" stroke="#9333ea" stroke-width="2" /> <!-- Label Lembah --> <text x="187.5" y="145" fill="#9333ea" font-size="12" text-anchor="middle" font-weight="bold">
+            LEMBAH
+           </text> <line x1="187.5" y1="105" x2="187.5" y2="130" stroke="#9333ea" stroke-width="2" /> <!-- Panah arah rambat --> <line x1="350" y1="20" x2="470" y2="20" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowhead)" /> <text x="410" y="15" fill="#ef4444" font-size="10" text-anchor="middle">
+            Arah Rambat
+           </text> <!-- Panah arah getar --> <line x1="50" y1="50" x2="50" y2="100" stroke="#22c55e" stroke-width="2" /> <line x1="45" y1="55" x2="50" y2="50" stroke="#22c55e" stroke-width="2" /> <line x1="55" y1="55" x2="50" y2="50" stroke="#22c55e" stroke-width="2" /> <line x1="45" y1="95" x2="50" y2="100" stroke="#22c55e" stroke-width="2" /> <line x1="55" y1="95" x2="50" y2="100" stroke="#22c55e" stroke-width="2" /> <text x="30" y="75" fill="#22c55e" font-size="9" text-anchor="middle" transform="rotate(-90, 30, 75)">
+            Arah Getar
+           </text> <!-- Lambda --> <line x1="0" y1="130" x2="250" y2="130" stroke="#0ea5e9" stroke-width="2" /> <line x1="0" y1="125" x2="0" y2="135" stroke="#0ea5e9" stroke-width="2" /> <line x1="250" y1="125" x2="250" y2="135" stroke="#0ea5e9" stroke-width="2" /> <text x="125" y="145" fill="#0ea5e9" font-size="12" text-anchor="middle" font-weight="bold">
+            λ (1 gelombang)
+           </text> <defs>
+            <marker id="arrowhead" markerwidth="10" markerheight="7" refx="9" refy="3.5" orient="auto">
+             <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444" />
+            </marker>
+           </defs>
+          </svg>
+         </div>
+         <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white rounded-lg p-4">
+           <p class="font-bold text-purple-700">📌 Bentuk:</p>
+           <p class="text-slate-600">Memiliki <strong>Bukit</strong> dan <strong>Lembah</strong></p>
+          </div>
+          <div class="bg-white rounded-lg p-4">
+           <p class="font-bold text-purple-700">📌 Contoh:</p>
+           <p class="text-slate-600">Gelombang tali, gelombang air</p>
+          </div>
+         </div>
+         <div class="mt-4 bg-purple-100 rounded-lg p-3">
+          <p class="text-purple-800 text-center font-medium">🔑 Satu gelombang (λ) = <strong>1 bukit + 1 lembah</strong></p>
+         </div>
+        </div><!-- Gelombang Longitudinal -->
+        <div class="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-6 border-l-4 border-orange-500">
+         <h3 class="text-xl font-bold text-orange-700 mb-4 flex items-center gap-2"><span class="text-2xl">🔊</span> Gelombang Longitudinal</h3>
+         <div class="illustration-container rounded-xl p-4 mb-4">
+          <svg width="100%" height="120" viewbox="0 0 500 120"><!-- Slinki/Pegas --> <g><!-- Rapatan -->
+            <g class="pulse-animation">
+             <line x1="20" y1="60" x2="25" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="27" y1="60" x2="32" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="34" y1="60" x2="39" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="41" y1="60" x2="46" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="48" y1="60" x2="53" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="55" y1="60" x2="60" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="62" y1="60" x2="67" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="69" y1="60" x2="74" y2="60" stroke="#ea580c" stroke-width="3" />
+            </g>
+            <text x="47" y="95" fill="#ea580c" font-size="11" text-anchor="middle" font-weight="bold">
+             RAPATAN
+            </text> <!-- Regangan -->
+            <g>
+             <line x1="90" y1="60" x2="105" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="120" y1="60" x2="135" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="150" y1="60" x2="165" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="180" y1="60" x2="195" y2="60" stroke="#ea580c" stroke-width="3" />
+            </g>
+            <text x="142" y="95" fill="#ea580c" font-size="11" text-anchor="middle" font-weight="bold">
+             REGANGAN
+            </text> <!-- Rapatan 2 -->
+            <g class="pulse-animation" style="animation-delay: 0.5s;">
+             <line x1="210" y1="60" x2="215" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="217" y1="60" x2="222" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="224" y1="60" x2="229" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="231" y1="60" x2="236" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="238" y1="60" x2="243" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="245" y1="60" x2="250" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="252" y1="60" x2="257" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="259" y1="60" x2="264" y2="60" stroke="#ea580c" stroke-width="3" />
+            </g> <!-- Regangan 2 -->
+            <g>
+             <line x1="280" y1="60" x2="295" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="310" y1="60" x2="325" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="340" y1="60" x2="355" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="370" y1="60" x2="385" y2="60" stroke="#ea580c" stroke-width="3" />
+            </g> <!-- Rapatan 3 -->
+            <g class="pulse-animation" style="animation-delay: 1s;">
+             <line x1="400" y1="60" x2="405" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="407" y1="60" x2="412" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="414" y1="60" x2="419" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="421" y1="60" x2="426" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="428" y1="60" x2="433" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="435" y1="60" x2="440" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="442" y1="60" x2="447" y2="60" stroke="#ea580c" stroke-width="3" />
+             <line x1="449" y1="60" x2="454" y2="60" stroke="#ea580c" stroke-width="3" />
+            </g>
+           </g> <!-- Lambda --> <line x1="20" y1="30" x2="210" y2="30" stroke="#0ea5e9" stroke-width="2" /> <line x1="20" y1="25" x2="20" y2="35" stroke="#0ea5e9" stroke-width="2" /> <line x1="210" y1="25" x2="210" y2="35" stroke="#0ea5e9" stroke-width="2" /> <text x="115" y="20" fill="#0ea5e9" font-size="12" text-anchor="middle" font-weight="bold">
+            λ (1 gelombang)
+           </text> <!-- Panah arah rambat dan getar --> <line x1="350" y1="30" x2="450" y2="30" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowhead2)" /> <text x="400" y="22" fill="#ef4444" font-size="10" text-anchor="middle">
+            Arah Rambat = Arah Getar
+           </text> <defs>
+            <marker id="arrowhead2" markerwidth="10" markerheight="7" refx="9" refy="3.5" orient="auto">
+             <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444" />
+            </marker>
+           </defs>
+          </svg>
+         </div>
+         <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white rounded-lg p-4">
+           <p class="font-bold text-orange-700">📌 Bentuk:</p>
+           <p class="text-slate-600">Memiliki <strong>Rapatan</strong> dan <strong>Regangan</strong></p>
+          </div>
+          <div class="bg-white rounded-lg p-4">
+           <p class="font-bold text-orange-700">📌 Contoh:</p>
+           <p class="text-slate-600">Gelombang slinki, gelombang suara</p>
+          </div>
+         </div>
+         <div class="mt-4 bg-orange-100 rounded-lg p-3">
+          <p class="text-orange-800 text-center font-medium">🔑 Satu gelombang (λ) = <strong>1 rapatan + 1 regangan</strong></p>
+         </div>
+        </div>
+        <div class="mt-6 flex justify-between"><button onclick="showSection(0)" class="interactive-btn bg-slate-200 text-slate-700 px-6 py-3 rounded-xl font-bold flex items-center gap-2"> <span>←</span> Sebelumnya </button> <button onclick="showSection(2)" class="interactive-btn bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2"> Selanjutnya <span>→</span> </button>
+        </div>
+       </div>
+      </section><!-- Section 2: Besaran Gelombang -->
+      <section id="section-2" class="content-section hidden">
+       <div class="card-glass rounded-3xl p-8 shadow-2xl">
+        <h2 class="text-3xl font-bold text-slate-800 mb-6 text-center" style="font-family: 'Quicksand', sans-serif;">📐 Besaran Penting dalam Gelombang</h2><!-- Ilustrasi Interaktif -->
+        <div class="illustration-container rounded-2xl p-6 mb-8">
+         <svg width="100%" height="200" viewbox="0 0 500 200"><!-- Garis keseimbangan --> <line x1="20" y1="100" x2="480" y2="100" stroke="#94a3b8" stroke-width="1" stroke-dasharray="5,5" /> <text x="495" y="100" fill="#94a3b8" font-size="10" text-anchor="end">
+           Keseimbangan
+          </text> <!-- Gelombang --> <path d="M20,100 Q80,20 140,100 T260,100 T380,100 T500,100" fill="none" stroke="#0ea5e9" stroke-width="3" /> <!-- Amplitudo --> <line x1="80" y1="100" x2="80" y2="35" stroke="#ef4444" stroke-width="2" /> <line x1="75" y1="35" x2="85" y2="35" stroke="#ef4444" stroke-width="2" /> <line x1="75" y1="100" x2="85" y2="100" stroke="#ef4444" stroke-width="2" /> <text x="65" y="70" fill="#ef4444" font-size="12" font-weight="bold">
+           A
+          </text> <text x="95" y="60" fill="#ef4444" font-size="10">
+           Amplitudo
+          </text> <!-- Lambda (Panjang Gelombang) --> <line x1="20" y1="170" x2="260" y2="170" stroke="#22c55e" stroke-width="2" /> <line x1="20" y1="165" x2="20" y2="175" stroke="#22c55e" stroke-width="2" /> <line x1="260" y1="165" x2="260" y2="175" stroke="#22c55e" stroke-width="2" /> <text x="140" y="190" fill="#22c55e" font-size="12" font-weight="bold" text-anchor="middle">
+           λ (Panjang Gelombang)
+          </text> <!-- Titik bukit dan lembah --> <circle cx="80" cy="35" r="5" fill="#9333ea" /> <circle cx="200" cy="165" r="5" fill="#9333ea" /> <text x="80" y="25" fill="#9333ea" font-size="10" text-anchor="middle">
+           Bukit
+          </text> <text x="200" y="185" fill="#9333ea" font-size="10" text-anchor="middle">
+           Lembah
+          </text>
+         </svg>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6"><!-- Amplitudo -->
+         <div class="bg-gradient-to-br from-red-50 to-rose-50 rounded-xl p-5 border-l-4 border-red-500">
+          <div class="flex items-center gap-3 mb-3"><span class="text-3xl">📏</span>
+           <h3 class="text-lg font-bold text-red-700">Amplitudo (A)</h3>
+          </div>
+          <p class="text-slate-700">Simpangan <strong>tertinggi</strong> dari getaran (jarak dari garis keseimbangan ke puncak)</p>
+          <div class="mt-3 bg-white rounded-lg p-3 text-center"><span class="text-red-600 font-mono font-bold">Satuan: meter (m)</span>
+          </div>
+         </div><!-- Periode -->
+         <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-5 border-l-4 border-blue-500">
+          <div class="flex items-center gap-3 mb-3"><span class="text-3xl">⏱️</span>
+           <h3 class="text-lg font-bold text-blue-700">Periode (T)</h3>
+          </div>
+          <p class="text-slate-700">Waktu yang dibutuhkan untuk <strong>satu gelombang penuh</strong></p>
+          <div class="mt-3 bg-white rounded-lg p-3 text-center"><span class="text-blue-600 font-mono font-bold">Satuan: sekon (s)</span>
+          </div>
+         </div><!-- Frekuensi -->
+         <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-5 border-l-4 border-green-500">
+          <div class="flex items-center gap-3 mb-3"><span class="text-3xl">🔄</span>
+           <h3 class="text-lg font-bold text-green-700">Frekuensi (f)</h3>
+          </div>
+          <p class="text-slate-700">Jumlah gelombang yang terjadi dalam <strong>satu detik</strong></p>
+          <div class="mt-3 bg-white rounded-lg p-3 text-center"><span class="text-green-600 font-mono font-bold">Satuan: Hertz (Hz)</span>
+          </div>
+         </div><!-- Cepat Rambat -->
+         <div class="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl p-5 border-l-4 border-purple-500">
+          <div class="flex items-center gap-3 mb-3"><span class="text-3xl">⚡</span>
+           <h3 class="text-lg font-bold text-purple-700">Cepat Rambat (V)</h3>
+          </div>
+          <p class="text-slate-700">Kecepatan gelombang merambat</p>
+          <div class="mt-3 bg-white rounded-lg p-3 text-center"><span class="text-purple-600 font-mono font-bold">Satuan: m/s</span>
+          </div>
+         </div>
+        </div><!-- Rumus -->
+        <div class="mt-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl p-6 text-white">
+         <h3 class="text-xl font-bold mb-4 text-center">📝 Rumus Penting</h3>
+         <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-white/20 rounded-xl p-4 text-center">
+           <p class="text-2xl font-bold font-mono">V = λ / T</p>
+           <p class="text-sm mt-2">atau</p>
+           <p class="text-2xl font-bold font-mono mt-1">V = λ × f</p>
+          </div>
+          <div class="bg-white/20 rounded-xl p-4 text-center">
+           <p class="text-2xl font-bold font-mono">f = 1 / T</p>
+           <p class="text-sm mt-2">Hubungan frekuensi &amp; periode</p>
+          </div>
+          <div class="bg-white/20 rounded-xl p-4 text-center">
+           <p class="text-2xl font-bold font-mono">λ = V × T</p>
+           <p class="text-sm mt-2">Panjang gelombang</p>
+          </div>
+         </div>
+        </div>
+        <div class="mt-6 flex justify-between"><button onclick="showSection(1)" class="interactive-btn bg-slate-200 text-slate-700 px-6 py-3 rounded-xl font-bold flex items-center gap-2"> <span>←</span> Sebelumnya </button> <button onclick="showSection(3)" class="interactive-btn bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2"> Selanjutnya <span>→</span> </button>
+        </div>
+       </div>
+      </section><!-- Section 3: Mekanik vs Elektromagnetik -->
+      <section id="section-3" class="content-section hidden">
+       <div class="card-glass rounded-3xl p-8 shadow-2xl">
+        <h2 class="text-3xl font-bold text-slate-800 mb-6 text-center" style="font-family: 'Quicksand', sans-serif;">⚡ Mekanik vs Elektromagnetik</h2>
+        <p class="text-slate-600 text-center mb-8">Berdasarkan medium perambatannya, gelombang dibagi menjadi:</p>
+        <div class="grid md:grid-cols-2 gap-6"><!-- Gelombang Mekanik -->
+         <div class="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-2xl p-6 border-2 border-teal-200">
+          <div class="text-center mb-4"><span class="text-5xl">🌊</span>
+           <h3 class="text-2xl font-bold text-teal-700 mt-2">Gelombang Mekanik</h3>
+          </div>
+          <div class="bg-teal-100 rounded-xl p-4 mb-4">
+           <p class="text-teal-800 font-bold text-center">✅ Membutuhkan MEDIUM untuk merambat</p>
+          </div><!-- Ilustrasi -->
+          <div class="illustration-container rounded-xl p-4 mb-4 h-32 flex items-center justify-center">
+           <div class="flex items-center gap-4">
+            <div class="text-center"><span class="text-3xl wave-animation">🌊</span>
+             <p class="text-xs text-slate-600 mt-1">Air</p>
+            </div>
+            <div class="text-center"><span class="text-3xl wave-animation" style="animation-delay: 0.3s;">🪢</span>
+             <p class="text-xs text-slate-600 mt-1">Tali</p>
+            </div>
+            <div class="text-center"><span class="text-3xl wave-animation" style="animation-delay: 0.6s;">🔊</span>
+             <p class="text-xs text-slate-600 mt-1">Suara</p>
+            </div>
+            <div class="text-center"><span class="text-3xl wave-animation" style="animation-delay: 0.9s;">🏔️</span>
+             <p class="text-xs text-slate-600 mt-1">Gempa</p>
+            </div>
+           </div>
+          </div>
+          <div class="space-y-2">
+           <p class="flex items-center gap-2 text-slate-700"><span class="text-lg">🌊</span> Gelombang laut</p>
+           <p class="flex items-center gap-2 text-slate-700"><span class="text-lg">🪢</span> Gelombang tali</p>
+           <p class="flex items-center gap-2 text-slate-700"><span class="text-lg">🔊</span> Gelombang suara (udara)</p>
+           <p class="flex items-center gap-2 text-slate-700"><span class="text-lg">🏔️</span> Gelombang gempa (tanah)</p>
+          </div>
+         </div><!-- Gelombang Elektromagnetik -->
+         <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border-2 border-amber-200">
+          <div class="text-center mb-4"><span class="text-5xl">☀️</span>
+           <h3 class="text-2xl font-bold text-amber-700 mt-2">Gelombang Elektromagnetik</h3>
+          </div>
+          <div class="bg-amber-100 rounded-xl p-4 mb-4">
+           <p class="text-amber-800 font-bold text-center">✨ TIDAK membutuhkan medium (bisa di ruang hampa)</p>
+          </div><!-- Ilustrasi -->
+          <div class="illustration-container rounded-xl p-4 mb-4 h-32 flex items-center justify-center bg-gradient-to-r from-slate-900 to-slate-800">
+           <div class="flex items-center gap-4">
+            <div class="text-center"><span class="text-3xl pulse-animation">☀️</span>
+             <p class="text-xs text-white mt-1">Cahaya</p>
+            </div><span class="text-white text-2xl">→</span>
+            <div class="text-center"><span class="text-2xl">🌌</span>
+             <p class="text-xs text-white mt-1">Ruang Hampa</p>
+            </div><span class="text-white text-2xl">→</span>
+            <div class="text-center"><span class="text-3xl">🌍</span>
+             <p class="text-xs text-white mt-1">Bumi</p>
+            </div>
+           </div>
+          </div>
+          <div class="space-y-2">
+           <p class="flex items-center gap-2 text-slate-700"><span class="text-lg">☀️</span> Cahaya matahari</p>
+           <p class="flex items-center gap-2 text-slate-700"><span class="text-lg">📻</span> Gelombang radio</p>
+           <p class="flex items-center gap-2 text-slate-700"><span class="text-lg">📡</span> Gelombang mikro</p>
+           <p class="flex items-center gap-2 text-slate-700"><span class="text-lg">🔬</span> Sinar-X, Gamma</p>
+          </div>
+         </div>
+        </div><!-- Spektrum Elektromagnetik -->
+        <div class="mt-8 bg-gradient-to-r from-violet-500 via-cyan-500 via-green-500 via-yellow-500 to-red-500 rounded-2xl p-1">
+         <div class="bg-white rounded-xl p-4">
+          <h3 class="text-center font-bold text-slate-700 mb-3">🌈 Spektrum Gelombang Elektromagnetik</h3>
+          <div class="flex justify-between text-xs text-slate-600 px-2"><span>Gamma</span> <span>X-ray</span> <span>UV</span> <span>Cahaya</span> <span>Infrared</span> <span>Mikro</span> <span>Radio</span>
+          </div>
+          <div class="flex justify-between text-xs text-slate-500 px-2 mt-1"><span>← λ pendek</span> <span>λ panjang →</span>
+          </div>
+         </div>
+        </div>
+        <div class="mt-6 flex justify-between"><button onclick="showSection(2)" class="interactive-btn bg-slate-200 text-slate-700 px-6 py-3 rounded-xl font-bold flex items-center gap-2"> <span>←</span> Sebelumnya </button> <button onclick="showSection(4)" class="interactive-btn bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2"> Selanjutnya <span>→</span> </button>
+        </div>
+       </div>
+      </section><!-- Section 4: Sinar-X -->
+      <section id="section-4" class="content-section hidden">
+       <div class="card-glass rounded-3xl p-8 shadow-2xl">
+        <h2 class="text-3xl font-bold text-slate-800 mb-6 text-center" style="font-family: 'Quicksand', sans-serif;">🔬 Fokus Sains: Sinar-X (Rontgen)</h2>
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+         <div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-indigo-700 mb-4">👨‍🔬 Penemu</h3>
+          <div class="flex items-center gap-4">
+           <div class="w-20 h-20 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-full flex items-center justify-center text-4xl">
+            👤
+           </div>
+           <div>
+            <p class="text-2xl font-bold text-slate-800">Wilhelm Röntgen</p>
+            <p class="text-slate-600">Fisikawan Jerman (1895)</p>
+            <p class="text-sm text-indigo-600">🏆 Nobel Fisika 1901</p>
+           </div>
+          </div>
+         </div>
+         <div class="bg-gradient-to-br from-cyan-50 to-teal-50 rounded-2xl p-6">
+          <h3 class="text-xl font-bold text-cyan-700 mb-4">📊 Karakteristik</h3>
+          <div class="space-y-3">
+           <div class="flex items-center gap-3 bg-white rounded-lg p-3"><span class="text-2xl">〰️</span>
+            <p class="text-slate-700">Panjang gelombang <strong>sangat pendek</strong></p>
+           </div>
+           <div class="flex items-center gap-3 bg-white rounded-lg p-3"><span class="text-2xl">⚡</span>
+            <p class="text-slate-700">Energi <strong>sangat tinggi</strong></p>
+           </div>
+          </div>
+         </div>
+        </div><!-- Ilustrasi Cara Kerja -->
+        <div class="illustration-container rounded-2xl p-6 mb-8">
+         <h3 class="text-lg font-bold text-slate-700 mb-4 text-center">🎯 Cara Kerja Sinar-X</h3>
+         <div class="relative">
+          <svg width="100%" height="250" viewbox="0 0 600 250"><!-- Mesin Rontgen --> <rect x="30" y="50" width="80" height="120" rx="10" fill="#6366f1" /> <text x="70" y="115" fill="white" font-size="12" text-anchor="middle" font-weight="bold">
+            MESIN
+           </text> <text x="70" y="130" fill="white" font-size="10" text-anchor="middle">
+            RONTGEN
+           </text> <!-- Sinar-X --> <g class="pulse-animation">
+            <line x1="110" y1="90" x2="250" y2="90" stroke="#eab308" stroke-width="3" stroke-dasharray="10,5" />
+            <line x1="110" y1="110" x2="250" y2="110" stroke="#eab308" stroke-width="3" stroke-dasharray="10,5" />
+            <line x1="110" y1="130" x2="250" y2="130" stroke="#eab308" stroke-width="3" stroke-dasharray="10,5" />
+           </g> <text x="180" y="75" fill="#eab308" font-size="11" text-anchor="middle" font-weight="bold">
+            Sinar-X →
+           </text> <!-- Tubuh Manusia --> <ellipse cx="300" cy="110" rx="50" ry="70" fill="#fecaca" stroke="#f87171" stroke-width="2" /> <!-- Otot --> <ellipse cx="300" cy="110" rx="35" ry="55" fill="#fca5a5" /> <!-- Tulang --> <rect x="285" y="60" width="30" height="100" rx="5" fill="white" stroke="#94a3b8" stroke-width="2" /> <text x="300" y="200" fill="#64748b" font-size="11" text-anchor="middle">
+            Tubuh Pasien
+           </text> <!-- Sinar menembus otot --> <g class="pulse-animation" style="animation-delay: 0.5s;">
+            <line x1="350" y1="90" x2="450" y2="90" stroke="#eab308" stroke-width="2" stroke-dasharray="5,3" />
+            <line x1="350" y1="130" x2="450" y2="130" stroke="#eab308" stroke-width="2" stroke-dasharray="5,3" />
+           </g> <!-- Sinar tertahan tulang --> <text x="300" y="115" fill="#64748b" font-size="8" text-anchor="middle">
+            ❌ tertahan
+           </text> <!-- Film/Detektor --> <rect x="470" y="40" width="20" height="140" fill="#1e293b" rx="3" /> <text x="480" y="200" fill="#64748b" font-size="11" text-anchor="middle">
+            Film
+           </text> <!-- Hasil --> <rect x="520" y="50" width="60" height="80" fill="#0f172a" rx="5" /> <rect x="540" y="60" width="20" height="60" fill="white" rx="3" /> <text x="550" y="150" fill="#64748b" font-size="11" text-anchor="middle">
+            Hasil
+           </text> <!-- Keterangan --> <g transform="translate(120, 220)">
+            <rect width="150" height="25" fill="#fef3c7" rx="5" />
+            <text x="75" y="17" fill="#92400e" font-size="10" text-anchor="middle">
+             ✓ Menembus otot (lunak)
+            </text>
+           </g> <g transform="translate(290, 220)">
+            <rect width="150" height="25" fill="#fee2e2" rx="5" />
+            <text x="75" y="17" fill="#991b1b" font-size="10" text-anchor="middle">
+             ✗ Tertahan tulang (padat)
+            </text>
+           </g>
+          </svg>
+         </div>
+        </div><!-- Aplikasi -->
+        <div class="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl p-6 text-white">
+         <h3 class="text-xl font-bold mb-4 text-center">🏥 Aplikasi di Dunia Medis</h3>
+         <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-white/20 rounded-xl p-4 text-center"><span class="text-4xl">🦴</span>
+           <p class="mt-2 font-medium">Melihat kondisi tulang</p>
+          </div>
+          <div class="bg-white/20 rounded-xl p-4 text-center"><span class="text-4xl">🦷</span>
+           <p class="mt-2 font-medium">Pemeriksaan gigi</p>
+          </div>
+          <div class="bg-white/20 rounded-xl p-4 text-center"><span class="text-4xl">🫁</span>
+           <p class="mt-2 font-medium">Deteksi penyakit paru</p>
+          </div>
+         </div>
+         <p class="text-center mt-4 text-white/90">💡 Keuntungan: Melihat kondisi dalam tubuh <strong>tanpa pembedahan!</strong></p>
+        </div>
+        <div class="mt-6 flex justify-between"><button onclick="showSection(3)" class="interactive-btn bg-slate-200 text-slate-700 px-6 py-3 rounded-xl font-bold flex items-center gap-2"> <span>←</span> Sebelumnya </button> <button onclick="showSection(5)" class="interactive-btn bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2"> Selanjutnya <span>→</span> </button>
+        </div>
+       </div>
+      </section><!-- Section 5: Bunyi & Pendengaran -->
+      <section id="section-5" class="content-section hidden">
+       <div class="card-glass rounded-3xl p-8 shadow-2xl">
+        <h2 class="text-3xl font-bold text-slate-800 mb-6 text-center" style="font-family: 'Quicksand', sans-serif;">🔊 Memahami Bunyi &amp; Pendengaran</h2>
+        <div class="info-card rounded-xl p-5 mb-8">
+         <p class="text-lg text-slate-700"><strong>Bunyi</strong> adalah <span class="text-cyan-600 font-bold">gelombang longitudinal</span> yang membutuhkan medium (udara, air, benda padat) untuk merambat.</p>
+        </div><!-- Pembagian Bunyi -->
+        <h3 class="text-xl font-bold text-slate-700 mb-4 text-center">📊 Pembagian Bunyi Berdasarkan Frekuensi</h3><!-- Skala Frekuensi Visual -->
+        <div class="illustration-container rounded-2xl p-6 mb-6">
+         <div class="relative h-16 bg-gradient-to-r from-indigo-500 via-green-500 to-orange-500 rounded-full overflow-hidden">
+          <div class="absolute inset-0 flex items-center">
+           <div class="w-1/3 border-r-2 border-white/50 text-center"><span class="text-white text-xs font-bold">INFRASONIK</span>
+           </div>
+           <div class="w-1/3 border-r-2 border-white/50 text-center"><span class="text-white text-xs font-bold">AUDIOSONIK</span>
+           </div>
+           <div class="w-1/3 text-center"><span class="text-white text-xs font-bold">ULTRASONIK</span>
+           </div>
+          </div>
+         </div>
+         <div class="flex justify-between mt-2 px-4 text-sm text-slate-600"><span>0 Hz</span> <span>20 Hz</span> <span>20.000 Hz</span> <span>∞</span>
+         </div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4"><!-- Infrasonik -->
+         <div class="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-5 border-2 border-indigo-200">
+          <div class="text-center mb-4">
+           <div class="w-16 h-16 bg-indigo-500 rounded-full flex items-center justify-center mx-auto mb-2"><span class="text-3xl">🦗</span>
+           </div>
+           <h4 class="text-lg font-bold text-indigo-700">Infrasonik</h4>
+           <p class="text-2xl font-bold text-indigo-500">&lt; 20 Hz</p>
+          </div>
+          <div class="bg-white rounded-lg p-3">
+           <p class="text-sm text-slate-600 font-medium mb-2">Dapat didengar oleh:</p>
+           <div class="flex justify-center gap-3">
+            <div class="text-center"><span class="text-2xl">🦗</span>
+             <p class="text-xs">Jangkrik</p>
+            </div>
+            <div class="text-center"><span class="text-2xl">🐕</span>
+             <p class="text-xs">Anjing</p>
+            </div>
+            <div class="text-center"><span class="text-2xl">🐘</span>
+             <p class="text-xs">Gajah</p>
+            </div>
+           </div>
+          </div>
+         </div><!-- Audiosonik -->
+         <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-5 border-2 border-green-300 transform scale-105">
+          <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+           MANUSIA
+          </div>
+          <div class="text-center mb-4 mt-2">
+           <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-2"><span class="text-3xl">👂</span>
+           </div>
+           <h4 class="text-lg font-bold text-green-700">Audiosonik</h4>
+           <p class="text-2xl font-bold text-green-500">20 - 20.000 Hz</p>
+          </div>
+          <div class="bg-white rounded-lg p-3">
+           <p class="text-sm text-slate-600 font-medium mb-2">Rentang pendengaran:</p>
+           <div class="flex justify-center">
+            <div class="text-center"><span class="text-4xl">👨‍👩‍👧‍👦</span>
+             <p class="text-sm font-medium text-green-700">Manusia</p>
+            </div>
+           </div>
+          </div>
+         </div><!-- Ultrasonik -->
+         <div class="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-5 border-2 border-orange-200">
+          <div class="text-center mb-4">
+           <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-2"><span class="text-3xl">🦇</span>
+           </div>
+           <h4 class="text-lg font-bold text-orange-700">Ultrasonik</h4>
+           <p class="text-2xl font-bold text-orange-500">&gt; 20.000 Hz</p>
+          </div>
+          <div class="bg-white rounded-lg p-3">
+           <p class="text-sm text-slate-600 font-medium mb-2">Dapat didengar oleh:</p>
+           <div class="flex justify-center gap-3">
+            <div class="text-center"><span class="text-2xl">🦇</span>
+             <p class="text-xs">Kelelawar</p>
+            </div>
+            <div class="text-center"><span class="text-2xl">🐬</span>
+             <p class="text-xs">Lumba-lumba</p>
+            </div>
+            <div class="text-center"><span class="text-2xl">🐕</span>
+             <p class="text-xs">Anjing</p>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="mt-6 bg-amber-50 rounded-xl p-4 border border-amber-200">
+         <p class="text-amber-800 text-center">💡 <strong>Tahukah kamu?</strong> Anjing dapat mendengar bunyi infrasonik DAN ultrasonik, sehingga mereka bisa mendengar suara yang tidak bisa kita dengar!</p>
+        </div>
+        <div class="mt-6 flex justify-between"><button onclick="showSection(4)" class="interactive-btn bg-slate-200 text-slate-700 px-6 py-3 rounded-xl font-bold flex items-center gap-2"> <span>←</span> Sebelumnya </button> <button onclick="showSection(6)" class="interactive-btn bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2"> Selanjutnya <span>→</span> </button>
+        </div>
+       </div>
+      </section><!-- Section 6: Ekolokasi -->
+      <section id="section-6" class="content-section hidden">
+       <div class="card-glass rounded-3xl p-8 shadow-2xl">
+        <h2 class="text-3xl font-bold text-slate-800 mb-6 text-center" style="font-family: 'Quicksand', sans-serif;">🦇 Keajaiban Ekolokasi</h2>
+        <div class="info-card rounded-xl p-5 mb-8">
+         <p class="text-lg text-slate-700"><strong>Ekolokasi</strong> adalah kemampuan beberapa hewan menggunakan <span class="text-cyan-600 font-bold">pantulan bunyi (gema)</span> untuk "melihat" dalam kegelapan.</p>
+        </div><!-- Ilustrasi Ekolokasi -->
+        <div class="illustration-container rounded-2xl p-6 mb-8 bg-gradient-to-b from-slate-800 to-slate-900">
+         <h3 class="text-lg font-bold text-white mb-4 text-center">🎯 Cara Kerja Ekolokasi</h3>
+         <svg width="100%" height="280" viewbox="0 0 600 280"><!-- Background gelap (gua) --> <rect x="0" y="0" width="600" height="280" fill="transparent" /> <!-- Kelelawar --> <g transform="translate(80, 100)">
+           <text font-size="60" y="30">
+            🦇
+           </text>
+           <text x="30" y="80" fill="#a3e635" font-size="11" text-anchor="middle" font-weight="bold">
+            KELELAWAR
+           </text>
+          </g> <!-- Gelombang keluar --> <g class="pulse-animation">
+           <path d="M150,120 Q200,100 250,90" fill="none" stroke="#facc15" stroke-width="3" stroke-dasharray="10,5" />
+           <path d="M150,120 Q200,120 250,120" fill="none" stroke="#facc15" stroke-width="3" stroke-dasharray="10,5" />
+           <path d="M150,120 Q200,140 250,150" fill="none" stroke="#facc15" stroke-width="3" stroke-dasharray="10,5" />
+          </g> <text x="200" y="75" fill="#facc15" font-size="10" font-weight="bold">
+           Suara ultrasonik →
+          </text> <!-- Mangsa (ngengat) --> <g transform="translate(350, 100)">
+           <circle cx="30" cy="30" r="40" fill="#374151" stroke="#6b7280" />
+           <text font-size="40" x="10" y="45">
+            🦋
+           </text>
+           <text x="30" y="90" fill="#f87171" font-size="11" text-anchor="middle" font-weight="bold">
+            MANGSA
+           </text>
+          </g> <!-- Gelombang pantul --> <g class="pulse-animation" style="animation-delay: 0.5s;">
+           <path d="M350,90 Q300,80 250,70" fill="none" stroke="#22d3ee" stroke-width="3" stroke-dasharray="10,5" />
+           <path d="M350,120 Q300,120 250,120" fill="none" stroke="#22d3ee" stroke-width="3" stroke-dasharray="10,5" />
+           <path d="M350,150 Q300,160 250,170" fill="none" stroke="#22d3ee" stroke-width="3" stroke-dasharray="10,5" />
+          </g> <text x="300" y="190" fill="#22d3ee" font-size="10" font-weight="bold">
+           ← Gema kembali
+          </text> <!-- Telinga menangkap --> <g transform="translate(150, 180)">
+           <ellipse cx="30" cy="20" rx="50" ry="30" fill="#065f46" opacity="0.3" />
+           <text x="30" y="60" fill="#10b981" font-size="10" text-anchor="middle">
+            Telinga menangkap
+           </text>
+           <text x="30" y="75" fill="#10b981" font-size="10" text-anchor="middle">
+            pantulan suara
+           </text>
+          </g> <!-- Langkah-langkah --> <g transform="translate(450, 50)">
+           <rect width="140" height="180" rx="10" fill="#1f2937" />
+           <text x="70" y="25" fill="white" font-size="12" text-anchor="middle" font-weight="bold">
+            Langkah:
+           </text>
+           <text x="15" y="50" fill="#facc15" font-size="10">
+            1. Mengeluarkan
+           </text>
+           <text x="15" y="65" fill="#facc15" font-size="10">
+            suara ultrasonik
+           </text>
+           <text x="15" y="90" fill="#f87171" font-size="10">
+            2. Suara mengenai
+           </text>
+           <text x="15" y="105" fill="#f87171" font-size="10">
+            benda/mangsa
+           </text>
+           <text x="15" y="130" fill="#22d3ee" font-size="10">
+            3. Suara memantul
+           </text>
+           <text x="15" y="145" fill="#22d3ee" font-size="10">
+            kembali (gema)
+           </text>
+           <text x="15" y="170" fill="#10b981" font-size="10">
+            4. Telinga menangkap
+           </text>
+           <text x="15" y="185" fill="#10b981" font-size="10">
+            → lokasi terdeteksi!
+           </text>
+          </g>
+         </svg>
+        </div><!-- Hewan yang menggunakan ekolokasi -->
+        <h3 class="text-xl font-bold text-slate-700 mb-4 text-center">🐾 Hewan dengan Kemampuan Ekolokasi</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+         <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-6 border-2 border-purple-200">
+          <div class="flex items-center gap-4 mb-4"><span class="text-6xl">🦇</span>
+           <div>
+            <h4 class="text-2xl font-bold text-purple-700">Kelelawar</h4>
+            <p class="text-slate-600">Berburu di malam hari</p>
+           </div>
+          </div>
+          <div class="bg-white rounded-xl p-4">
+           <ul class="space-y-2 text-slate-700">
+            <li class="flex items-center gap-2"><span>🎯</span> Mendeteksi serangga kecil dalam kegelapan</li>
+            <li class="flex items-center gap-2"><span>🚀</span> Menghindari rintangan saat terbang</li>
+            <li class="flex items-center gap-2"><span>📍</span> Menemukan jalan di dalam gua gelap</li>
+           </ul>
+          </div>
+         </div>
+         <div class="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-2xl p-6 border-2 border-cyan-200">
+          <div class="flex items-center gap-4 mb-4"><span class="text-6xl">🐬</span>
+           <div>
+            <h4 class="text-2xl font-bold text-cyan-700">Lumba-lumba</h4>
+            <p class="text-slate-600">Navigasi di laut dalam</p>
+           </div>
+          </div>
+          <div class="bg-white rounded-xl p-4">
+           <ul class="space-y-2 text-slate-700">
+            <li class="flex items-center gap-2"><span>🐟</span> Mencari ikan di air keruh</li>
+            <li class="flex items-center gap-2"><span>🗣️</span> Berkomunikasi dengan kelompok</li>
+            <li class="flex items-center gap-2"><span>🧭</span> Navigasi di kedalaman laut</li>
+           </ul>
+          </div>
+         </div>
+        </div>
+        <div class="mt-6 bg-gradient-to-r from-amber-100 to-yellow-100 rounded-xl p-4 border border-amber-300">
+         <p class="text-amber-800 text-center">🔬 <strong>Aplikasi Teknologi:</strong> Manusia meniru ekolokasi untuk membuat <strong>SONAR</strong> (kapal selam) dan <strong>USG</strong> (pemeriksaan kehamilan)!</p>
+        </div>
+        <div class="mt-6 flex justify-between"><button onclick="showSection(5)" class="interactive-btn bg-slate-200 text-slate-700 px-6 py-3 rounded-xl font-bold flex items-center gap-2"> <span>←</span> Sebelumnya </button> <button onclick="showSection(7)" class="interactive-btn bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2"> Selanjutnya <span>→</span> </button>
+        </div>
+       </div>
+      </section><!-- Section 7: Aktivitas Interaktif -->
+      <section id="section-7" class="content-section hidden">
+       <div class="card-glass rounded-3xl p-8 shadow-2xl">
+        <h2 class="text-3xl font-bold text-slate-800 mb-6 text-center" style="font-family: 'Quicksand', sans-serif;">🧪 Aktivitas Interaktif</h2><!-- Simulasi Gelombang -->
+        <div class="experiment-card rounded-2xl p-6 mb-6">
+         <h3 class="text-xl font-bold text-emerald-700 mb-4 flex items-center gap-2"><span class="text-2xl">🌊</span> Simulasi Gelombang Tali</h3>
+         <div class="bg-white rounded-xl p-6 mb-4">
+          <div class="mb-4"><label class="block text-slate-700 font-medium mb-2">Amplitudo (Tinggi Gelombang)</label> <input type="range" id="amplitude-slider" min="10" max="50" value="30" class="w-full h-3 bg-emerald-200 rounded-lg appearance-none cursor-pointer">
+           <div class="flex justify-between text-sm text-slate-500"><span>Rendah</span> <span id="amplitude-value">30</span> <span>Tinggi</span>
+           </div>
+          </div>
+          <div class="mb-4"><label class="block text-slate-700 font-medium mb-2">Frekuensi (Jumlah Gelombang)</label> <input type="range" id="frequency-slider" min="1" max="5" value="2" class="w-full h-3 bg-blue-200 rounded-lg appearance-none cursor-pointer">
+           <div class="flex justify-between text-sm text-slate-500"><span>Sedikit</span> <span id="frequency-value">2</span> <span>Banyak</span>
+           </div>
+          </div><!-- Canvas untuk gelombang -->
+          <div class="illustration-container rounded-xl p-4">
+           <svg id="wave-canvas" width="100%" height="150" viewbox="0 0 500 150"><line x1="0" y1="75" x2="500" y2="75" stroke="#94a3b8" stroke-width="1" stroke-dasharray="5,5" /> <path id="wave-path" d="" fill="none" stroke="#10b981" stroke-width="4" />
+           </svg>
+          </div>
+         </div>
+         <div class="bg-emerald-100 rounded-lg p-4">
+          <p class="text-emerald-800">💡 <strong>Pengamatan:</strong> Geser slider untuk melihat bagaimana amplitudo dan frekuensi mempengaruhi bentuk gelombang!</p>
+         </div>
+        </div><!-- Eksperimen Pluit Sedotan -->
+        <div class="experiment-card rounded-2xl p-6 mb-6" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);">
+         <h3 class="text-xl font-bold text-amber-700 mb-4 flex items-center gap-2"><span class="text-2xl">🎵</span> Eksperimen Virtual: Pluit Sedotan</h3>
+         <div class="bg-white rounded-xl p-6 mb-4">
+          <p class="text-slate-700 mb-4">Klik sedotan dengan panjang berbeda dan dengarkan perbedaan nadanya!</p>
+          <div class="flex items-end justify-center gap-4 h-48"><button onclick="playNote('high')" class="interactive-btn flex flex-col items-center">
+            <div class="w-8 bg-gradient-to-b from-pink-400 to-pink-500 rounded-t-full" style="height: 60px;"></div><span class="text-sm mt-2 font-medium">Pendek</span> <span class="text-xs text-pink-600">Nada Tinggi 🔊</span> </button> <button onclick="playNote('medium')" class="interactive-btn flex flex-col items-center">
+            <div class="w-8 bg-gradient-to-b from-blue-400 to-blue-500 rounded-t-full" style="height: 100px;"></div><span class="text-sm mt-2 font-medium">Sedang</span> <span class="text-xs text-blue-600">Nada Sedang 🔊</span> </button> <button onclick="playNote('low')" class="interactive-btn flex flex-col items-center">
+            <div class="w-8 bg-gradient-to-b from-green-400 to-green-500 rounded-t-full" style="height: 150px;"></div><span class="text-sm mt-2 font-medium">Panjang</span> <span class="text-xs text-green-600">Nada Rendah 🔊</span> </button>
+          </div>
+          <div id="note-feedback" class="mt-4 text-center text-lg font-medium text-slate-600">
+           👆 Klik sedotan untuk mendengar simulasi nada!
+          </div>
+         </div>
+         <div class="bg-amber-100 rounded-lg p-4">
+          <p class="text-amber-800">🔑 <strong>Kesimpulan:</strong> Semakin <strong>pendek</strong> sedotan, semakin <strong>tinggi</strong> nadanya! Ini karena kolom udara yang bergetar lebih pendek, menghasilkan frekuensi lebih tinggi.</p>
+         </div>
+        </div><!-- Kalkulator Gelombang -->
+        <div class="bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-6 border-l-4 border-violet-500">
+         <h3 class="text-xl font-bold text-violet-700 mb-4 flex items-center gap-2"><span class="text-2xl">🧮</span> Kalkulator Cepat Rambat Gelombang</h3>
+         <div class="bg-white rounded-xl p-6">
+          <div class="grid md:grid-cols-2 gap-4 mb-4">
+           <div><label class="block text-slate-700 font-medium mb-2">Panjang Gelombang (λ) dalam meter</label> <input type="number" id="lambda-input" placeholder="Contoh: 2" class="w-full px-4 py-3 border-2 border-violet-200 rounded-lg focus:border-violet-500 focus:outline-none" min="0" step="0.1">
+           </div>
+           <div><label class="block text-slate-700 font-medium mb-2">Frekuensi (f) dalam Hz</label> <input type="number" id="freq-input" placeholder="Contoh: 50" class="w-full px-4 py-3 border-2 border-violet-200 rounded-lg focus:border-violet-500 focus:outline-none" min="0" step="0.1">
+           </div>
+          </div><button onclick="calculateWaveSpeed()" class="w-full interactive-btn bg-gradient-to-r from-violet-500 to-purple-500 text-white py-3 rounded-xl font-bold text-lg"> 🔢 Hitung Cepat Rambat (V) </button>
+          <div id="calc-result" class="mt-4 p-4 bg-violet-100 rounded-xl text-center hidden">
+           <p class="text-violet-800 text-lg"><strong>V = λ × f</strong></p>
+           <p id="calc-formula" class="text-2xl font-bold text-violet-600 mt-2"></p>
+          </div>
+         </div>
+        </div>
+        <div class="mt-6 flex justify-between"><button onclick="showSection(6)" class="interactive-btn bg-slate-200 text-slate-700 px-6 py-3 rounded-xl font-bold flex items-center gap-2"> <span>←</span> Sebelumnya </button> <button onclick="showSection(8)" class="interactive-btn bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2"> Ke Soal HOTS <span>→</span> </button>
+        </div>
+       </div>
+      </section><!-- Section 8: Soal HOTS -->
+      <section id="section-8" class="content-section hidden">
+       <div class="card-glass rounded-3xl p-8 shadow-2xl">
+        <h2 class="text-3xl font-bold text-slate-800 mb-2 text-center" style="font-family: 'Quicksand', sans-serif;">📝 Soal HOTS</h2>
+        <p class="text-slate-600 text-center mb-6">Higher Order Thinking Skills - Uji Pemahamanmu!</p>
+        <div id="quiz-container"><!-- Quiz akan di-render oleh JavaScript -->
+        </div>
+        <div id="quiz-result" class="hidden mt-6 p-6 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl text-white text-center">
+         <h3 class="text-2xl font-bold mb-2">🎉 Hasil Kuis</h3>
+         <p class="text-4xl font-bold" id="score-display">0/10</p>
+         <p class="mt-2" id="score-message"></p><button onclick="resetQuiz()" class="mt-4 bg-white text-emerald-600 px-6 py-3 rounded-xl font-bold interactive-btn"> 🔄 Ulangi Kuis </button>
+        </div>
+        <div class="mt-6 flex justify-between"><button onclick="showSection(7)" class="interactive-btn bg-slate-200 text-slate-700 px-6 py-3 rounded-xl font-bold flex items-center gap-2"> <span>←</span> Sebelumnya </button> <button id="submit-quiz-btn" onclick="submitQuiz()" class="interactive-btn bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2"> ✅ Selesai &amp; Lihat Nilai </button>
+        </div>
+       </div>
+      </section>
+     </div>
+    </main>
+   </div><!-- Footer -->
+   <footer class="bg-white/10 backdrop-blur-md border-t border-white/20 px-4 py-3 flex-shrink-0">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+     <p id="footer-text" class="text-white/80 text-sm">© 2026 Algian Manggara, S.Agr</p><a href="https://i.imgur.com/mRmw86t.jpeg" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-white/80 hover:text-white transition-colors"> <img src="https://i.imgur.com/mRmw86t.jpeg" alt="Profile" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='#0ea5e9'; this.alt='Profile';" class="w-8 h-8 rounded-full object-cover border-2 border-white/50"> <span class="text-sm">Pembuat</span> </a>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Menjelajahi Dunia Gelombang',
+      footer_text: '© 2026 Algian Manggara, S.Agr',
+      background_color: '#0c4a6e',
+      surface_color: '#ffffff',
+      text_color: '#1e293b',
+      primary_action_color: '#0ea5e9',
+      secondary_action_color: '#64748b'
+    };
+    
+    let config = { ...defaultConfig };
+    let currentSection = 0;
+    let userAnswers = {};
+    let quizSubmitted = false;
+    
+    // HOTS Questions
+    const hotsQuestions = [
+      {
+        id: 1,
+        question: "Saat gempa bumi terjadi di dasar laut, gelombang tsunami merambat sangat cepat di laut dalam namun melambat saat mendekati pantai. Mengapa hal ini terjadi?",
+        options: [
+          "Karena air laut di pantai lebih asin",
+          "Karena kedalaman air berkurang sehingga medium perambatan berubah",
+          "Karena gelombang kehilangan energi",
+          "Karena suhu air di pantai lebih hangat"
+        ],
+        correct: 1,
+        explanation: "Cepat rambat gelombang di air dipengaruhi oleh kedalaman. Saat mendekati pantai, kedalaman berkurang sehingga gelombang melambat dan tingginya meningkat."
+      },
+      {
+        id: 2,
+        question: "Kelelawar dapat berburu dalam kegelapan total menggunakan ekolokasi. Jika ada hujan deras, kemampuan berburu kelelawar akan terganggu. Analisis penyebabnya!",
+        options: [
+          "Suara hujan mengacaukan pantulan ultrasonik dari mangsa",
+          "Kelelawar takut basah",
+          "Mangsa bersembunyi saat hujan",
+          "Ultrasonik tidak bisa menembus air hujan"
+        ],
+        correct: 0,
+        explanation: "Tetesan air hujan memantulkan gelombang ultrasonik, menciptakan 'noise' yang mengacaukan kemampuan kelelawar mendeteksi pantulan dari mangsa sebenarnya."
+      },
+      {
+        id: 3,
+        question: "Sebuah ambulans berbunyi 'nging-nging' mendekati Anda, lalu menjauh. Mengapa nada sirine terdengar berbeda saat mendekat dan menjauh?",
+        options: [
+          "Karena sopir ambulans mengubah volume sirine",
+          "Karena efek Doppler - frekuensi gelombang berubah relatif terhadap pengamat",
+          "Karena jarak mempengaruhi kecepatan suara",
+          "Karena telinga kita lelah mendengar"
+        ],
+        correct: 1,
+        explanation: "Efek Doppler menyebabkan frekuensi terdengar lebih tinggi saat sumber mendekat (gelombang 'terkompresi') dan lebih rendah saat menjauh (gelombang 'teregang')."
+      },
+      {
+        id: 4,
+        question: "Mengapa astronot di luar angkasa tidak bisa berbicara langsung tanpa alat komunikasi radio, padahal mereka berdekatan?",
+        options: [
+          "Karena helm menghalangi suara",
+          "Karena tidak ada medium (udara) untuk merambatkan gelombang suara di ruang hampa",
+          "Karena suara diserap oleh baju astronot",
+          "Karena tekanan di luar angkasa terlalu tinggi"
+        ],
+        correct: 1,
+        explanation: "Bunyi adalah gelombang mekanik yang membutuhkan medium. Di ruang hampa, tidak ada partikel udara untuk mentransmisikan getaran suara. Radio menggunakan gelombang elektromagnetik yang tidak butuh medium."
+      },
+      {
+        id: 5,
+        question: "Dokter menggunakan USG untuk memeriksa janin dalam kandungan. Mengapa USG menggunakan gelombang ultrasonik, bukan infrasonik atau audiosonik?",
+        options: [
+          "Karena ultrasonik lebih murah diproduksi",
+          "Karena frekuensi tinggi menghasilkan resolusi gambar lebih detail dan aman bagi janin",
+          "Karena infrasonik berbahaya bagi janin",
+          "Karena audiosonik terlalu keras untuk ibu hamil"
+        ],
+        correct: 1,
+        explanation: "Ultrasonik memiliki panjang gelombang pendek yang menghasilkan resolusi tinggi untuk pencitraan detail. Selain itu, intensitas yang digunakan aman dan tidak merusak jaringan."
+      },
+      {
+        id: 6,
+        question: "Seutas tali digetarkan dengan frekuensi tetap. Jika tegangan tali ditambah, apa yang terjadi pada panjang gelombang?",
+        options: [
+          "Panjang gelombang berkurang",
+          "Panjang gelombang bertambah karena cepat rambat meningkat",
+          "Panjang gelombang tetap",
+          "Gelombang berhenti terbentuk"
+        ],
+        correct: 1,
+        explanation: "Tegangan yang lebih besar meningkatkan cepat rambat (V). Dengan f tetap dan V = λf, maka λ harus bertambah agar persamaan tetap seimbang."
+      },
+      {
+        id: 7,
+        question: "Gelombang mikro dalam oven memanaskan makanan, namun piring kaca tetap dingin. Mengapa demikian?",
+        options: [
+          "Karena kaca memantulkan gelombang mikro",
+          "Karena gelombang mikro secara khusus menggetarkan molekul air dalam makanan",
+          "Karena kaca menyerap panas dari makanan",
+          "Karena suhu gelombang mikro rendah"
+        ],
+        correct: 1,
+        explanation: "Gelombang mikro pada frekuensi tertentu (2.45 GHz) secara resonansi menggetarkan molekul air. Makanan mengandung air sehingga memanas, sementara kaca kering tidak terpengaruh."
+      },
+      {
+        id: 8,
+        question: "Petir dan guntur terjadi bersamaan, namun kita selalu melihat kilat terlebih dahulu. Berdasarkan konsep gelombang, jelaskan fenomena ini!",
+        options: [
+          "Karena mata lebih cepat bereaksi daripada telinga",
+          "Karena cahaya adalah gelombang elektromagnetik yang merambat jauh lebih cepat dari suara",
+          "Karena guntur terjadi setelah kilat",
+          "Karena suara guntur diserap awan"
+        ],
+        correct: 1,
+        explanation: "Cahaya (GEM) merambat dengan kecepatan 3×10⁸ m/s, sedangkan suara hanya ~340 m/s di udara. Perbedaan kecepatan yang sangat besar menyebabkan cahaya sampai lebih dulu."
+      },
+      {
+        id: 9,
+        question: "Seekor gajah dapat berkomunikasi dengan gajah lain yang berjarak puluhan kilometer. Jenis gelombang bunyi apa yang digunakan dan mengapa efektif untuk jarak jauh?",
+        options: [
+          "Ultrasonik, karena frekuensi tinggi merambat lebih jauh",
+          "Infrasonik, karena frekuensi rendah mengalami pelemahan lebih kecil dan dapat merambat melalui tanah",
+          "Audiosonik, karena gajah berukuran besar",
+          "Gelombang radio, karena gajah adalah hewan cerdas"
+        ],
+        correct: 1,
+        explanation: "Gajah menghasilkan infrasonik (<20 Hz) yang panjang gelombangnya besar. Gelombang ini mengalami difraksi lebih baik melewati rintangan dan pelemahan lebih kecil di atmosfer."
+      },
+      {
+        id: 10,
+        question: "Sebuah kapal menggunakan sonar untuk mendeteksi kedalaman laut. Jika pulsa sonar dikirim dan gema diterima setelah 4 detik dengan kecepatan suara di air 1500 m/s, berapa kedalaman laut tersebut?",
+        options: [
+          "6000 meter",
+          "3000 meter (setengah dari jarak total karena gelombang pergi-pulang)",
+          "1500 meter",
+          "750 meter"
+        ],
+        correct: 1,
+        explanation: "Jarak total = V × t = 1500 × 4 = 6000 m. Karena gelombang menempuh jarak pergi dan pulang, kedalaman = 6000/2 = 3000 meter."
+      }
+    ];
+    
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (value) => {
+                cfg.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => cfg.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                cfg.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (value) => {
+                cfg.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => cfg.primary_action_color || defaultConfig.primary_action_color,
+              set: (value) => {
+                cfg.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            },
+            {
+              get: () => cfg.secondary_action_color || defaultConfig.secondary_action_color,
+              set: (value) => {
+                cfg.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ["main_title", cfg.main_title || defaultConfig.main_title],
+          ["footer_text", cfg.footer_text || defaultConfig.footer_text]
+        ])
+      });
+    }
+    
+    function applyConfig() {
+      // Apply text changes
+      const mainTitle = document.getElementById('main-title');
+      if (mainTitle) mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      
+      const footerText = document.getElementById('footer-text');
+      if (footerText) footerText.textContent = config.footer_text || defaultConfig.footer_text;
+      
+      // Apply colors
+      const appContainer = document.getElementById('app-container');
+      if (appContainer && config.background_color) {
+        appContainer.style.background = `linear-gradient(135deg, ${config.background_color} 0%, ${adjustColor(config.background_color, 30)} 50%, ${adjustColor(config.background_color, 60)} 100%)`;
+      }
+      
+      // Apply surface color to cards
+      const cards = document.querySelectorAll('.card-glass');
+      cards.forEach(card => {
+        if (config.surface_color) {
+          card.style.backgroundColor = config.surface_color;
+        }
+      });
+      
+      // Apply primary action color to buttons
+      const primaryButtons = document.querySelectorAll('.interactive-btn.bg-gradient-to-r.from-cyan-500');
+      primaryButtons.forEach(btn => {
+        if (config.primary_action_color) {
+          btn.style.background = `linear-gradient(to right, ${config.primary_action_color}, ${adjustColor(config.primary_action_color, 20)})`;
+        }
+      });
+    }
+    
+    function adjustColor(hex, percent) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      const amt = Math.round(2.55 * percent);
+      const R = (num >> 16) + amt;
+      const G = (num >> 8 & 0x00FF) + amt;
+      const B = (num & 0x0000FF) + amt;
+      return '#' + (0x1000000 +
+        (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+        (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+        (B < 255 ? B < 1 ? 0 : B : 255)
+      ).toString(16).slice(1);
+    }
+    
+    // Navigation functions
+    function showSection(index) {
+      // Hide all sections
+      for (let i = 0; i <= 8; i++) {
+        const section = document.getElementById(`section-${i}`);
+        if (section) {
+          section.classList.add('hidden');
+        }
+      }
+      
+      // Show selected section
+      const targetSection = document.getElementById(`section-${index}`);
+      if (targetSection) {
+        targetSection.classList.remove('hidden');
+      }
+      
+      // Update navigation
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach((item, i) => {
+        if (i === index) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+      
+      currentSection = index;
+      updateProgress();
+      
+      // Initialize quiz if on quiz section
+      if (index === 8 && !document.getElementById('quiz-q-0')) {
+        renderQuiz();
+      }
+      
+      // Scroll to top of content
+      const mainContent = document.querySelector('main');
+      if (mainContent) mainContent.scrollTop = 0;
+    }
+    
+    function updateProgress() {
+      const progress = ((currentSection + 1) / 9) * 100;
+      const progressBar = document.getElementById('progress-bar');
+      const progressText = document.getElementById('progress-text');
+      
+      if (progressBar) progressBar.style.width = `${progress}%`;
+      if (progressText) progressText.textContent = `Progres: ${currentSection + 1}/9`;
+    }
+    
+    // Wave simulation
+    function updateWave() {
+      const amplitude = parseInt(document.getElementById('amplitude-slider').value);
+      const frequency = parseInt(document.getElementById('frequency-slider').value);
+      
+      document.getElementById('amplitude-value').textContent = amplitude;
+      document.getElementById('frequency-value').textContent = frequency;
+      
+      const wavelength = 500 / frequency;
+      let pathData = 'M0,75 ';
+      
+      for (let x = 0; x <= 500; x += 5) {
+        const y = 75 - amplitude * Math.sin((x / wavelength) * 2 * Math.PI);
+        pathData += `L${x},${y} `;
+      }
+      
+      document.getElementById('wave-path').setAttribute('d', pathData);
+    }
+    
+    // Note simulation (visual feedback only - no audio)
+    function playNote(pitch) {
+      const feedback = document.getElementById('note-feedback');
+      let message = '';
+      let color = '';
+      
+      switch(pitch) {
+        case 'high':
+          message = '🎵 Nada TINGGI! Sedotan pendek = frekuensi tinggi';
+          color = 'text-pink-600';
+          break;
+        case 'medium':
+          message = '🎵 Nada SEDANG! Sedotan sedang = frekuensi sedang';
+          color = 'text-blue-600';
+          break;
+        case 'low':
+          message = '🎵 Nada RENDAH! Sedotan panjang = frekuensi rendah';
+          color = 'text-green-600';
+          break;
+      }
+      
+      feedback.className = `mt-4 text-center text-lg font-bold ${color}`;
+      feedback.textContent = message;
+    }
+    
+    // Calculator
+    function calculateWaveSpeed() {
+      const lambda = parseFloat(document.getElementById('lambda-input').value);
+      const freq = parseFloat(document.getElementById('freq-input').value);
+      
+      if (isNaN(lambda) || isNaN(freq) || lambda <= 0 || freq <= 0) {
+        const resultDiv = document.getElementById('calc-result');
+        resultDiv.classList.remove('hidden');
+        document.getElementById('calc-formula').innerHTML = '⚠️ Masukkan nilai yang valid!';
+        return;
+      }
+      
+      const speed = lambda * freq;
+      const resultDiv = document.getElementById('calc-result');
+      resultDiv.classList.remove('hidden');
+      document.getElementById('calc-formula').innerHTML = 
+        `V = ${lambda} × ${freq} = <span class="text-3xl">${speed} m/s</span>`;
+    }
+    
+    // Quiz functions
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      let html = '';
+      
+      hotsQuestions.forEach((q, index) => {
+        html += `
+          <div id="quiz-q-${index}" class="bg-white rounded-2xl p-6 mb-4 border-2 border-slate-200">
+            <div class="flex items-start gap-3 mb-4">
+              <span class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0">${index + 1}</span>
+              <p class="text-slate-800 font-medium">${q.question}</p>
+            </div>
+            <div class="space-y-2 ml-11">
+              ${q.options.map((opt, optIndex) => `
+                <div class="quiz-option rounded-lg p-3 border-2 border-slate-200" 
+                     data-question="${index}" 
+                     data-option="${optIndex}"
+                     onclick="selectOption(${index}, ${optIndex})">
+                  <span class="font-bold mr-2">${String.fromCharCode(65 + optIndex)}.</span>
+                  ${opt}
+                </div>
+              `).join('')}
+            </div>
+            <div id="explanation-${index}" class="hidden mt-4 ml-11 p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <p class="text-blue-800"><strong>💡 Pembahasan:</strong> ${q.explanation}</p>
+            </div>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+    
+    function selectOption(questionIndex, optionIndex) {
+      if (quizSubmitted) return;
+      
+      // Remove previous selection for this question
+      const options = document.querySelectorAll(`[data-question="${questionIndex}"]`);
+      options.forEach(opt => opt.classList.remove('selected'));
+      
+      // Add selection to clicked option
+      const selectedOption = document.querySelector(`[data-question="${questionIndex}"][data-option="${optionIndex}"]`);
+      selectedOption.classList.add('selected');
+      
+      // Store answer
+      userAnswers[questionIndex] = optionIndex;
+    }
+    
+    function submitQuiz() {
+      if (Object.keys(userAnswers).length < 10) {
+        const unanswered = 10 - Object.keys(userAnswers).length;
+        // Show inline message instead of alert
+        const submitBtn = document.getElementById('submit-quiz-btn');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = `⚠️ Masih ada ${unanswered} soal belum dijawab!`;
+        submitBtn.classList.add('bg-red-500');
+        submitBtn.classList.remove('from-emerald-500', 'to-teal-500');
+        
+        setTimeout(() => {
+          submitBtn.innerHTML = originalText;
+          submitBtn.classList.remove('bg-red-500');
+          submitBtn.classList.add('from-emerald-500', 'to-teal-500');
+        }, 2000);
+        return;
+      }
+      
+      quizSubmitted = true;
+      let score = 0;
+      
+      // Check answers and show explanations
+      hotsQuestions.forEach((q, index) => {
+        const userAnswer = userAnswers[index];
+        const options = document.querySelectorAll(`[data-question="${index}"]`);
+        
+        options.forEach((opt, optIndex) => {
+          opt.classList.remove('selected');
+          if (optIndex === q.correct) {
+            opt.classList.add('correct');
+          } else if (optIndex === userAnswer && userAnswer !== q.correct) {
+            opt.classList.add('incorrect');
+          }
+        });
+        
+        if (userAnswer === q.correct) {
+          score++;
+        }
+        
+        // Show explanation
+        document.getElementById(`explanation-${index}`).classList.remove('hidden');
+      });
+      
+      // Show result
+      const resultDiv = document.getElementById('quiz-result');
+      resultDiv.classList.remove('hidden');
+      document.getElementById('score-display').textContent = `${score}/10`;
+      
+      let message = '';
+      if (score >= 9) message = '🌟 Luar biasa! Kamu menguasai materi dengan sangat baik!';
+      else if (score >= 7) message = '👏 Bagus sekali! Pemahaman kamu sudah baik!';
+      else if (score >= 5) message = '💪 Cukup baik! Terus belajar untuk hasil lebih baik!';
+      else message = '📚 Perlu belajar lebih giat lagi. Semangat!';
+      
+      document.getElementById('score-message').textContent = message;
+      
+      // Hide submit button
+      document.getElementById('submit-quiz-btn').classList.add('hidden');
+    }
+    
+    function resetQuiz() {
+      quizSubmitted = false;
+      userAnswers = {};
+      
+      // Reset all options
+      const options = document.querySelectorAll('.quiz-option');
+      options.forEach(opt => {
+        opt.classList.remove('selected', 'correct', 'incorrect');
+      });
+      
+      // Hide explanations
+      hotsQuestions.forEach((_, index) => {
+        document.getElementById(`explanation-${index}`).classList.add('hidden');
+      });
+      
+      // Hide result, show submit button
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('submit-quiz-btn').classList.remove('hidden');
+    }
+    
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+      updateProgress();
+      updateWave();
+      
+      // Add event listeners for sliders
+      document.getElementById('amplitude-slider').addEventListener('input', updateWave);
+      document.getElementById('frequency-slider').addEventListener('input', updateWave);
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce46ddf37131be6',t:'MTc3MTE1NDU2NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

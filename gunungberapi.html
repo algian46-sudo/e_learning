@@ -1,0 +1,1668 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gunung Berapi di Indonesia - Media Pembelajaran</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&amp;family=Source+Sans+3:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; padding: 0; }
+    body { font-family: 'Source Sans 3', sans-serif; }
+    .font-display { font-family: 'Playfair Display', serif; }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+    
+    .lava-gradient {
+      background: linear-gradient(180deg, #ff6b35 0%, #f7931e 50%, #ffcc02 100%);
+    }
+    
+    .card-glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+    
+    .volcano-shadow {
+      filter: drop-shadow(0 10px 30px rgba(255, 107, 53, 0.3));
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes smoke {
+      0% { opacity: 0.8; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-50px) scale(1.5); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 53, 0.5); }
+      50% { box-shadow: 0 0 40px rgba(255, 107, 53, 0.8); }
+    }
+    
+    .animate-float { animation: float 3s ease-in-out infinite; }
+    .animate-smoke { animation: smoke 3s ease-out infinite; }
+    .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    
+    .nav-item {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #ff6b35, #ffcc02);
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+    
+    .nav-item:hover::after,
+    .nav-item.active::after {
+      width: 100%;
+    }
+    
+    .section-card {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .section-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    
+    .quiz-option:hover {
+      border-color: #ff6b35;
+      background: rgba(255, 107, 53, 0.1);
+    }
+    
+    .quiz-option.selected {
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.1);
+    }
+    
+    .quiz-option.correct {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.15);
+    }
+    
+    .quiz-option.incorrect {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.15);
+    }
+    
+    .progress-bar {
+      background: linear-gradient(90deg, #ff6b35 0%, #f7931e 50%, #ffcc02 100%);
+    }
+    
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    
+    .illustration-container {
+      background: linear-gradient(180deg, #87CEEB 0%, #E0F4FF 100%);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    
+    .scroll-container {
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full gradient-bg">
+  <div class="scroll-container"><!-- Navigation -->
+   <nav class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-slate-700/50">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <div class="w-10 h-10 rounded-full lava-gradient flex items-center justify-center animate-pulse-glow"><span class="text-xl">🌋</span>
+       </div><span class="font-display text-white text-lg font-bold hidden sm:block" id="nav-title">Gunung Berapi Indonesia</span>
+      </div>
+      <div class="flex gap-2 sm:gap-4 text-sm overflow-x-auto"><button onclick="scrollToSection('intro')" class="nav-item text-white/80 hover:text-white px-2 py-1 whitespace-nowrap">Pendahuluan</button> <button onclick="scrollToSection('klasifikasi')" class="nav-item text-white/80 hover:text-white px-2 py-1 whitespace-nowrap">Klasifikasi</button> <button onclick="scrollToSection('proses')" class="nav-item text-white/80 hover:text-white px-2 py-1 whitespace-nowrap">Proses</button> <button onclick="scrollToSection('dampak')" class="nav-item text-white/80 hover:text-white px-2 py-1 whitespace-nowrap">Dampak</button> <button onclick="scrollToSection('manfaat')" class="nav-item text-white/80 hover:text-white px-2 py-1 whitespace-nowrap">Manfaat</button> <button onclick="scrollToSection('aktivitas')" class="nav-item text-white/80 hover:text-white px-2 py-1 whitespace-nowrap">Aktivitas</button> <button onclick="scrollToSection('quiz')" class="nav-item text-white/80 hover:text-white px-2 py-1 whitespace-nowrap">Kuis</button>
+      </div>
+     </div>
+    </div>
+   </nav><!-- Hero Section -->
+   <header class="relative py-16 px-4 overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+     <div class="absolute top-20 left-10 w-32 h-32 bg-orange-500 rounded-full blur-3xl"></div>
+     <div class="absolute bottom-10 right-20 w-40 h-40 bg-yellow-500 rounded-full blur-3xl"></div>
+     <div class="absolute top-40 right-40 w-24 h-24 bg-red-500 rounded-full blur-2xl"></div>
+    </div>
+    <div class="max-w-6xl mx-auto text-center relative z-10">
+     <div class="mb-8"><!-- Animated Volcano SVG -->
+      <svg viewbox="0 0 400 300" class="w-64 h-48 mx-auto volcano-shadow animate-float"><!-- Sky background --> <defs>
+        <lineargradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+         <stop offset="0%" style="stop-color:#1a1a2e" />
+         <stop offset="100%" style="stop-color:#16213e" />
+        </lineargradient>
+        <lineargradient id="volcanoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+         <stop offset="0%" style="stop-color:#4a4a4a" />
+         <stop offset="50%" style="stop-color:#3d3d3d" />
+         <stop offset="100%" style="stop-color:#2d2d2d" />
+        </lineargradient>
+        <lineargradient id="lavaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+         <stop offset="0%" style="stop-color:#ff6b35" />
+         <stop offset="50%" style="stop-color:#f7931e" />
+         <stop offset="100%" style="stop-color:#ffcc02" />
+        </lineargradient>
+        <radialgradient id="glowGrad">
+         <stop offset="0%" style="stop-color:#ff6b35;stop-opacity:0.8" />
+         <stop offset="100%" style="stop-color:#ff6b35;stop-opacity:0" />
+        </radialgradient>
+       </defs> <!-- Glow effect --> <ellipse cx="200" cy="80" rx="60" ry="40" fill="url(#glowGrad)" class="animate-pulse" /> <!-- Smoke particles --> <g class="animate-smoke" style="animation-delay: 0s;">
+        <ellipse cx="180" cy="60" rx="15" ry="10" fill="#666" opacity="0.6" />
+       </g> <g class="animate-smoke" style="animation-delay: 0.5s;">
+        <ellipse cx="200" cy="50" rx="20" ry="12" fill="#777" opacity="0.5" />
+       </g> <g class="animate-smoke" style="animation-delay: 1s;">
+        <ellipse cx="220" cy="55" rx="18" ry="11" fill="#888" opacity="0.4" />
+       </g> <!-- Volcano body --> <path d="M100,280 L170,100 L190,90 L200,85 L210,90 L230,100 L300,280 Z" fill="url(#volcanoGrad)" /> <!-- Crater --> <ellipse cx="200" cy="90" rx="25" ry="8" fill="#1a1a1a" /> <!-- Lava in crater --> <ellipse cx="200" cy="88" rx="18" ry="5" fill="url(#lavaGrad)">
+        <animate attributename="ry" values="5;6;5" dur="2s" repeatcount="indefinite" />
+       </ellipse> <!-- Lava streams --> <path d="M195,95 Q190,150 185,200 Q183,220 190,250 L200,250 Q195,220 198,200 Q200,150 205,95" fill="url(#lavaGrad)" opacity="0.8" /> <!-- Ground --> <rect x="0" y="270" width="400" height="30" fill="#2d2d2d" /> <ellipse cx="200" cy="275" rx="120" ry="10" fill="#3d3d3d" />
+      </svg>
+     </div>
+     <h1 class="font-display text-4xl sm:text-5xl md:text-6xl text-white font-bold mb-4" id="main-title">Gunung Berapi di Indonesia</h1>
+     <p class="text-xl sm:text-2xl text-orange-300 font-medium mb-6" id="subtitle">Media Pembelajaran Interaktif untuk Siswa</p>
+     <p class="text-white/70 max-w-2xl mx-auto text-lg">Pelajari tentang keajaiban geologi Indonesia, proses terbentuknya gunung berapi, dampak, manfaat, serta cara mitigasi bencana vulkanik.</p>
+     <div class="flex justify-center gap-4 mt-8"><button onclick="scrollToSection('intro')" class="px-6 py-3 bg-gradient-to-r from-orange-500 to-yellow-500 text-white font-semibold rounded-full hover:shadow-lg hover:shadow-orange-500/30 transition-all"> Mulai Belajar </button> <button onclick="scrollToSection('quiz')" class="px-6 py-3 bg-white/10 text-white font-semibold rounded-full border border-white/20 hover:bg-white/20 transition-all"> Langsung ke Kuis </button>
+     </div>
+    </div>
+   </header><!-- Main Content -->
+   <main class="max-w-6xl mx-auto px-4 pb-20"><!-- Section 1: Pendahuluan -->
+    <section id="intro" class="mb-16 scroll-mt-20">
+     <div class="card-glass rounded-3xl p-6 sm:p-10 section-card shadow-2xl">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-2xl">
+        🌏
+       </div>
+       <div><span class="text-orange-500 font-semibold text-sm">BAB 1</span>
+        <h2 class="font-display text-2xl sm:text-3xl text-slate-800 font-bold">Indonesia: Laboratorium Gunung Api Dunia</h2>
+       </div>
+      </div><!-- Ring of Fire Illustration -->
+      <div class="illustration-container p-6 mb-8">
+       <svg viewbox="0 0 800 400" class="w-full h-auto"><!-- Ocean background --> <rect width="800" height="400" fill="#1e3a5f" /> <!-- Continents simplified --> <!-- Asia --> <path d="M450,50 Q500,60 550,80 Q600,100 620,150 Q600,200 550,220 Q500,200 480,180 Q450,200 400,180 Q380,150 400,100 Q420,70 450,50" fill="#3d5a3d" /> <!-- Australia --> <path d="M550,280 Q600,270 650,290 Q670,320 650,350 Q600,370 550,350 Q530,320 550,280" fill="#3d5a3d" /> <!-- Americas --> <path d="M100,80 Q130,60 160,80 Q180,120 170,180 Q150,240 130,300 Q100,340 80,300 Q60,240 70,180 Q80,120 100,80" fill="#3d5a3d" /> <!-- Ring of Fire path --> <path d="M130,80 Q200,50 300,80 Q400,60 500,80 Q600,100 650,180 Q680,260 650,320 Q600,360 550,350 Q500,340 480,300 Q450,260 400,240 Q350,260 300,280 Q200,320 130,280 Q80,240 70,180 Q60,120 130,80" fill="none" stroke="#ff6b35" stroke-width="8" stroke-dasharray="20,10" opacity="0.8" /> <!-- Indonesia highlight --> <ellipse cx="520" cy="220" rx="80" ry="40" fill="#ff6b35" opacity="0.3" /> <!-- Volcano markers on Ring of Fire --> <g fill="#ff6b35">
+         <circle cx="130" cy="100" r="6">
+          <animate attributename="r" values="4;8;4" dur="2s" repeatcount="indefinite" />
+         </circle>
+         <circle cx="150" cy="180" r="6">
+          <animate attributename="r" values="4;8;4" dur="2.2s" repeatcount="indefinite" />
+         </circle>
+         <circle cx="130" cy="260" r="6">
+          <animate attributename="r" values="4;8;4" dur="1.8s" repeatcount="indefinite" />
+         </circle>
+         <circle cx="480" cy="200" r="8">
+          <animate attributename="r" values="6;10;6" dur="1.5s" repeatcount="indefinite" />
+         </circle>
+         <circle cx="520" cy="220" r="8">
+          <animate attributename="r" values="6;10;6" dur="1.7s" repeatcount="indefinite" />
+         </circle>
+         <circle cx="560" cy="210" r="8">
+          <animate attributename="r" values="6;10;6" dur="1.9s" repeatcount="indefinite" />
+         </circle>
+         <circle cx="600" cy="180" r="6">
+          <animate attributename="r" values="4;8;4" dur="2.1s" repeatcount="indefinite" />
+         </circle>
+         <circle cx="620" cy="280" r="6">
+          <animate attributename="r" values="4;8;4" dur="2.3s" repeatcount="indefinite" />
+         </circle>
+        </g> <!-- Labels --> <text x="520" y="260" fill="white" font-size="14" font-weight="bold" text-anchor="middle">
+         INDONESIA
+        </text> <text x="400" y="30" fill="#ffcc02" font-size="18" font-weight="bold" text-anchor="middle">
+         🔥 RING OF FIRE (Cincin Api Pasifik) 🔥
+        </text> <!-- Legend --> <rect x="20" y="340" width="200" height="50" fill="rgba(0,0,0,0.5)" rx="8" /> <circle cx="40" cy="365" r="6" fill="#ff6b35" /> <text x="55" y="370" fill="white" font-size="12">
+         Gunung Berapi Aktif
+        </text> <line x1="130" y1="365" x2="160" y2="365" stroke="#ff6b35" stroke-width="4" stroke-dasharray="8,4" /> <text x="170" y="370" fill="white" font-size="12">
+         Ring of Fire
+        </text>
+       </svg>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+       <div class="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-6 border border-orange-100">
+        <h3 class="font-display text-xl text-slate-800 font-bold mb-4 flex items-center gap-2"><span class="text-2xl">🔥</span> Ring of Fire</h3>
+        <p class="text-slate-600 leading-relaxed">Indonesia terletak di <strong>Cincin Api Pasifik (Ring of Fire)</strong>, sebuah kawasan berbentuk tapal kuda sepanjang 40.000 km yang mengelilingi Samudra Pasifik. Kawasan ini memiliki 75% gunung berapi aktif dunia dan mengalami 90% gempa bumi global.</p>
+       </div>
+       <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+        <h3 class="font-display text-xl text-slate-800 font-bold mb-4 flex items-center gap-2"><span class="text-2xl">🌍</span> Pertemuan Lempeng</h3>
+        <p class="text-slate-600 leading-relaxed">Indonesia berada di pertemuan <strong>tiga lempeng tektonik utama</strong>: Lempeng Eurasia, Lempeng Indo-Australia, dan Lempeng Pasifik. Tumbukan antar lempeng ini menciptakan aktivitas vulkanik dan seismik yang intens.</p>
+       </div>
+      </div><!-- Tectonic Plates Illustration -->
+      <div class="illustration-container p-6 mb-8">
+       <h4 class="text-center font-bold text-slate-700 mb-4">Pertemuan Lempeng Tektonik di Indonesia</h4>
+       <svg viewbox="0 0 700 350" class="w-full h-auto"><!-- Background ocean --> <rect width="700" height="350" fill="#0077b6" /> <!-- Eurasia Plate --> <path d="M0,0 L700,0 L700,120 Q500,140 350,130 Q200,120 0,140 Z" fill="#8ecae6" stroke="#023e8a" stroke-width="3" /> <text x="350" y="60" fill="#023e8a" font-size="16" font-weight="bold" text-anchor="middle">
+         LEMPENG EURASIA
+        </text> <!-- Indo-Australian Plate --> <path d="M0,350 L0,220 Q150,200 300,210 Q450,200 600,230 L700,200 L700,350 Z" fill="#f4a261" stroke="#9c6644" stroke-width="3" /> <text x="350" y="310" fill="#9c6644" font-size="16" font-weight="bold" text-anchor="middle">
+         LEMPENG INDO-AUSTRALIA
+        </text> <!-- Pacific Plate (right side) --> <path d="M700,120 L700,200 Q650,180 600,170 Q580,160 600,150 Q650,140 700,120" fill="#90be6d" stroke="#4a7c59" stroke-width="3" /> <text x="660" y="165" fill="#4a7c59" font-size="12" font-weight="bold" text-anchor="middle">
+         LEMPENG
+        </text> <text x="660" y="180" fill="#4a7c59" font-size="12" font-weight="bold" text-anchor="middle">
+         PASIFIK
+        </text> <!-- Indonesia islands --> <g fill="#2d6a4f"><!-- Sumatra -->
+         <ellipse cx="120" cy="170" rx="50" ry="15" transform="rotate(-30, 120, 170)" /> <!-- Java -->
+         <ellipse cx="280" cy="185" rx="60" ry="12" /> <!-- Bali-Nusa Tenggara -->
+         <ellipse cx="400" cy="190" rx="40" ry="10" /> <!-- Sulawesi -->
+         <path d="M480,150 Q490,165 485,180 Q500,175 510,160 Q495,155 480,150" /> <!-- Papua -->
+         <ellipse cx="600" cy="175" rx="45" ry="25" />
+        </g> <!-- Subduction arrows --> <g fill="#e63946">
+         <polygon points="200,200 220,210 200,220 210,210" />
+         <polygon points="300,210 320,220 300,230 310,220" />
+         <polygon points="400,210 420,220 400,230 410,220" />
+        </g> <!-- Volcano symbols --> <g>
+         <polygon points="130,160 140,175 120,175" fill="#ff6b35" />
+         <polygon points="200,175 210,190 190,190" fill="#ff6b35" />
+         <polygon points="280,175 290,190 270,190" fill="#ff6b35" />
+         <polygon points="340,180 350,195 330,195" fill="#ff6b35" />
+         <polygon points="400,180 410,195 390,195" fill="#ff6b35" />
+         <polygon points="480,145 490,160 470,160" fill="#ff6b35" />
+        </g> <!-- Collision zone indicator --> <path d="M50,180 Q200,165 350,170 Q500,165 650,180" fill="none" stroke="#e63946" stroke-width="4" stroke-dasharray="10,5" /> <text x="350" y="155" fill="#e63946" font-size="12" font-weight="bold" text-anchor="middle">
+         ZONA SUBDUKSI
+        </text> <!-- Legend --> <rect x="10" y="250" width="150" height="90" fill="rgba(255,255,255,0.9)" rx="8" /> <text x="85" y="270" fill="#333" font-size="11" font-weight="bold" text-anchor="middle">
+         KETERANGAN:
+        </text> <polygon points="25,285 35,295 15,295" fill="#ff6b35" /> <text x="45" y="293" fill="#333" font-size="10">
+         Gunung Berapi
+        </text> <line x1="15" y1="310" x2="35" y2="310" stroke="#e63946" stroke-width="3" stroke-dasharray="5,3" /> <text x="45" y="313" fill="#333" font-size="10">
+         Zona Subduksi
+        </text> <polygon points="20,325 30,330 20,335 25,330" fill="#e63946" /> <text x="45" y="333" fill="#333" font-size="10">
+         Arah Subduksi
+        </text>
+       </svg>
+      </div><!-- Statistics Cards -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+       <div class="bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl p-5 text-center text-white">
+        <div class="text-4xl font-bold mb-1">
+         ~500
+        </div>
+        <div class="text-sm opacity-90">
+         Gunung Berapi
+        </div>
+       </div>
+       <div class="bg-gradient-to-br from-orange-500 to-yellow-500 rounded-2xl p-5 text-center text-white">
+        <div class="text-4xl font-bold mb-1">
+         127
+        </div>
+        <div class="text-sm opacity-90">
+         Gunung Aktif
+        </div>
+       </div>
+       <div class="bg-gradient-to-br from-yellow-500 to-amber-500 rounded-2xl p-5 text-center text-white">
+        <div class="text-4xl font-bold mb-1">
+         7.000
+        </div>
+        <div class="text-sm opacity-90">
+         KM Jalur Api
+        </div>
+       </div>
+       <div class="bg-gradient-to-br from-amber-500 to-red-500 rounded-2xl p-5 text-center text-white">
+        <div class="text-4xl font-bold mb-1">
+         3
+        </div>
+        <div class="text-sm opacity-90">
+         Lempeng Tektonik
+        </div>
+       </div>
+      </div>
+      <div class="mt-6 p-4 bg-amber-50 border-l-4 border-amber-500 rounded-r-xl">
+       <p class="text-amber-800"><strong>📍 Jalur Gunung Api Indonesia:</strong> Membentang sepanjang 7.000 km dari <strong>Sumatera → Jawa → Bali → Nusa Tenggara → Kepulauan Banda → Halmahera → Sulawesi Utara</strong></p>
+      </div>
+     </div>
+    </section><!-- Section 2: Klasifikasi -->
+    <section id="klasifikasi" class="mb-16 scroll-mt-20">
+     <div class="card-glass rounded-3xl p-6 sm:p-10 section-card shadow-2xl">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-2xl">
+        📊
+       </div>
+       <div><span class="text-blue-500 font-semibold text-sm">BAB 2</span>
+        <h2 class="font-display text-2xl sm:text-3xl text-slate-800 font-bold">Klasifikasi Gunung Berapi Indonesia</h2>
+       </div>
+      </div>
+      <p class="text-slate-600 mb-8 text-lg">Gunung berapi di Indonesia dikelompokkan menjadi <strong>tiga tipe</strong> berdasarkan sejarah letusannya. Klasifikasi ini membantu para ahli vulkanologi dalam memantau dan memprediksi aktivitas vulkanik.</p><!-- Classification Visual -->
+      <div class="illustration-container p-6 mb-8">
+       <svg viewbox="0 0 800 400" class="w-full h-auto"><!-- Background gradient --> <defs>
+         <lineargradient id="typeAGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#dc2626" />
+          <stop offset="100%" style="stop-color:#991b1b" />
+         </lineargradient>
+         <lineargradient id="typeBGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#ea580c" />
+          <stop offset="100%" style="stop-color:#c2410c" />
+         </lineargradient>
+         <lineargradient id="typeCGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#ca8a04" />
+          <stop offset="100%" style="stop-color:#a16207" />
+         </lineargradient>
+        </defs> <!-- Type A Volcano --> <g transform="translate(80, 50)"><!-- Erupting volcano -->
+         <polygon points="100,250 150,80 200,250" fill="url(#typeAGrad)" />
+         <ellipse cx="150" cy="85" rx="30" ry="10" fill="#1a1a1a" /> <!-- Lava eruption -->
+         <path d="M150,70 Q140,40 150,20 Q160,40 150,70" fill="#ff6b35">
+          <animate attributename="d" values="M150,70 Q140,40 150,20 Q160,40 150,70;M150,70 Q135,30 150,10 Q165,30 150,70;M150,70 Q140,40 150,20 Q160,40 150,70" dur="1s" repeatcount="indefinite" />
+         </path> <!-- Smoke -->
+         <ellipse cx="140" cy="30" rx="20" ry="12" fill="#666" opacity="0.6">
+          <animate attributename="cy" values="30;10;30" dur="2s" repeatcount="indefinite" />
+          <animate attributename="opacity" values="0.6;0.2;0.6" dur="2s" repeatcount="indefinite" />
+         </ellipse> <!-- Lava flow -->
+         <path d="M150,85 Q160,150 180,230" stroke="#ff6b35" stroke-width="8" fill="none" opacity="0.8" /> <!-- Label -->
+         <rect x="50" y="260" width="200" height="80" fill="#dc2626" rx="12" />
+         <text x="150" y="290" fill="white" font-size="20" font-weight="bold" text-anchor="middle">
+          TIPE A
+         </text>
+         <text x="150" y="315" fill="white" font-size="12" text-anchor="middle">
+          Letusan sejak 1600
+         </text>
+         <text x="150" y="332" fill="#fecaca" font-size="14" font-weight="bold" text-anchor="middle">
+          77 Gunung
+         </text>
+        </g> <!-- Type B Volcano --> <g transform="translate(300, 50)"><!-- Less active volcano -->
+         <polygon points="100,250 150,100 200,250" fill="url(#typeBGrad)" />
+         <ellipse cx="150" cy="105" rx="25" ry="8" fill="#1a1a1a" /> <!-- Small smoke -->
+         <ellipse cx="150" cy="80" rx="15" ry="8" fill="#888" opacity="0.5">
+          <animate attributename="opacity" values="0.5;0.2;0.5" dur="3s" repeatcount="indefinite" />
+         </ellipse> <!-- Historical marker -->
+         <text x="150" y="65" fill="#ea580c" font-size="12" text-anchor="middle">
+          Sebelum 1600
+         </text> <!-- Label -->
+         <rect x="50" y="260" width="200" height="80" fill="#ea580c" rx="12" />
+         <text x="150" y="290" fill="white" font-size="20" font-weight="bold" text-anchor="middle">
+          TIPE B
+         </text>
+         <text x="150" y="315" fill="white" font-size="12" text-anchor="middle">
+          Letusan sebelum 1600
+         </text>
+         <text x="150" y="332" fill="#fed7aa" font-size="14" font-weight="bold" text-anchor="middle">
+          29 Gunung
+         </text>
+        </g> <!-- Type C Volcano --> <g transform="translate(520, 50)"><!-- Dormant volcano with fumaroles -->
+         <polygon points="100,250 150,120 200,250" fill="url(#typeCGrad)" />
+         <ellipse cx="150" cy="125" rx="22" ry="7" fill="#1a1a1a" /> <!-- Fumaroles/Solfatara -->
+         <g fill="#ddd" opacity="0.4">
+          <ellipse cx="130" cy="180" rx="5" ry="10">
+           <animate attributename="opacity" values="0.4;0.1;0.4" dur="4s" repeatcount="indefinite" />
+          </ellipse>
+          <ellipse cx="170" cy="190" rx="4" ry="8">
+           <animate attributename="opacity" values="0.3;0.1;0.3" dur="3.5s" repeatcount="indefinite" />
+          </ellipse>
+          <ellipse cx="150" cy="100" rx="8" ry="5">
+           <animate attributename="opacity" values="0.5;0.2;0.5" dur="5s" repeatcount="indefinite" />
+          </ellipse>
+         </g> <!-- Fumarole label -->
+         <text x="150" y="70" fill="#ca8a04" font-size="11" text-anchor="middle">
+          Solfatar/Fumarol
+         </text>
+         <text x="150" y="82" fill="#ca8a04" font-size="10" text-anchor="middle">
+          (Gas Belerang)
+         </text> <!-- Label -->
+         <rect x="50" y="260" width="200" height="80" fill="#ca8a04" rx="12" />
+         <text x="150" y="290" fill="white" font-size="20" font-weight="bold" text-anchor="middle">
+          TIPE C
+         </text>
+         <text x="150" y="315" fill="white" font-size="12" text-anchor="middle">
+          Tidak ada sejarah letusan
+         </text>
+         <text x="150" y="332" fill="#fef08a" font-size="14" font-weight="bold" text-anchor="middle">
+          21 Gunung
+         </text>
+        </g> <!-- Timeline at bottom --> <line x1="50" y1="380" x2="750" y2="380" stroke="#666" stroke-width="2" /> <text x="230" y="395" fill="#dc2626" font-size="12" font-weight="bold" text-anchor="middle">
+         1600 M →
+        </text> <text x="450" y="395" fill="#ea580c" font-size="12" font-weight="bold" text-anchor="middle">
+         ← Sebelum 1600
+        </text> <text x="670" y="395" fill="#ca8a04" font-size="12" font-weight="bold" text-anchor="middle">
+         Tidak Tercatat
+        </text>
+       </svg>
+      </div><!-- Interactive Classification Cards -->
+      <div class="grid md:grid-cols-3 gap-6">
+       <div class="group cursor-pointer" onclick="showClassDetail('A')">
+        <div class="bg-gradient-to-br from-red-500 to-red-700 rounded-2xl p-6 text-white transform transition-all group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-red-500/30">
+         <div class="text-5xl mb-3">
+          🌋
+         </div>
+         <h3 class="text-2xl font-bold mb-2">Tipe A</h3>
+         <p class="text-red-100 text-sm mb-4">Memiliki catatan sejarah letusan sejak tahun 1600 Masehi</p>
+         <div class="flex justify-between items-center"><span class="text-3xl font-bold">77</span> <span class="text-red-200 text-sm">Gunung</span>
+         </div>
+         <div class="mt-4 text-xs text-red-200">
+          Contoh: Merapi, Semeru, Krakatau, Kelud, Sinabung
+         </div>
+        </div>
+       </div>
+       <div class="group cursor-pointer" onclick="showClassDetail('B')">
+        <div class="bg-gradient-to-br from-orange-500 to-orange-700 rounded-2xl p-6 text-white transform transition-all group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-orange-500/30">
+         <div class="text-5xl mb-3">
+          🗻
+         </div>
+         <h3 class="text-2xl font-bold mb-2">Tipe B</h3>
+         <p class="text-orange-100 text-sm mb-4">Memiliki catatan sejarah letusan sebelum tahun 1600 Masehi</p>
+         <div class="flex justify-between items-center"><span class="text-3xl font-bold">29</span> <span class="text-orange-200 text-sm">Gunung</span>
+         </div>
+         <div class="mt-4 text-xs text-orange-200">
+          Contoh: Gunung Tampomas, Gunung Ciremai
+         </div>
+        </div>
+       </div>
+       <div class="group cursor-pointer" onclick="showClassDetail('C')">
+        <div class="bg-gradient-to-br from-yellow-500 to-amber-600 rounded-2xl p-6 text-white transform transition-all group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-yellow-500/30">
+         <div class="text-5xl mb-3">
+          ⛰️
+         </div>
+         <h3 class="text-2xl font-bold mb-2">Tipe C</h3>
+         <p class="text-yellow-100 text-sm mb-4">Tidak ada sejarah letusan, masih ada jejak aktivitas vulkanik</p>
+         <div class="flex justify-between items-center"><span class="text-3xl font-bold">21</span> <span class="text-yellow-200 text-sm">Gunung</span>
+         </div>
+         <div class="mt-4 text-xs text-yellow-200">
+          Menunjukkan aktivitas solfatar atau fumarol
+         </div>
+        </div>
+       </div>
+      </div><!-- Detail Modal Placeholder -->
+      <div id="classDetailModal" class="hidden mt-6 p-6 bg-slate-100 rounded-2xl">
+       <div id="classDetailContent"></div>
+      </div><!-- Summary Table -->
+      <div class="mt-8 overflow-x-auto">
+       <table class="w-full text-left border-collapse">
+        <thead>
+         <tr class="bg-slate-800 text-white">
+          <th class="p-4 rounded-tl-xl">Tipe</th>
+          <th class="p-4">Karakteristik</th>
+          <th class="p-4">Jumlah</th>
+          <th class="p-4 rounded-tr-xl">Tingkat Kewaspadaan</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr class="bg-red-50 border-b border-red-100">
+          <td class="p-4 font-bold text-red-600">Tipe A</td>
+          <td class="p-4">Catatan letusan sejak 1600 M</td>
+          <td class="p-4 font-bold">77</td>
+          <td class="p-4"><span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm">Tinggi</span></td>
+         </tr>
+         <tr class="bg-orange-50 border-b border-orange-100">
+          <td class="p-4 font-bold text-orange-600">Tipe B</td>
+          <td class="p-4">Catatan letusan sebelum 1600 M</td>
+          <td class="p-4 font-bold">29</td>
+          <td class="p-4"><span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm">Sedang</span></td>
+         </tr>
+         <tr class="bg-yellow-50">
+          <td class="p-4 font-bold text-yellow-600 rounded-bl-xl">Tipe C</td>
+          <td class="p-4">Tidak ada sejarah letusan (masih ada solfatar/fumarol)</td>
+          <td class="p-4 font-bold">21</td>
+          <td class="p-4 rounded-br-xl"><span class="bg-yellow-500 text-white px-3 py-1 rounded-full text-sm">Waspada</span></td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </section><!-- Section 3: Proses Terbentuk dan Erupsi -->
+    <section id="proses" class="mb-16 scroll-mt-20">
+     <div class="card-glass rounded-3xl p-6 sm:p-10 section-card shadow-2xl">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-2xl">
+        ⚙️
+       </div>
+       <div><span class="text-purple-500 font-semibold text-sm">BAB 3</span>
+        <h2 class="font-display text-2xl sm:text-3xl text-slate-800 font-bold">Proses Terbentuknya &amp; Erupsi</h2>
+       </div>
+      </div><!-- Volcano Formation Process -->
+      <div class="illustration-container p-6 mb-8">
+       <h4 class="text-center font-bold text-slate-700 mb-4">Proses Pembentukan Gunung Berapi (Subduksi)</h4>
+       <svg viewbox="0 0 800 450" class="w-full h-auto"><defs>
+         <lineargradient id="crustGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#8B4513" />
+          <stop offset="100%" style="stop-color:#654321" />
+         </lineargradient>
+         <lineargradient id="mantleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#ff6b35" />
+          <stop offset="50%" style="stop-color:#e55039" />
+          <stop offset="100%" style="stop-color:#c0392b" />
+         </lineargradient>
+         <lineargradient id="oceanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#3498db" />
+          <stop offset="100%" style="stop-color:#2980b9" />
+         </lineargradient>
+        </defs> <!-- Mantle (Selubung) --> <rect x="0" y="200" width="800" height="250" fill="url(#mantleGrad)" /> <!-- Convection currents in mantle --> <g stroke="#ffcc02" stroke-width="2" fill="none" opacity="0.5">
+         <path d="M100,350 Q150,300 200,350 Q250,400 300,350">
+          <animate attributename="d" values="M100,350 Q150,300 200,350 Q250,400 300,350;M100,360 Q150,310 200,360 Q250,410 300,360;M100,350 Q150,300 200,350 Q250,400 300,350" dur="3s" repeatcount="indefinite" />
+         </path>
+         <path d="M400,350 Q450,300 500,350 Q550,400 600,350">
+          <animate attributename="d" values="M400,350 Q450,300 500,350 Q550,400 600,350;M400,360 Q450,310 500,360 Q550,410 600,360;M400,350 Q450,300 500,350 Q550,400 600,350" dur="3.5s" repeatcount="indefinite" />
+         </path>
+        </g> <text x="400" y="420" fill="#ffcc02" font-size="14" font-weight="bold" text-anchor="middle">
+         SELUBUNG BUMI (MANTLE)
+        </text> <!-- Continental Crust (right) --> <path d="M350,200 L800,200 L800,80 Q700,90 600,85 Q500,90 400,100 L350,200" fill="url(#crustGrad)" /> <text x="600" y="160" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">
+         LEMPENG BENUA
+        </text> <!-- Oceanic Crust (left, subducting) --> <path d="M0,120 L300,120 L350,200 L350,350 Q340,380 320,400" fill="#2c3e50" stroke="#1a252f" stroke-width="2" /> <text x="150" y="170" fill="#ecf0f1" font-size="14" font-weight="bold" text-anchor="middle">
+         LEMPENG SAMUDRA
+        </text> <!-- Ocean water --> <rect x="0" y="60" width="300" height="60" fill="url(#oceanGrad)" opacity="0.8" /> <text x="150" y="95" fill="#fff" font-size="12" text-anchor="middle">
+         SAMUDRA
+        </text> <!-- Subduction arrow --> <g fill="#e74c3c">
+         <polygon points="280,180 320,200 280,220" />
+         <polygon points="300,220 340,240 300,260" />
+         <polygon points="310,280 350,300 310,320" />
+        </g> <!-- Magma chamber --> <ellipse cx="500" cy="280" rx="60" ry="40" fill="#ff6b35" opacity="0.9">
+         <animate attributename="ry" values="40;45;40" dur="2s" repeatcount="indefinite" />
+        </ellipse> <text x="500" y="285" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">
+         KANTONG
+        </text> <text x="500" y="300" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">
+         MAGMA
+        </text> <!-- Magma conduit --> <path d="M500,240 Q500,180 500,120" stroke="#ff6b35" stroke-width="20" fill="none" opacity="0.8" /> <!-- Volcano --> <polygon points="420,100 500,30 580,100" fill="#654321" /> <ellipse cx="500" cy="35" rx="20" ry="8" fill="#1a1a1a" /> <!-- Eruption --> <g>
+         <path d="M500,25 Q490,0 500,-15 Q510,0 500,25" fill="#ff6b35">
+          <animate attributename="d" values="M500,25 Q490,0 500,-15 Q510,0 500,25;M500,25 Q485,-10 500,-25 Q515,-10 500,25;M500,25 Q490,0 500,-15 Q510,0 500,25" dur="1.5s" repeatcount="indefinite" />
+         </path>
+         <ellipse cx="500" cy="-20" rx="25" ry="15" fill="#888" opacity="0.5">
+          <animate attributename="opacity" values="0.5;0.2;0.5" dur="2s" repeatcount="indefinite" />
+          <animate attributename="cy" values="-20;-40;-20" dur="2s" repeatcount="indefinite" />
+         </ellipse>
+        </g> <!-- Labels --> <g font-size="12" fill="#333">
+         <text x="50" y="45" font-weight="bold">
+          1️⃣ Lempeng samudra
+         </text>
+         <text x="50" y="30" font-weight="bold">
+          bergerak menuju benua
+         </text>
+         <text x="320" y="380" font-weight="bold">
+          2️⃣ Subduksi:
+         </text>
+         <text x="320" y="395" font-weight="bold">
+          Lempeng menyelam
+         </text>
+         <text x="600" y="320" font-weight="bold">
+          3️⃣ Magma
+         </text>
+         <text x="600" y="335" font-weight="bold">
+          terbentuk
+         </text>
+         <text x="550" y="60" font-weight="bold">
+          4️⃣ Magma naik
+         </text>
+         <text x="550" y="75" font-weight="bold">
+          → ERUPSI!
+         </text>
+        </g>
+       </svg>
+      </div><!-- Magma vs Lava -->
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+       <div class="bg-gradient-to-br from-red-900 to-red-700 rounded-2xl p-6 text-white">
+        <div class="flex items-center gap-3 mb-4">
+         <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
+          <svg viewbox="0 0 60 60" class="w-12 h-12"><ellipse cx="30" cy="30" rx="25" ry="25" fill="#ff6b35" opacity="0.8" /> <ellipse cx="30" cy="30" rx="15" ry="15" fill="#ffcc02" /> <text x="30" y="35" fill="#c0392b" font-size="12" font-weight="bold" text-anchor="middle">
+            🔥
+           </text>
+          </svg>
+         </div>
+         <div>
+          <h3 class="text-2xl font-bold">MAGMA</h3>
+          <p class="text-red-200 text-sm">Di dalam bumi</p>
+         </div>
+        </div>
+        <p class="text-red-100"><strong>Magma</strong> adalah batuan cair yang terdapat di <strong>dalam perut bumi</strong>. Magma terbentuk akibat panas dan tekanan tinggi di lapisan mantel bumi. Magma mengandung gas-gas terlarut dan mineral cair dengan suhu mencapai <strong>700°C - 1.300°C</strong>.</p>
+       </div>
+       <div class="bg-gradient-to-br from-orange-600 to-yellow-500 rounded-2xl p-6 text-white">
+        <div class="flex items-center gap-3 mb-4">
+         <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center">
+          <svg viewbox="0 0 60 60" class="w-12 h-12"><path d="M10,50 Q20,30 30,40 Q40,50 50,30 L50,50 Z" fill="#ff6b35" /> <path d="M15,45 Q25,25 35,35 Q45,45 50,25" stroke="#ffcc02" stroke-width="3" fill="none" />
+          </svg>
+         </div>
+         <div>
+          <h3 class="text-2xl font-bold">LAVA</h3>
+          <p class="text-orange-100 text-sm">Di permukaan bumi</p>
+         </div>
+        </div>
+        <p class="text-orange-50"><strong>Lava</strong> adalah magma yang telah <strong>keluar ke permukaan bumi</strong> melalui erupsi gunung berapi. Ketika magma mencapai permukaan, gas-gas terlarut terlepas ke atmosfer. Lava mengalir dengan kecepatan bervariasi tergantung viskositasnya.</p>
+       </div>
+      </div><!-- Lava Temperature Guide -->
+      <div class="bg-slate-900 rounded-2xl p-6 mb-8">
+       <h3 class="text-white font-display text-xl font-bold mb-4 text-center">🌡️ Suhu Lava Berdasarkan Warna</h3>
+       <div class="illustration-container rounded-xl p-4 mb-4">
+        <svg viewbox="0 0 700 200" class="w-full h-auto"><!-- Temperature gradient bar --> <defs>
+          <lineargradient id="tempGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+           <stop offset="0%" style="stop-color:#1a1a1a" />
+           <stop offset="20%" style="stop-color:#8B0000" />
+           <stop offset="40%" style="stop-color:#FF4500" />
+           <stop offset="60%" style="stop-color:#FFA500" />
+           <stop offset="80%" style="stop-color:#FFD700" />
+           <stop offset="100%" style="stop-color:#FFFACD" />
+          </lineargradient>
+         </defs> <rect x="50" y="80" width="600" height="40" rx="20" fill="url(#tempGrad)" /> <!-- Temperature markers --> <g font-size="12" font-weight="bold"><!-- Black -->
+          <circle cx="80" cy="60" r="20" fill="#1a1a1a" stroke="#fff" stroke-width="2" />
+          <text x="80" y="65" fill="#fff" text-anchor="middle" font-size="10">
+           HITAM
+          </text>
+          <text x="80" y="150" fill="#333" text-anchor="middle">
+           &lt;500°C
+          </text>
+          <text x="80" y="170" fill="#666" text-anchor="middle" font-size="10">
+           Dingin
+          </text> <!-- Red -->
+          <circle cx="200" cy="60" r="20" fill="#8B0000" stroke="#fff" stroke-width="2" />
+          <text x="200" y="65" fill="#fff" text-anchor="middle" font-size="10">
+           MERAH
+          </text>
+          <text x="200" y="150" fill="#333" text-anchor="middle">
+           500-900°C
+          </text> <!-- Orange -->
+          <circle cx="350" cy="60" r="20" fill="#FF4500" stroke="#fff" stroke-width="2" />
+          <text x="350" y="65" fill="#fff" text-anchor="middle" font-size="10">
+           ORANYE
+          </text>
+          <text x="350" y="150" fill="#333" text-anchor="middle">
+           900-1000°C
+          </text> <!-- Yellow -->
+          <circle cx="500" cy="60" r="20" fill="#FFD700" stroke="#333" stroke-width="2" />
+          <text x="500" y="65" fill="#333" text-anchor="middle" font-size="10">
+           KUNING
+          </text>
+          <text x="500" y="150" fill="#333" text-anchor="middle">
+           1000-1150°C
+          </text> <!-- White -->
+          <circle cx="620" cy="60" r="20" fill="#FFFACD" stroke="#333" stroke-width="2" />
+          <text x="620" y="65" fill="#333" text-anchor="middle" font-size="10">
+           PUTIH
+          </text>
+          <text x="620" y="150" fill="#333" text-anchor="middle">
+           &gt;1150°C
+          </text>
+          <text x="620" y="170" fill="#e74c3c" text-anchor="middle" font-size="10" font-weight="bold">
+           PALING PANAS!
+          </text>
+         </g> <!-- Arrow --> <polygon points="660,100 680,90 680,110" fill="#333" /> <text x="700" y="105" fill="#333" font-size="10" font-weight="bold">
+          PANAS
+         </text>
+        </svg>
+       </div>
+       <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-sm">
+        <div class="bg-gray-800 text-gray-300 rounded-lg p-2">
+         <div class="text-lg mb-1">
+          ⬛
+         </div>
+         <div class="font-bold">
+          &lt;500°C
+         </div>
+        </div>
+        <div class="bg-red-900 text-red-100 rounded-lg p-2">
+         <div class="text-lg mb-1">
+          🔴
+         </div>
+         <div class="font-bold">
+          500-900°C
+         </div>
+        </div>
+        <div class="bg-orange-600 text-orange-100 rounded-lg p-2">
+         <div class="text-lg mb-1">
+          🟠
+         </div>
+         <div class="font-bold">
+          900-1000°C
+         </div>
+        </div>
+        <div class="bg-yellow-500 text-yellow-900 rounded-lg p-2">
+         <div class="text-lg mb-1">
+          🟡
+         </div>
+         <div class="font-bold">
+          1000-1150°C
+         </div>
+        </div>
+        <div class="bg-yellow-100 text-yellow-800 rounded-lg p-2 border border-yellow-300">
+         <div class="text-lg mb-1">
+          ⚪
+         </div>
+         <div class="font-bold">
+          &gt;1150°C
+         </div>
+        </div>
+       </div>
+      </div><!-- Eruption Products -->
+      <h3 class="font-display text-xl text-slate-800 font-bold mb-4">Produk Erupsi Gunung Berapi</h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+       <div class="bg-gradient-to-br from-orange-100 to-red-100 rounded-xl p-5 border border-orange-200">
+        <div class="text-3xl mb-2">
+         🔥
+        </div>
+        <h4 class="font-bold text-slate-800 mb-1">Lava</h4>
+        <p class="text-sm text-slate-600">Batuan cair pijar yang mengalir dari kawah</p>
+       </div>
+       <div class="bg-gradient-to-br from-gray-100 to-slate-200 rounded-xl p-5 border border-gray-200">
+        <div class="text-3xl mb-2">
+         💨
+        </div>
+        <h4 class="font-bold text-slate-800 mb-1">Debu Vulkanik</h4>
+        <p class="text-sm text-slate-600">Partikel halus batuan yang tersembur ke udara</p>
+       </div>
+       <div class="bg-gradient-to-br from-red-100 to-orange-100 rounded-xl p-5 border border-red-200">
+        <div class="text-3xl mb-2">
+         ☁️
+        </div>
+        <h4 class="font-bold text-slate-800 mb-1">Awan Panas</h4>
+        <p class="text-sm text-slate-600">Aliran piroklastik dengan suhu sangat tinggi</p>
+       </div>
+       <div class="bg-gradient-to-br from-yellow-100 to-green-100 rounded-xl p-5 border border-yellow-200">
+        <div class="text-3xl mb-2">
+         💀
+        </div>
+        <h4 class="font-bold text-slate-800 mb-1">Gas Vulkanik</h4>
+        <p class="text-sm text-slate-600">H₂S, CO₂, SO₂ yang berbahaya bagi pernapasan</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 4: Dampak dan Studi Kasus -->
+    <section id="dampak" class="mb-16 scroll-mt-20">
+     <div class="card-glass rounded-3xl p-6 sm:p-10 section-card shadow-2xl">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-500 to-rose-500 flex items-center justify-center text-2xl">
+        ⚠️
+       </div>
+       <div><span class="text-red-500 font-semibold text-sm">BAB 4</span>
+        <h2 class="font-display text-2xl sm:text-3xl text-slate-800 font-bold">Dampak &amp; Studi Kasus: Krakatau 1883</h2>
+       </div>
+      </div><!-- Krakatau Case Study -->
+      <div class="bg-gradient-to-r from-slate-900 via-red-900 to-slate-900 rounded-2xl p-6 mb-8 text-white">
+       <div class="text-center mb-6"><span class="text-6xl">🌋💥🌊</span>
+        <h3 class="font-display text-3xl font-bold mt-4">Letusan Krakatau 1883</h3>
+        <p class="text-red-200">Salah satu bencana vulkanik paling dahsyat dalam sejarah</p>
+       </div><!-- Krakatau Illustration -->
+       <div class="bg-slate-800 rounded-xl p-4 mb-6">
+        <svg viewbox="0 0 800 350" class="w-full h-auto"><!-- Ocean --> <rect x="0" y="200" width="800" height="150" fill="#1e3a5f" /> <!-- Waves --> <g fill="#2980b9" opacity="0.6">
+          <path d="M0,220 Q100,210 200,220 Q300,230 400,220 Q500,210 600,220 Q700,230 800,220 L800,350 L0,350 Z">
+           <animate attributename="d" values="M0,220 Q100,210 200,220 Q300,230 400,220 Q500,210 600,220 Q700,230 800,220 L800,350 L0,350 Z;M0,225 Q100,215 200,225 Q300,235 400,225 Q500,215 600,225 Q700,235 800,225 L800,350 L0,350 Z;M0,220 Q100,210 200,220 Q300,230 400,220 Q500,210 600,220 Q700,230 800,220 L800,350 L0,350 Z" dur="3s" repeatcount="indefinite" />
+          </path>
+         </g> <!-- Sky --> <rect x="0" y="0" width="800" height="200" fill="#1a1a2e" /> <!-- Volcanic ash cloud --> <g fill="#333" opacity="0.8">
+          <ellipse cx="400" cy="60" rx="200" ry="50">
+           <animate attributename="rx" values="200;220;200" dur="4s" repeatcount="indefinite" />
+          </ellipse>
+          <ellipse cx="350" cy="40" rx="150" ry="35" />
+          <ellipse cx="450" cy="35" rx="160" ry="40" />
+          <ellipse cx="300" cy="70" rx="100" ry="30" />
+          <ellipse cx="500" cy="75" rx="110" ry="35" />
+         </g> <!-- Krakatau volcano (erupting) --> <polygon points="350,200 400,100 450,200" fill="#4a4a4a" /> <ellipse cx="400" cy="105" rx="25" ry="8" fill="#1a1a1a" /> <!-- Massive eruption --> <g>
+          <path d="M400,90 Q380,50 400,20 Q420,50 400,90" fill="#ff6b35">
+           <animate attributename="d" values="M400,90 Q380,50 400,20 Q420,50 400,90;M400,90 Q370,30 400,0 Q430,30 400,90;M400,90 Q380,50 400,20 Q420,50 400,90" dur="0.8s" repeatcount="indefinite" />
+          </path>
+          <path d="M400,90 Q360,60 380,30" stroke="#ffcc02" stroke-width="5" fill="none">
+           <animate attributename="opacity" values="1;0.5;1" dur="0.5s" repeatcount="indefinite" />
+          </path>
+          <path d="M400,90 Q440,60 420,30" stroke="#ffcc02" stroke-width="5" fill="none">
+           <animate attributename="opacity" values="0.5;1;0.5" dur="0.5s" repeatcount="indefinite" />
+          </path>
+         </g> <!-- Tsunami waves --> <g fill="#3498db">
+          <path d="M100,250 Q150,200 200,250" stroke="#2980b9" stroke-width="4" fill="none">
+           <animate attributename="d" values="M100,250 Q150,200 200,250;M80,250 Q130,190 180,250;M100,250 Q150,200 200,250" dur="2s" repeatcount="indefinite" />
+          </path>
+          <path d="M600,250 Q650,200 700,250" stroke="#2980b9" stroke-width="4" fill="none">
+           <animate attributename="d" values="M600,250 Q650,200 700,250;M620,250 Q670,190 720,250;M600,250 Q650,200 700,250" dur="2s" repeatcount="indefinite" />
+          </path>
+         </g> <!-- Labels --> <text x="400" y="330" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">
+          SELAT SUNDA
+         </text> <text x="100" y="280" fill="#3498db" font-size="12" font-weight="bold">
+          🌊 TSUNAMI 40m
+         </text> <text x="700" y="280" fill="#3498db" font-size="12" font-weight="bold">
+          TSUNAMI 🌊
+         </text> <!-- Explosion indicator --> <circle cx="400" cy="80" r="30" fill="#ff6b35" opacity="0.3">
+          <animate attributename="r" values="30;50;30" dur="1s" repeatcount="indefinite" />
+          <animate attributename="opacity" values="0.3;0.1;0.3" dur="1s" repeatcount="indefinite" />
+         </circle> <!-- Date label --> <rect x="300" y="130" width="200" height="30" fill="rgba(0,0,0,0.7)" rx="5" /> <text x="400" y="150" fill="#ff6b35" font-size="14" font-weight="bold" text-anchor="middle">
+          27 Agustus 1883
+         </text>
+        </svg>
+       </div>
+       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white/10 rounded-xl p-4 text-center backdrop-blur">
+         <div class="text-3xl mb-2">
+          🌊
+         </div>
+         <div class="text-2xl font-bold text-yellow-400">
+          40 meter
+         </div>
+         <div class="text-sm text-red-200">
+          Tinggi Tsunami
+         </div>
+        </div>
+        <div class="bg-white/10 rounded-xl p-4 text-center backdrop-blur">
+         <div class="text-3xl mb-2">
+          💀
+         </div>
+         <div class="text-2xl font-bold text-yellow-400">
+          36.000+
+         </div>
+         <div class="text-sm text-red-200">
+          Korban Jiwa
+         </div>
+        </div>
+        <div class="bg-white/10 rounded-xl p-4 text-center backdrop-blur">
+         <div class="text-3xl mb-2">
+          🔊
+         </div>
+         <div class="text-2xl font-bold text-yellow-400">
+          4.800 km
+         </div>
+         <div class="text-sm text-red-200">
+          Jarak Suara Terdengar
+         </div>
+        </div>
+        <div class="bg-white/10 rounded-xl p-4 text-center backdrop-blur">
+         <div class="text-3xl mb-2">
+          🌡️
+         </div>
+         <div class="text-2xl font-bold text-yellow-400">
+          -1.2°C
+         </div>
+         <div class="text-sm text-red-200">
+          Penurunan Suhu Global
+         </div>
+        </div>
+       </div>
+      </div><!-- Impact Categories -->
+      <h3 class="font-display text-xl text-slate-800 font-bold mb-4">Dampak Letusan Gunung Berapi</h3>
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+       <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-6">
+        <h4 class="font-bold text-red-700 text-lg mb-4 flex items-center gap-2"><span class="text-2xl">⚠️</span> Dampak Langsung</h4>
+        <ul class="space-y-3 text-slate-700">
+         <li class="flex items-start gap-2"><span class="text-red-500 mt-1">●</span> <span><strong>Awan panas (Pyroclastic Flow)</strong> - aliran material vulkanik bersuhu tinggi yang bergerak cepat</span></li>
+         <li class="flex items-start gap-2"><span class="text-red-500 mt-1">●</span> <span><strong>Lahar</strong> - aliran lumpur vulkanik yang merusak pemukiman</span></li>
+         <li class="flex items-start gap-2"><span class="text-red-500 mt-1">●</span> <span><strong>Hujan abu</strong> - merusak tanaman dan mengganggu pernapasan</span></li>
+         <li class="flex items-start gap-2"><span class="text-red-500 mt-1">●</span> <span><strong>Tsunami vulkanik</strong> - dipicu oleh runtuhan kaldera ke laut</span></li>
+        </ul>
+       </div>
+       <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-6">
+        <h4 class="font-bold text-amber-700 text-lg mb-4 flex items-center gap-2"><span class="text-2xl">🌍</span> Dampak Global</h4>
+        <ul class="space-y-3 text-slate-700">
+         <li class="flex items-start gap-2"><span class="text-amber-500 mt-1">●</span> <span><strong>Perubahan iklim sementara</strong> - debu vulkanik menghalangi sinar matahari</span></li>
+         <li class="flex items-start gap-2"><span class="text-amber-500 mt-1">●</span> <span><strong>Volcanic winter</strong> - penurunan suhu global dalam jangka waktu tertentu</span></li>
+         <li class="flex items-start gap-2"><span class="text-amber-500 mt-1">●</span> <span><strong>Gangguan penerbangan</strong> - abu vulkanik berbahaya bagi mesin pesawat</span></li>
+         <li class="flex items-start gap-2"><span class="text-amber-500 mt-1">●</span> <span><strong>Sunset spektakuler</strong> - partikel vulkanik menciptakan warna langit unik</span></li>
+        </ul>
+       </div>
+      </div><!-- Risk Statistics -->
+      <div class="bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl p-6 text-white">
+       <div class="flex items-center justify-center gap-4 flex-wrap">
+        <div class="text-center">
+         <div class="text-5xl font-bold">
+          4,5 Juta
+         </div>
+         <div class="text-red-100">
+          Masyarakat Indonesia
+         </div>
+        </div>
+        <div class="text-4xl">
+         👥
+        </div>
+        <div class="text-center max-w-sm">
+         <div class="text-lg">
+          Tinggal di <strong>daerah rawan bencana vulkanik</strong>
+         </div>
+         <div class="text-red-200 text-sm mt-2">
+          Pentingnya edukasi mitigasi bencana!
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 5: Manfaat -->
+    <section id="manfaat" class="mb-16 scroll-mt-20">
+     <div class="card-glass rounded-3xl p-6 sm:p-10 section-card shadow-2xl">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-2xl">
+        🌱
+       </div>
+       <div><span class="text-green-500 font-semibold text-sm">BAB 5</span>
+        <h2 class="font-display text-2xl sm:text-3xl text-slate-800 font-bold">Manfaat Gunung Berapi</h2>
+       </div>
+      </div>
+      <p class="text-slate-600 mb-8 text-lg">Meskipun berbahaya, gunung berapi memberikan banyak <strong>manfaat</strong> bagi kehidupan manusia dan lingkungan. Indonesia memanfaatkan potensi vulkanik untuk berbagai sektor.</p><!-- Benefits Illustration -->
+      <div class="illustration-container p-6 mb-8">
+       <svg viewbox="0 0 800 400" class="w-full h-auto"><!-- Sky --> <rect width="800" height="400" fill="#e0f7fa" /> <!-- Sun --> <circle cx="700" cy="60" r="40" fill="#ffd54f" /> <g stroke="#ffd54f" stroke-width="3">
+         <line x1="700" y1="10" x2="700" y2="0" />
+         <line x1="740" y1="20" x2="750" y2="10" />
+         <line x1="750" y1="60" x2="760" y2="60" />
+         <line x1="740" y1="100" x2="750" y2="110" />
+        </g> <!-- Background mountains --> <polygon points="0,300 100,200 200,280 300,180 400,250 500,150 600,220 700,170 800,240 800,400 0,400" fill="#81c784" /> <!-- Main volcano (dormant, beneficial) --> <polygon points="300,350 400,150 500,350" fill="#5d4037" /> <ellipse cx="400" cy="155" rx="30" ry="10" fill="#3e2723" /> <!-- Fertile farmland --> <rect x="50" y="320" width="150" height="80" fill="#a5d6a7" rx="5" /> <g fill="#4caf50">
+         <rect x="60" y="340" width="10" height="30" />
+         <rect x="80" y="335" width="10" height="35" />
+         <rect x="100" y="340" width="10" height="30" />
+         <rect x="120" y="330" width="10" height="40" />
+         <rect x="140" y="338" width="10" height="32" />
+         <rect x="160" y="342" width="10" height="28" />
+        </g> <text x="125" y="390" fill="#1b5e20" font-size="11" font-weight="bold" text-anchor="middle">
+         PERTANIAN SUBUR
+        </text> <!-- Geothermal power plant --> <g transform="translate(550, 250)">
+         <rect x="0" y="50" width="80" height="50" fill="#78909c" />
+         <rect x="20" y="30" width="15" height="40" fill="#90a4ae" />
+         <rect x="45" y="35" width="15" height="35" fill="#90a4ae" /> <!-- Steam -->
+         <ellipse cx="27" cy="20" rx="8" ry="5" fill="#eceff1" opacity="0.8">
+          <animate attributename="cy" values="20;10;20" dur="2s" repeatcount="indefinite" />
+         </ellipse>
+         <ellipse cx="52" cy="25" rx="7" ry="4" fill="#eceff1" opacity="0.7">
+          <animate attributename="cy" values="25;15;25" dur="2.5s" repeatcount="indefinite" />
+         </ellipse>
+        </g> <text x="590" y="360" fill="#37474f" font-size="11" font-weight="bold" text-anchor="middle">
+         PANAS BUMI
+        </text> <!-- Mining --> <g transform="translate(250, 200)">
+         <polygon points="20,60 30,40 40,60" fill="#ffd54f" />
+         <polygon points="45,60 55,45 65,60" fill="#90a4ae" />
+         <polygon points="10,60 18,48 26,60" fill="#ff8a65" />
+         <text x="37" y="80" fill="#5d4037" font-size="10" font-weight="bold" text-anchor="middle">
+          MINERAL
+         </text>
+        </g> <!-- Hot spring / Tourism --> <g transform="translate(500, 180)">
+         <ellipse cx="40" cy="40" rx="35" ry="20" fill="#4dd0e1" />
+         <ellipse cx="40" cy="35" rx="30" ry="15" fill="#80deea" /> <!-- Steam from hot spring -->
+         <g fill="#fff" opacity="0.6">
+          <ellipse cx="30" cy="20" rx="5" ry="8">
+           <animate attributename="cy" values="20;10;20" dur="3s" repeatcount="indefinite" />
+          </ellipse>
+          <ellipse cx="50" cy="22" rx="4" ry="6">
+           <animate attributename="cy" values="22;12;22" dur="2.5s" repeatcount="indefinite" />
+          </ellipse>
+         </g>
+        </g> <text x="540" y="240" fill="#006064" font-size="10" font-weight="bold" text-anchor="middle">
+         WISATA
+        </text> <!-- Research --> <g transform="translate(350, 80)">
+         <rect x="0" y="20" width="30" height="40" fill="#fff" stroke="#333" stroke-width="2" />
+         <line x1="5" y1="30" x2="25" y2="30" stroke="#333" />
+         <line x1="5" y1="40" x2="25" y2="40" stroke="#333" />
+         <line x1="5" y1="50" x2="25" y2="50" stroke="#333" />
+         <circle cx="15" cy="10" r="8" fill="#1976d2" />
+        </g> <text x="365" y="130" fill="#0d47a1" font-size="10" font-weight="bold" text-anchor="middle">
+         RISET
+        </text> <!-- Legend --> <rect x="20" y="20" width="180" height="120" fill="rgba(255,255,255,0.9)" rx="10" /> <text x="110" y="45" fill="#333" font-size="12" font-weight="bold" text-anchor="middle">
+         MANFAAT GUNUNG API
+        </text> <g font-size="10" fill="#333">
+         <circle cx="35" cy="65" r="5" fill="#4caf50" />
+         <text x="45" y="68">
+          Tanah Subur
+         </text>
+         <circle cx="35" cy="85" r="5" fill="#ffd54f" />
+         <text x="45" y="88">
+          Sumber Mineral
+         </text>
+         <circle cx="35" cy="105" r="5" fill="#78909c" />
+         <text x="45" y="108">
+          Energi Geotermal
+         </text>
+         <circle cx="35" cy="125" r="5" fill="#4dd0e1" />
+         <text x="45" y="128">
+          Pariwisata &amp; Riset
+         </text>
+        </g>
+       </svg>
+      </div><!-- Benefits Cards -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+       <div class="bg-gradient-to-br from-amber-100 to-yellow-100 rounded-2xl p-6 border border-amber-200 hover:shadow-xl transition-shadow">
+        <div class="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-3xl mb-4">
+         💎
+        </div>
+        <h4 class="font-bold text-slate-800 text-lg mb-2">Sumber Mineral</h4>
+        <p class="text-slate-600 text-sm mb-3">Gunung berapi menghasilkan berbagai logam berharga setelah tidak aktif.</p>
+        <div class="flex flex-wrap gap-1"><span class="bg-amber-200 text-amber-800 px-2 py-1 rounded text-xs">Emas</span> <span class="bg-gray-200 text-gray-800 px-2 py-1 rounded text-xs">Perak</span> <span class="bg-orange-200 text-orange-800 px-2 py-1 rounded text-xs">Tembaga</span> <span class="bg-slate-200 text-slate-800 px-2 py-1 rounded text-xs">Timbal</span> <span class="bg-zinc-200 text-zinc-800 px-2 py-1 rounded text-xs">Seng</span>
+        </div>
+       </div>
+       <div class="bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl p-6 border border-blue-200 hover:shadow-xl transition-shadow">
+        <div class="w-14 h-14 bg-blue-500 rounded-2xl flex items-center justify-center text-3xl mb-4">
+         ⚡
+        </div>
+        <h4 class="font-bold text-slate-800 text-lg mb-2">Energi Geotermal</h4>
+        <p class="text-slate-600 text-sm mb-3">Panas bumi menjadi sumber energi terbarukan alternatif minyak bumi.</p>
+        <div class="bg-blue-200 rounded-lg p-2 text-center"><span class="text-blue-800 font-bold text-sm">🇮🇩 Indonesia #2 Dunia</span>
+         <p class="text-blue-700 text-xs">Kapasitas Geotermal Terbesar</p>
+        </div>
+       </div>
+       <div class="bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl p-6 border border-green-200 hover:shadow-xl transition-shadow">
+        <div class="w-14 h-14 bg-green-500 rounded-2xl flex items-center justify-center text-3xl mb-4">
+         🌾
+        </div>
+        <h4 class="font-bold text-slate-800 text-lg mb-2">Kesuburan Tanah</h4>
+        <p class="text-slate-600 text-sm mb-3">Debu vulkanik yang terdekomposisi menciptakan tanah paling subur.</p>
+        <div class="space-y-1 text-sm">
+         <div class="flex items-center gap-2"><span class="text-green-500">✓</span> <span class="text-slate-600">Kaya mineral</span>
+         </div>
+         <div class="flex items-center gap-2"><span class="text-green-500">✓</span> <span class="text-slate-600">Hasil panen melimpah</span>
+         </div>
+         <div class="flex items-center gap-2"><span class="text-green-500">✓</span> <span class="text-slate-600">Pertanian produktif</span>
+         </div>
+        </div>
+       </div>
+       <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-6 border border-purple-200 hover:shadow-xl transition-shadow">
+        <div class="w-14 h-14 bg-purple-500 rounded-2xl flex items-center justify-center text-3xl mb-4">
+         🏔️
+        </div>
+        <h4 class="font-bold text-slate-800 text-lg mb-2">Pariwisata &amp; Riset</h4>
+        <p class="text-slate-600 text-sm mb-3">Keindahan alam dan lokasi penelitian vulkanologi internasional.</p>
+        <div class="space-y-1 text-sm">
+         <div class="flex items-center gap-2"><span class="text-purple-500">🎯</span> <span class="text-slate-600">Wisata pendakian</span>
+         </div>
+         <div class="flex items-center gap-2"><span class="text-purple-500">🔬</span> <span class="text-slate-600">Riset internasional</span>
+         </div>
+         <div class="flex items-center gap-2"><span class="text-purple-500">♨️</span> <span class="text-slate-600">Pemandian air panas</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 6: Aktivitas Interaktif -->
+    <section id="aktivitas" class="mb-16 scroll-mt-20">
+     <div class="card-glass rounded-3xl p-6 sm:p-10 section-card shadow-2xl">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center text-2xl">
+        📝
+       </div>
+       <div><span class="text-indigo-500 font-semibold text-sm">AKTIVITAS</span>
+        <h2 class="font-display text-2xl sm:text-3xl text-slate-800 font-bold">Aktivitas Interaktif Siswa</h2>
+       </div>
+      </div><!-- Activity Tabs -->
+      <div class="flex flex-wrap gap-2 mb-6"><button onclick="showActivity(1)" id="actTab1" class="px-4 py-2 rounded-full bg-indigo-500 text-white font-medium transition-all"> 🏷️ Labeli Struktur </button> <button onclick="showActivity(2)" id="actTab2" class="px-4 py-2 rounded-full bg-slate-200 text-slate-700 font-medium hover:bg-slate-300 transition-all"> 🎭 Simulasi Peran </button> <button onclick="showActivity(3)" id="actTab3" class="px-4 py-2 rounded-full bg-slate-200 text-slate-700 font-medium hover:bg-slate-300 transition-all"> 📢 Kampanye Mitigasi </button>
+      </div><!-- Activity 1: Label Structure -->
+      <div id="activity1" class="tab-content active">
+       <div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-6 border border-indigo-100">
+        <h3 class="font-bold text-xl text-indigo-800 mb-4">🏷️ Aktivitas 1: Labeli Struktur Gunung Berapi</h3>
+        <p class="text-slate-600 mb-6">Klik pada bagian gunung berapi untuk melihat nama dan fungsinya. Cobalah mengingat setiap bagian!</p><!-- Interactive Volcano Diagram -->
+        <div class="bg-white rounded-xl p-4 mb-4">
+         <svg viewbox="0 0 600 400" class="w-full h-auto" id="volcanoStructure"><!-- Sky --> <rect width="600" height="400" fill="#e3f2fd" /> <!-- Underground layer --> <rect x="0" y="280" width="600" height="120" fill="#8d6e63" /> <!-- Volcano body --> <polygon points="150,280 300,80 450,280" fill="#5d4037" id="vBody" /> <!-- Crater --> <ellipse cx="300" cy="85" rx="35" ry="12" fill="#3e2723" id="vCrater" class="cursor-pointer hover:opacity-80" onclick="showLabel('crater')" /> <!-- Main conduit --> <rect x="285" y="90" width="30" height="190" fill="#ff6b35" opacity="0.8" id="vConduit" class="cursor-pointer hover:opacity-60" onclick="showLabel('conduit')" /> <!-- Magma chamber --> <ellipse cx="300" cy="340" rx="80" ry="40" fill="#ff6b35" id="vChamber" class="cursor-pointer hover:opacity-80" onclick="showLabel('chamber')" /> <!-- Secondary conduit --> <path d="M280,300 Q220,250 200,200" stroke="#ff6b35" stroke-width="15" fill="none" opacity="0.7" id="vSecondary" class="cursor-pointer hover:opacity-50" onclick="showLabel('secondary')" /> <!-- Lava flow --> <path d="M300,85 Q320,130 380,200 Q420,250 450,280" stroke="#ff6b35" stroke-width="12" fill="none" id="vLava" class="cursor-pointer hover:opacity-80" onclick="showLabel('lava')" /> <!-- Ash cloud --> <g id="vAsh" class="cursor-pointer hover:opacity-70" onclick="showLabel('ash')">
+           <ellipse cx="300" cy="40" rx="50" ry="25" fill="#78909c" />
+           <ellipse cx="270" cy="50" rx="30" ry="15" fill="#90a4ae" />
+           <ellipse cx="330" cy="45" rx="35" ry="18" fill="#90a4ae" />
+          </g> <!-- Labels (hidden by default, shown on click) --> <g id="labelCrater" class="hidden">
+           <rect x="350" y="60" width="120" height="50" fill="#1a1a1a" rx="8" />
+           <text x="410" y="82" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">
+            KAWAH
+           </text>
+           <text x="410" y="100" fill="#ccc" font-size="9" text-anchor="middle">
+            Lubang tempat keluarnya
+           </text>
+           <text x="410" y="112" fill="#ccc" font-size="9" text-anchor="middle">
+            material vulkanik
+           </text>
+           <line x1="350" y1="85" x2="335" y2="85" stroke="#fff" stroke-width="2" />
+          </g> <g id="labelConduit" class="hidden">
+           <rect x="350" y="150" width="130" height="50" fill="#1a1a1a" rx="8" />
+           <text x="415" y="172" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">
+            PIPA KEPUNDAN
+           </text>
+           <text x="415" y="190" fill="#ccc" font-size="9" text-anchor="middle">
+            Saluran utama magma
+           </text>
+           <line x1="350" y1="175" x2="315" y2="175" stroke="#fff" stroke-width="2" />
+          </g> <g id="labelChamber" class="hidden">
+           <rect x="380" y="310" width="140" height="60" fill="#1a1a1a" rx="8" />
+           <text x="450" y="332" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">
+            KANTONG MAGMA
+           </text>
+           <text x="450" y="350" fill="#ccc" font-size="9" text-anchor="middle">
+            Reservoir magma di
+           </text>
+           <text x="450" y="362" fill="#ccc" font-size="9" text-anchor="middle">
+            bawah gunung berapi
+           </text>
+           <line x1="380" y1="340" x2="380" y2="340" stroke="#fff" stroke-width="2" />
+          </g> <g id="labelSecondary" class="hidden">
+           <rect x="80" y="180" width="120" height="50" fill="#1a1a1a" rx="8" />
+           <text x="140" y="202" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">
+            PIPA SAMPING
+           </text>
+           <text x="140" y="220" fill="#ccc" font-size="9" text-anchor="middle">
+            Saluran magma sekunder
+           </text>
+           <line x1="200" y1="205" x2="220" y2="220" stroke="#fff" stroke-width="2" />
+          </g> <g id="labelLava" class="hidden">
+           <rect x="420" y="180" width="120" height="50" fill="#1a1a1a" rx="8" />
+           <text x="480" y="202" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">
+            ALIRAN LAVA
+           </text>
+           <text x="480" y="220" fill="#ccc" font-size="9" text-anchor="middle">
+            Magma yang mengalir
+           </text>
+           <text x="480" y="232" fill="#ccc" font-size="9" text-anchor="middle">
+            di permukaan
+           </text>
+           <line x1="420" y1="205" x2="400" y2="220" stroke="#fff" stroke-width="2" />
+          </g> <g id="labelAsh" class="hidden">
+           <rect x="360" y="20" width="130" height="50" fill="#1a1a1a" rx="8" />
+           <text x="425" y="42" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">
+            AWAN ABU
+           </text>
+           <text x="425" y="60" fill="#ccc" font-size="9" text-anchor="middle">
+            Material vulkanik halus
+           </text>
+           <line x1="360" y1="45" x2="340" y2="45" stroke="#fff" stroke-width="2" />
+          </g> <!-- Instruction --> <text x="300" y="390" fill="#5d4037" font-size="11" text-anchor="middle">
+           👆 Klik pada bagian gunung untuk melihat labelnya
+          </text>
+         </svg>
+        </div>
+        <div class="bg-indigo-100 rounded-lg p-4">
+         <p class="text-indigo-800 text-sm"><strong>💡 Tugas:</strong> Setelah mempelajari struktur di atas, gambar ulang gunung berapi di buku tugasmu dan beri label lengkap pada setiap bagiannya!</p>
+        </div>
+       </div>
+      </div><!-- Activity 2: Role Play -->
+      <div id="activity2" class="tab-content">
+       <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-2xl p-6 border border-green-100">
+        <h3 class="font-bold text-xl text-green-800 mb-4">🎭 Aktivitas 2: Simulasi Peran Seismolog</h3>
+        <p class="text-slate-600 mb-6">Bayangkan kamu adalah seorang <strong>seismolog</strong> (ahli gempa dan gunung berapi). Kamu harus menjelaskan tanda-tanda erupsi kepada Kepala Desa agar masyarakat segera mengungsi!</p>
+        <div class="grid md:grid-cols-2 gap-6">
+         <div class="bg-white rounded-xl p-5 border border-green-200">
+          <h4 class="font-bold text-green-700 mb-3 flex items-center gap-2"><span class="text-2xl">⚠️</span> Tanda-tanda Erupsi</h4>
+          <ul class="space-y-3">
+           <li class="flex items-start gap-2"><span class="bg-red-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+            <div><strong>Gempa Vulkanik</strong>
+             <p class="text-sm text-slate-600">Gempa berulang di sekitar gunung yang meningkat frekuensinya</p>
+            </div></li>
+           <li class="flex items-start gap-2"><span class="bg-orange-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+            <div><strong>Peningkatan Suhu</strong>
+             <p class="text-sm text-slate-600">Air sungai dan mata air di sekitar gunung menjadi lebih panas</p>
+            </div></li>
+           <li class="flex items-start gap-2"><span class="bg-yellow-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+            <div><strong>Gas Vulkanik</strong>
+             <p class="text-sm text-slate-600">Bau belerang yang menyengat, tumbuhan layu mendadak</p>
+            </div></li>
+           <li class="flex items-start gap-2"><span class="bg-red-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+            <div><strong>Hewan Turun Gunung</strong>
+             <p class="text-sm text-slate-600">Satwa liar meninggalkan habitat mereka secara massal</p>
+            </div></li>
+          </ul>
+         </div>
+         <div class="bg-white rounded-xl p-5 border border-green-200">
+          <h4 class="font-bold text-green-700 mb-3 flex items-center gap-2"><span class="text-2xl">📋</span> Skenario Role Play</h4>
+          <div class="bg-green-50 rounded-lg p-4 mb-4">
+           <p class="text-green-800 text-sm italic">"Pak Kepala Desa, saya dari BPPTKG membawa kabar penting. Berdasarkan data pemantauan kami, Gunung [nama] menunjukkan peningkatan aktivitas yang signifikan. Saya perlu menjelaskan situasinya dan meminta Bapak untuk segera mengevakuasi warga..."</p>
+          </div>
+          <div class="space-y-2 text-sm">
+           <p><strong>Tugas Siswa:</strong></p>
+           <ol class="list-decimal list-inside text-slate-600 space-y-1">
+            <li>Bentuk kelompok 3-4 orang</li>
+            <li>Pilih peran: Seismolog, Kepala Desa, Warga</li>
+            <li>Praktikkan dialog evakuasi yang meyakinkan</li>
+            <li>Presentasikan di depan kelas</li>
+           </ol>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Activity 3: Mitigation Campaign -->
+      <div id="activity3" class="tab-content">
+       <div class="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-6 border border-orange-100">
+        <h3 class="font-bold text-xl text-orange-800 mb-4">📢 Aktivitas 3: Kampanye Mitigasi Bencana</h3>
+        <p class="text-slate-600 mb-6">Buatlah <strong>poster atau video pendek</strong> tentang langkah-langkah mengurangi risiko bencana gunung berapi!</p>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+         <div class="bg-white rounded-xl p-5 border-2 border-blue-200">
+          <div class="text-3xl mb-2">
+           🔵
+          </div>
+          <h4 class="font-bold text-blue-700">SEBELUM Erupsi</h4>
+          <ul class="text-sm text-slate-600 mt-2 space-y-1">
+           <li>• Kenali jalur evakuasi</li>
+           <li>• Siapkan tas siaga bencana</li>
+           <li>• Ikuti info dari BMKG/BPBD</li>
+           <li>• Latihan evakuasi berkala</li>
+          </ul>
+         </div>
+         <div class="bg-white rounded-xl p-5 border-2 border-orange-200">
+          <div class="text-3xl mb-2">
+           🟠
+          </div>
+          <h4 class="font-bold text-orange-700">SAAT Erupsi</h4>
+          <ul class="text-sm text-slate-600 mt-2 space-y-1">
+           <li>• Segera mengungsi</li>
+           <li>• Gunakan masker</li>
+           <li>• Lindungi kepala</li>
+           <li>• Jauhi aliran sungai</li>
+          </ul>
+         </div>
+         <div class="bg-white rounded-xl p-5 border-2 border-green-200">
+          <div class="text-3xl mb-2">
+           🟢
+          </div>
+          <h4 class="font-bold text-green-700">SETELAH Erupsi</h4>
+          <ul class="text-sm text-slate-600 mt-2 space-y-1">
+           <li>• Tunggu instruksi resmi</li>
+           <li>• Bersihkan abu vulkanik</li>
+           <li>• Periksa kesehatan</li>
+           <li>• Bantu sesama</li>
+          </ul>
+         </div>
+        </div>
+        <div class="bg-orange-100 rounded-lg p-4">
+         <p class="text-orange-800 text-sm"><strong>💡 Tips Membuat Poster:</strong> Gunakan gambar yang menarik, tulisan singkat dan jelas, warna kontras, serta sertakan nomor darurat BPBD di daerahmu!</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 7: Quiz HOTS -->
+    <section id="quiz" class="mb-16 scroll-mt-20">
+     <div class="card-glass rounded-3xl p-6 sm:p-10 section-card shadow-2xl">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center text-2xl">
+        🎯
+       </div>
+       <div><span class="text-rose-500 font-semibold text-sm">EVALUASI</span>
+        <h2 class="font-display text-2xl sm:text-3xl text-slate-800 font-bold">Kuis HOTS (10 Soal)</h2>
+       </div>
+      </div>
+      <p class="text-slate-600 mb-6">Uji pemahamanmu dengan soal-soal <strong>Higher Order Thinking Skills (HOTS)</strong> berikut!</p><!-- Progress Bar -->
+      <div class="mb-6">
+       <div class="flex justify-between text-sm text-slate-600 mb-2"><span>Progres</span> <span id="quizProgress">0/10</span>
+       </div>
+       <div class="h-3 bg-slate-200 rounded-full overflow-hidden">
+        <div id="progressBar" class="h-full progress-bar rounded-full transition-all duration-500" style="width: 0%"></div>
+       </div>
+      </div><!-- Quiz Container -->
+      <div id="quizContainer"><!-- Questions will be loaded here -->
+      </div><!-- Quiz Controls -->
+      <div class="flex justify-between items-center mt-6"><button id="prevBtn" onclick="prevQuestion()" class="px-6 py-3 bg-slate-200 text-slate-700 rounded-full font-medium hover:bg-slate-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled> ← Sebelumnya </button> <button id="nextBtn" onclick="nextQuestion()" class="px-6 py-3 bg-gradient-to-r from-rose-500 to-pink-500 text-white rounded-full font-medium hover:shadow-lg transition-all"> Selanjutnya → </button>
+      </div><!-- Results -->
+      <div id="quizResults" class="hidden mt-8 text-center">
+       <div class="bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl p-8 border border-green-200">
+        <div class="text-6xl mb-4">
+         🏆
+        </div>
+        <h3 class="font-display text-3xl font-bold text-green-800 mb-2">Selamat!</h3>
+        <p class="text-green-700 mb-4">Kamu telah menyelesaikan kuis</p>
+        <div class="text-5xl font-bold text-green-600 mb-4" id="finalScore">
+         0/10
+        </div>
+        <p class="text-slate-600 mb-6" id="scoreMessage"></p><button onclick="resetQuiz()" class="px-6 py-3 bg-green-500 text-white rounded-full font-medium hover:bg-green-600 transition-all"> 🔄 Ulangi Kuis </button>
+       </div>
+      </div>
+     </div>
+    </section>
+   </main><!-- Footer -->
+   <footer class="bg-slate-900 text-white py-10 px-4">
+    <div class="max-w-6xl mx-auto">
+     <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-4"><img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-16 h-16 rounded-full object-cover border-2 border-orange-400" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #ff6b35, #ffcc02)'; this.alt='AM';">
+       <div>
+        <h3 class="font-display text-xl font-bold">Algian Manggara, S.Agr</h3>
+        <p class="text-slate-400 text-sm">Pengembang Media Pembelajaran</p>
+       </div>
+      </div>
+      <div class="text-center md:text-right">
+       <p class="text-slate-400 text-sm">Media Pembelajaran Gunung Berapi Indonesia</p>
+       <p class="text-orange-400 font-medium">© 2026 Algian Manggara, S.Agr</p>
+      </div>
+     </div>
+     <div class="mt-8 pt-6 border-t border-slate-700 text-center">
+      <p class="text-slate-500 text-sm">Dibuat dengan ❤️ untuk pembelajaran siswa Indonesia 🇮🇩</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default config
+    const defaultConfig = {
+      main_title: 'Gunung Berapi di Indonesia',
+      subtitle: 'Media Pembelajaran Interaktif untuk Siswa',
+      background_color: '#1a1a2e',
+      text_color: '#ffffff',
+      accent_color: '#ff6b35',
+      font_family: 'Source Sans 3'
+    };
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+          document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+          document.getElementById('nav-title').textContent = config.main_title || defaultConfig.main_title;
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => window.elementSdk.setConfig({ background_color: value })
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => window.elementSdk.setConfig({ accent_color: value })
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => window.elementSdk.setConfig({ font_family: value })
+          },
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['main_title', config.main_title || defaultConfig.main_title],
+          ['subtitle', config.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
+
+    // Scroll to section
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Show classification detail
+    function showClassDetail(type) {
+      const modal = document.getElementById('classDetailModal');
+      const content = document.getElementById('classDetailContent');
+      
+      const details = {
+        'A': {
+          title: 'Gunung Berapi Tipe A',
+          examples: ['Gunung Merapi (Jawa Tengah)', 'Gunung Semeru (Jawa Timur)', 'Gunung Krakatau (Selat Sunda)', 'Gunung Sinabung (Sumatera Utara)', 'Gunung Kelud (Jawa Timur)'],
+          desc: 'Gunung berapi dengan catatan sejarah letusan sejak tahun 1600 M. Dipantau secara intensif oleh PVMBG.'
+        },
+        'B': {
+          title: 'Gunung Berapi Tipe B',
+          examples: ['Gunung Tampomas (Jawa Barat)', 'Gunung Ciremai (Jawa Barat)', 'Gunung Ungaran (Jawa Tengah)'],
+          desc: 'Gunung berapi dengan catatan sejarah letusan sebelum tahun 1600 M. Masih berpotensi aktif.'
+        },
+        'C': {
+          title: 'Gunung Berapi Tipe C',
+          examples: ['Gunung dengan aktivitas solfatar', 'Gunung dengan aktivitas fumarol', 'Gunung dengan sumber air panas'],
+          desc: 'Tidak memiliki sejarah letusan tercatat, tetapi masih menunjukkan aktivitas vulkanik seperti solfatar atau fumarol.'
+        }
+      };
+      
+      const d = details[type];
+      content.innerHTML = `
+        <h4 class="font-bold text-xl text-slate-800 mb-3">${d.title}</h4>
+        <p class="text-slate-600 mb-4">${d.desc}</p>
+        <p class="font-medium text-slate-700 mb-2">Contoh:</p>
+        <ul class="list-disc list-inside text-slate-600">
+          ${d.examples.map(e => `<li>${e}</li>`).join('')}
+        </ul>
+      `;
+      modal.classList.remove('hidden');
+    }
+
+    // Show volcano structure labels
+    function showLabel(part) {
+      const labels = ['crater', 'conduit', 'chamber', 'secondary', 'lava', 'ash'];
+      labels.forEach(l => {
+        document.getElementById('label' + l.charAt(0).toUpperCase() + l.slice(1)).classList.add('hidden');
+      });
+      document.getElementById('label' + part.charAt(0).toUpperCase() + part.slice(1)).classList.remove('hidden');
+    }
+
+    // Activity tabs
+    function showActivity(num) {
+      for (let i = 1; i <= 3; i++) {
+        document.getElementById('activity' + i).classList.remove('active');
+        document.getElementById('actTab' + i).classList.remove('bg-indigo-500', 'text-white');
+        document.getElementById('actTab' + i).classList.add('bg-slate-200', 'text-slate-700');
+      }
+      document.getElementById('activity' + num).classList.add('active');
+      document.getElementById('actTab' + num).classList.add('bg-indigo-500', 'text-white');
+      document.getElementById('actTab' + num).classList.remove('bg-slate-200', 'text-slate-700');
+    }
+
+    // Quiz data - HOTS questions
+    const quizData = [
+      {
+        question: "Indonesia memiliki banyak gunung berapi aktif karena terletak di pertemuan tiga lempeng tektonik. Bagaimana proses subduksi menyebabkan terbentuknya gunung berapi?",
+        options: [
+          "Lempeng samudra menyelam di bawah lempeng benua, meleleh, dan magma naik ke permukaan",
+          "Lempeng benua dan samudra saling menjauh membentuk celah magma",
+          "Gempa bumi menyebabkan retakan yang dilalui magma",
+          "Erosi batuan menciptakan lubang untuk keluarnya magma"
+        ],
+        correct: 0,
+        explanation: "Pada zona subduksi, lempeng samudra yang lebih padat menyelam di bawah lempeng benua. Akibat tekanan dan panas tinggi, lempeng meleleh membentuk magma yang naik ke permukaan dan membentuk gunung berapi."
+      },
+      {
+        question: "Seorang petani di lereng Gunung Merapi mendapatkan hasil panen yang sangat melimpah. Mengapa tanah di sekitar gunung berapi sangat subur untuk pertanian?",
+        options: [
+          "Karena curah hujan yang tinggi di daerah pegunungan",
+          "Karena debu vulkanik mengandung mineral yang menyuburkan tanah setelah terdekomposisi",
+          "Karena suhu udara yang sejuk cocok untuk tanaman",
+          "Karena tidak ada hama penyakit di daerah gunung"
+        ],
+        correct: 1,
+        explanation: "Debu vulkanik mengandung berbagai mineral penting seperti fosfor, kalium, dan magnesium. Setelah terdekomposisi, mineral-mineral ini meresap ke tanah dan menyediakan nutrisi yang dibutuhkan tanaman."
+      },
+      {
+        question: "Pada tahun 1883, letusan Gunung Krakatau menyebabkan penurunan suhu global. Apa mekanisme yang menyebabkan fenomena ini?",
+        options: [
+          "Tsunami mendinginkan air laut secara global",
+          "Getaran gempa mengganggu inti bumi",
+          "Debu vulkanik di atmosfer menghalangi sinar matahari mencapai permukaan bumi",
+          "Gas vulkanik membuat lubang di lapisan ozon"
+        ],
+        correct: 2,
+        explanation: "Letusan dahsyat menyemburkan jutaan ton debu vulkanik ke stratosfer. Partikel-partikel ini menyebar secara global dan memantulkan sinar matahari kembali ke angkasa, sehingga mengurangi panas yang mencapai permukaan bumi."
+      },
+      {
+        question: "Mengapa warna lava dapat menunjukkan tingkat bahayanya bagi manusia?",
+        options: [
+          "Warna menunjukkan jenis mineral dalam lava",
+          "Warna menunjukkan suhu lava; semakin terang warnanya, semakin panas dan berbahaya",
+          "Warna menunjukkan kecepatan aliran lava",
+          "Warna menunjukkan kandungan gas beracun dalam lava"
+        ],
+        correct: 1,
+        explanation: "Warna lava berkorelasi langsung dengan suhunya. Lava hitam (< 500°C) relatif lebih dingin, sedangkan lava putih (> 1.150°C) adalah yang paling panas dan berbahaya karena dapat membakar apapun yang dilaluinya."
+      },
+      {
+        question: "Sebuah desa di radius 5 km dari gunung berapi tipe A perlu melakukan evakuasi. Mengapa gunung tipe A mendapat prioritas pemantauan lebih tinggi dibanding tipe B dan C?",
+        options: [
+          "Karena gunung tipe A lebih tinggi dari tipe lainnya",
+          "Karena gunung tipe A memiliki riwayat letusan terdokumentasi sejak 1600 yang menunjukkan pola aktivitas aktif",
+          "Karena gunung tipe A berada di dekat pemukiman padat",
+          "Karena gunung tipe A menghasilkan lava lebih banyak"
+        ],
+        correct: 1,
+        explanation: "Gunung tipe A memiliki catatan sejarah letusan sejak 1600 M, yang berarti aktivitasnya terdokumentasi dengan baik dan pola erupsinya dapat dipelajari. Ini membuat prediksi lebih akurat namun juga menunjukkan gunung tersebut masih sangat aktif."
+      },
+      {
+        question: "Indonesia memanfaatkan energi geotermal dari gunung berapi. Bagaimana proses konversi panas bumi menjadi listrik?",
+        options: [
+          "Panas langsung mengalirkan listrik melalui kabel",
+          "Uap panas dari dalam bumi memutar turbin yang terhubung dengan generator",
+          "Magma didinginkan untuk menghasilkan energi",
+          "Batuan panas digiling menjadi bahan bakar"
+        ],
+        correct: 1,
+        explanation: "Panas bumi memanaskan air bawah tanah menjadi uap bertekanan tinggi. Uap ini dialirkan ke turbin yang berputar dan terhubung dengan generator, mengkonversi energi kinetik menjadi energi listrik."
+      },
+      {
+        question: "Seorang seismolog menemukan bahwa frekuensi gempa vulkanik di suatu gunung meningkat drastis dalam seminggu terakhir. Apa interpretasi dan rekomendasi yang tepat?",
+        options: [
+          "Ini normal, tidak perlu tindakan khusus",
+          "Gempa disebabkan oleh aktivitas manusia, bukan gunung berapi",
+          "Peningkatan gempa vulkanik mengindikasikan pergerakan magma; perlu meningkatkan status siaga dan mempersiapkan evakuasi",
+          "Gempa akan segera berhenti dengan sendirinya"
+        ],
+        correct: 2,
+        explanation: "Peningkatan frekuensi gempa vulkanik biasanya mengindikasikan pergerakan magma di dalam gunung. Ini adalah salah satu tanda-tanda penting mendekati erupsi yang memerlukan peningkatan kewaspadaan dan persiapan evakuasi."
+      },
+      {
+        question: "Mengapa masyarakat tetap tinggal di lereng gunung berapi meskipun mengetahui risikonya?",
+        options: [
+          "Mereka tidak mengetahui bahaya gunung berapi",
+          "Pemerintah memaksa mereka tinggal di sana",
+          "Kesuburan tanah untuk pertanian, mata pencaharian, dan ikatan sosial-budaya dengan tempat tinggal mereka",
+          "Tidak ada tempat lain yang tersedia untuk ditinggali"
+        ],
+        correct: 2,
+        explanation: "Keputusan masyarakat tinggal di lereng gunung melibatkan berbagai faktor: tanah vulkanik yang subur mendukung pertanian, mata pencaharian yang sudah mapan, warisan leluhur, serta ikatan sosial dan budaya yang kuat dengan tempat mereka."
+      },
+      {
+        question: "Jika kamu menjadi kepala BPBD dan mendapat laporan bahwa sebuah gunung berapi menunjukkan peningkatan aktivitas solfatar, langkah apa yang paling tepat?",
+        options: [
+          "Langsung mengevakuasi seluruh penduduk dalam radius 20 km",
+          "Mengabaikan laporan karena solfatar adalah aktivitas normal",
+          "Meningkatkan pemantauan, menginformasikan masyarakat, dan menyiapkan rencana evakuasi jika aktivitas meningkat",
+          "Menutup akses ke gunung dan menunggu erupsi terjadi"
+        ],
+        correct: 2,
+        explanation: "Respon yang proporsional adalah meningkatkan pemantauan untuk memahami tren aktivitas, menginformasikan masyarakat agar waspada, dan menyiapkan rencana evakuasi. Evakuasi massal hanya dilakukan jika ada indikasi erupsi segera."
+      },
+      {
+        question: "Anak Krakatau (Krakatoa) terus tumbuh sejak muncul pada 1927. Apa implikasi pertumbuhan ini bagi mitigasi bencana di Selat Sunda?",
+        options: [
+          "Tidak ada implikasi karena gunung masih kecil",
+          "Pertumbuhan gunung muda yang aktif meningkatkan risiko letusan dan tsunami, memerlukan sistem peringatan dini dan edukasi masyarakat pesisir",
+          "Pertumbuhan akan berhenti dengan sendirinya",
+          "Gunung baru selalu lebih aman daripada gunung tua"
+        ],
+        correct: 1,
+        explanation: "Anak Krakatau adalah gunung muda yang sangat aktif. Pertumbuhannya yang terus-menerus menunjukkan aktivitas vulkanik tinggi. Letusan atau longsoran material ke laut dapat memicu tsunami seperti yang terjadi pada 2018, sehingga memerlukan kesiapsiagaan tinggi."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(10).fill(null);
+    let quizSubmitted = false;
+
+    // Initialize quiz
+    function initQuiz() {
+      renderQuestion();
+      updateProgress();
+    }
+
+    function renderQuestion() {
+      const q = quizData[currentQuestion];
+      const container = document.getElementById('quizContainer');
+      
+      let optionsHTML = q.options.map((opt, idx) => {
+        let classes = 'quiz-option p-4 rounded-xl cursor-pointer';
+        if (userAnswers[currentQuestion] === idx) {
+          classes += ' selected';
+        }
+        if (quizSubmitted) {
+          if (idx === q.correct) {
+            classes += ' correct';
+          } else if (userAnswers[currentQuestion] === idx && idx !== q.correct) {
+            classes += ' incorrect';
+          }
+        }
+        return `
+          <div class="${classes}" onclick="selectAnswer(${idx})" ${quizSubmitted ? 'style="pointer-events: none;"' : ''}>
+            <div class="flex items-start gap-3">
+              <span class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-700 flex-shrink-0">
+                ${String.fromCharCode(65 + idx)}
+              </span>
+              <span class="text-slate-700">${opt}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      let explanationHTML = '';
+      if (quizSubmitted && userAnswers[currentQuestion] !== null) {
+        const isCorrect = userAnswers[currentQuestion] === q.correct;
+        explanationHTML = `
+          <div class="mt-4 p-4 rounded-xl ${isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}">
+            <p class="${isCorrect ? 'text-green-800' : 'text-red-800'}">
+              <strong>${isCorrect ? '✅ Benar!' : '❌ Kurang tepat.'}</strong>
+            </p>
+            <p class="text-slate-600 mt-2 text-sm">${q.explanation}</p>
+          </div>
+        `;
+      }
+      
+      container.innerHTML = `
+        <div class="bg-gradient-to-r from-rose-100 to-pink-100 rounded-2xl p-6 mb-6">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="bg-rose-500 text-white px-3 py-1 rounded-full text-sm font-bold">Soal ${currentQuestion + 1}</span>
+            <span class="text-rose-600 text-sm">dari 10</span>
+          </div>
+          <p class="text-slate-800 text-lg leading-relaxed">${q.question}</p>
+        </div>
+        <div class="space-y-3">
+          ${optionsHTML}
+        </div>
+        ${explanationHTML}
+      `;
+      
+      // Update button states
+      document.getElementById('prevBtn').disabled = currentQuestion === 0;
+      
+      if (currentQuestion === 9) {
+        document.getElementById('nextBtn').textContent = quizSubmitted ? 'Lihat Hasil' : 'Selesai';
+      } else {
+        document.getElementById('nextBtn').textContent = 'Selanjutnya →';
+      }
+    }
+
+    function selectAnswer(idx) {
+      if (quizSubmitted) return;
+      userAnswers[currentQuestion] = idx;
+      renderQuestion();
+      updateProgress();
+    }
+
+    function nextQuestion() {
+      if (currentQuestion === 9) {
+        if (!quizSubmitted) {
+          quizSubmitted = true;
+          renderQuestion();
+          showResults();
+        } else {
+          showResults();
+        }
+      } else {
+        currentQuestion++;
+        renderQuestion();
+        updateProgress();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+        updateProgress();
+      }
+    }
+
+    function updateProgress() {
+      const answered = userAnswers.filter(a => a !== null).length;
+      document.getElementById('quizProgress').textContent = `${answered}/10`;
+      document.getElementById('progressBar').style.width = `${answered * 10}%`;
+    }
+
+    function showResults() {
+      const score = userAnswers.reduce((acc, ans, idx) => {
+        return acc + (ans === quizData[idx].correct ? 1 : 0);
+      }, 0);
+      
+      document.getElementById('finalScore').textContent = `${score}/10`;
+      
+      let message = '';
+      if (score >= 9) {
+        message = '🌟 Luar biasa! Kamu sangat memahami materi gunung berapi!';
+      } else if (score >= 7) {
+        message = '👏 Bagus sekali! Pemahaman kamu sudah baik.';
+      } else if (score >= 5) {
+        message = '💪 Cukup baik! Terus belajar untuk meningkatkan pemahaman.';
+      } else {
+        message = '📚 Ayo pelajari lagi materinya dan coba kembali!';
+      }
+      document.getElementById('scoreMessage').textContent = message;
+      
+      document.getElementById('quizResults').classList.remove('hidden');
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      userAnswers = new Array(10).fill(null);
+      quizSubmitted = false;
+      document.getElementById('quizResults').classList.add('hidden');
+      renderQuestion();
+      updateProgress();
+    }
+
+    // Initialize on load
+    initQuiz();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce5481bc58eb29b',t:'MTc3MTE2MzUwNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

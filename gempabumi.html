@@ -1,0 +1,1305 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memahami Gempa Bumi dan Dampaknya</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { font-family: 'Poppins', sans-serif; }
+    .font-serif { font-family: 'Merriweather', serif; }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+    
+    @keyframes wave {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
+    @keyframes pulse-ring {
+      0% { transform: scale(0.5); opacity: 1; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+    
+    .float-animation { animation: float 3s ease-in-out infinite; }
+    .shake-animation { animation: shake 0.5s ease-in-out; }
+    .wave-animation { animation: wave 2s linear infinite; }
+    
+    .nav-item {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #f59e0b, #ef4444);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-item:hover::after,
+    .nav-item.active::after {
+      width: 100%;
+    }
+    
+    .card-hover {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #ef4444, #f59e0b, #ef4444);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient 3s linear infinite;
+    }
+    
+    @keyframes gradient {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+    
+    .seismic-wave {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid #ef4444;
+      animation: pulse-ring 1.5s ease-out infinite;
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      transform: translateX(5px);
+    }
+    
+    .quiz-option.selected {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      transform: scale(1.02);
+    }
+    
+    .quiz-option.correct {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+    }
+    
+    .quiz-option.incorrect {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+    }
+    
+    .progress-bar {
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      transition: width 0.5s ease;
+    }
+    
+    .section-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+    
+    .section-indicator.active {
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      transform: scale(1.3);
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+    }
+    
+    .tectonic-plate {
+      transition: transform 0.5s ease;
+    }
+    
+    .tectonic-plate:hover {
+      cursor: pointer;
+    }
+    
+    .interactive-diagram {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .tooltip-box {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    
+    .tooltip-trigger:hover .tooltip-box {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #f59e0b, #ef4444);
+      border-radius: 4px;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-slate-50 text-slate-800 overflow-auto">
+  <div id="app-container" class="w-full h-full flex flex-col"><!-- Header Navigation -->
+   <header id="main-header" class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-lg border-b border-amber-200">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <div class="relative">
+        <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg">
+         <svg class="w-7 h-7 text-white" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+         </svg>
+        </div>
+        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+       </div>
+       <div>
+        <h1 id="header-title" class="text-lg font-bold gradient-text">Gempa Bumi</h1>
+        <p class="text-xs text-slate-500">Media Pembelajaran Interaktif</p>
+       </div>
+      </div>
+      <nav class="hidden md:flex items-center gap-6"><button onclick="scrollToSection('intro')" class="nav-item text-sm font-medium text-slate-600 hover:text-amber-600">Pengantar</button> <button onclick="scrollToSection('types')" class="nav-item text-sm font-medium text-slate-600 hover:text-amber-600">Jenis Gempa</button> <button onclick="scrollToSection('terms')" class="nav-item text-sm font-medium text-slate-600 hover:text-amber-600">Istilah</button> <button onclick="scrollToSection('measure')" class="nav-item text-sm font-medium text-slate-600 hover:text-amber-600">Pengukuran</button> <button onclick="scrollToSection('disasters')" class="nav-item text-sm font-medium text-slate-600 hover:text-amber-600">Bencana</button> <button onclick="scrollToSection('quiz')" class="nav-item px-4 py-2 bg-gradient-to-r from-amber-500 to-red-500 text-white rounded-full text-sm font-semibold hover:shadow-lg hover:scale-105 transition-all"> 🎯 Kuis HOTS </button>
+      </nav><button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg hover:bg-amber-50">
+       <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+       </svg></button>
+     </div><!-- Mobile Menu -->
+     <div id="mobile-menu" class="hidden md:hidden mt-4 pb-2 border-t border-slate-100 pt-4">
+      <div class="flex flex-col gap-2"><button onclick="scrollToSection('intro')" class="text-left px-3 py-2 rounded-lg hover:bg-amber-50 text-sm font-medium">📖 Pengantar</button> <button onclick="scrollToSection('types')" class="text-left px-3 py-2 rounded-lg hover:bg-amber-50 text-sm font-medium">🌋 Jenis Gempa</button> <button onclick="scrollToSection('terms')" class="text-left px-3 py-2 rounded-lg hover:bg-amber-50 text-sm font-medium">📚 Istilah Penting</button> <button onclick="scrollToSection('measure')" class="text-left px-3 py-2 rounded-lg hover:bg-amber-50 text-sm font-medium">📏 Pengukuran</button> <button onclick="scrollToSection('disasters')" class="text-left px-3 py-2 rounded-lg hover:bg-amber-50 text-sm font-medium">⚠️ Bencana Lanjutan</button> <button onclick="scrollToSection('quiz')" class="text-left px-3 py-2 rounded-lg bg-gradient-to-r from-amber-500 to-red-500 text-white text-sm font-semibold">🎯 Kuis HOTS</button>
+      </div>
+     </div>
+    </div>
+   </header><!-- Main Content -->
+   <main class="flex-1 overflow-auto"><!-- Hero Section -->
+    <section id="intro" class="relative bg-gradient-to-br from-slate-900 via-slate-800 to-amber-900 text-white py-16 px-4 overflow-hidden">
+     <div class="absolute inset-0 opacity-20">
+      <div class="absolute top-20 left-10 w-64 h-64 bg-amber-500 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-10 right-20 w-80 h-80 bg-red-500 rounded-full blur-3xl"></div>
+     </div>
+     <div class="max-w-6xl mx-auto relative z-10">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+       <div><span class="inline-block px-4 py-1 bg-amber-500/20 border border-amber-500/30 rounded-full text-amber-300 text-sm mb-4"> 📚 Materi Pembelajaran IPA </span>
+        <h1 id="main-title" class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Memahami <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-red-400">Gempa Bumi</span> dan Dampaknya</h1>
+        <p class="text-lg text-slate-300 mb-6 leading-relaxed">Pelajari tentang fenomena alam yang luar biasa ini - dari penyebab, jenis, hingga cara mengukurnya. Dilengkapi dengan aktivitas interaktif dan kuis HOTS!</p>
+        <div class="flex flex-wrap gap-3 mb-8">
+         <div class="flex items-center gap-2 px-3 py-2 bg-white/10 rounded-lg"><span class="text-2xl">🌍</span>
+          <div>
+           <p class="text-xs text-slate-400">Per Tahun</p>
+           <p class="font-bold text-amber-300">10.000-30.000</p>
+          </div>
+         </div>
+         <div class="flex items-center gap-2 px-3 py-2 bg-white/10 rounded-lg"><span class="text-2xl">📊</span>
+          <div>
+           <p class="text-xs text-slate-400">Materi</p>
+           <p class="font-bold text-amber-300">6 Bab</p>
+          </div>
+         </div>
+         <div class="flex items-center gap-2 px-3 py-2 bg-white/10 rounded-lg"><span class="text-2xl">❓</span>
+          <div>
+           <p class="text-xs text-slate-400">Soal HOTS</p>
+           <p class="font-bold text-amber-300">10 Soal</p>
+          </div>
+         </div>
+        </div><button onclick="scrollToSection('content-start')" class="group px-8 py-4 bg-gradient-to-r from-amber-500 to-red-500 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-amber-500/30 transition-all flex items-center gap-2"> Mulai Belajar 
+         <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+         </svg></button>
+       </div><!-- Interactive Earth Animation -->
+       <div class="relative flex items-center justify-center">
+        <div class="relative w-72 h-72"><!-- Seismic waves -->
+         <div class="seismic-wave w-72 h-72" style="animation-delay: 0s;"></div>
+         <div class="seismic-wave w-72 h-72" style="animation-delay: 0.5s;"></div>
+         <div class="seismic-wave w-72 h-72" style="animation-delay: 1s;"></div><!-- Earth -->
+         <div class="absolute inset-0 flex items-center justify-center">
+          <div class="w-48 h-48 rounded-full bg-gradient-to-br from-blue-400 via-green-500 to-blue-600 shadow-2xl relative overflow-hidden float-animation">
+           <div class="absolute top-4 left-8 w-16 h-12 bg-green-600 rounded-full opacity-80"></div>
+           <div class="absolute top-12 right-6 w-20 h-14 bg-green-600 rounded-full opacity-80"></div>
+           <div class="absolute bottom-8 left-12 w-14 h-10 bg-green-600 rounded-full opacity-80"></div>
+           <div class="absolute bottom-4 right-8 w-12 h-8 bg-white rounded-full opacity-50"></div>
+           <div class="absolute top-2 right-12 w-8 h-6 bg-white rounded-full opacity-50"></div><!-- Epicenter marker -->
+           <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-red-500 rounded-full animate-pulse shadow-lg shadow-red-500/50"></div>
+          </div>
+         </div><!-- Labels -->
+         <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-red-500 rounded-full text-xs font-bold">
+          Episentrum
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Content Start Marker -->
+    <div id="content-start"></div><!-- Section 1: What is Earthquake -->
+    <section class="py-16 px-4 bg-white">
+     <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12"><span class="inline-block px-4 py-1 bg-amber-100 text-amber-700 rounded-full text-sm font-medium mb-3">BAB 1</span>
+       <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-3">Apa itu Gempa Bumi?</h2>
+       <p class="text-slate-500 max-w-2xl mx-auto">Memahami definisi dan karakteristik dasar gempa bumi</p>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-8 items-center">
+       <div class="space-y-6">
+        <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200">
+         <div class="flex items-start gap-4">
+          <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg"><span class="text-2xl">📖</span>
+          </div>
+          <div>
+           <h3 class="font-bold text-lg text-slate-800 mb-2">Definisi</h3>
+           <p class="text-slate-600 leading-relaxed"><strong>Gempa bumi</strong> adalah getaran atau guncangan yang terjadi di permukaan bumi akibat <span class="text-amber-600 font-semibold">pelepasan energi dari dalam bumi secara tiba-tiba</span>.</p>
+          </div>
+         </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+         <div class="card-hover bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+          <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-3"><span class="text-2xl">📊</span>
+          </div>
+          <h4 class="font-bold text-slate-800 mb-1">Frekuensi</h4>
+          <p class="text-2xl font-extrabold text-blue-600">10.000-30.000</p>
+          <p class="text-sm text-slate-500">gempa per tahun</p>
+         </div>
+         <div class="card-hover bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+          <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-3"><span class="text-2xl">⚠️</span>
+          </div>
+          <h4 class="font-bold text-slate-800 mb-1">Dampak</h4>
+          <p class="text-sm text-slate-600 leading-relaxed">Merusak infrastruktur hingga merenggut nyawa</p>
+         </div>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-5 border border-blue-200">
+         <div class="flex items-center gap-3"><span class="text-3xl">💡</span>
+          <div>
+           <h4 class="font-bold text-blue-800">Tahukah Kamu?</h4>
+           <p class="text-blue-700 text-sm">Kita tidak merasakan semua gempa, terutama jika kekuatannya kecil (di bawah 3 SR)!</p>
+          </div>
+         </div>
+        </div>
+       </div><!-- Earthquake Illustration -->
+       <div class="relative">
+        <div class="bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl p-6 relative overflow-hidden">
+         <div id="earthquake-demo" class="relative h-64"><!-- Ground layers -->
+          <svg class="w-full h-full" viewbox="0 0 400 250"><!-- Sky --> <rect x="0" y="0" width="400" height="100" fill="#87CEEB" /> <circle cx="50" cy="30" r="15" fill="#FFD700" /> <!-- Buildings --> <g id="buildings">
+            <rect x="40" y="50" width="40" height="50" fill="#8B4513" rx="2" />
+            <rect x="45" y="55" width="10" height="12" fill="#87CEEB" />
+            <rect x="65" y="55" width="10" height="12" fill="#87CEEB" />
+            <polygon points="40,50 60,30 80,50" fill="#B22222" />
+            <rect x="100" y="30" width="50" height="70" fill="#696969" />
+            <rect x="105" y="35" width="12" height="15" fill="#87CEEB" />
+            <rect x="122" y="35" width="12" height="15" fill="#87CEEB" />
+            <rect x="105" y="55" width="12" height="15" fill="#87CEEB" />
+            <rect x="122" y="55" width="12" height="15" fill="#87CEEB" />
+            <rect x="105" y="75" width="12" height="15" fill="#87CEEB" />
+            <rect x="122" y="75" width="12" height="15" fill="#87CEEB" />
+            <rect x="170" y="60" width="35" height="40" fill="#DEB887" />
+            <rect x="175" y="65" width="10" height="12" fill="#87CEEB" />
+            <rect x="190" y="65" width="10" height="12" fill="#87CEEB" />
+            <rect x="182" y="85" width="12" height="15" fill="#8B4513" />
+            <rect x="230" y="20" width="60" height="80" fill="#A0522D" />
+            <rect x="235" y="25" width="15" height="18" fill="#87CEEB" />
+            <rect x="255" y="25" width="15" height="18" fill="#87CEEB" />
+            <rect x="235" y="48" width="15" height="18" fill="#87CEEB" />
+            <rect x="255" y="48" width="15" height="18" fill="#87CEEB" />
+            <rect x="235" y="71" width="15" height="18" fill="#87CEEB" />
+            <rect x="255" y="71" width="15" height="18" fill="#87CEEB" />
+            <rect x="310" y="55" width="45" height="45" fill="#CD853F" />
+            <rect x="315" y="60" width="12" height="15" fill="#87CEEB" />
+            <rect x="332" y="60" width="12" height="15" fill="#87CEEB" />
+            <polygon points="310,55 332,35 355,55" fill="#8B0000" />
+           </g> <!-- Ground surface --> <rect x="0" y="100" width="400" height="20" fill="#228B22" /> <!-- Earth layers --> <rect x="0" y="120" width="400" height="40" fill="#8B4513" /> <rect x="0" y="160" width="400" height="40" fill="#A0522D" /> <rect x="0" y="200" width="400" height="50" fill="#CD853F" /> <!-- Fault line --> <path d="M200,120 L180,160 L210,200 L190,250" stroke="#FF4500" stroke-width="4" fill="none" stroke-dasharray="8,4" /> <!-- Hypocenter --> <circle id="hypocenter" cx="195" cy="200" r="10" fill="#FF0000">
+            <animate attributename="r" values="8;12;8" dur="1s" repeatcount="indefinite" />
+           </circle> <!-- Seismic waves from hypocenter --> <circle cx="195" cy="200" r="20" fill="none" stroke="#FF6347" stroke-width="2" opacity="0.6">
+            <animate attributename="r" values="15;50;15" dur="2s" repeatcount="indefinite" />
+            <animate attributename="opacity" values="0.8;0;0.8" dur="2s" repeatcount="indefinite" />
+           </circle> <!-- Labels --> <text x="195" y="225" text-anchor="middle" font-size="10" fill="white" font-weight="bold">
+            Hiposentrum
+           </text> <!-- Epicenter marker on surface --> <circle cx="200" cy="100" r="6" fill="#FF0000">
+            <animate attributename="r" values="5;8;5" dur="0.8s" repeatcount="indefinite" />
+           </circle> <text x="200" y="92" text-anchor="middle" font-size="9" fill="#FF0000" font-weight="bold">
+            Episentrum
+           </text>
+          </svg>
+         </div><button onclick="simulateEarthquake()" class="mt-4 w-full py-3 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-xl font-bold hover:shadow-lg transition-all flex items-center justify-center gap-2"> <span>🌋</span> Simulasikan Gempa </button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 2: Types of Earthquakes -->
+    <section id="types" class="py-16 px-4 bg-gradient-to-br from-slate-900 to-slate-800 text-white">
+     <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12"><span class="inline-block px-4 py-1 bg-amber-500/20 text-amber-300 rounded-full text-sm font-medium mb-3">BAB 2</span>
+       <h2 class="text-3xl md:text-4xl font-bold mb-3">Mengapa Gempa Bisa Terjadi?</h2>
+       <p class="text-slate-400 max-w-2xl mx-auto">Jenis-jenis gempa berdasarkan penyebabnya</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Gempa Tektonik -->
+       <div class="card-hover bg-gradient-to-br from-blue-900/50 to-blue-800/50 rounded-2xl p-6 border border-blue-500/30 backdrop-blur">
+        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mb-4 shadow-lg">
+         <svg class="w-8 h-8 text-white" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-9 4 18 3-9h4" />
+         </svg>
+        </div>
+        <h3 class="text-xl font-bold text-blue-300 mb-2">Gempa Tektonik</h3>
+        <p class="text-slate-300 text-sm mb-4">Disebabkan oleh pergerakan lempeng bumi (konvergen, divergen, dan transform).</p>
+        <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-blue-500/20 rounded text-xs text-blue-300">Konvergen</span> <span class="px-2 py-1 bg-blue-500/20 rounded text-xs text-blue-300">Divergen</span> <span class="px-2 py-1 bg-blue-500/20 rounded text-xs text-blue-300">Transform</span>
+        </div><!-- Interactive Plate Illustration -->
+        <div class="mt-4 relative h-24 bg-slate-800/50 rounded-lg overflow-hidden">
+         <div id="plate-left" class="tectonic-plate absolute left-0 top-8 w-20 h-8 bg-gradient-to-r from-amber-600 to-amber-500 rounded-r-lg transition-transform" style="transform: translateX(0);">
+          <div class="absolute -top-2 left-2 text-xs">
+           🏔️
+          </div>
+         </div>
+         <div id="plate-right" class="tectonic-plate absolute right-0 top-8 w-20 h-8 bg-gradient-to-l from-blue-600 to-blue-500 rounded-l-lg transition-transform" style="transform: translateX(0);">
+          <div class="absolute -top-2 right-2 text-xs">
+           🏔️
+          </div>
+         </div>
+         <div class="absolute bottom-2 left-1/2 -translate-x-1/2 text-xs text-slate-400">
+          Klik untuk animasi →
+         </div>
+        </div><button onclick="animatePlates()" class="mt-2 w-full py-2 bg-blue-500/30 rounded-lg text-sm font-medium hover:bg-blue-500/50 transition-colors"> Lihat Pergerakan Lempeng </button>
+       </div><!-- Gempa Vulkanik -->
+       <div class="card-hover bg-gradient-to-br from-red-900/50 to-orange-800/50 rounded-2xl p-6 border border-red-500/30 backdrop-blur">
+        <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center mb-4 shadow-lg"><span class="text-3xl">🌋</span>
+        </div>
+        <h3 class="text-xl font-bold text-red-300 mb-2">Gempa Vulkanik</h3>
+        <p class="text-slate-300 text-sm mb-4">Terjadi karena pergerakan magma dan tekanan gas di dalam gunung berapi.</p><!-- Volcano Illustration -->
+        <div class="mt-4 relative h-32 bg-slate-800/50 rounded-lg overflow-hidden">
+         <svg class="w-full h-full" viewbox="0 0 200 100"><!-- Volcano --> <polygon points="100,20 40,80 160,80" fill="#4a3728" /> <polygon points="100,20 70,50 130,50" fill="#5d4a3a" /> <!-- Crater --> <ellipse cx="100" cy="25" rx="15" ry="8" fill="#2d1f15" /> <!-- Magma chamber --> <ellipse cx="100" cy="90" rx="30" ry="15" fill="#ff4500" opacity="0.6">
+           <animate attributename="opacity" values="0.4;0.8;0.4" dur="2s" repeatcount="indefinite" />
+          </ellipse> <!-- Rising magma --> <path d="M100,90 Q95,60 100,30" stroke="#ff6347" stroke-width="8" fill="none" opacity="0.5">
+           <animate attributename="opacity" values="0.3;0.7;0.3" dur="1.5s" repeatcount="indefinite" />
+          </path> <!-- Smoke/Gas --> <circle cx="95" cy="15" r="8" fill="#888" opacity="0.4">
+           <animate attributename="cy" values="15;5;15" dur="3s" repeatcount="indefinite" />
+           <animate attributename="opacity" values="0.4;0.1;0.4" dur="3s" repeatcount="indefinite" />
+          </circle> <circle cx="105" cy="12" r="6" fill="#888" opacity="0.3">
+           <animate attributename="cy" values="12;2;12" dur="2.5s" repeatcount="indefinite" />
+           <animate attributename="opacity" values="0.3;0.1;0.3" dur="2.5s" repeatcount="indefinite" />
+          </circle> <text x="100" y="98" text-anchor="middle" font-size="8" fill="#ff6347">
+           Magma
+          </text>
+         </svg>
+        </div>
+       </div><!-- Gempa Runtuhan -->
+       <div class="card-hover bg-gradient-to-br from-amber-900/50 to-yellow-800/50 rounded-2xl p-6 border border-amber-500/30 backdrop-blur">
+        <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center mb-4 shadow-lg"><span class="text-3xl">⛰️</span>
+        </div>
+        <h3 class="text-xl font-bold text-amber-300 mb-2">Gempa Runtuhan</h3>
+        <p class="text-slate-300 text-sm mb-4">Akibat peristiwa alam seperti tanah longsor atau runtuhnya gua.</p>
+        <div class="mt-4 relative h-32 bg-slate-800/50 rounded-lg overflow-hidden flex items-center justify-center">
+         <svg class="w-full h-full" viewbox="0 0 200 100"><!-- Mountain --> <polygon points="30,80 80,20 130,80" fill="#5d6b4e" /> <polygon points="70,80 100,40 130,80" fill="#7a8a6a" /> <!-- Landslide --> <g id="landslide-rocks">
+           <circle cx="85" cy="45" r="5" fill="#8B4513">
+            <animate attributename="cx" values="85;110;140" dur="2s" repeatcount="indefinite" />
+            <animate attributename="cy" values="45;60;80" dur="2s" repeatcount="indefinite" />
+           </circle>
+           <circle cx="90" cy="50" r="4" fill="#A0522D">
+            <animate attributename="cx" values="90;115;145" dur="2.2s" repeatcount="indefinite" />
+            <animate attributename="cy" values="50;65;82" dur="2.2s" repeatcount="indefinite" />
+           </circle>
+           <circle cx="88" cy="48" r="3" fill="#8B4513">
+            <animate attributename="cx" values="88;112;142" dur="1.8s" repeatcount="indefinite" />
+            <animate attributename="cy" values="48;62;78" dur="1.8s" repeatcount="indefinite" />
+           </circle>
+          </g> <!-- Ground --> <rect x="0" y="80" width="200" height="20" fill="#654321" /> <text x="150" y="65" font-size="8" fill="#ffaa00">
+           Longsor
+          </text>
+         </svg>
+        </div>
+       </div><!-- Gempa Tumbukan -->
+       <div class="card-hover bg-gradient-to-br from-purple-900/50 to-indigo-800/50 rounded-2xl p-6 border border-purple-500/30 backdrop-blur">
+        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-xl flex items-center justify-center mb-4 shadow-lg"><span class="text-3xl">☄️</span>
+        </div>
+        <h3 class="text-xl font-bold text-purple-300 mb-2">Gempa Tumbukan</h3>
+        <p class="text-slate-300 text-sm mb-4">Disebabkan jatuhnya benda langit seperti meteorit atau asteroid.</p>
+        <div class="mt-4 relative h-32 bg-gradient-to-b from-indigo-900 to-slate-800 rounded-lg overflow-hidden">
+         <svg class="w-full h-full" viewbox="0 0 200 100"><!-- Stars --> <circle cx="20" cy="15" r="1" fill="white" /> <circle cx="50" cy="25" r="1" fill="white" /> <circle cx="150" cy="10" r="1" fill="white" /> <circle cx="180" cy="30" r="1" fill="white" /> <!-- Meteor --> <g>
+           <ellipse cx="60" cy="35" rx="12" ry="8" fill="#8B4513">
+            <animate attributename="cx" values="60;140" dur="1.5s" repeatcount="indefinite" />
+            <animate attributename="cy" values="35;75" dur="1.5s" repeatcount="indefinite" />
+           </ellipse>
+           <path d="M60,35 L30,20 L35,30 L20,25" stroke="#ff6347" stroke-width="3" fill="none">
+            <animate attributename="d" values="M60,35 L30,20 L35,30 L20,25;M140,75 L110,60 L115,70 L100,65" dur="1.5s" repeatcount="indefinite" />
+           </path>
+          </g> <!-- Earth surface --> <ellipse cx="100" cy="95" rx="80" ry="15" fill="#228B22" /> <!-- Impact point --> <circle cx="140" cy="80" r="0" fill="#ff4500" opacity="0">
+           <animate attributename="r" values="0;20;0" dur="1.5s" repeatcount="indefinite" begin="1s" />
+           <animate attributename="opacity" values="0;0.8;0" dur="1.5s" repeatcount="indefinite" begin="1s" />
+          </circle>
+         </svg>
+        </div>
+       </div><!-- Gempa Buatan -->
+       <div class="card-hover bg-gradient-to-br from-gray-800/50 to-gray-700/50 rounded-2xl p-6 border border-gray-500/30 backdrop-blur lg:col-span-2">
+        <div class="flex items-start gap-4">
+         <div class="w-16 h-16 bg-gradient-to-br from-gray-500 to-gray-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg"><span class="text-3xl">💣</span>
+         </div>
+         <div class="flex-1">
+          <h3 class="text-xl font-bold text-gray-300 mb-2">Gempa Buatan</h3>
+          <p class="text-slate-300 text-sm mb-4">Disebabkan aktivitas manusia, seperti penggunaan bahan peledak skala besar, uji coba nuklir, atau aktivitas pertambangan.</p>
+          <div class="grid grid-cols-3 gap-3 mt-4">
+           <div class="bg-slate-700/50 rounded-lg p-3 text-center"><span class="text-2xl">🏗️</span>
+            <p class="text-xs text-slate-400 mt-1">Pertambangan</p>
+           </div>
+           <div class="bg-slate-700/50 rounded-lg p-3 text-center"><span class="text-2xl">💥</span>
+            <p class="text-xs text-slate-400 mt-1">Ledakan</p>
+           </div>
+           <div class="bg-slate-700/50 rounded-lg p-3 text-center"><span class="text-2xl">☢️</span>
+            <p class="text-xs text-slate-400 mt-1">Uji Nuklir</p>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 3: Important Terms -->
+    <section id="terms" class="py-16 px-4 bg-white">
+     <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12"><span class="inline-block px-4 py-1 bg-amber-100 text-amber-700 rounded-full text-sm font-medium mb-3">BAB 3</span>
+       <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-3">Istilah Penting dalam Gempa Bumi</h2>
+       <p class="text-slate-500 max-w-2xl mx-auto">Memahami konsep dasar yang wajib diketahui</p>
+      </div><!-- Interactive Diagram -->
+      <div class="bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl p-6 mb-8">
+       <h3 class="text-lg font-bold text-slate-800 mb-4 text-center">🔍 Diagram Interaktif: Hiposentrum &amp; Episentrum</h3>
+       <div class="relative max-w-3xl mx-auto">
+        <svg class="w-full" viewbox="0 0 600 350" id="term-diagram"><!-- Background gradient - Sky --> <defs>
+          <lineargradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+           <stop offset="0%" style="stop-color:#87CEEB" />
+           <stop offset="100%" style="stop-color:#E0F4FF" />
+          </lineargradient>
+          <lineargradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+           <stop offset="0%" style="stop-color:#8B4513" />
+           <stop offset="50%" style="stop-color:#A0522D" />
+           <stop offset="100%" style="stop-color:#CD853F" />
+          </lineargradient>
+         </defs> <!-- Sky --> <rect x="0" y="0" width="600" height="100" fill="url(#skyGrad)" /> <!-- City silhouette --> <g id="city-silhouette">
+          <rect x="50" y="60" width="30" height="40" fill="#2d3748" />
+          <rect x="90" y="50" width="40" height="50" fill="#4a5568" />
+          <rect x="140" y="70" width="25" height="30" fill="#2d3748" />
+          <rect x="180" y="40" width="50" height="60" fill="#4a5568" />
+          <rect x="240" y="65" width="35" height="35" fill="#2d3748" />
+          <rect x="290" y="55" width="30" height="45" fill="#4a5568" />
+          <rect x="330" y="45" width="45" height="55" fill="#2d3748" />
+          <rect x="390" y="60" width="35" height="40" fill="#4a5568" />
+          <rect x="440" y="50" width="50" height="50" fill="#2d3748" />
+          <rect x="500" y="70" width="30" height="30" fill="#4a5568" />
+          <rect x="540" y="55" width="40" height="45" fill="#2d3748" />
+         </g> <!-- Ground surface --> <rect x="0" y="100" width="600" height="20" fill="#228B22" /> <text x="300" y="115" text-anchor="middle" font-size="12" fill="white" font-weight="bold">
+          PERMUKAAN BUMI
+         </text> <!-- Earth layers --> <rect x="0" y="120" width="600" height="230" fill="url(#groundGrad)" /> <!-- Layer labels --> <text x="550" y="160" text-anchor="end" font-size="10" fill="#fff" opacity="0.7">
+          Kerak Bumi
+         </text> <text x="550" y="220" text-anchor="end" font-size="10" fill="#fff" opacity="0.7">
+          Mantel Atas
+         </text> <text x="550" y="300" text-anchor="end" font-size="10" fill="#fff" opacity="0.7">
+          Mantel Bawah
+         </text> <!-- Fault line --> <path d="M300,120 L280,180 L310,240 L285,300 L300,350" stroke="#FF4500" stroke-width="4" fill="none" stroke-dasharray="10,5" /> <text x="320" y="200" font-size="10" fill="#FF4500" font-weight="bold">
+          Patahan
+         </text> <!-- Hiposentrum --> <circle id="hypo-point" cx="295" cy="280" r="15" fill="#FF0000">
+          <animate attributename="r" values="12;18;12" dur="1.5s" repeatcount="indefinite" />
+         </circle> <circle cx="295" cy="280" r="25" fill="none" stroke="#FF6347" stroke-width="2" opacity="0.5">
+          <animate attributename="r" values="20;40;20" dur="2s" repeatcount="indefinite" />
+          <animate attributename="opacity" values="0.5;0;0.5" dur="2s" repeatcount="indefinite" />
+         </circle> <!-- Hiposentrum label --> <rect x="150" y="260" width="120" height="45" rx="8" fill="rgba(255,0,0,0.9)" /> <text x="210" y="280" text-anchor="middle" font-size="12" fill="white" font-weight="bold">
+          HIPOSENTRUM
+         </text> <text x="210" y="295" text-anchor="middle" font-size="9" fill="white">
+          Titik pusat gempa
+         </text> <line x1="270" y1="282" x2="280" y2="280" stroke="white" stroke-width="2" /> <!-- Seismic waves --> <g id="seismic-waves">
+          <circle cx="295" cy="280" r="40" fill="none" stroke="#FFD700" stroke-width="2" opacity="0.6">
+           <animate attributename="r" values="30;80;30" dur="2s" repeatcount="indefinite" />
+           <animate attributename="opacity" values="0.6;0;0.6" dur="2s" repeatcount="indefinite" />
+          </circle>
+          <circle cx="295" cy="280" r="60" fill="none" stroke="#FFA500" stroke-width="2" opacity="0.4">
+           <animate attributename="r" values="50;110;50" dur="2.5s" repeatcount="indefinite" />
+           <animate attributename="opacity" values="0.4;0;0.4" dur="2.5s" repeatcount="indefinite" />
+          </circle>
+         </g> <!-- Vertical line from hypo to epi --> <line x1="295" y1="280" x2="300" y2="100" stroke="#FF4500" stroke-width="2" stroke-dasharray="5,5" /> <!-- Episentrum --> <circle id="epi-point" cx="300" cy="100" r="12" fill="#FF0000">
+          <animate attributename="r" values="10;15;10" dur="1s" repeatcount="indefinite" />
+         </circle> <!-- Episentrum label --> <rect x="340" y="75" width="130" height="50" rx="8" fill="rgba(255,0,0,0.9)" /> <text x="405" y="95" text-anchor="middle" font-size="12" fill="white" font-weight="bold">
+          EPISENTRUM
+         </text> <text x="405" y="110" text-anchor="middle" font-size="9" fill="white">
+          Titik di permukaan
+         </text> <text x="405" y="120" text-anchor="middle" font-size="9" fill="white">
+          tepat di atas hiposentrum
+         </text> <line x1="340" y1="100" x2="315" y2="100" stroke="white" stroke-width="2" /> <!-- Depth indicator --> <line x1="50" y1="120" x2="50" y2="280" stroke="#333" stroke-width="2" /> <line x1="45" y1="120" x2="55" y2="120" stroke="#333" stroke-width="2" /> <line x1="45" y1="280" x2="55" y2="280" stroke="#333" stroke-width="2" /> <text x="30" y="200" text-anchor="middle" font-size="10" fill="#333" transform="rotate(-90, 30, 200)">
+          Kedalaman (km)
+         </text>
+        </svg>
+       </div>
+      </div><!-- Term Cards -->
+      <div class="grid md:grid-cols-3 gap-6">
+       <div class="card-hover bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-6 border border-red-200">
+        <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center mb-4 shadow-lg"><span class="text-2xl">📍</span>
+        </div>
+        <h3 class="text-xl font-bold text-red-700 mb-2">Hiposentrum</h3>
+        <p class="text-slate-600 text-sm mb-3">Titik pusat gempa yang berada <strong>di dalam bumi</strong>.</p>
+        <div class="bg-white rounded-lg p-3 border border-red-100">
+         <p class="text-xs text-slate-500">💡 <strong>Kedalaman:</strong> Bisa mencapai ratusan kilometer di bawah permukaan</p>
+        </div>
+       </div>
+       <div class="card-hover bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-200">
+        <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center mb-4 shadow-lg"><span class="text-2xl">🎯</span>
+        </div>
+        <h3 class="text-xl font-bold text-amber-700 mb-2">Episentrum</h3>
+        <p class="text-slate-600 text-sm mb-3">Titik di <strong>permukaan bumi</strong> tepat di atas hiposentrum.</p>
+        <div class="bg-white rounded-lg p-3 border border-amber-100">
+         <p class="text-xs text-slate-500">⚠️ <strong>Penting:</strong> Daerah ini merasakan getaran pertama &amp; kerusakan terparah</p>
+        </div>
+       </div>
+       <div class="card-hover bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-200">
+        <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mb-4 shadow-lg"><span class="text-2xl">〰️</span>
+        </div>
+        <h3 class="text-xl font-bold text-blue-700 mb-2">Gelombang Seismik</h3>
+        <p class="text-slate-600 text-sm mb-3">Energi gempa yang merambat dalam bentuk <strong>getaran</strong>.</p>
+        <div class="bg-white rounded-lg p-3 border border-blue-100">
+         <p class="text-xs text-slate-500">📊 <strong>Tipe:</strong> Gelombang P (Primer) &amp; Gelombang S (Sekunder)</p>
+        </div>
+       </div>
+      </div><!-- Wave Types Interactive -->
+      <div class="mt-8 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-6 border border-indigo-200">
+       <h3 class="text-xl font-bold text-indigo-800 mb-4 text-center">🌊 Jenis Gelombang Seismik</h3>
+       <div class="grid md:grid-cols-2 gap-6"><!-- P-Wave -->
+        <div class="bg-white rounded-xl p-5 border border-indigo-100">
+         <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 bg-indigo-500 rounded-lg flex items-center justify-center"><span class="text-white font-bold">P</span>
+          </div>
+          <div>
+           <h4 class="font-bold text-indigo-700">Gelombang Primer</h4>
+           <p class="text-xs text-slate-500">Longitudinal / Gelombang Tekan</p>
+          </div>
+         </div>
+         <div class="relative h-16 bg-indigo-50 rounded-lg overflow-hidden mb-3">
+          <svg class="w-full h-full" viewbox="0 0 300 60"><g id="p-wave-particles">
+            <circle cx="20" cy="30" r="5" fill="#6366f1">
+             <animate attributename="cx" values="20;25;15;20" dur="0.5s" repeatcount="indefinite" />
+            </circle>
+            <circle cx="50" cy="30" r="5" fill="#6366f1">
+             <animate attributename="cx" values="50;55;45;50" dur="0.5s" repeatcount="indefinite" begin="0.1s" />
+            </circle>
+            <circle cx="80" cy="30" r="5" fill="#6366f1">
+             <animate attributename="cx" values="80;85;75;80" dur="0.5s" repeatcount="indefinite" begin="0.2s" />
+            </circle>
+            <circle cx="110" cy="30" r="5" fill="#6366f1">
+             <animate attributename="cx" values="110;115;105;110" dur="0.5s" repeatcount="indefinite" begin="0.3s" />
+            </circle>
+            <circle cx="140" cy="30" r="5" fill="#6366f1">
+             <animate attributename="cx" values="140;145;135;140" dur="0.5s" repeatcount="indefinite" begin="0.4s" />
+            </circle>
+            <circle cx="170" cy="30" r="5" fill="#6366f1">
+             <animate attributename="cx" values="170;175;165;170" dur="0.5s" repeatcount="indefinite" begin="0.5s" />
+            </circle>
+            <circle cx="200" cy="30" r="5" fill="#6366f1">
+             <animate attributename="cx" values="200;205;195;200" dur="0.5s" repeatcount="indefinite" begin="0.6s" />
+            </circle>
+            <circle cx="230" cy="30" r="5" fill="#6366f1">
+             <animate attributename="cx" values="230;235;225;230" dur="0.5s" repeatcount="indefinite" begin="0.7s" />
+            </circle>
+            <circle cx="260" cy="30" r="5" fill="#6366f1">
+             <animate attributename="cx" values="260;265;255;260" dur="0.5s" repeatcount="indefinite" begin="0.8s" />
+            </circle>
+           </g> <path d="M10,30 L290,30" stroke="#6366f1" stroke-width="1" stroke-dasharray="5,5" opacity="0.3" />
+          </svg>
+         </div>
+         <ul class="text-sm text-slate-600 space-y-1">
+          <li>✅ Kecepatan: <strong>5-8 km/detik</strong></li>
+          <li>✅ Merambat di padat, cair, &amp; gas</li>
+          <li>✅ Tiba pertama di seismograf</li>
+         </ul>
+        </div><!-- S-Wave -->
+        <div class="bg-white rounded-xl p-5 border border-purple-100">
+         <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center"><span class="text-white font-bold">S</span>
+          </div>
+          <div>
+           <h4 class="font-bold text-purple-700">Gelombang Sekunder</h4>
+           <p class="text-xs text-slate-500">Transversal / Gelombang Geser</p>
+          </div>
+         </div>
+         <div class="relative h-16 bg-purple-50 rounded-lg overflow-hidden mb-3">
+          <svg class="w-full h-full" viewbox="0 0 300 60"><path d="M0,30 Q15,10 30,30 T60,30 T90,30 T120,30 T150,30 T180,30 T210,30 T240,30 T270,30 T300,30" stroke="#a855f7" stroke-width="3" fill="none">
+            <animate attributename="d" values="M0,30 Q15,10 30,30 T60,30 T90,30 T120,30 T150,30 T180,30 T210,30 T240,30 T270,30 T300,30;
+                                       M0,30 Q15,50 30,30 T60,30 T90,30 T120,30 T150,30 T180,30 T210,30 T240,30 T270,30 T300,30;
+                                       M0,30 Q15,10 30,30 T60,30 T90,30 T120,30 T150,30 T180,30 T210,30 T240,30 T270,30 T300,30" dur="0.8s" repeatcount="indefinite" />
+           </path> <g>
+            <circle cx="30" cy="30" r="4" fill="#a855f7">
+             <animate attributename="cy" values="30;15;45;30" dur="0.8s" repeatcount="indefinite" />
+            </circle>
+            <circle cx="90" cy="30" r="4" fill="#a855f7">
+             <animate attributename="cy" values="30;15;45;30" dur="0.8s" repeatcount="indefinite" begin="0.2s" />
+            </circle>
+            <circle cx="150" cy="30" r="4" fill="#a855f7">
+             <animate attributename="cy" values="30;15;45;30" dur="0.8s" repeatcount="indefinite" begin="0.4s" />
+            </circle>
+            <circle cx="210" cy="30" r="4" fill="#a855f7">
+             <animate attributename="cy" values="30;15;45;30" dur="0.8s" repeatcount="indefinite" begin="0.6s" />
+            </circle>
+            <circle cx="270" cy="30" r="4" fill="#a855f7">
+             <animate attributename="cy" values="30;15;45;30" dur="0.8s" repeatcount="indefinite" begin="0.8s" />
+            </circle>
+           </g>
+          </svg>
+         </div>
+         <ul class="text-sm text-slate-600 space-y-1">
+          <li>✅ Kecepatan: <strong>3-5 km/detik</strong></li>
+          <li>✅ Hanya merambat di zat padat</li>
+          <li>✅ Tiba setelah gelombang P</li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 4: Measuring Earthquakes -->
+    <section id="measure" class="py-16 px-4 bg-gradient-to-br from-emerald-900 to-teal-800 text-white">
+     <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12"><span class="inline-block px-4 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-sm font-medium mb-3">BAB 4</span>
+       <h2 class="text-3xl md:text-4xl font-bold mb-3">Bagaimana Cara Mengukur Gempa?</h2>
+       <p class="text-emerald-200 max-w-2xl mx-auto">Alat dan satuan pengukuran gempa bumi</p>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-8 mb-8"><!-- Seismograph -->
+       <div class="bg-white/10 backdrop-blur rounded-2xl p-6 border border-emerald-500/30">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg"><span class="text-2xl">📊</span>
+         </div>
+         <div>
+          <h3 class="text-xl font-bold text-emerald-300">Seismograf</h3>
+          <p class="text-sm text-emerald-200">Alat pengukur getaran gempa</p>
+         </div>
+        </div><!-- Seismograph Animation -->
+        <div class="bg-slate-900/50 rounded-xl p-4 mb-4">
+         <svg class="w-full" viewbox="0 0 400 150" id="seismograph"><!-- Frame --> <rect x="50" y="20" width="300" height="110" fill="none" stroke="#10b981" stroke-width="2" rx="5" /> <!-- Paper roll --> <rect x="60" y="50" width="280" height="60" fill="#f0fdf4" rx="2" /> <!-- Grid lines --> <g stroke="#d1fae5" stroke-width="0.5">
+           <line x1="60" y1="65" x2="340" y2="65" />
+           <line x1="60" y1="80" x2="340" y2="80" />
+           <line x1="60" y1="95" x2="340" y2="95" />
+          </g> <!-- Seismic trace --> <path id="seismic-trace" d="M60,80 L80,80 L90,75 L100,85 L110,80 L130,80 L140,60 L150,100 L160,55 L170,105 L180,50 L190,110 L200,45 L210,105 L220,55 L230,95 L240,65 L250,85 L260,75 L270,80 L290,80 L340,80" stroke="#ef4444" stroke-width="2" fill="none">
+           <animate attributename="d" values="M60,80 L340,80;
+                                     M60,80 L80,80 L90,75 L100,85 L110,80 L130,80 L140,60 L150,100 L160,55 L170,105 L180,50 L190,110 L200,45 L210,105 L220,55 L230,95 L240,65 L250,85 L260,75 L270,80 L290,80 L340,80" dur="3s" repeatcount="indefinite" />
+          </path> <!-- Pen holder --> <rect x="55" y="70" width="8" height="20" fill="#374151" /> <circle cx="63" cy="80" r="3" fill="#ef4444" /> <!-- Labels --> <text x="200" y="140" text-anchor="middle" font-size="10" fill="#10b981">
+           Seismogram - Hasil Rekaman
+          </text>
+         </svg>
+        </div>
+        <p class="text-sm text-emerald-100"><strong>Seismogram</strong> adalah diagram hasil rekaman dari seismograf yang menunjukkan intensitas dan durasi getaran gempa.</p>
+       </div><!-- Scales -->
+       <div class="space-y-4"><!-- Richter Scale -->
+        <div class="bg-white/10 backdrop-blur rounded-2xl p-6 border border-amber-500/30">
+         <div class="flex items-center gap-4 mb-4">
+          <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg"><span class="text-white font-bold text-lg">SR</span>
+          </div>
+          <div>
+           <h3 class="text-xl font-bold text-amber-300">Skala Richter (SR)</h3>
+           <p class="text-sm text-amber-200">Berdasarkan amplitudo gelombang</p>
+          </div>
+         </div>
+         <div class="bg-slate-900/50 rounded-lg p-4">
+          <p class="text-sm text-slate-300 mb-3">📌 <strong>Aturan Penting:</strong></p>
+          <div class="grid grid-cols-2 gap-3">
+           <div class="bg-amber-500/20 rounded-lg p-3 text-center">
+            <p class="text-2xl font-bold text-amber-400">10×</p>
+            <p class="text-xs text-amber-200">Kekuatan naik per angka</p>
+           </div>
+           <div class="bg-orange-500/20 rounded-lg p-3 text-center">
+            <p class="text-2xl font-bold text-orange-400">30×</p>
+            <p class="text-xs text-orange-200">Energi naik per angka</p>
+           </div>
+          </div>
+         </div>
+        </div><!-- Moment Magnitude -->
+        <div class="bg-white/10 backdrop-blur rounded-2xl p-6 border border-cyan-500/30">
+         <div class="flex items-center gap-4 mb-4">
+          <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center shadow-lg"><span class="text-white font-bold text-lg">M</span>
+          </div>
+          <div>
+           <h3 class="text-xl font-bold text-cyan-300">Momen Magnitudo (M)</h3>
+           <p class="text-sm text-cyan-200">Berdasarkan frekuensi</p>
+          </div>
+         </div>
+         <div class="bg-slate-900/50 rounded-lg p-4">
+          <p class="text-sm text-slate-300">✅ Lebih akurat untuk gempa besar<br>
+            ✅ Digunakan BMKG sejak <strong>2008</strong></p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Magnitude Categories -->
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-6 border border-emerald-500/30">
+       <h3 class="text-xl font-bold text-emerald-300 mb-4 text-center">📏 Kategori Kekuatan Gempa (Magnitudo)</h3>
+       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div class="bg-gradient-to-br from-red-600 to-red-700 rounded-xl p-4 text-center card-hover">
+         <p class="text-2xl font-bold">≥ 8</p>
+         <p class="text-sm opacity-90">Sangat Besar</p>
+         <div class="mt-2 text-3xl">
+          💥
+         </div>
+        </div>
+        <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-4 text-center card-hover">
+         <p class="text-2xl font-bold">7-7.9</p>
+         <p class="text-sm opacity-90">Besar</p>
+         <div class="mt-2 text-3xl">
+          🔥
+         </div>
+        </div>
+        <div class="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-4 text-center card-hover">
+         <p class="text-2xl font-bold">6-6.9</p>
+         <p class="text-sm opacity-90">Kuat</p>
+         <div class="mt-2 text-3xl">
+          ⚡
+         </div>
+        </div>
+        <div class="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl p-4 text-center card-hover">
+         <p class="text-2xl font-bold">5-5.9</p>
+         <p class="text-sm opacity-90">Sedang</p>
+         <div class="mt-2 text-3xl">
+          🌊
+         </div>
+        </div>
+        <div class="bg-gradient-to-br from-lime-500 to-lime-600 rounded-xl p-4 text-center card-hover">
+         <p class="text-2xl font-bold">4-4.9</p>
+         <p class="text-sm opacity-90">Ringan</p>
+         <div class="mt-2 text-3xl">
+          〰️
+         </div>
+        </div>
+        <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-4 text-center card-hover">
+         <p class="text-2xl font-bold">3-3.9</p>
+         <p class="text-sm opacity-90">Minor</p>
+         <div class="mt-2 text-3xl">
+          🍃
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 5: Secondary Disasters -->
+    <section id="disasters" class="py-16 px-4 bg-white">
+     <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12"><span class="inline-block px-4 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium mb-3">BAB 5</span>
+       <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-3">Bencana Lanjutan (Bahaya Sekunder)</h2>
+       <p class="text-slate-500 max-w-2xl mx-auto">Dampak berbahaya yang menyertai gempa bumi</p>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-8"><!-- Aftershocks -->
+       <div class="card-hover bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-6 border border-orange-200">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center shadow-lg"><span class="text-2xl">🔄</span>
+         </div>
+         <div>
+          <h3 class="text-xl font-bold text-orange-700">Gempa Susulan</h3>
+          <p class="text-sm text-orange-600">Aftershock</p>
+         </div>
+        </div>
+        <p class="text-slate-600 mb-4">Terjadi karena lempeng bumi membutuhkan waktu untuk kembali ke posisi stabil setelah gempa utama.</p>
+        <div class="bg-white rounded-xl p-4 border border-orange-100">
+         <div class="flex items-start gap-3"><span class="text-2xl">⚠️</span>
+          <div>
+           <p class="font-semibold text-orange-700 mb-1">Peringatan!</p>
+           <p class="text-sm text-slate-600">Meski lebih kecil, tetap berbahaya bagi bangunan yang sudah retak akibat gempa utama.</p>
+          </div>
+         </div>
+        </div><!-- Aftershock Illustration -->
+        <div class="mt-4 bg-slate-100 rounded-xl p-4">
+         <svg class="w-full h-32" viewbox="0 0 400 100"><!-- Main earthquake --> <rect x="50" y="30" width="30" height="40" fill="#ef4444" rx="3" /> <text x="65" y="80" text-anchor="middle" font-size="8" fill="#333">
+           Utama
+          </text> <!-- Aftershocks --> <rect x="120" y="45" width="20" height="25" fill="#f97316" rx="2" /> <rect x="160" y="50" width="15" height="20" fill="#fb923c" rx="2" /> <rect x="195" y="55" width="12" height="15" fill="#fdba74" rx="2" /> <rect x="225" y="58" width="10" height="12" fill="#fed7aa" rx="2" /> <rect x="250" y="60" width="8" height="10" fill="#ffedd5" rx="1" /> <!-- Timeline --> <line x1="40" y1="75" x2="280" y2="75" stroke="#333" stroke-width="1" /> <text x="160" y="95" text-anchor="middle" font-size="8" fill="#666">
+           Waktu →
+          </text> <!-- Arrow --> <path d="M90,50 L110,50" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)" /> <defs>
+           <marker id="arrowhead" markerwidth="10" markerheight="7" refx="9" refy="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+           </marker>
+          </defs>
+         </svg>
+         <p class="text-xs text-center text-slate-500 mt-2">Intensitas gempa susulan semakin berkurang seiring waktu</p>
+        </div>
+       </div><!-- Tsunami -->
+       <div class="card-hover bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-200">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg"><span class="text-2xl">🌊</span>
+         </div>
+         <div>
+          <h3 class="text-xl font-bold text-blue-700">Tsunami</h3>
+          <p class="text-sm text-blue-600">Gelombang Laut Raksasa</p>
+         </div>
+        </div>
+        <p class="text-slate-600 mb-4">Terjadi jika episentrum gempa berada <strong>di dasar laut</strong> dan menyebabkan perpindahan massa air yang sangat besar.</p>
+        <div class="grid grid-cols-2 gap-3 mb-4">
+         <div class="bg-white rounded-lg p-3 border border-blue-100 text-center">
+          <p class="text-2xl font-bold text-blue-600">800</p>
+          <p class="text-xs text-slate-500">km/jam di laut dalam</p>
+         </div>
+         <div class="bg-white rounded-lg p-3 border border-blue-100 text-center">
+          <p class="text-2xl font-bold text-cyan-600">30+ m</p>
+          <p class="text-xs text-slate-500">ketinggian maksimal</p>
+         </div>
+        </div><!-- Tsunami Illustration -->
+        <div class="bg-gradient-to-b from-sky-200 to-blue-400 rounded-xl overflow-hidden">
+         <svg class="w-full h-40" viewbox="0 0 400 120"><!-- Deep ocean --> <rect x="0" y="60" width="200" height="60" fill="#1e40af" /> <!-- Shallow water --> <polygon points="200,60 400,40 400,120 200,120" fill="#3b82f6" /> <!-- Ocean floor --> <path d="M0,110 L100,115 L150,105 L200,110 L250,100 L300,95 L350,90 L400,85" fill="#064e3b" stroke="#065f46" stroke-width="2" /> <!-- Epicenter under sea --> <circle cx="100" cy="100" r="8" fill="#ef4444">
+           <animate attributename="r" values="6;10;6" dur="1s" repeatcount="indefinite" />
+          </circle> <text x="100" y="75" text-anchor="middle" font-size="8" fill="white">
+           Episentrum
+          </text> <!-- Wave in deep water (small) --> <path d="M50,55 Q75,50 100,55 T150,55 T200,55" stroke="#60a5fa" stroke-width="3" fill="none">
+           <animate attributename="d" values="M50,55 Q75,50 100,55 T150,55 T200,55;M50,58 Q75,53 100,58 T150,58 T200,58;M50,55 Q75,50 100,55 T150,55 T200,55" dur="2s" repeatcount="indefinite" />
+          </path> <!-- Wave getting bigger in shallow water --> <path d="M200,50 Q250,30 300,50 T400,20" stroke="#2563eb" stroke-width="4" fill="none">
+           <animate attributename="d" values="M200,50 Q250,30 300,50 T400,20;M200,55 Q250,25 300,45 T400,15;M200,50 Q250,30 300,50 T400,20" dur="1.5s" repeatcount="indefinite" />
+          </path> <!-- Beach/Land --> <polygon points="380,40 400,35 400,60 380,60" fill="#fbbf24" /> <rect x="385" y="30" width="8" height="10" fill="#78350f" /> <polygon points="385,30 389,20 393,30" fill="#22c55e" /> <!-- Labels --> <text x="80" y="45" font-size="7" fill="white">
+           Laut Dalam
+          </text> <text x="80" y="52" font-size="6" fill="white">
+           Gelombang Rendah
+          </text> <text x="300" y="15" font-size="7" fill="#1e3a8a">
+           Laut Dangkal
+          </text> <text x="300" y="22" font-size="6" fill="#1e3a8a">
+           Gelombang Tinggi!
+          </text>
+         </svg>
+        </div><!-- Historical Examples -->
+        <div class="mt-4 space-y-2">
+         <p class="font-semibold text-slate-700 text-sm">📜 Contoh Tsunami di Indonesia:</p>
+         <div class="flex gap-2"><span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">Aceh 2004 (9.3 M)</span> <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium">Palu 2018 (7.4 M)</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Quiz Section -->
+    <section id="quiz" class="py-16 px-4 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white">
+     <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-8"><span class="inline-block px-4 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-sm font-medium mb-3">EVALUASI</span>
+       <h2 class="text-3xl md:text-4xl font-bold mb-3">🎯 Kuis HOTS</h2>
+       <p class="text-purple-200 max-w-2xl mx-auto">10 Soal Higher Order Thinking Skills untuk menguji pemahamanmu!</p>
+      </div><!-- Quiz Container -->
+      <div id="quiz-container" class="bg-white/10 backdrop-blur rounded-2xl p-6 border border-purple-500/30"><!-- Progress Bar -->
+       <div class="mb-6">
+        <div class="flex justify-between text-sm mb-2"><span id="quiz-progress-text">Soal 1 dari 10</span> <span id="quiz-score">Skor: 0</span>
+        </div>
+        <div class="h-3 bg-purple-900/50 rounded-full overflow-hidden">
+         <div id="quiz-progress-bar" class="progress-bar h-full rounded-full" style="width: 10%"></div>
+        </div>
+       </div><!-- Question Area -->
+       <div id="question-area">
+        <div id="question-text" class="text-lg md:text-xl font-semibold mb-6 leading-relaxed"></div>
+        <div id="options-container" class="space-y-3"></div>
+       </div><!-- Feedback Area -->
+       <div id="feedback-area" class="hidden mt-6 p-4 rounded-xl">
+        <div id="feedback-text" class="font-semibold mb-2"></div>
+        <div id="explanation-text" class="text-sm opacity-90"></div>
+       </div><!-- Navigation -->
+       <div class="mt-6 flex justify-between items-center"><button id="prev-btn" onclick="prevQuestion()" class="px-4 py-2 bg-purple-600/50 rounded-lg font-medium hover:bg-purple-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled> ← Sebelumnya </button> <button id="next-btn" onclick="nextQuestion()" class="px-6 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-lg font-bold hover:shadow-lg transition-all disabled:opacity-50"> Selanjutnya → </button>
+       </div><!-- Results Area (Hidden initially) -->
+       <div id="results-area" class="hidden text-center py-8">
+        <div class="text-6xl mb-4">
+         🏆
+        </div>
+        <h3 class="text-2xl font-bold mb-2">Kuis Selesai!</h3>
+        <p id="final-score" class="text-xl text-amber-300 mb-4"></p>
+        <div id="score-message" class="text-purple-200 mb-6"></div><button onclick="restartQuiz()" class="px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl font-bold hover:shadow-lg transition-all"> 🔄 Ulangi Kuis </button>
+       </div>
+      </div>
+     </div>
+    </section><!-- Footer -->
+    <footer class="bg-slate-900 text-white py-8 px-4">
+     <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+       <div class="flex items-center gap-3"><img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-12 h-12 rounded-full object-cover border-2 border-amber-500" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #f59e0b, #ef4444)'; this.alt='Author Avatar';">
+        <div>
+         <p id="author-name" class="font-bold text-amber-400">Algian Manggara, S.Agr</p>
+         <p class="text-sm text-slate-400">Pengembang Media Pembelajaran</p>
+        </div>
+       </div>
+       <div class="text-center md:text-right">
+        <p class="text-slate-400 text-sm">Media Pembelajaran Interaktif</p>
+        <p id="footer-text" class="text-slate-500 text-sm">© 2026 Algian Manggara, S.Agr</p>
+       </div>
+      </div>
+      <div class="mt-6 pt-6 border-t border-slate-800 text-center">
+       <p class="text-xs text-slate-500">Dibuat dengan ❤️ untuk pendidikan Indonesia</p>
+      </div>
+     </div>
+    </footer>
+   </main>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Memahami Gempa Bumi dan Dampaknya',
+      author_name: 'Algian Manggara, S.Agr',
+      background_color: '#0f172a',
+      surface_color: '#1e293b',
+      text_color: '#f8fafc',
+      primary_action_color: '#f59e0b',
+      secondary_action_color: '#ef4444'
+    };
+
+    let config = { ...defaultConfig };
+
+    // Quiz Data - 10 HOTS Questions
+    const quizData = [
+      {
+        question: "Sebuah stasiun BMKG di Jakarta mendeteksi gelombang P dari gempa di Mentawai 2 menit lebih awal dari gelombang S. Apa yang dapat disimpulkan dari data ini?",
+        options: [
+          "Gempa terjadi sangat dekat dengan stasiun",
+          "Episentrum berada cukup jauh karena ada perbedaan waktu tiba yang signifikan",
+          "Gempa berkekuatan sangat besar",
+          "Gempa terjadi di permukaan tanah"
+        ],
+        correct: 1,
+        explanation: "Perbedaan waktu tiba gelombang P dan S yang besar menunjukkan jarak episentrum yang jauh. Semakin jauh jarak, semakin besar perbedaan waktunya karena kedua gelombang memiliki kecepatan berbeda (P: 5-8 km/s, S: 3-5 km/s)."
+      },
+      {
+        question: "Gempa dengan magnitudo 5.0 SR melepaskan energi X. Berapakah energi yang dilepaskan oleh gempa 7.0 SR?",
+        options: [
+          "2X (dua kali lipat)",
+          "20X (dua puluh kali lipat)",
+          "900X (sembilan ratus kali lipat)",
+          "100X (seratus kali lipat)"
+        ],
+        correct: 2,
+        explanation: "Setiap kenaikan 1 angka pada skala Richter, energi meningkat 30 kali. Dari 5.0 ke 7.0 ada selisih 2 angka, sehingga: 30 × 30 = 900 kali lipat energi."
+      },
+      {
+        question: "Kota A berada tepat di episentrum gempa tektonik, sedangkan kota B berjarak 100 km dari episentrum. Mengapa kerusakan di kota A jauh lebih parah?",
+        options: [
+          "Kota A memiliki bangunan yang lebih tua",
+          "Episentrum adalah titik di permukaan tepat di atas hiposentrum sehingga menerima energi paling besar",
+          "Kota A tidak memiliki sistem peringatan dini",
+          "Gempa susulan lebih sering terjadi di kota A"
+        ],
+        correct: 1,
+        explanation: "Episentrum adalah proyeksi hiposentrum ke permukaan bumi, sehingga jarak ke sumber energi paling dekat. Intensitas gelombang seismik berkurang seiring jarak, membuat area episentrum mengalami kerusakan terparah."
+      },
+      {
+        question: "Gunung Merapi mengalami peningkatan aktivitas vulkanik. Tim pemantau mendeteksi serangkaian gempa kecil (tremor). Apa yang paling mungkin menjadi penyebab gempa-gempa ini?",
+        options: [
+          "Pergerakan lempeng Indo-Australia dan Eurasia",
+          "Pergerakan magma dan tekanan gas di dalam gunung berapi",
+          "Runtuhnya gua-gua di bawah gunung",
+          "Aktivitas pertambangan di sekitar gunung"
+        ],
+        correct: 1,
+        explanation: "Gempa vulkanik disebabkan oleh pergerakan magma yang naik dan tekanan gas di dalam gunung berapi. Tremor vulkanik adalah indikator penting aktivitas magmatik yang harus dipantau untuk mitigasi erupsi."
+      },
+      {
+        question: "Seorang siswa membuat model demonstrasi gelombang seismik menggunakan slinky (pegas). Gerakan mana yang menunjukkan gelombang S (sekunder)?",
+        options: [
+          "Menekan dan melepas ujung pegas secara berulang (gerakan maju-mundur)",
+          "Menggerakkan ujung pegas ke atas dan ke bawah (gerakan tegak lurus)",
+          "Memutar pegas seperti spiral",
+          "Menarik pegas hingga putus"
+        ],
+        correct: 1,
+        explanation: "Gelombang S adalah gelombang transversal dengan arah getaran tegak lurus terhadap arah rambat. Gerakan ke atas-bawah pada pegas mensimulasikan ini, sedangkan gerakan maju-mundur mensimulasikan gelombang P (longitudinal)."
+      },
+      {
+        question: "BMKG beralih dari Skala Richter ke Momen Magnitudo (M) sejak 2008. Apa keunggulan utama Momen Magnitudo untuk gempa besar?",
+        options: [
+          "Lebih mudah dihitung dengan kalkulator",
+          "Tidak jenuh (saturate) pada gempa besar, memberikan pengukuran lebih akurat",
+          "Bisa mengukur gempa di luar angkasa",
+          "Lebih populer di kalangan masyarakat"
+        ],
+        correct: 1,
+        explanation: "Skala Richter mengalami saturasi (jenuh) pada gempa >7.0 SR sehingga tidak akurat. Momen Magnitudo mengukur total energi yang dilepaskan berdasarkan karakteristik patahan, memberikan hasil lebih akurat terutama untuk gempa besar."
+      },
+      {
+        question: "Sebuah gempa 8.5 M terjadi di dasar Samudra Hindia. 15 menit kemudian, tsunami mencapai pantai barat Aceh. Mengapa gelombang tsunami menjadi sangat tinggi saat mendekati pantai?",
+        options: [
+          "Angin mendorong gelombang menjadi lebih tinggi",
+          "Kedalaman air berkurang menyebabkan energi gelombang terkonsentrasi ke atas",
+          "Pantai Aceh berbentuk cekung seperti corong",
+          "Gempa susulan menambah tinggi gelombang"
+        ],
+        correct: 1,
+        explanation: "Di laut dalam, tsunami bergerak cepat dengan amplitudo kecil. Saat memasuki perairan dangkal, kecepatan berkurang tetapi energi tetap konstan sehingga amplitudo (ketinggian) meningkat drastis - ini disebut 'shoaling effect'."
+      },
+      {
+        question: "Setelah gempa utama 6.8 M, terjadi puluhan gempa susulan selama berminggu-minggu. Mengapa gempa susulan berbahaya meski kekuatannya lebih kecil?",
+        options: [
+          "Gempa susulan selalu disertai tsunami",
+          "Gempa susulan dapat meruntuhkan bangunan yang sudah rusak/retak akibat gempa utama",
+          "Gempa susulan menghasilkan gelombang S lebih banyak",
+          "Gempa susulan terjadi di episentrum yang berbeda"
+        ],
+        correct: 1,
+        explanation: "Gempa susulan berbahaya karena struktur bangunan sudah melemah akibat gempa utama. Getaran tambahan meski lebih kecil dapat menyebabkan keruntuhan total pada bangunan yang kondisinya sudah kritis."
+      },
+      {
+        question: "Indonesia sering mengalami gempa karena terletak di 'Cincin Api Pasifik'. Jenis pergerakan lempeng apa yang dominan menyebabkan gempa di Indonesia?",
+        options: [
+          "Divergen - lempeng saling menjauh",
+          "Transform - lempeng bergeser horizontal",
+          "Konvergen - lempeng Indo-Australia menunjam di bawah lempeng Eurasia",
+          "Semua jenis pergerakan dengan proporsi yang sama"
+        ],
+        correct: 2,
+        explanation: "Indonesia berada di zona subduksi dimana lempeng Indo-Australia menunjam di bawah lempeng Eurasia (konvergen). Proses ini menciptakan palung laut dalam dan rangkaian gunung berapi, serta menjadi sumber utama gempa tektonik di Indonesia."
+      },
+      {
+        question: "Sebuah hiposentrum gempa terdeteksi pada kedalaman 300 km. Apa implikasi dari kedalaman ini terhadap kerusakan di permukaan?",
+        options: [
+          "Kerusakan akan sangat parah karena energinya besar",
+          "Kerusakan relatif lebih ringan karena energi tersebar dalam jarak yang lebih jauh",
+          "Tidak ada kerusakan sama sekali karena terlalu dalam",
+          "Kerusakan hanya terjadi di dasar laut"
+        ],
+        correct: 1,
+        explanation: "Gempa dalam (>300 km) umumnya menyebabkan kerusakan lebih ringan di permukaan karena energi seismik harus merambat melalui jarak yang lebih jauh dan tersebar lebih luas. Sebaliknya, gempa dangkal (<70 km) dengan magnitudo sama akan lebih merusak."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answers = new Array(quizData.length).fill(null);
+    let answered = new Array(quizData.length).fill(false);
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (value) => { cfg.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+            },
+            {
+              get: () => cfg.surface_color || defaultConfig.surface_color,
+              set: (value) => { cfg.surface_color = value; window.elementSdk.setConfig({ surface_color: value }); }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (value) => { cfg.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+            },
+            {
+              get: () => cfg.primary_action_color || defaultConfig.primary_action_color,
+              set: (value) => { cfg.primary_action_color = value; window.elementSdk.setConfig({ primary_action_color: value }); }
+            },
+            {
+              get: () => cfg.secondary_action_color || defaultConfig.secondary_action_color,
+              set: (value) => { cfg.secondary_action_color = value; window.elementSdk.setConfig({ secondary_action_color: value }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['main_title', cfg.main_title || defaultConfig.main_title],
+          ['author_name', cfg.author_name || defaultConfig.author_name]
+        ])
+      });
+    }
+
+    function applyConfig() {
+      const mainTitle = config.main_title || defaultConfig.main_title;
+      const authorName = config.author_name || defaultConfig.author_name;
+      
+      const mainTitleEl = document.getElementById('main-title');
+      if (mainTitleEl) {
+        mainTitleEl.innerHTML = `Memahami <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-red-400">${mainTitle.includes('Gempa') ? 'Gempa Bumi' : mainTitle}</span> dan Dampaknya`;
+      }
+      
+      const authorNameEl = document.getElementById('author-name');
+      if (authorNameEl) authorNameEl.textContent = authorName;
+      
+      const footerText = document.getElementById('footer-text');
+      if (footerText) footerText.textContent = `© 2026 ${authorName}`;
+    }
+
+    // Navigation functions
+    function scrollToSection(sectionId) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        toggleMobileMenu(true);
+      }
+    }
+
+    function toggleMobileMenu(forceClose = false) {
+      const menu = document.getElementById('mobile-menu');
+      if (forceClose) {
+        menu.classList.add('hidden');
+      } else {
+        menu.classList.toggle('hidden');
+      }
+    }
+
+    // Earthquake simulation
+    function simulateEarthquake() {
+      const buildings = document.getElementById('buildings');
+      if (buildings) {
+        buildings.style.animation = 'shake 0.5s ease-in-out';
+        setTimeout(() => {
+          buildings.style.animation = '';
+        }, 500);
+      }
+    }
+
+    // Tectonic plates animation
+    let platesAnimating = false;
+    function animatePlates() {
+      if (platesAnimating) return;
+      platesAnimating = true;
+      
+      const leftPlate = document.getElementById('plate-left');
+      const rightPlate = document.getElementById('plate-right');
+      
+      leftPlate.style.transform = 'translateX(20px)';
+      rightPlate.style.transform = 'translateX(-20px)';
+      
+      setTimeout(() => {
+        leftPlate.style.transform = 'translateX(0)';
+        rightPlate.style.transform = 'translateX(0)';
+        platesAnimating = false;
+      }, 1000);
+    }
+
+    // Quiz functions
+    function loadQuestion() {
+      const q = quizData[currentQuestion];
+      
+      document.getElementById('quiz-progress-text').textContent = `Soal ${currentQuestion + 1} dari ${quizData.length}`;
+      document.getElementById('quiz-progress-bar').style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
+      document.getElementById('quiz-score').textContent = `Skor: ${score}`;
+      
+      document.getElementById('question-text').textContent = `${currentQuestion + 1}. ${q.question}`;
+      
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+      
+      q.options.forEach((option, index) => {
+        const optionEl = document.createElement('button');
+        optionEl.className = 'quiz-option w-full text-left p-4 rounded-xl border-2 border-purple-300/30 bg-white/5';
+        optionEl.innerHTML = `<span class="inline-block w-8 h-8 rounded-full bg-purple-500/30 text-center leading-8 mr-3 font-bold">${String.fromCharCode(65 + index)}</span>${option}`;
+        
+        if (answered[currentQuestion]) {
+          optionEl.disabled = true;
+          if (index === q.correct) {
+            optionEl.classList.add('correct');
+          } else if (index === answers[currentQuestion] && index !== q.correct) {
+            optionEl.classList.add('incorrect');
+          }
+        }
+        
+        optionEl.addEventListener('click', () => selectAnswer(index));
+        optionsContainer.appendChild(optionEl);
+      });
+      
+      // Show feedback if already answered
+      const feedbackArea = document.getElementById('feedback-area');
+      if (answered[currentQuestion]) {
+        feedbackArea.classList.remove('hidden');
+        const isCorrect = answers[currentQuestion] === q.correct;
+        feedbackArea.className = `mt-6 p-4 rounded-xl ${isCorrect ? 'bg-green-500/20 border border-green-500/30' : 'bg-red-500/20 border border-red-500/30'}`;
+        document.getElementById('feedback-text').textContent = isCorrect ? '✅ Benar!' : '❌ Kurang Tepat';
+        document.getElementById('explanation-text').textContent = q.explanation;
+      } else {
+        feedbackArea.classList.add('hidden');
+      }
+      
+      // Update navigation buttons
+      document.getElementById('prev-btn').disabled = currentQuestion === 0;
+      document.getElementById('next-btn').textContent = currentQuestion === quizData.length - 1 ? 'Lihat Hasil' : 'Selanjutnya →';
+    }
+
+    function selectAnswer(index) {
+      if (answered[currentQuestion]) return;
+      
+      const q = quizData[currentQuestion];
+      answers[currentQuestion] = index;
+      answered[currentQuestion] = true;
+      
+      if (index === q.correct) {
+        score++;
+      }
+      
+      loadQuestion();
+    }
+
+    function nextQuestion() {
+      if (!answered[currentQuestion]) {
+        // Highlight that user needs to answer
+        const options = document.querySelectorAll('.quiz-option');
+        options.forEach(opt => {
+          opt.classList.add('border-amber-500');
+          setTimeout(() => opt.classList.remove('border-amber-500'), 300);
+        });
+        return;
+      }
+      
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('question-area').classList.add('hidden');
+      document.getElementById('feedback-area').classList.add('hidden');
+      document.querySelector('#quiz-container > .mt-6').classList.add('hidden');
+      document.getElementById('results-area').classList.remove('hidden');
+      
+      const percentage = Math.round((score / quizData.length) * 100);
+      document.getElementById('final-score').textContent = `Skor Akhir: ${score}/${quizData.length} (${percentage}%)`;
+      
+      let message = '';
+      if (percentage >= 90) {
+        message = '🌟 Luar Biasa! Kamu sangat memahami materi gempa bumi!';
+      } else if (percentage >= 70) {
+        message = '👏 Bagus! Pemahamanmu sudah baik, terus tingkatkan!';
+      } else if (percentage >= 50) {
+        message = '📚 Cukup baik! Pelajari lagi materi yang belum dikuasai.';
+      } else {
+        message = '💪 Semangat! Baca ulang materi dan coba lagi ya!';
+      }
+      document.getElementById('score-message').textContent = message;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answers = new Array(quizData.length).fill(null);
+      answered = new Array(quizData.length).fill(false);
+      
+      document.getElementById('question-area').classList.remove('hidden');
+      document.querySelector('#quiz-container > .mt-6').classList.remove('hidden');
+      document.getElementById('results-area').classList.add('hidden');
+      
+      loadQuestion();
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      loadQuestion();
+      applyConfig();
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce52f21c4f06d16',t:'MTc3MTE2MjQ4MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

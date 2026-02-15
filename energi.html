@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usaha dan Energi - Pembelajaran IPA</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=Crimson+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --surface-color: #1e293b;
+      --text-color: #f1f5f9;
+      --primary-color: #22d3ee;
+      --secondary-color: #a855f7;
+    }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: 'Poppins', sans-serif; }
+    .formula { font-family: 'Crimson Pro', serif; font-size: 1.2em; }
+    .gradient-text {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .card-glow:hover {
+      box-shadow: 0 0 30px rgba(34, 211, 238, 0.2);
+    }
+    .nav-item.active {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(168, 85, 247, 0.2));
+      border-left: 3px solid var(--primary-color);
+    }
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      border-color: var(--primary-color);
+      background: rgba(34, 211, 238, 0.1);
+    }
+    .quiz-option.selected { border-color: var(--secondary-color); background: rgba(168, 85, 247, 0.2); }
+    .quiz-option.correct { border-color: #22c55e; background: rgba(34, 197, 94, 0.2); }
+    .quiz-option.incorrect { border-color: #ef4444; background: rgba(239, 68, 68, 0.2); }
+    .progress-bar { transition: width 0.5s ease; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-animation { animation: float 3s ease-in-out infinite; }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(34, 211, 238, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(34, 211, 238, 0.6); }
+    }
+    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    .interactive-zone {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.05), rgba(168, 85, 247, 0.05));
+      border: 2px dashed rgba(34, 211, 238, 0.3);
+    }
+    .energy-bar {
+      transition: all 0.3s ease;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full overflow-auto" style="background: var(--bg-color); color: var(--text-color);">
+  <div id="app-container" class="min-h-full flex flex-col"><!-- Header -->
+   <header class="sticky top-0 z-50 backdrop-blur-lg border-b" style="background: rgba(15, 23, 42, 0.9); border-color: rgba(34, 211, 238, 0.2);">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <div class="w-12 h-12 rounded-xl flex items-center justify-center pulse-glow" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
+        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+       </div>
+       <div>
+        <h1 id="main-title" class="text-xl font-bold gradient-text">Usaha dan Energi</h1>
+        <p class="text-xs opacity-70">Ilmu Pengetahuan Alam (IPA)</p>
+       </div>
+      </div>
+      <div class="hidden md:flex items-center gap-2 text-sm"><span class="px-3 py-1 rounded-full" style="background: rgba(34, 211, 238, 0.2);">📚 Materi Lengkap</span> <span class="px-3 py-1 rounded-full" style="background: rgba(168, 85, 247, 0.2);">🎯 10 Soal HOTS</span>
+      </div>
+     </div>
+    </div>
+   </header>
+   <div class="flex-1 flex flex-col lg:flex-row"><!-- Sidebar Navigation -->
+    <nav class="lg:w-64 lg:min-h-full border-b lg:border-b-0 lg:border-r" style="background: var(--surface-color); border-color: rgba(34, 211, 238, 0.1);">
+     <div class="p-4">
+      <h3 class="text-xs font-semibold uppercase tracking-wider mb-3 opacity-60">Daftar Materi</h3>
+      <ul id="nav-menu" class="space-y-1">
+       <li><button onclick="showSection('konsep')" class="nav-item active w-full text-left px-4 py-3 rounded-lg text-sm transition-all flex items-center gap-3"> <span class="text-lg">⚡</span> <span>Konsep Energi</span> </button></li>
+       <li><button onclick="showSection('plta')" class="nav-item w-full text-left px-4 py-3 rounded-lg text-sm transition-all flex items-center gap-3 hover:bg-white/5"> <span class="text-lg">💧</span> <span>Energi Terbarukan (PLTA)</span> </button></li>
+       <li><button onclick="showSection('jatiluhur')" class="nav-item w-full text-left px-4 py-3 rounded-lg text-sm transition-all flex items-center gap-3 hover:bg-white/5"> <span class="text-lg">🏗️</span> <span>Studi Kasus: Jatiluhur</span> </button></li>
+       <li><button onclick="showSection('dampak')" class="nav-item w-full text-left px-4 py-3 rounded-lg text-sm transition-all flex items-center gap-3 hover:bg-white/5"> <span class="text-lg">🔍</span> <span>Analisis Dampak</span> </button></li>
+       <li><button onclick="showSection('interaktif')" class="nav-item w-full text-left px-4 py-3 rounded-lg text-sm transition-all flex items-center gap-3 hover:bg-white/5"> <span class="text-lg">🎮</span> <span>Aktivitas Interaktif</span> </button></li>
+       <li><button onclick="showSection('quiz')" class="nav-item w-full text-left px-4 py-3 rounded-lg text-sm transition-all flex items-center gap-3 hover:bg-white/5"> <span class="text-lg">📝</span> <span>Soal HOTS</span> </button></li>
+      </ul>
+     </div>
+    </nav><!-- Main Content -->
+    <main class="flex-1 p-4 lg:p-8 overflow-auto">
+     <div class="max-w-4xl mx-auto"><!-- Section 1: Konsep Energi -->
+      <section id="section-konsep" class="section-content">
+       <div class="mb-8"><span class="inline-block px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(34, 211, 238, 0.2); color: var(--primary-color);">BAB 1</span>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-4">Memahami Konsep <span class="gradient-text">Energi</span></h2>
+        <p class="text-lg opacity-80">Energi sering kita sebut sebagai "tenaga" dalam kehidupan sehari-hari. Dalam sains, <strong style="color: var(--primary-color);">energi adalah kemampuan untuk melakukan usaha</strong>.</p>
+       </div><!-- Energi Kinetik Card -->
+       <div class="card-glow rounded-2xl p-6 mb-6 transition-all duration-300" style="background: var(--surface-color); border: 1px solid rgba(34, 211, 238, 0.2);">
+        <div class="flex items-start gap-4 mb-4">
+         <div class="w-14 h-14 rounded-xl flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, #22d3ee, #06b6d4);"><span class="text-2xl">🏃</span>
+         </div>
+         <div>
+          <h3 class="text-xl font-bold mb-1" style="color: var(--primary-color);">Energi Kinetik</h3>
+          <p class="text-sm opacity-70">Energi yang dimiliki oleh benda yang sedang bergerak</p>
+         </div>
+        </div><!-- Ilustrasi Energi Kinetik -->
+        <div class="rounded-xl p-4 mb-4" style="background: rgba(0,0,0,0.3);">
+         <div class="flex items-center justify-around flex-wrap gap-4">
+          <div class="text-center">
+           <div class="w-20 h-20 mx-auto mb-2 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
+            <svg class="w-10 h-10 text-white" viewbox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4" /> <path d="M2 12h4M18 12h4" stroke="currentColor" stroke-width="2" />
+            </svg>
+           </div>
+           <p class="text-xs">Bola Menggelinding</p>
+          </div>
+          <div class="text-center">
+           <div class="w-20 h-20 mx-auto mb-2 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+            <svg class="w-10 h-10 text-white" viewbox="0 0 24 24" fill="currentColor"><rect x="2" y="8" width="16" height="8" rx="2" /> <circle cx="6" cy="18" r="2" /> <circle cx="14" cy="18" r="2" />
+            </svg>
+           </div>
+           <p class="text-xs">Mobil Bergerak</p>
+          </div>
+          <div class="text-center">
+           <div class="w-20 h-20 mx-auto mb-2 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+            <svg class="w-10 h-10 text-white" viewbox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+           </div>
+           <p class="text-xs">Pesawat Terbang</p>
+          </div>
+         </div>
+        </div>
+        <div class="rounded-xl p-4 mb-4" style="background: rgba(34, 211, 238, 0.1); border: 1px solid rgba(34, 211, 238, 0.3);">
+         <p class="text-sm mb-2 opacity-70">Rumus Energi Kinetik:</p>
+         <p class="formula text-2xl font-semibold text-center" style="color: var(--primary-color);">E<sub>k</sub> = ½mv²</p>
+        </div>
+        <div class="flex items-start gap-2 p-3 rounded-lg" style="background: rgba(168, 85, 247, 0.1);"><span>💡</span>
+         <p class="text-sm"><strong>Poin Penting:</strong> Semakin cepat benda bergerak, energinya naik sebanding dengan <em>kuadrat kecepatannya</em>.</p>
+        </div>
+        <div class="mt-4 p-4 rounded-xl" style="background: rgba(0,0,0,0.3);">
+         <p class="text-sm mb-2 opacity-70">Hubungan dengan Usaha:</p>
+         <p class="formula text-lg text-center">W = ΔE<sub>k</sub> = ½m(v₂² - v₁²)</p>
+        </div>
+       </div><!-- Energi Potensial Card -->
+       <div class="card-glow rounded-2xl p-6 mb-6 transition-all duration-300" style="background: var(--surface-color); border: 1px solid rgba(168, 85, 247, 0.2);">
+        <div class="flex items-start gap-4 mb-4">
+         <div class="w-14 h-14 rounded-xl flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, #a855f7, #9333ea);"><span class="text-2xl">🍎</span>
+         </div>
+         <div>
+          <h3 class="text-xl font-bold mb-1" style="color: var(--secondary-color);">Energi Potensial</h3>
+          <p class="text-sm opacity-70">Energi yang dimiliki benda karena posisi (ketinggian), bentuk, atau susunannya</p>
+         </div>
+        </div><!-- Ilustrasi Energi Potensial -->
+        <div class="rounded-xl p-4 mb-4 relative overflow-hidden" style="background: linear-gradient(to bottom, #1e3a5f, #0f172a);">
+         <div class="flex items-end justify-center gap-8 h-48"><!-- Pohon dengan buah -->
+          <div class="relative">
+           <div class="w-4 h-24 mx-auto rounded" style="background: #8B4513;"></div>
+           <div class="absolute -top-8 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full" style="background: #22c55e;"></div>
+           <div class="absolute -top-4 left-1/2 -translate-x-1/2 ml-8 w-6 h-6 rounded-full float-animation" style="background: #ef4444;"><span class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs whitespace-nowrap px-2 py-1 rounded" style="background: rgba(168, 85, 247, 0.8);">E<sub>p</sub> = mgh</span>
+           </div>
+           <p class="text-xs text-center mt-2 opacity-70">Buah di Pohon</p>
+          </div><!-- Batu di tebing -->
+          <div class="relative">
+           <div class="w-16 h-32 rounded-t-lg" style="background: linear-gradient(to bottom, #6b7280, #374151);"></div>
+           <div class="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-8 rounded-lg" style="background: #9ca3af;"></div>
+           <p class="text-xs text-center mt-2 opacity-70">Batu di Tebing</p>
+          </div><!-- Air bendungan -->
+          <div class="relative">
+           <div class="w-20 h-28 rounded-t" style="background: linear-gradient(to bottom, #0ea5e9, #0284c7);"></div>
+           <div class="absolute bottom-0 left-0 w-20 h-4" style="background: #64748b;"></div>
+           <p class="text-xs text-center mt-2 opacity-70">Air Bendungan</p>
+          </div>
+         </div>
+         <div class="absolute bottom-0 left-0 right-0 h-8" style="background: linear-gradient(to top, #0f172a, transparent);"></div>
+        </div>
+        <div class="rounded-xl p-4 mb-4" style="background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3);">
+         <p class="text-sm mb-2 opacity-70">Rumus Energi Potensial:</p>
+         <p class="formula text-2xl font-semibold text-center" style="color: var(--secondary-color);">E<sub>p</sub> = m · g · h</p>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-center text-sm">
+         <div class="p-3 rounded-lg" style="background: rgba(0,0,0,0.3);">
+          <p class="font-bold" style="color: var(--primary-color);">m</p>
+          <p class="text-xs opacity-70">massa (kg)</p>
+         </div>
+         <div class="p-3 rounded-lg" style="background: rgba(0,0,0,0.3);">
+          <p class="font-bold" style="color: var(--primary-color);">g</p>
+          <p class="text-xs opacity-70">gravitasi (9.8 m/s²)</p>
+         </div>
+         <div class="p-3 rounded-lg" style="background: rgba(0,0,0,0.3);">
+          <p class="font-bold" style="color: var(--primary-color);">h</p>
+          <p class="text-xs opacity-70">ketinggian (m)</p>
+         </div>
+        </div>
+       </div><!-- Energi Mekanik Card -->
+       <div class="card-glow rounded-2xl p-6 transition-all duration-300" style="background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(168, 85, 247, 0.1)); border: 1px solid rgba(34, 211, 238, 0.3);">
+        <div class="flex items-start gap-4 mb-4">
+         <div class="w-14 h-14 rounded-xl flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));"><span class="text-2xl">⚙️</span>
+         </div>
+         <div>
+          <h3 class="text-xl font-bold mb-1 gradient-text">Energi Mekanik</h3>
+          <p class="text-sm opacity-70">Total gabungan dari energi kinetik dan energi potensial pada suatu benda</p>
+         </div>
+        </div>
+        <div class="rounded-xl p-6 mb-4 text-center" style="background: rgba(0,0,0,0.3);">
+         <p class="formula text-3xl font-bold gradient-text">E<sub>m</sub> = E<sub>p</sub> + E<sub>k</sub></p>
+        </div><!-- Ilustrasi Mobil -->
+        <div class="rounded-xl p-4" style="background: rgba(0,0,0,0.2);">
+         <p class="text-sm font-semibold mb-3">📌 Contoh Kasus:</p>
+         <div class="grid md:grid-cols-2 gap-4">
+          <div class="p-4 rounded-lg" style="background: rgba(34, 211, 238, 0.1);">
+           <div class="flex items-center justify-center mb-3">
+            <svg class="w-16 h-10" viewbox="0 0 64 40"><rect x="4" y="15" width="50" height="15" rx="3" fill="#ef4444" /> <rect x="8" y="8" width="20" height="12" rx="2" fill="#fbbf24" /> <circle cx="15" cy="32" r="5" fill="#374151" /> <circle cx="45" cy="32" r="5" fill="#374151" /> <line x1="54" y1="22" x2="62" y2="22" stroke="#22d3ee" stroke-width="2" /> <polygon points="58,18 62,22 58,26" fill="#22d3ee" />
+            </svg>
+           </div>
+           <p class="text-sm text-center"><strong>Mobil di jalan datar:</strong></p>
+           <p class="text-xs text-center opacity-70">Hanya E<sub>k</sub> (E<sub>p</sub> = 0)</p>
+          </div>
+          <div class="p-4 rounded-lg" style="background: rgba(168, 85, 247, 0.1);">
+           <div class="flex items-center justify-center mb-3">
+            <svg class="w-16 h-16" viewbox="0 0 64 64"><line x1="0" y1="55" x2="64" y2="25" stroke="#4b5563" stroke-width="4" /> <g transform="translate(25, 28) rotate(-25)">
+              <rect x="0" y="0" width="30" height="12" rx="2" fill="#3b82f6" />
+              <rect x="3" y="-5" width="12" height="8" rx="1" fill="#60a5fa" />
+              <circle cx="7" cy="14" r="4" fill="#374151" />
+              <circle cx="23" cy="14" r="4" fill="#374151" />
+             </g> <path d="M45 15 L50 10 L55 15" stroke="#a855f7" stroke-width="2" fill="none" />
+            </svg>
+           </div>
+           <p class="text-sm text-center"><strong>Mobil menanjak:</strong></p>
+           <p class="text-xs text-center opacity-70">E<sub>k</sub> + E<sub>p</sub></p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </section><!-- Section 2: PLTA -->
+      <section id="section-plta" class="section-content hidden">
+       <div class="mb-8"><span class="inline-block px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(34, 211, 238, 0.2); color: var(--primary-color);">BAB 2</span>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-4">Energi Terbarukan: <span class="gradient-text">Tenaga Air (PLTA)</span></h2>
+        <p class="text-lg opacity-80">Indonesia memiliki kekayaan sumber daya air yang melimpah (sungai, danau, air terjun) yang dimanfaatkan sebagai sumber energi terbarukan.</p>
+       </div><!-- Cara Kerja PLTA -->
+       <div class="card-glow rounded-2xl p-6 mb-6" style="background: var(--surface-color); border: 1px solid rgba(34, 211, 238, 0.2);">
+        <h3 class="text-xl font-bold mb-6 flex items-center gap-2"><span>🔧</span> Bagaimana PLTA Bekerja?</h3><!-- Ilustrasi PLTA -->
+        <div class="rounded-xl p-6 mb-6 relative overflow-hidden" style="background: linear-gradient(to bottom, #0c4a6e, #0f172a);">
+         <svg class="w-full h-64" viewbox="0 0 400 200"><!-- Bendungan --> <path d="M50 40 L100 40 L110 160 L40 160 Z" fill="#6b7280" /> <text x="75" y="100" text-anchor="middle" fill="#fff" font-size="8">
+           BENDUNGAN
+          </text> <!-- Air di belakang bendungan --> <rect x="0" y="40" width="50" height="120" fill="#0ea5e9" opacity="0.8" /> <text x="25" y="100" text-anchor="middle" fill="#fff" font-size="7">
+           AIR
+          </text> <!-- Pipa --> <path d="M100 80 Q150 80 150 120 L150 150 Q150 160 160 160 L200 160" fill="none" stroke="#94a3b8" stroke-width="15" /> <!-- Turbin --> <circle cx="230" cy="160" r="30" fill="#374151" /> <circle cx="230" cy="160" r="20" fill="#22d3ee" /> <line x1="230" y1="140" x2="230" y2="180" stroke="#0f172a" stroke-width="3" /> <line x1="210" y1="160" x2="250" y2="160" stroke="#0f172a" stroke-width="3" /> <text x="230" y="200" text-anchor="middle" fill="#fff" font-size="8">
+           TURBIN
+          </text> <!-- Generator --> <rect x="280" y="140" width="50" height="40" rx="5" fill="#a855f7" /> <text x="305" y="165" text-anchor="middle" fill="#fff" font-size="8">
+           GENERATOR
+          </text> <!-- Kabel listrik --> <path d="M330 160 L360 160 L360 60 L390 60" stroke="#fbbf24" stroke-width="3" fill="none" /> <!-- Rumah --> <path d="M370 60 L390 40 L410 60 Z" fill="#ef4444" /> <rect x="375" y="60" width="30" height="30" fill="#fbbf24" /> <rect x="385" y="70" width="10" height="20" fill="#0f172a" /> <!-- Panah dan Label --> <defs>
+           <marker id="arrowhead" markerwidth="10" markerheight="7" refx="9" refy="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#22d3ee" />
+           </marker>
+          </defs> <!-- Energi Potensial --> <text x="25" y="30" text-anchor="middle" fill="#a855f7" font-size="7" font-weight="bold">
+           Ep (Potensial)
+          </text> <!-- Panah ke turbin --> <line x1="110" y1="90" x2="195" y2="140" stroke="#22d3ee" stroke-width="2" marker-end="url(#arrowhead)" /> <text x="150" y="105" fill="#22d3ee" font-size="7">
+           E. Mekanik
+          </text> <!-- Panah ke generator --> <line x1="260" y1="160" x2="275" y2="160" stroke="#22d3ee" stroke-width="2" marker-end="url(#arrowhead)" /> <!-- Panah ke rumah --> <line x1="335" y1="155" x2="355" y2="100" stroke="#fbbf24" stroke-width="2" marker-end="url(#arrowhead)" /> <text x="355" y="135" fill="#fbbf24" font-size="7">
+           E. Listrik
+          </text>
+         </svg>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4">
+         <div class="relative p-4 rounded-xl text-center" style="background: rgba(168, 85, 247, 0.2);">
+          <div class="absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background: var(--secondary-color);">
+           1
+          </div><span class="text-3xl mb-2 block">💧</span>
+          <p class="font-semibold mb-1">Energi Potensial</p>
+          <p class="text-xs opacity-70">Air dimanfaatkan melalui ketinggian bendungan</p>
+         </div>
+         <div class="relative p-4 rounded-xl text-center" style="background: rgba(34, 211, 238, 0.2);">
+          <div class="absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background: var(--primary-color); color: #0f172a;">
+           2
+          </div><span class="text-3xl mb-2 block">⚙️</span>
+          <p class="font-semibold mb-1">Turbin Berputar</p>
+          <p class="text-xs opacity-70">Mengubah E. potensial → E. mekanik</p>
+         </div>
+         <div class="relative p-4 rounded-xl text-center" style="background: rgba(251, 191, 36, 0.2);">
+          <div class="absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background: #fbbf24; color: #0f172a;">
+           3
+          </div><span class="text-3xl mb-2 block">⚡</span>
+          <p class="font-semibold mb-1">Generator</p>
+          <p class="text-xs opacity-70">Menghasilkan energi listrik</p>
+         </div>
+        </div>
+       </div><!-- Klasifikasi PLTA -->
+       <div class="card-glow rounded-2xl p-6" style="background: var(--surface-color); border: 1px solid rgba(168, 85, 247, 0.2);">
+        <h3 class="text-xl font-bold mb-6 flex items-center gap-2"><span>📊</span> Klasifikasi PLTA Berdasarkan Daya</h3>
+        <div class="overflow-x-auto">
+         <table class="w-full text-sm">
+          <thead>
+           <tr style="background: rgba(34, 211, 238, 0.2);">
+            <th class="px-4 py-3 text-left rounded-tl-lg">Jenis</th>
+            <th class="px-4 py-3 text-left">Kapasitas Daya</th>
+            <th class="px-4 py-3 text-left rounded-tr-lg">Ilustrasi</th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="border-b" style="border-color: rgba(255,255,255,0.1);">
+            <td class="px-4 py-3 font-semibold" style="color: var(--primary-color);">Pikohidro</td>
+            <td class="px-4 py-3">&lt; 5 kW</td>
+            <td class="px-4 py-3">🏠 Rumah tangga kecil</td>
+           </tr>
+           <tr class="border-b" style="border-color: rgba(255,255,255,0.1);">
+            <td class="px-4 py-3 font-semibold" style="color: var(--secondary-color);">Mikrohidro</td>
+            <td class="px-4 py-3">5 kW - 100 kW</td>
+            <td class="px-4 py-3">🏘️ Desa kecil</td>
+           </tr>
+           <tr class="border-b" style="border-color: rgba(255,255,255,0.1);">
+            <td class="px-4 py-3 font-semibold" style="color: #fbbf24;">Minihidro</td>
+            <td class="px-4 py-3">101 kW - 1 MW</td>
+            <td class="px-4 py-3">🏙️ Kota kecil</td>
+           </tr>
+           <tr>
+            <td class="px-4 py-3 font-semibold" style="color: #22c55e;">Bendungan (Dam)</td>
+            <td class="px-4 py-3">&gt; 100 MW</td>
+            <td class="px-4 py-3">🌆 Kota besar / Industri</td>
+           </tr>
+          </tbody>
+         </table>
+        </div>
+       </div>
+      </section><!-- Section 3: Studi Kasus Jatiluhur -->
+      <section id="section-jatiluhur" class="section-content hidden">
+       <div class="mb-8"><span class="inline-block px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(34, 211, 238, 0.2); color: var(--primary-color);">BAB 3</span>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-4">Studi Kasus: <span class="gradient-text">Bendungan Jatiluhur</span></h2>
+        <p class="text-lg opacity-80">Bendungan terbesar di Indonesia yang menjadi simbol kemandirian energi nasional.</p>
+       </div><!-- Info Card -->
+       <div class="card-glow rounded-2xl overflow-hidden mb-6" style="background: var(--surface-color); border: 1px solid rgba(34, 211, 238, 0.2);"><!-- Ilustrasi Bendungan -->
+        <div class="relative h-64" style="background: linear-gradient(to bottom, #0284c7, #0f172a);">
+         <svg class="w-full h-full" viewbox="0 0 400 200" preserveaspectratio="xMidYMid slice"><!-- Sky --> <rect x="0" y="0" width="400" height="100" fill="url(#skyGradient)" /> <defs>
+           <lineargradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#0ea5e9" />
+            <stop offset="100%" stop-color="#0284c7" />
+           </lineargradient>
+          </defs> <!-- Sun --> <circle cx="320" cy="40" r="25" fill="#fbbf24" /> <!-- Mountains --> <path d="M0 100 L80 50 L160 100 L240 60 L320 100 L400 70 L400 200 L0 200 Z" fill="#166534" /> <!-- Dam Structure --> <path d="M100 100 L150 100 L160 180 L90 180 Z" fill="#6b7280" /> <path d="M150 100 L300 100 L300 180 L160 180 Z" fill="#9ca3af" /> <!-- Water behind dam --> <rect x="0" y="100" width="100" height="100" fill="#0ea5e9" opacity="0.9" /> <!-- Water flow --> <ellipse cx="200" cy="185" rx="60" ry="10" fill="#0ea5e9" opacity="0.7" /> <!-- Dam details --> <rect x="160" y="110" width="20" height="40" fill="#374151" /> <rect x="200" y="110" width="20" height="40" fill="#374151" /> <rect x="240" y="110" width="20" height="40" fill="#374151" /> <!-- Label --> <rect x="130" y="60" width="140" height="30" rx="5" fill="rgba(0,0,0,0.7)" /> <text x="200" y="80" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">
+           BENDUNGAN JATILUHUR
+          </text>
+         </svg>
+         <div class="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold" style="background: rgba(34, 211, 238, 0.9); color: #0f172a;">
+          🏆 Terbesar di Indonesia
+         </div>
+        </div>
+        <div class="p-6">
+         <div class="grid md:grid-cols-2 gap-6">
+          <div>
+           <h3 class="text-lg font-bold mb-4 flex items-center gap-2"><span>📍</span> Informasi Umum</h3>
+           <ul class="space-y-3 text-sm">
+            <li class="flex items-start gap-3"><span class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background: rgba(34, 211, 238, 0.2);">🗺️</span>
+             <div>
+              <p class="font-semibold">Lokasi</p>
+              <p class="opacity-70">Kecamatan Jatiluhur, Purwakarta, Jawa Barat</p>
+             </div></li>
+            <li class="flex items-start gap-3"><span class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background: rgba(168, 85, 247, 0.2);">📅</span>
+             <div>
+              <p class="font-semibold">Pembangunan</p>
+              <p class="opacity-70">Dimulai tahun 1957</p>
+             </div></li>
+            <li class="flex items-start gap-3"><span class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background: rgba(251, 191, 36, 0.2);">🏗️</span>
+             <div>
+              <p class="font-semibold">Kontraktor</p>
+              <p class="opacity-70">Perusahaan Prancis</p>
+             </div></li>
+           </ul>
+          </div>
+          <div>
+           <h3 class="text-lg font-bold mb-4 flex items-center gap-2"><span>🎉</span> Sejarah Peresmian</h3>
+           <div class="p-4 rounded-xl" style="background: rgba(34, 211, 238, 0.1); border: 1px solid rgba(34, 211, 238, 0.3);">
+            <div class="flex items-center gap-4">
+             <div class="w-16 h-16 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));"><span class="text-2xl">🎗️</span>
+             </div>
+             <div>
+              <p class="font-bold text-lg" style="color: var(--primary-color);">26 Agustus 1967</p>
+              <p class="text-sm opacity-70">Diresmikan oleh Presiden Soeharto</p>
+             </div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </section><!-- Section 4: Analisis Dampak -->
+      <section id="section-dampak" class="section-content hidden">
+       <div class="mb-8"><span class="inline-block px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">BAB 4</span>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-4">Analisis <span class="gradient-text">Dampak Bendungan</span></h2>
+        <p class="text-lg opacity-80">Meskipun bermanfaat, pembangunan bendungan skala besar memiliki dampak yang perlu dipertimbangkan.</p>
+       </div>
+       <div class="grid md:grid-cols-2 gap-6 mb-6"><!-- Dampak Positif -->
+        <div class="card-glow rounded-2xl p-6" style="background: var(--surface-color); border: 1px solid rgba(34, 197, 94, 0.3);">
+         <h3 class="text-lg font-bold mb-4 flex items-center gap-2" style="color: #22c55e;"><span>✅</span> Dampak Positif</h3>
+         <ul class="space-y-3">
+          <li class="flex items-start gap-3 p-3 rounded-lg" style="background: rgba(34, 197, 94, 0.1);"><span class="text-xl">⚡</span>
+           <div>
+            <p class="font-semibold">Sumber Energi Bersih</p>
+            <p class="text-sm opacity-70">Tidak menghasilkan polusi udara</p>
+           </div></li>
+          <li class="flex items-start gap-3 p-3 rounded-lg" style="background: rgba(34, 197, 94, 0.1);"><span class="text-xl">💧</span>
+           <div>
+            <p class="font-semibold">Pengendalian Banjir</p>
+            <p class="text-sm opacity-70">Mengatur aliran air sungai</p>
+           </div></li>
+          <li class="flex items-start gap-3 p-3 rounded-lg" style="background: rgba(34, 197, 94, 0.1);"><span class="text-xl">🌾</span>
+           <div>
+            <p class="font-semibold">Irigasi Pertanian</p>
+            <p class="text-sm opacity-70">Menyediakan air untuk sawah</p>
+           </div></li>
+         </ul>
+        </div><!-- Dampak Negatif -->
+        <div class="card-glow rounded-2xl p-6" style="background: var(--surface-color); border: 1px solid rgba(239, 68, 68, 0.3);">
+         <h3 class="text-lg font-bold mb-4 flex items-center gap-2" style="color: #ef4444;"><span>⚠️</span> Dampak Negatif</h3>
+         <ul class="space-y-3">
+          <li class="flex items-start gap-3 p-3 rounded-lg" style="background: rgba(239, 68, 68, 0.1);"><span class="text-xl">🐟</span>
+           <div>
+            <p class="font-semibold">Gangguan Ekosistem</p>
+            <p class="text-sm opacity-70">Mengganggu keseimbangan ekosistem sungai/danau</p>
+           </div></li>
+          <li class="flex items-start gap-3 p-3 rounded-lg" style="background: rgba(239, 68, 68, 0.1);"><span class="text-xl">💥</span>
+           <div>
+            <p class="font-semibold">Risiko Kecelakaan</p>
+            <p class="text-sm opacity-70">Bahaya besar jika struktur rusak</p>
+           </div></li>
+          <li class="flex items-start gap-3 p-3 rounded-lg" style="background: rgba(239, 68, 68, 0.1);"><span class="text-xl">💰</span>
+           <div>
+            <p class="font-semibold">Biaya Tinggi</p>
+            <p class="text-sm opacity-70">Pembangunan memerlukan dana besar &amp; waktu lama</p>
+           </div></li>
+         </ul>
+        </div>
+       </div><!-- Diskusi -->
+       <div class="interactive-zone rounded-2xl p-6">
+        <h3 class="text-lg font-bold mb-4 flex items-center gap-2"><span>💬</span> Diskusi Kelas</h3>
+        <p class="mb-4 opacity-80">Menurut kalian, apakah manfaat PLTA lebih besar daripada dampak negatifnya? Berikan alasannya!</p>
+        <div class="flex flex-wrap gap-2"><span class="px-3 py-1 rounded-full text-xs" style="background: rgba(34, 211, 238, 0.2);">#EnergiTerbarukan</span> <span class="px-3 py-1 rounded-full text-xs" style="background: rgba(168, 85, 247, 0.2);">#Lingkungan</span> <span class="px-3 py-1 rounded-full text-xs" style="background: rgba(251, 191, 36, 0.2);">#Pembangunan</span>
+        </div>
+       </div>
+      </section><!-- Section 5: Aktivitas Interaktif -->
+      <section id="section-interaktif" class="section-content hidden">
+       <div class="mb-8"><span class="inline-block px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(168, 85, 247, 0.2); color: var(--secondary-color);">AKTIVITAS</span>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-4">Aktivitas <span class="gradient-text">Interaktif</span></h2>
+        <p class="text-lg opacity-80">Mari kita praktikkan pemahaman tentang energi dengan aktivitas berikut!</p>
+       </div><!-- Kalkulator Energi -->
+       <div class="card-glow rounded-2xl p-6 mb-6" style="background: var(--surface-color); border: 1px solid rgba(34, 211, 238, 0.2);">
+        <h3 class="text-xl font-bold mb-6 flex items-center gap-2"><span>🧮</span> Kalkulator Energi</h3>
+        <div class="grid md:grid-cols-2 gap-6"><!-- Energi Kinetik Calculator -->
+         <div class="p-4 rounded-xl" style="background: rgba(34, 211, 238, 0.1);">
+          <h4 class="font-semibold mb-4" style="color: var(--primary-color);">Energi Kinetik (E<sub>k</sub>)</h4>
+          <div class="space-y-3">
+           <div><label class="text-sm opacity-70 block mb-1" for="mass-ek">Massa (kg)</label> <input type="number" id="mass-ek" value="10" min="0" step="0.1" class="w-full px-4 py-2 rounded-lg text-white" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(34, 211, 238, 0.3);">
+           </div>
+           <div><label class="text-sm opacity-70 block mb-1" for="velocity">Kecepatan (m/s)</label> <input type="number" id="velocity" value="5" min="0" step="0.1" class="w-full px-4 py-2 rounded-lg text-white" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(34, 211, 238, 0.3);">
+           </div><button onclick="calculateEk()" class="w-full py-2 rounded-lg font-semibold transition-all hover:opacity-80" style="background: linear-gradient(135deg, var(--primary-color), #06b6d4); color: #0f172a;"> Hitung E<sub>k</sub> </button>
+           <div id="result-ek" class="p-3 rounded-lg text-center" style="background: rgba(0,0,0,0.3);">
+            <p class="text-sm opacity-70">Hasil:</p>
+            <p class="text-2xl font-bold" style="color: var(--primary-color);">125 Joule</p>
+           </div>
+          </div>
+         </div><!-- Energi Potensial Calculator -->
+         <div class="p-4 rounded-xl" style="background: rgba(168, 85, 247, 0.1);">
+          <h4 class="font-semibold mb-4" style="color: var(--secondary-color);">Energi Potensial (E<sub>p</sub>)</h4>
+          <div class="space-y-3">
+           <div><label class="text-sm opacity-70 block mb-1" for="mass-ep">Massa (kg)</label> <input type="number" id="mass-ep" value="10" min="0" step="0.1" class="w-full px-4 py-2 rounded-lg text-white" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(168, 85, 247, 0.3);">
+           </div>
+           <div><label class="text-sm opacity-70 block mb-1" for="height">Ketinggian (m)</label> <input type="number" id="height" value="5" min="0" step="0.1" class="w-full px-4 py-2 rounded-lg text-white" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(168, 85, 247, 0.3);">
+           </div><button onclick="calculateEp()" class="w-full py-2 rounded-lg font-semibold transition-all hover:opacity-80" style="background: linear-gradient(135deg, var(--secondary-color), #9333ea); color: white;"> Hitung E<sub>p</sub> </button>
+           <div id="result-ep" class="p-3 rounded-lg text-center" style="background: rgba(0,0,0,0.3);">
+            <p class="text-sm opacity-70">Hasil:</p>
+            <p class="text-2xl font-bold" style="color: var(--secondary-color);">490 Joule</p>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div><!-- Identifikasi Energi -->
+       <div class="card-glow rounded-2xl p-6" style="background: var(--surface-color); border: 1px solid rgba(168, 85, 247, 0.2);">
+        <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span>🎯</span> Identifikasi Jenis Energi</h3>
+        <p class="text-sm opacity-70 mb-6">Klik pada benda untuk mengidentifikasi jenis energinya!</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="energy-items"><button onclick="identifyEnergy(this, 'kinetik', 'Pesawat Terbang')" class="energy-item p-4 rounded-xl text-center transition-all hover:scale-105" style="background: rgba(0,0,0,0.3);">
+          <div class="w-16 h-16 mx-auto mb-2 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);"><span class="text-3xl">✈️</span>
+          </div><p class="text-sm">Pesawat Terbang</p><p class="energy-label text-xs mt-1 opacity-0">-</p></button> <button onclick="identifyEnergy(this, 'potensial', 'Buku di Rak')" class="energy-item p-4 rounded-xl text-center transition-all hover:scale-105" style="background: rgba(0,0,0,0.3);">
+          <div class="w-16 h-16 mx-auto mb-2 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #a855f7, #9333ea);"><span class="text-3xl">📚</span>
+          </div><p class="text-sm">Buku di Rak</p><p class="energy-label text-xs mt-1 opacity-0">-</p></button> <button onclick="identifyEnergy(this, 'keduanya', 'Roller Coaster')" class="energy-item p-4 rounded-xl text-center transition-all hover:scale-105" style="background: rgba(0,0,0,0.3);">
+          <div class="w-16 h-16 mx-auto mb-2 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #22d3ee, #a855f7);"><span class="text-3xl">🎢</span>
+          </div><p class="text-sm">Roller Coaster</p><p class="energy-label text-xs mt-1 opacity-0">-</p></button> <button onclick="identifyEnergy(this, 'kinetik', 'Mobil Balap')" class="energy-item p-4 rounded-xl text-center transition-all hover:scale-105" style="background: rgba(0,0,0,0.3);">
+          <div class="w-16 h-16 mx-auto mb-2 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #ef4444, #dc2626);"><span class="text-3xl">🏎️</span>
+          </div><p class="text-sm">Mobil Balap</p><p class="energy-label text-xs mt-1 opacity-0">-</p></button> <button onclick="identifyEnergy(this, 'potensial', 'Air Waduk')" class="energy-item p-4 rounded-xl text-center transition-all hover:scale-105" style="background: rgba(0,0,0,0.3);">
+          <div class="w-16 h-16 mx-auto mb-2 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);"><span class="text-3xl">🌊</span>
+          </div><p class="text-sm">Air Waduk</p><p class="energy-label text-xs mt-1 opacity-0">-</p></button> <button onclick="identifyEnergy(this, 'keduanya', 'Burung Terbang')" class="energy-item p-4 rounded-xl text-center transition-all hover:scale-105" style="background: rgba(0,0,0,0.3);">
+          <div class="w-16 h-16 mx-auto mb-2 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);"><span class="text-3xl">🦅</span>
+          </div><p class="text-sm">Burung Terbang</p><p class="energy-label text-xs mt-1 opacity-0">-</p></button> <button onclick="identifyEnergy(this, 'potensial', 'Busur Panah')" class="energy-item p-4 rounded-xl text-center transition-all hover:scale-105" style="background: rgba(0,0,0,0.3);">
+          <div class="w-16 h-16 mx-auto mb-2 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #22c55e, #16a34a);"><span class="text-3xl">🏹</span>
+          </div><p class="text-sm">Busur Panah (ditarik)</p><p class="energy-label text-xs mt-1 opacity-0">-</p></button> <button onclick="identifyEnergy(this, 'kinetik', 'Bola Menggelinding')" class="energy-item p-4 rounded-xl text-center transition-all hover:scale-105" style="background: rgba(0,0,0,0.3);">
+          <div class="w-16 h-16 mx-auto mb-2 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #f97316, #ea580c);"><span class="text-3xl">⚽</span>
+          </div><p class="text-sm">Bola Menggelinding</p><p class="energy-label text-xs mt-1 opacity-0">-</p></button>
+        </div>
+        <div id="energy-result" class="mt-6 p-4 rounded-xl hidden" style="background: rgba(34, 211, 238, 0.1); border: 1px solid rgba(34, 211, 238, 0.3);">
+         <p class="text-center"></p>
+        </div>
+       </div>
+      </section><!-- Section 6: Quiz HOTS -->
+      <section id="section-quiz" class="section-content hidden">
+       <div class="mb-8"><span class="inline-block px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(251, 191, 36, 0.2); color: #fbbf24;">EVALUASI</span>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-4">Soal <span class="gradient-text">HOTS</span></h2>
+        <p class="text-lg opacity-80">10 soal Higher Order Thinking Skills untuk menguji pemahamanmu!</p>
+       </div><!-- Progress Bar -->
+       <div class="mb-6">
+        <div class="flex justify-between text-sm mb-2"><span>Progres</span> <span id="quiz-progress">0/10</span>
+        </div>
+        <div class="h-3 rounded-full overflow-hidden" style="background: rgba(0,0,0,0.3);">
+         <div id="progress-bar" class="progress-bar h-full rounded-full" style="width: 0%; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));"></div>
+        </div>
+       </div><!-- Quiz Container -->
+       <div id="quiz-container" class="card-glow rounded-2xl p-6" style="background: var(--surface-color); border: 1px solid rgba(34, 211, 238, 0.2);"><!-- Quiz content will be loaded here -->
+       </div><!-- Quiz Result -->
+       <div id="quiz-result" class="hidden card-glow rounded-2xl p-8 text-center" style="background: var(--surface-color); border: 1px solid rgba(34, 211, 238, 0.2);">
+        <div class="w-24 h-24 mx-auto mb-4 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));"><span class="text-4xl">🏆</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">Hasil Evaluasi</h3>
+        <p class="text-4xl font-bold gradient-text mb-4" id="final-score">0/10</p>
+        <p class="opacity-70 mb-6" id="score-message">-</p><button onclick="resetQuiz()" class="px-6 py-3 rounded-xl font-semibold transition-all hover:opacity-80" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: #0f172a;"> Ulangi Quiz </button>
+       </div>
+      </section>
+     </div>
+    </main>
+   </div><!-- Footer -->
+   <footer class="border-t py-6 px-4" style="background: var(--surface-color); border-color: rgba(34, 211, 238, 0.1);">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+     <div class="flex items-center gap-3"><img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-10 h-10 rounded-full object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #22d3ee, #a855f7)'; this.alt='AM'; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22><text x=%2250%%22 y=%2250%%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2216%22>👨‍🏫</text></svg>';">
+      <div>
+       <p id="creator-name" class="font-semibold text-sm">Algian Manggara, S.Agr</p>
+       <p class="text-xs opacity-60">Pembuat Materi</p>
+      </div>
+     </div>
+     <p class="text-sm opacity-60">© 2026 Algian Manggara, S.Agr. All rights reserved.</p>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      page_title: 'Usaha dan Energi',
+      teacher_name: 'Algian Manggara, S.Agr',
+      background_color: '#0f172a',
+      surface_color: '#1e293b',
+      text_color: '#f1f5f9',
+      primary_color: '#22d3ee',
+      secondary_color: '#a855f7'
+    };
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          document.getElementById('main-title').textContent = config.page_title || defaultConfig.page_title;
+          document.getElementById('creator-name').textContent = config.teacher_name || defaultConfig.teacher_name;
+          
+          const bgColor = config.background_color || defaultConfig.background_color;
+          const surfaceColor = config.surface_color || defaultConfig.surface_color;
+          const textColor = config.text_color || defaultConfig.text_color;
+          const primaryColor = config.primary_color || defaultConfig.primary_color;
+          const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+          
+          document.documentElement.style.setProperty('--bg-color', bgColor);
+          document.documentElement.style.setProperty('--surface-color', surfaceColor);
+          document.documentElement.style.setProperty('--text-color', textColor);
+          document.documentElement.style.setProperty('--primary-color', primaryColor);
+          document.documentElement.style.setProperty('--secondary-color', secondaryColor);
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => window.elementSdk.setConfig({ background_color: value })
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => window.elementSdk.setConfig({ surface_color: value })
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => window.elementSdk.setConfig({ text_color: value })
+            },
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => window.elementSdk.setConfig({ primary_color: value })
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => window.elementSdk.setConfig({ secondary_color: value })
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['page_title', config.page_title || defaultConfig.page_title],
+          ['teacher_name', config.teacher_name || defaultConfig.teacher_name]
+        ])
+      });
+    }
+
+    // Navigation
+    function showSection(sectionId) {
+      document.querySelectorAll('.section-content').forEach(section => {
+        section.classList.add('hidden');
+      });
+      document.getElementById('section-' + sectionId).classList.remove('hidden');
+      
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      event.currentTarget.classList.add('active');
+      
+      if (sectionId === 'quiz') {
+        loadQuiz();
+      }
+    }
+
+    // Calculator functions
+    function calculateEk() {
+      const mass = parseFloat(document.getElementById('mass-ek').value) || 0;
+      const velocity = parseFloat(document.getElementById('velocity').value) || 0;
+      const ek = 0.5 * mass * velocity * velocity;
+      document.getElementById('result-ek').innerHTML = `
+        <p class="text-sm opacity-70">Hasil:</p>
+        <p class="text-2xl font-bold" style="color: var(--primary-color);">${ek.toFixed(2)} Joule</p>
+      `;
+    }
+
+    function calculateEp() {
+      const mass = parseFloat(document.getElementById('mass-ep').value) || 0;
+      const height = parseFloat(document.getElementById('height').value) || 0;
+      const g = 9.8;
+      const ep = mass * g * height;
+      document.getElementById('result-ep').innerHTML = `
+        <p class="text-sm opacity-70">Hasil:</p>
+        <p class="text-2xl font-bold" style="color: var(--secondary-color);">${ep.toFixed(2)} Joule</p>
+      `;
+    }
+
+    // Energy identification
+    function identifyEnergy(element, type, name) {
+      const label = element.querySelector('.energy-label');
+      let labelText = '';
+      let bgColor = '';
+      
+      if (type === 'kinetik') {
+        labelText = '⚡ Energi Kinetik';
+        bgColor = 'rgba(34, 211, 238, 0.2)';
+      } else if (type === 'potensial') {
+        labelText = '🔋 Energi Potensial';
+        bgColor = 'rgba(168, 85, 247, 0.2)';
+      } else {
+        labelText = '⚡🔋 Keduanya';
+        bgColor = 'linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(168, 85, 247, 0.2))';
+      }
+      
+      label.textContent = labelText;
+      label.classList.remove('opacity-0');
+      label.classList.add('opacity-100');
+      element.style.background = bgColor;
+      
+      const resultDiv = document.getElementById('energy-result');
+      resultDiv.classList.remove('hidden');
+      
+      let explanation = '';
+      if (type === 'kinetik') {
+        explanation = `<strong>${name}</strong> memiliki <span style="color: var(--primary-color);">energi kinetik</span> karena sedang bergerak.`;
+      } else if (type === 'potensial') {
+        explanation = `<strong>${name}</strong> memiliki <span style="color: var(--secondary-color);">energi potensial</span> karena posisi/bentuknya.`;
+      } else {
+        explanation = `<strong>${name}</strong> memiliki <span class="gradient-text">keduanya</span> karena bergerak sekaligus berada di ketinggian.`;
+      }
+      resultDiv.querySelector('p').innerHTML = explanation;
+    }
+
+    // Quiz data - HOTS questions
+    const quizData = [
+      {
+        question: "Sebuah mobil bermassa 1000 kg bergerak dengan kecepatan 20 m/s. Jika kecepatannya ditingkatkan menjadi 40 m/s, berapa kali lipat energi kinetiknya meningkat?",
+        options: ["2 kali", "4 kali", "8 kali", "16 kali"],
+        correct: 1,
+        explanation: "Karena Ek = ½mv², jika v menjadi 2 kali lipat (20→40), maka Ek menjadi 2² = 4 kali lipat."
+      },
+      {
+        question: "Sebuah batu bermassa 2 kg dijatuhkan dari ketinggian 10 m. Pada ketinggian 5 m, perbandingan energi potensial dan energi kinetiknya adalah...",
+        options: ["1:1", "1:2", "2:1", "3:1"],
+        correct: 0,
+        explanation: "Di tengah perjalanan (h=5m), energi potensial yang hilang berubah menjadi energi kinetik secara sama besar, sehingga Ep:Ek = 1:1."
+      },
+      {
+        question: "PLTA memanfaatkan energi potensial air. Jika ketinggian bendungan dinaikkan 2 kali lipat dengan debit air tetap, bagaimana perubahan energi listrik yang dihasilkan?",
+        options: ["Tetap", "Naik 2 kali", "Naik 4 kali", "Turun setengah"],
+        correct: 1,
+        explanation: "Ep = mgh, jika h naik 2 kali maka Ep naik 2 kali, sehingga energi listrik juga naik 2 kali."
+      },
+      {
+        question: "Sebuah roller coaster sedang berada di puncak tertinggi dalam keadaan diam. Manakah pernyataan yang PALING TEPAT tentang energinya?",
+        options: [
+          "Energi mekanik = 0",
+          "Energi kinetik = Energi potensial",
+          "Energi mekanik = Energi potensial",
+          "Energi potensial = 0"
+        ],
+        correct: 2,
+        explanation: "Saat diam di puncak: Ek = 0, sehingga Em = Ep + 0 = Ep. Energi mekanik sama dengan energi potensial."
+      },
+      {
+        question: "Dua bola A dan B bermassa sama dijatuhkan dari ketinggian berbeda. Bola A dari 20 m, bola B dari 5 m. Perbandingan kecepatan keduanya saat mencapai tanah adalah...",
+        options: ["4:1", "2:1", "√2:1", "1:1"],
+        correct: 1,
+        explanation: "Kecepatan jatuh bebas v = √(2gh). Perbandingan: √(2×10×20) : √(2×10×5) = √400 : √100 = 20:10 = 2:1."
+      },
+      {
+        question: "Sebuah bendungan PLTA mengalami pengurangan volume air 50% akibat kemarau. Jika ketinggian air turun 20%, berapa persen penurunan energi potensial total air?",
+        options: ["50%", "60%", "70%", "20%"],
+        correct: 1,
+        explanation: "Ep total = mgh. Jika m = 50% dan h = 80%, maka Ep = 0,5 × 0,8 = 0,4 atau 40% tersisa (turun 60%)."
+      },
+      {
+        question: "Seorang anak bermassa 40 kg meluncur dari perosotan setinggi 3 m. Jika 20% energi hilang karena gesekan, berapakah kecepatan anak di dasar perosotan? (g = 10 m/s²)",
+        options: ["6,9 m/s", "7,7 m/s", "8,5 m/s", "10 m/s"],
+        correct: 0,
+        explanation: "Ep awal = mgh = 40×10×3 = 1200 J. Ek akhir = 80% × 1200 = 960 J. v = √(2×960/40) = √48 ≈ 6,9 m/s."
+      },
+      {
+        question: "Manakah yang BUKAN merupakan alasan mengapa PLTA dianggap sebagai sumber energi terbarukan?",
+        options: [
+          "Air terus berputar dalam siklus hidrologi",
+          "Tidak menghasilkan gas rumah kaca saat operasi",
+          "Bendungan tidak memerlukan perawatan",
+          "Sumber airnya dapat dipulihkan secara alami"
+        ],
+        correct: 2,
+        explanation: "Bendungan TETAP memerlukan perawatan rutin. Ini bukan alasan PLTA disebut terbarukan."
+      },
+      {
+        question: "Sebuah peluru bermassa 10 gram ditembakkan vertikal ke atas dengan kecepatan 100 m/s. Pada ketinggian maksimum, energi mekaniknya adalah... (abaikan gesekan udara)",
+        options: ["0 Joule", "50 Joule", "100 Joule", "Tak terhingga"],
+        correct: 1,
+        explanation: "Em = Ek awal = ½mv² = ½ × 0,01 × 100² = 50 J. Energi mekanik kekal (tanpa gesekan)."
+      },
+      {
+        question: "Bendungan Jatiluhur selain menghasilkan listrik juga berfungsi untuk irigasi. Dari perspektif energi, manakah analisis yang PALING TEPAT?",
+        options: [
+          "Air irigasi tidak memiliki energi karena tidak menggerakkan turbin",
+          "Air irigasi memiliki energi potensial yang berubah menjadi energi kinetik saat mengalir",
+          "Fungsi irigasi mengurangi efisiensi pembangkit listrik karena energinya terbuang",
+          "Air irigasi hanya memiliki energi kinetik tanpa energi potensial"
+        ],
+        correct: 1,
+        explanation: "Air irigasi tetap memiliki Ep (karena ketinggian) yang berubah menjadi Ek saat mengalir ke sawah."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = [];
+
+    function loadQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answered = new Array(quizData.length).fill(null);
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('quiz-container').classList.remove('hidden');
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const quiz = quizData[currentQuestion];
+      const container = document.getElementById('quiz-container');
+      
+      container.innerHTML = `
+        <div class="mb-6">
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-medium mb-4" style="background: rgba(251, 191, 36, 0.2); color: #fbbf24;">
+            Soal ${currentQuestion + 1} dari ${quizData.length}
+          </span>
+          <p class="text-lg font-medium">${quiz.question}</p>
+        </div>
+        <div class="space-y-3 mb-6" id="options-container">
+          ${quiz.options.map((opt, i) => `
+            <button onclick="selectAnswer(${i})" class="quiz-option w-full text-left p-4 rounded-xl border transition-all ${answered[currentQuestion] === i ? 'selected' : ''}" style="border-color: rgba(255,255,255,0.1); background: rgba(0,0,0,0.2);">
+              <span class="inline-block w-8 h-8 rounded-lg text-center leading-8 mr-3 font-semibold" style="background: rgba(255,255,255,0.1);">${String.fromCharCode(65+i)}</span>
+              ${opt}
+            </button>
+          `).join('')}
+        </div>
+        <div id="explanation" class="hidden p-4 rounded-xl mb-6" style="background: rgba(34, 211, 238, 0.1); border: 1px solid rgba(34, 211, 238, 0.3);">
+          <p class="font-semibold mb-2">💡 Penjelasan:</p>
+          <p class="text-sm opacity-80">${quiz.explanation}</p>
+        </div>
+        <div class="flex justify-between">
+          <button onclick="prevQuestion()" class="px-4 py-2 rounded-lg transition-all ${currentQuestion === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/10'}" style="border: 1px solid rgba(255,255,255,0.2);" ${currentQuestion === 0 ? 'disabled' : ''}>
+            ← Sebelumnya
+          </button>
+          <button onclick="nextQuestion()" class="px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-80" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: #0f172a;">
+            ${currentQuestion === quizData.length - 1 ? 'Lihat Hasil' : 'Selanjutnya →'}
+          </button>
+        </div>
+      `;
+      
+      updateProgress();
+    }
+
+    function selectAnswer(index) {
+      answered[currentQuestion] = index;
+      const quiz = quizData[currentQuestion];
+      const options = document.querySelectorAll('.quiz-option');
+      
+      options.forEach((opt, i) => {
+        opt.classList.remove('selected', 'correct', 'incorrect');
+        if (i === quiz.correct) {
+          opt.classList.add('correct');
+        } else if (i === index && i !== quiz.correct) {
+          opt.classList.add('incorrect');
+        }
+        opt.disabled = true;
+      });
+      
+      document.getElementById('explanation').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    function updateProgress() {
+      const answeredCount = answered.filter(a => a !== null).length;
+      document.getElementById('quiz-progress').textContent = `${answeredCount}/${quizData.length}`;
+      document.getElementById('progress-bar').style.width = `${(answeredCount / quizData.length) * 100}%`;
+    }
+
+    function showResult() {
+      score = answered.reduce((acc, ans, i) => {
+        return acc + (ans === quizData[i].correct ? 1 : 0);
+      }, 0);
+      
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      document.getElementById('final-score').textContent = `${score}/${quizData.length}`;
+      
+      let message = '';
+      if (score >= 9) message = '🌟 Luar biasa! Kamu menguasai materi dengan sangat baik!';
+      else if (score >= 7) message = '👏 Bagus sekali! Pemahaman kamu sudah baik!';
+      else if (score >= 5) message = '💪 Cukup baik! Terus belajar untuk hasil lebih baik!';
+      else message = '📚 Jangan menyerah! Pelajari kembali materinya ya!';
+      
+      document.getElementById('score-message').textContent = message;
+      document.getElementById('progress-bar').style.width = '100%';
+      document.getElementById('quiz-progress').textContent = `${quizData.length}/${quizData.length}`;
+    }
+
+    function resetQuiz() {
+      loadQuiz();
+    }
+
+    // Initialize calculator results
+    calculateEk();
+    calculateEp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce42a21d74e62b7',t:'MTc3MTE1MTc5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

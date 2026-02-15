@@ -1,0 +1,1117 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menjelajahi Dunia Sel</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { font-family: 'Nunito', sans-serif; }
+    .title-font { font-family: 'Playfair Display', serif; }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    }
+    
+    .cell-card {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    
+    .cell-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .organelle-btn {
+      transition: all 0.3s ease;
+    }
+    
+    .organelle-btn:hover {
+      transform: scale(1.05);
+    }
+    
+    .organelle-btn.active {
+      ring: 4px;
+      ring-color: #667eea;
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.wrong) {
+      background: #e0e7ff;
+      border-color: #667eea;
+    }
+    
+    .quiz-option.selected {
+      background: #c7d2fe;
+      border-color: #667eea;
+    }
+    
+    .quiz-option.correct {
+      background: #d1fae5;
+      border-color: #10b981;
+    }
+    
+    .quiz-option.wrong {
+      background: #fee2e2;
+      border-color: #ef4444;
+    }
+    
+    .nav-link {
+      position: relative;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: white;
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .floating-cell {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+    
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.4); }
+      50% { box-shadow: 0 0 40px rgba(102, 126, 234, 0.8); }
+    }
+    
+    .scroll-smooth {
+      scroll-behavior: smooth;
+    }
+    
+    .comparison-table th {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+    
+    .fact-card {
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    }
+    
+    .section-divider {
+      background: linear-gradient(90deg, transparent, #667eea, transparent);
+      height: 2px;
+    }
+
+    .cell-diagram {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .cell-part {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .cell-part:hover {
+      filter: brightness(1.1);
+      transform: scale(1.02);
+    }
+
+    .tooltip-box {
+      position: absolute;
+      background: white;
+      padding: 12px 16px;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      z-index: 50;
+      max-width: 250px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .tooltip-box.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .progress-bar {
+      background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+      background-size: 200% 100%;
+      animation: gradient-shift 2s ease infinite;
+    }
+
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gray-50 overflow-auto scroll-smooth"><!-- Navigation -->
+  <nav class="gradient-bg sticky top-0 z-50 shadow-lg">
+   <div class="max-w-7xl mx-auto px-4 py-4">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+     <div class="flex items-center gap-3">
+      <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center pulse-glow"><span class="text-2xl">🔬</span>
+      </div>
+      <h1 id="main-title" class="title-font text-white text-xl md:text-2xl font-bold">Menjelajahi Dunia Sel</h1>
+     </div>
+     <div class="flex flex-wrap gap-2 md:gap-4 text-white text-sm md:text-base"><a href="#pendahuluan" class="nav-link hover:text-yellow-200">Pendahuluan</a> <a href="#struktur" class="nav-link hover:text-yellow-200">Struktur</a> <a href="#organel" class="nav-link hover:text-yellow-200">Organel</a> <a href="#perbandingan" class="nav-link hover:text-yellow-200">Perbandingan</a> <a href="#quiz" class="nav-link hover:text-yellow-200">Kuis</a>
+     </div>
+    </div>
+   </div>
+  </nav><!-- Hero Section -->
+  <section class="gradient-bg relative overflow-hidden py-16 md:py-24">
+   <div class="absolute inset-0 opacity-20">
+    <div class="floating-cell absolute top-10 left-10 w-20 h-20 bg-white rounded-full"></div>
+    <div class="floating-cell absolute top-20 right-20 w-16 h-16 bg-yellow-200 rounded-full" style="animation-delay: 1s;"></div>
+    <div class="floating-cell absolute bottom-10 left-1/4 w-12 h-12 bg-pink-200 rounded-full" style="animation-delay: 2s;"></div>
+    <div class="floating-cell absolute bottom-20 right-1/3 w-24 h-24 bg-purple-200 rounded-full" style="animation-delay: 0.5s;"></div>
+   </div>
+   <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+    <h2 class="title-font text-4xl md:text-6xl text-white font-bold mb-6">🧬 Selamat Datang di Dunia Sel!</h2>
+    <p class="text-xl md:text-2xl text-white/90 mb-8">Pelajari rahasia kehidupan dari unit terkecilnya. Mari kita jelajahi bersama!</p><a href="#pendahuluan" class="inline-block bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-yellow-100 transition-all transform hover:scale-105 shadow-lg"> 🚀 Mulai Belajar </a>
+   </div>
+  </section><!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 py-12"><!-- Section 1: Pendahuluan -->
+   <section id="pendahuluan" class="mb-16 scroll-mt-20">
+    <div class="text-center mb-10"><span class="inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">BAB 1</span>
+     <h2 class="title-font text-3xl md:text-4xl font-bold text-gray-800 mb-4">🔍 Apa itu Sel?</h2>
+     <div class="section-divider w-32 mx-auto"></div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+     <div class="cell-card rounded-2xl p-8 shadow-lg">
+      <h3 class="text-2xl font-bold text-purple-700 mb-6">Pengertian Sel</h3>
+      <div class="space-y-6">
+       <div class="flex items-start gap-4 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl">
+        <div class="w-14 h-14 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-2xl">🧱</span>
+        </div>
+        <div>
+         <h4 class="font-bold text-gray-800 mb-1">Unit Terkecil Kehidupan</h4>
+         <p class="text-gray-600">Sel adalah unit struktural dan fungsional terkecil dari semua makhluk hidup. Setiap organisme tersusun dari satu sel (uniseluler) atau banyak sel (multiseluler).</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 p-4 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl">
+        <div class="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-2xl">🏭</span>
+        </div>
+        <div>
+         <h4 class="font-bold text-gray-800 mb-1">Bukan Ruang Kosong</h4>
+         <p class="text-gray-600">Di dalam sel terdapat berbagai komponen yang disebut <strong>organel</strong>. Setiap organel memiliki fungsi spesifik untuk menjaga kehidupan sel.</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">
+        <div class="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-2xl">🫀</span>
+        </div>
+        <div>
+         <h4 class="font-bold text-gray-800 mb-1">Analogi Tubuh Manusia</h4>
+         <p class="text-gray-600">Organel berfungsi seperti organ pada tubuh. Masing-masing memiliki ciri khas namun bekerja bersama sebagai satu kesatuan yang harmonis.</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Cell Illustration -->
+     <div class="relative">
+      <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-3xl p-6 shadow-lg">
+       <svg viewbox="0 0 400 400" class="w-full max-w-md mx-auto"><!-- Cell membrane --> <ellipse cx="200" cy="200" rx="180" ry="160" fill="none" stroke="#8b5cf6" stroke-width="8" stroke-dasharray="20,10" /> <!-- Cytoplasm --> <ellipse cx="200" cy="200" rx="170" ry="150" fill="#e9d5ff" opacity="0.5" /> <!-- Nucleus --> <circle cx="200" cy="180" r="60" fill="#c084fc" stroke="#7c3aed" stroke-width="4" /> <circle cx="200" cy="180" r="20" fill="#7c3aed" /> <text x="200" y="185" text-anchor="middle" fill="white" font-size="12" font-weight="bold">
+         DNA
+        </text> <!-- Mitochondria --> <ellipse cx="100" cy="250" rx="35" ry="20" fill="#f97316" stroke="#ea580c" stroke-width="2" /> <path d="M75 250 Q90 240 105 250 Q120 260 135 250" fill="none" stroke="#ea580c" stroke-width="2" /> <!-- Mitochondria 2 --> <ellipse cx="310" cy="220" rx="30" ry="18" fill="#f97316" stroke="#ea580c" stroke-width="2" transform="rotate(30 310 220)" /> <!-- Endoplasmic Reticulum --> <path d="M250 280 Q270 270 290 280 Q310 290 330 280" fill="none" stroke="#06b6d4" stroke-width="4" /> <path d="M250 300 Q270 290 290 300 Q310 310 330 300" fill="none" stroke="#06b6d4" stroke-width="4" /> <!-- Ribosomes --> <circle cx="260" cy="275" r="5" fill="#0891b2" /> <circle cx="280" cy="285" r="5" fill="#0891b2" /> <circle cx="300" cy="275" r="5" fill="#0891b2" /> <circle cx="320" cy="290" r="5" fill="#0891b2" /> <!-- Golgi Apparatus --> <path d="M80 150 Q100 140 120 150" fill="none" stroke="#eab308" stroke-width="6" stroke-linecap="round" /> <path d="M85 165 Q105 155 125 165" fill="none" stroke="#eab308" stroke-width="5" stroke-linecap="round" /> <path d="M90 180 Q110 170 130 180" fill="none" stroke="#eab308" stroke-width="4" stroke-linecap="round" /> <!-- Vacuole (small for animal cell) --> <circle cx="150" cy="280" r="25" fill="#a3e635" stroke="#65a30d" stroke-width="2" opacity="0.7" /> <!-- Lysosomes --> <circle cx="280" cy="150" r="15" fill="#ec4899" stroke="#db2777" stroke-width="2" /> <circle cx="320" cy="170" r="12" fill="#ec4899" stroke="#db2777" stroke-width="2" /> <!-- Centrioles --> <rect x="140" cy="120" width="25" height="8" fill="#6366f1" rx="2" transform="rotate(-20 152 124)" /> <rect x="145" cy="135" width="25" height="8" fill="#6366f1" rx="2" transform="rotate(70 157 139)" />
+       </svg>
+       <p class="text-center text-purple-700 font-semibold mt-4">🔬 Ilustrasi Sel Hewan</p>
+      </div>
+     </div>
+    </div><!-- Teori Sel -->
+    <div class="mt-12 cell-card rounded-2xl p-8 shadow-lg">
+     <h3 class="text-2xl font-bold text-purple-700 mb-6 text-center">📜 Sejarah Penemuan Sel</h3>
+     <div class="grid md:grid-cols-3 gap-6">
+      <div class="text-center p-6 bg-gradient-to-b from-amber-50 to-orange-50 rounded-xl">
+       <div class="w-20 h-20 bg-amber-400 rounded-full flex items-center justify-center mx-auto mb-4"><span class="text-3xl">🔭</span>
+       </div>
+       <h4 class="font-bold text-gray-800 mb-2">Robert Hooke (1665)</h4>
+       <p class="text-gray-600 text-sm">Pertama kali mengamati sel pada gabus dan menamainya "cell" (sel) yang berarti ruangan kecil.</p>
+      </div>
+      <div class="text-center p-6 bg-gradient-to-b from-blue-50 to-indigo-50 rounded-xl">
+       <div class="w-20 h-20 bg-blue-400 rounded-full flex items-center justify-center mx-auto mb-4"><span class="text-3xl">🦠</span>
+       </div>
+       <h4 class="font-bold text-gray-800 mb-2">Antonie van Leeuwenhoek</h4>
+       <p class="text-gray-600 text-sm">Mengamati organisme bersel satu (bakteri &amp; protozoa) menggunakan mikroskop buatannya sendiri.</p>
+      </div>
+      <div class="text-center p-6 bg-gradient-to-b from-green-50 to-emerald-50 rounded-xl">
+       <div class="w-20 h-20 bg-green-400 rounded-full flex items-center justify-center mx-auto mb-4"><span class="text-3xl">📖</span>
+       </div>
+       <h4 class="font-bold text-gray-800 mb-2">Teori Sel Modern</h4>
+       <p class="text-gray-600 text-sm">Semua makhluk hidup tersusun dari sel, sel adalah unit dasar kehidupan, dan sel berasal dari sel sebelumnya.</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Section 2: Struktur Sel (Analogi Soto) -->
+   <section id="struktur" class="mb-16 scroll-mt-20">
+    <div class="text-center mb-10"><span class="inline-block bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">BAB 2</span>
+     <h2 class="title-font text-3xl md:text-4xl font-bold text-gray-800 mb-4">🍜 Tiga Bagian Utama Sel</h2>
+     <p class="text-gray-600 text-lg">Analogi Semangkuk Soto yang Lezat!</p>
+     <div class="section-divider w-32 mx-auto mt-4"></div>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-8 items-center"><!-- Soto Bowl Illustration -->
+     <div class="order-2 lg:order-1">
+      <div class="bg-gradient-to-br from-orange-100 to-yellow-100 rounded-3xl p-8 shadow-lg">
+       <svg viewbox="0 0 400 350" class="w-full max-w-md mx-auto"><!-- Bowl --> <ellipse cx="200" cy="280" rx="160" ry="40" fill="#b45309" /> <path d="M40 280 Q40 320 200 320 Q360 320 360 280" fill="#d97706" /> <ellipse cx="200" cy="280" rx="150" ry="35" fill="#fbbf24" /> <!-- Soup (Sitoplasma) --> <ellipse cx="200" cy="260" rx="140" ry="50" fill="#fef3c7" /> <ellipse cx="200" cy="250" rx="130" ry="40" fill="#fde68a" opacity="0.8" /> <!-- Ingredients floating --> <!-- Egg (Nukleus) --> <ellipse cx="200" cy="220" rx="40" ry="30" fill="white" stroke="#fbbf24" stroke-width="3" /> <ellipse cx="200" cy="215" rx="20" ry="15" fill="#fbbf24" /> <!-- Vegetables (Other organelles) --> <ellipse cx="130" cy="240" rx="15" ry="8" fill="#22c55e" /> <ellipse cx="270" cy="235" rx="12" ry="6" fill="#22c55e" /> <rect x="150" cy="255" width="20" height="8" fill="#f97316" rx="2" /> <rect x="230" cy="250" width="18" height="7" fill="#f97316" rx="2" /> <!-- Steam --> <path d="M150 180 Q145 160 155 140" fill="none" stroke="#d1d5db" stroke-width="3" stroke-linecap="round" /> <path d="M200 170 Q195 150 205 130" fill="none" stroke="#d1d5db" stroke-width="3" stroke-linecap="round" /> <path d="M250 175 Q245 155 255 135" fill="none" stroke="#d1d5db" stroke-width="3" stroke-linecap="round" /> <!-- Labels --> <text x="200" y="100" text-anchor="middle" fill="#7c3aed" font-size="14" font-weight="bold">
+         MEMBRAN SEL
+        </text> <path d="M200 110 L200 160 L280 200" fill="none" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow)" /> <text x="340" cy="220" text-anchor="start" fill="#f59e0b" font-size="12" font-weight="bold">
+         NUKLEUS
+        </text> <line x1="330" y1="220" x2="245" y2="220" stroke="#f59e0b" stroke-width="2" /> <text x="60" y="260" text-anchor="start" fill="#06b6d4" font-size="12" font-weight="bold">
+         SITOPLASMA
+        </text> <line x1="120" y1="255" x2="140" y2="250" stroke="#06b6d4" stroke-width="2" />
+       </svg>
+      </div>
+     </div><!-- Explanation Cards -->
+     <div class="order-1 lg:order-2 space-y-6">
+      <div class="cell-card rounded-2xl p-6 shadow-lg border-l-4 border-purple-500">
+       <div class="flex items-center gap-4 mb-3">
+        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center"><span class="text-3xl">🥣</span>
+        </div>
+        <div>
+         <h3 class="text-xl font-bold text-purple-700">Membran Sel = Mangkuk</h3><span class="text-sm text-gray-500">Pembatas &amp; Pelindung</span>
+        </div>
+       </div>
+       <p class="text-gray-600">Seperti mangkuk yang menyatukan dan membatasi isi soto dari lingkungan luar. Membran sel mengontrol apa yang boleh masuk dan keluar dari sel.</p>
+      </div>
+      <div class="cell-card rounded-2xl p-6 shadow-lg border-l-4 border-cyan-500">
+       <div class="flex items-center gap-4 mb-3">
+        <div class="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center"><span class="text-3xl">🍲</span>
+        </div>
+        <div>
+         <h3 class="text-xl font-bold text-cyan-700">Sitoplasma = Kuah Soto</h3><span class="text-sm text-gray-500">Cairan Pengisi Sel</span>
+        </div>
+       </div>
+       <p class="text-gray-600">Kuah soto yang mengisi seluruh mangkuk, sama seperti sitoplasma yang merupakan cairan tempat semua organel berada dan reaksi kimia terjadi.</p>
+      </div>
+      <div class="cell-card rounded-2xl p-6 shadow-lg border-l-4 border-amber-500">
+       <div class="flex items-center gap-4 mb-3">
+        <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center"><span class="text-3xl">🥚</span>
+        </div>
+        <div>
+         <h3 class="text-xl font-bold text-amber-700">Nukleus = Telur</h3><span class="text-sm text-gray-500">Pusat Kendali</span>
+        </div>
+       </div>
+       <p class="text-gray-600">Telur yang berada di tengah mangkuk soto, seperti nukleus yang menjadi pusat kendali sel dan menyimpan informasi genetik (DNA).</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Section 3: Organel Sel -->
+   <section id="organel" class="mb-16 scroll-mt-20">
+    <div class="text-center mb-10"><span class="inline-block bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">BAB 3</span>
+     <h2 class="title-font text-3xl md:text-4xl font-bold text-gray-800 mb-4">🏫 Mengenal Organel Sel</h2>
+     <p class="text-gray-600 text-lg">Klik organel untuk mempelajari fungsinya!</p>
+     <div class="section-divider w-32 mx-auto mt-4"></div>
+    </div><!-- Interactive Organelle Selector -->
+    <div class="cell-card rounded-2xl p-6 md:p-8 shadow-lg mb-8">
+     <div class="flex flex-wrap justify-center gap-3 mb-8" id="organelle-buttons"><button onclick="showOrganelle('membran')" class="organelle-btn px-4 py-2 bg-purple-100 text-purple-700 rounded-full font-semibold hover:bg-purple-200" data-organelle="membran"> 🚪 Membran Sel </button> <button onclick="showOrganelle('dinding')" class="organelle-btn px-4 py-2 bg-amber-100 text-amber-700 rounded-full font-semibold hover:bg-amber-200" data-organelle="dinding"> 🧱 Dinding Sel </button> <button onclick="showOrganelle('nukleus')" class="organelle-btn px-4 py-2 bg-red-100 text-red-700 rounded-full font-semibold hover:bg-red-200" data-organelle="nukleus"> 👑 Nukleus </button> <button onclick="showOrganelle('mitokondria')" class="organelle-btn px-4 py-2 bg-orange-100 text-orange-700 rounded-full font-semibold hover:bg-orange-200" data-organelle="mitokondria"> ⚡ Mitokondria </button> <button onclick="showOrganelle('vakuola')" class="organelle-btn px-4 py-2 bg-green-100 text-green-700 rounded-full font-semibold hover:bg-green-200" data-organelle="vakuola"> 📦 Vakuola </button> <button onclick="showOrganelle('kloroplas')" class="organelle-btn px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full font-semibold hover:bg-emerald-200" data-organelle="kloroplas"> 🌿 Kloroplas </button> <button onclick="showOrganelle('sitoplasma')" class="organelle-btn px-4 py-2 bg-cyan-100 text-cyan-700 rounded-full font-semibold hover:bg-cyan-200" data-organelle="sitoplasma"> 💧 Sitoplasma </button> <button onclick="showOrganelle('re')" class="organelle-btn px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-semibold hover:bg-blue-200" data-organelle="re"> 🏭 RE </button> <button onclick="showOrganelle('ribosom')" class="organelle-btn px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full font-semibold hover:bg-indigo-200" data-organelle="ribosom"> ⚙️ Ribosom </button> <button onclick="showOrganelle('golgi')" class="organelle-btn px-4 py-2 bg-yellow-100 text-yellow-700 rounded-full font-semibold hover:bg-yellow-200" data-organelle="golgi"> 📮 Badan Golgi </button> <button onclick="showOrganelle('lisosom')" class="organelle-btn px-4 py-2 bg-pink-100 text-pink-700 rounded-full font-semibold hover:bg-pink-200" data-organelle="lisosom"> 🗑️ Lisosom </button>
+     </div><!-- Organelle Detail Display -->
+     <div id="organelle-display" class="grid md:grid-cols-2 gap-8 items-center">
+      <div id="organelle-image" class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 min-h-64 flex items-center justify-center">
+       <div class="text-center">
+        <div class="text-6xl mb-4">
+         👆
+        </div>
+        <p class="text-gray-500">Klik salah satu organel di atas untuk melihat detail!</p>
+       </div>
+      </div>
+      <div id="organelle-info" class="space-y-4">
+       <h3 id="organelle-title" class="text-2xl font-bold text-gray-800">Pilih Organel</h3>
+       <div id="organelle-function" class="p-4 bg-blue-50 rounded-xl">
+        <h4 class="font-semibold text-blue-700 mb-2">📋 Fungsi:</h4>
+        <p class="text-gray-600">Informasi fungsi akan muncul di sini.</p>
+       </div>
+       <div id="organelle-analogy" class="p-4 bg-green-50 rounded-xl">
+        <h4 class="font-semibold text-green-700 mb-2">🏫 Analogi Sekolah:</h4>
+        <p class="text-gray-600">Perumpamaan akan muncul di sini.</p>
+       </div>
+       <div id="organelle-fact" class="p-4 bg-amber-50 rounded-xl">
+        <h4 class="font-semibold text-amber-700 mb-2">💡 Fakta Menarik:</h4>
+        <p class="text-gray-600">Fakta unik akan muncul di sini.</p>
+       </div>
+      </div>
+     </div>
+    </div><!-- Organelle Table -->
+    <div class="cell-card rounded-2xl shadow-lg overflow-hidden">
+     <div class="overflow-x-auto">
+      <table class="w-full comparison-table">
+       <thead>
+        <tr class="text-white">
+         <th class="px-6 py-4 text-left">Organel</th>
+         <th class="px-6 py-4 text-left">Fungsi Utama</th>
+         <th class="px-6 py-4 text-left">Analogi Sekolah</th>
+         <th class="px-6 py-4 text-center">Hewan</th>
+         <th class="px-6 py-4 text-center">Tumbuhan</th>
+        </tr>
+       </thead>
+       <tbody class="text-gray-700">
+        <tr class="border-b hover:bg-purple-50 transition-colors">
+         <td class="px-6 py-4 font-semibold">🚪 Membran Sel</td>
+         <td class="px-6 py-4">Mengontrol keluar masuknya zat</td>
+         <td class="px-6 py-4">Gerbang/Pagar Sekolah</td>
+         <td class="px-6 py-4 text-center text-2xl">✅</td>
+         <td class="px-6 py-4 text-center text-2xl">✅</td>
+        </tr>
+        <tr class="border-b hover:bg-amber-50 transition-colors">
+         <td class="px-6 py-4 font-semibold">🧱 Dinding Sel</td>
+         <td class="px-6 py-4">Perlindungan &amp; kekakuan</td>
+         <td class="px-6 py-4">Tembok Bangunan</td>
+         <td class="px-6 py-4 text-center text-2xl">❌</td>
+         <td class="px-6 py-4 text-center text-2xl">✅</td>
+        </tr>
+        <tr class="border-b hover:bg-red-50 transition-colors">
+         <td class="px-6 py-4 font-semibold">👑 Nukleus</td>
+         <td class="px-6 py-4">Pusat kendali aktivitas sel</td>
+         <td class="px-6 py-4">Kepala Sekolah</td>
+         <td class="px-6 py-4 text-center text-2xl">✅</td>
+         <td class="px-6 py-4 text-center text-2xl">✅</td>
+        </tr>
+        <tr class="border-b hover:bg-orange-50 transition-colors">
+         <td class="px-6 py-4 font-semibold">⚡ Mitokondria</td>
+         <td class="px-6 py-4">Produksi energi (ATP)</td>
+         <td class="px-6 py-4">Perusahaan Listrik (PLN)</td>
+         <td class="px-6 py-4 text-center text-2xl">✅</td>
+         <td class="px-6 py-4 text-center text-2xl">✅</td>
+        </tr>
+        <tr class="border-b hover:bg-green-50 transition-colors">
+         <td class="px-6 py-4 font-semibold">📦 Vakuola</td>
+         <td class="px-6 py-4">Menyimpan air &amp; zat</td>
+         <td class="px-6 py-4">Gudang/Kantin</td>
+         <td class="px-6 py-4 text-center">✅ <span class="text-xs">(kecil)</span></td>
+         <td class="px-6 py-4 text-center">✅ <span class="text-xs">(besar)</span></td>
+        </tr>
+        <tr class="border-b hover:bg-emerald-50 transition-colors">
+         <td class="px-6 py-4 font-semibold">🌿 Kloroplas</td>
+         <td class="px-6 py-4">Fotosintesis</td>
+         <td class="px-6 py-4">Dapur/Laboratorium Masak</td>
+         <td class="px-6 py-4 text-center text-2xl">❌</td>
+         <td class="px-6 py-4 text-center text-2xl">✅</td>
+        </tr>
+        <tr class="hover:bg-cyan-50 transition-colors">
+         <td class="px-6 py-4 font-semibold">💧 Sitoplasma</td>
+         <td class="px-6 py-4">Tempat reaksi kimia sel</td>
+         <td class="px-6 py-4">Halaman/Ruang Kelas</td>
+         <td class="px-6 py-4 text-center text-2xl">✅</td>
+         <td class="px-6 py-4 text-center text-2xl">✅</td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </section><!-- Section 4: Perbandingan Sel -->
+   <section id="perbandingan" class="mb-16 scroll-mt-20">
+    <div class="text-center mb-10"><span class="inline-block bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">BAB 4</span>
+     <h2 class="title-font text-3xl md:text-4xl font-bold text-gray-800 mb-4">🔄 Sel Hewan vs Sel Tumbuhan</h2>
+     <p class="text-gray-600 text-lg">Mengapa tumbuhan tidak bisa bergerak bebas seperti hewan?</p>
+     <div class="section-divider w-32 mx-auto mt-4"></div>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-8 mb-12"><!-- Animal Cell -->
+     <div class="cell-card rounded-2xl overflow-hidden shadow-lg">
+      <div class="bg-gradient-to-r from-pink-500 to-rose-500 p-6 text-white">
+       <h3 class="text-2xl font-bold flex items-center gap-3"><span class="text-4xl">🐾</span> Sel Hewan</h3>
+      </div>
+      <div class="p-6"><!-- Animal Cell SVG -->
+       <div class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-xl p-4 mb-6">
+        <svg viewbox="0 0 300 250" class="w-full max-w-xs mx-auto"><!-- Cell membrane only (no cell wall) --> <ellipse cx="150" cy="125" rx="130" ry="100" fill="#fce7f3" stroke="#ec4899" stroke-width="4" /> <!-- Nucleus --> <circle cx="150" cy="110" r="40" fill="#f472b6" stroke="#db2777" stroke-width="3" /> <circle cx="150" cy="110" r="15" fill="#db2777" /> <!-- Mitochondria --> <ellipse cx="80" cy="150" rx="25" ry="12" fill="#f97316" stroke="#ea580c" stroke-width="2" /> <ellipse cx="220" cy="130" rx="22" ry="10" fill="#f97316" stroke="#ea580c" stroke-width="2" /> <!-- Small vacuoles --> <circle cx="100" cy="90" r="12" fill="#a3e635" opacity="0.6" /> <circle cx="200" cy="160" r="10" fill="#a3e635" opacity="0.6" /> <!-- Centrioles --> <rect x="170" cy="70" width="20" height="6" fill="#6366f1" rx="2" /> <rect x="175" cy="82" width="20" height="6" fill="#6366f1" rx="2" transform="rotate(90 185 85)" /> <!-- Lysosomes --> <circle cx="120" cy="170" r="10" fill="#ec4899" /> <circle cx="180" cy="180" r="8" fill="#ec4899" /> <!-- ER --> <path d="M60 100 Q75 90 90 100 Q105 110 120 100" fill="none" stroke="#06b6d4" stroke-width="3" />
+        </svg>
+       </div>
+       <div class="space-y-4">
+        <div class="flex items-center gap-3 p-3 bg-pink-50 rounded-lg"><span class="text-2xl">❌</span>
+         <div><span class="font-semibold text-gray-800">Tidak punya dinding sel</span>
+          <p class="text-sm text-gray-500">Bentuk lebih fleksibel &amp; ukuran lebih kecil</p>
+         </div>
+        </div>
+        <div class="flex items-center gap-3 p-3 bg-pink-50 rounded-lg"><span class="text-2xl">❌</span>
+         <div><span class="font-semibold text-gray-800">Tidak punya kloroplas</span>
+          <p class="text-sm text-gray-500">Tidak bisa membuat makanan sendiri</p>
+         </div>
+        </div>
+        <div class="flex items-center gap-3 p-3 bg-pink-50 rounded-lg"><span class="text-2xl">📦</span>
+         <div><span class="font-semibold text-gray-800">Vakuola kecil &amp; banyak</span>
+          <p class="text-sm text-gray-500">Fungsi penyimpanan terbatas</p>
+         </div>
+        </div>
+        <div class="flex items-center gap-3 p-3 bg-pink-50 rounded-lg"><span class="text-2xl">✅</span>
+         <div><span class="font-semibold text-gray-800">Punya sentriol</span>
+          <p class="text-sm text-gray-500">Berperan dalam pembelahan sel</p>
+         </div>
+        </div>
+        <div class="flex items-center gap-3 p-3 bg-pink-50 rounded-lg"><span class="text-2xl">✅</span>
+         <div><span class="font-semibold text-gray-800">Punya lisosom</span>
+          <p class="text-sm text-gray-500">Mencerna zat asing &amp; sel rusak</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Plant Cell -->
+     <div class="cell-card rounded-2xl overflow-hidden shadow-lg">
+      <div class="bg-gradient-to-r from-green-500 to-emerald-500 p-6 text-white">
+       <h3 class="text-2xl font-bold flex items-center gap-3"><span class="text-4xl">🌱</span> Sel Tumbuhan</h3>
+      </div>
+      <div class="p-6"><!-- Plant Cell SVG -->
+       <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 mb-6">
+        <svg viewbox="0 0 300 250" class="w-full max-w-xs mx-auto"><!-- Cell wall (outer) --> <rect x="15" y="20" width="270" height="210" rx="20" fill="none" stroke="#15803d" stroke-width="8" /> <!-- Cell membrane (inner) --> <rect x="30" y="35" width="240" height="180" rx="15" fill="#dcfce7" stroke="#22c55e" stroke-width="3" /> <!-- Large central vacuole --> <ellipse cx="150" cy="130" rx="80" ry="60" fill="#bbf7d0" stroke="#22c55e" stroke-width="2" /> <!-- Nucleus (pushed to side by vacuole) --> <circle cx="60" cy="80" r="30" fill="#86efac" stroke="#16a34a" stroke-width="2" /> <circle cx="60" cy="80" r="12" fill="#16a34a" /> <!-- Chloroplasts --> <ellipse cx="230" cy="70" rx="20" ry="12" fill="#22c55e" /> <ellipse cx="240" cy="180" rx="18" ry="10" fill="#22c55e" /> <ellipse cx="70" cy="170" rx="16" ry="9" fill="#22c55e" /> <!-- Mitochondria --> <ellipse cx="210" cy="130" rx="15" ry="8" fill="#f97316" /> <!-- Chloroplast internal structure --> <line x1="215" y1="70" x2="245" y2="70" stroke="#15803d" stroke-width="1" /> <line x1="225" y1="180" x2="255" y2="180" stroke="#15803d" stroke-width="1" />
+        </svg>
+       </div>
+       <div class="space-y-4">
+        <div class="flex items-center gap-3 p-3 bg-green-50 rounded-lg"><span class="text-2xl">✅</span>
+         <div><span class="font-semibold text-gray-800">Punya dinding sel</span>
+          <p class="text-sm text-gray-500">Memberikan bentuk kaku &amp; perlindungan</p>
+         </div>
+        </div>
+        <div class="flex items-center gap-3 p-3 bg-green-50 rounded-lg"><span class="text-2xl">✅</span>
+         <div><span class="font-semibold text-gray-800">Punya kloroplas</span>
+          <p class="text-sm text-gray-500">Bisa membuat makanan sendiri (autotrof)</p>
+         </div>
+        </div>
+        <div class="flex items-center gap-3 p-3 bg-green-50 rounded-lg"><span class="text-2xl">📦</span>
+         <div><span class="font-semibold text-gray-800">Vakuola besar di tengah</span>
+          <p class="text-sm text-gray-500">Menyimpan air, nutrisi, &amp; hasil fotosintesis</p>
+         </div>
+        </div>
+        <div class="flex items-center gap-3 p-3 bg-green-50 rounded-lg"><span class="text-2xl">❌</span>
+         <div><span class="font-semibold text-gray-800">Tidak punya sentriol</span>
+          <p class="text-sm text-gray-500">Pembelahan sel tanpa sentriol</p>
+         </div>
+        </div>
+        <div class="flex items-center gap-3 p-3 bg-green-50 rounded-lg"><span class="text-2xl">❌</span>
+         <div><span class="font-semibold text-gray-800">Tidak punya lisosom</span>
+          <p class="text-sm text-gray-500">Vakuola mengambil alih sebagian fungsi</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div><!-- Interesting Facts -->
+    <div class="grid md:grid-cols-3 gap-6">
+     <div class="fact-card rounded-2xl p-6 shadow-lg">
+      <div class="text-4xl mb-4">
+       🔢
+      </div>
+      <h4 class="text-xl font-bold text-gray-800 mb-2">Ukuran Sel</h4>
+      <p class="text-gray-700">Sel hewan umumnya berukuran 10-30 mikrometer, sedangkan sel tumbuhan 10-100 mikrometer. 1 mikrometer = 0.001 mm!</p>
+     </div>
+     <div class="fact-card rounded-2xl p-6 shadow-lg">
+      <div class="text-4xl mb-4">
+       ♻️
+      </div>
+      <h4 class="text-xl font-bold text-gray-800 mb-2">Regenerasi Sel</h4>
+      <p class="text-gray-700">Tubuh manusia mengganti <strong>100-150 juta sel mati setiap detik</strong>! Sel kulit berganti total setiap 2-3 minggu.</p>
+     </div>
+     <div class="fact-card rounded-2xl p-6 shadow-lg">
+      <div class="text-4xl mb-4">
+       💥
+      </div>
+      <h4 class="text-xl font-bold text-gray-800 mb-2">Self-Destruct</h4>
+      <p class="text-gray-700">Sel hewan memiliki sistem "bunuh diri" (apoptosis) untuk menghancurkan diri jika rusak atau terinfeksi virus!</p>
+     </div>
+    </div>
+   </section><!-- Section 5: Interactive Activities -->
+   <section id="aktivitas" class="mb-16 scroll-mt-20">
+    <div class="text-center mb-10"><span class="inline-block bg-pink-100 text-pink-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">AKTIVITAS</span>
+     <h2 class="title-font text-3xl md:text-4xl font-bold text-gray-800 mb-4">🎯 Aktivitas Interaktif</h2>
+     <div class="section-divider w-32 mx-auto mt-4"></div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8"><!-- Drag and Drop Activity -->
+     <div class="cell-card rounded-2xl p-6 shadow-lg">
+      <h3 class="text-xl font-bold text-purple-700 mb-4 flex items-center gap-2"><span class="text-2xl">🎨</span> Proyek: Model Sel Kotaku</h3>
+      <div class="bg-purple-50 rounded-xl p-5 mb-4">
+       <p class="text-gray-700 mb-4">Buatlah model sel dengan konsep "Kota/Desa" tempat tinggalmu! Hubungkan setiap tempat dengan organel sel.</p>
+       <div class="space-y-2 text-sm">
+        <div class="flex items-center gap-2 p-2 bg-white rounded-lg"><span class="text-xl">🏛️</span> <span><strong>Kantor Kepala Desa/Wali Kota</strong> = Nukleus</span>
+        </div>
+        <div class="flex items-center gap-2 p-2 bg-white rounded-lg"><span class="text-xl">⚡</span> <span><strong>Pembangkit Listrik</strong> = Mitokondria</span>
+        </div>
+        <div class="flex items-center gap-2 p-2 bg-white rounded-lg"><span class="text-xl">🚧</span> <span><strong>Gerbang/Pos Satpam</strong> = Membran Sel</span>
+        </div>
+        <div class="flex items-center gap-2 p-2 bg-white rounded-lg"><span class="text-xl">🏪</span> <span><strong>Gudang/Pasar</strong> = Vakuola</span>
+        </div>
+        <div class="flex items-center gap-2 p-2 bg-white rounded-lg"><span class="text-xl">🌳</span> <span><strong>Sawah/Kebun</strong> = Kloroplas</span>
+        </div>
+       </div>
+      </div>
+      <p class="text-sm text-gray-500 italic">💡 Bisa dibuat dalam bentuk diorama, poster, atau video drama!</p>
+     </div><!-- Microscope Activity -->
+     <div class="cell-card rounded-2xl p-6 shadow-lg">
+      <h3 class="text-xl font-bold text-green-700 mb-4 flex items-center gap-2"><span class="text-2xl">🔬</span> Praktikum: Pengamatan Mikroskop</h3>
+      <div class="bg-green-50 rounded-xl p-5 mb-4">
+       <h4 class="font-semibold text-gray-800 mb-3">Mengamati Sel Bawang Merah</h4>
+       <ol class="space-y-2 text-gray-700 text-sm list-decimal list-inside">
+        <li>Siapkan mikroskop dengan perbesaran 100x-400x</li>
+        <li>Ambil lapisan tipis epidermis bawang merah</li>
+        <li>Letakkan pada kaca objek, tetesi air</li>
+        <li>Tutup dengan kaca penutup</li>
+        <li>Amati dan gambar struktur yang terlihat</li>
+       </ol>
+      </div>
+      <div class="bg-blue-50 rounded-xl p-4">
+       <h4 class="font-semibold text-blue-700 mb-2">Yang Bisa Diamati:</h4>
+       <div class="flex flex-wrap gap-2"><span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">Dinding Sel</span> <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">Membran Sel</span> <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">Vakuola</span> <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">Nukleus</span> <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">Sitoplasma</span>
+       </div>
+      </div>
+     </div>
+    </div><!-- Labeling Activity -->
+    <div class="cell-card rounded-2xl p-6 shadow-lg mt-8">
+     <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2"><span class="text-2xl">🏷️</span> Aktivitas: Label Bagian Sel</h3>
+     <p class="text-gray-600 mb-6">Klik pada bagian sel untuk melihat namanya!</p>
+     <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div class="relative bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-4">
+       <svg viewbox="0 0 400 350" class="w-full cursor-pointer" id="interactive-cell"><!-- Cell membrane --> <ellipse cx="200" cy="175" rx="170" ry="140" fill="#e0e7ff" stroke="#6366f1" stroke-width="5" class="cell-part" data-part="membran" /> <!-- Cytoplasm --> <ellipse cx="200" cy="175" rx="160" ry="130" fill="#c7d2fe" opacity="0.5" class="cell-part" data-part="sitoplasma" /> <!-- Nucleus --> <circle cx="200" cy="160" r="55" fill="#a5b4fc" stroke="#4f46e5" stroke-width="3" class="cell-part" data-part="nukleus" /> <circle cx="200" cy="160" r="20" fill="#4f46e5" class="cell-part" data-part="nukleolus" /> <!-- Mitochondria --> <ellipse cx="90" cy="220" rx="30" ry="15" fill="#fb923c" stroke="#ea580c" stroke-width="2" class="cell-part" data-part="mitokondria" /> <ellipse cx="320" cy="200" rx="28" ry="14" fill="#fb923c" stroke="#ea580c" stroke-width="2" transform="rotate(20 320 200)" class="cell-part" data-part="mitokondria" /> <!-- ER --> <path d="M250 250 Q280 240 310 250 Q340 260 360 250" fill="none" stroke="#22d3ee" stroke-width="5" class="cell-part" data-part="re" /> <path d="M250 270 Q280 260 310 270 Q340 280 360 270" fill="none" stroke="#22d3ee" stroke-width="4" class="cell-part" data-part="re" /> <!-- Ribosomes --> <circle cx="270" cy="245" r="6" fill="#06b6d4" class="cell-part" data-part="ribosom" /> <circle cx="295" cy="255" r="6" fill="#06b6d4" class="cell-part" data-part="ribosom" /> <circle cx="320" cy="245" r="6" fill="#06b6d4" class="cell-part" data-part="ribosom" /> <!-- Golgi Apparatus --> <path d="M70 120 Q100 110 130 120" fill="none" stroke="#facc15" stroke-width="7" stroke-linecap="round" class="cell-part" data-part="golgi" /> <path d="M75 140 Q105 130 135 140" fill="none" stroke="#facc15" stroke-width="6" stroke-linecap="round" class="cell-part" data-part="golgi" /> <path d="M80 160 Q110 150 140 160" fill="none" stroke="#facc15" stroke-width="5" stroke-linecap="round" class="cell-part" data-part="golgi" /> <!-- Vacuole --> <circle cx="140" cy="250" r="25" fill="#86efac" stroke="#22c55e" stroke-width="2" opacity="0.8" class="cell-part" data-part="vakuola" /> <!-- Lysosomes --> <circle cx="280" cy="130" r="15" fill="#f472b6" stroke="#ec4899" stroke-width="2" class="cell-part" data-part="lisosom" /> <circle cx="310" cy="155" r="12" fill="#f472b6" stroke="#ec4899" stroke-width="2" class="cell-part" data-part="lisosom" />
+       </svg>
+       <div id="cell-tooltip" class="tooltip-box">
+        <h4 class="font-bold text-gray-800"></h4>
+        <p class="text-sm text-gray-600"></p>
+       </div>
+      </div>
+      <div id="label-info" class="bg-white rounded-xl p-6 shadow-inner min-h-48">
+       <div class="text-center text-gray-400"><span class="text-5xl block mb-4">👈</span>
+        <p>Klik pada bagian sel untuk melihat informasi detailnya!</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Section 6: Quiz -->
+   <section id="quiz" class="mb-16 scroll-mt-20">
+    <div class="text-center mb-10"><span class="inline-block bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">EVALUASI</span>
+     <h2 class="title-font text-3xl md:text-4xl font-bold text-gray-800 mb-4">📝 Kuis HOTS: Uji Pemahamanmu!</h2>
+     <p class="text-gray-600">10 soal tingkat tinggi untuk mengasah kemampuan berpikir kritismu</p>
+     <div class="section-divider w-32 mx-auto mt-4"></div>
+    </div>
+    <div class="cell-card rounded-2xl p-6 md:p-8 shadow-lg"><!-- Progress Bar -->
+     <div class="mb-8">
+      <div class="flex justify-between text-sm text-gray-600 mb-2"><span>Progres Kuis</span> <span id="quiz-progress">0/10</span>
+      </div>
+      <div class="w-full bg-gray-200 rounded-full h-3">
+       <div id="progress-fill" class="progress-bar h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+      </div>
+     </div><!-- Quiz Container -->
+     <div id="quiz-container"><!-- Questions will be injected here -->
+     </div><!-- Quiz Navigation -->
+     <div class="flex flex-wrap justify-between items-center gap-4 mt-8"><button id="prev-btn" onclick="prevQuestion()" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-colors disabled:opacity-50" disabled> ← Sebelumnya </button>
+      <div id="score-display" class="text-center hidden"><span class="text-2xl font-bold text-purple-700">Skor: <span id="final-score">0</span>/10</span>
+      </div><button id="next-btn" onclick="nextQuestion()" class="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors"> Selanjutnya → </button>
+     </div><!-- Result Modal -->
+     <div id="result-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div class="bg-white rounded-2xl p-8 max-w-md w-full text-center">
+       <div id="result-emoji" class="text-6xl mb-4">
+        🎉
+       </div>
+       <h3 id="result-title" class="text-2xl font-bold text-gray-800 mb-2">Selamat!</h3>
+       <p id="result-message" class="text-gray-600 mb-6">Kamu telah menyelesaikan kuis!</p>
+       <div class="text-4xl font-bold text-purple-600 mb-6"><span id="result-score">0</span>/10
+       </div>
+       <div id="result-feedback" class="text-left bg-gray-50 rounded-xl p-4 mb-6 text-sm text-gray-700"></div><button onclick="resetQuiz()" class="px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors"> 🔄 Ulangi Kuis </button>
+      </div>
+     </div>
+    </div>
+   </section>
+  </main><!-- Footer -->
+  <footer class="gradient-bg text-white py-12">
+   <div class="max-w-7xl mx-auto px-4">
+    <div class="grid md:grid-cols-3 gap-8 mb-8">
+     <div>
+      <h4 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">🔬</span> Menjelajahi Dunia Sel</h4>
+      <p class="text-white/80 text-sm">Media pembelajaran interaktif untuk memahami struktur dan fungsi sel dengan cara yang menyenangkan.</p>
+     </div>
+     <div>
+      <h4 class="text-lg font-bold mb-4">📚 Materi</h4>
+      <ul class="space-y-2 text-white/80 text-sm">
+       <li><a href="#pendahuluan" class="hover:text-yellow-200">Pengertian Sel</a></li>
+       <li><a href="#struktur" class="hover:text-yellow-200">Struktur Utama Sel</a></li>
+       <li><a href="#organel" class="hover:text-yellow-200">Organel Sel</a></li>
+       <li><a href="#perbandingan" class="hover:text-yellow-200">Perbandingan Sel</a></li>
+      </ul>
+     </div>
+     <div>
+      <h4 class="text-lg font-bold mb-4">👨‍🏫 Pembuat</h4>
+      <div class="flex items-center gap-3"><img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-14 h-14 rounded-full object-cover border-2 border-white/30" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #667eea, #764ba2)'; this.alt='AM';">
+       <div>
+        <p class="font-semibold">Algian Manggara, S.Agr</p>
+        <p class="text-sm text-white/70">Pendidik &amp; Pengembang Konten</p>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="border-t border-white/20 pt-6 text-center">
+     <p class="text-white/70 text-sm">© 2026 Algian Manggara, S.Agr - Semua Hak Dilindungi</p>
+     <p class="text-white/50 text-xs mt-2">Dibuat dengan ❤️ untuk pembelajaran yang lebih baik</p>
+    </div>
+   </div>
+  </footer>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: "Menjelajahi Dunia Sel",
+      primary_color: "#667eea",
+      secondary_color: "#764ba2",
+      text_color: "#1f2937",
+      background_color: "#f9fafb",
+      accent_color: "#f093fb"
+    };
+
+    // Organelle data
+    const organelleData = {
+      membran: {
+        title: "🚪 Membran Sel (Membran Plasma)",
+        image: `<svg viewBox="0 0 200 150" class="w-full"><rect x="10" y="30" width="180" height="90" rx="10" fill="none" stroke="#8b5cf6" stroke-width="8" stroke-dasharray="15,8"/><circle cx="40" cy="75" r="8" fill="#c084fc"/><circle cx="80" cy="75" r="8" fill="#c084fc"/><circle cx="120" cy="75" r="8" fill="#c084fc"/><circle cx="160" cy="75" r="8" fill="#c084fc"/><text x="100" y="140" text-anchor="middle" fill="#7c3aed" font-size="12">Fosfolipid Bilayer</text></svg>`,
+        function: "Mengontrol keluar masuknya zat (makanan, air, oksigen, CO₂, sisa metabolisme) dan menjadi pembatas antara sel dengan lingkungan luar. Bersifat selektif permeabel.",
+        analogy: "Gerbang/Pagar Sekolah - Memeriksa siapa yang boleh masuk dan keluar, menjaga keamanan.",
+        fact: "Membran sel tersusun dari fosfolipid bilayer (dua lapis lemak) dengan protein yang tertanam di dalamnya. Tebalnya hanya 7-8 nanometer!"
+      },
+      dinding: {
+        title: "🧱 Dinding Sel",
+        image: `<svg viewBox="0 0 200 150" class="w-full"><rect x="10" y="20" width="180" height="110" rx="5" fill="none" stroke="#15803d" stroke-width="10"/><rect x="25" y="35" width="150" height="80" rx="3" fill="#dcfce7" stroke="#22c55e" stroke-width="3"/><text x="100" y="140" text-anchor="middle" fill="#15803d" font-size="11">Selulosa (hanya tumbuhan)</text></svg>`,
+        function: "Memberikan perlindungan, bentuk tetap, dan kekakuan pada sel tumbuhan. Mencegah sel pecah saat menyerap air berlebih.",
+        analogy: "Tembok Bangunan Sekolah - Memberikan struktur kokoh dan perlindungan dari luar.",
+        fact: "Dinding sel tersusun dari selulosa, polisakarida yang sangat kuat. Inilah mengapa pohon bisa tumbuh sangat tinggi tanpa roboh! Hanya ada di sel tumbuhan, jamur, dan bakteri."
+      },
+      nukleus: {
+        title: "👑 Nukleus (Inti Sel)",
+        image: `<svg viewBox="0 0 200 150" class="w-full"><circle cx="100" cy="75" r="60" fill="#c084fc" stroke="#7c3aed" stroke-width="4"/><circle cx="100" cy="75" r="25" fill="#7c3aed"/><text x="100" y="80" text-anchor="middle" fill="white" font-size="10" font-weight="bold">Nukleolus</text><path d="M60 60 Q80 50 100 60 Q120 70 140 60" fill="none" stroke="#a855f7" stroke-width="2"/><path d="M60 90 Q80 100 100 90 Q120 80 140 90" fill="none" stroke="#a855f7" stroke-width="2"/><text x="100" y="145" text-anchor="middle" fill="#7c3aed" font-size="11">DNA & Kromosom</text></svg>`,
+        function: "Pusat kendali seluruh aktivitas sel. Menyimpan informasi genetik (DNA) dan mengatur pembelahan sel, sintesis protein, serta metabolisme.",
+        analogy: "Kepala Sekolah - Mengatur semua aktivitas dan membuat keputusan penting untuk seluruh sekolah.",
+        fact: "DNA manusia jika direntangkan panjangnya mencapai 2 meter, namun bisa dikemas dalam nukleus yang diameternya hanya 6 mikrometer! Di dalam nukleus ada nukleolus yang membuat ribosom."
+      },
+      mitokondria: {
+        title: "⚡ Mitokondria",
+        image: `<svg viewBox="0 0 200 150" class="w-full"><ellipse cx="100" cy="75" rx="80" ry="45" fill="#fed7aa" stroke="#ea580c" stroke-width="4"/><path d="M30 75 Q50 55 70 75 Q90 95 110 75 Q130 55 150 75 Q170 95 175 75" fill="none" stroke="#f97316" stroke-width="3"/><ellipse cx="100" cy="75" rx="70" ry="35" fill="none" stroke="#fb923c" stroke-width="2"/><text x="100" y="135" text-anchor="middle" fill="#ea580c" font-size="11">Krista & Matriks</text></svg>`,
+        function: "Memproduksi energi (ATP) melalui respirasi seluler. Mengubah glukosa dan oksigen menjadi energi yang bisa digunakan sel.",
+        analogy: "Perusahaan Listrik (PLN) - Menghasilkan listrik (energi) untuk seluruh aktivitas sekolah.",
+        fact: "Mitokondria punya DNA sendiri dan bisa memperbanyak diri! Diduga berasal dari bakteri yang bersimbiosis dengan sel purba. Sel otot jantung punya ribuan mitokondria karena butuh banyak energi."
+      },
+      vakuola: {
+        title: "📦 Vakuola",
+        image: `<svg viewBox="0 0 200 150" class="w-full"><ellipse cx="100" cy="75" rx="70" ry="50" fill="#bbf7d0" stroke="#22c55e" stroke-width="3"/><circle cx="70" cy="60" r="8" fill="#86efac"/><circle cx="120" cy="85" r="10" fill="#86efac"/><circle cx="90" cy="90" r="6" fill="#86efac"/><text x="100" y="140" text-anchor="middle" fill="#16a34a" font-size="11">Kantung Penyimpanan</text></svg>`,
+        function: "Menyimpan air, makanan, mineral, dan sisa metabolisme. Pada tumbuhan, vakuola besar menjaga tekanan turgor agar sel tetap kaku.",
+        analogy: "Gudang/Kantin Sekolah - Menyimpan berbagai bahan dan makanan untuk keperluan sekolah.",
+        fact: "Vakuola sel tumbuhan bisa menempati 90% volume sel! Pada beberapa tanaman, vakuola menyimpan pigmen warna bunga. Vakuola sel hewan jauh lebih kecil."
+      },
+      kloroplas: {
+        title: "🌿 Kloroplas",
+        image: `<svg viewBox="0 0 200 150" class="w-full"><ellipse cx="100" cy="75" rx="75" ry="45" fill="#22c55e" stroke="#15803d" stroke-width="3"/><ellipse cx="60" cy="65" rx="20" ry="10" fill="#16a34a"/><ellipse cx="100" cy="85" rx="22" ry="11" fill="#16a34a"/><ellipse cx="140" cy="70" rx="18" ry="9" fill="#16a34a"/><text x="100" y="45" text-anchor="middle" fill="white" font-size="9" font-weight="bold">Tilakoid</text><text x="100" y="140" text-anchor="middle" fill="#15803d" font-size="11">Grana & Stroma</text></svg>`,
+        function: "Tempat terjadinya fotosintesis untuk menghasilkan glukosa (makanan). Mengandung klorofil yang menyerap cahaya matahari.",
+        analogy: "Dapur/Laboratorium Masak - Tempat membuat makanan untuk seluruh sekolah.",
+        fact: "Kloroplas juga punya DNA sendiri seperti mitokondria! Warna hijau daun berasal dari klorofil di dalam kloroplas. Satu sel daun bisa punya 50-100 kloroplas."
+      },
+      sitoplasma: {
+        title: "💧 Sitoplasma",
+        image: `<svg viewBox="0 0 200 150" class="w-full"><ellipse cx="100" cy="75" rx="85" ry="55" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="3"/><circle cx="60" cy="60" r="5" fill="#7dd3fc"/><circle cx="140" cy="80" r="4" fill="#7dd3fc"/><circle cx="90" cy="95" r="6" fill="#7dd3fc"/><circle cx="120" cy="55" r="5" fill="#7dd3fc"/><text x="100" y="140" text-anchor="middle" fill="#0284c7" font-size="11">Cairan Koloid (Sitosol)</text></svg>`,
+        function: "Cairan kental tempat semua organel berada dan reaksi kimia sel berlangsung. Mengandung air, garam, enzim, dan molekul organik.",
+        analogy: "Halaman/Ruang Kelas Sekolah - Tempat semua aktivitas berlangsung dan semua bagian terhubung.",
+        fact: "Sitoplasma bukan cairan biasa, tapi gel koloid yang bisa berubah dari sol (cair) ke gel (padat). Di sinilah ribuan reaksi kimia terjadi setiap detik!"
+      },
+      re: {
+        title: "🏭 Retikulum Endoplasma (RE)",
+        image: `<svg viewBox="0 0 200 150" class="w-full"><path d="M30 50 Q60 40 90 50 Q120 60 150 50 Q180 40 190 50" fill="none" stroke="#06b6d4" stroke-width="6"/><path d="M30 75 Q60 65 90 75 Q120 85 150 75 Q180 65 190 75" fill="none" stroke="#06b6d4" stroke-width="5"/><path d="M30 100 Q60 90 90 100 Q120 110 150 100 Q180 90 190 100" fill="none" stroke="#06b6d4" stroke-width="4"/><circle cx="100" cy="50" r="4" fill="#0891b2"/><circle cx="140" cy="75" r="4" fill="#0891b2"/><circle cx="60" cy="100" r="4" fill="#0891b2"/><text x="100" y="140" text-anchor="middle" fill="#0891b2" font-size="10">RE Kasar (ribosom) & RE Halus</text></svg>`,
+        function: "RE Kasar: Sintesis protein (ada ribosom). RE Halus: Sintesis lipid dan detoksifikasi. Menjadi jalur transportasi dalam sel.",
+        analogy: "Koridor/Lorong Sekolah dengan ruang-ruang - Jalur transportasi dan tempat pembuatan berbagai bahan.",
+        fact: "RE Kasar disebut 'kasar' karena permukaannya ditempeli ribosom. RE Halus banyak di sel hati untuk menetralisir racun dan obat-obatan!"
+      },
+      ribosom: {
+        title: "⚙️ Ribosom",
+        image: `<svg viewBox="0 0 200 150" class="w-full"><circle cx="60" cy="70" r="20" fill="#6366f1"/><ellipse cx="60" cy="95" rx="15" ry="10" fill="#818cf8"/><circle cx="100" cy="60" r="18" fill="#6366f1"/><ellipse cx="100" cy="82" rx="13" ry="8" fill="#818cf8"/><circle cx="140" cy="75" r="22" fill="#6366f1"/><ellipse cx="140" cy="100" rx="16" ry="11" fill="#818cf8"/><text x="100" y="140" text-anchor="middle" fill="#4f46e5" font-size="11">Subunit Besar & Kecil</text></svg>`,
+        function: "Tempat sintesis protein berdasarkan instruksi dari mRNA. Menerjemahkan kode genetik menjadi rantai asam amino.",
+        analogy: "Mesin Cetak/Printer Sekolah - Memproduksi dokumen (protein) sesuai perintah.",
+        fact: "Ribosom adalah organel terkecil! Satu sel bakteri punya sekitar 10.000 ribosom, sel manusia bisa punya jutaan. Tidak punya membran."
+      },
+      golgi: {
+        title: "📮 Badan Golgi (Aparatus Golgi)",
+        image: `<svg viewBox="0 0 200 150" class="w-full"><path d="M40 50 Q100 35 160 50" fill="none" stroke="#eab308" stroke-width="10" stroke-linecap="round"/><path d="M45 75 Q100 60 155 75" fill="none" stroke="#eab308" stroke-width="8" stroke-linecap="round"/><path d="M50 100 Q100 85 150 100" fill="none" stroke="#eab308" stroke-width="6" stroke-linecap="round"/><circle cx="170" cy="55" r="8" fill="#fbbf24"/><circle cx="165" cy="80" r="6" fill="#fbbf24"/><text x="100" y="140" text-anchor="middle" fill="#ca8a04" font-size="11">Sisterna & Vesikel</text></svg>`,
+        function: "Memproses, mengemas, dan mengirim protein serta lipid ke tujuan akhirnya. Membentuk lisosom dan vesikel sekresi.",
+        analogy: "Kantor Pos Sekolah - Mengemas dan mengirim paket (protein) ke alamat yang tepat.",
+        fact: "Badan Golgi punya sisi 'cis' (menerima) dan 'trans' (mengirim). Sel yang aktif mensekresi (seperti sel kelenjar) punya badan Golgi yang sangat besar!"
+      },
+      lisosom: {
+        title: "🗑️ Lisosom",
+        image: `<svg viewBox="0 0 200 150" class="w-full"><circle cx="70" cy="75" r="35" fill="#f472b6" stroke="#ec4899" stroke-width="3"/><circle cx="130" cy="65" r="28" fill="#f472b6" stroke="#ec4899" stroke-width="3"/><circle cx="140" cy="105" r="20" fill="#f472b6" stroke="#ec4899" stroke-width="3"/><text x="70" y="80" text-anchor="middle" fill="white" font-size="10">Enzim</text><text x="100" y="145" text-anchor="middle" fill="#db2777" font-size="11">Kantung Enzim Pencerna</text></svg>`,
+        function: "Mencerna zat asing, organel rusak, dan bakteri menggunakan enzim hidrolitik. Sistem daur ulang dan pertahanan sel.",
+        analogy: "Petugas Kebersihan/Tim Pembersih - Membersihkan sampah dan barang rusak di sekolah.",
+        fact: "Lisosom mengandung 50+ jenis enzim yang bisa mencerna hampir semua molekul biologis! Membran lisosom sangat kuat agar enzimnya tidak bocor dan mencerna sel sendiri."
+      },
+      nukleolus: {
+        title: "🔵 Nukleolus (Anak Inti)",
+        image: `<svg viewBox="0 0 200 150" class="w-full"><circle cx="100" cy="75" r="55" fill="#c084fc" stroke="#7c3aed" stroke-width="3"/><circle cx="100" cy="75" r="25" fill="#7c3aed"/><text x="100" y="80" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Nukleolus</text><text x="100" y="145" text-anchor="middle" fill="#7c3aed" font-size="11">Di dalam Nukleus</text></svg>`,
+        function: "Membuat komponen ribosom (rRNA). Nukleolus adalah 'pabrik' pembuat ribosom di dalam nukleus.",
+        analogy: "Ruang Produksi di Kantor Kepala Sekolah - Membuat peralatan (ribosom) untuk sekolah.",
+        fact: "Sel bisa punya lebih dari satu nukleolus! Nukleolus tidak punya membran dan tampak lebih gelap di bawah mikroskop."
+      }
+    };
+
+    // Quiz questions (HOTS level)
+    const quizQuestions = [
+      {
+        question: "Seorang petani menemukan tanamannya layu meskipun telah disiram cukup air. Setelah diperiksa, ternyata tanah mengandung kadar garam sangat tinggi. Berdasarkan pemahaman tentang sel, apa yang terjadi pada sel-sel akar tanaman tersebut?",
+        options: [
+          "Air masuk ke dalam sel secara berlebihan sehingga sel pecah",
+          "Air keluar dari vakuola sel karena osmosis, menyebabkan sel mengkerut (plasmolisis)",
+          "Dinding sel rusak akibat garam yang masuk",
+          "Kloroplas berhenti melakukan fotosintesis"
+        ],
+        correct: 1,
+        explanation: "Kadar garam tinggi di luar sel menyebabkan lingkungan menjadi hipertonik. Air dari vakuola keluar melalui osmosis, menyebabkan vakuola mengecil dan sel mengkerut (plasmolisis). Ini membuat tanaman layu."
+      },
+      {
+        question: "Mengapa pasien dengan gangguan mitokondria sering mengalami kelelahan kronis dan kelemahan otot, terutama setelah aktivitas fisik?",
+        options: [
+          "Mitokondria gagal menyimpan oksigen untuk sel otot",
+          "Mitokondria tidak mampu memproduksi ATP yang cukup untuk kontraksi otot",
+          "Mitokondria tidak bisa membentuk protein otot",
+          "Mitokondria menghambat aliran darah ke otot"
+        ],
+        correct: 1,
+        explanation: "Mitokondria adalah 'pembangkit energi' sel yang menghasilkan ATP. Gangguan mitokondria menyebabkan produksi ATP berkurang, sehingga sel otot kekurangan energi untuk kontraksi, menyebabkan kelelahan dan kelemahan."
+      },
+      {
+        question: "Sebuah eksperimen menunjukkan bahwa sel daun yang disimpan dalam gelap selama seminggu kehilangan warna hijaunya. Organel apa yang mengalami degradasi dan apa dampaknya bagi sel?",
+        options: [
+          "Vakuola terdegradasi, sel kehilangan kemampuan menyimpan air",
+          "Kloroplas terdegradasi, sel kehilangan kemampuan fotosintesis",
+          "Mitokondria terdegradasi, sel kehilangan energi",
+          "Nukleus terdegradasi, sel kehilangan kontrol genetik"
+        ],
+        correct: 1,
+        explanation: "Tanpa cahaya, kloroplas (yang mengandung klorofil hijau) akan terdegradasi karena tidak digunakan. Akibatnya, sel kehilangan kemampuan fotosintesis dan tidak bisa membuat makanan sendiri."
+      },
+      {
+        question: "Mengapa sel hewan memiliki kemampuan untuk mengubah bentuknya (seperti sel darah putih yang bisa 'merayap'), sementara sel tumbuhan bentuknya tetap?",
+        options: [
+          "Sel hewan memiliki lebih banyak mitokondria",
+          "Sel tumbuhan memiliki vakuola yang lebih besar",
+          "Sel tumbuhan memiliki dinding sel yang kaku, sel hewan tidak",
+          "Sel hewan memiliki nukleus yang lebih fleksibel"
+        ],
+        correct: 2,
+        explanation: "Sel tumbuhan memiliki dinding sel dari selulosa yang kaku dan tidak elastis, memberikan bentuk tetap. Sel hewan hanya memiliki membran sel yang fleksibel, memungkinkan perubahan bentuk seperti pada sel darah putih saat fagositosis."
+      },
+      {
+        question: "Seorang peneliti menemukan bahwa sel kanker memiliki jumlah ribosom yang jauh lebih banyak dari sel normal. Apa kesimpulan yang paling tepat tentang karakteristik sel kanker ini?",
+        options: [
+          "Sel kanker membutuhkan lebih banyak energi",
+          "Sel kanker melakukan sintesis protein sangat aktif untuk pembelahan cepat",
+          "Sel kanker menyimpan lebih banyak nutrisi",
+          "Sel kanker menghasilkan lebih banyak enzim pencernaan"
+        ],
+        correct: 1,
+        explanation: "Ribosom adalah tempat sintesis protein. Sel kanker yang membelah sangat cepat membutuhkan protein dalam jumlah besar untuk membentuk sel-sel baru. Oleh karena itu, jumlah ribosomnya meningkat drastis."
+      },
+      {
+        question: "Penyakit Tay-Sachs terjadi karena lisosom tidak dapat memproduksi enzim tertentu. Apa dampak langsung dari kondisi ini pada tingkat seluler?",
+        options: [
+          "Sel tidak mampu menghasilkan energi",
+          "Zat-zat yang seharusnya dicerna menumpuk dan merusak sel",
+          "Sel tidak bisa membelah diri",
+          "Protein tidak bisa disintesis"
+        ],
+        correct: 1,
+        explanation: "Lisosom berfungsi mencerna zat-zat dalam sel menggunakan enzim. Tanpa enzim tertentu, zat yang seharusnya dicerna (seperti lipid kompleks) menumpuk di dalam sel, menyebabkan kerusakan dan kematian sel, terutama sel saraf."
+      },
+      {
+        question: "Tanaman di daerah gurun memiliki vakuola yang sangat besar dan sitoplasma yang padat. Adaptasi ini membantu tanaman tersebut untuk bertahan hidup dengan cara:",
+        options: [
+          "Meningkatkan kecepatan fotosintesis",
+          "Menyimpan cadangan air dalam jumlah besar untuk masa kekeringan",
+          "Menghasilkan lebih banyak energi dari mitokondria",
+          "Melindungi dari serangan hewan pemakan tumbuhan"
+        ],
+        correct: 1,
+        explanation: "Vakuola besar pada tanaman gurun berfungsi sebagai reservoir air yang sangat penting untuk bertahan saat kekeringan. Sitoplasma padat menunjukkan konsentrasi zat terlarut tinggi yang membantu mempertahankan air di dalam sel."
+      },
+      {
+        question: "Antibiotik tertentu bekerja dengan cara menghambat ribosom bakteri tanpa mempengaruhi ribosom manusia. Mengapa hal ini mungkin terjadi?",
+        options: [
+          "Ribosom bakteri terletak di nukleus, ribosom manusia tidak",
+          "Ribosom bakteri dan manusia memiliki struktur yang berbeda",
+          "Bakteri tidak memiliki membran sel seperti sel manusia",
+          "Sel manusia tidak membutuhkan ribosom untuk bertahan hidup"
+        ],
+        correct: 1,
+        explanation: "Ribosom bakteri (70S) dan ribosom manusia (80S) memiliki struktur yang berbeda. Antibiotik dirancang secara spesifik untuk mengenali dan menghambat ribosom 70S bakteri, sehingga tidak mempengaruhi ribosom 80S sel manusia."
+      },
+      {
+        question: "Sel-sel pada ujung akar tumbuhan memiliki aktivitas badan Golgi yang sangat tinggi. Apa fungsi utama yang menyebabkan hal tersebut?",
+        options: [
+          "Menghasilkan energi untuk pertumbuhan akar",
+          "Mensekresikan bahan penyusun dinding sel baru untuk pemanjangan akar",
+          "Mencerna nutrisi dari tanah",
+          "Menyimpan air yang diserap dari tanah"
+        ],
+        correct: 1,
+        explanation: "Ujung akar adalah zona pertumbuhan aktif yang membutuhkan pembentukan dinding sel baru terus-menerus. Badan Golgi aktif memproduksi dan mensekresikan polisakarida (seperti pektin dan hemiselulosa) untuk membentuk dinding sel baru."
+      },
+      {
+        question: "Seorang siswa mengamati bahwa sel bawang merah yang direndam dalam larutan gula pekat menunjukkan membran sel yang menjauh dari dinding sel. Fenomena ini membuktikan bahwa:",
+        options: [
+          "Dinding sel bersifat permeabel terhadap gula",
+          "Membran sel bersifat selektif permeabel dan air keluar secara osmosis",
+          "Nukleus mengontrol pergerakan air dalam sel",
+          "Vakuola menyerap gula dari lingkungan"
+        ],
+        correct: 1,
+        explanation: "Fenomena ini disebut plasmolisis. Membran sel bersifat selektif permeabel - memungkinkan air keluar (osmosis) menuju larutan gula yang lebih pekat di luar sel. Akibatnya, vakuola mengecil dan membran sel menjauh dari dinding sel."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizQuestions.length).fill(null);
+    let quizCompleted = false;
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          const mainTitle = document.getElementById('main-title');
+          if (mainTitle) {
+            mainTitle.textContent = config.main_title || defaultConfig.main_title;
+          }
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => { config.primary_color = value; window.elementSdk.setConfig({ primary_color: value }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["main_title", config.main_title || defaultConfig.main_title]
+        ])
+      });
+    }
+
+    // Show organelle details
+    function showOrganelle(id) {
+      const data = organelleData[id];
+      if (!data) return;
+
+      // Update active button
+      document.querySelectorAll('.organelle-btn').forEach(btn => {
+        btn.classList.remove('ring-4', 'ring-purple-400');
+        if (btn.dataset.organelle === id) {
+          btn.classList.add('ring-4', 'ring-purple-400');
+        }
+      });
+
+      // Update display
+      document.getElementById('organelle-image').innerHTML = `
+        <div class="text-center">
+          ${data.image}
+        </div>
+      `;
+
+      document.getElementById('organelle-title').textContent = data.title;
+      
+      document.getElementById('organelle-function').innerHTML = `
+        <h4 class="font-semibold text-blue-700 mb-2">📋 Fungsi:</h4>
+        <p class="text-gray-700">${data.function}</p>
+      `;
+      
+      document.getElementById('organelle-analogy').innerHTML = `
+        <h4 class="font-semibold text-green-700 mb-2">🏫 Analogi Sekolah:</h4>
+        <p class="text-gray-700">${data.analogy}</p>
+      `;
+      
+      document.getElementById('organelle-fact').innerHTML = `
+        <h4 class="font-semibold text-amber-700 mb-2">💡 Fakta Menarik:</h4>
+        <p class="text-gray-700">${data.fact}</p>
+      `;
+    }
+
+    // Interactive cell labeling
+    document.getElementById('interactive-cell').addEventListener('click', function(e) {
+      const part = e.target.closest('.cell-part');
+      if (!part) return;
+
+      const partId = part.dataset.part;
+      const data = organelleData[partId];
+      
+      if (data) {
+        document.getElementById('label-info').innerHTML = `
+          <div class="space-y-4">
+            <h4 class="text-xl font-bold text-gray-800">${data.title}</h4>
+            <div class="p-4 bg-blue-50 rounded-xl">
+              <p class="text-gray-700 text-sm">${data.function}</p>
+            </div>
+            <div class="p-3 bg-green-50 rounded-lg">
+              <span class="text-sm text-green-700"><strong>Analogi:</strong> ${data.analogy}</span>
+            </div>
+          </div>
+        `;
+      }
+    });
+
+    // Quiz functions
+    function renderQuestion() {
+      const q = quizQuestions[currentQuestion];
+      const container = document.getElementById('quiz-container');
+      
+      container.innerHTML = `
+        <div class="mb-6">
+          <span class="inline-block bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Soal ${currentQuestion + 1} dari ${quizQuestions.length}
+          </span>
+          <h4 class="text-lg md:text-xl font-semibold text-gray-800 leading-relaxed">${q.question}</h4>
+        </div>
+        <div class="space-y-3" id="options-container">
+          ${q.options.map((opt, idx) => `
+            <button 
+              onclick="selectAnswer(${idx})" 
+              class="quiz-option w-full text-left p-4 border-2 border-gray-200 rounded-xl hover:border-purple-400 transition-all ${userAnswers[currentQuestion] === idx ? 'selected' : ''}"
+              data-index="${idx}"
+              ${quizCompleted ? 'disabled' : ''}
+            >
+              <span class="inline-block w-8 h-8 bg-gray-100 rounded-full text-center leading-8 mr-3 font-semibold">${String.fromCharCode(65 + idx)}</span>
+              ${opt}
+            </button>
+          `).join('')}
+        </div>
+        ${quizCompleted ? `
+          <div class="mt-6 p-4 ${userAnswers[currentQuestion] === q.correct ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'} border rounded-xl">
+            <p class="font-semibold ${userAnswers[currentQuestion] === q.correct ? 'text-green-700' : 'text-red-700'} mb-2">
+              ${userAnswers[currentQuestion] === q.correct ? '✅ Benar!' : '❌ Kurang Tepat'}
+            </p>
+            <p class="text-gray-700 text-sm">${q.explanation}</p>
+          </div>
+        ` : ''}
+      `;
+
+      // Update progress
+      const answered = userAnswers.filter(a => a !== null).length;
+      document.getElementById('quiz-progress').textContent = `${answered}/${quizQuestions.length}`;
+      document.getElementById('progress-fill').style.width = `${(answered / quizQuestions.length) * 100}%`;
+
+      // Update buttons
+      document.getElementById('prev-btn').disabled = currentQuestion === 0;
+      
+      if (currentQuestion === quizQuestions.length - 1 && !quizCompleted) {
+        document.getElementById('next-btn').textContent = '✓ Selesai';
+      } else if (quizCompleted) {
+        document.getElementById('next-btn').textContent = currentQuestion === quizQuestions.length - 1 ? 'Lihat Hasil' : 'Selanjutnya →';
+      } else {
+        document.getElementById('next-btn').textContent = 'Selanjutnya →';
+      }
+
+      // Highlight correct/wrong after completion
+      if (quizCompleted) {
+        const options = document.querySelectorAll('.quiz-option');
+        options.forEach((opt, idx) => {
+          if (idx === q.correct) {
+            opt.classList.add('correct');
+          } else if (userAnswers[currentQuestion] === idx) {
+            opt.classList.add('wrong');
+          }
+        });
+      }
+    }
+
+    function selectAnswer(index) {
+      if (quizCompleted) return;
+      userAnswers[currentQuestion] = index;
+      renderQuestion();
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else if (!quizCompleted) {
+        // Check if all questions answered
+        const unanswered = userAnswers.findIndex(a => a === null);
+        if (unanswered !== -1) {
+          currentQuestion = unanswered;
+          renderQuestion();
+          return;
+        }
+        quizCompleted = true;
+        showResults();
+      } else {
+        showResults();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    function showResults() {
+      const score = userAnswers.reduce((acc, ans, idx) => {
+        return acc + (ans === quizQuestions[idx].correct ? 1 : 0);
+      }, 0);
+
+      document.getElementById('result-score').textContent = score;
+      document.getElementById('final-score').textContent = score;
+      document.getElementById('score-display').classList.remove('hidden');
+
+      let emoji, title, message, feedback;
+      
+      if (score >= 9) {
+        emoji = '🏆';
+        title = 'Luar Biasa!';
+        message = 'Kamu menguasai materi dengan sangat baik!';
+        feedback = 'Pemahaman konsepmu tentang sel sangat mendalam. Kamu siap untuk materi yang lebih kompleks!';
+      } else if (score >= 7) {
+        emoji = '🌟';
+        title = 'Hebat!';
+        message = 'Pemahaman yang sangat baik!';
+        feedback = 'Kamu sudah memahami sebagian besar materi. Pelajari kembali bagian yang masih keliru untuk hasil yang lebih baik.';
+      } else if (score >= 5) {
+        emoji = '👍';
+        title = 'Bagus!';
+        message = 'Terus tingkatkan pemahamanmu!';
+        feedback = 'Kamu sudah memiliki dasar yang baik. Fokus pada hubungan antara struktur dan fungsi organel.';
+      } else {
+        emoji = '💪';
+        title = 'Semangat!';
+        message = 'Mari pelajari materi lebih dalam lagi.';
+        feedback = 'Jangan menyerah! Baca kembali materi, terutama bagian tentang fungsi masing-masing organel dan perbedaan sel hewan dengan sel tumbuhan.';
+      }
+
+      document.getElementById('result-emoji').textContent = emoji;
+      document.getElementById('result-title').textContent = title;
+      document.getElementById('result-message').textContent = message;
+      document.getElementById('result-feedback').innerHTML = `<strong>💡 Saran:</strong> ${feedback}`;
+      document.getElementById('result-modal').classList.remove('hidden');
+      
+      renderQuestion();
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      userAnswers = new Array(quizQuestions.length).fill(null);
+      quizCompleted = false;
+      document.getElementById('result-modal').classList.add('hidden');
+      document.getElementById('score-display').classList.add('hidden');
+      renderQuestion();
+    }
+
+    // Initialize
+    renderQuestion();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce161bd5352da7d',t:'MTc3MTEyMjYxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,1388 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cahaya dan Alat Optik - Media Pembelajaran</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { font-family: 'Poppins', sans-serif; }
+    .font-serif { font-family: 'Merriweather', serif; }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #1a1a2e; }
+    ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 4px; }
+    
+    /* Animations */
+    @keyframes float { 
+      0%, 100% { transform: translateY(0px); } 
+      50% { transform: translateY(-10px); } 
+    }
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.6); }
+    }
+    @keyframes pulse-light {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    @keyframes wave {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
+    .float { animation: float 3s ease-in-out infinite; }
+    .glow { animation: glow 2s ease-in-out infinite; }
+    .pulse-light { animation: pulse-light 2s ease-in-out infinite; }
+    
+    .rainbow-bg {
+      background: linear-gradient(90deg, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #a855f7);
+      background-size: 200% 200%;
+      animation: rainbow 3s linear infinite;
+    }
+    
+    /* Light ray effect */
+    .light-ray {
+      background: linear-gradient(90deg, transparent, rgba(251,191,36,0.4), transparent);
+      animation: wave 2s linear infinite;
+    }
+    
+    /* Glass effect */
+    .glass {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    /* Card hover effects */
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    
+    /* Tab styling */
+    .tab-active {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+    }
+    
+    /* Quiz styling */
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    .quiz-option:hover:not(.selected):not(.correct):not(.wrong) {
+      background: rgba(79, 70, 229, 0.3);
+      border-color: #4f46e5;
+    }
+    .quiz-option.selected {
+      background: rgba(79, 70, 229, 0.5);
+      border-color: #4f46e5;
+    }
+    .quiz-option.correct {
+      background: rgba(34, 197, 94, 0.3);
+      border-color: #22c55e;
+    }
+    .quiz-option.wrong {
+      background: rgba(239, 68, 68, 0.3);
+      border-color: #ef4444;
+    }
+    
+    /* Interactive demos */
+    .prism {
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    }
+    
+    /* Eye diagram */
+    .eye-part {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .eye-part:hover {
+      filter: brightness(1.3);
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white overflow-auto">
+  <div id="app" class="w-full min-h-full"><!-- Header -->
+   <header class="relative overflow-hidden py-12 px-4">
+    <div class="absolute inset-0 overflow-hidden">
+     <div class="absolute top-10 left-10 w-32 h-32 bg-yellow-400 rounded-full blur-3xl opacity-20 float"></div>
+     <div class="absolute top-20 right-20 w-40 h-40 bg-purple-500 rounded-full blur-3xl opacity-20 float" style="animation-delay: 1s"></div>
+     <div class="absolute bottom-10 left-1/3 w-24 h-24 bg-blue-400 rounded-full blur-3xl opacity-20 float" style="animation-delay: 0.5s"></div>
+    </div>
+    <div class="max-w-6xl mx-auto text-center relative z-10"><!-- Sun illustration -->
+     <div class="w-24 h-24 mx-auto mb-6 relative">
+      <div class="absolute inset-0 bg-gradient-to-br from-yellow-300 to-orange-500 rounded-full glow"></div>
+      <div class="absolute inset-2 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full"></div><!-- Light rays -->
+      <div class="absolute -inset-4">
+       <div class="absolute top-0 left-1/2 w-1 h-8 bg-gradient-to-t from-yellow-400 to-transparent -translate-x-1/2 -translate-y-full"></div>
+       <div class="absolute bottom-0 left-1/2 w-1 h-8 bg-gradient-to-b from-yellow-400 to-transparent -translate-x-1/2 translate-y-full"></div>
+       <div class="absolute left-0 top-1/2 w-8 h-1 bg-gradient-to-l from-yellow-400 to-transparent -translate-y-1/2 -translate-x-full"></div>
+       <div class="absolute right-0 top-1/2 w-8 h-1 bg-gradient-to-r from-yellow-400 to-transparent -translate-y-1/2 translate-x-full"></div>
+      </div>
+     </div>
+     <h1 id="mainTitle" class="text-4xl md:text-6xl font-bold bg-gradient-to-r from-yellow-200 via-yellow-400 to-orange-400 bg-clip-text text-transparent mb-4">Cahaya dan Alat Optik</h1>
+     <p id="subtitle" class="text-xl md:text-2xl text-indigo-200 font-light">Media Pembelajaran Interaktif untuk Siswa</p><!-- Rainbow spectrum bar -->
+     <div class="mt-8 h-2 rounded-full rainbow-bg max-w-md mx-auto"></div>
+    </div>
+   </header><!-- Navigation Tabs -->
+   <nav class="sticky top-0 z-50 glass py-4 px-4">
+    <div class="max-w-6xl mx-auto">
+     <div class="flex flex-wrap justify-center gap-2"><button onclick="showSection('sifat')" class="tab-btn tab-active px-4 py-2 rounded-full text-sm font-medium transition-all" data-section="sifat"> 🌟 Sifat Cahaya </button> <button onclick="showSection('spektrum')" class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-slate-800 hover:bg-slate-700 transition-all" data-section="spektrum"> 🌈 Spektrum </button> <button onclick="showSection('mata')" class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-slate-800 hover:bg-slate-700 transition-all" data-section="mata"> 👁️ Mata Manusia </button> <button onclick="showSection('optik')" class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-slate-800 hover:bg-slate-700 transition-all" data-section="optik"> 🔭 Alat Optik </button> <button onclick="showSection('aktivitas')" class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-slate-800 hover:bg-slate-700 transition-all" data-section="aktivitas"> 🧪 Aktivitas </button> <button onclick="showSection('quiz')" class="tab-btn px-4 py-2 rounded-full text-sm font-medium bg-slate-800 hover:bg-slate-700 transition-all" data-section="quiz"> 📝 Kuis HOTS </button>
+     </div>
+    </div>
+   </nav><!-- Main Content -->
+   <main class="max-w-6xl mx-auto px-4 py-8"><!-- Section 1: Sifat-Sifat Cahaya -->
+    <section id="sifat" class="content-section">
+     <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-yellow-400 mb-4">1. Sifat-Sifat Cahaya</h2>
+      <p class="text-lg text-slate-300 max-w-3xl mx-auto">Cahaya memiliki karakteristik khusus yang memungkinkan kita berinteraksi dengan dunia visual. Mari pelajari sifat-sifat unik cahaya!</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-6"><!-- Merambat Lurus -->
+      <div class="glass rounded-2xl p-6 card-hover">
+       <div class="flex items-start gap-4">
+        <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center text-3xl flex-shrink-0">
+         ➡️
+        </div>
+        <div class="flex-1">
+         <h3 class="text-xl font-bold text-yellow-300 mb-2">Merambat Lurus</h3>
+         <p class="text-slate-300 text-sm mb-4">Cahaya selalu bergerak dalam garis lurus selama tidak ada penghalang. Ini menjelaskan mengapa kita bisa melihat cahaya bintang yang jaraknya jutaan tahun cahaya dari Bumi.</p>
+        </div>
+       </div><!-- Interactive Demo: Light travels straight -->
+       <div class="mt-4 bg-slate-900/50 rounded-xl p-4">
+        <p class="text-xs text-slate-400 mb-3">🔬 Demonstrasi Interaktif:</p>
+        <div class="relative h-24 overflow-hidden rounded-lg bg-slate-800"><!-- Light source -->
+         <div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 bg-yellow-400 rounded-full glow"></div><!-- Light ray -->
+         <div class="absolute left-12 top-1/2 -translate-y-1/2 w-full h-1 overflow-hidden">
+          <div class="h-full light-ray"></div>
+         </div><!-- Screens with holes -->
+         <div class="absolute left-1/3 top-0 bottom-0 w-2 bg-slate-600 flex flex-col justify-center">
+          <div class="w-2 h-4 bg-slate-800"></div>
+         </div>
+         <div class="absolute left-2/3 top-0 bottom-0 w-2 bg-slate-600 flex flex-col justify-center">
+          <div class="w-2 h-4 bg-slate-800"></div>
+         </div><!-- Eye -->
+         <div class="absolute right-4 top-1/2 -translate-y-1/2 text-2xl">
+          👁️
+         </div>
+        </div>
+        <p class="text-xs text-center text-slate-400 mt-2">Cahaya melewati lubang-lubang yang sejajar karena merambat lurus</p>
+       </div>
+       <div class="mt-4 p-3 bg-indigo-900/30 rounded-lg">
+        <p class="text-xs text-indigo-300"><span class="font-bold">💡 Contoh:</span> Percobaan kertas berlubang yang disejajarkan - cahaya hanya bisa melewati jika lubang-lubangnya segaris.</p>
+       </div>
+      </div><!-- Dapat Dipantulkan -->
+      <div class="glass rounded-2xl p-6 card-hover">
+       <div class="flex items-start gap-4">
+        <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-xl flex items-center justify-center text-3xl flex-shrink-0">
+         🪞
+        </div>
+        <div class="flex-1">
+         <h3 class="text-xl font-bold text-cyan-300 mb-2">Dapat Dipantulkan (Refleksi)</h3>
+         <p class="text-slate-300 text-sm mb-4">Cahaya akan memantul jika menumbuk suatu permukaan. Jenis pemantulan tergantung pada karakteristik permukaan.</p>
+        </div>
+       </div><!-- Reflection types comparison -->
+       <div class="mt-4 grid grid-cols-2 gap-4">
+        <div class="bg-slate-900/50 rounded-xl p-4">
+         <h4 class="text-sm font-bold text-green-400 mb-2">Pemantulan Teratur</h4>
+         <div class="relative h-20 bg-slate-800 rounded-lg overflow-hidden"><!-- Mirror surface -->
+          <div class="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-cyan-400 to-blue-500"></div><!-- Incident rays (parallel) -->
+          <svg class="absolute inset-0 w-full h-full"><line x1="20" y1="5" x2="40" y2="60" stroke="#fbbf24" stroke-width="2" /> <line x1="50" y1="5" x2="70" y2="60" stroke="#fbbf24" stroke-width="2" /> <line x1="80" y1="5" x2="100" y2="60" stroke="#fbbf24" stroke-width="2" /> <!-- Reflected rays (parallel) --> <line x1="40" y1="60" x2="60" y2="5" stroke="#22c55e" stroke-width="2" /> <line x1="70" y1="60" x2="90" y2="5" stroke="#22c55e" stroke-width="2" /> <line x1="100" y1="60" x2="120" y2="5" stroke="#22c55e" stroke-width="2" />
+          </svg>
+         </div>
+         <p class="text-xs text-slate-400 mt-2">Pada permukaan rata (cermin)</p>
+        </div>
+        <div class="bg-slate-900/50 rounded-xl p-4">
+         <h4 class="text-sm font-bold text-orange-400 mb-2">Pemantulan Baur</h4>
+         <div class="relative h-20 bg-slate-800 rounded-lg overflow-hidden"><!-- Rough surface -->
+          <svg class="absolute bottom-0 left-0 right-0 h-3" viewbox="0 0 150 12"><path d="M0,6 L10,2 L20,8 L30,4 L40,10 L50,3 L60,7 L70,5 L80,9 L90,4 L100,8 L110,3 L120,7 L130,5 L140,9 L150,6" fill="none" stroke="#f97316" stroke-width="2" />
+          </svg><!-- Incident rays (parallel) -->
+          <svg class="absolute inset-0 w-full h-full"><line x1="20" y1="5" x2="40" y2="55" stroke="#fbbf24" stroke-width="2" /> <line x1="50" y1="5" x2="70" y2="55" stroke="#fbbf24" stroke-width="2" /> <line x1="80" y1="5" x2="100" y2="55" stroke="#fbbf24" stroke-width="2" /> <!-- Reflected rays (scattered) --> <line x1="40" y1="55" x2="30" y2="5" stroke="#f97316" stroke-width="2" /> <line x1="70" y1="55" x2="95" y2="5" stroke="#f97316" stroke-width="2" /> <line x1="100" y1="55" x2="85" y2="5" stroke="#f97316" stroke-width="2" />
+          </svg>
+         </div>
+         <p class="text-xs text-slate-400 mt-2">Pada permukaan kasar (kertas)</p>
+        </div>
+       </div>
+       <div class="mt-4 p-3 bg-cyan-900/30 rounded-lg">
+        <p class="text-xs text-cyan-300"><span class="font-bold">⚖️ Hukum Pemantulan:</span> Sudut datang (i) selalu sama dengan sudut pantul (r)</p>
+       </div>
+      </div><!-- Dapat Dibiaskan -->
+      <div class="glass rounded-2xl p-6 card-hover">
+       <div class="flex items-start gap-4">
+        <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center text-3xl flex-shrink-0">
+         💎
+        </div>
+        <div class="flex-1">
+         <h3 class="text-xl font-bold text-purple-300 mb-2">Dapat Dibiaskan (Refraksi)</h3>
+         <p class="text-slate-300 text-sm mb-4">Cahaya dapat dibelokkan saat melewati dua medium dengan kerapatan optik (indeks bias) berbeda.</p>
+        </div>
+       </div><!-- Interactive Refraction Demo -->
+       <div class="mt-4 bg-slate-900/50 rounded-xl p-4">
+        <p class="text-xs text-slate-400 mb-3">🔬 Fenomena Pensil Patah:</p>
+        <div class="relative h-32 bg-gradient-to-b from-slate-800 to-blue-900/50 rounded-lg overflow-hidden"><!-- Glass -->
+         <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-24 border-2 border-cyan-400/50 rounded-b-lg bg-cyan-500/10"></div><!-- Water level -->
+         <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-16 bg-blue-400/30 rounded-b-lg"></div><!-- Pencil - above water -->
+         <div class="absolute top-4 left-1/2 -translate-x-1/2 w-2 h-12 bg-gradient-to-b from-yellow-600 to-orange-500 rounded-t origin-bottom" style="transform: translateX(-50%) rotate(-5deg)"></div><!-- Pencil - in water (shifted) -->
+         <div class="absolute bottom-4 left-1/2 w-2 h-10 bg-gradient-to-b from-orange-500 to-pink-500 rounded-b origin-top" style="transform: translateX(-30%) rotate(5deg)"></div><!-- Water surface line -->
+         <div class="absolute bottom-16 left-1/2 -translate-x-1/2 w-16 h-0.5 bg-cyan-400/50"></div>
+        </div>
+        <p class="text-xs text-center text-slate-400 mt-2">Pensil terlihat "patah" karena pembiasan cahaya di air</p>
+       </div>
+       <div class="mt-4 p-3 bg-purple-900/30 rounded-lg">
+        <p class="text-xs text-purple-300"><span class="font-bold">🔬 Fakta:</span> Kecepatan cahaya menurun dari 300.000 km/s (vakum) menjadi ~225.000 km/s (air) dan ~200.000 km/s (kaca)</p>
+       </div>
+      </div><!-- Gelombang Elektromagnetik -->
+      <div class="glass rounded-2xl p-6 card-hover">
+       <div class="flex items-start gap-4">
+        <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center text-3xl flex-shrink-0">
+         📡
+        </div>
+        <div class="flex-1">
+         <h3 class="text-xl font-bold text-green-300 mb-2">Gelombang Elektromagnetik</h3>
+         <p class="text-slate-300 text-sm mb-4">Cahaya tidak memerlukan medium untuk merambat. Inilah mengapa cahaya bintang dapat menembus ruang hampa udara untuk sampai ke Bumi.</p>
+        </div>
+       </div><!-- EM Wave illustration -->
+       <div class="mt-4 bg-slate-900/50 rounded-xl p-4">
+        <div class="relative h-20 overflow-hidden">
+         <svg class="w-full h-full" viewbox="0 0 200 60"><!-- Electric field (vertical) --> <path d="M0,30 Q10,10 20,30 Q30,50 40,30 Q50,10 60,30 Q70,50 80,30 Q90,10 100,30 Q110,50 120,30 Q130,10 140,30 Q150,50 160,30 Q170,10 180,30 Q190,50 200,30" fill="none" stroke="#fbbf24" stroke-width="2">
+           <animate attributename="d" dur="1s" repeatcount="indefinite" values="M0,30 Q10,10 20,30 Q30,50 40,30 Q50,10 60,30 Q70,50 80,30 Q90,10 100,30 Q110,50 120,30 Q130,10 140,30 Q150,50 160,30 Q170,10 180,30 Q190,50 200,30;
+                              M0,30 Q10,50 20,30 Q30,10 40,30 Q50,50 60,30 Q70,10 80,30 Q90,50 100,30 Q110,10 120,30 Q130,50 140,30 Q150,10 160,30 Q170,50 180,30 Q190,10 200,30;
+                              M0,30 Q10,10 20,30 Q30,50 40,30 Q50,10 60,30 Q70,50 80,30 Q90,10 100,30 Q110,50 120,30 Q130,10 140,30 Q150,50 160,30 Q170,10 180,30 Q190,50 200,30" />
+          </path> <!-- Propagation arrow --> <line x1="0" y1="55" x2="180" y2="55" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow)" /> <defs>
+           <marker id="arrow" markerwidth="10" markerheight="10" refx="9" refy="3" orient="auto">
+            <path d="M0,0 L0,6 L9,3 z" fill="#22c55e" />
+           </marker>
+          </defs>
+         </svg>
+        </div>
+        <div class="flex justify-between text-xs mt-2"><span class="text-yellow-400">⚡ Medan Listrik</span> <span class="text-green-400">➡️ Arah Rambat</span>
+        </div>
+       </div>
+       <div class="mt-4 p-3 bg-green-900/30 rounded-lg">
+        <p class="text-xs text-green-300"><span class="font-bold">🌌 Contoh:</span> Cahaya matahari menempuh 150 juta km melalui ruang hampa dalam waktu ~8 menit!</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 2: Spektrum Cahaya -->
+    <section id="spektrum" class="content-section hidden">
+     <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-yellow-400 mb-4">2. Cahaya Tampak dan Spektrum</h2>
+      <p class="text-lg text-slate-300 max-w-3xl mx-auto">Tidak semua gelombang elektromagnetik dapat dilihat oleh manusia. Mata kita hanya sensitif terhadap spektrum tertentu.</p>
+     </div><!-- Electromagnetic Spectrum -->
+     <div class="glass rounded-2xl p-6 mb-8">
+      <h3 class="text-xl font-bold text-center mb-6">Spektrum Gelombang Elektromagnetik</h3>
+      <div class="relative"><!-- Full EM spectrum bar -->
+       <div class="flex h-16 rounded-xl overflow-hidden mb-4">
+        <div class="flex-1 bg-gradient-to-r from-purple-900 to-purple-700 flex items-center justify-center"><span class="text-xs font-bold text-center px-1">Sinar Gamma</span>
+        </div>
+        <div class="flex-1 bg-gradient-to-r from-purple-700 to-indigo-600 flex items-center justify-center"><span class="text-xs font-bold text-center px-1">Sinar X</span>
+        </div>
+        <div class="flex-1 bg-gradient-to-r from-indigo-600 to-violet-500 flex items-center justify-center"><span class="text-xs font-bold text-center px-1">UV</span>
+        </div>
+        <div class="flex-[2] rainbow-bg flex items-center justify-center border-2 border-white"><span class="text-xs font-bold text-center px-1 bg-black/50 rounded px-2">CAHAYA TAMPAK</span>
+        </div>
+        <div class="flex-1 bg-gradient-to-r from-red-600 to-red-800 flex items-center justify-center"><span class="text-xs font-bold text-center px-1">Inframerah</span>
+        </div>
+        <div class="flex-1 bg-gradient-to-r from-red-800 to-red-900 flex items-center justify-center"><span class="text-xs font-bold text-center px-1">Mikro</span>
+        </div>
+        <div class="flex-1 bg-gradient-to-r from-red-900 to-slate-800 flex items-center justify-center"><span class="text-xs font-bold text-center px-1">Radio</span>
+        </div>
+       </div><!-- Wavelength scale -->
+       <div class="flex justify-between text-xs text-slate-400 mb-2"><span>10⁻¹² m</span> <span>10⁻⁹ m</span> <span>10⁻⁷ m</span> <span>380-700 nm</span> <span>10⁻⁵ m</span> <span>10⁻² m</span> <span>10³ m</span>
+       </div>
+       <p class="text-center text-sm text-slate-400">← Panjang Gelombang Pendek | Panjang Gelombang Panjang →</p>
+      </div>
+     </div><!-- Visible Light Spectrum Detail -->
+     <div class="glass rounded-2xl p-6 mb-8">
+      <h3 class="text-xl font-bold text-center mb-6">Spektrum Cahaya Tampak (MEJIKUHIBINIU)</h3>
+      <div class="grid grid-cols-7 gap-2 mb-6">
+       <div class="text-center">
+        <div class="h-24 bg-gradient-to-b from-red-400 to-red-600 rounded-xl mb-2 flex items-end justify-center pb-2"><span class="text-xs font-bold text-white drop-shadow">M</span>
+        </div>
+        <p class="text-xs font-bold text-red-400">Merah</p>
+        <p class="text-xs text-slate-400">700 nm</p>
+       </div>
+       <div class="text-center">
+        <div class="h-24 bg-gradient-to-b from-orange-400 to-orange-600 rounded-xl mb-2 flex items-end justify-center pb-2"><span class="text-xs font-bold text-white drop-shadow">J</span>
+        </div>
+        <p class="text-xs font-bold text-orange-400">Jingga</p>
+        <p class="text-xs text-slate-400">620 nm</p>
+       </div>
+       <div class="text-center">
+        <div class="h-24 bg-gradient-to-b from-yellow-400 to-yellow-500 rounded-xl mb-2 flex items-end justify-center pb-2"><span class="text-xs font-bold text-slate-800 drop-shadow">K</span>
+        </div>
+        <p class="text-xs font-bold text-yellow-400">Kuning</p>
+        <p class="text-xs text-slate-400">580 nm</p>
+       </div>
+       <div class="text-center">
+        <div class="h-24 bg-gradient-to-b from-green-400 to-green-600 rounded-xl mb-2 flex items-end justify-center pb-2"><span class="text-xs font-bold text-white drop-shadow">H</span>
+        </div>
+        <p class="text-xs font-bold text-green-400">Hijau</p>
+        <p class="text-xs text-slate-400">530 nm</p>
+       </div>
+       <div class="text-center">
+        <div class="h-24 bg-gradient-to-b from-cyan-400 to-cyan-600 rounded-xl mb-2 flex items-end justify-center pb-2"><span class="text-xs font-bold text-white drop-shadow">B</span>
+        </div>
+        <p class="text-xs font-bold text-cyan-400">Biru</p>
+        <p class="text-xs text-slate-400">470 nm</p>
+       </div>
+       <div class="text-center">
+        <div class="h-24 bg-gradient-to-b from-indigo-400 to-indigo-600 rounded-xl mb-2 flex items-end justify-center pb-2"><span class="text-xs font-bold text-white drop-shadow">N</span>
+        </div>
+        <p class="text-xs font-bold text-indigo-400">Nila</p>
+        <p class="text-xs text-slate-400">420 nm</p>
+       </div>
+       <div class="text-center">
+        <div class="h-24 bg-gradient-to-b from-violet-400 to-violet-600 rounded-xl mb-2 flex items-end justify-center pb-2"><span class="text-xs font-bold text-white drop-shadow">U</span>
+        </div>
+        <p class="text-xs font-bold text-violet-400">Ungu</p>
+        <p class="text-xs text-slate-400">380 nm</p>
+       </div>
+      </div>
+      <div class="text-center text-sm text-slate-400">
+       <p>← Energi Rendah | Energi Tinggi →</p>
+       <p class="mt-1">← Panjang Gelombang Panjang | Panjang Gelombang Pendek →</p>
+      </div>
+     </div><!-- How We See Colors -->
+     <div class="glass rounded-2xl p-6">
+      <h3 class="text-xl font-bold text-center mb-6">🎨 Mengapa Benda Terlihat Berwarna?</h3>
+      <div class="grid md:grid-cols-2 gap-6">
+       <div class="bg-slate-900/50 rounded-xl p-6">
+        <h4 class="font-bold text-green-400 mb-4">Contoh: Daun Terlihat Hijau</h4><!-- Visual demonstration -->
+        <div class="relative h-48 bg-slate-800 rounded-xl overflow-hidden mb-4"><!-- Sun -->
+         <div class="absolute top-4 left-4 w-12 h-12 bg-yellow-400 rounded-full glow"></div><!-- White light rays -->
+         <svg class="absolute top-8 left-14 w-32 h-20"><line x1="0" y1="0" x2="80" y2="60" stroke="#ef4444" stroke-width="2" opacity="0.7" /> <line x1="0" y1="0" x2="82" y2="58" stroke="#f97316" stroke-width="2" opacity="0.7" /> <line x1="0" y1="0" x2="84" y2="56" stroke="#eab308" stroke-width="2" opacity="0.7" /> <line x1="0" y1="0" x2="86" y2="54" stroke="#22c55e" stroke-width="2" /> <line x1="0" y1="0" x2="88" y2="52" stroke="#3b82f6" stroke-width="2" opacity="0.7" /> <line x1="0" y1="0" x2="90" y2="50" stroke="#8b5cf6" stroke-width="2" opacity="0.7" />
+         </svg><!-- Leaf -->
+         <div class="absolute bottom-8 left-1/2 -translate-x-1/2">
+          <svg width="80" height="60" viewbox="0 0 80 60"><ellipse cx="40" cy="30" rx="35" ry="25" fill="#22c55e" /> <line x1="40" y1="5" x2="40" y2="55" stroke="#15803d" stroke-width="2" /> <line x1="15" y1="20" x2="40" y2="30" stroke="#15803d" stroke-width="1" /> <line x1="15" y1="40" x2="40" y2="30" stroke="#15803d" stroke-width="1" /> <line x1="65" y1="20" x2="40" y2="30" stroke="#15803d" stroke-width="1" /> <line x1="65" y1="40" x2="40" y2="30" stroke="#15803d" stroke-width="1" />
+          </svg>
+         </div><!-- Reflected green light to eye -->
+         <svg class="absolute bottom-20 right-8 w-24 h-16"><line x1="0" y1="40" x2="60" y2="0" stroke="#22c55e" stroke-width="3" />
+         </svg><!-- Eye -->
+         <div class="absolute top-8 right-4 text-3xl">
+          👁️
+         </div><!-- Absorbed colors (X marks) -->
+         <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1"><span class="text-xs text-red-400 line-through">M</span> <span class="text-xs text-orange-400 line-through">J</span> <span class="text-xs text-yellow-400 line-through">K</span> <span class="text-xs text-green-400 font-bold">H✓</span> <span class="text-xs text-blue-400 line-through">B</span> <span class="text-xs text-violet-400 line-through">U</span>
+         </div>
+        </div>
+        <p class="text-sm text-slate-300">Daun <span class="text-green-400 font-bold">menyerap</span> semua warna kecuali hijau, dan <span class="text-green-400 font-bold">memantulkan</span> cahaya hijau ke mata kita.</p>
+       </div>
+       <div class="space-y-4">
+        <div class="bg-red-900/30 rounded-xl p-4 border border-red-500/30">
+         <h5 class="font-bold text-red-400 mb-2">🍎 Apel Merah</h5>
+         <p class="text-sm text-slate-300">Menyerap: JKHBNU | Memantulkan: <span class="text-red-400 font-bold">Merah</span></p>
+        </div>
+        <div class="bg-yellow-900/30 rounded-xl p-4 border border-yellow-500/30">
+         <h5 class="font-bold text-yellow-400 mb-2">🍌 Pisang Kuning</h5>
+         <p class="text-sm text-slate-300">Menyerap: MHBNU | Memantulkan: <span class="text-yellow-400 font-bold">Kuning</span></p>
+        </div>
+        <div class="bg-slate-700/50 rounded-xl p-4 border border-slate-500/30">
+         <h5 class="font-bold text-slate-300 mb-2">⬛ Benda Hitam</h5>
+         <p class="text-sm text-slate-300">Menyerap: <span class="font-bold">SEMUA warna</span> | Memantulkan: Tidak ada</p>
+        </div>
+        <div class="bg-white/10 rounded-xl p-4 border border-white/30">
+         <h5 class="font-bold text-white mb-2">⬜ Benda Putih</h5>
+         <p class="text-sm text-slate-300">Menyerap: Tidak ada | Memantulkan: <span class="font-bold">SEMUA warna</span></p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 3: Mata Manusia -->
+    <section id="mata" class="content-section hidden">
+     <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-yellow-400 mb-4">3. Indera Penglihatan: Mata Manusia</h2>
+      <p class="text-lg text-slate-300 max-w-3xl mx-auto">Mata bekerja dengan menangkap pantulan cahaya dari benda-benda di sekitar. Mari pelajari bagian-bagian mata dan fungsinya!</p>
+     </div><!-- Interactive Eye Diagram -->
+     <div class="glass rounded-2xl p-6 mb-8">
+      <h3 class="text-xl font-bold text-center mb-6">🔬 Anatomi Mata Manusia (Klik untuk Info)</h3>
+      <div class="flex flex-col lg:flex-row gap-8 items-center"><!-- Eye SVG Diagram -->
+       <div class="flex-1 relative">
+        <svg viewbox="0 0 400 300" class="w-full max-w-lg mx-auto"><!-- Eyeball outline --> <ellipse cx="200" cy="150" rx="150" ry="120" fill="#f8f8f8" stroke="#333" stroke-width="2" /> <!-- Sclera (white) --> <ellipse cx="200" cy="150" rx="145" ry="115" fill="#fff" /> <!-- Choroid (blood vessel layer) --> <ellipse cx="200" cy="150" rx="140" ry="110" fill="#8B0000" opacity="0.3" /> <!-- Retina --> <path d="M60,150 Q60,60 200,50 Q340,60 340,150 Q340,240 200,250 Q60,240 60,150" fill="none" stroke="#FFD700" stroke-width="8" class="eye-part" data-part="retina" onclick="showEyeInfo('retina')" /> <!-- Vitreous humor --> <ellipse cx="220" cy="150" rx="100" ry="90" fill="#E0FFFF" opacity="0.3" /> <!-- Lens --> <ellipse cx="100" cy="150" rx="25" ry="45" fill="#87CEEB" stroke="#4169E1" stroke-width="2" class="eye-part" data-part="lensa" onclick="showEyeInfo('lensa')" /> <!-- Iris --> <circle cx="60" cy="150" r="35" fill="#8B4513" stroke="#654321" stroke-width="2" class="eye-part" data-part="iris" onclick="showEyeInfo('iris')" /> <!-- Pupil --> <circle cx="60" cy="150" r="15" fill="#000" class="eye-part" data-part="pupil" onclick="showEyeInfo('pupil')" /> <!-- Cornea --> <path d="M30,150 Q30,100 60,90 Q90,100 90,150 Q90,200 60,210 Q30,200 30,150" fill="none" stroke="#00CED1" stroke-width="4" class="eye-part" data-part="kornea" onclick="showEyeInfo('kornea')" /> <!-- Optic nerve --> <ellipse cx="350" cy="150" rx="20" ry="30" fill="#FFA500" stroke="#FF8C00" stroke-width="2" class="eye-part" data-part="saraf" onclick="showEyeInfo('saraf')" /> <rect x="350" y="135" width="50" height="30" fill="#FFA500" /> <!-- Ciliary muscle --> <ellipse cx="120" cy="100" rx="15" ry="8" fill="#FF6B6B" class="eye-part" data-part="siliaris" onclick="showEyeInfo('siliaris')" /> <ellipse cx="120" cy="200" rx="15" ry="8" fill="#FF6B6B" class="eye-part" data-part="siliaris" onclick="showEyeInfo('siliaris')" /> <!-- Light rays entering --> <line x1="0" y1="100" x2="60" y2="150" stroke="#FFD700" stroke-width="2" stroke-dasharray="5,3" /> <line x1="0" y1="150" x2="60" y2="150" stroke="#FFD700" stroke-width="2" stroke-dasharray="5,3" /> <line x1="0" y1="200" x2="60" y2="150" stroke="#FFD700" stroke-width="2" stroke-dasharray="5,3" /> <!-- Labels --> <text x="60" y="50" text-anchor="middle" fill="#00CED1" font-size="12" font-weight="bold">
+          Kornea
+         </text> <text x="60" y="250" text-anchor="middle" fill="#8B4513" font-size="12" font-weight="bold">
+          Iris &amp; Pupil
+         </text> <text x="100" y="80" text-anchor="middle" fill="#4169E1" font-size="12" font-weight="bold">
+          Lensa
+         </text> <text x="120" y="230" text-anchor="middle" fill="#FF6B6B" font-size="12" font-weight="bold">
+          Otot Siliaris
+         </text> <text x="280" y="50" text-anchor="middle" fill="#FFD700" font-size="12" font-weight="bold">
+          Retina
+         </text> <text x="380" y="180" text-anchor="middle" fill="#FF8C00" font-size="12" font-weight="bold">
+          Saraf Optik
+         </text>
+        </svg>
+       </div><!-- Info Panel -->
+       <div class="flex-1 max-w-md">
+        <div id="eyeInfo" class="bg-slate-800 rounded-xl p-6 min-h-64">
+         <h4 class="text-xl font-bold text-yellow-400 mb-4" id="eyePartTitle">👆 Klik Bagian Mata</h4>
+         <p class="text-slate-300" id="eyePartDesc">Klik pada bagian-bagian mata di diagram untuk mempelajari fungsinya!</p>
+         <div class="mt-4 p-3 bg-slate-700/50 rounded-lg hidden" id="eyePartFact">
+          <p class="text-sm text-cyan-300" id="eyePartFactText"></p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Eye Parts Cards -->
+     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="glass rounded-xl p-4 card-hover">
+       <div class="w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center mb-3"><span class="text-2xl">🔵</span>
+       </div>
+       <h4 class="font-bold text-cyan-400">Kornea</h4>
+       <p class="text-sm text-slate-300 mt-2">Lapisan terluar bening yang membantu memfokuskan cahaya pertama kali.</p>
+      </div>
+      <div class="glass rounded-xl p-4 card-hover">
+       <div class="w-12 h-12 bg-amber-500/20 rounded-lg flex items-center justify-center mb-3"><span class="text-2xl">🟤</span>
+       </div>
+       <h4 class="font-bold text-amber-400">Iris &amp; Pupil</h4>
+       <p class="text-sm text-slate-300 mt-2">Iris (berwarna) mengatur pupil (hitam) untuk mengontrol jumlah cahaya masuk.</p>
+      </div>
+      <div class="glass rounded-xl p-4 card-hover">
+       <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-3"><span class="text-2xl">💎</span>
+       </div>
+       <h4 class="font-bold text-blue-400">Lensa Mata</h4>
+       <p class="text-sm text-slate-300 mt-2">Bersifat fleksibel, kecembungannya diatur otot siliaris untuk fokus.</p>
+      </div>
+      <div class="glass rounded-xl p-4 card-hover">
+       <div class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center mb-3"><span class="text-2xl">📷</span>
+       </div>
+       <h4 class="font-bold text-yellow-400">Retina</h4>
+       <p class="text-sm text-slate-300 mt-2">Fotoreseptor: sel kerucut (warna) dan sel batang (gelap).</p>
+      </div>
+     </div><!-- How Vision Works -->
+     <div class="glass rounded-2xl p-6 mt-8">
+      <h3 class="text-xl font-bold text-center mb-6">🎬 Proses Penglihatan</h3>
+      <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+       <div class="text-center p-4">
+        <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-2 glow"><span class="text-2xl">☀️</span>
+        </div>
+        <p class="text-sm font-bold">1. Cahaya</p>
+        <p class="text-xs text-slate-400">dari sumber</p>
+       </div>
+       <div class="text-2xl text-yellow-400">
+        →
+       </div>
+       <div class="text-center p-4">
+        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-2"><span class="text-2xl">🌳</span>
+        </div>
+        <p class="text-sm font-bold">2. Benda</p>
+        <p class="text-xs text-slate-400">memantulkan</p>
+       </div>
+       <div class="text-2xl text-yellow-400">
+        →
+       </div>
+       <div class="text-center p-4">
+        <div class="w-16 h-16 bg-cyan-500 rounded-full flex items-center justify-center mx-auto mb-2"><span class="text-2xl">👁️</span>
+        </div>
+        <p class="text-sm font-bold">3. Mata</p>
+        <p class="text-xs text-slate-400">menangkap</p>
+       </div>
+       <div class="text-2xl text-yellow-400">
+        →
+       </div>
+       <div class="text-center p-4">
+        <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-2"><span class="text-2xl">🧠</span>
+        </div>
+        <p class="text-sm font-bold">4. Otak</p>
+        <p class="text-xs text-slate-400">memproses</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 4: Alat Optik -->
+    <section id="optik" class="content-section hidden">
+     <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-yellow-400 mb-4">4. Alat Optik (Teknologi Penglihatan)</h2>
+      <p class="text-lg text-slate-300 max-w-3xl mx-auto">Manusia menciptakan alat optik untuk mengatasi keterbatasan mata dalam melihat benda yang sangat jauh atau merekam momen.</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8"><!-- Teleskop -->
+      <div class="glass rounded-2xl p-6 card-hover">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center text-4xl">
+         🔭
+        </div>
+        <div>
+         <h3 class="text-2xl font-bold text-indigo-400">Teleskop</h3>
+         <p class="text-slate-400">Melihat benda jauh</p>
+        </div>
+       </div><!-- Telescope Diagram -->
+       <div class="bg-slate-900/50 rounded-xl p-4 mb-4">
+        <div class="relative h-32"><!-- Star -->
+         <div class="absolute left-4 top-1/2 -translate-y-1/2 text-2xl pulse-light">
+          ⭐
+         </div><!-- Light rays from star -->
+         <svg class="absolute left-12 top-0 w-full h-full"><line x1="0" y1="40" x2="60" y2="50" stroke="#fbbf24" stroke-width="1.5" /> <line x1="0" y1="64" x2="60" y2="60" stroke="#fbbf24" stroke-width="1.5" /> <line x1="0" y1="88" x2="60" y2="70" stroke="#fbbf24" stroke-width="1.5" />
+         </svg><!-- Objective lens -->
+         <div class="absolute left-20 top-1/2 -translate-y-1/2 w-4 h-20 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full opacity-70"></div>
+         <p class="absolute left-16 bottom-0 text-xs text-cyan-400">Objektif</p><!-- Telescope tube -->
+         <div class="absolute left-24 top-1/2 -translate-y-1/2 w-32 h-8 bg-slate-700 rounded"></div><!-- Focal point -->
+         <svg class="absolute left-24 top-0 w-32 h-full"><line x1="0" y1="50" x2="100" y2="64" stroke="#22c55e" stroke-width="1.5" /> <line x1="0" y1="60" x2="100" y2="64" stroke="#22c55e" stroke-width="1.5" /> <line x1="0" y1="70" x2="100" y2="64" stroke="#22c55e" stroke-width="1.5" />
+         </svg><!-- Eyepiece lens -->
+         <div class="absolute right-20 top-1/2 -translate-y-1/2 w-3 h-12 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full opacity-70"></div>
+         <p class="absolute right-16 bottom-0 text-xs text-green-400">Okuler</p><!-- Eye -->
+         <div class="absolute right-4 top-1/2 -translate-y-1/2 text-2xl">
+          👁️
+         </div>
+        </div>
+       </div>
+       <div class="space-y-3">
+        <div class="flex items-start gap-3 p-3 bg-indigo-900/30 rounded-lg"><span class="text-lg">🔵</span>
+         <div>
+          <p class="font-bold text-indigo-300 text-sm">Lensa Objektif</p>
+          <p class="text-xs text-slate-400">Mengumpulkan cahaya dari objek jauh</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-3 p-3 bg-green-900/30 rounded-lg"><span class="text-lg">🟢</span>
+         <div>
+          <p class="font-bold text-green-300 text-sm">Lensa Okuler</p>
+          <p class="text-xs text-slate-400">Memperbesar bayangan untuk mata</p>
+         </div>
+        </div>
+       </div>
+       <div class="mt-4 p-4 bg-purple-900/30 rounded-xl border border-purple-500/30">
+        <p class="text-sm text-purple-300"><span class="font-bold">🛸 Contoh:</span> Teleskop Hubble NASA mengorbit di luar angkasa untuk melihat galaksi Andromeda yang berjarak 2,5 juta tahun cahaya!</p>
+       </div>
+      </div><!-- Kamera -->
+      <div class="glass rounded-2xl p-6 card-hover">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-20 h-20 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl flex items-center justify-center text-4xl">
+         📷
+        </div>
+        <div>
+         <h3 class="text-2xl font-bold text-rose-400">Kamera</h3>
+         <p class="text-slate-400">Merekam momen</p>
+        </div>
+       </div><!-- Camera vs Eye Comparison -->
+       <div class="bg-slate-900/50 rounded-xl p-4 mb-4">
+        <h4 class="text-sm font-bold text-center mb-4 text-yellow-400">Perbandingan Kamera &amp; Mata</h4>
+        <div class="grid grid-cols-3 gap-2 text-center text-xs">
+         <div class="font-bold text-rose-400">
+          Kamera
+         </div>
+         <div class="font-bold text-slate-400">
+          Bagian
+         </div>
+         <div class="font-bold text-cyan-400">
+          Mata
+         </div>
+         <div class="bg-rose-900/30 rounded p-2">
+          Lensa Kamera
+         </div>
+         <div class="bg-slate-700/50 rounded p-2">
+          🔍 Pemfokus
+         </div>
+         <div class="bg-cyan-900/30 rounded p-2">
+          Lensa Mata
+         </div>
+         <div class="bg-rose-900/30 rounded p-2">
+          Aperture
+         </div>
+         <div class="bg-slate-700/50 rounded p-2">
+          ⭕ Pengatur Cahaya
+         </div>
+         <div class="bg-cyan-900/30 rounded p-2">
+          Pupil
+         </div>
+         <div class="bg-rose-900/30 rounded p-2">
+          Sensor/Film
+         </div>
+         <div class="bg-slate-700/50 rounded p-2">
+          📷 Penangkap
+         </div>
+         <div class="bg-cyan-900/30 rounded p-2">
+          Retina
+         </div>
+         <div class="bg-rose-900/30 rounded p-2">
+          Memori Card
+         </div>
+         <div class="bg-slate-700/50 rounded p-2">
+          💾 Penyimpan
+         </div>
+         <div class="bg-cyan-900/30 rounded p-2">
+          Otak
+         </div>
+        </div>
+       </div><!-- Camera Diagram -->
+       <div class="relative h-40 bg-slate-800 rounded-xl overflow-hidden"><!-- Object -->
+        <div class="absolute left-4 top-1/2 -translate-y-1/2">
+         <div class="text-3xl">
+          🌸
+         </div>
+        </div><!-- Light rays -->
+        <svg class="absolute left-12 top-0 w-full h-full"><line x1="20" y1="60" x2="80" y2="80" stroke="#fbbf24" stroke-width="1.5" /> <line x1="20" y1="80" x2="80" y2="80" stroke="#fbbf24" stroke-width="1.5" /> <line x1="20" y1="100" x2="80" y2="80" stroke="#fbbf24" stroke-width="1.5" />
+        </svg><!-- Camera body -->
+        <div class="absolute right-8 top-1/2 -translate-y-1/2 w-32 h-24 bg-slate-600 rounded-lg border-2 border-slate-500"><!-- Lens -->
+         <div class="absolute -left-4 top-1/2 -translate-y-1/2 w-8 h-16 bg-gradient-to-r from-slate-700 to-slate-600 rounded-full border-2 border-slate-400">
+          <div class="absolute inset-2 bg-blue-400/30 rounded-full"></div>
+         </div><!-- Sensor -->
+         <div class="absolute right-2 top-1/2 -translate-y-1/2 w-16 h-12 bg-gradient-to-br from-green-500/30 to-blue-500/30 rounded border border-slate-400"><!-- Inverted image -->
+          <div class="w-full h-full flex items-center justify-center transform rotate-180 text-lg">
+           🌸
+          </div>
+         </div>
+        </div>
+        <p class="absolute bottom-2 right-2 text-xs text-slate-400">Bayangan terbalik di sensor</p>
+       </div>
+       <div class="mt-4 p-4 bg-rose-900/30 rounded-xl border border-rose-500/30">
+        <p class="text-sm text-rose-300"><span class="font-bold">📸 Fakta:</span> Kamera digital modern memiliki sensor dengan jutaan piksel (megapixel) untuk menangkap detail gambar yang sangat halus!</p>
+       </div>
+      </div><!-- Lup/Kaca Pembesar -->
+      <div class="glass rounded-2xl p-6 card-hover">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-20 h-20 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-2xl flex items-center justify-center text-4xl">
+         🔍
+        </div>
+        <div>
+         <h3 class="text-2xl font-bold text-amber-400">Lup (Kaca Pembesar)</h3>
+         <p class="text-slate-400">Memperbesar benda kecil</p>
+        </div>
+       </div>
+       <div class="bg-slate-900/50 rounded-xl p-4 mb-4">
+        <div class="relative h-32 flex items-center justify-center"><!-- Magnifying glass -->
+         <div class="relative">
+          <div class="w-24 h-24 border-4 border-amber-400 rounded-full bg-amber-100/10 flex items-center justify-center"><span class="text-4xl">🐜</span>
+          </div>
+          <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 w-3 h-12 bg-amber-600 rounded-b-lg"></div>
+         </div>
+        </div>
+        <p class="text-xs text-center text-slate-400 mt-2">Lensa cembung memperbesar bayangan benda</p>
+       </div>
+       <p class="text-sm text-slate-300">Lup menggunakan <span class="text-amber-400 font-bold">lensa cembung</span> tunggal untuk memperbesar benda-benda kecil seperti serangga, teks, atau detail benda.</p>
+      </div><!-- Mikroskop -->
+      <div class="glass rounded-2xl p-6 card-hover">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-20 h-20 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center text-4xl">
+         🔬
+        </div>
+        <div>
+         <h3 class="text-2xl font-bold text-teal-400">Mikroskop</h3>
+         <p class="text-slate-400">Melihat objek mikroskopis</p>
+        </div>
+       </div>
+       <div class="bg-slate-900/50 rounded-xl p-4 mb-4">
+        <div class="relative h-32 flex items-center justify-center"><!-- Microscope simplified -->
+         <svg viewbox="0 0 100 120" class="w-24 h-32"><!-- Base --> <rect x="20" y="100" width="60" height="10" rx="2" fill="#475569" /> <!-- Arm --> <rect x="65" y="30" width="8" height="75" rx="2" fill="#64748b" /> <!-- Stage --> <rect x="30" y="70" width="40" height="5" rx="1" fill="#94a3b8" /> <!-- Objective lens --> <rect x="45" y="55" width="10" height="15" rx="2" fill="#14b8a6" /> <!-- Eyepiece --> <rect x="45" y="20" width="10" height="20" rx="2" fill="#0d9488" /> <circle cx="50" cy="15" r="8" fill="#134e4a" stroke="#14b8a6" stroke-width="2" /> <!-- Tube --> <rect x="47" y="35" width="6" height="20" fill="#475569" /> <!-- Sample --> <circle cx="50" cy="72" r="3" fill="#fbbf24" />
+         </svg>
+        </div>
+       </div>
+       <p class="text-sm text-slate-300">Mikroskop menggunakan <span class="text-teal-400 font-bold">dua lensa cembung</span> (objektif + okuler) untuk melihat sel, bakteri, dan organisme mikroskopis.</p>
+       <div class="mt-4 p-3 bg-teal-900/30 rounded-lg">
+        <p class="text-xs text-teal-300"><span class="font-bold">🧫 Fakta:</span> Mikroskop elektron dapat memperbesar hingga 2 juta kali!</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 5: Aktivitas Interaktif -->
+    <section id="aktivitas" class="content-section hidden">
+     <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-yellow-400 mb-4">🧪 Aktivitas Interaktif</h2>
+      <p class="text-lg text-slate-300 max-w-3xl mx-auto">Mari praktikkan konsep cahaya melalui eksperimen sederhana yang bisa dilakukan di rumah atau di kelas!</p>
+     </div>
+     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Eksperimen 1: Pensil Patah -->
+      <div class="glass rounded-2xl p-6 card-hover">
+       <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl p-4 mb-4">
+        <h3 class="text-xl font-bold text-white">Eksperimen 1</h3>
+        <p class="text-white/80">Pensil Patah</p>
+       </div>
+       <div class="bg-slate-900/50 rounded-xl p-4 mb-4 h-40 flex items-center justify-center"><!-- Glass with pencil animation -->
+        <div class="relative">
+         <div class="w-16 h-24 border-2 border-cyan-400/50 rounded-b-lg bg-blue-400/20 relative overflow-hidden"><!-- Water -->
+          <div class="absolute bottom-0 left-0 right-0 h-16 bg-blue-400/30"></div><!-- Pencil above water -->
+          <div class="absolute -top-8 left-1/2 w-2 h-16 bg-gradient-to-b from-yellow-600 to-orange-500 origin-bottom" style="transform: translateX(-50%) rotate(-5deg);"></div><!-- Pencil in water (refracted) -->
+          <div class="absolute bottom-2 left-1/2 w-2 h-12 bg-gradient-to-b from-orange-500 to-pink-400 origin-top" style="transform: translateX(-30%) rotate(8deg);"></div>
+         </div>
+        </div>
+       </div>
+       <h4 class="font-bold text-purple-300 mb-2">Alat &amp; Bahan:</h4>
+       <ul class="text-sm text-slate-300 space-y-1 mb-4">
+        <li>✓ Gelas bening berisi air</li>
+        <li>✓ Pensil atau sedotan</li>
+       </ul>
+       <h4 class="font-bold text-purple-300 mb-2">Langkah:</h4>
+       <ol class="text-sm text-slate-300 space-y-1">
+        <li>1. Masukkan pensil ke dalam gelas berisi air</li>
+        <li>2. Amati dari samping</li>
+        <li>3. Pensil terlihat "patah" di permukaan air!</li>
+       </ol>
+       <div class="mt-4 p-3 bg-purple-900/30 rounded-lg">
+        <p class="text-xs text-purple-300"><span class="font-bold">💡 Konsep:</span> Pembiasan cahaya saat melewati dua medium berbeda (udara → air)</p>
+       </div>
+      </div><!-- Eksperimen 2: Cahaya Merambat Lurus -->
+      <div class="glass rounded-2xl p-6 card-hover">
+       <div class="bg-gradient-to-br from-yellow-500 to-orange-500 rounded-xl p-4 mb-4">
+        <h3 class="text-xl font-bold text-white">Eksperimen 2</h3>
+        <p class="text-white/80">Ayo Intip Bintang</p>
+       </div>
+       <div class="bg-slate-900/50 rounded-xl p-4 mb-4 h-40 flex items-center justify-center"><!-- Cards with holes -->
+        <div class="flex items-center gap-4">
+         <div class="w-8 h-8 bg-yellow-400 rounded-full glow"></div>
+         <div class="w-12 h-16 bg-slate-600 rounded flex items-center justify-center">
+          <div class="w-3 h-3 bg-slate-900 rounded-full"></div>
+         </div>
+         <div class="w-12 h-16 bg-slate-600 rounded flex items-center justify-center">
+          <div class="w-3 h-3 bg-slate-900 rounded-full"></div>
+         </div>
+         <div class="w-12 h-16 bg-slate-600 rounded flex items-center justify-center">
+          <div class="w-3 h-3 bg-slate-900 rounded-full"></div>
+         </div>
+         <div class="text-2xl">
+          👁️
+         </div>
+        </div>
+       </div>
+       <h4 class="font-bold text-yellow-300 mb-2">Alat &amp; Bahan:</h4>
+       <ul class="text-sm text-slate-300 space-y-1 mb-4">
+        <li>✓ 3 lembar karton/kertas tebal</li>
+        <li>✓ Senter atau lilin</li>
+        <li>✓ Penggaris untuk menyejajarkan</li>
+       </ul>
+       <h4 class="font-bold text-yellow-300 mb-2">Langkah:</h4>
+       <ol class="text-sm text-slate-300 space-y-1">
+        <li>1. Buat lubang di tengah setiap karton</li>
+        <li>2. Sejajarkan ketiga karton</li>
+        <li>3. Nyalakan senter di belakang karton pertama</li>
+        <li>4. Cahaya hanya terlihat jika lubang segaris!</li>
+       </ol>
+       <div class="mt-4 p-3 bg-yellow-900/30 rounded-lg">
+        <p class="text-xs text-yellow-300"><span class="font-bold">💡 Konsep:</span> Membuktikan bahwa cahaya merambat lurus</p>
+       </div>
+      </div><!-- Eksperimen 3: Kamera Obscura -->
+      <div class="glass rounded-2xl p-6 card-hover">
+       <div class="bg-gradient-to-br from-cyan-500 to-blue-500 rounded-xl p-4 mb-4">
+        <h3 class="text-xl font-bold text-white">Eksperimen 3</h3>
+        <p class="text-white/80">Kamera Obscura</p>
+       </div>
+       <div class="bg-slate-900/50 rounded-xl p-4 mb-4 h-40 flex items-center justify-center"><!-- Camera obscura diagram -->
+        <div class="relative">
+         <div class="text-3xl absolute -left-16 top-1/2 -translate-y-1/2">
+          🕯️
+         </div>
+         <div class="w-24 h-20 bg-slate-700 rounded border-2 border-slate-500 relative">
+          <div class="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 bg-slate-900 rounded-full"></div>
+          <div class="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-14 bg-white/10 rounded flex items-center justify-center"><span class="transform rotate-180 text-lg">🕯️</span>
+          </div>
+         </div>
+         <p class="text-xs text-center mt-2 text-slate-400">Bayangan terbalik</p>
+        </div>
+       </div>
+       <h4 class="font-bold text-cyan-300 mb-2">Alat &amp; Bahan:</h4>
+       <ul class="text-sm text-slate-300 space-y-1 mb-4">
+        <li>✓ Kotak kardus</li>
+        <li>✓ Kertas kalkir/minyak</li>
+        <li>✓ Selotip &amp; gunting</li>
+        <li>✓ Jarum/paku kecil</li>
+       </ul>
+       <h4 class="font-bold text-cyan-300 mb-2">Langkah:</h4>
+       <ol class="text-sm text-slate-300 space-y-1">
+        <li>1. Buat lubang kecil di satu sisi kotak</li>
+        <li>2. Tempelkan kertas kalkir di sisi berlawanan</li>
+        <li>3. Arahkan lubang ke objek terang</li>
+        <li>4. Lihat bayangan terbalik di kertas!</li>
+       </ol>
+       <div class="mt-4 p-3 bg-cyan-900/30 rounded-lg">
+        <p class="text-xs text-cyan-300"><span class="font-bold">💡 Konsep:</span> Prinsip dasar kamera - cahaya merambat lurus membentuk bayangan terbalik</p>
+       </div>
+      </div><!-- Eksperimen 4: Pelangi Buatan -->
+      <div class="glass rounded-2xl p-6 card-hover">
+       <div class="bg-gradient-to-br from-red-500 via-yellow-500 to-blue-500 rounded-xl p-4 mb-4">
+        <h3 class="text-xl font-bold text-white">Eksperimen 4</h3>
+        <p class="text-white/80">Membuat Pelangi</p>
+       </div>
+       <div class="bg-slate-900/50 rounded-xl p-4 mb-4 h-40 flex items-center justify-center">
+        <div class="relative">
+         <div class="w-20 h-28 border-2 border-cyan-400/50 rounded-b-lg bg-blue-400/20"></div>
+         <div class="absolute -right-8 top-0 w-16 h-4 rainbow-bg rounded-full transform rotate-45"></div>
+         <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-2xl">
+          ☀️
+         </div>
+        </div>
+       </div>
+       <h4 class="font-bold text-pink-300 mb-2">Alat &amp; Bahan:</h4>
+       <ul class="text-sm text-slate-300 space-y-1 mb-4">
+        <li>✓ Gelas bening berisi air</li>
+        <li>✓ Sinar matahari/senter kuat</li>
+        <li>✓ Kertas putih</li>
+       </ul>
+       <h4 class="font-bold text-pink-300 mb-2">Langkah:</h4>
+       <ol class="text-sm text-slate-300 space-y-1">
+        <li>1. Letakkan gelas di dekat jendela terkena sinar</li>
+        <li>2. Tempatkan kertas putih di sisi lain gelas</li>
+        <li>3. Atur sudut hingga terbentuk spektrum pelangi!</li>
+       </ol>
+       <div class="mt-4 p-3 bg-pink-900/30 rounded-lg">
+        <p class="text-xs text-pink-300"><span class="font-bold">💡 Konsep:</span> Dispersi cahaya - cahaya putih terurai menjadi spektrum warna</p>
+       </div>
+      </div><!-- Eksperimen 5: Cermin Refleksi -->
+      <div class="glass rounded-2xl p-6 card-hover">
+       <div class="bg-gradient-to-br from-slate-400 to-slate-600 rounded-xl p-4 mb-4">
+        <h3 class="text-xl font-bold text-white">Eksperimen 5</h3>
+        <p class="text-white/80">Sudut Pantul</p>
+       </div>
+       <div class="bg-slate-900/50 rounded-xl p-4 mb-4 h-40 flex items-center justify-center">
+        <svg viewbox="0 0 120 80" class="w-32 h-20"><!-- Mirror --> <line x1="60" y1="10" x2="60" y2="70" stroke="#94a3b8" stroke-width="4" /> <!-- Incident ray --> <line x1="20" y1="20" x2="60" y2="40" stroke="#fbbf24" stroke-width="2" marker-end="url(#arrowYellow)" /> <!-- Reflected ray --> <line x1="60" y1="40" x2="100" y2="20" stroke="#22c55e" stroke-width="2" marker-end="url(#arrowGreen)" /> <!-- Normal line --> <line x1="30" y1="40" x2="90" y2="40" stroke="#64748b" stroke-width="1" stroke-dasharray="4,2" /> <!-- Angles --> <path d="M45,40 Q50,35 55,40" fill="none" stroke="#fbbf24" stroke-width="1.5" /> <path d="M65,40 Q70,35 75,40" fill="none" stroke="#22c55e" stroke-width="1.5" /> <text x="42" y="52" fill="#fbbf24" font-size="8">
+          i
+         </text> <text x="72" y="52" fill="#22c55e" font-size="8">
+          r
+         </text> <defs>
+          <marker id="arrowYellow" markerwidth="10" markerheight="10" refx="9" refy="3" orient="auto">
+           <path d="M0,0 L0,6 L9,3 z" fill="#fbbf24" />
+          </marker>
+          <marker id="arrowGreen" markerwidth="10" markerheight="10" refx="9" refy="3" orient="auto">
+           <path d="M0,0 L0,6 L9,3 z" fill="#22c55e" />
+          </marker>
+         </defs>
+        </svg>
+       </div>
+       <h4 class="font-bold text-slate-300 mb-2">Alat &amp; Bahan:</h4>
+       <ul class="text-sm text-slate-300 space-y-1 mb-4">
+        <li>✓ Cermin datar</li>
+        <li>✓ Senter/laser pointer</li>
+        <li>✓ Busur derajat</li>
+        <li>✓ Kertas &amp; pensil</li>
+       </ul>
+       <h4 class="font-bold text-slate-300 mb-2">Langkah:</h4>
+       <ol class="text-sm text-slate-300 space-y-1">
+        <li>1. Letakkan cermin tegak di atas kertas</li>
+        <li>2. Arahkan senter dengan sudut tertentu</li>
+        <li>3. Ukur sudut datang dan sudut pantul</li>
+        <li>4. Buktikan: sudut i = sudut r!</li>
+       </ol>
+       <div class="mt-4 p-3 bg-slate-700/50 rounded-lg">
+        <p class="text-xs text-slate-300"><span class="font-bold">💡 Konsep:</span> Hukum pemantulan cahaya</p>
+       </div>
+      </div><!-- Eksperimen 6: Bayangan -->
+      <div class="glass rounded-2xl p-6 card-hover">
+       <div class="bg-gradient-to-br from-indigo-500 to-violet-600 rounded-xl p-4 mb-4">
+        <h3 class="text-xl font-bold text-white">Eksperimen 6</h3>
+        <p class="text-white/80">Bayangan &amp; Jarak</p>
+       </div>
+       <div class="bg-slate-900/50 rounded-xl p-4 mb-4 h-40 flex items-center justify-center">
+        <div class="flex items-end gap-4">
+         <div class="text-2xl">
+          🔦
+         </div>
+         <div class="flex flex-col items-center">
+          <div class="w-8 h-16 bg-slate-600 rounded"></div>
+          <div class="w-12 h-2 bg-slate-900 rounded-full mt-1"></div>
+         </div>
+         <div class="flex flex-col items-center">
+          <div class="w-6 h-12 bg-slate-600 rounded"></div>
+          <div class="w-16 h-2 bg-slate-900 rounded-full mt-1"></div>
+         </div>
+        </div>
+       </div>
+       <h4 class="font-bold text-violet-300 mb-2">Alat &amp; Bahan:</h4>
+       <ul class="text-sm text-slate-300 space-y-1 mb-4">
+        <li>✓ Senter</li>
+        <li>✓ Benda kecil (mainan/boneka)</li>
+        <li>✓ Dinding/layar putih</li>
+        <li>✓ Penggaris</li>
+       </ul>
+       <h4 class="font-bold text-violet-300 mb-2">Langkah:</h4>
+       <ol class="text-sm text-slate-300 space-y-1">
+        <li>1. Letakkan benda di antara senter dan dinding</li>
+        <li>2. Dekatkan/jauhkan benda dari senter</li>
+        <li>3. Amati perubahan ukuran bayangan!</li>
+       </ol>
+       <div class="mt-4 p-3 bg-violet-900/30 rounded-lg">
+        <p class="text-xs text-violet-300"><span class="font-bold">💡 Konsep:</span> Hubungan jarak sumber cahaya dengan ukuran bayangan</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 6: Quiz HOTS -->
+    <section id="quiz" class="content-section hidden">
+     <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-yellow-400 mb-4">📝 Kuis HOTS</h2>
+      <p class="text-lg text-slate-300 max-w-3xl mx-auto">Uji pemahamanmu tentang Cahaya dan Alat Optik dengan 10 soal Higher Order Thinking Skills (HOTS)!</p>
+     </div>
+     <div class="glass rounded-2xl p-6 mb-8"><!-- Quiz Progress -->
+      <div class="flex items-center justify-between mb-6">
+       <div class="flex items-center gap-4"><span class="text-2xl">📊</span>
+        <div>
+         <p class="font-bold">Progress</p>
+         <p class="text-sm text-slate-400">Soal <span id="currentQ">1</span> dari 10</p>
+        </div>
+       </div>
+       <div class="text-right">
+        <p class="font-bold text-green-400">Skor: <span id="score">0</span>/10</p>
+        <p class="text-sm text-slate-400" id="quizStatus">Belum selesai</p>
+       </div>
+      </div><!-- Progress Bar -->
+      <div class="w-full h-3 bg-slate-700 rounded-full mb-8 overflow-hidden">
+       <div id="progressBar" class="h-full bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full transition-all duration-500" style="width: 10%"></div>
+      </div><!-- Question Container -->
+      <div id="questionContainer"><!-- Questions will be rendered here -->
+      </div><!-- Navigation Buttons -->
+      <div class="flex justify-between mt-8"><button id="prevBtn" onclick="prevQuestion()" class="px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-xl font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled> ← Sebelumnya </button> <button id="nextBtn" onclick="nextQuestion()" class="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 rounded-xl font-bold transition-all"> Selanjutnya → </button> <button id="submitBtn" onclick="submitQuiz()" class="hidden px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 rounded-xl font-bold transition-all"> Selesai &amp; Lihat Hasil 🎉 </button>
+      </div>
+     </div><!-- Results Panel (Hidden initially) -->
+     <div id="resultsPanel" class="hidden glass rounded-2xl p-8 text-center">
+      <div class="text-6xl mb-4" id="resultEmoji">
+       🎉
+      </div>
+      <h3 class="text-3xl font-bold mb-2" id="resultTitle">Selamat!</h3>
+      <p class="text-xl text-slate-300 mb-6" id="resultDesc">Kamu telah menyelesaikan kuis!</p>
+      <div class="inline-block bg-slate-800 rounded-2xl p-6 mb-6">
+       <p class="text-5xl font-bold text-yellow-400" id="finalScore">0/10</p>
+       <p class="text-slate-400">Skor Akhir</p>
+      </div>
+      <div class="grid grid-cols-2 gap-4 max-w-md mx-auto mb-8">
+       <div class="bg-green-900/30 rounded-xl p-4">
+        <p class="text-2xl font-bold text-green-400" id="correctCount">0</p>
+        <p class="text-sm text-slate-400">Benar</p>
+       </div>
+       <div class="bg-red-900/30 rounded-xl p-4">
+        <p class="text-2xl font-bold text-red-400" id="wrongCount">0</p>
+        <p class="text-sm text-slate-400">Salah</p>
+       </div>
+      </div><button onclick="restartQuiz()" class="px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 rounded-xl font-bold text-lg transition-all"> 🔄 Ulangi Kuis </button>
+     </div>
+    </section>
+   </main><!-- Footer -->
+   <footer class="glass mt-12 py-8 px-4">
+    <div class="max-w-6xl mx-auto">
+     <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-4"><img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-16 h-16 rounded-full object-cover border-2 border-yellow-400" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #4f46e5, #7c3aed)'; this.alt='AM';">
+       <div>
+        <p class="font-bold text-lg">Algian Manggara, S.Agr</p>
+        <p class="text-slate-400 text-sm">Pembuat Media Pembelajaran</p>
+       </div>
+      </div>
+      <div class="text-center md:text-right">
+       <p class="text-slate-400">© 2026 Algian Manggara, S.Agr</p>
+       <p class="text-sm text-slate-500">Media Pembelajaran Cahaya dan Alat Optik</p>
+      </div>
+     </div>
+     <div class="mt-6 pt-6 border-t border-slate-700/50 text-center">
+      <p class="text-sm text-slate-500">🌟 Dibuat dengan ❤️ untuk pembelajaran yang menyenangkan</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_title: 'Cahaya dan Alat Optik',
+      subtitle: 'Media Pembelajaran Interaktif untuk Siswa',
+      background_color: '#0f172a',
+      surface_color: '#1e1b4b',
+      text_color: '#e2e8f0',
+      primary_color: '#fbbf24',
+      secondary_color: '#4f46e5'
+    };
+
+    let config = { ...defaultConfig };
+
+    // Eye part information
+    const eyePartsInfo = {
+      kornea: {
+        title: '🔵 Kornea',
+        desc: 'Kornea adalah lapisan terluar mata yang transparan dan berfungsi sebagai "jendela" mata. Kornea membiaskan (membelokkan) cahaya pertama kali sebelum masuk ke bagian mata lainnya. Sekitar 70% pemfokusan cahaya terjadi di kornea!',
+        fact: '💡 Kornea tidak memiliki pembuluh darah sehingga mendapat oksigen langsung dari udara!'
+      },
+      iris: {
+        title: '🟤 Iris',
+        desc: 'Iris adalah bagian mata yang berwarna (coklat, biru, hijau, dll). Iris berfungsi mengatur jumlah cahaya yang masuk ke mata dengan cara mengecilkan atau membesarkan pupil. Iris bekerja seperti aperture pada kamera!',
+        fact: '💡 Pola iris setiap orang unik seperti sidik jari!'
+      },
+      pupil: {
+        title: '⚫ Pupil',
+        desc: 'Pupil adalah lubang hitam di tengah iris yang merupakan jalan masuk cahaya ke dalam mata. Ukuran pupil berubah-ubah: membesar di tempat gelap (untuk menangkap lebih banyak cahaya) dan mengecil di tempat terang.',
+        fact: '💡 Pupil bisa membesar hingga 8mm di kegelapan dan mengecil hingga 2mm di cahaya terang!'
+      },
+      lensa: {
+        title: '💎 Lensa Mata',
+        desc: 'Lensa mata bersifat fleksibel dan kecembungannya dapat diatur oleh otot siliaris. Proses ini disebut akomodasi. Lensa memfokuskan cahaya tepat di retina agar kita bisa melihat benda dengan jelas baik yang dekat maupun jauh.',
+        fact: '💡 Lensa mata terbuat dari protein kristalin yang sangat jernih dan tidak tergantikan!'
+      },
+      siliaris: {
+        title: '💪 Otot Siliaris',
+        desc: 'Otot siliaris mengontrol bentuk lensa mata. Saat melihat benda dekat, otot ini berkontraksi sehingga lensa menjadi lebih cembung. Saat melihat benda jauh, otot rileks dan lensa menjadi lebih pipih.',
+        fact: '💡 Seiring bertambahnya usia, lensa kehilangan fleksibilitas (presbiopi/mata tua)!'
+      },
+      retina: {
+        title: '📷 Retina',
+        desc: 'Retina adalah lapisan sensitif cahaya di bagian belakang mata, seperti sensor kamera. Retina mengandung dua jenis sel fotoreseptor: sel kerucut (untuk melihat warna dan detail di tempat terang) dan sel batang (untuk melihat di tempat redup).',
+        fact: '💡 Retina mengandung sekitar 120 juta sel batang dan 6 juta sel kerucut!'
+      },
+      saraf: {
+        title: '🧠 Saraf Optik',
+        desc: 'Saraf optik menghubungkan mata ke otak. Saraf ini membawa sinyal listrik dari retina ke otak untuk diproses menjadi gambar yang kita "lihat". Titik di mana saraf optik keluar dari mata disebut blind spot (titik buta).',
+        fact: '💡 Otak memproses gambar yang sebenarnya terbalik menjadi tegak!'
+      }
+    };
+
+    function showEyeInfo(part) {
+      const info = eyePartsInfo[part];
+      if (info) {
+        document.getElementById('eyePartTitle').textContent = info.title;
+        document.getElementById('eyePartDesc').textContent = info.desc;
+        document.getElementById('eyePartFact').classList.remove('hidden');
+        document.getElementById('eyePartFactText').textContent = info.fact;
+      }
+    }
+
+    // Quiz Questions
+    const quizQuestions = [
+      {
+        question: "Seorang penyelam melihat seekor ikan di dalam air. Ketika ia mencoba menangkap ikan tersebut dengan tangan, ia selalu meleset. Mengapa hal ini terjadi?",
+        options: [
+          "Ikan bergerak terlalu cepat",
+          "Cahaya dibiaskan saat melewati air ke udara sehingga posisi ikan terlihat lebih dangkal dari sebenarnya",
+          "Mata penyelam tidak berfungsi dengan baik di dalam air",
+          "Air membuat ikan terlihat lebih besar"
+        ],
+        correct: 1,
+        explanation: "Pembiasan cahaya (refraksi) terjadi saat cahaya melewati dua medium berbeda (air-udara). Cahaya dari ikan dibiaskan saat keluar dari air, membuat ikan terlihat di posisi yang lebih dangkal dari posisi sebenarnya."
+      },
+      {
+        question: "Di sebuah ruangan gelap, pupil mata akan membesar. Jika tiba-tiba lampu dinyalakan, apa yang akan terjadi dan mengapa?",
+        options: [
+          "Pupil tetap besar karena sudah terbiasa gelap",
+          "Pupil akan mengecil secara bertahap untuk mengurangi jumlah cahaya yang masuk dan melindungi retina",
+          "Kornea akan menebal untuk menyaring cahaya",
+          "Lensa mata akan berubah warna"
+        ],
+        correct: 1,
+        explanation: "Iris mengatur ukuran pupil secara refleks. Saat cahaya terlalu terang, pupil mengecil untuk melindungi retina dari kerusakan akibat cahaya berlebihan. Ini adalah mekanisme perlindungan alami mata."
+      },
+      {
+        question: "Sebuah benda berwarna merah disinari dengan cahaya biru murni. Warna apa yang akan terlihat oleh pengamat?",
+        options: [
+          "Merah terang",
+          "Ungu (campuran merah dan biru)",
+          "Hitam atau sangat gelap",
+          "Biru"
+        ],
+        correct: 2,
+        explanation: "Benda terlihat berwarna merah karena memantulkan cahaya merah dan menyerap warna lain. Jika hanya disinari cahaya biru, tidak ada cahaya merah untuk dipantulkan, sehingga semua cahaya diserap dan benda terlihat hitam/gelap."
+      },
+      {
+        question: "Teleskop Hubble ditempatkan di luar angkasa, bukan di permukaan Bumi. Apa keuntungan utama dari penempatan ini terkait dengan sifat cahaya?",
+        options: [
+          "Di luar angkasa lebih dingin sehingga teleskop tidak cepat rusak",
+          "Tidak ada atmosfer yang menyebabkan pembiasan dan hamburan cahaya, sehingga gambar lebih jernih",
+          "Teleskop bisa berputar lebih cepat",
+          "Cahaya bintang lebih terang di luar angkasa"
+        ],
+        correct: 1,
+        explanation: "Atmosfer Bumi menyebabkan pembiasan dan hamburan cahaya (yang membuat bintang tampak berkelip). Di luar atmosfer, cahaya dari objek langit mencapai teleskop tanpa gangguan, menghasilkan gambar yang jauh lebih tajam dan jelas."
+      },
+      {
+        question: "Seorang fotografer ingin mengambil foto pada kondisi cahaya redup. Pengaturan kamera apa yang paling tepat berdasarkan prinsip optik?",
+        options: [
+          "Memperkecil aperture (bukaan lensa) untuk ketajaman maksimal",
+          "Memperbesar aperture (bukaan lensa) agar lebih banyak cahaya masuk ke sensor",
+          "Menggunakan lensa zoom terjauh",
+          "Menutup lensa sebagian dengan filter"
+        ],
+        correct: 1,
+        explanation: "Seperti pupil mata yang membesar di tempat gelap, aperture kamera perlu diperbesar agar lebih banyak cahaya masuk ke sensor. Ini adalah penerapan prinsip yang sama dengan cara mata beradaptasi terhadap cahaya."
+      },
+      {
+        question: "Mengapa langit terlihat biru pada siang hari, tetapi berubah menjadi jingga/merah saat matahari terbenam?",
+        options: [
+          "Matahari mengubah warnanya sepanjang hari",
+          "Pada siang hari cahaya biru yang panjang gelombangnya pendek lebih mudah dihamburkan, sedangkan saat senja cahaya melewati atmosfer lebih tebal sehingga hanya merah/jingga yang sampai",
+          "Awan menyerap warna biru saat sore hari",
+          "Mata kita lebih sensitif terhadap warna merah di sore hari"
+        ],
+        correct: 1,
+        explanation: "Fenomena ini disebut hamburan Rayleigh. Cahaya biru (gelombang pendek) lebih mudah dihamburkan atmosfer. Saat senja, cahaya matahari melewati atmosfer lebih tebal, sehingga biru terhamburkan jauh sebelum sampai mata, menyisakan merah/jingga."
+      },
+      {
+        question: "Dalam percobaan kamera obscura sederhana, bayangan yang terbentuk selalu terbalik. Prinsip yang sama juga berlaku pada mata manusia. Bagaimana otak mengatasi masalah ini?",
+        options: [
+          "Lensa mata membalikkan bayangan sebelum sampai retina",
+          "Retina memiliki sensor khusus yang membaca gambar terbalik",
+          "Otak memproses dan membalikkan bayangan secara neurologis sehingga kita melihat tegak",
+          "Kornea berfungsi sebagai cermin pembalik"
+        ],
+        correct: 2,
+        explanation: "Bayangan di retina memang terbalik (seperti kamera obscura), tetapi otak telah terlatih sejak lahir untuk memproses sinyal dari retina dan 'membalikkan' persepsi kita sehingga dunia terlihat tegak lurus."
+      },
+      {
+        question: "Seseorang mengalami kesulitan melihat benda jauh dengan jelas (miopi). Jenis lensa apa yang tepat untuk memperbaiki kondisi ini dan mengapa?",
+        options: [
+          "Lensa cembung, untuk memperbesar bayangan",
+          "Lensa cekung, untuk menyebarkan cahaya sehingga fokus jatuh tepat di retina",
+          "Lensa datar, untuk tidak mengubah arah cahaya",
+          "Lensa prisma, untuk membiaskan cahaya ke samping"
+        ],
+        correct: 1,
+        explanation: "Pada miopi, bayangan jatuh di depan retina. Lensa cekung (divergen) menyebarkan cahaya sebelum masuk mata, sehingga setelah dibiaskan lensa mata, fokus tepat jatuh di retina. Ini kebalikan dari rabun dekat yang butuh lensa cembung."
+      },
+      {
+        question: "Seekor ikan di dasar akuarium melihat seorang anak di luar akuarium. Dari sudut pandang ikan, bagaimana anak tersebut terlihat?",
+        options: [
+          "Lebih kecil dari ukuran sebenarnya",
+          "Lebih besar dan posisinya tampak lebih tinggi dari sebenarnya",
+          "Sama persis seperti ukuran aslinya",
+          "Terbalik"
+        ],
+        correct: 1,
+        explanation: "Pembiasan bekerja dua arah! Sama seperti pensil terlihat patah dari atas, cahaya yang masuk dari udara ke air juga dibiaskan. Dari perspektif ikan, benda di luar air terlihat lebih besar dan posisinya tampak berbeda dari sebenarnya."
+      },
+      {
+        question: "Dalam operasi mata LASIK, laser digunakan untuk mengubah bentuk kornea. Bagaimana hal ini dapat memperbaiki penglihatan berdasarkan prinsip optik?",
+        options: [
+          "Laser membunuh bakteri yang menghalangi penglihatan",
+          "Laser mengubah warna kornea agar lebih transparan",
+          "Dengan mengubah kelengkungan kornea, kekuatan pembiasan cahaya berubah sehingga fokus dapat jatuh tepat di retina",
+          "Laser memperkuat otot mata"
+        ],
+        correct: 2,
+        explanation: "Kornea bertanggung jawab atas ~70% pemfokusan cahaya di mata. Dengan mengubah kelengkungannya menggunakan laser, dokter dapat menyesuaikan kemampuan pembiasan kornea sehingga cahaya fokus tepat di retina tanpa perlu kacamata."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(10).fill(null);
+    let quizCompleted = false;
+
+    function renderQuestion() {
+      const q = quizQuestions[currentQuestion];
+      const container = document.getElementById('questionContainer');
+      
+      let optionsHTML = q.options.map((opt, idx) => {
+        let classes = 'quiz-option p-4 rounded-xl border-2 border-slate-600 cursor-pointer transition-all';
+        if (userAnswers[currentQuestion] === idx) {
+          if (quizCompleted) {
+            classes += idx === q.correct ? ' correct' : ' wrong';
+          } else {
+            classes += ' selected';
+          }
+        }
+        if (quizCompleted && idx === q.correct) {
+          classes += ' correct';
+        }
+        return `
+          <div class="${classes}" onclick="${quizCompleted ? '' : `selectAnswer(${idx})`}">
+            <div class="flex items-start gap-3">
+              <span class="w-8 h-8 flex-shrink-0 rounded-full bg-slate-700 flex items-center justify-center font-bold">
+                ${String.fromCharCode(65 + idx)}
+              </span>
+              <span class="flex-1">${opt}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      let explanationHTML = '';
+      if (quizCompleted) {
+        explanationHTML = `
+          <div class="mt-6 p-4 ${userAnswers[currentQuestion] === q.correct ? 'bg-green-900/30 border-green-500/30' : 'bg-red-900/30 border-red-500/30'} border rounded-xl">
+            <p class="font-bold ${userAnswers[currentQuestion] === q.correct ? 'text-green-400' : 'text-red-400'} mb-2">
+              ${userAnswers[currentQuestion] === q.correct ? '✅ Benar!' : '❌ Kurang tepat'}
+            </p>
+            <p class="text-sm text-slate-300">${q.explanation}</p>
+          </div>
+        `;
+      }
+      
+      container.innerHTML = `
+        <div class="mb-6">
+          <span class="inline-block px-3 py-1 bg-indigo-500/30 rounded-full text-sm text-indigo-300 mb-4">
+            Soal ${currentQuestion + 1}
+          </span>
+          <h3 class="text-xl font-bold leading-relaxed">${q.question}</h3>
+        </div>
+        <div class="space-y-3">
+          ${optionsHTML}
+        </div>
+        ${explanationHTML}
+      `;
+      
+      // Update navigation
+      document.getElementById('currentQ').textContent = currentQuestion + 1;
+      document.getElementById('progressBar').style.width = `${((currentQuestion + 1) / 10) * 100}%`;
+      
+      document.getElementById('prevBtn').disabled = currentQuestion === 0;
+      
+      if (currentQuestion === 9) {
+        document.getElementById('nextBtn').classList.add('hidden');
+        if (!quizCompleted) {
+          document.getElementById('submitBtn').classList.remove('hidden');
+        }
+      } else {
+        document.getElementById('nextBtn').classList.remove('hidden');
+        document.getElementById('submitBtn').classList.add('hidden');
+      }
+    }
+
+    function selectAnswer(idx) {
+      if (quizCompleted) return;
+      userAnswers[currentQuestion] = idx;
+      renderQuestion();
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < 9) {
+        currentQuestion++;
+        renderQuestion();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    function submitQuiz() {
+      quizCompleted = true;
+      
+      let correct = 0;
+      userAnswers.forEach((ans, idx) => {
+        if (ans === quizQuestions[idx].correct) correct++;
+      });
+      
+      document.getElementById('score').textContent = correct;
+      document.getElementById('quizStatus').textContent = 'Selesai!';
+      document.getElementById('submitBtn').classList.add('hidden');
+      
+      // Show results panel
+      document.getElementById('resultsPanel').classList.remove('hidden');
+      document.getElementById('finalScore').textContent = `${correct}/10`;
+      document.getElementById('correctCount').textContent = correct;
+      document.getElementById('wrongCount').textContent = 10 - correct;
+      
+      // Update result message
+      let emoji, title, desc;
+      if (correct >= 9) {
+        emoji = '🏆';
+        title = 'Luar Biasa!';
+        desc = 'Kamu sangat menguasai materi Cahaya dan Alat Optik!';
+      } else if (correct >= 7) {
+        emoji = '🌟';
+        title = 'Hebat!';
+        desc = 'Pemahaman kamu tentang cahaya sudah sangat baik!';
+      } else if (correct >= 5) {
+        emoji = '👍';
+        title = 'Bagus!';
+        desc = 'Terus belajar untuk meningkatkan pemahamanmu!';
+      } else {
+        emoji = '💪';
+        title = 'Tetap Semangat!';
+        desc = 'Coba pelajari kembali materinya dan ulangi kuisnya!';
+      }
+      
+      document.getElementById('resultEmoji').textContent = emoji;
+      document.getElementById('resultTitle').textContent = title;
+      document.getElementById('resultDesc').textContent = desc;
+      
+      renderQuestion();
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      userAnswers = new Array(10).fill(null);
+      quizCompleted = false;
+      
+      document.getElementById('score').textContent = '0';
+      document.getElementById('quizStatus').textContent = 'Belum selesai';
+      document.getElementById('resultsPanel').classList.add('hidden');
+      document.getElementById('nextBtn').classList.remove('hidden');
+      
+      renderQuestion();
+    }
+
+    // Section navigation
+    function showSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('.content-section').forEach(sec => {
+        sec.classList.add('hidden');
+      });
+      
+      // Show selected section
+      document.getElementById(sectionId).classList.remove('hidden');
+      
+      // Update tabs
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('tab-active');
+        btn.classList.add('bg-slate-800', 'hover:bg-slate-700');
+      });
+      
+      const activeTab = document.querySelector(`[data-section="${sectionId}"]`);
+      activeTab.classList.add('tab-active');
+      activeTab.classList.remove('bg-slate-800', 'hover:bg-slate-700');
+      
+      // Initialize quiz if needed
+      if (sectionId === 'quiz' && !document.getElementById('questionContainer').innerHTML) {
+        renderQuestion();
+      }
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Element SDK Integration
+    async function onConfigChange(newConfig) {
+      config = { ...defaultConfig, ...newConfig };
+      
+      // Update title
+      const titleEl = document.getElementById('mainTitle');
+      if (titleEl) titleEl.textContent = config.main_title;
+      
+      // Update subtitle
+      const subtitleEl = document.getElementById('subtitle');
+      if (subtitleEl) subtitleEl.textContent = config.subtitle;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              config.secondary_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ secondary_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['main_title', config.main_title || defaultConfig.main_title],
+        ['subtitle', config.subtitle || defaultConfig.subtitle]
+      ]);
+    }
+
+    // Initialize
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    // Initialize first section
+    showSection('sifat');
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce4924391aa9a2b',t:'MTc3MTE1NjA1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

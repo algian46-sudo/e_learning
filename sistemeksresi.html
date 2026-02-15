@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Ekskresi Manusia - Media Pembelajaran</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { box-sizing: border-box; }
+    .font-heading { font-family: 'Playfair Display', serif; }
+    .font-body { font-family: 'Nunito', sans-serif; }
+    
+    .nav-dot { transition: all 0.3s ease; }
+    .nav-dot.active { transform: scale(1.3); }
+    
+    .card-hover { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .card-hover:hover { transform: translateY(-8px); }
+    
+    .organ-card { transition: all 0.3s ease; cursor: pointer; }
+    .organ-card:hover { transform: scale(1.02); }
+    .organ-card.selected { ring: 4px; }
+    
+    .fade-in { animation: fadeIn 0.6s ease-out forwards; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .pulse-dot { animation: pulse 2s infinite; }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.7; }
+    }
+    
+    .flow-arrow { animation: flowMove 1.5s infinite; }
+    @keyframes flowMove {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(5px); }
+    }
+    
+    .quiz-option { transition: all 0.2s ease; }
+    .quiz-option:hover:not(.selected):not(.disabled) { transform: scale(1.02); }
+    .quiz-option.correct { background: linear-gradient(135deg, #10b981, #059669) !important; color: white !important; }
+    .quiz-option.incorrect { background: linear-gradient(135deg, #ef4444, #dc2626) !important; color: white !important; }
+    
+    .progress-fill { transition: width 0.5s ease; }
+    
+    .water-animation {
+      background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 100%);
+      animation: waterLevel 3s ease-in-out infinite;
+    }
+    @keyframes waterLevel {
+      0%, 100% { height: 60%; }
+      50% { height: 75%; }
+    }
+
+    .scroll-container {
+      scrollbar-width: thin;
+      scrollbar-color: #94a3b8 transparent;
+    }
+    .scroll-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    .scroll-container::-webkit-scrollbar-thumb {
+      background: #94a3b8;
+      border-radius: 3px;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50 text-slate-800 overflow-auto scroll-container"><!-- Navigation Dots -->
+  <nav class="fixed right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3"><button onclick="scrollToSection(0)" class="nav-dot w-3 h-3 rounded-full bg-teal-600 active" data-section="0" title="Beranda"></button> <button onclick="scrollToSection(1)" class="nav-dot w-3 h-3 rounded-full bg-teal-300" data-section="1" title="Pendahuluan"></button> <button onclick="scrollToSection(2)" class="nav-dot w-3 h-3 rounded-full bg-teal-300" data-section="2" title="Organ Ekskresi"></button> <button onclick="scrollToSection(3)" class="nav-dot w-3 h-3 rounded-full bg-teal-300" data-section="3" title="Ginjal"></button> <button onclick="scrollToSection(4)" class="nav-dot w-3 h-3 rounded-full bg-teal-300" data-section="4" title="Homeostasis"></button> <button onclick="scrollToSection(5)" class="nav-dot w-3 h-3 rounded-full bg-teal-300" data-section="5" title="Fakta Unik"></button> <button onclick="scrollToSection(6)" class="nav-dot w-3 h-3 rounded-full bg-teal-300" data-section="6" title="Kuis"></button>
+  </nav>
+  <main class="w-full"><!-- Hero Section -->
+   <section id="section-0" class="min-h-screen flex items-center justify-center p-6 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+     <svg viewbox="0 0 400 400" class="w-full h-full"><circle cx="50" cy="50" r="40" fill="#0d9488" class="pulse-dot" /> <circle cx="350" cy="100" r="30" fill="#06b6d4" /> <circle cx="100" cy="350" r="50" fill="#0891b2" /> <circle cx="300" cy="300" r="35" fill="#14b8a6" />
+     </svg>
+    </div>
+    <div class="text-center z-10 fade-in max-w-4xl">
+     <div class="mb-8">
+      <svg viewbox="0 0 120 120" class="w-32 h-32 mx-auto mb-6"><!-- Kidney icon --> <defs>
+        <lineargradient id="kidneyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+         <stop offset="0%" style="stop-color:#dc2626" />
+         <stop offset="100%" style="stop-color:#991b1b" />
+        </lineargradient>
+       </defs> <ellipse cx="40" cy="60" rx="25" ry="40" fill="url(#kidneyGrad)" transform="rotate(-15 40 60)" /> <ellipse cx="35" cy="55" rx="8" ry="15" fill="#fecaca" transform="rotate(-15 35 55)" /> <ellipse cx="80" cy="60" rx="25" ry="40" fill="url(#kidneyGrad)" transform="rotate(15 80 60)" /> <ellipse cx="85" cy="55" rx="8" ry="15" fill="#fecaca" transform="rotate(15 85 55)" /> <path d="M40 95 Q60 110 80 95" stroke="#7f1d1d" stroke-width="3" fill="none" />
+      </svg>
+     </div>
+     <h1 id="mainTitle" class="font-heading text-5xl md:text-7xl text-teal-800 mb-6 leading-tight">Sistem Ekskresi<br><span class="text-teal-600">Manusia</span></h1>
+     <p class="text-xl md:text-2xl text-slate-600 mb-10 max-w-2xl mx-auto">Pelajari bagaimana tubuhmu membuang "sampah" metabolisme untuk tetap sehat dan seimbang</p><button onclick="scrollToSection(1)" class="bg-gradient-to-r from-teal-600 to-cyan-600 text-white px-10 py-4 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-105 inline-flex items-center gap-3"> Mulai Belajar 
+      <svg class="w-5 h-5 flow-arrow" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg></button>
+    </div>
+   </section><!-- Section 1: Pendahuluan -->
+   <section id="section-1" class="min-h-screen flex items-center p-6 md:p-12">
+    <div class="max-w-6xl mx-auto w-full">
+     <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="fade-in"><span class="inline-block bg-teal-100 text-teal-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">📚 Bab 1</span>
+       <h2 class="font-heading text-4xl md:text-5xl text-teal-800 mb-6">Mengapa Tubuh Perlu "Membuang Sampah"?</h2>
+       <div class="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-lg mb-6 border-l-4 border-amber-500">
+        <h3 class="font-bold text-lg text-amber-700 mb-3 flex items-center gap-2">🏠 Analogi Rumah Kotor</h3>
+        <p class="text-slate-600 leading-relaxed">Bayangkan sebuah rumah yang sampahnya tidak dibuang selama dua minggu. Debu menumpuk dan sisa makanan membusuk. Apa yang terjadi? Tentu akan muncul <strong>bau dan penyakit</strong>.</p>
+       </div>
+       <div class="bg-gradient-to-r from-teal-500 to-cyan-500 text-white rounded-2xl p-6 shadow-lg">
+        <h3 class="font-bold text-xl mb-3">📖 Definisi Ekskresi</h3>
+        <p class="leading-relaxed opacity-95">Sama seperti rumah, tubuh kita menghasilkan sampah dari hasil metabolisme. Proses pembuangan sampah sisa metabolisme ini disebut <strong>EKSKRESI</strong>.</p>
+       </div>
+      </div>
+      <div class="fade-in"><!-- House Illustration -->
+       <div class="relative">
+        <svg viewbox="0 0 400 350" class="w-full max-w-md mx-auto"><!-- House --> <path d="M200 30 L350 130 L350 300 L50 300 L50 130 Z" fill="#fef3c7" stroke="#d97706" stroke-width="3" /> <path d="M200 30 L50 130 L200 80 L350 130 Z" fill="#f59e0b" stroke="#d97706" stroke-width="3" /> <!-- Door --> <rect x="170" y="200" width="60" height="100" fill="#92400e" rx="5" /> <circle cx="215" cy="250" r="5" fill="#fbbf24" /> <!-- Windows --> <rect x="90" y="160" width="50" height="50" fill="#bae6fd" stroke="#0284c7" stroke-width="2" rx="3" /> <rect x="260" y="160" width="50" height="50" fill="#bae6fd" stroke="#0284c7" stroke-width="2" rx="3" /> <!-- Trash bags --> <ellipse cx="380" cy="280" rx="30" ry="40" fill="#4b5563" /> <ellipse cx="370" cy="275" rx="25" ry="35" fill="#6b7280" /> <path d="M355 260 Q370 250 385 260" stroke="#374151" stroke-width="3" fill="none" /> <!-- Smell waves --> <path d="M380 230 Q390 220 380 210" stroke="#84cc16" stroke-width="3" fill="none" opacity="0.7" class="pulse-dot" /> <path d="M390 235 Q400 225 390 215" stroke="#84cc16" stroke-width="3" fill="none" opacity="0.5" class="pulse-dot" /> <!-- Flies --> <circle cx="365" cy="240" r="4" fill="#1f2937" /> <circle cx="395" cy="225" r="3" fill="#1f2937" />
+        </svg>
+       </div>
+       <div class="mt-8 bg-white/90 rounded-2xl p-6 shadow-lg">
+        <h4 class="font-bold text-teal-700 mb-4 text-lg">🎯 Tujuan Ekskresi:</h4>
+        <ul class="space-y-3">
+         <li class="flex items-start gap-3"><span class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center text-red-600 font-bold shrink-0">1</span> <span class="text-slate-600">Menghilangkan <strong>racun</strong> dari tubuh</span></li>
+         <li class="flex items-start gap-3"><span class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold shrink-0">2</span> <span class="text-slate-600">Menjaga <strong>Homeostasis</strong>: Keseimbangan kondisi internal tubuh dengan lingkungan luar agar tubuh berfungsi normal</span></li>
+        </ul>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Section 2: Organ Ekskresi -->
+   <section id="section-2" class="min-h-screen flex items-center p-6 md:p-12 bg-gradient-to-b from-transparent to-teal-50/50">
+    <div class="max-w-6xl mx-auto w-full">
+     <div class="text-center mb-12 fade-in"><span class="inline-block bg-cyan-100 text-cyan-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">🫀 Bab 2</span>
+      <h2 class="font-heading text-4xl md:text-5xl text-teal-800 mb-4">Organ-Organ Ekskresi Utama</h2>
+      <p class="text-slate-600 text-lg max-w-2xl mx-auto">Manusia memiliki <strong>empat organ utama</strong> dalam sistem pembuangan. Klik setiap organ untuk mempelajari lebih lanjut!</p>
+     </div>
+     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="organCards"><!-- Ginjal -->
+      <div class="organ-card bg-white rounded-2xl p-6 shadow-lg border-2 border-transparent hover:border-red-300 cursor-pointer" onclick="selectOrgan('ginjal')">
+       <div class="w-20 h-20 mx-auto mb-4 bg-red-50 rounded-full flex items-center justify-center">
+        <svg viewbox="0 0 60 60" class="w-12 h-12"><ellipse cx="20" cy="30" rx="12" ry="20" fill="#dc2626" transform="rotate(-10 20 30)" /> <ellipse cx="18" cy="28" rx="4" ry="8" fill="#fecaca" transform="rotate(-10 18 28)" /> <ellipse cx="40" cy="30" rx="12" ry="20" fill="#dc2626" transform="rotate(10 40 30)" /> <ellipse cx="42" cy="28" rx="4" ry="8" fill="#fecaca" transform="rotate(10 42 28)" />
+        </svg>
+       </div>
+       <h3 class="font-bold text-xl text-center text-red-700 mb-2">Ginjal</h3>
+       <p class="text-slate-600 text-center text-sm">Menyaring darah dan mengeluarkan urine</p>
+       <div id="ginjal-detail" class="hidden mt-4 pt-4 border-t border-red-100">
+        <p class="text-sm text-slate-600">Ginjal adalah organ berbentuk kacang yang terletak di kedua sisi tulang belakang. Setiap hari, ginjal menyaring sekitar <strong>180 liter darah</strong> dan menghasilkan 1-2 liter urine.</p>
+       </div>
+      </div><!-- Paru-paru -->
+      <div class="organ-card bg-white rounded-2xl p-6 shadow-lg border-2 border-transparent hover:border-pink-300" onclick="selectOrgan('paru')">
+       <div class="w-20 h-20 mx-auto mb-4 bg-pink-50 rounded-full flex items-center justify-center">
+        <svg viewbox="0 0 60 60" class="w-12 h-12"><path d="M30 10 L30 35" stroke="#ec4899" stroke-width="4" stroke-linecap="round" /> <ellipse cx="18" cy="35" rx="14" ry="18" fill="#f472b6" /> <ellipse cx="42" cy="35" rx="14" ry="18" fill="#f472b6" /> <path d="M18 25 Q8 40 18 50" stroke="#db2777" stroke-width="2" fill="none" /> <path d="M42 25 Q52 40 42 50" stroke="#db2777" stroke-width="2" fill="none" />
+        </svg>
+       </div>
+       <h3 class="font-bold text-xl text-center text-pink-700 mb-2">Paru-paru</h3>
+       <p class="text-slate-600 text-center text-sm">Mengeluarkan CO₂ dan uap air</p>
+       <div id="paru-detail" class="hidden mt-4 pt-4 border-t border-pink-100">
+        <p class="text-sm text-slate-600">Saat bernapas, paru-paru mengeluarkan <strong>karbon dioksida (CO₂)</strong> dan <strong>uap air (H₂O)</strong>. Kita kehilangan sekitar <strong>17,5 ml air setiap jamnya</strong> melalui pernapasan.</p>
+       </div>
+      </div><!-- Kulit -->
+      <div class="organ-card bg-white rounded-2xl p-6 shadow-lg border-2 border-transparent hover:border-amber-300" onclick="selectOrgan('kulit')">
+       <div class="w-20 h-20 mx-auto mb-4 bg-amber-50 rounded-full flex items-center justify-center">
+        <svg viewbox="0 0 60 60" class="w-12 h-12"><rect x="10" y="15" width="40" height="35" rx="5" fill="#fcd34d" /> <rect x="10" y="15" width="40" height="12" rx="5" fill="#fbbf24" /> <circle cx="20" cy="38" r="3" fill="#92400e" /> <circle cx="35" cy="42" r="3" fill="#92400e" /> <circle cx="42" cy="35" r="2" fill="#92400e" /> <path d="M25 30 Q25 25 28 22" stroke="#60a5fa" stroke-width="2" fill="none" /> <circle cx="28" cy="20" r="3" fill="#60a5fa" />
+        </svg>
+       </div>
+       <h3 class="font-bold text-xl text-center text-amber-700 mb-2">Kulit</h3>
+       <p class="text-slate-600 text-center text-sm">Mengeluarkan keringat</p>
+       <div id="kulit-detail" class="hidden mt-4 pt-4 border-t border-amber-100">
+        <p class="text-sm text-slate-600">Kulit memiliki sekitar <strong>2-4 juta kelenjar keringat</strong>. Keringat mengandung air, garam mineral, dan sedikit urea. Saat olahraga berat, produksi keringat bisa mencapai <strong>5 liter per hari</strong>!</p>
+       </div>
+      </div><!-- Hati -->
+      <div class="organ-card bg-white rounded-2xl p-6 shadow-lg border-2 border-transparent hover:border-purple-300" onclick="selectOrgan('hati')">
+       <div class="w-20 h-20 mx-auto mb-4 bg-purple-50 rounded-full flex items-center justify-center">
+        <svg viewbox="0 0 60 60" class="w-12 h-12"><path d="M10 25 Q5 35 15 45 Q25 55 35 50 Q45 45 50 35 Q55 25 45 18 Q35 10 25 15 Q15 20 10 25" fill="#8b5cf6" /> <path d="M25 25 Q30 30 35 28" stroke="#6d28d9" stroke-width="2" fill="none" /> <path d="M20 35 Q25 38 30 35" stroke="#6d28d9" stroke-width="2" fill="none" />
+        </svg>
+       </div>
+       <h3 class="font-bold text-xl text-center text-purple-700 mb-2">Hati (Liver)</h3>
+       <p class="text-slate-600 text-center text-sm">Memecah protein &amp; merombak sel darah merah</p>
+       <div id="hati-detail" class="hidden mt-4 pt-4 border-t border-purple-100">
+        <p class="text-sm text-slate-600">Hati memecah protein menjadi <strong>urea</strong> (yang nanti dibuang ginjal) dan merombak <strong>sel darah merah tua</strong> menjadi bilirubin. Hati juga menetralkan racun dan obat-obatan.</p>
+       </div>
+      </div>
+     </div>
+     <div class="mt-8 text-center">
+      <p class="text-slate-500 text-sm italic">💡 Klik kartu organ untuk melihat informasi detail</p>
+     </div>
+    </div>
+   </section><!-- Section 3: Ginjal & Produksi Urine -->
+   <section id="section-3" class="min-h-screen flex items-center p-6 md:p-12">
+    <div class="max-w-6xl mx-auto w-full">
+     <div class="text-center mb-12 fade-in"><span class="inline-block bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">🔬 Bab 3</span>
+      <h2 class="font-heading text-4xl md:text-5xl text-teal-800 mb-4">Fokus pada Ginjal &amp; Produksi Urine</h2>
+     </div>
+     <div class="grid lg:grid-cols-2 gap-12 items-start">
+      <div class="space-y-6 fade-in">
+       <div class="bg-white rounded-2xl p-6 shadow-lg">
+        <h3 class="font-bold text-xl text-red-700 mb-4 flex items-center gap-2"><span class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">🎯</span> Fungsi Ginjal</h3>
+        <p class="text-slate-600 leading-relaxed">Menyaring <strong>urea</strong> dan sampah metabolisme dari darah sambil tetap <strong>mempertahankan</strong> zat yang dibutuhkan tubuh seperti glukosa, asam amino, dan mineral penting.</p>
+       </div>
+       <div class="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl p-6 shadow-lg text-white">
+        <h3 class="font-bold text-xl mb-4">🔄 Alur Pembuangan Urine</h3>
+        <div class="flex flex-wrap items-center justify-center gap-3 text-sm">
+         <div class="bg-white/20 rounded-lg px-4 py-3 text-center">
+          <div class="text-2xl mb-1">
+           🫘
+          </div>
+          <div class="font-semibold">
+           Ginjal
+          </div>
+          <div class="text-xs opacity-80">
+           Penyaringan
+          </div>
+         </div>
+         <svg class="w-6 h-6 flow-arrow shrink-0" fill="currentColor" viewbox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" />
+         </svg>
+         <div class="bg-white/20 rounded-lg px-4 py-3 text-center">
+          <div class="text-2xl mb-1">
+           📍
+          </div>
+          <div class="font-semibold">
+           Ureter
+          </div>
+          <div class="text-xs opacity-80">
+           Penghubung
+          </div>
+         </div>
+         <svg class="w-6 h-6 flow-arrow shrink-0" fill="currentColor" viewbox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" />
+         </svg>
+         <div class="bg-white/20 rounded-lg px-4 py-3 text-center">
+          <div class="text-2xl mb-1">
+           🎈
+          </div>
+          <div class="font-semibold">
+           Kandung Kemih
+          </div>
+          <div class="text-xs opacity-80">
+           Penyimpanan
+          </div>
+         </div>
+         <svg class="w-6 h-6 flow-arrow shrink-0" fill="currentColor" viewbox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" />
+         </svg>
+         <div class="bg-white/20 rounded-lg px-4 py-3 text-center">
+          <div class="text-2xl mb-1">
+           🚿
+          </div>
+          <div class="font-semibold">
+           Uretra
+          </div>
+          <div class="text-xs opacity-80">
+           Pengeluaran
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="fade-in">
+       <div class="bg-white rounded-2xl p-8 shadow-lg">
+        <h3 class="font-bold text-xl text-teal-700 mb-6 text-center">📊 Komposisi Urine Normal</h3><!-- Interactive Pie Chart -->
+        <div class="relative w-64 h-64 mx-auto mb-6">
+         <svg viewbox="0 0 100 100" class="w-full h-full transform -rotate-90"><!-- Water 95% --> <circle cx="50" cy="50" r="40" fill="none" stroke="#60a5fa" stroke-width="20" stroke-dasharray="238 251" class="transition-all duration-500" /> <!-- Solid 5% --> <circle cx="50" cy="50" r="40" fill="none" stroke="#f59e0b" stroke-width="20" stroke-dasharray="13 251" stroke-dashoffset="-238" class="transition-all duration-500" />
+         </svg>
+         <div class="absolute inset-0 flex items-center justify-center">
+          <div class="text-center">
+           <div class="text-3xl font-bold text-blue-600">
+            95%
+           </div>
+           <div class="text-sm text-slate-500">
+            Air
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+         <div class="flex items-center gap-3">
+          <div class="w-4 h-4 rounded bg-blue-400"></div><span class="text-slate-600">Air: <strong>95%</strong></span>
+         </div>
+         <div class="flex items-center gap-3">
+          <div class="w-4 h-4 rounded bg-amber-400"></div><span class="text-slate-600">Bahan Padat: <strong>5%</strong></span>
+         </div>
+        </div>
+        <div class="mt-6 bg-amber-50 rounded-xl p-4">
+         <h4 class="font-semibold text-amber-700 mb-2">Komposisi Bahan Padat (5%):</h4>
+         <ul class="text-sm text-slate-600 space-y-1">
+          <li>• <strong>Urea:</strong> 45% dari total padatan</li>
+          <li>• <strong>Bahan Anorganik:</strong> Garam &amp; mineral</li>
+          <li>• <strong>Zat Organik Non-urea:</strong> Kreatinin, asam urat</li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Section 4: Homeostasis -->
+   <section id="section-4" class="min-h-screen flex items-center p-6 md:p-12 bg-gradient-to-b from-transparent to-blue-50/50">
+    <div class="max-w-6xl mx-auto w-full">
+     <div class="text-center mb-12 fade-in"><span class="inline-block bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">⚖️ Bab 4</span>
+      <h2 class="font-heading text-4xl md:text-5xl text-teal-800 mb-4">Homeostasis: Keseimbangan Air</h2>
+      <p class="text-slate-600 text-lg max-w-2xl mx-auto">Ginjal sangat fleksibel dalam mengatur volume cairan tubuh</p>
+     </div>
+     <div class="grid lg:grid-cols-2 gap-8"><!-- Kondisi Panas -->
+      <div class="bg-gradient-to-br from-orange-400 to-red-500 rounded-2xl p-8 shadow-xl text-white fade-in card-hover">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-4xl">
+         ☀️
+        </div>
+        <div>
+         <h3 class="font-bold text-2xl">Kondisi Panas</h3>
+         <p class="opacity-80">/ Banyak Berkeringat</p>
+        </div>
+       </div>
+       <div class="bg-white/10 rounded-xl p-6 mb-6">
+        <p class="leading-relaxed">Jika tubuh kehilangan banyak air lewat keringat dan kurang minum, ginjal akan memproduksi urine yang <strong>sedikit dan pekat</strong>.</p>
+       </div><!-- Water Glass Visualization -->
+       <div class="flex items-end justify-center gap-4">
+        <div class="text-center">
+         <div class="relative w-16 h-24 border-4 border-white/50 rounded-b-xl overflow-hidden bg-white/10">
+          <div class="absolute bottom-0 w-full h-1/3 bg-amber-300"></div>
+         </div>
+         <p class="text-sm mt-2 opacity-80">Urine Sedikit</p>
+        </div>
+        <div class="text-center">
+         <div class="relative w-16 h-24 border-4 border-white/50 rounded-b-xl overflow-hidden bg-white/10">
+          <div class="absolute bottom-0 w-full h-full bg-gradient-to-t from-blue-300 to-transparent opacity-50"></div>
+         </div>
+         <p class="text-sm mt-2 opacity-80">Warna Pekat</p>
+        </div>
+       </div>
+      </div><!-- Kondisi Dingin -->
+      <div class="bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl p-8 shadow-xl text-white fade-in card-hover">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-4xl">
+         ❄️
+        </div>
+        <div>
+         <h3 class="font-bold text-2xl">Kondisi Dingin</h3>
+         <p class="opacity-80">/ Sedikit Berkeringat</p>
+        </div>
+       </div>
+       <div class="bg-white/10 rounded-xl p-6 mb-6">
+        <p class="leading-relaxed">Tubuh tidak banyak berkeringat, sehingga ginjal akan membuang kelebihan air melalui urine yang <strong>banyak dan lebih encer</strong>.</p>
+       </div><!-- Water Glass Visualization -->
+       <div class="flex items-end justify-center gap-4">
+        <div class="text-center">
+         <div class="relative w-16 h-24 border-4 border-white/50 rounded-b-xl overflow-hidden bg-white/10">
+          <div class="absolute bottom-0 w-full h-3/4 bg-yellow-100"></div>
+         </div>
+         <p class="text-sm mt-2 opacity-80">Urine Banyak</p>
+        </div>
+        <div class="text-center">
+         <div class="relative w-16 h-24 border-4 border-white/50 rounded-b-xl overflow-hidden bg-white/10">
+          <div class="absolute bottom-0 w-full h-full bg-gradient-to-t from-yellow-50 to-transparent opacity-80"></div>
+         </div>
+         <p class="text-sm mt-2 opacity-80">Warna Encer</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Interactive Data Comparison -->
+     <div class="mt-12 bg-white rounded-2xl p-8 shadow-lg fade-in">
+      <h3 class="font-bold text-xl text-teal-700 mb-6 text-center">📊 Perbandingan Kehilangan Air</h3>
+      <div class="overflow-x-auto">
+       <table class="w-full text-sm">
+        <thead>
+         <tr class="bg-teal-50">
+          <th class="px-4 py-3 text-left rounded-tl-lg">Sumber Kehilangan</th>
+          <th class="px-4 py-3 text-center">Cuaca Normal (ml)</th>
+          <th class="px-4 py-3 text-center rounded-tr-lg">Olahraga Berat (ml)</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr class="border-b border-slate-100">
+          <td class="px-4 py-3 font-medium">🚿 Urine</td>
+          <td class="px-4 py-3 text-center text-blue-600 font-bold">1400</td>
+          <td class="px-4 py-3 text-center text-blue-600 font-bold">500</td>
+         </tr>
+         <tr class="border-b border-slate-100 bg-amber-50">
+          <td class="px-4 py-3 font-medium">💧 Keringat</td>
+          <td class="px-4 py-3 text-center text-amber-600 font-bold">450</td>
+          <td class="px-4 py-3 text-center text-amber-600 font-bold">5350</td>
+         </tr>
+         <tr class="border-b border-slate-100">
+          <td class="px-4 py-3 font-medium">💨 Pernapasan</td>
+          <td class="px-4 py-3 text-center">350</td>
+          <td class="px-4 py-3 text-center">650</td>
+         </tr>
+         <tr>
+          <td class="px-4 py-3 font-medium">🚽 Feses</td>
+          <td class="px-4 py-3 text-center">200</td>
+          <td class="px-4 py-3 text-center">100</td>
+         </tr>
+        </tbody>
+        <tfoot>
+         <tr class="bg-teal-600 text-white">
+          <td class="px-4 py-3 font-bold rounded-bl-lg">TOTAL</td>
+          <td class="px-4 py-3 text-center font-bold">2400 ml</td>
+          <td class="px-4 py-3 text-center font-bold rounded-br-lg">6600 ml</td>
+         </tr>
+        </tfoot>
+       </table>
+      </div>
+      <div class="mt-6 bg-amber-50 rounded-xl p-4 border-l-4 border-amber-500">
+       <p class="text-sm text-slate-600"><strong>🤔 Pertanyaan Diskusi:</strong> Mengapa saat olahraga berat produksi urine menurun drastis (dari 1400 ml → 500 ml) sementara keringat melonjak tajam (dari 450 ml → 5350 ml)?</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Section 5: Fakta Unik -->
+   <section id="section-5" class="min-h-screen flex items-center p-6 md:p-12">
+    <div class="max-w-6xl mx-auto w-full">
+     <div class="text-center mb-12 fade-in"><span class="inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">💡 Bab 5</span>
+      <h2 class="font-heading text-4xl md:text-5xl text-teal-800 mb-4">Tahukah Kamu?</h2>
+      <p class="text-slate-600 text-lg">Fakta-fakta unik tentang sistem ekskresi</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-white rounded-2xl p-6 shadow-lg card-hover fade-in border-l-4 border-blue-500">
+       <div class="flex items-start gap-4">
+        <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-3xl shrink-0">
+         🎈
+        </div>
+        <div>
+         <h3 class="font-bold text-lg text-blue-700 mb-2">Kapasitas Kandung Kemih</h3>
+         <p class="text-slate-600">Kandung kemih manusia dapat menampung sekitar <strong>400 ml urine</strong> - setara dengan hampir 2 gelas air!</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-lg card-hover fade-in border-l-4 border-green-500">
+       <div class="flex items-start gap-4">
+        <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center text-3xl shrink-0">
+         ⏱️
+        </div>
+        <div>
+         <h3 class="font-bold text-lg text-green-700 mb-2">Durasi Menahan</h3>
+         <p class="text-slate-600">Urine bisa tertahan di kandung kemih selama hampir <strong>5 jam</strong> sebelum dikeluarkan.</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-lg card-hover fade-in border-l-4 border-red-500">
+       <div class="flex items-start gap-4">
+        <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center text-3xl shrink-0">
+         💪
+        </div>
+        <div>
+         <h3 class="font-bold text-lg text-red-700 mb-2">Ginjal Super</h3>
+         <p class="text-slate-600">Jika satu ginjal rusak, ginjal satunya dapat <strong>membesar hingga 50%</strong> untuk mengambil alih seluruh fungsi penyaringan!</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-lg card-hover fade-in border-l-4 border-pink-500">
+       <div class="flex items-start gap-4">
+        <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center text-3xl shrink-0">
+         💨
+        </div>
+        <div>
+         <h3 class="font-bold text-lg text-pink-700 mb-2">Air dari Napas</h3>
+         <p class="text-slate-600">Saat bernapas, kita kehilangan air sebanyak <strong>17,5 ml setiap jamnya</strong> - itu sekitar 420 ml per hari!</p>
+        </div>
+       </div>
+      </div>
+      <div class="md:col-span-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-8 shadow-xl text-white fade-in">
+       <h3 class="font-bold text-2xl mb-6 text-center">📋 Tugas Proyek</h3>
+       <p class="text-center text-lg opacity-95 mb-6">Pilih salah satu penyakit terkait sistem ekskresi dan buat panduan hidup sehat!</p>
+       <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white/20 rounded-xl p-6">
+         <h4 class="font-bold text-lg mb-3">🔍 Pilihan Topik:</h4>
+         <ul class="space-y-2 text-sm">
+          <li>• Diabetes Mellitus</li>
+          <li>• Batu Ginjal</li>
+          <li>• Batu Empedu</li>
+          <li>• Gagal Ginjal</li>
+         </ul>
+        </div>
+        <div class="bg-white/20 rounded-xl p-6">
+         <h4 class="font-bold text-lg mb-3">📝 Yang Harus Dibuat:</h4>
+         <ul class="space-y-2 text-sm">
+          <li>• Poster atau Infografik</li>
+          <li>• Menu diet yang tepat</li>
+          <li>• Analisis sosial-ekonomi penyakit</li>
+          <li>• Tips pencegahan</li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Section 6: Quiz HOTS -->
+   <section id="section-6" class="min-h-screen flex items-center p-6 md:p-12 bg-gradient-to-b from-transparent to-teal-50">
+    <div class="max-w-4xl mx-auto w-full">
+     <div class="text-center mb-8 fade-in"><span class="inline-block bg-teal-100 text-teal-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">📝 Evaluasi</span>
+      <h2 class="font-heading text-4xl md:text-5xl text-teal-800 mb-4">Kuis HOTS</h2>
+      <p class="text-slate-600">10 Soal Higher Order Thinking Skills</p>
+     </div><!-- Quiz Container -->
+     <div id="quizContainer" class="bg-white rounded-2xl shadow-xl overflow-hidden"><!-- Progress Bar -->
+      <div class="bg-slate-100 h-3">
+       <div id="progressBar" class="progress-fill bg-gradient-to-r from-teal-500 to-cyan-500 h-full" style="width: 10%"></div>
+      </div><!-- Quiz Content -->
+      <div class="p-8">
+       <div id="questionNumber" class="text-sm text-teal-600 font-semibold mb-2">
+        Soal 1 dari 10
+       </div>
+       <h3 id="questionText" class="text-xl font-bold text-slate-800 mb-6">Loading question...</h3>
+       <div id="optionsContainer" class="space-y-3"><!-- Options will be inserted here -->
+       </div>
+       <div id="feedback" class="hidden mt-6 p-4 rounded-xl">
+        <p id="feedbackText" class="font-medium"></p>
+       </div>
+       <div class="flex justify-between items-center mt-8"><button id="prevBtn" onclick="prevQuestion()" class="px-6 py-3 bg-slate-200 text-slate-700 rounded-xl font-semibold hover:bg-slate-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled> ← Sebelumnya </button> <button id="nextBtn" onclick="nextQuestion()" class="px-6 py-3 bg-teal-600 text-white rounded-xl font-semibold hover:bg-teal-700 transition-colors disabled:opacity-50"> Selanjutnya → </button>
+       </div>
+      </div>
+     </div><!-- Results Container -->
+     <div id="resultsContainer" class="hidden bg-white rounded-2xl shadow-xl p-8 text-center">
+      <div class="w-24 h-24 mx-auto mb-6 bg-teal-100 rounded-full flex items-center justify-center"><span class="text-5xl">🎉</span>
+      </div>
+      <h3 class="font-heading text-3xl text-teal-800 mb-4">Kuis Selesai!</h3>
+      <p class="text-slate-600 mb-6">Skor Anda:</p>
+      <div id="scoreDisplay" class="text-6xl font-bold text-teal-600 mb-6">
+       0/10
+      </div>
+      <div id="scoreMessage" class="text-lg text-slate-600 mb-8"></div><button onclick="restartQuiz()" class="px-8 py-4 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"> 🔄 Ulangi Kuis </button>
+     </div>
+    </div>
+   </section>
+  </main><!-- Footer -->
+  <footer class="bg-gradient-to-r from-teal-800 to-cyan-800 text-white py-8 px-6">
+   <div class="max-w-6xl mx-auto">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+     <div class="flex items-center gap-4"><img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-16 h-16 rounded-full object-cover border-2 border-white/30" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #0d9488, #06b6d4)'; this.alt='Foto tidak tersedia';">
+      <div>
+       <p id="footerText" class="font-semibold text-lg">© 2026 Algian Manggara, S.Agr</p>
+       <p class="text-teal-200 text-sm">Media Pembelajaran Sistem Ekskresi Manusia</p>
+      </div>
+     </div>
+     <div class="text-center md:text-right">
+      <p class="text-teal-200 text-sm">Dibuat dengan ❤️ untuk pendidikan Indonesia</p>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Sistem Ekskresi Manusia',
+      footer_text: '© 2026 Algian Manggara, S.Agr',
+      primary_color: '#0d9488',
+      secondary_color: '#06b6d4',
+      text_color: '#1e293b',
+      background_color: '#f0fdfa',
+      accent_color: '#f59e0b'
+    };
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          const mainTitle = document.getElementById('mainTitle');
+          const footerText = document.getElementById('footerText');
+          
+          if (mainTitle) {
+            const titleText = config.main_title || defaultConfig.main_title;
+            mainTitle.innerHTML = titleText.replace(' ', '<br><span class="text-teal-600">') + '</span>';
+          }
+          
+          if (footerText) {
+            footerText.textContent = config.footer_text || defaultConfig.footer_text;
+          }
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => window.elementSdk.setConfig({ background_color: value })
+            },
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => window.elementSdk.setConfig({ primary_color: value })
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => window.elementSdk.setConfig({ text_color: value })
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => window.elementSdk.setConfig({ secondary_color: value })
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => window.elementSdk.setConfig({ accent_color: value })
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['main_title', config.main_title || defaultConfig.main_title],
+          ['footer_text', config.footer_text || defaultConfig.footer_text]
+        ])
+      });
+    }
+
+    // Navigation
+    function scrollToSection(index) {
+      const section = document.getElementById(`section-${index}`);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+        updateNavDots(index);
+      }
+    }
+
+    function updateNavDots(activeIndex) {
+      document.querySelectorAll('.nav-dot').forEach((dot, index) => {
+        if (index === activeIndex) {
+          dot.classList.add('active', 'bg-teal-600');
+          dot.classList.remove('bg-teal-300');
+        } else {
+          dot.classList.remove('active', 'bg-teal-600');
+          dot.classList.add('bg-teal-300');
+        }
+      });
+    }
+
+    // Intersection Observer for nav dots
+    const observerOptions = { threshold: 0.5 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const index = parseInt(entry.target.id.split('-')[1]);
+          updateNavDots(index);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('section[id^="section-"]').forEach(section => {
+      observer.observe(section);
+    });
+
+    // Organ cards interaction
+    function selectOrgan(organId) {
+      document.querySelectorAll('.organ-card').forEach(card => {
+        const detail = card.querySelector(`[id$="-detail"]`);
+        if (detail) detail.classList.add('hidden');
+        card.classList.remove('ring-4', 'ring-teal-300');
+      });
+      
+      const detail = document.getElementById(`${organId}-detail`);
+      if (detail) {
+        detail.classList.remove('hidden');
+        detail.closest('.organ-card').classList.add('ring-4', 'ring-teal-300');
+      }
+    }
+
+    // Quiz Data - HOTS Questions
+    const quizData = [
+      {
+        question: "Seorang atlet maraton berlari di bawah terik matahari selama 3 jam. Apa yang terjadi pada produksi urinenya dan mengapa?",
+        options: [
+          "Urine meningkat karena tubuh perlu membuang lebih banyak racun",
+          "Urine menurun drastis karena air lebih banyak dikeluarkan melalui keringat untuk homeostasis",
+          "Urine tetap sama karena ginjal bekerja konstan",
+          "Urine berhenti total karena tubuh tidak membutuhkan ekskresi saat olahraga"
+        ],
+        correct: 1,
+        explanation: "Saat olahraga berat, tubuh kehilangan banyak air melalui keringat untuk mengatur suhu tubuh. Ginjal merespons dengan memproduksi urine lebih sedikit dan pekat untuk menjaga keseimbangan cairan (homeostasis)."
+      },
+      {
+        question: "Mengapa pasien dengan satu ginjal yang sehat masih dapat hidup normal?",
+        options: [
+          "Karena tubuh tidak memerlukan dua ginjal untuk fungsi normal",
+          "Karena ginjal yang tersisa dapat membesar hingga 50% dan mengambil alih seluruh fungsi penyaringan",
+          "Karena organ lain menggantikan fungsi ginjal yang hilang",
+          "Karena tubuh mengurangi produksi sampah metabolisme"
+        ],
+        correct: 1,
+        explanation: "Ginjal memiliki kemampuan adaptasi luar biasa. Ketika satu ginjal rusak atau diangkat, ginjal satunya dapat mengalami hipertrofi (membesar) hingga 50% dan mengambil alih seluruh fungsi penyaringan."
+      },
+      {
+        question: "Seorang pasien diabetes memiliki kadar glukosa tinggi dalam urine. Apa yang dapat disimpulkan tentang kondisi ginjalnya?",
+        options: [
+          "Ginjalnya rusak dan tidak bisa menyaring apapun",
+          "Ginjal bekerja normal tetapi kadar glukosa darah terlalu tinggi sehingga melebihi ambang reabsorpsi",
+          "Ginjal menyaring terlalu banyak zat dari darah",
+          "Ureter tersumbat sehingga glukosa menumpuk"
+        ],
+        correct: 1,
+        explanation: "Pada diabetes, kadar glukosa darah sangat tinggi sehingga melebihi kapasitas ginjal untuk mereabsorpsi semua glukosa. Glukosa yang tidak dapat diserap kembali akan keluar bersama urine."
+      },
+      {
+        question: "Mengapa urine seseorang yang kurang minum air berwarna kuning pekat?",
+        options: [
+          "Karena ginjal menambahkan pewarna ke dalam urine",
+          "Karena urea dan limbah metabolisme lebih terkonsentrasi dalam volume air yang lebih sedikit",
+          "Karena kandung kemih mengubah warna urine",
+          "Karena tubuh memproduksi lebih banyak limbah saat dehidrasi"
+        ],
+        correct: 1,
+        explanation: "Saat tubuh kekurangan air, ginjal memproduksi urine dengan volume lebih sedikit untuk menghemat air. Karena jumlah limbah metabolisme (seperti urobilin) relatif tetap dalam volume air yang lebih kecil, konsentrasinya meningkat sehingga warna urine menjadi lebih pekat."
+      },
+      {
+        question: "Apa hubungan antara fungsi hati dan ginjal dalam sistem ekskresi?",
+        options: [
+          "Keduanya tidak berhubungan dan bekerja secara independen",
+          "Hati memecah protein menjadi urea, lalu ginjal menyaring dan membuang urea tersebut",
+          "Ginjal memecah protein dan hati membuangnya",
+          "Hati dan ginjal sama-sama membuang urea langsung ke usus"
+        ],
+        correct: 1,
+        explanation: "Hati dan ginjal bekerja sama dalam sistem ekskresi. Hati memecah protein berlebih dan mengubah amonia beracun menjadi urea yang lebih aman. Urea kemudian dibawa oleh darah ke ginjal untuk disaring dan dibuang melalui urine."
+      },
+      {
+        question: "Seseorang bekerja di ruangan ber-AC selama 8 jam. Prediksi apa yang terjadi pada sistem ekskresinya?",
+        options: [
+          "Produksi keringat meningkat, urine menurun",
+          "Produksi keringat menurun, urine meningkat dan lebih encer",
+          "Keringat dan urine sama-sama meningkat",
+          "Tidak ada perubahan pada sistem ekskresi"
+        ],
+        correct: 1,
+        explanation: "Di ruangan ber-AC yang dingin, tubuh tidak perlu banyak berkeringat untuk mengatur suhu. Kelebihan air dalam tubuh akan dibuang melalui urine, sehingga produksi urine meningkat dan lebih encer."
+      },
+      {
+        question: "Mengapa paru-paru termasuk organ ekskresi meskipun fungsi utamanya adalah pernapasan?",
+        options: [
+          "Karena paru-paru juga menyaring darah seperti ginjal",
+          "Karena paru-paru mengeluarkan CO₂ dan uap air yang merupakan sisa metabolisme sel",
+          "Karena paru-paru menghasilkan urea",
+          "Karena paru-paru menyimpan limbah metabolisme"
+        ],
+        correct: 1,
+        explanation: "Paru-paru termasuk organ ekskresi karena mengeluarkan karbon dioksida (CO₂) hasil respirasi sel dan uap air (H₂O) yang merupakan produk sampingan metabolisme. Sekitar 17,5 ml air hilang setiap jam melalui pernapasan."
+      },
+      {
+        question: "Seorang pasien mengalami gagal ginjal kronis. Mengapa dokter menyarankan untuk membatasi asupan protein?",
+        options: [
+          "Karena protein membuat ginjal lebih berat",
+          "Karena pemecahan protein menghasilkan urea yang tidak dapat dibuang oleh ginjal yang rusak",
+          "Karena protein menyumbat saluran kemih",
+          "Karena protein menghancurkan sel ginjal"
+        ],
+        correct: 1,
+        explanation: "Protein yang dicerna akan dipecah oleh hati menjadi urea. Pada pasien gagal ginjal, kemampuan ginjal untuk menyaring dan membuang urea berkurang drastis. Pembatasan protein mengurangi produksi urea sehingga mengurangi beban kerja ginjal yang rusak."
+      },
+      {
+        question: "Analisis mengapa orang yang banyak mengonsumsi garam cenderung merasa lebih haus dan sering buang air kecil?",
+        options: [
+          "Garam merusak kandung kemih",
+          "Kelebihan garam meningkatkan konsentrasi darah, tubuh membutuhkan air untuk mengencerkannya, dan ginjal membuang kelebihan garam melalui urine",
+          "Garam mempercepat metabolisme",
+          "Garam langsung diserap ke kandung kemih"
+        ],
+        correct: 1,
+        explanation: "Kelebihan garam meningkatkan osmolaritas darah. Tubuh merespons dengan rasa haus untuk menambah cairan dan mengencerkan darah. Ginjal kemudian bekerja membuang kelebihan garam melalui urine untuk menjaga homeostasis."
+      },
+      {
+        question: "Dalam kondisi apa urine dapat menjadi indikator kesehatan seseorang? Berikan analisisnya.",
+        options: [
+          "Urine tidak pernah dapat menunjukkan kondisi kesehatan",
+          "Warna, bau, volume, dan komposisi urine dapat menunjukkan berbagai kondisi seperti dehidrasi, infeksi, diabetes, atau masalah ginjal",
+          "Hanya volume urine yang penting untuk diagnosis",
+          "Urine hanya menunjukkan kondisi kandung kemih"
+        ],
+        correct: 1,
+        explanation: "Urine adalah cerminan kondisi tubuh. Warna pekat menunjukkan dehidrasi, bau tidak normal bisa mengindikasikan infeksi, glukosa dalam urine menunjukkan diabetes, dan protein dalam urine bisa menandakan masalah ginjal. Pemeriksaan urinalisis menjadi alat diagnosis penting dalam kedokteran."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = new Array(quizData.length).fill(false);
+    let userAnswers = new Array(quizData.length).fill(null);
+
+    function loadQuestion() {
+      const quiz = quizData[currentQuestion];
+      document.getElementById('questionNumber').textContent = `Soal ${currentQuestion + 1} dari ${quizData.length}`;
+      document.getElementById('questionText').textContent = quiz.question;
+      document.getElementById('progressBar').style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
+      
+      const optionsContainer = document.getElementById('optionsContainer');
+      optionsContainer.innerHTML = '';
+      
+      quiz.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = `quiz-option w-full text-left p-4 rounded-xl border-2 transition-all ${
+          answered[currentQuestion] 
+            ? (index === quiz.correct 
+              ? 'correct border-green-500' 
+              : (userAnswers[currentQuestion] === index 
+                ? 'incorrect border-red-500' 
+                : 'border-slate-200 bg-slate-50 opacity-50'))
+            : 'border-slate-200 hover:border-teal-400 hover:bg-teal-50'
+        }`;
+        button.innerHTML = `<span class="font-semibold">${String.fromCharCode(65 + index)}.</span> ${option}`;
+        
+        if (!answered[currentQuestion]) {
+          button.onclick = () => selectAnswer(index);
+        } else {
+          button.classList.add('disabled');
+        }
+        
+        optionsContainer.appendChild(button);
+      });
+
+      // Show feedback if already answered
+      const feedback = document.getElementById('feedback');
+      if (answered[currentQuestion]) {
+        feedback.classList.remove('hidden');
+        feedback.className = `mt-6 p-4 rounded-xl ${userAnswers[currentQuestion] === quiz.correct ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`;
+        document.getElementById('feedbackText').innerHTML = `<strong>${userAnswers[currentQuestion] === quiz.correct ? '✅ Benar!' : '❌ Kurang Tepat'}</strong><br><span class="text-sm text-slate-600">${quiz.explanation}</span>`;
+      } else {
+        feedback.classList.add('hidden');
+      }
+
+      // Update navigation buttons
+      document.getElementById('prevBtn').disabled = currentQuestion === 0;
+      document.getElementById('nextBtn').textContent = currentQuestion === quizData.length - 1 ? 'Lihat Hasil' : 'Selanjutnya →';
+    }
+
+    function selectAnswer(index) {
+      if (answered[currentQuestion]) return;
+      
+      answered[currentQuestion] = true;
+      userAnswers[currentQuestion] = index;
+      
+      if (index === quizData[currentQuestion].correct) {
+        score++;
+      }
+      
+      loadQuestion();
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('quizContainer').classList.add('hidden');
+      document.getElementById('resultsContainer').classList.remove('hidden');
+      document.getElementById('scoreDisplay').textContent = `${score}/${quizData.length}`;
+      
+      let message = '';
+      const percentage = (score / quizData.length) * 100;
+      if (percentage >= 90) {
+        message = '🌟 Luar biasa! Kamu sangat memahami sistem ekskresi!';
+      } else if (percentage >= 70) {
+        message = '👏 Bagus sekali! Pemahaman yang baik, terus belajar!';
+      } else if (percentage >= 50) {
+        message = '💪 Cukup baik! Pelajari lagi materi yang belum dikuasai.';
+      } else {
+        message = '📚 Perlu belajar lebih giat! Ulangi materi dan coba lagi.';
+      }
+      document.getElementById('scoreMessage').textContent = message;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answered = new Array(quizData.length).fill(false);
+      userAnswers = new Array(quizData.length).fill(null);
+      
+      document.getElementById('resultsContainer').classList.add('hidden');
+      document.getElementById('quizContainer').classList.remove('hidden');
+      loadQuestion();
+    }
+
+    // Initialize quiz
+    loadQuestion();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce3b894b6e0b29b',t:'MTc3MTE0NzEzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

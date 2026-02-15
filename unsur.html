@@ -1,0 +1,1389 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unsur, Senyawa, dan Campuran - Bab 5</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { font-family: 'Poppins', sans-serif; }
+    .title-font { font-family: 'Playfair Display', serif; }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+    
+    .card-glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .element-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .element-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    
+    .medal-shine {
+      animation: shine 2s infinite;
+    }
+    
+    @keyframes shine {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.3); }
+    }
+    
+    .pulse-glow {
+      animation: pulseGlow 2s infinite;
+    }
+    
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+      50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .section-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:hover, .nav-item.active {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: white;
+    }
+    
+    .periodic-element {
+      width: 80px;
+      height: 90px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .periodic-element:hover {
+      transform: scale(1.1);
+      z-index: 10;
+    }
+    
+    .logam { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+    .nonlogam { background: linear-gradient(135deg, #34d399, #10b981); }
+    .metaloid { background: linear-gradient(135deg, #a78bfa, #8b5cf6); }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      transform: translateX(10px);
+      background: #e0e7ff;
+    }
+    
+    .quiz-option.selected { background: #dbeafe; border-color: #3b82f6; }
+    .quiz-option.correct { background: #d1fae5; border-color: #10b981; }
+    .quiz-option.incorrect { background: #fee2e2; border-color: #ef4444; }
+    
+    .progress-ring {
+      transform: rotate(-90deg);
+    }
+    
+    .body-diagram {
+      position: relative;
+    }
+    
+    .element-label {
+      position: absolute;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .interactive-demo {
+      min-height: 300px;
+      background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .water-wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40%;
+      background: linear-gradient(180deg, rgba(59, 130, 246, 0.3) 0%, rgba(37, 99, 235, 0.6) 100%);
+      animation: wave 3s ease-in-out infinite;
+    }
+    
+    @keyframes wave {
+      0%, 100% { height: 40%; }
+      50% { height: 45%; }
+    }
+    
+    .salt-particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 2px;
+      animation: dissolve 4s infinite;
+    }
+    
+    @keyframes dissolve {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(100px); }
+    }
+    
+    .scroll-indicator {
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full gradient-bg text-gray-800 overflow-auto">
+  <div id="app-container" class="min-h-full"><!-- Navigation -->
+   <nav class="section-nav bg-white/95 backdrop-blur-md shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+     <div class="flex items-center justify-between flex-wrap gap-2">
+      <div class="flex items-center gap-3">
+       <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center"><span class="text-white text-xl">⚗️</span>
+       </div>
+       <h1 id="main-title" class="title-font text-xl font-bold text-gray-800">Bab 5: Unsur, Senyawa &amp; Campuran</h1>
+      </div>
+      <div class="flex gap-2 overflow-x-auto pb-1" id="nav-links"><button onclick="scrollToSection('intro')" class="nav-item px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100">Pendahuluan</button> <button onclick="scrollToSection('unsur')" class="nav-item px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100">Unsur</button> <button onclick="scrollToSection('senyawa')" class="nav-item px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100">Senyawa</button> <button onclick="scrollToSection('campuran')" class="nav-item px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100">Campuran</button> <button onclick="scrollToSection('aktivitas')" class="nav-item px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100">Aktivitas</button> <button onclick="scrollToSection('quiz')" class="nav-item px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100">Kuis HOTS</button>
+      </div>
+     </div>
+    </div>
+   </nav><!-- Hero Section -->
+   <section id="intro" class="py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+     <div class="card-glass rounded-3xl p-8 shadow-2xl">
+      <div class="text-center mb-8"><span class="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-4">📚 Materi Pembelajaran IPA</span>
+       <h2 class="title-font text-4xl md:text-5xl font-bold text-gray-800 mb-4">Unsur, Senyawa, dan Campuran</h2>
+       <p class="text-lg text-gray-600 max-w-2xl mx-auto">Memahami perbedaan unsur, senyawa, dan campuran serta aplikasinya dalam kehidupan sehari-hari</p>
+      </div><!-- Pemantik -->
+      <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 mb-8 border-l-4 border-amber-500">
+       <h3 class="flex items-center gap-2 text-xl font-bold text-amber-800 mb-4"><span class="text-2xl">💡</span> Pertanyaan Pemantik</h3>
+       <div class="space-y-4">
+        <div class="flex items-start gap-3"><span class="flex-shrink-0 w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold">1</span>
+         <p class="text-gray-700">Mengapa Indonesia masih mengimpor garam, padahal memiliki garis pantai terpanjang ke-2 di dunia?</p>
+        </div>
+        <div class="flex items-start gap-3"><span class="flex-shrink-0 w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold">2</span>
+         <p class="text-gray-700">Bagaimana cara memisahkan garam dari air laut? Proses apa yang terjadi?</p>
+        </div>
+       </div>
+      </div><!-- Kata Kunci -->
+      <div class="flex flex-wrap justify-center gap-3"><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">🔗 Ikatan Kimia</span> <span class="px-4 py-2 bg-purple-100 text-purple-700 rounded-full font-medium">⚛️ Molekul</span> <span class="px-4 py-2 bg-green-100 text-green-700 rounded-full font-medium">⚡ Elektron</span> <span class="px-4 py-2 bg-orange-100 text-orange-700 rounded-full font-medium">🧪 Pemisahan Campuran</span>
+      </div><!-- Scroll Indicator -->
+      <div class="text-center mt-8 scroll-indicator"><span class="text-gray-400 text-sm">Gulir ke bawah untuk melanjutkan</span>
+       <div class="text-2xl mt-2">
+        👇
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Medali Section -->
+   <section class="py-12 px-4 bg-white/10">
+    <div class="max-w-6xl mx-auto">
+     <div class="card-glass rounded-3xl p-8 shadow-2xl">
+      <h3 class="text-2xl font-bold text-center mb-8 flex items-center justify-center gap-3"><span class="text-3xl">🏆</span> Mengenal Unsur Melalui Medali</h3>
+      <div class="grid md:grid-cols-3 gap-6 mb-8"><!-- Emas -->
+       <div class="element-card bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-2xl p-6 text-center">
+        <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center medal-shine shadow-lg"><span class="text-4xl">🥇</span>
+        </div>
+        <h4 class="text-xl font-bold text-yellow-800">Juara 1 - Emas</h4>
+        <div class="mt-3 inline-block px-4 py-2 bg-yellow-500 text-white rounded-lg font-mono text-lg font-bold">
+         Au
+        </div>
+        <p class="mt-3 text-sm text-yellow-700">Aurum (Latin)</p>
+        <p class="mt-2 text-gray-600 text-sm">Logam mulia paling berharga, sangat tahan korosi</p>
+       </div><!-- Perak -->
+       <div class="element-card bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl p-6 text-center">
+        <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center medal-shine shadow-lg"><span class="text-4xl">🥈</span>
+        </div>
+        <h4 class="text-xl font-bold text-gray-700">Juara 2 - Perak</h4>
+        <div class="mt-3 inline-block px-4 py-2 bg-gray-500 text-white rounded-lg font-mono text-lg font-bold">
+         Ag
+        </div>
+        <p class="mt-3 text-sm text-gray-600">Argentum (Latin)</p>
+        <p class="mt-2 text-gray-600 text-sm">Penghantar listrik terbaik di antara semua logam</p>
+       </div><!-- Perunggu -->
+       <div class="element-card bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl p-6 text-center">
+        <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-orange-400 to-orange-700 flex items-center justify-center medal-shine shadow-lg"><span class="text-4xl">🥉</span>
+        </div>
+        <h4 class="text-xl font-bold text-orange-800">Juara 3 - Perunggu</h4>
+        <div class="mt-3 inline-flex gap-2"><span class="px-3 py-2 bg-orange-500 text-white rounded-lg font-mono font-bold">Cu</span> <span class="text-orange-600 font-bold">+</span> <span class="px-3 py-2 bg-orange-600 text-white rounded-lg font-mono font-bold">Sn</span>
+        </div>
+        <p class="mt-3 text-sm text-orange-700">Tembaga + Timah (Campuran/Alloy)</p>
+        <p class="mt-2 text-gray-600 text-sm">Lebih kuat dari tembaga murni, tahan korosi</p>
+       </div>
+      </div>
+      <div class="bg-blue-50 rounded-xl p-4 border-l-4 border-blue-500">
+       <p class="text-blue-800 font-medium"><span class="font-bold">💡 Tahukah kamu?</span> Logam mulia seperti emas dan perak dipilih untuk medali karena sifatnya yang tahan korosi (tidak berkarat), mudah dibentuk, dan memiliki kilau yang indah!</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Definisi Unsur Section -->
+   <section id="unsur" class="py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+     <div class="card-glass rounded-3xl p-8 shadow-2xl">
+      <h3 class="text-3xl font-bold text-center mb-8 title-font"><span class="text-4xl">⚛️</span> Apa Itu Unsur?</h3>
+      <div class="grid md:grid-cols-2 gap-8 mb-8">
+       <div>
+        <div class="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-6 text-white mb-6">
+         <h4 class="text-xl font-bold mb-3">📖 Definisi</h4>
+         <p class="text-lg leading-relaxed"><strong>Unsur</strong> adalah zat tunggal yang tidak dapat diuraikan lagi menjadi zat yang lebih sederhana dengan reaksi kimia biasa.</p>
+        </div>
+        <div class="bg-green-50 rounded-xl p-5 border-l-4 border-green-500">
+         <h5 class="font-bold text-green-800 mb-2">🔬 Fakta Menarik</h5>
+         <ul class="space-y-2 text-gray-700">
+          <li class="flex items-start gap-2"><span class="text-green-500">✓</span> Ilmuwan telah mengidentifikasi <strong>118 unsur</strong></li>
+          <li class="flex items-start gap-2"><span class="text-green-500">✓</span> <strong>94 unsur</strong> ditemukan di alam</li>
+          <li class="flex items-start gap-2"><span class="text-green-500">✓</span> <strong>24 unsur</strong> dibuat di laboratorium</li>
+         </ul>
+        </div>
+       </div>
+       <div>
+        <h4 class="text-xl font-bold mb-4 text-gray-800">Bentuk-Bentuk Zat:</h4>
+        <div class="space-y-4">
+         <div class="bg-amber-50 rounded-xl p-4 border border-amber-200 element-card">
+          <div class="flex items-center gap-3">
+           <div class="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center text-2xl">
+            🔶
+           </div>
+           <div>
+            <h5 class="font-bold text-amber-800">Unsur Murni</h5>
+            <p class="text-sm text-gray-600">Terdiri dari satu jenis unsur saja</p>
+           </div>
+          </div>
+          <div class="mt-3 flex flex-wrap gap-2"><span class="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm">Emas murni (Au)</span> <span class="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm">Besi murni (Fe)</span> <span class="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm">Oksigen (O₂)</span>
+          </div>
+         </div>
+         <div class="bg-purple-50 rounded-xl p-4 border border-purple-200 element-card">
+          <div class="flex items-center gap-3">
+           <div class="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center text-2xl">
+            🔷
+           </div>
+           <div>
+            <h5 class="font-bold text-purple-800">Senyawa</h5>
+            <p class="text-sm text-gray-600">Gabungan dua atau lebih unsur dengan perbandingan tetap</p>
+           </div>
+          </div>
+          <div class="mt-3 flex flex-wrap gap-2"><span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">Air (H₂O)</span> <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">Garam (NaCl)</span> <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">Gula (C₁₂H₂₂O₁₁)</span>
+          </div>
+         </div>
+         <div class="bg-teal-50 rounded-xl p-4 border border-teal-200 element-card">
+          <div class="flex items-center gap-3">
+           <div class="w-12 h-12 rounded-full bg-teal-500 flex items-center justify-center text-2xl">
+            🔸
+           </div>
+           <div>
+            <h5 class="font-bold text-teal-800">Campuran</h5>
+            <p class="text-sm text-gray-600">Gabungan zat tanpa ikatan kimia, dapat dipisahkan</p>
+           </div>
+          </div>
+          <div class="mt-3 flex flex-wrap gap-2"><span class="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-sm">Air laut</span> <span class="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-sm">Udara</span> <span class="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-sm">Perunggu</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Simbol Unsur IUPAC -->
+   <section class="py-12 px-4 bg-white/10">
+    <div class="max-w-6xl mx-auto">
+     <div class="card-glass rounded-3xl p-8 shadow-2xl">
+      <h3 class="text-2xl font-bold text-center mb-6"><span class="text-3xl">🌐</span> Nama dan Simbol Universal (IUPAC)</h3>
+      <div class="bg-blue-50 rounded-xl p-5 mb-8 border-l-4 border-blue-500">
+       <p class="text-blue-800"><strong>IUPAC</strong> (International Union of Pure and Applied Chemistry) membuat standar penamaan unsur agar ilmuwan di seluruh dunia memiliki pemahaman yang sama.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 mb-8">
+       <div>
+        <h4 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">📝</span> Aturan Penulisan Simbol:</h4>
+        <ol class="space-y-3">
+         <li class="flex items-start gap-3 bg-gray-50 p-3 rounded-lg"><span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold">1</span> <p>Menggunakan nama <strong>bahasa Latin</strong></p></li>
+         <li class="flex items-start gap-3 bg-gray-50 p-3 rounded-lg"><span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold">2</span> <p>Diambil dari <strong>huruf depan</strong> (selalu kapital)</p></li>
+         <li class="flex items-start gap-3 bg-gray-50 p-3 rounded-lg"><span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold">3</span> <p>Jika huruf depan sama, ditambah <strong>huruf kedua</strong> (huruf kecil)</p></li>
+        </ol>
+       </div>
+       <div>
+        <h4 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-2xl">📊</span> Contoh Simbol Unsur:</h4>
+        <div class="overflow-x-auto">
+         <table class="w-full bg-white rounded-xl overflow-hidden shadow">
+          <thead class="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+           <tr>
+            <th class="px-4 py-3 text-left">Nama Indonesia</th>
+            <th class="px-4 py-3 text-left">Nama Latin</th>
+            <th class="px-4 py-3 text-center">Simbol</th>
+           </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+           <tr class="hover:bg-blue-50 transition-colors">
+            <td class="px-4 py-3">Karbon</td>
+            <td class="px-4 py-3 italic">Carbon</td>
+            <td class="px-4 py-3 text-center"><span class="font-mono font-bold text-blue-600 text-lg">C</span></td>
+           </tr>
+           <tr class="hover:bg-blue-50 transition-colors">
+            <td class="px-4 py-3">Kalsium</td>
+            <td class="px-4 py-3 italic">Calcium</td>
+            <td class="px-4 py-3 text-center"><span class="font-mono font-bold text-blue-600 text-lg">Ca</span></td>
+           </tr>
+           <tr class="hover:bg-blue-50 transition-colors">
+            <td class="px-4 py-3">Emas</td>
+            <td class="px-4 py-3 italic">Aurum</td>
+            <td class="px-4 py-3 text-center"><span class="font-mono font-bold text-yellow-600 text-lg">Au</span></td>
+           </tr>
+           <tr class="hover:bg-blue-50 transition-colors">
+            <td class="px-4 py-3">Perak</td>
+            <td class="px-4 py-3 italic">Argentum</td>
+            <td class="px-4 py-3 text-center"><span class="font-mono font-bold text-gray-600 text-lg">Ag</span></td>
+           </tr>
+           <tr class="hover:bg-blue-50 transition-colors">
+            <td class="px-4 py-3">Besi</td>
+            <td class="px-4 py-3 italic">Ferrum</td>
+            <td class="px-4 py-3 text-center"><span class="font-mono font-bold text-gray-700 text-lg">Fe</span></td>
+           </tr>
+           <tr class="hover:bg-blue-50 transition-colors">
+            <td class="px-4 py-3">Natrium</td>
+            <td class="px-4 py-3 italic">Natrium</td>
+            <td class="px-4 py-3 text-center"><span class="font-mono font-bold text-orange-600 text-lg">Na</span></td>
+           </tr>
+          </tbody>
+         </table>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Klasifikasi Unsur -->
+   <section class="py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+     <div class="card-glass rounded-3xl p-8 shadow-2xl">
+      <h3 class="text-2xl font-bold text-center mb-8"><span class="text-3xl">🔬</span> Klasifikasi Unsur</h3><!-- Tabs -->
+      <div class="flex flex-wrap justify-center gap-3 mb-8"><button onclick="showClassTab('logam')" id="tab-logam" class="tab-btn px-6 py-3 rounded-full font-semibold transition-all bg-gradient-to-r from-amber-400 to-amber-600 text-white shadow-lg"> 🔩 Logam </button> <button onclick="showClassTab('nonlogam')" id="tab-nonlogam" class="tab-btn px-6 py-3 rounded-full font-semibold transition-all bg-gray-200 text-gray-700 hover:bg-green-500 hover:text-white"> 💨 Nonlogam </button> <button onclick="showClassTab('metaloid')" id="tab-metaloid" class="tab-btn px-6 py-3 rounded-full font-semibold transition-all bg-gray-200 text-gray-700 hover:bg-purple-500 hover:text-white"> ⚗️ Metaloid </button>
+      </div><!-- Logam Content -->
+      <div id="content-logam" class="tab-content active">
+       <div class="grid md:grid-cols-2 gap-8">
+        <div>
+         <div class="bg-gradient-to-br from-amber-100 to-amber-200 rounded-2xl p-6">
+          <h4 class="text-xl font-bold text-amber-800 mb-4">Sifat-Sifat Logam:</h4>
+          <ul class="space-y-3">
+           <li class="flex items-center gap-3 bg-white/80 p-3 rounded-lg"><span class="text-2xl">💪</span> <span>Kuat dan keras</span></li>
+           <li class="flex items-center gap-3 bg-white/80 p-3 rounded-lg"><span class="text-2xl">🔨</span> <span>Dapat ditempa dan ditarik (ductile &amp; malleable)</span></li>
+           <li class="flex items-center gap-3 bg-white/80 p-3 rounded-lg"><span class="text-2xl">⚡</span> <span>Penghantar listrik yang baik</span></li>
+           <li class="flex items-center gap-3 bg-white/80 p-3 rounded-lg"><span class="text-2xl">🔥</span> <span>Penghantar panas yang baik</span></li>
+           <li class="flex items-center gap-3 bg-white/80 p-3 rounded-lg"><span class="text-2xl">✨</span> <span>Memiliki kilau mengkilap</span></li>
+          </ul>
+         </div>
+        </div>
+        <div>
+         <h4 class="text-xl font-bold mb-4">Contoh Unsur Logam:</h4>
+         <div class="grid grid-cols-3 gap-3">
+          <div class="periodic-element logam shadow-lg"><span class="text-xs text-white/80">26</span> <span class="text-2xl font-bold text-white">Fe</span> <span class="text-xs text-white">Besi</span>
+          </div>
+          <div class="periodic-element logam shadow-lg"><span class="text-xs text-white/80">79</span> <span class="text-2xl font-bold text-white">Au</span> <span class="text-xs text-white">Emas</span>
+          </div>
+          <div class="periodic-element logam shadow-lg"><span class="text-xs text-white/80">29</span> <span class="text-2xl font-bold text-white">Cu</span> <span class="text-xs text-white">Tembaga</span>
+          </div>
+          <div class="periodic-element logam shadow-lg"><span class="text-xs text-white/80">13</span> <span class="text-2xl font-bold text-white">Al</span> <span class="text-xs text-white">Aluminium</span>
+          </div>
+          <div class="periodic-element logam shadow-lg"><span class="text-xs text-white/80">80</span> <span class="text-2xl font-bold text-white">Hg</span> <span class="text-xs text-white">Raksa*</span>
+          </div>
+          <div class="periodic-element logam shadow-lg"><span class="text-xs text-white/80">47</span> <span class="text-2xl font-bold text-white">Ag</span> <span class="text-xs text-white">Perak</span>
+          </div>
+         </div>
+         <p class="mt-4 text-sm text-gray-600 bg-amber-50 p-3 rounded-lg"><span class="font-bold">*Catatan:</span> Raksa (Hg) adalah satu-satunya logam yang berwujud cair pada suhu ruang!</p>
+        </div>
+       </div>
+      </div><!-- Nonlogam Content -->
+      <div id="content-nonlogam" class="tab-content">
+       <div class="grid md:grid-cols-2 gap-8">
+        <div>
+         <div class="bg-gradient-to-br from-green-100 to-green-200 rounded-2xl p-6">
+          <h4 class="text-xl font-bold text-green-800 mb-4">Sifat-Sifat Nonlogam:</h4>
+          <ul class="space-y-3">
+           <li class="flex items-center gap-3 bg-white/80 p-3 rounded-lg"><span class="text-2xl">🪶</span> <span>Rapuh dan mudah patah (tidak dapat ditempa)</span></li>
+           <li class="flex items-center gap-3 bg-white/80 p-3 rounded-lg"><span class="text-2xl">🚫</span> <span>Bukan penghantar listrik (isolator)</span></li>
+           <li class="flex items-center gap-3 bg-white/80 p-3 rounded-lg"><span class="text-2xl">❄️</span> <span>Bukan penghantar panas yang baik</span></li>
+           <li class="flex items-center gap-3 bg-white/80 p-3 rounded-lg"><span class="text-2xl">🌫️</span> <span>Permukaan kusam (tidak mengkilap)</span></li>
+           <li class="flex items-center gap-3 bg-white/80 p-3 rounded-lg"><span class="text-2xl">🧬</span> <span>Unsur pembentuk utama tubuh manusia</span></li>
+          </ul>
+         </div>
+        </div>
+        <div>
+         <h4 class="text-xl font-bold mb-4">Contoh Unsur Nonlogam:</h4>
+         <div class="grid grid-cols-3 gap-3">
+          <div class="periodic-element nonlogam shadow-lg"><span class="text-xs text-white/80">8</span> <span class="text-2xl font-bold text-white">O</span> <span class="text-xs text-white">Oksigen</span>
+          </div>
+          <div class="periodic-element nonlogam shadow-lg"><span class="text-xs text-white/80">6</span> <span class="text-2xl font-bold text-white">C</span> <span class="text-xs text-white">Karbon</span>
+          </div>
+          <div class="periodic-element nonlogam shadow-lg"><span class="text-xs text-white/80">1</span> <span class="text-2xl font-bold text-white">H</span> <span class="text-xs text-white">Hidrogen</span>
+          </div>
+          <div class="periodic-element nonlogam shadow-lg"><span class="text-xs text-white/80">7</span> <span class="text-2xl font-bold text-white">N</span> <span class="text-xs text-white">Nitrogen</span>
+          </div>
+          <div class="periodic-element nonlogam shadow-lg"><span class="text-xs text-white/80">16</span> <span class="text-2xl font-bold text-white">S</span> <span class="text-xs text-white">Belerang</span>
+          </div>
+          <div class="periodic-element nonlogam shadow-lg"><span class="text-xs text-white/80">35</span> <span class="text-2xl font-bold text-white">Br</span> <span class="text-xs text-white">Bromin*</span>
+          </div>
+         </div>
+         <p class="mt-4 text-sm text-gray-600 bg-green-50 p-3 rounded-lg"><span class="font-bold">*Catatan:</span> Bromin (Br) adalah satu-satunya nonlogam yang berwujud cair pada suhu ruang!</p>
+        </div>
+       </div>
+      </div><!-- Metaloid Content -->
+      <div id="content-metaloid" class="tab-content">
+       <div class="grid md:grid-cols-2 gap-8">
+        <div>
+         <div class="bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-6">
+          <h4 class="text-xl font-bold text-purple-800 mb-4">Sifat-Sifat Metaloid:</h4>
+          <ul class="space-y-3">
+           <li class="flex items-center gap-3 bg-white/80 p-3 rounded-lg"><span class="text-2xl">⚖️</span> <span>Memiliki sifat di antara logam dan nonlogam</span></li>
+           <li class="flex items-center gap-3 bg-white/80 p-3 rounded-lg"><span class="text-2xl">💻</span> <span>Semikonduktor (setengah penghantar listrik)</span></li>
+           <li class="flex items-center gap-3 bg-white/80 p-3 rounded-lg"><span class="text-2xl">🔋</span> <span>Penting dalam industri elektronik</span></li>
+           <li class="flex items-center gap-3 bg-white/80 p-3 rounded-lg"><span class="text-2xl">✨</span> <span>Sebagian memiliki kilau seperti logam</span></li>
+          </ul>
+         </div>
+        </div>
+        <div>
+         <h4 class="text-xl font-bold mb-4">Contoh Unsur Metaloid:</h4>
+         <div class="grid grid-cols-3 gap-3">
+          <div class="periodic-element metaloid shadow-lg"><span class="text-xs text-white/80">14</span> <span class="text-2xl font-bold text-white">Si</span> <span class="text-xs text-white">Silikon</span>
+          </div>
+          <div class="periodic-element metaloid shadow-lg"><span class="text-xs text-white/80">32</span> <span class="text-2xl font-bold text-white">Ge</span> <span class="text-xs text-white">Germanium</span>
+          </div>
+          <div class="periodic-element metaloid shadow-lg"><span class="text-xs text-white/80">33</span> <span class="text-2xl font-bold text-white">As</span> <span class="text-xs text-white">Arsenik</span>
+          </div>
+          <div class="periodic-element metaloid shadow-lg"><span class="text-xs text-white/80">51</span> <span class="text-2xl font-bold text-white">Sb</span> <span class="text-xs text-white">Antimon</span>
+          </div>
+          <div class="periodic-element metaloid shadow-lg"><span class="text-xs text-white/80">52</span> <span class="text-2xl font-bold text-white">Te</span> <span class="text-xs text-white">Telurium</span>
+          </div>
+          <div class="periodic-element metaloid shadow-lg"><span class="text-xs text-white/80">5</span> <span class="text-2xl font-bold text-white">B</span> <span class="text-xs text-white">Boron</span>
+          </div>
+         </div>
+         <p class="mt-4 text-sm text-gray-600 bg-purple-50 p-3 rounded-lg"><span class="font-bold">💡 Tahukah kamu?</span> Silikon adalah bahan utama pembuatan chip komputer dan panel surya!</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Unsur dalam Tubuh Manusia -->
+   <section class="py-12 px-4 bg-white/10">
+    <div class="max-w-6xl mx-auto">
+     <div class="card-glass rounded-3xl p-8 shadow-2xl">
+      <h3 class="text-2xl font-bold text-center mb-8"><span class="text-3xl">🧬</span> Unsur dalam Tubuh Manusia</h3>
+      <div class="grid md:grid-cols-2 gap-8">
+       <div class="relative"><!-- Human Body SVG -->
+        <div class="body-diagram flex justify-center">
+         <svg viewbox="0 0 200 400" class="w-64 h-auto"><!-- Body outline --> <ellipse cx="100" cy="45" rx="35" ry="40" fill="#fcd5b5" stroke="#d4a373" stroke-width="2" /> <rect x="70" y="80" width="60" height="100" rx="15" fill="#fcd5b5" stroke="#d4a373" stroke-width="2" /> <rect x="45" y="85" width="25" height="80" rx="10" fill="#fcd5b5" stroke="#d4a373" stroke-width="2" /> <rect x="130" y="85" width="25" height="80" rx="10" fill="#fcd5b5" stroke="#d4a373" stroke-width="2" /> <rect x="75" y="175" width="22" height="100" rx="8" fill="#fcd5b5" stroke="#d4a373" stroke-width="2" /> <rect x="103" y="175" width="22" height="100" rx="8" fill="#fcd5b5" stroke="#d4a373" stroke-width="2" /> <!-- Element labels with lines --> <circle cx="100" cy="120" r="25" fill="rgba(59, 130, 246, 0.3)" stroke="#3b82f6" stroke-width="2" /> <text x="100" y="115" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="bold">
+           O
+          </text> <text x="100" y="128" text-anchor="middle" font-size="8" fill="#1e40af">
+           65%
+          </text> <circle cx="55" cy="130" r="18" fill="rgba(34, 197, 94, 0.3)" stroke="#22c55e" stroke-width="2" /> <text x="55" y="126" text-anchor="middle" font-size="10" fill="#166534" font-weight="bold">
+           C
+          </text> <text x="55" y="138" text-anchor="middle" font-size="7" fill="#166534">
+           18.5%
+          </text> <circle cx="145" cy="130" r="15" fill="rgba(239, 68, 68, 0.3)" stroke="#ef4444" stroke-width="2" /> <text x="145" y="126" text-anchor="middle" font-size="10" fill="#b91c1c" font-weight="bold">
+           H
+          </text> <text x="145" y="138" text-anchor="middle" font-size="7" fill="#b91c1c">
+           9.5%
+          </text> <circle cx="100" cy="160" r="12" fill="rgba(168, 85, 247, 0.3)" stroke="#a855f7" stroke-width="2" /> <text x="100" y="157" text-anchor="middle" font-size="9" fill="#7c3aed" font-weight="bold">
+           N
+          </text> <text x="100" y="168" text-anchor="middle" font-size="6" fill="#7c3aed">
+           3.2%
+          </text>
+         </svg>
+        </div>
+       </div>
+       <div>
+        <h4 class="text-xl font-bold mb-4">4 Unsur Utama Penyusun Tubuh (96,2%)</h4>
+        <div class="space-y-4">
+         <div class="flex items-center gap-4 bg-blue-50 p-4 rounded-xl">
+          <div class="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-xl">
+           O
+          </div>
+          <div class="flex-1">
+           <div class="flex justify-between items-center mb-1"><span class="font-bold text-blue-800">Oksigen</span> <span class="font-bold text-blue-600">65%</span>
+           </div>
+           <div class="w-full bg-blue-200 rounded-full h-3">
+            <div class="bg-blue-500 h-3 rounded-full" style="width: 65%"></div>
+           </div>
+          </div>
+         </div>
+         <div class="flex items-center gap-4 bg-green-50 p-4 rounded-xl">
+          <div class="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center text-white font-bold text-xl">
+           C
+          </div>
+          <div class="flex-1">
+           <div class="flex justify-between items-center mb-1"><span class="font-bold text-green-800">Karbon</span> <span class="font-bold text-green-600">18,5%</span>
+           </div>
+           <div class="w-full bg-green-200 rounded-full h-3">
+            <div class="bg-green-500 h-3 rounded-full" style="width: 18.5%"></div>
+           </div>
+          </div>
+         </div>
+         <div class="flex items-center gap-4 bg-red-50 p-4 rounded-xl">
+          <div class="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center text-white font-bold text-xl">
+           H
+          </div>
+          <div class="flex-1">
+           <div class="flex justify-between items-center mb-1"><span class="font-bold text-red-800">Hidrogen</span> <span class="font-bold text-red-600">9,5%</span>
+           </div>
+           <div class="w-full bg-red-200 rounded-full h-3">
+            <div class="bg-red-500 h-3 rounded-full" style="width: 9.5%"></div>
+           </div>
+          </div>
+         </div>
+         <div class="flex items-center gap-4 bg-purple-50 p-4 rounded-xl">
+          <div class="w-16 h-16 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold text-xl">
+           N
+          </div>
+          <div class="flex-1">
+           <div class="flex justify-between items-center mb-1"><span class="font-bold text-purple-800">Nitrogen</span> <span class="font-bold text-purple-600">3,2%</span>
+           </div>
+           <div class="w-full bg-purple-200 rounded-full h-3">
+            <div class="bg-purple-500 h-3 rounded-full" style="width: 3.2%"></div>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="mt-6 bg-amber-50 rounded-xl p-4 border-l-4 border-amber-500">
+         <p class="text-amber-800"><span class="font-bold">💡 Penting!</span> Unsur-unsur ini dalam tubuh berbentuk <strong>senyawa</strong>, bukan unsur murni. Contoh: Air (H₂O) yang terdiri dari Hidrogen dan Oksigen.</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Senyawa Section -->
+   <section id="senyawa" class="py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+     <div class="card-glass rounded-3xl p-8 shadow-2xl">
+      <h3 class="text-3xl font-bold text-center mb-8 title-font"><span class="text-4xl">🧪</span> Senyawa</h3>
+      <div class="grid md:grid-cols-2 gap-8 mb-8">
+       <div>
+        <div class="bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl p-6 text-white mb-6">
+         <h4 class="text-xl font-bold mb-3">📖 Definisi</h4>
+         <p class="text-lg leading-relaxed"><strong>Senyawa</strong> adalah zat yang terbentuk dari dua atau lebih unsur yang bergabung melalui reaksi kimia dengan perbandingan tetap.</p>
+        </div>
+        <div class="bg-purple-50 rounded-xl p-5">
+         <h5 class="font-bold text-purple-800 mb-3">🔑 Ciri-Ciri Senyawa:</h5>
+         <ul class="space-y-2 text-gray-700">
+          <li class="flex items-start gap-2"><span class="text-purple-500">✓</span> Terbentuk dari ikatan kimia</li>
+          <li class="flex items-start gap-2"><span class="text-purple-500">✓</span> Memiliki perbandingan unsur yang tetap</li>
+          <li class="flex items-start gap-2"><span class="text-purple-500">✓</span> Sifatnya berbeda dari unsur penyusunnya</li>
+          <li class="flex items-start gap-2"><span class="text-purple-500">✓</span> Hanya dapat diuraikan dengan reaksi kimia</li>
+         </ul>
+        </div>
+       </div>
+       <div>
+        <h4 class="text-xl font-bold mb-4">Contoh Senyawa Sehari-hari:</h4>
+        <div class="space-y-4"><!-- Air -->
+         <div class="bg-blue-50 rounded-xl p-4 element-card border border-blue-200">
+          <div class="flex items-center gap-4">
+           <div class="text-4xl">
+            💧
+           </div>
+           <div class="flex-1">
+            <h5 class="font-bold text-blue-800">Air (H₂O)</h5>
+            <p class="text-sm text-gray-600">2 atom Hidrogen + 1 atom Oksigen</p>
+           </div>
+           <div class="flex items-center gap-1"><span class="w-8 h-8 rounded-full bg-red-400 text-white text-xs flex items-center justify-center font-bold">H</span> <span class="w-8 h-8 rounded-full bg-red-400 text-white text-xs flex items-center justify-center font-bold">H</span> <span class="w-10 h-10 rounded-full bg-blue-500 text-white text-xs flex items-center justify-center font-bold">O</span>
+           </div>
+          </div>
+         </div><!-- Garam -->
+         <div class="bg-gray-50 rounded-xl p-4 element-card border border-gray-200">
+          <div class="flex items-center gap-4">
+           <div class="text-4xl">
+            🧂
+           </div>
+           <div class="flex-1">
+            <h5 class="font-bold text-gray-800">Garam Dapur (NaCl)</h5>
+            <p class="text-sm text-gray-600">1 atom Natrium + 1 atom Klorin</p>
+           </div>
+           <div class="flex items-center gap-1"><span class="w-10 h-10 rounded-full bg-orange-500 text-white text-xs flex items-center justify-center font-bold">Na</span> <span class="w-10 h-10 rounded-full bg-green-500 text-white text-xs flex items-center justify-center font-bold">Cl</span>
+           </div>
+          </div>
+         </div><!-- Gula -->
+         <div class="bg-amber-50 rounded-xl p-4 element-card border border-amber-200">
+          <div class="flex items-center gap-4">
+           <div class="text-4xl">
+            🍬
+           </div>
+           <div class="flex-1">
+            <h5 class="font-bold text-amber-800">Gula (C₁₂H₂₂O₁₁)</h5>
+            <p class="text-sm text-gray-600">12 Karbon + 22 Hidrogen + 11 Oksigen</p>
+           </div>
+          </div>
+         </div><!-- CO2 -->
+         <div class="bg-green-50 rounded-xl p-4 element-card border border-green-200">
+          <div class="flex items-center gap-4">
+           <div class="text-4xl">
+            💨
+           </div>
+           <div class="flex-1">
+            <h5 class="font-bold text-green-800">Karbon Dioksida (CO₂)</h5>
+            <p class="text-sm text-gray-600">1 atom Karbon + 2 atom Oksigen</p>
+           </div>
+           <div class="flex items-center gap-1"><span class="w-10 h-10 rounded-full bg-gray-700 text-white text-xs flex items-center justify-center font-bold">C</span> <span class="w-8 h-8 rounded-full bg-blue-500 text-white text-xs flex items-center justify-center font-bold">O</span> <span class="w-8 h-8 rounded-full bg-blue-500 text-white text-xs flex items-center justify-center font-bold">O</span>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Campuran Section -->
+   <section id="campuran" class="py-12 px-4 bg-white/10">
+    <div class="max-w-6xl mx-auto">
+     <div class="card-glass rounded-3xl p-8 shadow-2xl">
+      <h3 class="text-3xl font-bold text-center mb-8 title-font"><span class="text-4xl">🌊</span> Campuran</h3>
+      <div class="grid md:grid-cols-2 gap-8 mb-8">
+       <div>
+        <div class="bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl p-6 text-white mb-6">
+         <h4 class="text-xl font-bold mb-3">📖 Definisi</h4>
+         <p class="text-lg leading-relaxed"><strong>Campuran</strong> adalah gabungan dua atau lebih zat yang tidak mengalami reaksi kimia dan dapat dipisahkan dengan cara fisika.</p>
+        </div>
+        <div class="bg-teal-50 rounded-xl p-5">
+         <h5 class="font-bold text-teal-800 mb-3">🔑 Ciri-Ciri Campuran:</h5>
+         <ul class="space-y-2 text-gray-700">
+          <li class="flex items-start gap-2"><span class="text-teal-500">✓</span> Tidak ada ikatan kimia antar zat</li>
+          <li class="flex items-start gap-2"><span class="text-teal-500">✓</span> Perbandingan zat penyusun tidak tetap</li>
+          <li class="flex items-start gap-2"><span class="text-teal-500">✓</span> Sifat zat asli masih terlihat</li>
+          <li class="flex items-start gap-2"><span class="text-teal-500">✓</span> Dapat dipisahkan dengan cara fisika</li>
+         </ul>
+        </div>
+       </div>
+       <div>
+        <h4 class="text-xl font-bold mb-4">Jenis-Jenis Campuran:</h4>
+        <div class="space-y-4">
+         <div class="bg-cyan-50 rounded-xl p-4 border border-cyan-200">
+          <h5 class="font-bold text-cyan-800 mb-2">🔬 Campuran Homogen (Larutan)</h5>
+          <p class="text-sm text-gray-600 mb-2">Campuran yang komponennya tercampur merata dan tidak dapat dibedakan</p>
+          <div class="flex flex-wrap gap-2"><span class="px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full text-sm">Air garam</span> <span class="px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full text-sm">Sirup</span> <span class="px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full text-sm">Udara</span> <span class="px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full text-sm">Perunggu</span>
+          </div>
+         </div>
+         <div class="bg-orange-50 rounded-xl p-4 border border-orange-200">
+          <h5 class="font-bold text-orange-800 mb-2">🧫 Campuran Heterogen</h5>
+          <p class="text-sm text-gray-600 mb-2">Campuran yang komponennya tidak tercampur merata dan dapat dibedakan</p>
+          <div class="flex flex-wrap gap-2"><span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm">Pasir + Air</span> <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm">Minyak + Air</span> <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm">Campuran kacang</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Metode Pemisahan Campuran -->
+      <h4 class="text-xl font-bold mb-6 text-center">⚗️ Metode Pemisahan Campuran</h4>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+       <div class="bg-white rounded-xl p-4 text-center element-card shadow-md">
+        <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-blue-100 flex items-center justify-center text-3xl">
+         🔥
+        </div>
+        <h5 class="font-bold text-gray-800">Penguapan</h5>
+        <p class="text-sm text-gray-600 mt-2">Memisahkan zat terlarut dari pelarut</p>
+        <p class="text-xs text-blue-600 mt-1">Contoh: Garam dari air laut</p>
+       </div>
+       <div class="bg-white rounded-xl p-4 text-center element-card shadow-md">
+        <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-green-100 flex items-center justify-center text-3xl">
+         🧻
+        </div>
+        <h5 class="font-bold text-gray-800">Filtrasi</h5>
+        <p class="text-sm text-gray-600 mt-2">Memisahkan padatan dari cairan</p>
+        <p class="text-xs text-green-600 mt-1">Contoh: Pasir dari air</p>
+       </div>
+       <div class="bg-white rounded-xl p-4 text-center element-card shadow-md">
+        <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-purple-100 flex items-center justify-center text-3xl">
+         💧
+        </div>
+        <h5 class="font-bold text-gray-800">Destilasi</h5>
+        <p class="text-sm text-gray-600 mt-2">Memisahkan berdasarkan titik didih</p>
+        <p class="text-xs text-purple-600 mt-1">Contoh: Air murni dari air laut</p>
+       </div>
+       <div class="bg-white rounded-xl p-4 text-center element-card shadow-md">
+        <div class="w-16 h-16 mx-auto mb-3 rounded-full bg-amber-100 flex items-center justify-center text-3xl">
+         🧲
+        </div>
+        <h5 class="font-bold text-gray-800">Magnetisasi</h5>
+        <p class="text-sm text-gray-600 mt-2">Memisahkan benda magnetik</p>
+        <p class="text-xs text-amber-600 mt-1">Contoh: Besi dari pasir</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Interactive Demo: Pemisahan Garam -->
+   <section id="aktivitas" class="py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+     <div class="card-glass rounded-3xl p-8 shadow-2xl">
+      <h3 class="text-2xl font-bold text-center mb-8"><span class="text-3xl">🧪</span> Aktivitas Interaktif: Simulasi Pemisahan Garam</h3>
+      <div class="grid md:grid-cols-2 gap-8">
+       <div>
+        <div class="interactive-demo p-6" id="salt-demo">
+         <div class="text-center mb-4"><span id="demo-title" class="inline-block px-4 py-2 bg-white/90 rounded-full text-sm font-semibold text-blue-800">Air Laut</span>
+         </div><!-- Sun -->
+         <div id="sun-element" class="absolute top-4 right-4 w-16 h-16 transition-all duration-1000 opacity-0">
+          <div class="w-full h-full rounded-full bg-yellow-400 shadow-lg flex items-center justify-center text-3xl">
+           ☀️
+          </div>
+         </div><!-- Container/beaker -->
+         <div class="relative mx-auto w-40 h-48 border-4 border-blue-300 rounded-b-3xl bg-white/30 overflow-hidden"><!-- Water -->
+          <div id="water-level" class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-blue-400 to-blue-200 transition-all duration-1000" style="height: 80%;"><!-- Salt particles in water -->
+           <div id="salt-particles" class="relative w-full h-full">
+            <div class="salt-particle" style="top: 20%; left: 30%; animation-delay: 0s;"></div>
+            <div class="salt-particle" style="top: 40%; left: 60%; animation-delay: 0.5s;"></div>
+            <div class="salt-particle" style="top: 60%; left: 40%; animation-delay: 1s;"></div>
+            <div class="salt-particle" style="top: 30%; left: 70%; animation-delay: 1.5s;"></div>
+            <div class="salt-particle" style="top: 50%; left: 25%; animation-delay: 2s;"></div>
+           </div>
+          </div><!-- Salt residue at bottom -->
+          <div id="salt-residue" class="absolute bottom-0 left-0 right-0 bg-white transition-all duration-1000" style="height: 0%;"></div>
+         </div><!-- Steam -->
+         <div id="steam-element" class="absolute top-20 left-1/2 transform -translate-x-1/2 text-4xl opacity-0 transition-opacity duration-1000">
+          💨💨💨
+         </div>
+        </div>
+        <div class="flex justify-center gap-4 mt-6"><button onclick="startEvaporation()" id="start-btn" class="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-semibold hover:shadow-lg transition-all"> 🔥 Mulai Penguapan </button> <button onclick="resetDemo()" class="px-6 py-3 bg-gray-500 text-white rounded-full font-semibold hover:bg-gray-600 transition-all"> 🔄 Reset </button>
+        </div>
+       </div>
+       <div>
+        <h4 class="text-xl font-bold mb-4">📝 Langkah-Langkah Pemisahan Garam dari Air Laut:</h4>
+        <div class="space-y-4" id="steps-list">
+         <div class="flex items-start gap-3 p-4 rounded-xl bg-gray-50 transition-all" id="step-1"><span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold">1</span>
+          <div>
+           <h5 class="font-bold text-gray-800">Pengumpulan Air Laut</h5>
+           <p class="text-sm text-gray-600">Air laut dikumpulkan di tambak atau wadah penampungan</p>
+          </div>
+         </div>
+         <div class="flex items-start gap-3 p-4 rounded-xl bg-gray-50 transition-all" id="step-2"><span class="flex-shrink-0 w-8 h-8 rounded-full bg-gray-300 text-white flex items-center justify-center font-bold">2</span>
+          <div>
+           <h5 class="font-bold text-gray-800">Penguapan oleh Panas Matahari</h5>
+           <p class="text-sm text-gray-600">Air menguap karena panas matahari, menyisakan garam</p>
+          </div>
+         </div>
+         <div class="flex items-start gap-3 p-4 rounded-xl bg-gray-50 transition-all" id="step-3"><span class="flex-shrink-0 w-8 h-8 rounded-full bg-gray-300 text-white flex items-center justify-center font-bold">3</span>
+          <div>
+           <h5 class="font-bold text-gray-800">Kristalisasi Garam</h5>
+           <p class="text-sm text-gray-600">Garam terbentuk menjadi kristal putih di dasar wadah</p>
+          </div>
+         </div>
+         <div class="flex items-start gap-3 p-4 rounded-xl bg-gray-50 transition-all" id="step-4"><span class="flex-shrink-0 w-8 h-8 rounded-full bg-gray-300 text-white flex items-center justify-center font-bold">4</span>
+          <div>
+           <h5 class="font-bold text-gray-800">Pengumpulan Garam</h5>
+           <p class="text-sm text-gray-600">Garam dikumpulkan dan dikeringkan untuk dikonsumsi</p>
+          </div>
+         </div>
+        </div>
+        <div class="mt-6 p-4 bg-amber-50 rounded-xl border-l-4 border-amber-500">
+         <p class="text-amber-800 text-sm"><span class="font-bold">💡 Menjawab Pertanyaan Pemantik:</span> Indonesia masih mengimpor garam karena produksi garam lokal belum mencukupi kebutuhan industri yang sangat besar, ditambah cuaca yang tidak selalu mendukung proses penguapan alami.</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Perbandingan Section -->
+   <section class="py-12 px-4 bg-white/10">
+    <div class="max-w-6xl mx-auto">
+     <div class="card-glass rounded-3xl p-8 shadow-2xl">
+      <h3 class="text-2xl font-bold text-center mb-8"><span class="text-3xl">⚖️</span> Perbandingan Unsur, Senyawa, dan Campuran</h3>
+      <div class="overflow-x-auto">
+       <table class="w-full bg-white rounded-xl overflow-hidden shadow-lg">
+        <thead class="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+         <tr>
+          <th class="px-4 py-4 text-left">Aspek</th>
+          <th class="px-4 py-4 text-center">Unsur ⚛️</th>
+          <th class="px-4 py-4 text-center">Senyawa 🧪</th>
+          <th class="px-4 py-4 text-center">Campuran 🌊</th>
+         </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+         <tr class="hover:bg-blue-50 transition-colors">
+          <td class="px-4 py-3 font-semibold">Komposisi</td>
+          <td class="px-4 py-3 text-center">Satu jenis atom</td>
+          <td class="px-4 py-3 text-center">Dua atau lebih unsur</td>
+          <td class="px-4 py-3 text-center">Dua atau lebih zat</td>
+         </tr>
+         <tr class="hover:bg-blue-50 transition-colors">
+          <td class="px-4 py-3 font-semibold">Ikatan</td>
+          <td class="px-4 py-3 text-center">-</td>
+          <td class="px-4 py-3 text-center">Ikatan kimia</td>
+          <td class="px-4 py-3 text-center">Tidak ada ikatan kimia</td>
+         </tr>
+         <tr class="hover:bg-blue-50 transition-colors">
+          <td class="px-4 py-3 font-semibold">Perbandingan</td>
+          <td class="px-4 py-3 text-center">-</td>
+          <td class="px-4 py-3 text-center">Tetap</td>
+          <td class="px-4 py-3 text-center">Tidak tetap</td>
+         </tr>
+         <tr class="hover:bg-blue-50 transition-colors">
+          <td class="px-4 py-3 font-semibold">Pemisahan</td>
+          <td class="px-4 py-3 text-center">Tidak dapat</td>
+          <td class="px-4 py-3 text-center">Reaksi kimia</td>
+          <td class="px-4 py-3 text-center">Cara fisika</td>
+         </tr>
+         <tr class="hover:bg-blue-50 transition-colors">
+          <td class="px-4 py-3 font-semibold">Contoh</td>
+          <td class="px-4 py-3 text-center">Fe, Au, O₂</td>
+          <td class="px-4 py-3 text-center">H₂O, NaCl, CO₂</td>
+          <td class="px-4 py-3 text-center">Air laut, udara</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </div>
+   </section><!-- Quiz Section -->
+   <section id="quiz" class="py-12 px-4">
+    <div class="max-w-4xl mx-auto">
+     <div class="card-glass rounded-3xl p-8 shadow-2xl">
+      <h3 class="text-2xl font-bold text-center mb-2"><span class="text-3xl">🎯</span> Kuis HOTS (Higher Order Thinking Skills)</h3>
+      <p class="text-center text-gray-600 mb-8">Uji pemahamanmu dengan 10 soal berikut!</p><!-- Progress -->
+      <div class="mb-8">
+       <div class="flex justify-between items-center mb-2"><span class="text-sm font-medium text-gray-600">Progress</span> <span id="progress-text" class="text-sm font-bold text-blue-600">0/10</span>
+       </div>
+       <div class="w-full bg-gray-200 rounded-full h-3">
+        <div id="progress-bar" class="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+       </div>
+      </div><!-- Quiz Container -->
+      <div id="quiz-container"><!-- Questions will be rendered here -->
+      </div><!-- Results -->
+      <div id="quiz-results" class="hidden text-center">
+       <div class="mb-6">
+        <div class="w-32 h-32 mx-auto mb-4 relative">
+         <svg class="progress-ring" width="128" height="128"><circle cx="64" cy="64" r="56" stroke="#e5e7eb" stroke-width="8" fill="none" /> <circle id="result-circle" cx="64" cy="64" r="56" stroke="#3b82f6" stroke-width="8" fill="none" stroke-dasharray="352" stroke-dashoffset="352" stroke-linecap="round" />
+         </svg>
+         <div class="absolute inset-0 flex items-center justify-center"><span id="result-score" class="text-3xl font-bold text-blue-600">0%</span>
+         </div>
+        </div>
+        <h4 id="result-message" class="text-2xl font-bold text-gray-800 mb-2">Hasil Kuis</h4>
+        <p id="result-detail" class="text-gray-600"></p>
+       </div><button onclick="restartQuiz()" class="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-semibold hover:shadow-lg transition-all"> 🔄 Ulangi Kuis </button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="py-8 px-4 bg-gray-900 text-white">
+    <div class="max-w-6xl mx-auto">
+     <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3"><img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-12 h-12 rounded-full object-cover border-2 border-white" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='#4f46e5'; this.alt='AM';">
+       <div>
+        <p id="footer-name" class="font-semibold">Algian Manggara, S.Agr</p>
+        <p class="text-sm text-gray-400">Pembuat Materi Pembelajaran</p>
+       </div>
+      </div>
+      <div class="text-center md:text-right">
+       <p class="text-gray-400">© 2026 <span id="footer-copyright">Algian Manggara, S.Agr</span></p>
+       <p class="text-sm text-gray-500">Materi IPA - Unsur, Senyawa, dan Campuran</p>
+      </div>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      page_title: 'Bab 5: Unsur, Senyawa & Campuran',
+      teacher_name: 'Algian Manggara, S.Agr',
+      primary_color: '#3b82f6',
+      secondary_color: '#8b5cf6',
+      background_color: '#1a1a2e',
+      text_color: '#1f2937',
+      accent_color: '#f59e0b'
+    };
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          // Update title
+          const titleEl = document.getElementById('main-title');
+          if (titleEl) titleEl.textContent = config.page_title || defaultConfig.page_title;
+          
+          // Update footer
+          const footerName = document.getElementById('footer-name');
+          const footerCopyright = document.getElementById('footer-copyright');
+          if (footerName) footerName.textContent = config.teacher_name || defaultConfig.teacher_name;
+          if (footerCopyright) footerCopyright.textContent = config.teacher_name || defaultConfig.teacher_name;
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['page_title', config.page_title || defaultConfig.page_title],
+          ['teacher_name', config.teacher_name || defaultConfig.teacher_name]
+        ])
+      });
+    }
+
+    // Navigation
+    function scrollToSection(sectionId) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      
+      // Update active nav
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      event.target.classList.add('active');
+    }
+
+    // Classification Tabs
+    function showClassTab(tabName) {
+      // Hide all content
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      
+      // Reset all tab buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.className = 'tab-btn px-6 py-3 rounded-full font-semibold transition-all bg-gray-200 text-gray-700';
+      });
+      
+      // Show selected content
+      document.getElementById(`content-${tabName}`).classList.add('active');
+      
+      // Style active tab
+      const activeTab = document.getElementById(`tab-${tabName}`);
+      const colors = {
+        logam: 'bg-gradient-to-r from-amber-400 to-amber-600 text-white shadow-lg',
+        nonlogam: 'bg-gradient-to-r from-green-400 to-green-600 text-white shadow-lg',
+        metaloid: 'bg-gradient-to-r from-purple-400 to-purple-600 text-white shadow-lg'
+      };
+      activeTab.className = `tab-btn px-6 py-3 rounded-full font-semibold transition-all ${colors[tabName]}`;
+    }
+
+    // Salt Evaporation Demo
+    let demoStep = 0;
+    
+    function startEvaporation() {
+      const startBtn = document.getElementById('start-btn');
+      startBtn.disabled = true;
+      startBtn.classList.add('opacity-50');
+      
+      // Step 1: Show sun
+      setTimeout(() => {
+        document.getElementById('sun-element').classList.remove('opacity-0');
+        document.getElementById('demo-title').textContent = 'Pemanasan dimulai...';
+        highlightStep(1);
+      }, 500);
+      
+      // Step 2: Start evaporation
+      setTimeout(() => {
+        document.getElementById('water-level').style.height = '50%';
+        document.getElementById('steam-element').classList.remove('opacity-0');
+        document.getElementById('demo-title').textContent = 'Air menguap...';
+        highlightStep(2);
+      }, 2000);
+      
+      // Step 3: More evaporation
+      setTimeout(() => {
+        document.getElementById('water-level').style.height = '20%';
+        document.getElementById('salt-residue').style.height = '10%';
+        document.getElementById('demo-title').textContent = 'Garam mulai mengkristal...';
+        highlightStep(3);
+      }, 4000);
+      
+      // Step 4: Complete
+      setTimeout(() => {
+        document.getElementById('water-level').style.height = '0%';
+        document.getElementById('salt-residue').style.height = '20%';
+        document.getElementById('steam-element').classList.add('opacity-0');
+        document.getElementById('demo-title').textContent = 'Garam terbentuk! 🧂';
+        document.getElementById('salt-particles').innerHTML = '';
+        highlightStep(4);
+        
+        startBtn.disabled = false;
+        startBtn.classList.remove('opacity-50');
+      }, 6000);
+    }
+    
+    function highlightStep(stepNum) {
+      for (let i = 1; i <= 4; i++) {
+        const stepEl = document.getElementById(`step-${i}`);
+        const numEl = stepEl.querySelector('span');
+        
+        if (i <= stepNum) {
+          stepEl.classList.add('bg-green-50');
+          stepEl.classList.remove('bg-gray-50');
+          numEl.classList.add('bg-green-500');
+          numEl.classList.remove('bg-gray-300', 'bg-blue-500');
+        }
+      }
+    }
+    
+    function resetDemo() {
+      document.getElementById('water-level').style.height = '80%';
+      document.getElementById('salt-residue').style.height = '0%';
+      document.getElementById('sun-element').classList.add('opacity-0');
+      document.getElementById('steam-element').classList.add('opacity-0');
+      document.getElementById('demo-title').textContent = 'Air Laut';
+      
+      document.getElementById('salt-particles').innerHTML = `
+        <div class="salt-particle" style="top: 20%; left: 30%; animation-delay: 0s;"></div>
+        <div class="salt-particle" style="top: 40%; left: 60%; animation-delay: 0.5s;"></div>
+        <div class="salt-particle" style="top: 60%; left: 40%; animation-delay: 1s;"></div>
+        <div class="salt-particle" style="top: 30%; left: 70%; animation-delay: 1.5s;"></div>
+        <div class="salt-particle" style="top: 50%; left: 25%; animation-delay: 2s;"></div>
+      `;
+      
+      for (let i = 1; i <= 4; i++) {
+        const stepEl = document.getElementById(`step-${i}`);
+        const numEl = stepEl.querySelector('span');
+        stepEl.classList.remove('bg-green-50');
+        stepEl.classList.add('bg-gray-50');
+        if (i === 1) {
+          numEl.classList.add('bg-blue-500');
+          numEl.classList.remove('bg-green-500');
+        } else {
+          numEl.classList.add('bg-gray-300');
+          numEl.classList.remove('bg-green-500');
+        }
+      }
+    }
+
+    // HOTS Quiz
+    const quizQuestions = [
+      {
+        question: "Seorang petani garam di Madura mengalami penurunan produksi saat musim hujan. Berdasarkan konsep pemisahan campuran, mengapa hal ini terjadi?",
+        options: [
+          "Air hujan melarutkan garam yang sudah terbentuk",
+          "Proses penguapan terhambat karena kelembaban tinggi dan sinar matahari berkurang",
+          "Air hujan mengubah komposisi kimia garam",
+          "Garam berubah menjadi senyawa lain saat terkena air hujan"
+        ],
+        correct: 1,
+        explanation: "Proses pembuatan garam bergantung pada penguapan air laut oleh sinar matahari. Saat musim hujan, sinar matahari berkurang dan kelembaban udara tinggi, sehingga laju penguapan menurun drastis."
+      },
+      {
+        question: "Perunggu (medali juara 3) adalah campuran tembaga dan timah, sedangkan air adalah senyawa hidrogen dan oksigen. Apa perbedaan fundamental antara keduanya?",
+        options: [
+          "Perunggu lebih keras dari air",
+          "Perunggu dapat dipisahkan secara fisika, sedangkan air hanya dapat diuraikan dengan reaksi kimia",
+          "Perunggu terdiri dari logam, sedangkan air terdiri dari nonlogam",
+          "Perunggu berwujud padat, sedangkan air berwujud cair"
+        ],
+        correct: 1,
+        explanation: "Perunggu adalah campuran (alloy) yang komponennya tidak berikatan kimia, sehingga bisa dipisahkan secara fisika. Air adalah senyawa dengan ikatan kimia kuat, hanya dapat diuraikan melalui elektrolisis atau reaksi kimia."
+      },
+      {
+        question: "Tubuh manusia mengandung 65% oksigen. Mengapa kita tidak terbakar padahal oksigen mendukung pembakaran?",
+        options: [
+          "Oksigen dalam tubuh berbentuk cair",
+          "Oksigen dalam tubuh terikat dalam senyawa seperti air (H₂O), bukan oksigen bebas (O₂)",
+          "Kulit manusia melindungi dari pembakaran",
+          "Kadar oksigen 65% tidak cukup untuk menyebabkan pembakaran"
+        ],
+        correct: 1,
+        explanation: "Oksigen dalam tubuh tidak dalam bentuk bebas (O₂), melainkan terikat dalam senyawa seperti air (H₂O), karbohidrat, protein, dan lemak. Sifat unsur dalam senyawa berbeda dengan sifat unsur bebasnya."
+      },
+      {
+        question: "Raksa (Hg) adalah logam yang berwujud cair pada suhu ruang. Jika raksa dicampur dengan emas, apakah hasilnya termasuk senyawa atau campuran? Jelaskan alasannya!",
+        options: [
+          "Senyawa, karena terjadi reaksi kimia antara raksa dan emas",
+          "Campuran (amalgam), karena tidak terjadi ikatan kimia dan perbandingannya tidak tetap",
+          "Senyawa, karena menghasilkan zat baru dengan sifat berbeda",
+          "Tidak bisa dicampur karena keduanya logam"
+        ],
+        correct: 1,
+        explanation: "Raksa yang dicampur dengan logam lain membentuk amalgam, yaitu jenis campuran. Tidak ada ikatan kimia yang terbentuk, perbandingan komponennya tidak tetap, dan dapat dipisahkan dengan cara fisika (pemanasan)."
+      },
+      {
+        question: "Sebuah laboratorium memiliki campuran pasir besi dan garam. Metode pemisahan apa yang paling efisien untuk memisahkan ketiganya?",
+        options: [
+          "Filtrasi saja",
+          "Magnetisasi untuk memisahkan besi, lalu penguapan untuk memisahkan garam dari pasir yang dilarutkan",
+          "Destilasi untuk semua komponen",
+          "Sublimasi untuk garam, kemudian filtrasi"
+        ],
+        correct: 1,
+        explanation: "Langkah efisien: (1) Magnetisasi untuk menarik besi, (2) Larutkan campuran dalam air (garam larut, pasir tidak), (3) Filtrasi untuk memisahkan pasir, (4) Penguapan larutan garam untuk mendapatkan garam."
+      },
+      {
+        question: "Simbol Ca digunakan untuk Kalsium (Calcium) agar tidak sama dengan C (Karbon). Berdasarkan aturan IUPAC, apa simbol yang tepat untuk Kadmium (Cadmium)?",
+        options: [
+          "K",
+          "Ca",
+          "Cd",
+          "Cm"
+        ],
+        correct: 2,
+        explanation: "Berdasarkan aturan IUPAC: (1) C sudah dipakai untuk Karbon, (2) Ca sudah dipakai untuk Kalsium, (3) Maka Kadmium menggunakan Cd (huruf pertama kapital + huruf ketiga kecil karena huruf kedua 'a' sudah dipakai Ca)."
+      },
+      {
+        question: "Seorang siswa menemukan bahwa udara terdiri dari 78% nitrogen, 21% oksigen, dan 1% gas lain. Mengapa udara disebut campuran homogen dan bukan senyawa?",
+        options: [
+          "Karena udara tidak berwarna",
+          "Karena komponen udara tidak berikatan kimia, perbandingannya bisa berubah, dan dapat dipisahkan secara fisika",
+          "Karena udara mengandung banyak jenis gas",
+          "Karena udara tidak memiliki rumus kimia"
+        ],
+        correct: 1,
+        explanation: "Udara adalah campuran karena: (1) Tidak ada ikatan kimia antar komponennya, (2) Perbandingan gas bisa berbeda di berbagai tempat, (3) Dapat dipisahkan dengan destilasi fraksional. Homogen karena tercampur merata secara molekuler."
+      },
+      {
+        question: "Silikon (Si) adalah metaloid yang digunakan dalam chip komputer. Mengapa silikon dipilih untuk aplikasi ini berdasarkan sifat metaloidnya?",
+        options: [
+          "Karena silikon sangat murah dan mudah didapat",
+          "Karena silikon bersifat semikonduktor yang konduktivitasnya dapat dikontrol dengan penambahan unsur lain",
+          "Karena silikon tidak bereaksi dengan listrik",
+          "Karena silikon adalah penghantar listrik terbaik"
+        ],
+        correct: 1,
+        explanation: "Sifat semikonduktor silikon memungkinkan konduktivitas listriknya dikontrol dengan doping (penambahan unsur lain seperti Boron atau Fosfor). Ini memungkinkan pembuatan transistor yang menjadi dasar chip komputer."
+      },
+      {
+        question: "Air murni (H₂O) memiliki titik didih 100°C, sedangkan air laut mendidih pada suhu lebih tinggi. Bagaimana fenomena ini menjelaskan perbedaan senyawa dan campuran?",
+        options: [
+          "Air laut mengandung lebih banyak oksigen",
+          "Garam terlarut dalam air laut mengganggu ikatan hidrogen, meningkatkan titik didih campuran",
+          "Air laut memiliki ikatan kimia berbeda",
+          "Garam membuat air menjadi senyawa baru"
+        ],
+        correct: 1,
+        explanation: "Air laut adalah campuran air dan garam. Partikel garam terlarut mengganggu proses penguapan molekul air, sehingga dibutuhkan energi lebih tinggi (suhu lebih tinggi) untuk mendidihkan air laut. Ini adalah sifat koligatif larutan."
+      },
+      {
+        question: "Dalam industri, besi (Fe) sering dicampur dengan karbon (C) untuk membuat baja. Jika perbandingan karbon kurang dari 2%, hasilnya baja; jika lebih dari 2%, hasilnya besi tuang. Apa kesimpulan yang dapat diambil tentang sifat campuran?",
+        options: [
+          "Campuran selalu memiliki perbandingan tetap seperti senyawa",
+          "Perbandingan komponen dalam campuran tidak tetap dan mempengaruhi sifat akhir campuran",
+          "Baja dan besi tuang adalah senyawa berbeda",
+          "Karbon tidak dapat dicampur dengan besi"
+        ],
+        correct: 1,
+        explanation: "Ini menunjukkan ciri khas campuran: (1) Perbandingan komponen tidak tetap, (2) Perubahan perbandingan mempengaruhi sifat campuran. Baja (< 2% C) lebih fleksibel dan kuat, sedangkan besi tuang (> 2% C) lebih keras tapi rapuh."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = [];
+
+    function initQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answered = new Array(quizQuestions.length).fill(null);
+      renderQuestion();
+      document.getElementById('quiz-results').classList.add('hidden');
+      document.getElementById('quiz-container').classList.remove('hidden');
+      updateProgress();
+    }
+
+    function renderQuestion() {
+      const q = quizQuestions[currentQuestion];
+      const container = document.getElementById('quiz-container');
+      
+      container.innerHTML = `
+        <div class="mb-6">
+          <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-3">
+            Soal ${currentQuestion + 1} dari ${quizQuestions.length}
+          </span>
+          <p class="text-lg font-medium text-gray-800 leading-relaxed">${q.question}</p>
+        </div>
+        
+        <div class="space-y-3 mb-6">
+          ${q.options.map((opt, idx) => `
+            <div onclick="selectAnswer(${idx})" 
+              class="quiz-option p-4 rounded-xl border-2 border-gray-200 ${answered[currentQuestion] === idx ? 'selected' : ''}"
+              id="option-${idx}">
+              <div class="flex items-start gap-3">
+                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-bold text-gray-600">
+                  ${String.fromCharCode(65 + idx)}
+                </span>
+                <span class="text-gray-700">${opt}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        
+        <div id="feedback" class="hidden mb-6 p-4 rounded-xl"></div>
+        
+        <div class="flex justify-between gap-4">
+          <button onclick="prevQuestion()" ${currentQuestion === 0 ? 'disabled' : ''} 
+            class="px-6 py-3 rounded-full font-semibold transition-all ${currentQuestion === 0 ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-gray-500 text-white hover:bg-gray-600'}">
+            ← Sebelumnya
+          </button>
+          <button onclick="checkAnswer()" id="check-btn" 
+            class="px-6 py-3 bg-gradient-to-r from-green-500 to-teal-600 text-white rounded-full font-semibold hover:shadow-lg transition-all ${answered[currentQuestion] === null ? 'opacity-50 cursor-not-allowed' : ''}">
+            Periksa Jawaban
+          </button>
+          <button onclick="nextQuestion()" id="next-btn" 
+            class="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-semibold hover:shadow-lg transition-all hidden">
+            ${currentQuestion === quizQuestions.length - 1 ? 'Lihat Hasil' : 'Selanjutnya →'}
+          </button>
+        </div>
+      `;
+    }
+
+    function selectAnswer(idx) {
+      if (document.getElementById('feedback').classList.contains('hidden') === false) return;
+      
+      answered[currentQuestion] = idx;
+      
+      document.querySelectorAll('.quiz-option').forEach((opt, i) => {
+        opt.classList.remove('selected');
+        if (i === idx) opt.classList.add('selected');
+      });
+      
+      document.getElementById('check-btn').classList.remove('opacity-50', 'cursor-not-allowed');
+    }
+
+    function checkAnswer() {
+      if (answered[currentQuestion] === null) return;
+      
+      const q = quizQuestions[currentQuestion];
+      const feedback = document.getElementById('feedback');
+      const isCorrect = answered[currentQuestion] === q.correct;
+      
+      if (isCorrect) score++;
+      
+      // Show correct/incorrect styling
+      document.querySelectorAll('.quiz-option').forEach((opt, i) => {
+        if (i === q.correct) {
+          opt.classList.add('correct');
+          opt.classList.remove('selected');
+        } else if (i === answered[currentQuestion] && !isCorrect) {
+          opt.classList.add('incorrect');
+          opt.classList.remove('selected');
+        }
+      });
+      
+      // Show feedback
+      feedback.classList.remove('hidden');
+      feedback.className = `mb-6 p-4 rounded-xl ${isCorrect ? 'bg-green-50 border-l-4 border-green-500' : 'bg-red-50 border-l-4 border-red-500'}`;
+      feedback.innerHTML = `
+        <div class="flex items-start gap-3">
+          <span class="text-2xl">${isCorrect ? '✅' : '❌'}</span>
+          <div>
+            <p class="font-bold ${isCorrect ? 'text-green-800' : 'text-red-800'}">${isCorrect ? 'Benar!' : 'Kurang Tepat'}</p>
+            <p class="text-sm text-gray-700 mt-1">${q.explanation}</p>
+          </div>
+        </div>
+      `;
+      
+      // Hide check button, show next button
+      document.getElementById('check-btn').classList.add('hidden');
+      document.getElementById('next-btn').classList.remove('hidden');
+      
+      updateProgress();
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    function updateProgress() {
+      const answeredCount = answered.filter(a => a !== null).length;
+      document.getElementById('progress-text').textContent = `${answeredCount}/${quizQuestions.length}`;
+      document.getElementById('progress-bar').style.width = `${(answeredCount / quizQuestions.length) * 100}%`;
+    }
+
+    function showResults() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-results').classList.remove('hidden');
+      
+      const percentage = Math.round((score / quizQuestions.length) * 100);
+      const circumference = 352;
+      const offset = circumference - (percentage / 100) * circumference;
+      
+      document.getElementById('result-circle').style.strokeDashoffset = offset;
+      document.getElementById('result-score').textContent = `${percentage}%`;
+      document.getElementById('result-detail').textContent = `Kamu menjawab ${score} dari ${quizQuestions.length} soal dengan benar`;
+      
+      let message, color;
+      if (percentage >= 80) {
+        message = '🎉 Luar Biasa!';
+        color = '#10b981';
+      } else if (percentage >= 60) {
+        message = '👍 Bagus!';
+        color = '#3b82f6';
+      } else if (percentage >= 40) {
+        message = '📚 Perlu Belajar Lagi';
+        color = '#f59e0b';
+      } else {
+        message = '💪 Jangan Menyerah!';
+        color = '#ef4444';
+      }
+      
+      document.getElementById('result-message').textContent = message;
+      document.getElementById('result-circle').style.stroke = color;
+    }
+
+    function restartQuiz() {
+      initQuiz();
+    }
+
+    // Initialize quiz on load
+    initQuiz();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce4a00c626362b7',t:'MTc3MTE1NjYyMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

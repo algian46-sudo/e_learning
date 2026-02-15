@@ -1,0 +1,998 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getaran dalam Kehidupan Sehari-hari - IPA</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Poppins:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    
+    .font-heading { font-family: 'Poppins', sans-serif; }
+    .font-body { font-family: 'Nunito', sans-serif; }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+    }
+    
+    .card-glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .glow-text {
+      text-shadow: 0 0 40px rgba(59, 130, 246, 0.5);
+    }
+    
+    /* Animasi Bandul */
+    @keyframes pendulum {
+      0%, 100% { transform: rotate(30deg); }
+      50% { transform: rotate(-30deg); }
+    }
+    
+    .pendulum-swing {
+      animation: pendulum 2s ease-in-out infinite;
+      transform-origin: top center;
+    }
+    
+    /* Animasi Gelombang */
+    @keyframes wave {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    .wave-animate {
+      animation: wave 2s linear infinite;
+    }
+    
+    /* Animasi Getaran Pita Suara */
+    @keyframes vibrate {
+      0%, 100% { transform: scaleX(1); }
+      50% { transform: scaleX(1.1); }
+    }
+    
+    .vibrate-anim {
+      animation: vibrate 0.1s ease-in-out infinite;
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:hover {
+      background: rgba(59, 130, 246, 0.3);
+      transform: translateX(5px);
+    }
+    
+    .nav-item.active {
+      background: rgba(59, 130, 246, 0.5);
+      border-left: 4px solid #3b82f6;
+    }
+    
+    .section-card {
+      transition: all 0.4s ease;
+    }
+    
+    .section-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.wrong) {
+      background: rgba(59, 130, 246, 0.3);
+      transform: scale(1.02);
+    }
+    
+    .quiz-option.selected {
+      background: rgba(59, 130, 246, 0.5);
+      border-color: #3b82f6;
+    }
+    
+    .quiz-option.correct {
+      background: rgba(34, 197, 94, 0.5);
+      border-color: #22c55e;
+    }
+    
+    .quiz-option.wrong {
+      background: rgba(239, 68, 68, 0.5);
+      border-color: #ef4444;
+    }
+    
+    .interactive-btn {
+      transition: all 0.3s ease;
+    }
+    
+    .interactive-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+    }
+    
+    .interactive-btn:active {
+      transform: scale(0.98);
+    }
+    
+    /* Scrollbar Custom */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: rgba(59, 130, 246, 0.5);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(59, 130, 246, 0.7);
+    }
+    
+    .formula-box {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+      border: 2px solid rgba(59, 130, 246, 0.3);
+    }
+    
+    .table-custom th {
+      background: rgba(59, 130, 246, 0.3);
+    }
+    
+    .table-custom tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    
+    .table-custom tr:hover {
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .real-image {
+      border: 3px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .image-caption {
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      padding: 1rem;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full gradient-bg text-white font-body overflow-auto">
+  <div class="w-full min-h-full"><!-- Header -->
+   <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+       </div>
+       <div>
+        <h1 id="page-title" class="font-heading font-bold text-xl glow-text">Getaran dalam Kehidupan Sehari-hari</h1>
+        <p class="text-sm text-blue-300">Bab 4 - Getaran, Gelombang, dan Cahaya</p>
+       </div>
+      </div>
+      <div class="hidden md:flex items-center gap-4"><span class="px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-sm">IPA Kelas 8</span> <button onclick="scrollToSection('quiz')" class="interactive-btn px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-semibold text-sm"> 🎯 Mulai Kuis </button>
+      </div>
+     </div>
+    </div>
+   </header><!-- Navigation Mobile -->
+   <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-t border-white/10 px-2 py-2">
+    <div class="flex justify-around"><button onclick="scrollToSection('intro')" class="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-blue-500/20"> <span>🌌</span> <span class="text-xs">Intro</span> </button> <button onclick="scrollToSection('materi')" class="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-blue-500/20"> <span>📚</span> <span class="text-xs">Materi</span> </button> <button onclick="scrollToSection('interaktif')" class="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-blue-500/20"> <span>🧪</span> <span class="text-xs">Lab</span> </button> <button onclick="scrollToSection('quiz')" class="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-blue-500/20"> <span>🎯</span> <span class="text-xs">Kuis</span> </button>
+    </div>
+   </nav>
+   <main class="max-w-7xl mx-auto px-4 py-8 pb-24 md:pb-8"><!-- Section 1: Pendahuluan -->
+    <section id="intro" class="mb-12">
+     <div class="section-card card-glass rounded-2xl p-6 md:p-8">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">🌌</span>
+       <div><span class="text-blue-400 text-sm font-semibold">BAGIAN 1</span>
+        <h2 class="font-heading font-bold text-2xl md:text-3xl">Mengapa Kita Bisa Melihat Galaksi?</h2>
+       </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+       <div>
+        <div class="relative rounded-xl overflow-hidden mb-4 real-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/M31_09-01-2011_%28cropped%29.jpg/1280px-M31_09-01-2011_%28cropped%29.jpg" alt="Galaksi Andromeda" class="w-full h-64 object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1e3a5f, #0f172a)'; this.alt='Gambar Galaksi Andromeda';">
+         <div class="image-caption">
+          <p class="text-sm font-semibold">Galaksi Andromeda (M31)</p>
+          <p class="text-xs text-gray-300">Jarak: 2,5 juta tahun cahaya dari Bumi</p>
+         </div>
+        </div>
+        <div class="bg-blue-500/10 rounded-xl p-4 border border-blue-500/20">
+         <h4 class="font-semibold text-blue-300 mb-2">💡 Tahukah Kamu?</h4>
+         <p class="text-gray-300 text-sm">Galaksi Andromeda berjarak <strong>2,5 juta tahun cahaya</strong> dari Bumi. Artinya, cahaya dari galaksi tersebut membutuhkan waktu 2,5 juta tahun untuk sampai ke mata kita!</p>
+        </div>
+       </div>
+       <div class="space-y-4">
+        <div class="bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-xl p-5 border border-purple-500/20">
+         <h4 class="font-semibold text-purple-300 mb-3">🔭 Koneksi Ilmiah</h4>
+         <p class="text-gray-300">Prinsip kerja teropong dan kamera yang memungkinkan kita melihat objek luar angkasa didasari oleh konsep:</p>
+         <div class="flex flex-wrap gap-2 mt-3"><span class="px-3 py-1 bg-blue-500/30 rounded-full text-sm">Getaran</span> <span class="px-3 py-1 bg-purple-500/30 rounded-full text-sm">Gelombang</span> <span class="px-3 py-1 bg-pink-500/30 rounded-full text-sm">Cahaya</span>
+         </div>
+        </div>
+        <div class="bg-gradient-to-r from-green-500/20 to-teal-500/20 rounded-xl p-5 border border-green-500/20">
+         <h4 class="font-semibold text-green-300 mb-3">🎯 Proyek Akhir Bab</h4>
+         <p class="text-gray-300">Di akhir pembelajaran, kamu akan membuat <strong>Kamera Obscura</strong> - nenek moyang kamera digital modern!</p>
+         <div class="mt-3 flex items-center gap-2 text-sm text-green-400">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg><span>Siapkan bahan-bahanmu!</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 2: Apa itu Getaran? -->
+    <section id="materi" class="mb-12">
+     <div class="section-card card-glass rounded-2xl p-6 md:p-8">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">📖</span>
+       <div><span class="text-blue-400 text-sm font-semibold">BAGIAN 2</span>
+        <h2 class="font-heading font-bold text-2xl md:text-3xl">Apa itu Getaran?</h2>
+       </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+       <div>
+        <div class="formula-box rounded-xl p-6 mb-4">
+         <h4 class="font-heading font-bold text-xl text-blue-300 mb-3">📌 Definisi Getaran</h4>
+         <p class="text-lg text-white leading-relaxed"><strong>Getaran (osilasi)</strong> adalah gerak bolak-balik suatu benda secara <em>teratur</em> melalui <em>titik kesetimbangannya</em>.</p>
+        </div>
+        <div class="bg-yellow-500/10 rounded-xl p-4 border border-yellow-500/20">
+         <h4 class="font-semibold text-yellow-300 mb-2">⚡ Pemicu Getaran</h4>
+         <p class="text-gray-300">Semua benda akan bergetar jika diberikan <strong>gangguan</strong> atau <strong>usikan</strong> dari luar.</p>
+        </div>
+       </div>
+       <div class="relative rounded-xl overflow-hidden real-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Stimmgabel.jpg/800px-Stimmgabel.jpg" alt="Garpu Tala Bergetar" class="w-full h-full object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1e3a5f, #0f172a)'; this.alt='Garpu Tala';">
+        <div class="image-caption">
+         <p class="text-sm font-semibold">Garpu Tala</p>
+         <p class="text-xs text-gray-300">Contoh benda yang menghasilkan getaran murni</p>
+        </div>
+       </div>
+      </div><!-- Contoh Getaran Pita Suara -->
+      <div class="bg-gradient-to-r from-pink-500/20 to-red-500/20 rounded-xl p-6 border border-pink-500/20">
+       <h4 class="font-heading font-bold text-xl text-pink-300 mb-4">🎤 Aktivitas: Rasakan Getaranmu!</h4>
+       <div class="grid md:grid-cols-2 gap-6">
+        <div>
+         <div class="relative rounded-xl overflow-hidden mb-4 real-image h-48"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Gray955.png/440px-Gray955.png" alt="Anatomi Pita Suara" class="w-full h-full object-contain bg-slate-800" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1e3a5f, #0f172a)'; this.alt='Pita Suara';">
+          <div class="image-caption">
+           <p class="text-sm font-semibold">Anatomi Pita Suara Manusia</p>
+          </div>
+         </div>
+        </div>
+        <div>
+         <div class="bg-black/30 rounded-xl p-4">
+          <h5 class="font-semibold text-white mb-3">📝 Langkah Percobaan:</h5>
+          <ol class="space-y-2 text-gray-300">
+           <li class="flex gap-2"><span class="bg-pink-500/30 w-6 h-6 rounded-full flex items-center justify-center text-sm shrink-0">1</span> <span>Letakkan jari-jarimu di tenggorokan (jakun)</span></li>
+           <li class="flex gap-2"><span class="bg-pink-500/30 w-6 h-6 rounded-full flex items-center justify-center text-sm shrink-0">2</span> <span>Ucapkan "Aaaa..." dengan suara pelan</span></li>
+           <li class="flex gap-2"><span class="bg-pink-500/30 w-6 h-6 rounded-full flex items-center justify-center text-sm shrink-0">3</span> <span>Ucapkan lagi dengan suara lebih keras</span></li>
+           <li class="flex gap-2"><span class="bg-pink-500/30 w-6 h-6 rounded-full flex items-center justify-center text-sm shrink-0">4</span> <span>Rasakan perbedaan getarannya!</span></li>
+          </ol>
+         </div>
+         <div class="mt-4 p-3 bg-pink-500/20 rounded-lg">
+          <p class="text-sm text-pink-200">💡 <strong>Kesimpulan:</strong> Semakin keras suara, semakin kuat getaran yang terasa. Pita suara bergetar karena udara dari paru-paru.</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 3: Karakteristik Getaran -->
+    <section class="mb-12">
+     <div class="section-card card-glass rounded-2xl p-6 md:p-8">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">🔍</span>
+       <div><span class="text-blue-400 text-sm font-semibold">BAGIAN 3</span>
+        <h2 class="font-heading font-bold text-2xl md:text-3xl">Karakteristik Getaran</h2>
+       </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6"><!-- Kasat Mata -->
+       <div class="bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl p-6 border border-green-500/20">
+        <div class="flex items-center gap-3 mb-4">
+         <div class="w-12 h-12 bg-green-500/30 rounded-xl flex items-center justify-center"><span class="text-2xl">👁️</span>
+         </div>
+         <h4 class="font-heading font-bold text-lg text-green-300">Getaran Kasat Mata</h4>
+        </div>
+        <p class="text-gray-300 mb-4">Getaran dengan <strong>simpangan besar</strong> yang bisa dilihat langsung oleh mata.</p>
+        <div class="relative rounded-xl overflow-hidden real-image h-40 mb-3"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Metronome.svg/640px-Metronome.svg.png" alt="Metronom" class="w-full h-full object-contain bg-slate-800 p-4" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1e3a5f, #0f172a)'; this.alt='Metronom';">
+         <div class="image-caption py-2">
+          <p class="text-xs font-semibold">Metronom - getarannya terlihat jelas</p>
+         </div>
+        </div>
+        <div class="space-y-2">
+         <p class="text-sm text-green-200">Contoh:</p>
+         <ul class="text-sm text-gray-300 space-y-1">
+          <li>• Bandul jam dinding</li>
+          <li>• Ayunan anak-anak</li>
+          <li>• Senar gitar saat dipetik</li>
+          <li>• Metronom</li>
+         </ul>
+        </div>
+       </div><!-- Tidak Kasat Mata -->
+       <div class="bg-gradient-to-br from-purple-500/20 to-violet-500/20 rounded-xl p-6 border border-purple-500/20">
+        <div class="flex items-center gap-3 mb-4">
+         <div class="w-12 h-12 bg-purple-500/30 rounded-xl flex items-center justify-center"><span class="text-2xl">🔬</span>
+         </div>
+         <h4 class="font-heading font-bold text-lg text-purple-300">Getaran Tidak Kasat Mata</h4>
+        </div>
+        <p class="text-gray-300 mb-4">Getaran dengan <strong>simpangan sangat kecil</strong> sehingga tidak terlihat mata telanjang.</p>
+        <div class="relative rounded-xl overflow-hidden real-image h-40 mb-3"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Atom.svg/640px-Atom.svg.png" alt="Model Atom" class="w-full h-full object-contain bg-slate-800 p-4" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1e3a5f, #0f172a)'; this.alt='Model Atom';">
+         <div class="image-caption py-2">
+          <p class="text-xs font-semibold">Atom - bergetar tapi tak terlihat</p>
+         </div>
+        </div>
+        <div class="space-y-2">
+         <p class="text-sm text-purple-200">Contoh:</p>
+         <ul class="text-sm text-gray-300 space-y-1">
+          <li>• Getaran atom dalam zat padat</li>
+          <li>• Getaran molekul udara (bunyi)</li>
+          <li>• Getaran kristal kuarsa di jam</li>
+          <li>• Pita suara saat berbicara</li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 4: Variabel dan Parameter Getaran -->
+    <section class="mb-12">
+     <div class="section-card card-glass rounded-2xl p-6 md:p-8">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">📊</span>
+       <div><span class="text-blue-400 text-sm font-semibold">BAGIAN 4</span>
+        <h2 class="font-heading font-bold text-2xl md:text-3xl">Variabel dan Parameter Getaran</h2>
+       </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8"><!-- Ilustrasi Bandul Interaktif -->
+       <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+        <h4 class="font-semibold text-center text-blue-300 mb-4">🎯 Bandul Sederhana</h4>
+        <div class="relative h-72 flex justify-center"><!-- Titik Gantung -->
+         <div class="absolute top-0 w-full flex justify-center">
+          <div class="w-4 h-4 bg-gray-500 rounded-full"></div>
+         </div><!-- Bandul -->
+         <div id="pendulum-demo" class="pendulum-swing">
+          <svg viewbox="0 0 100 200" class="w-32 h-64"><!-- Tali --> <line x1="50" y1="0" x2="50" y2="150" stroke="#94a3b8" stroke-width="2" /> <!-- Bola --> <circle cx="50" cy="160" r="15" fill="url(#ballGradient)" /> <defs>
+            <radialgradient id="ballGradient">
+             <stop offset="0%" stop-color="#60a5fa" />
+             <stop offset="100%" stop-color="#1e40af" />
+            </radialgradient>
+           </defs>
+          </svg>
+         </div><!-- Label Titik -->
+         <div class="absolute bottom-12 left-0 right-0 flex justify-between px-4 text-sm"><span class="bg-red-500/30 px-2 py-1 rounded">A</span> <span class="bg-green-500/30 px-2 py-1 rounded">O (Setimbang)</span> <span class="bg-red-500/30 px-2 py-1 rounded">B</span>
+         </div><!-- Garis Amplitudo -->
+         <div class="absolute bottom-6 left-0 right-0 flex justify-center">
+          <div class="flex items-center gap-2">
+           <div class="h-0.5 w-16 bg-yellow-400"></div><span class="text-yellow-400 text-xs">Amplitudo</span>
+           <div class="h-0.5 w-16 bg-yellow-400"></div>
+          </div>
+         </div>
+        </div>
+        <div class="mt-4 text-center">
+         <p class="text-sm text-gray-400">Satu getaran penuh: A → O → B → O → A</p>
+        </div>
+       </div><!-- Tabel Parameter -->
+       <div class="overflow-x-auto">
+        <table class="table-custom w-full text-sm rounded-xl overflow-hidden">
+         <thead>
+          <tr class="text-left">
+           <th class="p-3 font-semibold">Parameter</th>
+           <th class="p-3 font-semibold">Definisi</th>
+           <th class="p-3 font-semibold">Satuan</th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td class="p-3 font-medium text-blue-300">Titik Setimbang</td>
+           <td class="p-3 text-gray-300">Posisi diam benda sebelum diberi gangguan (Titik O)</td>
+           <td class="p-3 text-gray-400">-</td>
+          </tr>
+          <tr>
+           <td class="p-3 font-medium text-blue-300">Satu Getaran</td>
+           <td class="p-3 text-gray-300">Gerak penuh dari A → O → B → O → A</td>
+           <td class="p-3 text-gray-400">-</td>
+          </tr>
+          <tr>
+           <td class="p-3 font-medium text-yellow-300">Amplitudo</td>
+           <td class="p-3 text-gray-300">Simpangan terbesar dari titik setimbang (Jarak O-A atau O-B)</td>
+           <td class="p-3 text-gray-400">Meter (m)</td>
+          </tr>
+          <tr>
+           <td class="p-3 font-medium text-green-300">Periode (T)</td>
+           <td class="p-3 text-gray-300">Waktu untuk 1 kali getaran penuh</td>
+           <td class="p-3 text-gray-400">Detik (s)</td>
+          </tr>
+          <tr>
+           <td class="p-3 font-medium text-purple-300">Frekuensi (f)</td>
+           <td class="p-3 text-gray-300">Banyaknya getaran dalam 1 detik</td>
+           <td class="p-3 text-gray-400">Hertz (Hz)</td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 5: Rumus Penting -->
+    <section class="mb-12">
+     <div class="section-card card-glass rounded-2xl p-6 md:p-8">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">🧮</span>
+       <div><span class="text-blue-400 text-sm font-semibold">BAGIAN 5</span>
+        <h2 class="font-heading font-bold text-2xl md:text-3xl">Rumus Penting</h2>
+       </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-8"><!-- Rumus Periode -->
+       <div class="formula-box rounded-xl p-6 text-center">
+        <h4 class="font-semibold text-green-300 mb-4">Periode (T)</h4>
+        <div class="text-4xl font-heading font-bold text-white mb-4">
+         T = <span class="text-green-400">t</span> / <span class="text-blue-400">n</span>
+        </div>
+        <div class="text-left text-sm text-gray-300 space-y-1">
+         <p><span class="text-green-400 font-semibold">t</span> = Waktu total (detik)</p>
+         <p><span class="text-blue-400 font-semibold">n</span> = Jumlah getaran</p>
+         <p><span class="text-white font-semibold">T</span> = Periode (detik)</p>
+        </div>
+       </div><!-- Rumus Frekuensi -->
+       <div class="formula-box rounded-xl p-6 text-center">
+        <h4 class="font-semibold text-purple-300 mb-4">Frekuensi (f)</h4>
+        <div class="text-4xl font-heading font-bold text-white mb-4">
+         f = <span class="text-blue-400">n</span> / <span class="text-green-400">t</span>
+        </div>
+        <div class="text-left text-sm text-gray-300 space-y-1">
+         <p><span class="text-blue-400 font-semibold">n</span> = Jumlah getaran</p>
+         <p><span class="text-green-400 font-semibold">t</span> = Waktu total (detik)</p>
+         <p><span class="text-white font-semibold">f</span> = Frekuensi (Hz)</p>
+        </div>
+       </div>
+      </div><!-- Hubungan T dan f -->
+      <div class="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-xl p-6 border border-yellow-500/20">
+       <h4 class="font-semibold text-yellow-300 mb-4 text-center">⚡ Hubungan Periode dan Frekuensi</h4>
+       <div class="text-center text-3xl font-heading font-bold text-white mb-4">
+        T = 1/f &nbsp;&nbsp; atau &nbsp;&nbsp; f = 1/T
+       </div>
+       <p class="text-center text-gray-300">Periode dan frekuensi berbanding terbalik. Semakin besar periode, semakin kecil frekuensinya.</p>
+      </div><!-- Kalkulator Interaktif -->
+      <div class="mt-8 bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+       <h4 class="font-semibold text-blue-300 mb-4 text-center">🔢 Kalkulator Getaran Interaktif</h4>
+       <div class="grid md:grid-cols-3 gap-4 mb-4">
+        <div><label class="block text-sm text-gray-400 mb-2">Jumlah Getaran (n)</label> <input type="number" id="calc-n" value="10" min="1" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500">
+        </div>
+        <div><label class="block text-sm text-gray-400 mb-2">Waktu Total (t) detik</label> <input type="number" id="calc-t" value="5" min="0.1" step="0.1" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500">
+        </div>
+        <div class="flex items-end"><button onclick="calculateVibration()" class="interactive-btn w-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg px-4 py-2 font-semibold"> Hitung! </button>
+        </div>
+       </div>
+       <div id="calc-result" class="grid md:grid-cols-2 gap-4">
+        <div class="bg-green-500/20 rounded-lg p-4 text-center">
+         <p class="text-sm text-green-300">Periode (T)</p>
+         <p id="result-T" class="text-2xl font-bold text-white">0.5 detik</p>
+        </div>
+        <div class="bg-purple-500/20 rounded-lg p-4 text-center">
+         <p class="text-sm text-purple-300">Frekuensi (f)</p>
+         <p id="result-f" class="text-2xl font-bold text-white">2 Hz</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 6: Aktivitas Lab -->
+    <section id="interaktif" class="mb-12">
+     <div class="section-card card-glass rounded-2xl p-6 md:p-8">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">🧪</span>
+       <div><span class="text-blue-400 text-sm font-semibold">BAGIAN 6</span>
+        <h2 class="font-heading font-bold text-2xl md:text-3xl">Aktivitas Lab: Eksperimen Bandul</h2>
+       </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+       <div>
+        <div class="relative rounded-xl overflow-hidden real-image h-64 mb-4"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Pendulum-no-text.gif/220px-Pendulum-no-text.gif" alt="Animasi Bandul" class="w-full h-full object-contain bg-slate-800" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1e3a5f, #0f172a)'; this.alt='Bandul Berayun';">
+         <div class="image-caption">
+          <p class="text-sm font-semibold">Simulasi gerak bandul sederhana</p>
+         </div>
+        </div>
+       </div>
+       <div>
+        <div class="bg-blue-500/10 rounded-xl p-5 border border-blue-500/20 mb-4">
+         <h4 class="font-semibold text-blue-300 mb-3">🎯 Tujuan Eksperimen</h4>
+         <p class="text-gray-300">Mengamati pengaruh <strong>panjang tali</strong> terhadap periode dan frekuensi getaran bandul.</p>
+        </div>
+        <div class="bg-yellow-500/10 rounded-xl p-5 border border-yellow-500/20">
+         <h4 class="font-semibold text-yellow-300 mb-3">🔮 Hipotesis</h4>
+         <p class="text-gray-300">Semakin <strong>panjang tali</strong> yang digunakan, maka waktu untuk satu kali getaran (periode) akan semakin <strong>lama</strong>.</p>
+        </div>
+       </div>
+      </div><!-- Alat dan Bahan -->
+      <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 mb-6">
+       <h4 class="font-semibold text-white mb-4">📦 Alat dan Bahan</h4>
+       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-slate-700/50 rounded-lg p-3 text-center"><span class="text-3xl">🧵</span>
+         <p class="text-sm text-gray-300 mt-2">Tali/Benang (50cm, 75cm, 100cm)</p>
+        </div>
+        <div class="bg-slate-700/50 rounded-lg p-3 text-center"><span class="text-3xl">🍎</span>
+         <p class="text-sm text-gray-300 mt-2">Buah/Batu sebagai pemberat</p>
+        </div>
+        <div class="bg-slate-700/50 rounded-lg p-3 text-center"><span class="text-3xl">⏱️</span>
+         <p class="text-sm text-gray-300 mt-2">Stopwatch/HP</p>
+        </div>
+        <div class="bg-slate-700/50 rounded-lg p-3 text-center"><span class="text-3xl">📏</span>
+         <p class="text-sm text-gray-300 mt-2">Penggaris/Meteran</p>
+        </div>
+       </div>
+      </div><!-- Simulasi Interaktif -->
+      <div class="bg-gradient-to-r from-green-500/20 to-teal-500/20 rounded-xl p-6 border border-green-500/20">
+       <h4 class="font-semibold text-green-300 mb-4 text-center">🎮 Simulasi Interaktif: Pengaruh Panjang Tali</h4>
+       <div class="grid md:grid-cols-3 gap-6"><!-- Kontrol -->
+        <div class="space-y-4">
+         <div><label class="block text-sm text-gray-400 mb-2">Panjang Tali: <span id="rope-length-display" class="text-green-300 font-semibold">50</span> cm</label> <input type="range" id="rope-length" min="25" max="100" value="50" class="w-full" onchange="updatePendulumSimulation()">
+         </div>
+         <div class="bg-slate-800/50 rounded-lg p-4">
+          <p class="text-sm text-gray-400 mb-2">Hasil Simulasi:</p>
+          <div class="space-y-2">
+           <p class="text-green-300">Periode: <span id="sim-period" class="font-bold text-white">1.42</span> detik</p>
+           <p class="text-purple-300">Frekuensi: <span id="sim-freq" class="font-bold text-white">0.70</span> Hz</p>
+          </div>
+         </div>
+        </div><!-- Visualisasi -->
+        <div class="col-span-2 bg-slate-800/50 rounded-xl p-4 flex justify-center items-center min-h-[250px]">
+         <div id="pendulum-sim" class="relative">
+          <svg viewbox="0 0 200 300" class="w-48 h-72"><!-- Titik Gantung --> <rect x="75" y="0" width="50" height="10" fill="#4b5563" /> <circle cx="100" cy="10" r="5" fill="#6b7280" /> <!-- Tali dan Bandul (akan dianimasikan) --> <g id="pendulum-group" style="transform-origin: 100px 10px;">
+            <line id="sim-rope" x1="100" y1="10" x2="100" y2="160" stroke="#94a3b8" stroke-width="2" />
+            <circle id="sim-ball" cx="100" cy="175" r="20" fill="url(#simBallGradient)" />
+           </g> <!-- Label --> <text x="100" y="220" text-anchor="middle" fill="#9ca3af" font-size="12">
+            A ← O → B
+           </text> <defs>
+            <radialgradient id="simBallGradient">
+             <stop offset="0%" stop-color="#34d399" />
+             <stop offset="100%" stop-color="#059669" />
+            </radialgradient>
+           </defs>
+          </svg>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 7: Diskusi Kritis -->
+    <section class="mb-12">
+     <div class="section-card card-glass rounded-2xl p-6 md:p-8">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">💭</span>
+       <div><span class="text-blue-400 text-sm font-semibold">BAGIAN 7</span>
+        <h2 class="font-heading font-bold text-2xl md:text-3xl">Diskusi Kritis &amp; Aplikasi Nyata</h2>
+       </div>
+      </div><!-- Pertanyaan Diskusi -->
+      <div class="bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-xl p-6 border border-orange-500/20 mb-6">
+       <h4 class="font-semibold text-orange-300 mb-4">🤔 Pertanyaan untuk Didiskusikan</h4>
+       <div class="bg-slate-800/50 rounded-lg p-4 mb-4">
+        <p class="text-lg text-white font-medium mb-2">"Jika kamu berjalan bolak-balik di kelas, apakah itu disebut getaran?"</p>
+       </div><button onclick="toggleAnswer('discussion-answer')" class="interactive-btn bg-orange-500/30 hover:bg-orange-500/50 px-4 py-2 rounded-lg text-sm"> Lihat Jawaban 👇 </button>
+       <div id="discussion-answer" class="hidden mt-4 bg-green-500/20 rounded-lg p-4 border border-green-500/30">
+        <p class="text-green-300 font-semibold mb-2">✅ Jawaban:</p>
+        <p class="text-gray-300"><strong>Tidak!</strong> Karena:</p>
+        <ul class="text-gray-300 mt-2 space-y-1">
+         <li>• Tidak ada titik setimbang yang tetap</li>
+         <li>• Gerakannya tidak selalu teratur</li>
+         <li>• Periode dan frekuensinya tidak konstan</li>
+        </ul>
+       </div>
+      </div><!-- Aplikasi Nyata -->
+      <div class="grid md:grid-cols-3 gap-4">
+       <div class="bg-slate-800/50 rounded-xl p-5 border border-slate-700">
+        <div class="relative rounded-lg overflow-hidden real-image h-32 mb-3"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Kolben.gif/220px-Kolben.gif" alt="Piston Mesin" class="w-full h-full object-cover bg-slate-700" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1e3a5f, #0f172a)'; this.alt='Piston';">
+        </div>
+        <h5 class="font-semibold text-blue-300 mb-2">🚗 Mesin Kendaraan</h5>
+        <p class="text-sm text-gray-400">Piston bergetar naik-turun mengubah energi getaran menjadi energi gerak untuk memutar roda.</p>
+       </div>
+       <div class="bg-slate-800/50 rounded-xl p-5 border border-slate-700">
+        <div class="relative rounded-lg overflow-hidden real-image h-32 mb-3"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Quartz_crystal.jpg/640px-Quartz_crystal.jpg" alt="Kristal Kuarsa" class="w-full h-full object-cover bg-slate-700" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1e3a5f, #0f172a)'; this.alt='Kristal Kuarsa';">
+        </div>
+        <h5 class="font-semibold text-purple-300 mb-2">⌚ Jam Kuarsa</h5>
+        <p class="text-sm text-gray-400">Kristal kuarsa bergetar 32.768 kali per detik untuk menjaga ketepatan waktu.</p>
+       </div>
+       <div class="bg-slate-800/50 rounded-xl p-5 border border-slate-700">
+        <div class="relative rounded-lg overflow-hidden real-image h-32 mb-3"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Loudspeaker.svg/500px-Loudspeaker.svg.png" alt="Speaker" class="w-full h-full object-contain bg-slate-700 p-2" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1e3a5f, #0f172a)'; this.alt='Speaker';">
+        </div>
+        <h5 class="font-semibold text-green-300 mb-2">🔊 Speaker</h5>
+        <p class="text-sm text-gray-400">Membran speaker bergetar menghasilkan gelombang suara yang kita dengar.</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Section 8: Kuis HOTS -->
+    <section id="quiz" class="mb-12">
+     <div class="section-card card-glass rounded-2xl p-6 md:p-8">
+      <div class="flex items-center gap-3 mb-6"><span class="text-4xl">🎯</span>
+       <div><span class="text-blue-400 text-sm font-semibold">BAGIAN 8</span>
+        <h2 class="font-heading font-bold text-2xl md:text-3xl">Kuis HOTS: Uji Pemahamanmu!</h2>
+       </div>
+      </div><!-- Progress Bar -->
+      <div class="mb-6">
+       <div class="flex justify-between text-sm text-gray-400 mb-2"><span>Progres</span> <span id="quiz-progress">0/10</span>
+       </div>
+       <div class="w-full bg-slate-700 rounded-full h-3">
+        <div id="progress-bar" class="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+       </div>
+      </div><!-- Quiz Container -->
+      <div id="quiz-container"><!-- Questions will be loaded here -->
+      </div><!-- Quiz Result -->
+      <div id="quiz-result" class="hidden text-center">
+       <div class="text-6xl mb-4">
+        🏆
+       </div>
+       <h3 class="font-heading font-bold text-3xl text-white mb-2">Kuis Selesai!</h3>
+       <p class="text-xl text-gray-300 mb-4">Skor kamu: <span id="final-score" class="text-green-400 font-bold">0</span>/10</p>
+       <div id="score-message" class="text-lg text-gray-400 mb-6"></div><button onclick="resetQuiz()" class="interactive-btn bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-3 rounded-xl font-semibold"> 🔄 Ulangi Kuis </button>
+      </div><!-- Navigation Buttons -->
+      <div id="quiz-nav" class="flex justify-between mt-6"><button id="prev-btn" onclick="prevQuestion()" class="interactive-btn bg-slate-700 hover:bg-slate-600 px-6 py-2 rounded-lg disabled:opacity-50" disabled> ← Sebelumnya </button> <button id="next-btn" onclick="nextQuestion()" class="interactive-btn bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-2 rounded-lg"> Selanjutnya → </button>
+      </div>
+     </div>
+    </section>
+   </main><!-- Footer -->
+   <footer class="bg-slate-900/80 border-t border-white/10 py-8 pb-24 md:pb-8">
+    <div class="max-w-7xl mx-auto px-4">
+     <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3"><img src="https://i.imgur.com/mRmw86t.jpeg" alt="Foto Pembuat" class="w-12 h-12 rounded-full object-cover border-2 border-blue-500" loading="lazy" onerror="this.style.background='#3b82f6'; this.alt='Foto';">
+       <div>
+        <p id="creator-name" class="font-semibold text-white">Algian Manggara, S.Agr</p>
+        <p class="text-sm text-gray-400">Pengembang Materi Pembelajaran</p>
+       </div>
+      </div>
+      <div class="text-center md:text-right">
+       <p class="text-gray-400 text-sm">© 2026 <span class="text-blue-400">Algian Manggara, S.Agr</span></p>
+       <p class="text-gray-500 text-xs mt-1">Materi Pembelajaran IPA - Getaran, Gelombang, dan Cahaya</p>
+      </div>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default Configuration
+    const defaultConfig = {
+      page_title: "Getaran dalam Kehidupan Sehari-hari",
+      creator_name: "Algian Manggara, S.Agr"
+    };
+
+    // Quiz Questions Data - HOTS Level
+    const quizQuestions = [
+      {
+        id: 1,
+        question: "Sebuah bandul bergetar sebanyak 30 kali dalam waktu 15 detik. Jika panjang tali bandul diperpanjang menjadi 4 kali semula, bagaimana perubahan periodenya?",
+        options: [
+          "Periode menjadi 2 kali lebih besar",
+          "Periode menjadi 4 kali lebih besar",
+          "Periode tetap sama",
+          "Periode menjadi setengahnya"
+        ],
+        correct: 0,
+        explanation: "Periode bandul berbanding lurus dengan akar kuadrat panjang tali. Jika panjang tali menjadi 4 kali (√4 = 2), maka periode menjadi 2 kali lebih besar."
+      },
+      {
+        id: 2,
+        question: "Seorang anak mengayunkan ayunan di taman. Saat ayunan mencapai titik tertinggi di sisi kanan, energi apakah yang paling dominan?",
+        options: [
+          "Energi kinetik maksimum",
+          "Energi potensial maksimum",
+          "Energi kinetik dan potensial sama besar",
+          "Tidak ada energi yang bekerja"
+        ],
+        correct: 1,
+        explanation: "Di titik tertinggi, ayunan berhenti sesaat sehingga energi kinetik = 0 dan energi potensial mencapai maksimum karena ketinggian maksimum."
+      },
+      {
+        id: 3,
+        question: "Getaran pada senar gitar menghasilkan bunyi. Jika senar dikencangkan, apa yang terjadi pada frekuensi dan periode getarannya?",
+        options: [
+          "Frekuensi naik, periode naik",
+          "Frekuensi turun, periode turun",
+          "Frekuensi naik, periode turun",
+          "Frekuensi turun, periode naik"
+        ],
+        correct: 2,
+        explanation: "Senar yang lebih kencang bergetar lebih cepat (frekuensi naik). Karena f = 1/T, jika frekuensi naik maka periode turun. Inilah mengapa senar gitar yang dikencangkan menghasilkan nada lebih tinggi."
+      },
+      {
+        id: 4,
+        question: "Dua bandul A dan B memiliki frekuensi masing-masing 2 Hz dan 4 Hz. Dalam waktu 10 detik, berapa selisih jumlah getaran keduanya?",
+        options: [
+          "10 getaran",
+          "20 getaran",
+          "30 getaran",
+          "40 getaran"
+        ],
+        correct: 1,
+        explanation: "n = f × t. Bandul A: 2 × 10 = 20 getaran. Bandul B: 4 × 10 = 40 getaran. Selisih = 40 - 20 = 20 getaran."
+      },
+      {
+        id: 5,
+        question: "Sebuah pegas digetarkan dengan amplitudo 5 cm dan periode 0,5 detik. Jika amplitudo diperbesar menjadi 10 cm tanpa mengubah faktor lain, bagaimana periode getarannya?",
+        options: [
+          "Periode menjadi 2 kali lebih besar",
+          "Periode menjadi setengahnya",
+          "Periode tetap 0,5 detik",
+          "Periode menjadi 1 detik"
+        ],
+        correct: 2,
+        explanation: "Periode getaran pegas TIDAK dipengaruhi oleh amplitudo. Periode hanya bergantung pada massa benda dan konstanta pegas. Jadi periode tetap 0,5 detik."
+      },
+      {
+        id: 6,
+        question: "Kristal kuarsa dalam jam tangan bergetar dengan frekuensi 32.768 Hz. Berapa kali kristal tersebut bergetar dalam 1 menit?",
+        options: [
+          "32.768 kali",
+          "1.966.080 kali",
+          "546 kali",
+          "2.097.152 kali"
+        ],
+        correct: 1,
+        explanation: "1 menit = 60 detik. Jumlah getaran = f × t = 32.768 × 60 = 1.966.080 kali per menit."
+      },
+      {
+        id: 7,
+        question: "Sebuah benda bergetar dengan T = 0,25 detik. Jika benda tersebut bergetar selama 2 menit, berapa jumlah getaran yang terjadi?",
+        options: [
+          "480 getaran",
+          "240 getaran",
+          "120 getaran",
+          "8 getaran"
+        ],
+        correct: 0,
+        explanation: "2 menit = 120 detik. f = 1/T = 1/0,25 = 4 Hz. n = f × t = 4 × 120 = 480 getaran."
+      },
+      {
+        id: 8,
+        question: "Mengapa penumpang di dalam mobil yang mesinnya menyala bisa merasakan getaran meskipun tidak bisa melihat piston bergerak?",
+        options: [
+          "Karena getaran piston termasuk getaran kasat mata",
+          "Karena getaran merambat melalui bodi mobil meskipun simpangannya kecil",
+          "Karena penumpang memiliki kemampuan khusus merasakan getaran",
+          "Karena getaran piston menghasilkan suara yang sangat keras"
+        ],
+        correct: 1,
+        explanation: "Getaran piston mesin memiliki simpangan kecil (tidak kasat mata), namun getaran tersebut merambat melalui bodi mobil hingga terasa oleh penumpang sebagai sensasi getar."
+      },
+      {
+        id: 9,
+        question: "Seorang ilmuwan mengukur getaran atom dalam kristal. Ia menemukan bahwa dalam 1 detik terjadi 10¹³ getaran. Berapa periode getaran atom tersebut?",
+        options: [
+          "10¹³ detik",
+          "10⁻¹³ detik",
+          "0,1 detik",
+          "10 detik"
+        ],
+        correct: 1,
+        explanation: "T = 1/f = 1/10¹³ = 10⁻¹³ detik. Ini menunjukkan betapa cepatnya getaran pada tingkat atom yang tidak bisa kita lihat."
+      },
+      {
+        id: 10,
+        question: "Dua bandul identik diayunkan di Bumi dan di Bulan. Diketahui gravitasi Bulan adalah 1/6 gravitasi Bumi. Bagaimana perbandingan periode bandul di Bulan terhadap di Bumi?",
+        options: [
+          "Periode di Bulan 6 kali lebih besar",
+          "Periode di Bulan √6 kali lebih besar",
+          "Periode di Bulan sama dengan di Bumi",
+          "Periode di Bulan 1/6 kali dari Bumi"
+        ],
+        correct: 1,
+        explanation: "Periode bandul T = 2π√(L/g). Jika g menjadi 1/6, maka T berbanding dengan √(1/(1/6)) = √6. Jadi periode di Bulan √6 ≈ 2,45 kali lebih besar dari di Bumi."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quizQuestions.length).fill(null);
+    let score = 0;
+
+    // Initialize Elements SDK
+    function initElementSDK() {
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (config) => {
+            document.getElementById('page-title').textContent = config.page_title || defaultConfig.page_title;
+            document.getElementById('creator-name').textContent = config.creator_name || defaultConfig.creator_name;
+          },
+          mapToCapabilities: (config) => ({
+            recolorables: [],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ['page_title', config.page_title || defaultConfig.page_title],
+            ['creator_name', config.creator_name || defaultConfig.creator_name]
+          ])
+        });
+      }
+    }
+
+    // Calculator Functions
+    function calculateVibration() {
+      const n = parseFloat(document.getElementById('calc-n').value) || 1;
+      const t = parseFloat(document.getElementById('calc-t').value) || 1;
+      
+      const T = t / n;
+      const f = n / t;
+      
+      document.getElementById('result-T').textContent = T.toFixed(3) + ' detik';
+      document.getElementById('result-f').textContent = f.toFixed(3) + ' Hz';
+    }
+
+    // Pendulum Simulation
+    function updatePendulumSimulation() {
+      const length = parseFloat(document.getElementById('rope-length').value);
+      document.getElementById('rope-length-display').textContent = length;
+      
+      // Simplified period calculation: T = 2π√(L/g)
+      // Using g = 980 cm/s² for calculation
+      const g = 980;
+      const T = 2 * Math.PI * Math.sqrt(length / g);
+      const f = 1 / T;
+      
+      document.getElementById('sim-period').textContent = T.toFixed(2);
+      document.getElementById('sim-freq').textContent = f.toFixed(2);
+      
+      // Update animation speed
+      const pendulumGroup = document.getElementById('pendulum-group');
+      pendulumGroup.style.animation = `pendulum ${T}s ease-in-out infinite`;
+      
+      // Update rope and ball position
+      const ropeLength = 50 + (length * 1.2);
+      document.getElementById('sim-rope').setAttribute('y2', ropeLength);
+      document.getElementById('sim-ball').setAttribute('cy', ropeLength + 15);
+    }
+
+    // Quiz Functions
+    function loadQuestion() {
+      const question = quizQuestions[currentQuestion];
+      const container = document.getElementById('quiz-container');
+      
+      let optionsHTML = question.options.map((opt, idx) => {
+        let classes = 'quiz-option p-4 rounded-xl border-2 border-slate-600 bg-slate-800/50';
+        if (userAnswers[currentQuestion] === idx) {
+          classes += ' selected';
+        }
+        return `
+          <div class="${classes}" onclick="selectAnswer(${idx})" data-idx="${idx}">
+            <div class="flex items-start gap-3">
+              <span class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-sm font-semibold shrink-0">
+                ${String.fromCharCode(65 + idx)}
+              </span>
+              <span class="text-gray-200">${opt}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.innerHTML = `
+        <div class="mb-6">
+          <span class="text-blue-400 text-sm font-semibold">Soal ${currentQuestion + 1} dari 10</span>
+          <h4 class="font-heading font-bold text-xl text-white mt-2 leading-relaxed">${question.question}</h4>
+        </div>
+        <div class="space-y-3" id="options-container">
+          ${optionsHTML}
+        </div>
+        <div id="explanation-box" class="hidden mt-4"></div>
+      `;
+
+      updateProgress();
+      updateNavButtons();
+    }
+
+    function selectAnswer(idx) {
+      if (userAnswers[currentQuestion] !== null) return;
+      
+      userAnswers[currentQuestion] = idx;
+      const question = quizQuestions[currentQuestion];
+      const options = document.querySelectorAll('.quiz-option');
+      
+      options.forEach((opt, i) => {
+        opt.classList.remove('selected');
+        if (i === idx) {
+          if (idx === question.correct) {
+            opt.classList.add('correct');
+            score++;
+          } else {
+            opt.classList.add('wrong');
+          }
+        }
+        if (i === question.correct) {
+          opt.classList.add('correct');
+        }
+      });
+
+      // Show explanation
+      const expBox = document.getElementById('explanation-box');
+      expBox.innerHTML = `
+        <div class="bg-blue-500/20 rounded-xl p-4 border border-blue-500/30">
+          <h5 class="font-semibold text-blue-300 mb-2">💡 Penjelasan:</h5>
+          <p class="text-gray-300">${question.explanation}</p>
+        </div>
+      `;
+      expBox.classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+      }
+    }
+
+    function updateProgress() {
+      const answered = userAnswers.filter(a => a !== null).length;
+      document.getElementById('quiz-progress').textContent = `${answered}/10`;
+      document.getElementById('progress-bar').style.width = `${(answered / 10) * 100}%`;
+    }
+
+    function updateNavButtons() {
+      document.getElementById('prev-btn').disabled = currentQuestion === 0;
+      document.getElementById('next-btn').textContent = currentQuestion === quizQuestions.length - 1 ? 'Selesai ✓' : 'Selanjutnya →';
+    }
+
+    function showResult() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-nav').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      document.getElementById('final-score').textContent = score;
+      
+      let message = '';
+      if (score >= 9) {
+        message = '🌟 Luar Biasa! Kamu sangat memahami konsep getaran!';
+      } else if (score >= 7) {
+        message = '👏 Hebat! Pemahaman kamu sudah baik, terus tingkatkan!';
+      } else if (score >= 5) {
+        message = '📚 Cukup baik! Ayo pelajari lagi materi yang belum dikuasai.';
+      } else {
+        message = '💪 Jangan menyerah! Pelajari kembali materinya dan coba lagi.';
+      }
+      document.getElementById('score-message').textContent = message;
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      userAnswers = new Array(quizQuestions.length).fill(null);
+      score = 0;
+      
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('quiz-nav').classList.remove('hidden');
+      document.getElementById('quiz-result').classList.add('hidden');
+      
+      loadQuestion();
+    }
+
+    // Helper Functions
+    function toggleAnswer(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('hidden');
+    }
+
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+      initElementSDK();
+      calculateVibration();
+      updatePendulumSimulation();
+      loadQuestion();
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ce45e85c28eb581',t:'MTc3MTE1MzkzNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

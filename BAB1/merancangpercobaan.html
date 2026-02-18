@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menjadi Ilmuwan Cilik dengan Metode Ilmiah</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="/_sdk/element_sdk.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+    <style>
+        * { font-family: 'Nunito', sans-serif; }
+        .comic-font { font-family: 'Comic Neue', cursive; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
+        }
+        
+        @keyframes slide-in {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes bounce-in {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        
+        .float-animation { animation: float 3s ease-in-out infinite; }
+        .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        .slide-in { animation: slide-in 0.5s ease-out forwards; }
+        .bounce-in { animation: bounce-in 0.6s ease-out forwards; }
+        
+        .step-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .step-card:hover::before {
+            left: 100%;
+        }
+        
+        .step-card:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+        
+        .nav-dot {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-dot.active {
+            transform: scale(1.3);
+        }
+        
+        .quiz-option {
+            transition: all 0.2s ease;
+        }
+        
+        .quiz-option:hover:not(:disabled) {
+            transform: translateX(10px);
+        }
+        
+        .progress-fill {
+            transition: width 0.5s ease-out;
+        }
+        
+        .mascot {
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+        
+        .section-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-hidden {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .illustration-container {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 20px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .illustration-container::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+        }
+
+        .real-image {
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .real-image:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="h-full bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <div id="app-container" class="h-full overflow-auto">
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 text-white py-6 px-4 shadow-lg relative overflow-hidden">
+            <div class="absolute inset-0 opacity-20">
+                <div class="absolute top-2 left-10 text-4xl">🔬</div>
+                <div class="absolute top-4 right-20 text-3xl">🧪</div>
+                <div class="absolute bottom-2 left-1/4 text-2xl">⚗️</div>
+                <div class="absolute bottom-3 right-1/3 text-3xl">🔭</div>
+                <div class="absolute top-1/2 left-1/2 text-2xl">💡</div>
+            </div>
+            <div class="max-w-6xl mx-auto relative z-10">
+                <div class="flex items-center justify-center gap-4">
+                    <div class="text-5xl float-animation">🧑‍🔬</div>
+                    <div class="text-center">
+                        <h1 id="main-title" class="text-2xl md:text-4xl font-extrabold comic-font drop-shadow-lg">
+                            Menjadi Ilmuwan Cilik dengan Metode Ilmiah
+                        </h1>
+                        <p class="text-blue-100 mt-2 text-sm md:text-base">Petualangan Sains untuk Siswa SMP 🚀</p>
+                    </div>
+                    <div class="text-5xl float-animation" style="animation-delay: 0.5s;">🔬</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Dots -->
+        <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm py-3 px-4 shadow-md">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex justify-center items-center gap-2 flex-wrap">
+                    <button onclick="scrollToSection('intro')" class="nav-dot w-10 h-10 rounded-full bg-blue-500 text-white text-xs font-bold hover:bg-blue-600 transition-all" title="Pendahuluan">1</button>
+                    <div class="w-8 h-1 bg-gray-300 rounded hidden md:block"></div>
+                    <button onclick="scrollToSection('alur')" class="nav-dot w-10 h-10 rounded-full bg-purple-500 text-white text-xs font-bold hover:bg-purple-600 transition-all" title="Alur">2</button>
+                    <div class="w-8 h-1 bg-gray-300 rounded hidden md:block"></div>
+                    <button onclick="scrollToSection('observasi')" class="nav-dot w-10 h-10 rounded-full bg-green-500 text-white text-xs font-bold hover:bg-green-600 transition-all" title="Observasi">3</button>
+                    <div class="w-8 h-1 bg-gray-300 rounded hidden md:block"></div>
+                    <button onclick="scrollToSection('tujuan')" class="nav-dot w-10 h-10 rounded-full bg-yellow-500 text-white text-xs font-bold hover:bg-yellow-600 transition-all" title="Tujuan">4</button>
+                    <div class="w-8 h-1 bg-gray-300 rounded hidden md:block"></div>
+                    <button onclick="scrollToSection('hipotesis')" class="nav-dot w-10 h-10 rounded-full bg-orange-500 text-white text-xs font-bold hover:bg-orange-600 transition-all" title="Hipotesis">5</button>
+                    <div class="w-8 h-1 bg-gray-300 rounded hidden md:block"></div>
+                    <button onclick="scrollToSection('variabel')" class="nav-dot w-10 h-10 rounded-full bg-red-500 text-white text-xs font-bold hover:bg-red-600 transition-all" title="Variabel">6</button>
+                    <div class="w-8 h-1 bg-gray-300 rounded hidden md:block"></div>
+                    <button onclick="scrollToSection('prosedur')" class="nav-dot w-10 h-10 rounded-full bg-pink-500 text-white text-xs font-bold hover:bg-pink-600 transition-all" title="Prosedur">7</button>
+                    <div class="w-8 h-1 bg-gray-300 rounded hidden md:block"></div>
+                    <button onclick="scrollToSection('quiz')" class="nav-dot w-10 h-10 rounded-full bg-indigo-500 text-white text-xs font-bold hover:bg-indigo-600 transition-all" title="Kuis">🎯</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="max-w-6xl mx-auto px-4 py-8 space-y-12">
+            
+            <!-- Section 1: Pendahuluan -->
+            <section id="intro" class="bg-white rounded-3xl shadow-xl p-6 md:p-8 border-4 border-blue-200 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-100 rounded-full -translate-y-1/2 translate-x-1/2 opacity-50"></div>
+                
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="bg-blue-500 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-lg">1</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-blue-700 comic-font">Apa itu Metode Ilmiah? 🤔</h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-5 rounded-2xl border-l-4 border-blue-500">
+                            <h3 class="font-bold text-blue-700 text-lg mb-2">📖 Definisi</h3>
+                            <p class="text-gray-700 leading-relaxed">
+                                <strong>Metode ilmiah</strong> adalah cara atau pendekatan sistematis yang digunakan dalam penelitian untuk menemukan kebenaran ilmiah melalui langkah-langkah yang terstruktur dan dapat diuji ulang.
+                            </p>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-amber-50 to-yellow-100 p-5 rounded-2xl border-l-4 border-yellow-500">
+                            <h3 class="font-bold text-yellow-700 text-lg mb-2">🔍 Analogi Detektif</h3>
+                            <p class="text-gray-700 leading-relaxed">
+                                Ilmuwan bekerja seperti <strong>detektif</strong>! Mereka:
+                            </p>
+                            <ul class="mt-2 space-y-1 text-gray-600">
+                                <li>👀 Mengamati dengan teliti</li>
+                                <li>❓ Bertanya tentang fenomena</li>
+                                <li>🔎 Menyelidiki secara mendalam</li>
+                                <li>📋 Mengumpulkan bukti-bukti</li>
+                                <li>💭 Menarik kesimpulan</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-green-50 to-emerald-100 p-5 rounded-2xl border-l-4 border-green-500">
+                            <h3 class="font-bold text-green-700 text-lg mb-2">📈 Perubahan Level</h3>
+                            <p class="text-gray-700 leading-relaxed">
+                                <span class="inline-block bg-green-200 px-2 py-1 rounded text-sm font-semibold">SD</span> → Percobaan dirancang oleh guru
+                                <br>
+                                <span class="inline-block bg-green-400 text-white px-2 py-1 rounded text-sm font-semibold mt-2">SMP</span> → Kalian merancang sendiri percobaan! 🎉
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-center">
+                        <div class="illustration-container w-full">
+                            <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=500&h=350&fit=crop" 
+                                 alt="Ilmuwan cilik melakukan eksperimen di laboratorium" 
+                                 class="real-image w-full h-64 object-cover"
+                                 loading="lazy"
+                                 onerror="this.style.background='linear-gradient(135deg, #3b82f6, #8b5cf6)'; this.alt='Gambar tidak tersedia'; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect fill=%22%233b82f6%22 width=%22400%22 height=%22300%22/><text x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2240%22>🔬🧑‍🔬🔭</text></svg>';">
+                            <p class="text-center text-sm text-gray-500 mt-3 italic">Seorang ilmuwan cilik sedang mengamati sampel di laboratorium</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Element -->
+                <div class="mt-6 bg-blue-50 p-4 rounded-2xl">
+                    <h4 class="font-bold text-blue-700 mb-3">🎮 Aktivitas Interaktif: Kenali Dirimu!</h4>
+                    <p class="text-gray-600 mb-3">Pernahkah kamu penasaran tentang sesuatu di sekitarmu? Pilih yang paling sering kamu rasakan:</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <button onclick="showCuriosityResponse('alam')" class="p-3 bg-white rounded-xl border-2 border-blue-200 hover:border-blue-500 hover:bg-blue-50 transition-all text-center">
+                            <span class="text-3xl block mb-1">🌿</span>
+                            <span class="text-sm">Fenomena Alam</span>
+                        </button>
+                        <button onclick="showCuriosityResponse('teknologi')" class="p-3 bg-white rounded-xl border-2 border-blue-200 hover:border-blue-500 hover:bg-blue-50 transition-all text-center">
+                            <span class="text-3xl block mb-1">💻</span>
+                            <span class="text-sm">Teknologi</span>
+                        </button>
+                        <button onclick="showCuriosityResponse('makhluk')" class="p-3 bg-white rounded-xl border-2 border-blue-200 hover:border-blue-500 hover:bg-blue-50 transition-all text-center">
+                            <span class="text-3xl block mb-1">🦋</span>
+                            <span class="text-sm">Makhluk Hidup</span>
+                        </button>
+                        <button onclick="showCuriosityResponse('benda')" class="p-3 bg-white rounded-xl border-2 border-blue-200 hover:border-blue-500 hover:bg-blue-50 transition-all text-center">
+                            <span class="text-3xl block mb-1">⚡</span>
+                            <span class="text-sm">Benda & Energi</span>
+                        </button>
+                    </div>
+                    <div id="curiosity-response" class="mt-4 hidden">
+                        <div class="bg-white p-4 rounded-xl border-2 border-green-400">
+                            <p id="curiosity-text" class="text-gray-700"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Alur Metode Ilmiah -->
+            <section id="alur" class="bg-white rounded-3xl shadow-xl p-6 md:p-8 border-4 border-purple-200">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="bg-purple-500 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-lg">2</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-purple-700 comic-font">Alur Metode Ilmiah 🔄</h2>
+                </div>
+
+                <p class="text-gray-600 mb-6 text-lg">Ada <strong>6 tahapan utama</strong> yang harus dilakukan secara berurutan:</p>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+                    <div class="step-card bg-gradient-to-br from-blue-400 to-blue-600 p-4 rounded-2xl text-white text-center shadow-lg cursor-pointer" onclick="highlightStep(1)">
+                        <div class="text-4xl mb-2">👁️</div>
+                        <div class="font-bold text-sm">1. Observasi</div>
+                        <div class="text-xs opacity-80">Pengamatan</div>
+                    </div>
+                    <div class="step-card bg-gradient-to-br from-green-400 to-green-600 p-4 rounded-2xl text-white text-center shadow-lg cursor-pointer" onclick="highlightStep(2)">
+                        <div class="text-4xl mb-2">💡</div>
+                        <div class="font-bold text-sm">2. Hipotesis</div>
+                        <div class="text-xs opacity-80">Dugaan Sementara</div>
+                    </div>
+                    <div class="step-card bg-gradient-to-br from-yellow-400 to-orange-500 p-4 rounded-2xl text-white text-center shadow-lg cursor-pointer" onclick="highlightStep(3)">
+                        <div class="text-4xl mb-2">📝</div>
+                        <div class="font-bold text-sm">3. Rancang</div>
+                        <div class="text-xs opacity-80">Prosedur</div>
+                    </div>
+                    <div class="step-card bg-gradient-to-br from-red-400 to-pink-500 p-4 rounded-2xl text-white text-center shadow-lg cursor-pointer" onclick="highlightStep(4)">
+                        <div class="text-4xl mb-2">🧪</div>
+                        <div class="font-bold text-sm">4. Eksperimen</div>
+                        <div class="text-xs opacity-80">Percobaan</div>
+                    </div>
+                    <div class="step-card bg-gradient-to-br from-purple-400 to-purple-600 p-4 rounded-2xl text-white text-center shadow-lg cursor-pointer" onclick="highlightStep(5)">
+                        <div class="text-4xl mb-2">📊</div>
+                        <div class="font-bold text-sm">5. Data</div>
+                        <div class="text-xs opacity-80">Hasil</div>
+                    </div>
+                    <div class="step-card bg-gradient-to-br from-indigo-400 to-indigo-600 p-4 rounded-2xl text-white text-center shadow-lg cursor-pointer" onclick="highlightStep(6)">
+                        <div class="text-4xl mb-2">✅</div>
+                        <div class="font-bold text-sm">6. Kesimpulan</div>
+                        <div class="text-xs opacity-80">Hasil Akhir</div>
+                    </div>
+                </div>
+
+                <div id="step-detail" class="bg-purple-50 p-5 rounded-2xl border-2 border-purple-200">
+                    <p class="text-gray-600 text-center">👆 Klik salah satu tahapan di atas untuk melihat penjelasan detail!</p>
+                </div>
+
+                <!-- Flowchart Visual -->
+                <div class="mt-8">
+                    <h3 class="font-bold text-purple-700 text-lg mb-4 text-center">📌 Diagram Alur Metode Ilmiah</h3>
+                    <div class="flex flex-wrap justify-center items-center gap-2 text-sm">
+                        <div class="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold">Observasi</div>
+                        <span class="text-2xl">→</span>
+                        <div class="bg-green-500 text-white px-4 py-2 rounded-full font-semibold">Hipotesis</div>
+                        <span class="text-2xl">→</span>
+                        <div class="bg-yellow-500 text-white px-4 py-2 rounded-full font-semibold">Rancang</div>
+                        <span class="text-2xl">→</span>
+                        <div class="bg-red-500 text-white px-4 py-2 rounded-full font-semibold">Eksperimen</div>
+                        <span class="text-2xl">→</span>
+                        <div class="bg-purple-500 text-white px-4 py-2 rounded-full font-semibold">Data</div>
+                        <span class="text-2xl">→</span>
+                        <div class="bg-indigo-500 text-white px-4 py-2 rounded-full font-semibold">Kesimpulan</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Observasi -->
+            <section id="observasi" class="bg-white rounded-3xl shadow-xl p-6 md:p-8 border-4 border-green-200">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="bg-green-500 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-lg">3</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-green-700 comic-font">Tahap 1: Pengamatan (Observasi) 👁️</h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="bg-gradient-to-r from-green-50 to-emerald-100 p-5 rounded-2xl">
+                            <h3 class="font-bold text-green-700 text-lg mb-3">🎯 Cara Mengamati</h3>
+                            <p class="text-gray-700 mb-3">Gunakan <strong>kelima indra</strong> untuk mengamati:</p>
+                            <div class="grid grid-cols-5 gap-2 text-center">
+                                <div class="bg-white p-2 rounded-xl shadow">
+                                    <span class="text-2xl">👀</span>
+                                    <p class="text-xs mt-1">Penglihatan</p>
+                                </div>
+                                <div class="bg-white p-2 rounded-xl shadow">
+                                    <span class="text-2xl">👂</span>
+                                    <p class="text-xs mt-1">Pendengaran</p>
+                                </div>
+                                <div class="bg-white p-2 rounded-xl shadow">
+                                    <span class="text-2xl">👃</span>
+                                    <p class="text-xs mt-1">Penciuman</p>
+                                </div>
+                                <div class="bg-white p-2 rounded-xl shadow">
+                                    <span class="text-2xl">👅</span>
+                                    <p class="text-xs mt-1">Pengecapan</p>
+                                </div>
+                                <div class="bg-white p-2 rounded-xl shadow">
+                                    <span class="text-2xl">✋</span>
+                                    <p class="text-xs mt-1">Perabaan</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-blue-50 to-cyan-100 p-5 rounded-2xl">
+                            <h3 class="font-bold text-blue-700 text-lg mb-2">💭 Hasil Pengamatan</h3>
+                            <p class="text-gray-700">
+                                Dari apa yang kita lihat atau rasakan di lingkungan sekitar, akan muncul <strong>pertanyaan</strong> yang akan diteliti lebih lanjut.
+                            </p>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-amber-50 to-yellow-100 p-5 rounded-2xl">
+                            <h3 class="font-bold text-yellow-700 text-lg mb-2">📝 Contoh Pengamatan</h3>
+                            <div class="flex items-center gap-3">
+                                <span class="text-4xl">🌧️</span>
+                                <p class="text-gray-700">Mengamati <strong>awan mendung yang tebal</strong> → Muncul pertanyaan: "Mengapa awan berwarna gelap sebelum hujan?"</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="illustration-container">
+                            <img src="https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=500&h=300&fit=crop" 
+                                 alt="Awan mendung gelap sebelum hujan" 
+                                 class="real-image w-full h-48 object-cover"
+                                 loading="lazy"
+                                 onerror="this.style.background='linear-gradient(135deg, #6b7280, #374151)'; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 250%22><rect fill=%22%236b7280%22 width=%22400%22 height=%22250%22/><text x=%22200%22 y=%22125%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2250%22>🌧️⛈️</text></svg>';">
+                            <p class="text-center text-sm text-gray-500 mt-2 italic">Awan mendung yang tebal menandakan akan turun hujan</p>
+                        </div>
+
+                        <!-- Interactive Observation Game -->
+                        <div class="bg-green-50 p-4 rounded-2xl border-2 border-green-200">
+                            <h4 class="font-bold text-green-700 mb-3">🎮 Latihan Observasi</h4>
+                            <p class="text-sm text-gray-600 mb-3">Indra mana yang kamu gunakan untuk mengamati hal-hal berikut?</p>
+                            <div id="observation-game" class="space-y-3">
+                                <div class="flex items-center justify-between bg-white p-3 rounded-xl">
+                                    <span>🍋 Rasa jeruk nipis</span>
+                                    <select onchange="checkObservation(this, 'pengecap')" class="px-3 py-1 border-2 border-green-300 rounded-lg">
+                                        <option value="">Pilih...</option>
+                                        <option value="penglihatan">👀 Penglihatan</option>
+                                        <option value="pendengaran">👂 Pendengaran</option>
+                                        <option value="penciuman">👃 Penciuman</option>
+                                        <option value="pengecap">👅 Pengecapan</option>
+                                        <option value="perabaan">✋ Perabaan</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-center justify-between bg-white p-3 rounded-xl">
+                                    <span>🎵 Suara burung berkicau</span>
+                                    <select onchange="checkObservation(this, 'pendengaran')" class="px-3 py-1 border-2 border-green-300 rounded-lg">
+                                        <option value="">Pilih...</option>
+                                        <option value="penglihatan">👀 Penglihatan</option>
+                                        <option value="pendengaran">👂 Pendengaran</option>
+                                        <option value="penciuman">👃 Penciuman</option>
+                                        <option value="pengecap">👅 Pengecapan</option>
+                                        <option value="perabaan">✋ Perabaan</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-center justify-between bg-white p-3 rounded-xl">
+                                    <span>🌸 Wangi bunga melati</span>
+                                    <select onchange="checkObservation(this, 'penciuman')" class="px-3 py-1 border-2 border-green-300 rounded-lg">
+                                        <option value="">Pilih...</option>
+                                        <option value="penglihatan">👀 Penglihatan</option>
+                                        <option value="pendengaran">👂 Pendengaran</option>
+                                        <option value="penciuman">👃 Penciuman</option>
+                                        <option value="pengecap">👅 Pengecapan</option>
+                                        <option value="perabaan">✋ Perabaan</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Tujuan Percobaan -->
+            <section id="tujuan" class="bg-white rounded-3xl shadow-xl p-6 md:p-8 border-4 border-yellow-200">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="bg-yellow-500 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-lg">4</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-yellow-700 comic-font">Tahap 2: Menentukan Tujuan Percobaan 🎯</h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="bg-gradient-to-r from-yellow-50 to-amber-100 p-5 rounded-2xl">
+                            <h3 class="font-bold text-yellow-700 text-lg mb-3">✅ Kriteria Tujuan yang Baik</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3 bg-white p-3 rounded-xl">
+                                    <span class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center">1</span>
+                                    <span><strong>Dapat diuji</strong> - Bisa dibuktikan melalui percobaan</span>
+                                </div>
+                                <div class="flex items-center gap-3 bg-white p-3 rounded-xl">
+                                    <span class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center">2</span>
+                                    <span><strong>Dapat dilakukan</strong> - Realistis dengan alat yang ada</span>
+                                </div>
+                                <div class="flex items-center gap-3 bg-white p-3 rounded-xl">
+                                    <span class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center">3</span>
+                                    <span><strong>Bukan pendapat pribadi</strong> - Objektif, bukan subjektif</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-red-50 to-pink-100 p-5 rounded-2xl border-l-4 border-red-400">
+                            <h3 class="font-bold text-red-600 text-lg mb-2">❌ Contoh SALAH (Pendapat)</h3>
+                            <p class="text-gray-700 italic">"Bunga merah lebih bagus dari bunga kuning."</p>
+                            <p class="text-sm text-red-500 mt-2">→ Ini pendapat pribadi, tidak bisa diukur secara ilmiah!</p>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-green-50 to-emerald-100 p-5 rounded-2xl border-l-4 border-green-400">
+                            <h3 class="font-bold text-green-600 text-lg mb-2">✅ Contoh BENAR (Bisa Diuji)</h3>
+                            <p class="text-gray-700 italic">"Apakah cahaya matahari memengaruhi kecerahan warna bunga?"</p>
+                            <p class="text-sm text-green-500 mt-2">→ Ini bisa diuji dengan percobaan!</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="illustration-container">
+                            <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=500&h=300&fit=crop" 
+                                 alt="Bunga-bunga berwarna-warni di taman" 
+                                 class="real-image w-full h-48 object-cover"
+                                 loading="lazy"
+                                 onerror="this.style.background='linear-gradient(135deg, #f472b6, #fb923c)'; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 250%22><rect fill=%22%23f472b6%22 width=%22400%22 height=%22250%22/><text x=%22200%22 y=%22125%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2250%22>🌸🌺🌻</text></svg>';">
+                            <p class="text-center text-sm text-gray-500 mt-2 italic">Berbagai warna bunga yang bisa diamati secara ilmiah</p>
+                        </div>
+
+                        <!-- Interactive Classification -->
+                        <div class="bg-yellow-50 p-4 rounded-2xl border-2 border-yellow-200">
+                            <h4 class="font-bold text-yellow-700 mb-3">🎮 Klasifikasikan Tujuan!</h4>
+                            <p class="text-sm text-gray-600 mb-3">Tentukan apakah pernyataan berikut adalah tujuan yang BENAR atau SALAH:</p>
+                            <div id="classify-game" class="space-y-3">
+                                <div class="bg-white p-3 rounded-xl">
+                                    <p class="mb-2">"Kucing lebih lucu dari anjing"</p>
+                                    <div class="flex gap-2">
+                                        <button onclick="classifyGoal(this, 'salah', 1)" class="px-4 py-1 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-all text-sm font-semibold">❌ Salah</button>
+                                        <button onclick="classifyGoal(this, 'benar', 1)" class="px-4 py-1 bg-green-100 text-green-600 rounded-lg hover:bg-green-200 transition-all text-sm font-semibold">✅ Benar</button>
+                                    </div>
+                                    <p id="classify-result-1" class="text-sm mt-2 hidden"></p>
+                                </div>
+                                <div class="bg-white p-3 rounded-xl">
+                                    <p class="mb-2">"Apakah suhu air mempengaruhi kecepatan es mencair?"</p>
+                                    <div class="flex gap-2">
+                                        <button onclick="classifyGoal(this, 'salah', 2)" class="px-4 py-1 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-all text-sm font-semibold">❌ Salah</button>
+                                        <button onclick="classifyGoal(this, 'benar', 2)" class="px-4 py-1 bg-green-100 text-green-600 rounded-lg hover:bg-green-200 transition-all text-sm font-semibold">✅ Benar</button>
+                                    </div>
+                                    <p id="classify-result-2" class="text-sm mt-2 hidden"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: Hipotesis -->
+            <section id="hipotesis" class="bg-white rounded-3xl shadow-xl p-6 md:p-8 border-4 border-orange-200">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="bg-orange-500 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-lg">5</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-orange-700 comic-font">Tahap 3: Membuat Hipotesis 💡</h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="bg-gradient-to-r from-orange-50 to-amber-100 p-5 rounded-2xl">
+                            <h3 class="font-bold text-orange-700 text-lg mb-2">📖 Definisi Hipotesis</h3>
+                            <p class="text-gray-700">
+                                <strong>Hipotesis</strong> adalah perkiraan atau <strong>dugaan sementara</strong> dari jawaban atas tujuan percobaan yang akan diuji kebenarannya.
+                            </p>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-blue-50 to-indigo-100 p-5 rounded-2xl">
+                            <h3 class="font-bold text-blue-700 text-lg mb-3">✅ Syarat Hipotesis yang Baik</h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-green-500 mt-1">✓</span>
+                                    <span><strong>Logis</strong> - Masuk akal dan dapat diterima</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-green-500 mt-1">✓</span>
+                                    <span><strong>Didukung alasan ilmiah</strong> - Berdasarkan pengetahuan atau teori yang ada</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-green-500 mt-1">✓</span>
+                                    <span><strong>Dapat diuji</strong> - Bisa dibuktikan melalui eksperimen</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-green-50 to-emerald-100 p-5 rounded-2xl border-l-4 border-green-400">
+                            <h3 class="font-bold text-green-600 text-lg mb-2">📝 Contoh Hipotesis</h3>
+                            <div class="bg-white p-4 rounded-xl">
+                                <p class="text-gray-700 italic mb-2">
+                                    "Tanaman yang diberi lebih banyak pupuk akan tumbuh lebih tinggi karena pupuk mengandung nutrisi yang dibutuhkan untuk pertumbuhan."
+                                </p>
+                                <div class="text-sm text-gray-500 mt-3 space-y-1">
+                                    <p>📌 <strong>Dugaan:</strong> Tanaman tumbuh lebih tinggi</p>
+                                    <p>📌 <strong>Alasan:</strong> Pupuk mengandung nutrisi pertumbuhan</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="illustration-container">
+                            <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=500&h=300&fit=crop" 
+                                 alt="Tanaman yang sedang tumbuh dengan pupuk" 
+                                 class="real-image w-full h-48 object-cover"
+                                 loading="lazy"
+                                 onerror="this.style.background='linear-gradient(135deg, #22c55e, #16a34a)'; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 250%22><rect fill=%22%2322c55e%22 width=%22400%22 height=%22250%22/><text x=%22200%22 y=%22125%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2250%22>🌱🪴🌿</text></svg>';">
+                            <p class="text-center text-sm text-gray-500 mt-2 italic">Tanaman yang diberi pupuk tumbuh subur</p>
+                        </div>
+
+                        <!-- Hypothesis Builder -->
+                        <div class="bg-orange-50 p-4 rounded-2xl border-2 border-orange-200">
+                            <h4 class="font-bold text-orange-700 mb-3">🎮 Bangun Hipotesismu!</h4>
+                            <p class="text-sm text-gray-600 mb-3">Lengkapi hipotesis berikut:</p>
+                            <div class="bg-white p-4 rounded-xl space-y-3">
+                                <p class="text-gray-700">Jika tanaman disiram dengan air</p>
+                                <select id="hypothesis-select" class="w-full p-2 border-2 border-orange-300 rounded-lg" onchange="checkHypothesis()">
+                                    <option value="">Pilih kelanjutannya...</option>
+                                    <option value="benar">lebih sering, maka akan tumbuh lebih cepat karena air dibutuhkan untuk fotosintesis</option>
+                                    <option value="salah1">gula, maka akan lebih manis rasanya</option>
+                                    <option value="salah2">di malam hari, maka tanaman akan lebih cantik</option>
+                                </select>
+                                <div id="hypothesis-feedback" class="text-sm hidden p-3 rounded-lg"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: Variabel -->
+            <section id="variabel" class="bg-white rounded-3xl shadow-xl p-6 md:p-8 border-4 border-red-200">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="bg-red-500 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-lg">6</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-red-700 comic-font">Tahap 4: Mengenal Variabel 🔬</h2>
+                </div>
+
+                <p class="text-gray-600 mb-6 text-lg">Dalam sebuah eksperimen, kita harus mengatur <strong>faktor-faktor</strong> yang ada:</p>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-gradient-to-br from-blue-400 to-blue-600 p-6 rounded-2xl text-white shadow-lg">
+                        <div class="text-5xl mb-3 text-center">🎛️</div>
+                        <h3 class="font-bold text-xl mb-2 text-center">Variabel Bebas</h3>
+                        <p class="text-blue-100 text-sm text-center mb-3">Faktor yang <strong>sengaja diubah-ubah</strong></p>
+                        <div class="bg-white/20 p-3 rounded-xl">
+                            <p class="text-sm">Contoh: Jumlah pupuk yang diberikan (0g, 5g, 10g)</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-green-400 to-green-600 p-6 rounded-2xl text-white shadow-lg">
+                        <div class="text-5xl mb-3 text-center">📏</div>
+                        <h3 class="font-bold text-xl mb-2 text-center">Variabel Terikat</h3>
+                        <p class="text-green-100 text-sm text-center mb-3">Faktor yang <strong>diamati/diukur</strong></p>
+                        <div class="bg-white/20 p-3 rounded-xl">
+                            <p class="text-sm">Contoh: Tinggi tanaman setelah 2 minggu</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-purple-400 to-purple-600 p-6 rounded-2xl text-white shadow-lg">
+                        <div class="text-5xl mb-3 text-center">🔒</div>
+                        <h3 class="font-bold text-xl mb-2 text-center">Variabel Kontrol</h3>
+                        <p class="text-purple-100 text-sm text-center mb-3">Faktor yang <strong>dibuat tetap sama</strong></p>
+                        <div class="bg-white/20 p-3 rounded-xl">
+                            <p class="text-sm">Contoh: Jenis tanaman, jumlah air, cahaya matahari</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="illustration-container">
+                        <img src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=500&h=300&fit=crop" 
+                             alt="Percobaan tanaman dengan variabel berbeda" 
+                             class="real-image w-full h-48 object-cover"
+                             loading="lazy"
+                             onerror="this.style.background='linear-gradient(135deg, #8b5cf6, #6366f1)'; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 250%22><rect fill=%22%238b5cf6%22 width=%22400%22 height=%22250%22/><text x=%22200%22 y=%22125%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2250%22>🧪🌱📊</text></svg>';">
+                        <p class="text-center text-sm text-gray-500 mt-2 italic">Percobaan dengan beberapa variabel yang dikontrol</p>
+                    </div>
+
+                    <!-- Variable Matching Game -->
+                    <div class="bg-red-50 p-4 rounded-2xl border-2 border-red-200">
+                        <h4 class="font-bold text-red-700 mb-3">🎮 Cocokkan Variabel!</h4>
+                        <p class="text-sm text-gray-600 mb-3">Percobaan: "Pengaruh intensitas cahaya terhadap pertumbuhan kecambah"</p>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between bg-white p-3 rounded-xl">
+                                <span>Intensitas cahaya</span>
+                                <select onchange="checkVariable(this, 'bebas', 'var1')" class="px-3 py-1 border-2 border-red-300 rounded-lg text-sm">
+                                    <option value="">Pilih...</option>
+                                    <option value="bebas">🎛️ Variabel Bebas</option>
+                                    <option value="terikat">📏 Variabel Terikat</option>
+                                    <option value="kontrol">🔒 Variabel Kontrol</option>
+                                </select>
+                            </div>
+                            <div class="flex items-center justify-between bg-white p-3 rounded-xl">
+                                <span>Tinggi kecambah</span>
+                                <select onchange="checkVariable(this, 'terikat', 'var2')" class="px-3 py-1 border-2 border-red-300 rounded-lg text-sm">
+                                    <option value="">Pilih...</option>
+                                    <option value="bebas">🎛️ Variabel Bebas</option>
+                                    <option value="terikat">📏 Variabel Terikat</option>
+                                    <option value="kontrol">🔒 Variabel Kontrol</option>
+                                </select>
+                            </div>
+                            <div class="flex items-center justify-between bg-white p-3 rounded-xl">
+                                <span>Jenis biji & volume air</span>
+                                <select onchange="checkVariable(this, 'kontrol', 'var3')" class="px-3 py-1 border-2 border-red-300 rounded-lg text-sm">
+                                    <option value="">Pilih...</option>
+                                    <option value="bebas">🎛️ Variabel Bebas</option>
+                                    <option value="terikat">📏 Variabel Terikat</option>
+                                    <option value="kontrol">🔒 Variabel Kontrol</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="variable-score" class="mt-3 text-center font-bold text-red-600"></div>
+                    </div>
+                </div>
+
+                <!-- Visual Diagram -->
+                <div class="mt-6 bg-gray-50 p-5 rounded-2xl">
+                    <h4 class="font-bold text-gray-700 text-center mb-4">📊 Hubungan Antar Variabel</h4>
+                    <div class="flex flex-wrap justify-center items-center gap-4">
+                        <div class="bg-blue-500 text-white px-4 py-3 rounded-xl text-center">
+                            <p class="font-bold">Variabel Bebas</p>
+                            <p class="text-sm">Diubah-ubah</p>
+                        </div>
+                        <span class="text-3xl">→</span>
+                        <div class="bg-yellow-400 text-white px-4 py-3 rounded-xl text-center">
+                            <p class="font-bold">EKSPERIMEN</p>
+                            <p class="text-sm">Proses</p>
+                        </div>
+                        <span class="text-3xl">→</span>
+                        <div class="bg-green-500 text-white px-4 py-3 rounded-xl text-center">
+                            <p class="font-bold">Variabel Terikat</p>
+                            <p class="text-sm">Diamati/diukur</p>
+                        </div>
+                    </div>
+                    <p class="text-center text-sm text-purple-600 mt-3">🔒 Variabel Kontrol: Dijaga tetap sama selama eksperimen</p>
+                </div>
+            </section>
+
+            <!-- Section 7: Prosedur -->
+            <section id="prosedur" class="bg-white rounded-3xl shadow-xl p-6 md:p-8 border-4 border-pink-200">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="bg-pink-500 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-lg">7</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-pink-700 comic-font">Tahap 5: Prosedur Percobaan 📋</h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="bg-gradient-to-r from-pink-50 to-rose-100 p-5 rounded-2xl">
+                            <h3 class="font-bold text-pink-700 text-lg mb-2">📖 Definisi</h3>
+                            <p class="text-gray-700">
+                                <strong>Prosedur</strong> adalah urutan langkah-langkah rinci yang dilakukan dalam percobaan dari awal hingga akhir.
+                            </p>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-amber-50 to-yellow-100 p-5 rounded-2xl">
+                            <h3 class="font-bold text-yellow-700 text-lg mb-3">⚠️ Pentingnya Rencana</h3>
+                            <p class="text-gray-700 mb-3">
+                                Kita harus mendaftarkan <strong>alat dan bahan secara spesifik</strong> agar tidak ada yang terlupakan saat praktik!
+                            </p>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-white p-3 rounded-xl">
+                                    <h4 class="font-bold text-sm text-blue-600 mb-2">🔧 Contoh Alat:</h4>
+                                    <ul class="text-xs text-gray-600 space-y-1">
+                                        <li>• Penggaris 30 cm</li>
+                                        <li>• Gelas ukur 100 ml</li>
+                                        <li>• Stopwatch</li>
+                                        <li>• Pot plastik</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-white p-3 rounded-xl">
+                                    <h4 class="font-bold text-sm text-green-600 mb-2">🧪 Contoh Bahan:</h4>
+                                    <ul class="text-xs text-gray-600 space-y-1">
+                                        <li>• Biji kacang hijau 20 butir</li>
+                                        <li>• Pupuk NPK 15 gram</li>
+                                        <li>• Air 500 ml</li>
+                                        <li>• Tanah humus</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-blue-50 to-indigo-100 p-5 rounded-2xl">
+                            <h3 class="font-bold text-blue-700 text-lg mb-3">📝 Contoh Prosedur</h3>
+                            <ol class="space-y-2 text-gray-700 text-sm">
+                                <li class="flex items-start gap-2">
+                                    <span class="bg-blue-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">1</span>
+                                    <span>Siapkan 3 pot plastik dan beri label A, B, C</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="bg-blue-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">2</span>
+                                    <span>Isi masing-masing pot dengan tanah humus 500 gram</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="bg-blue-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">3</span>
+                                    <span>Tanam 5 biji kacang hijau pada setiap pot</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="bg-blue-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">4</span>
+                                    <span>Beri pupuk: Pot A (0g), Pot B (5g), Pot C (10g)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="bg-blue-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">5</span>
+                                    <span>Siram dengan 50 ml air setiap hari selama 2 minggu</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="bg-blue-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">6</span>
+                                    <span>Ukur dan catat tinggi tanaman setiap 3 hari</span>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="illustration-container">
+                            <img src="https://images.unsplash.com/photo-1581093458791-9f3c3250a8b0?w=500&h=300&fit=crop" 
+                                 alt="Alat dan bahan percobaan ilmiah" 
+                                 class="real-image w-full h-48 object-cover"
+                                 loading="lazy"
+                                 onerror="this.style.background='linear-gradient(135deg, #ec4899, #f472b6)'; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 250%22><rect fill=%22%23ec4899%22 width=%22400%22 height=%22250%22/><text x=%22200%22 y=%22125%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2250%22>🔬📋✏️</text></svg>';">
+                            <p class="text-center text-sm text-gray-500 mt-2 italic">Persiapan alat dan bahan percobaan yang terorganisir</p>
+                        </div>
+
+                        <!-- Procedure Builder -->
+                        <div class="bg-pink-50 p-4 rounded-2xl border-2 border-pink-200">
+                            <h4 class="font-bold text-pink-700 mb-3">🎮 Susun Prosedur!</h4>
+                            <p class="text-sm text-gray-600 mb-3">Urutkan langkah-langkah percobaan berikut dengan benar:</p>
+                            <div id="procedure-game" class="space-y-2">
+                                <div draggable="true" ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="drop(event)" data-order="3" class="procedure-item bg-white p-3 rounded-xl border-2 border-pink-200 cursor-move flex items-center gap-2">
+                                    <span class="text-xl">↕️</span>
+                                    <span>Catat hasil pengamatan setiap hari</span>
+                                </div>
+                                <div draggable="true" ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="drop(event)" data-order="1" class="procedure-item bg-white p-3 rounded-xl border-2 border-pink-200 cursor-move flex items-center gap-2">
+                                    <span class="text-xl">↕️</span>
+                                    <span>Siapkan alat dan bahan</span>
+                                </div>
+                                <div draggable="true" ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="drop(event)" data-order="4" class="procedure-item bg-white p-3 rounded-xl border-2 border-pink-200 cursor-move flex items-center gap-2">
+                                    <span class="text-xl">↕️</span>
+                                    <span>Analisis data dan buat kesimpulan</span>
+                                </div>
+                                <div draggable="true" ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="drop(event)" data-order="2" class="procedure-item bg-white p-3 rounded-xl border-2 border-pink-200 cursor-move flex items-center gap-2">
+                                    <span class="text-xl">↕️</span>
+                                    <span>Lakukan percobaan sesuai rencana</span>
+                                </div>
+                            </div>
+                            <button onclick="checkProcedureOrder()" class="mt-4 w-full bg-pink-500 text-white py-2 rounded-xl font-bold hover:bg-pink-600 transition-all">
+                                ✓ Cek Urutan
+                            </button>
+                            <div id="procedure-result" class="mt-3 text-center font-bold hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 8: Quiz HOTS -->
+            <section id="quiz" class="bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 rounded-3xl shadow-xl p-6 md:p-8 border-4 border-indigo-300">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="bg-indigo-500 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-lg pulse-glow">🎯</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-indigo-700 comic-font">Kuis HOTS: Uji Kemampuanmu! 🧠</h2>
+                </div>
+
+                <div class="bg-white/80 p-4 rounded-2xl mb-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold text-indigo-700">Progress:</span>
+                        <span id="quiz-progress-text" class="text-sm text-gray-600">0/10 Soal</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                        <div id="quiz-progress-bar" class="progress-fill bg-gradient-to-r from-indigo-500 to-purple-500 h-full rounded-full" style="width: 0%"></div>
+                    </div>
+                    <div class="flex items-center justify-between mt-2">
+                        <span class="text-sm text-green-600 font-bold">✓ Benar: <span id="correct-count">0</span></span>
+                        <span class="text-sm text-red-600 font-bold">✗ Salah: <span id="wrong-count">0</span></span>
+                    </div>
+                </div>
+
+                <div id="quiz-container">
+                    <!-- Quiz questions will be loaded here -->
+                </div>
+
+                <div id="quiz-result" class="hidden mt-6 bg-white p-6 rounded-2xl text-center">
+                    <div id="result-emoji" class="text-6xl mb-4"></div>
+                    <h3 id="result-title" class="text-2xl font-bold mb-2"></h3>
+                    <p id="result-message" class="text-gray-600 mb-4"></p>
+                    <div id="result-score" class="text-4xl font-bold text-indigo-600 mb-4"></div>
+                    <button onclick="restartQuiz()" class="bg-indigo-500 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-600 transition-all">
+                        🔄 Ulangi Kuis
+                    </button>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white py-8 px-4 mt-12">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <img src="https://i.imgur.com/mRmw86t.jpeg" 
+                             alt="Algian Manggara" 
+                             class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-lg"
+                             loading="lazy"
+                             onerror="this.style.background='linear-gradient(135deg, #6366f1, #8b5cf6)'; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 50 50%22><rect fill=%22%236366f1%22 width=%2250%22 height=%2250%22 rx=%2225%22/><text x=%2225%22 y=%2232%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2220%22>AM</text></svg>';">
+                        <div>
+                            <p class="font-bold">Algian Manggara, S.Agr</p>
+                            <p class="text-gray-400 text-sm">Pengembang Materi Pembelajaran</p>
+                        </div>
+                    </div>
+                    <div class="text-center md:text-right">
+                        <p class="text-gray-400 text-sm">Media Pembelajaran Interaktif</p>
+                        <p id="footer-text" class="font-semibold">© 2026 Algian Manggara, S.Agr</p>
+                    </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-gray-700 text-center">
+                    <p class="text-gray-500 text-sm">🔬 Menjadi Ilmuwan Cilik dengan Metode Ilmiah 🧪</p>
+                    <p class="text-gray-600 text-xs mt-2">Dibuat dengan ❤️ untuk pendidikan Indonesia</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Default configuration
+        const defaultConfig = {
+            main_title: 'Menjadi Ilmuwan Cilik dengan Metode Ilmiah',
+            footer_text: '© 2026 Algian Manggara, S.Agr',
+            primary_color: '#6366f1',
+            secondary_color: '#8b5cf6',
+            text_color: '#1f2937',
+            accent_color: '#ec4899',
+            background_color: '#f5f3ff'
+        };
+
+        let config = { ...defaultConfig };
+
+        // Element SDK initialization
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange: async (newConfig) => {
+                    config = { ...defaultConfig, ...newConfig };
+                    
+                    const mainTitle = document.getElementById('main-title');
+                    if (mainTitle) mainTitle.textContent = config.main_title || defaultConfig.main_title;
+                    
+                    const footerText = document.getElementById('footer-text');
+                    if (footerText) footerText.textContent = config.footer_text || defaultConfig.footer_text;
+                },
+                mapToCapabilities: (config) => ({
+                    recolorables: [
+                        {
+                            get: () => config.primary_color || defaultConfig.primary_color,
+                            set: (value) => {
+                                config.primary_color = value;
+                                window.elementSdk.setConfig({ primary_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.secondary_color || defaultConfig.secondary_color,
+                            set: (value) => {
+                                config.secondary_color = value;
+                                window.elementSdk.setConfig({ secondary_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.text_color || defaultConfig.text_color,
+                            set: (value) => {
+                                config.text_color = value;
+                                window.elementSdk.setConfig({ text_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.accent_color || defaultConfig.accent_color,
+                            set: (value) => {
+                                config.accent_color = value;
+                                window.elementSdk.setConfig({ accent_color: value });
+                            }
+                        },
+                        {
+                            get: () => config.background_color || defaultConfig.background_color,
+                            set: (value) => {
+                                config.background_color = value;
+                                window.elementSdk.setConfig({ background_color: value });
+                            }
+                        }
+                    ],
+                    borderables: [],
+                    fontEditable: undefined,
+                    fontSizeable: undefined
+                }),
+                mapToEditPanelValues: (config) => new Map([
+                    ['main_title', config.main_title || defaultConfig.main_title],
+                    ['footer_text', config.footer_text || defaultConfig.footer_text]
+                ])
+            });
+        }
+
+        // Quiz Data - 10 HOTS Questions
+        const quizData = [
+            {
+                question: "Seorang siswa mengamati bahwa tanaman di dekat jendela tumbuh lebih tinggi daripada tanaman di sudut ruangan. Langkah metode ilmiah apa yang sedang dilakukan siswa tersebut?",
+                options: [
+                    "Membuat hipotesis",
+                    "Melakukan observasi",
+                    "Menarik kesimpulan",
+                    "Merancang eksperimen"
+                ],
+                correct: 1,
+                explanation: "Siswa sedang melakukan OBSERVASI karena ia mengamati fenomena di lingkungannya tanpa melakukan manipulasi apapun."
+            },
+            {
+                question: "Pernyataan manakah yang merupakan hipotesis yang baik?",
+                options: [
+                    "Es krim coklat lebih enak dari es krim vanila",
+                    "Jika suhu air dinaikkan, maka gula akan lebih cepat larut karena molekul air bergerak lebih aktif",
+                    "Semua burung bisa terbang",
+                    "Matematika adalah pelajaran yang sulit"
+                ],
+                correct: 1,
+                explanation: "Hipotesis yang baik harus LOGIS, DAPAT DIUJI, dan DIDUKUNG ALASAN ILMIAH. Pilihan B memenuhi semua kriteria tersebut."
+            },
+            {
+                question: "Dalam percobaan 'Pengaruh jenis pupuk terhadap pertumbuhan tomat', manakah yang merupakan variabel TERIKAT?",
+                options: [
+                    "Jenis pupuk yang diberikan",
+                    "Jumlah air penyiraman",
+                    "Tinggi dan jumlah buah tomat",
+                    "Jenis tanaman tomat"
+                ],
+                correct: 2,
+                explanation: "Variabel TERIKAT adalah yang DIAMATI/DIUKUR sebagai hasil dari perubahan variabel bebas, yaitu tinggi dan jumlah buah tomat."
+            },
+            {
+                question: "Mengapa variabel kontrol penting dalam sebuah eksperimen?",
+                options: [
+                    "Agar eksperimen lebih cepat selesai",
+                    "Agar hasil eksperimen dapat dipastikan disebabkan oleh variabel bebas, bukan faktor lain",
+                    "Agar eksperimen terlihat lebih ilmiah",
+                    "Agar data yang diperoleh lebih banyak"
+                ],
+                correct: 1,
+                explanation: "Variabel kontrol dibuat TETAP SAMA agar hasil eksperimen dapat dipastikan disebabkan oleh perubahan variabel bebas, bukan faktor-faktor lain."
+            },
+            {
+                question: "Ani ingin meneliti apakah musik klasik mempengaruhi pertumbuhan tanaman. Ia menempatkan 3 tanaman: satu diberi musik klasik, satu diberi musik rock, dan satu tanpa musik. Apa yang SALAH dengan rancangan eksperimennya?",
+                options: [
+                    "Seharusnya menggunakan lebih banyak tanaman untuk setiap perlakuan",
+                    "Musik rock tidak relevan untuk dibandingkan",
+                    "Eksperimen tidak perlu variabel kontrol (tanpa musik)",
+                    "Tanaman seharusnya diletakkan di tempat berbeda"
+                ],
+                correct: 0,
+                explanation: "Eksperimen yang baik membutuhkan PENGULANGAN (replikasi) untuk memastikan hasil yang valid. Menggunakan hanya 1 tanaman per perlakuan tidak cukup reliabel."
+            },
+            {
+                question: "Perhatikan prosedur berikut:\n1. Siapkan 3 gelas air dengan suhu berbeda\n2. Masukkan 10 gram gula ke setiap gelas\n3. Aduk dengan kecepatan sama\n4. Catat waktu gula larut sempurna\n\nApa tujuan dari langkah nomor 3?",
+                options: [
+                    "Mempercepat proses percobaan",
+                    "Menjadikan kecepatan pengadukan sebagai variabel kontrol",
+                    "Membuat gula lebih mudah terlihat",
+                    "Menambah variabel bebas dalam eksperimen"
+                ],
+                correct: 1,
+                explanation: "Mengaduk dengan kecepatan SAMA bertujuan menjadikan pengadukan sebagai VARIABEL KONTROL agar tidak mempengaruhi hasil eksperimen."
+            },
+            {
+                question: "Setelah melakukan eksperimen, Budi menemukan bahwa hipotesisnya TIDAK TERBUKTI. Apa yang seharusnya dilakukan Budi?",
+                options: [
+                    "Mengubah data agar sesuai hipotesis",
+                    "Menerima hasil, menarik kesimpulan, dan merefleksi kemungkinan penyebabnya",
+                    "Menganggap eksperimen gagal dan tidak perlu dilaporkan",
+                    "Mengulangi eksperimen sampai hipotesis terbukti"
+                ],
+                correct: 1,
+                explanation: "Dalam metode ilmiah, hipotesis yang tidak terbukti adalah hasil yang VALID. Ilmuwan harus menerima hasil apa adanya dan merefleksi penyebabnya."
+            },
+            {
+                question: "Manakah pernyataan yang merupakan KESIMPULAN, bukan sekadar pengamatan?",
+                options: [
+                    "Tanaman A lebih tinggi 5 cm dari tanaman B",
+                    "Warna daun tanaman A lebih hijau",
+                    "Pemberian pupuk organik meningkatkan pertumbuhan tanaman karena menyediakan nutrisi yang dibutuhkan",
+                    "Suhu ruangan selama percobaan adalah 25°C"
+                ],
+                correct: 2,
+                explanation: "KESIMPULAN harus menjawab tujuan/hipotesis percobaan dan menjelaskan HUBUNGAN SEBAB-AKIBAT berdasarkan data yang diperoleh."
+            },
+            {
+                question: "Seorang ilmuwan ingin menguji apakah cahaya mempengaruhi arah pertumbuhan tanaman. Ia meletakkan tanaman di dekat jendela selama seminggu. Apa kelemahan dari rancangan ini?",
+                options: [
+                    "Waktunya terlalu singkat",
+                    "Tidak ada kelompok pembanding (kontrol) tanpa cahaya terarah",
+                    "Jendela bukan sumber cahaya yang baik",
+                    "Seharusnya menggunakan lampu, bukan cahaya matahari"
+                ],
+                correct: 1,
+                explanation: "Eksperimen yang baik harus memiliki KELOMPOK KONTROL untuk dibandingkan dengan kelompok perlakuan, sehingga dapat diketahui efek sebenarnya dari variabel bebas."
+            },
+            {
+                question: "Rina melakukan percobaan dan mendapatkan data yang berbeda dari temannya yang melakukan percobaan serupa. Langkah yang PALING TEPAT adalah...",
+                options: [
+                    "Menyalin data temannya agar sama",
+                    "Menganalisis perbedaan prosedur atau kondisi yang mungkin menyebabkan perbedaan hasil",
+                    "Menganggap salah satu percobaan pasti salah",
+                    "Tidak melaporkan hasil karena berbeda"
+                ],
+                correct: 1,
+                explanation: "Dalam sains, perbedaan hasil adalah hal yang WAJAR dan harus DIANALISIS penyebabnya, bukan diabaikan atau disamakan secara tidak jujur."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let correctAnswers = 0;
+        let wrongAnswers = 0;
+        let answeredQuestions = new Set();
+
+        // Initialize quiz
+        function initQuiz() {
+            currentQuestion = 0;
+            correctAnswers = 0;
+            wrongAnswers = 0;
+            answeredQuestions = new Set();
+            document.getElementById('quiz-result').classList.add('hidden');
+            updateProgress();
+            showQuestion(0);
+        }
+
+        function showQuestion(index) {
+            const container = document.getElementById('quiz-container');
+            const q = quizData[index];
+            
+            container.innerHTML = `
+                <div class="bg-white p-6 rounded-2xl shadow-lg bounce-in">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="bg-indigo-500 text-white px-3 py-1 rounded-full text-sm font-bold">Soal ${index + 1}/10</span>
+                        <span class="text-indigo-600 text-sm font-semibold">HOTS</span>
+                    </div>
+                    <p class="text-lg text-gray-800 mb-6 leading-relaxed whitespace-pre-line">${q.question}</p>
+                    <div class="space-y-3">
+                        ${q.options.map((opt, i) => `
+                            <button 
+                                onclick="checkAnswer(${index}, ${i})" 
+                                class="quiz-option w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-indigo-400 hover:bg-indigo-50 transition-all ${answeredQuestions.has(index) ? 'pointer-events-none' : ''}"
+                                id="option-${index}-${i}"
+                                ${answeredQuestions.has(index) ? 'disabled' : ''}
+                            >
+                                <span class="font-bold text-indigo-600 mr-2">${String.fromCharCode(65 + i)}.</span>
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div id="explanation-${index}" class="mt-4 hidden">
+                        <div class="bg-blue-50 p-4 rounded-xl border-l-4 border-blue-500">
+                            <p class="font-bold text-blue-700 mb-1">💡 Penjelasan:</p>
+                            <p class="text-gray-700">${q.explanation}</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between mt-6">
+                        <button onclick="prevQuestion()" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-xl font-bold hover:bg-gray-300 transition-all ${index === 0 ? 'invisible' : ''}">
+                            ← Sebelumnya
+                        </button>
+                        <button onclick="nextQuestion()" class="px-6 py-2 bg-indigo-500 text-white rounded-xl font-bold hover:bg-indigo-600 transition-all" id="next-btn-${index}">
+                            ${index === 9 ? 'Lihat Hasil' : 'Selanjutnya →'}
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Restore answered state if already answered
+            if (answeredQuestions.has(index)) {
+                const correctIdx = q.correct;
+                document.querySelectorAll(`[id^="option-${index}"]`).forEach((btn, i) => {
+                    if (i === correctIdx) {
+                        btn.classList.add('bg-green-100', 'border-green-500');
+                    }
+                });
+                document.getElementById(`explanation-${index}`).classList.remove('hidden');
+            }
+        }
+
+        function checkAnswer(questionIndex, selectedIndex) {
+            if (answeredQuestions.has(questionIndex)) return;
+            
+            answeredQuestions.add(questionIndex);
+            const q = quizData[questionIndex];
+            const isCorrect = selectedIndex === q.correct;
+            
+            if (isCorrect) {
+                correctAnswers++;
+                document.getElementById(`option-${questionIndex}-${selectedIndex}`).classList.add('bg-green-100', 'border-green-500');
+            } else {
+                wrongAnswers++;
+                document.getElementById(`option-${questionIndex}-${selectedIndex}`).classList.add('bg-red-100', 'border-red-500');
+                document.getElementById(`option-${questionIndex}-${q.correct}`).classList.add('bg-green-100', 'border-green-500');
+            }
+            
+            document.getElementById(`explanation-${questionIndex}`).classList.remove('hidden');
+            
+            document.querySelectorAll(`[id^="option-${questionIndex}"]`).forEach(btn => {
+                btn.classList.add('pointer-events-none');
+            });
+            
+            updateProgress();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < 9) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            } else {
+                showResults();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function updateProgress() {
+            const progress = (answeredQuestions.size / 10) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${progress}%`;
+            document.getElementById('quiz-progress-text').textContent = `${answeredQuestions.size}/10 Soal`;
+            document.getElementById('correct-count').textContent = correctAnswers;
+            document.getElementById('wrong-count').textContent = wrongAnswers;
+        }
+
+        function showResults() {
+            const percentage = (correctAnswers / 10) * 100;
+            let emoji, title, message;
+            
+            if (percentage >= 90) {
+                emoji = '🏆';
+                title = 'LUAR BIASA!';
+                message = 'Kamu sudah menguasai metode ilmiah dengan sangat baik! Terus pertahankan!';
+            } else if (percentage >= 70) {
+                emoji = '🌟';
+                title = 'HEBAT!';
+                message = 'Pemahaman kamu tentang metode ilmiah sudah baik. Tingkatkan terus!';
+            } else if (percentage >= 50) {
+                emoji = '💪';
+                title = 'BAGUS!';
+                message = 'Kamu sudah memahami dasar-dasar metode ilmiah. Pelajari lagi materi yang belum dikuasai!';
+            } else {
+                emoji = '📚';
+                title = 'TETAP SEMANGAT!';
+                message = 'Jangan menyerah! Baca kembali materi dan coba lagi kuisnya.';
+            }
+            
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('quiz-result').classList.remove('hidden');
+            document.getElementById('result-emoji').textContent = emoji;
+            document.getElementById('result-title').textContent = title;
+            document.getElementById('result-message').textContent = message;
+            document.getElementById('result-score').textContent = `${correctAnswers}/10 (${percentage}%)`;
+        }
+
+        function restartQuiz() {
+            document.getElementById('quiz-container').classList.remove('hidden');
+            initQuiz();
+        }
+
+        // Interactive functions
+        function showCuriosityResponse(type) {
+            const responses = {
+                'alam': '🌿 Wah, kamu tertarik dengan fenomena alam! Kamu bisa meneliti tentang cuaca, tumbuhan, atau ekosistem. Mulailah dari hal sederhana di sekitarmu!',
+                'teknologi': '💻 Keren! Rasa penasaran tentang teknologi bisa membawamu menjadi inovator masa depan. Coba teliti bagaimana alat elektronik di rumahmu bekerja!',
+                'makhluk': '🦋 Makhluk hidup memang menarik! Ada banyak hal yang bisa diteliti dari perilaku hewan, pertumbuhan tanaman, hingga ekosistem di sekitarmu!',
+                'benda': '⚡ Fisika dan kimia sangat seru! Kamu bisa meneliti tentang energi, gerak, atau reaksi kimia sederhana yang aman dilakukan di rumah!'
+            };
+            
+            const responseEl = document.getElementById('curiosity-response');
+            const textEl = document.getElementById('curiosity-text');
+            
+            textEl.textContent = responses[type];
+            responseEl.classList.remove('hidden');
+            responseEl.classList.add('bounce-in');
+        }
+
+        function highlightStep(step) {
+            const details = {
+                1: { title: '👁️ Observasi (Pengamatan)', content: 'Menggunakan panca indra untuk mengamati fenomena di sekitar kita. Dari pengamatan ini muncul pertanyaan yang akan diteliti.' },
+                2: { title: '💡 Hipotesis (Dugaan Sementara)', content: 'Membuat perkiraan atau dugaan awal tentang jawaban dari pertanyaan penelitian. Hipotesis harus logis dan dapat diuji.' },
+                3: { title: '📝 Rancangan Percobaan', content: 'Membuat rencana detail tentang prosedur, alat, bahan, dan variabel yang akan digunakan dalam eksperimen.' },
+                4: { title: '🧪 Eksperimen (Percobaan)', content: 'Melaksanakan percobaan sesuai rancangan yang telah dibuat dengan teliti dan sistematis.' },
+                5: { title: '📊 Pengumpulan Data', content: 'Mengumpulkan dan menyajikan hasil percobaan dalam bentuk tabel, grafik, atau catatan yang terorganisir.' },
+                6: { title: '✅ Kesimpulan', content: 'Menarik kesimpulan berdasarkan data yang diperoleh, apakah hipotesis terbukti atau tidak.' }
+            };
+            
+            const detail = details[step];
+            document.getElementById('step-detail').innerHTML = `
+                <div class="slide-in">
+                    <h4 class="font-bold text-purple-700 text-lg mb-2">${detail.title}</h4>
+                    <p class="text-gray-700">${detail.content}</p>
+                </div>
+            `;
+        }
+
+        function checkObservation(select, correct) {
+            if (select.value === correct) {
+                select.classList.remove('border-green-300');
+                select.classList.add('border-green-500', 'bg-green-50');
+            } else if (select.value !== '') {
+                select.classList.remove('border-green-300');
+                select.classList.add('border-red-500', 'bg-red-50');
+            }
+        }
+
+        function classifyGoal(btn, answer, num) {
+            const correctAnswers = { 1: 'salah', 2: 'benar' };
+            const resultEl = document.getElementById(`classify-result-${num}`);
+            
+            if (answer === correctAnswers[num]) {
+                resultEl.textContent = '✅ Benar! ' + (num === 1 ? 'Ini adalah pendapat pribadi yang tidak bisa diukur.' : 'Ini bisa diuji dengan eksperimen!');
+                resultEl.className = 'text-sm mt-2 text-green-600 font-semibold';
+            } else {
+                resultEl.textContent = '❌ Coba lagi! Pikirkan apakah ini bisa diuji secara ilmiah.';
+                resultEl.className = 'text-sm mt-2 text-red-600 font-semibold';
+            }
+            resultEl.classList.remove('hidden');
+        }
+
+        function checkHypothesis() {
+            const select = document.getElementById('hypothesis-select');
+            const feedback = document.getElementById('hypothesis-feedback');
+            
+            if (select.value === 'benar') {
+                feedback.textContent = '✅ Tepat! Hipotesis ini logis dan didukung alasan ilmiah tentang peran air dalam fotosintesis.';
+                feedback.className = 'text-sm p-3 rounded-lg bg-green-100 text-green-700';
+            } else if (select.value.startsWith('salah')) {
+                feedback.textContent = '❌ Kurang tepat. Hipotesis harus logis dan didukung alasan ilmiah yang dapat diuji.';
+                feedback.className = 'text-sm p-3 rounded-lg bg-red-100 text-red-700';
+            }
+            feedback.classList.remove('hidden');
+        }
+
+        let variableScore = 0;
+        function checkVariable(select, correct, id) {
+            if (select.value === correct) {
+                select.classList.add('bg-green-50', 'border-green-500');
+                variableScore++;
+            } else if (select.value !== '') {
+                select.classList.add('bg-red-50', 'border-red-500');
+            }
+            
+            if (variableScore === 3) {
+                document.getElementById('variable-score').textContent = '🎉 Sempurna! Kamu memahami ketiga jenis variabel!';
+            }
+        }
+
+        // Drag and drop for procedure
+        let draggedItem = null;
+
+        function dragStart(e) {
+            draggedItem = e.target;
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            if (draggedItem !== e.target && e.target.classList.contains('procedure-item')) {
+                const parent = e.target.parentNode;
+                const allItems = [...parent.querySelectorAll('.procedure-item')];
+                const draggedIdx = allItems.indexOf(draggedItem);
+                const targetIdx = allItems.indexOf(e.target);
+                
+                if (draggedIdx < targetIdx) {
+                    parent.insertBefore(draggedItem, e.target.nextSibling);
+                } else {
+                    parent.insertBefore(draggedItem, e.target);
+                }
+            }
+        }
+
+        function checkProcedureOrder() {
+            const items = document.querySelectorAll('.procedure-item');
+            const orders = [...items].map(item => parseInt(item.dataset.order));
+            const isCorrect = orders.every((val, idx) => val === idx + 1);
+            
+            const resultEl = document.getElementById('procedure-result');
+            resultEl.classList.remove('hidden');
+            
+            if (isCorrect) {
+                resultEl.textContent = '🎉 Benar! Urutannya sudah tepat!';
+                resultEl.className = 'mt-3 text-center font-bold text-green-600';
+            } else {
+                resultEl.textContent = '❌ Belum tepat. Coba susun ulang! (Urutan: Siapkan → Lakukan → Catat → Analisis)';
+                resultEl.className = 'mt-3 text-center font-bold text-red-600';
+            }
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize on load
+        initQuiz();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf64ade14ba807d',t:'MTc3MTM0MTg3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

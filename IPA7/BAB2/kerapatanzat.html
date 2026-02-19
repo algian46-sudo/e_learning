@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kerapatan Zat - Media Pembelajaran</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { font-family: 'Poppins', sans-serif; }
+    .heading-font { font-family: 'Merriweather', serif; }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes sink {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+    
+    @keyframes bubble {
+      0% { transform: translateY(100%) scale(0); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-100%) scale(1); opacity: 0; }
+    }
+    
+    @keyframes wave {
+      0%, 100% { transform: translateX(0) scaleY(1); }
+      50% { transform: translateX(-5px) scaleY(1.1); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
+    }
+    
+    .float-animation { animation: float 3s ease-in-out infinite; }
+    .sink-animation { animation: sink 2s ease-in-out infinite; }
+    .bubble-animation { animation: bubble 4s ease-in-out infinite; }
+    .wave-animation { animation: wave 2s ease-in-out infinite; }
+    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    .nav-item:hover, .nav-item.active {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: white;
+    }
+    
+    .liquid-layer {
+      transition: all 0.5s ease;
+    }
+    .liquid-layer:hover {
+      transform: scaleX(1.02);
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.1);
+    }
+    .quiz-option.selected { border-color: #3b82f6; background: rgba(59, 130, 246, 0.2); }
+    .quiz-option.correct { border-color: #10b981; background: rgba(16, 185, 129, 0.2); }
+    .quiz-option.incorrect { border-color: #ef4444; background: rgba(239, 68, 68, 0.2); }
+    
+    .progress-bar {
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+      background-size: 200% 100%;
+      animation: gradient-shift 2s ease infinite;
+    }
+    
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .experiment-container {
+      background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);
+      border-radius: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .water-surface {
+      position: absolute;
+      bottom: 60%;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #0ea5e9, transparent);
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body class="h-full bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+  <div id="app" class="h-full overflow-auto">
+    
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-lg border-b border-blue-100">
+      <div class="max-w-7xl mx-auto px-4 py-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg">
+              <span class="text-2xl">⚗️</span>
+            </div>
+            <div>
+              <h1 id="main-title" class="text-xl font-bold gradient-text heading-font">Kerapatan Zat</h1>
+              <p id="subtitle" class="text-xs text-slate-500">Massa Jenis - IPA Kelas 7</p>
+            </div>
+          </div>
+          <nav class="hidden md:flex gap-2">
+            <button onclick="scrollToSection('materi')" class="nav-item px-4 py-2 rounded-full text-sm font-medium text-slate-600 hover:text-white">📚 Materi</button>
+            <button onclick="scrollToSection('eksperimen')" class="nav-item px-4 py-2 rounded-full text-sm font-medium text-slate-600 hover:text-white">🧪 Eksperimen</button>
+            <button onclick="scrollToSection('quiz')" class="nav-item px-4 py-2 rounded-full text-sm font-medium text-slate-600 hover:text-white">📝 Kuis</button>
+          </nav>
+          <button onclick="toggleMobileNav()" class="md:hidden p-2 rounded-lg bg-blue-100 text-blue-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+        </div>
+        <!-- Mobile Navigation -->
+        <nav id="mobile-nav" class="md:hidden hidden mt-3 pb-2 border-t border-blue-100 pt-3">
+          <div class="flex flex-col gap-2">
+            <button onclick="scrollToSection('materi')" class="nav-item px-4 py-2 rounded-lg text-sm font-medium text-slate-600 text-left">📚 Materi</button>
+            <button onclick="scrollToSection('eksperimen')" class="nav-item px-4 py-2 rounded-lg text-sm font-medium text-slate-600 text-left">🧪 Eksperimen</button>
+            <button onclick="scrollToSection('quiz')" class="nav-item px-4 py-2 rounded-lg text-sm font-medium text-slate-600 text-left">📝 Kuis</button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative py-16 px-4 overflow-hidden">
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 float-animation"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 float-animation" style="animation-delay: 1s;"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 float-animation" style="animation-delay: 2s;"></div>
+      </div>
+      
+      <div class="max-w-4xl mx-auto text-center relative">
+        <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 mb-6 shadow-lg">
+          <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+          <span class="text-sm text-slate-600">Media Pembelajaran Interaktif</span>
+        </div>
+        
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-6 heading-font">
+          <span class="gradient-text">Kerapatan Zat</span>
+          <br>
+          <span class="text-slate-700">(Massa Jenis)</span>
+        </h1>
+        
+        <p class="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+          Pelajari konsep massa jenis, cara mengukurnya, dan fenomena mengapung-melayang-tenggelam melalui aktivitas interaktif yang menyenangkan!
+        </p>
+        
+        <div class="flex flex-wrap justify-center gap-4">
+          <button onclick="scrollToSection('materi')" class="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all pulse-glow">
+            🚀 Mulai Belajar
+          </button>
+          <button onclick="scrollToSection('quiz')" class="px-8 py-4 bg-white text-slate-700 font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all border-2 border-slate-200">
+            📝 Langsung Kuis
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <main id="materi" class="max-w-7xl mx-auto px-4 pb-20">
+      
+      <!-- Section 1: Apersepsi -->
+      <section class="mb-16 scroll-mt-24">
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden card-hover">
+          <div class="bg-gradient-to-r from-amber-400 to-orange-500 p-6">
+            <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center gap-3 heading-font">
+              <span class="text-4xl">🤔</span> Apersepsi - Mengapa Berbeda?
+            </h2>
+          </div>
+          <div class="p-6 md:p-8">
+            <div class="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-xl mb-6">
+              <p class="text-lg font-semibold text-amber-800">💡 Pertanyaan Pemantik:</p>
+              <p class="text-amber-700 mt-2">"Jika batu bata dan air dengan volume yang sama jatuh mengenai kaki, mengapa batu bata terasa lebih sakit?"</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <h3 class="text-xl font-semibold text-slate-800 mb-4">Penjelasan:</h3>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-3">
+                    <span class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">1</span>
+                    <p class="text-slate-600">Partikel zat padat (seperti batu bata) tersusun <strong class="text-blue-600">lebih rapat</strong> dibandingkan partikel zat cair.</p>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">2</span>
+                    <p class="text-slate-600">Dalam volume yang sama, <strong class="text-blue-600">jumlah partikel</strong> pada zat padat lebih banyak daripada zat cair.</p>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">3</span>
+                    <p class="text-slate-600">Semakin banyak partikel = <strong class="text-blue-600">semakin besar massa</strong> = semakin sakit saat menimpa.</p>
+                  </li>
+                </ul>
+              </div>
+              
+              <!-- Interactive Particle Comparison -->
+              <div class="bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl p-6">
+                <h4 class="text-center font-semibold text-slate-700 mb-4">🔬 Perbandingan Susunan Partikel</h4>
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="bg-white rounded-xl p-4 text-center shadow-md">
+                    <div class="text-4xl mb-2">🧱</div>
+                    <p class="font-semibold text-slate-700 mb-2">Batu Bata</p>
+                    <div class="grid grid-cols-5 gap-1 justify-center mx-auto w-fit">
+                      ${Array(25).fill('').map(() => '<div class="w-3 h-3 bg-red-400 rounded-full"></div>').join('')}
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2">Partikel sangat rapat</p>
+                  </div>
+                  <div class="bg-white rounded-xl p-4 text-center shadow-md">
+                    <div class="text-4xl mb-2">💧</div>
+                    <p class="font-semibold text-slate-700 mb-2">Air</p>
+                    <div class="grid grid-cols-5 gap-2 justify-center mx-auto w-fit">
+                      ${Array(15).fill('').map(() => '<div class="w-3 h-3 bg-blue-400 rounded-full"></div>').join('')}
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2">Partikel lebih renggang</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Definisi Massa Jenis -->
+      <section class="mb-16 scroll-mt-24">
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden card-hover">
+          <div class="bg-gradient-to-r from-blue-500 to-cyan-500 p-6">
+            <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center gap-3 heading-font">
+              <span class="text-4xl">📖</span> Definisi Massa Jenis
+            </h2>
+          </div>
+          <div class="p-6 md:p-8">
+            <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 mb-8">
+              <h3 class="text-xl font-bold text-blue-800 mb-3">📌 Pengertian:</h3>
+              <p class="text-lg text-blue-700">
+                <strong>Massa jenis</strong> adalah pengukuran massa setiap satuan volume benda. 
+                Dengan kata lain, massa jenis menunjukkan seberapa "padat" suatu zat.
+              </p>
+            </div>
+            
+            <h3 class="text-xl font-semibold text-slate-800 mb-4">⭐ Karakteristik Utama:</h3>
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-5 border border-purple-200">
+                <div class="text-3xl mb-3">🎯</div>
+                <h4 class="font-semibold text-purple-800 mb-2">Unik untuk Setiap Zat</h4>
+                <p class="text-sm text-purple-600">Setiap materi memiliki massa jenis yang berbeda-beda.</p>
+              </div>
+              <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-5 border border-green-200">
+                <div class="text-3xl mb-3">🏷️</div>
+                <h4 class="font-semibold text-green-800 mb-2">Identitas Zat</h4>
+                <p class="text-sm text-green-600">Massa jenis dapat dijadikan sebagai penanda suatu zat.</p>
+              </div>
+              <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-5 border border-orange-200">
+                <div class="text-3xl mb-3">📏</div>
+                <h4 class="font-semibold text-orange-800 mb-2">Tetap Sama</h4>
+                <p class="text-sm text-orange-600">Massa jenis suatu zat tetap sama meskipun ukurannya berbeda.</p>
+              </div>
+            </div>
+
+            <!-- Interactive Demo: Same Density Different Size -->
+            <div class="mt-8 bg-slate-50 rounded-2xl p-6">
+              <h4 class="font-semibold text-slate-700 mb-4 text-center">🎮 Demonstrasi: Massa Jenis Tetap Sama</h4>
+              <div class="flex flex-wrap justify-center items-end gap-8">
+                <div class="text-center">
+                  <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg shadow-lg mx-auto mb-2"></div>
+                  <p class="text-sm font-medium">Emas Kecil</p>
+                  <p class="text-xs text-slate-500">ρ = 19.3 g/cm³</p>
+                </div>
+                <div class="text-center">
+                  <div class="w-24 h-24 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg shadow-lg mx-auto mb-2"></div>
+                  <p class="text-sm font-medium">Emas Sedang</p>
+                  <p class="text-xs text-slate-500">ρ = 19.3 g/cm³</p>
+                </div>
+                <div class="text-center">
+                  <div class="w-32 h-32 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg shadow-lg mx-auto mb-2"></div>
+                  <p class="text-sm font-medium">Emas Besar</p>
+                  <p class="text-xs text-slate-500">ρ = 19.3 g/cm³</p>
+                </div>
+              </div>
+              <p class="text-center text-slate-600 mt-4 text-sm">✨ Perhatikan: Ukuran berbeda, tapi massa jenis tetap sama!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Rumus Matematika -->
+      <section class="mb-16 scroll-mt-24">
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden card-hover">
+          <div class="bg-gradient-to-r from-purple-500 to-pink-500 p-6">
+            <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center gap-3 heading-font">
+              <span class="text-4xl">🔢</span> Rumus Matematika
+            </h2>
+          </div>
+          <div class="p-6 md:p-8">
+            <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-8 text-center mb-8">
+              <div class="inline-block bg-white rounded-2xl px-12 py-8 shadow-xl">
+                <p class="text-4xl md:text-5xl font-bold text-purple-700 mb-2">ρ = m / V</p>
+                <p class="text-slate-500">Massa Jenis = Massa ÷ Volume</p>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+              <div class="bg-purple-50 rounded-xl p-5 text-center border-2 border-purple-200">
+                <p class="text-4xl font-bold text-purple-600 mb-2">ρ</p>
+                <p class="text-lg font-semibold text-slate-700">(rho)</p>
+                <p class="text-sm text-slate-500 mt-2">Massa Jenis</p>
+                <p class="text-xs text-purple-600 mt-1">g/cm³ atau kg/m³</p>
+              </div>
+              <div class="bg-blue-50 rounded-xl p-5 text-center border-2 border-blue-200">
+                <p class="text-4xl font-bold text-blue-600 mb-2">m</p>
+                <p class="text-lg font-semibold text-slate-700">Massa</p>
+                <p class="text-sm text-slate-500 mt-2">Banyaknya zat</p>
+                <p class="text-xs text-blue-600 mt-1">gram (g) atau kg</p>
+              </div>
+              <div class="bg-green-50 rounded-xl p-5 text-center border-2 border-green-200">
+                <p class="text-4xl font-bold text-green-600 mb-2">V</p>
+                <p class="text-lg font-semibold text-slate-700">Volume</p>
+                <p class="text-sm text-slate-500 mt-2">Ruang yang ditempati</p>
+                <p class="text-xs text-green-600 mt-1">cm³ atau m³</p>
+              </div>
+            </div>
+
+            <!-- Interactive Calculator -->
+            <div class="bg-slate-100 rounded-2xl p-6">
+              <h4 class="font-semibold text-slate-700 mb-4 text-center">🧮 Kalkulator Massa Jenis</h4>
+              <div class="grid md:grid-cols-4 gap-4 items-end">
+                <div>
+                  <label class="block text-sm font-medium text-slate-600 mb-2">Massa (gram)</label>
+                  <input type="number" id="calc-mass" class="w-full px-4 py-3 rounded-xl border-2 border-slate-300 focus:border-purple-500 focus:outline-none transition" placeholder="Contoh: 100" value="100">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-600 mb-2">Volume (cm³)</label>
+                  <input type="number" id="calc-volume" class="w-full px-4 py-3 rounded-xl border-2 border-slate-300 focus:border-purple-500 focus:outline-none transition" placeholder="Contoh: 50" value="50">
+                </div>
+                <div>
+                  <button onclick="calculateDensity()" class="w-full px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-xl hover:shadow-lg transition">
+                    Hitung! 🚀
+                  </button>
+                </div>
+                <div>
+                  <div id="calc-result" class="bg-white rounded-xl p-4 text-center border-2 border-purple-200">
+                    <p class="text-sm text-slate-500">Hasil:</p>
+                    <p class="text-2xl font-bold text-purple-600">2 g/cm³</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Mengukur Volume Benda Tidak Beraturan -->
+      <section class="mb-16 scroll-mt-24">
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden card-hover">
+          <div class="bg-gradient-to-r from-teal-500 to-emerald-500 p-6">
+            <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center gap-3 heading-font">
+              <span class="text-4xl">🔬</span> Mengukur Volume Benda Tidak Beraturan
+            </h2>
+          </div>
+          <div class="p-6 md:p-8">
+            <div class="bg-teal-50 border-l-4 border-teal-400 p-4 rounded-r-xl mb-6">
+              <p class="text-lg font-semibold text-teal-800">💡 Metode Archimedes</p>
+              <p class="text-teal-700 mt-1">Digunakan untuk benda yang bentuknya tidak beraturan seperti batu, kayu, atau logam dengan bentuk aneh.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+              <!-- Method 1: Overflow -->
+              <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-200">
+                <h4 class="font-bold text-blue-800 text-lg mb-4 flex items-center gap-2">
+                  <span class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm">1</span>
+                  Metode Gelas Berpancur
+                </h4>
+                
+                <!-- Interactive Animation -->
+                <div class="bg-white rounded-xl p-4 mb-4 relative h-48 overflow-hidden">
+                  <div class="absolute bottom-4 left-1/2 -translate-x-1/2">
+                    <!-- Beaker -->
+                    <div class="relative">
+                      <div class="w-20 h-28 border-4 border-slate-400 border-t-0 rounded-b-lg bg-gradient-to-t from-blue-300 to-blue-200 relative overflow-hidden">
+                        <div class="absolute -right-4 top-2 w-4 h-3 border-2 border-slate-400 border-l-0 rounded-r-lg"></div>
+                      </div>
+                      <!-- Rock -->
+                      <div id="rock-overflow" class="absolute -top-8 left-1/2 -translate-x-1/2 w-8 h-8 bg-gradient-to-br from-slate-500 to-slate-700 rounded-lg transform rotate-12 cursor-pointer sink-animation">
+                        <span class="text-xs text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">🪨</span>
+                      </div>
+                    </div>
+                    <!-- Measuring cup -->
+                    <div class="absolute -right-16 top-8 w-10 h-12 border-2 border-slate-400 border-t-0 rounded-b-lg bg-blue-100">
+                      <div class="w-full h-1/3 bg-blue-300 absolute bottom-0 rounded-b-lg"></div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="space-y-2 text-sm text-slate-600">
+                  <p>✅ Isi gelas berpancur dengan air sampai penuh</p>
+                  <p>✅ Masukkan benda ke dalam gelas</p>
+                  <p>✅ Air yang tumpah = Volume benda</p>
+                </div>
+              </div>
+
+              <!-- Method 2: Displacement -->
+              <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-200">
+                <h4 class="font-bold text-green-800 text-lg mb-4 flex items-center gap-2">
+                  <span class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm">2</span>
+                  Metode Gelas Ukur
+                </h4>
+                
+                <!-- Interactive Animation -->
+                <div class="bg-white rounded-xl p-4 mb-4 relative h-48 overflow-hidden">
+                  <div class="flex justify-center items-end gap-8 h-full pb-4">
+                    <!-- Before -->
+                    <div class="text-center">
+                      <div class="relative">
+                        <div class="w-12 h-32 border-2 border-slate-400 rounded-b-lg bg-gradient-to-t from-blue-300 to-transparent">
+                          <div class="absolute bottom-0 w-full h-16 bg-blue-300 rounded-b-lg"></div>
+                        </div>
+                        <div class="absolute right-0 top-16 text-xs text-slate-500">50 ml</div>
+                      </div>
+                      <p class="text-xs mt-2 text-slate-600">Sebelum</p>
+                    </div>
+                    
+                    <div class="text-2xl text-slate-400">→</div>
+                    
+                    <!-- After -->
+                    <div class="text-center">
+                      <div class="relative">
+                        <div class="w-12 h-32 border-2 border-slate-400 rounded-b-lg bg-gradient-to-t from-blue-300 to-transparent">
+                          <div class="absolute bottom-0 w-full h-24 bg-blue-300 rounded-b-lg"></div>
+                          <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-6 h-6 bg-gradient-to-br from-slate-500 to-slate-700 rounded transform rotate-12">
+                            <span class="text-xs">🪨</span>
+                          </div>
+                        </div>
+                        <div class="absolute right-0 top-8 text-xs text-green-600 font-bold">80 ml</div>
+                      </div>
+                      <p class="text-xs mt-2 text-slate-600">Sesudah</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="bg-green-100 rounded-lg p-3 text-center">
+                  <p class="text-green-800 font-semibold">Volume benda = 80 - 50 = <span class="text-xl">30 ml</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Fenomena Mengapung, Melayang, Tenggelam -->
+      <section class="mb-16 scroll-mt-24">
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden card-hover">
+          <div class="bg-gradient-to-r from-indigo-500 to-blue-500 p-6">
+            <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center gap-3 heading-font">
+              <span class="text-4xl">🌊</span> Fenomena Mengapung, Melayang, dan Tenggelam
+            </h2>
+          </div>
+          <div class="p-6 md:p-8">
+            
+            <!-- Interactive Demo -->
+            <div class="bg-gradient-to-b from-sky-100 to-blue-300 rounded-2xl p-6 mb-8 relative overflow-hidden" style="min-height: 350px;">
+              <div class="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
+                <span class="text-sm font-semibold text-sky-800">🎮 Simulasi Interaktif</span>
+                <button onclick="resetSimulation()" class="px-3 py-1 bg-white/80 rounded-full text-xs font-medium text-sky-700 hover:bg-white transition">🔄 Reset</button>
+              </div>
+              
+              <!-- Water container -->
+              <div class="relative mt-10 mx-auto w-full max-w-md h-64 bg-gradient-to-b from-blue-200 to-blue-400 rounded-xl border-4 border-blue-600 overflow-hidden">
+                <!-- Water surface line -->
+                <div class="absolute top-4 left-0 right-0 h-1 bg-blue-500/50"></div>
+                
+                <!-- Floating object -->
+                <div id="obj-float" class="absolute top-2 left-8 cursor-pointer transition-all duration-1000 float-animation" title="Kayu - Mengapung">
+                  <div class="w-14 h-10 bg-gradient-to-br from-amber-600 to-amber-800 rounded-lg shadow-lg flex items-center justify-center">
+                    <span class="text-lg">🪵</span>
+                  </div>
+                  <p class="text-xs text-center mt-1 text-white font-medium drop-shadow">Kayu</p>
+                </div>
+                
+                <!-- Suspended object -->
+                <div id="obj-suspend" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all duration-1000" title="Telur - Melayang">
+                  <div class="w-12 h-14 bg-gradient-to-br from-amber-100 to-amber-200 rounded-full shadow-lg flex items-center justify-center">
+                    <span class="text-xl">🥚</span>
+                  </div>
+                  <p class="text-xs text-center mt-1 text-white font-medium drop-shadow">Telur</p>
+                </div>
+                
+                <!-- Sinking object -->
+                <div id="obj-sink" class="absolute bottom-4 right-8 cursor-pointer transition-all duration-1000 sink-animation" title="Batu - Tenggelam">
+                  <div class="w-14 h-12 bg-gradient-to-br from-slate-500 to-slate-700 rounded-lg shadow-lg flex items-center justify-center">
+                    <span class="text-xl">🪨</span>
+                  </div>
+                  <p class="text-xs text-center mt-1 text-white font-medium drop-shadow">Batu</p>
+                </div>
+                
+                <!-- Bubbles -->
+                <div class="absolute bottom-0 left-1/4 w-2 h-2 bg-white/40 rounded-full bubble-animation"></div>
+                <div class="absolute bottom-0 left-1/2 w-3 h-3 bg-white/30 rounded-full bubble-animation" style="animation-delay: 1s;"></div>
+                <div class="absolute bottom-0 left-3/4 w-2 h-2 bg-white/50 rounded-full bubble-animation" style="animation-delay: 2s;"></div>
+              </div>
+            </div>
+
+            <!-- Explanation Cards -->
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+              <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-5 border-2 border-red-200">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center">
+                    <span class="text-2xl">⬇️</span>
+                  </div>
+                  <h4 class="font-bold text-red-800">Tenggelam</h4>
+                </div>
+                <div class="bg-white rounded-lg p-3 mb-3">
+                  <p class="text-sm font-mono text-center text-red-700">ρ benda > ρ cairan</p>
+                </div>
+                <p class="text-sm text-red-600">Massa jenis benda lebih besar dari massa jenis cairan.</p>
+                <p class="text-xs text-slate-500 mt-2">Contoh: Batu di air</p>
+              </div>
+              
+              <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl p-5 border-2 border-yellow-200">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center">
+                    <span class="text-2xl">↔️</span>
+                  </div>
+                  <h4 class="font-bold text-yellow-800">Melayang</h4>
+                </div>
+                <div class="bg-white rounded-lg p-3 mb-3">
+                  <p class="text-sm font-mono text-center text-yellow-700">ρ benda = ρ cairan</p>
+                </div>
+                <p class="text-sm text-yellow-600">Massa jenis benda sama dengan massa jenis cairan.</p>
+                <p class="text-xs text-slate-500 mt-2">Contoh: Telur di air garam</p>
+              </div>
+              
+              <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-5 border-2 border-green-200">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                    <span class="text-2xl">⬆️</span>
+                  </div>
+                  <h4 class="font-bold text-green-800">Mengapung</h4>
+                </div>
+                <div class="bg-white rounded-lg p-3 mb-3">
+                  <p class="text-sm font-mono text-center text-green-700">ρ benda < ρ cairan</p>
+                </div>
+                <p class="text-sm text-green-600">Massa jenis benda lebih kecil dari massa jenis cairan.</p>
+                <p class="text-xs text-slate-500 mt-2">Contoh: Kayu di air</p>
+              </div>
+            </div>
+
+            <!-- Dead Sea Example -->
+            <div class="bg-gradient-to-r from-cyan-100 to-blue-100 rounded-2xl p-6 border border-cyan-200">
+              <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="w-32 h-32 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl flex items-center justify-center shadow-xl flex-shrink-0">
+                  <span class="text-6xl">🏊</span>
+                </div>
+                <div>
+                  <h4 class="font-bold text-cyan-800 text-lg mb-2">🌍 Tahukah Kamu? Laut Mati</h4>
+                  <p class="text-cyan-700 mb-3">
+                    Tubuh manusia bisa mengapung di Laut Mati tanpa harus berenang! Mengapa?
+                  </p>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white/70 rounded-lg p-3">
+                      <p class="text-sm text-slate-600">Massa jenis air Laut Mati</p>
+                      <p class="text-xl font-bold text-cyan-600">1.24 g/cm³</p>
+                    </div>
+                    <div class="bg-white/70 rounded-lg p-3">
+                      <p class="text-sm text-slate-600">Massa jenis tubuh manusia</p>
+                      <p class="text-xl font-bold text-green-600">0.985 g/cm³</p>
+                    </div>
+                  </div>
+                  <p class="text-sm text-cyan-600 mt-3">
+                    <strong>Kesimpulan:</strong> Karena ρ tubuh (0.985) < ρ air laut (1.24), manusia mengapung!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Kerapatan pada Berbagai Cairan & Gas -->
+      <section class="mb-16 scroll-mt-24">
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden card-hover">
+          <div class="bg-gradient-to-r from-pink-500 to-rose-500 p-6">
+            <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center gap-3 heading-font">
+              <span class="text-4xl">🧪</span> Kerapatan pada Berbagai Cairan & Gas
+            </h2>
+          </div>
+          <div class="p-6 md:p-8">
+            <div class="grid md:grid-cols-2 gap-8">
+              
+              <!-- Liquid Layers -->
+              <div>
+                <h3 class="text-xl font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                  <span>💧</span> Lapisan Cairan
+                </h3>
+                <p class="text-slate-600 mb-4">
+                  Cairan yang lebih rapat akan berada di lapisan paling bawah, sedangkan yang paling renggang di paling atas.
+                </p>
+                
+                <!-- Interactive Liquid Tower -->
+                <div class="bg-slate-100 rounded-2xl p-6">
+                  <div class="relative mx-auto w-32">
+                    <!-- Glass container -->
+                    <div class="w-full border-4 border-slate-400 border-t-0 rounded-b-2xl overflow-hidden bg-white">
+                      <!-- Honey -->
+                      <div class="liquid-layer h-12 bg-gradient-to-r from-amber-600 to-amber-700 flex items-center justify-center cursor-pointer" title="Madu: 1.42 g/cm³">
+                        <span class="text-white text-sm font-medium">🍯 Madu</span>
+                      </div>
+                      <!-- Syrup -->
+                      <div class="liquid-layer h-12 bg-gradient-to-r from-purple-600 to-purple-700 flex items-center justify-center cursor-pointer" title="Sirup: 1.33 g/cm³">
+                        <span class="text-white text-sm font-medium">🫐 Sirup</span>
+                      </div>
+                      <!-- Dish soap -->
+                      <div class="liquid-layer h-12 bg-gradient-to-r from-green-400 to-green-500 flex items-center justify-center cursor-pointer" title="Sabun: 1.06 g/cm³">
+                        <span class="text-white text-sm font-medium">🧴 Sabun</span>
+                      </div>
+                      <!-- Water -->
+                      <div class="liquid-layer h-12 bg-gradient-to-r from-blue-400 to-blue-500 flex items-center justify-center cursor-pointer" title="Air: 1.00 g/cm³">
+                        <span class="text-white text-sm font-medium">💧 Air</span>
+                      </div>
+                      <!-- Oil -->
+                      <div class="liquid-layer h-12 bg-gradient-to-r from-yellow-300 to-yellow-400 flex items-center justify-center cursor-pointer" title="Minyak: 0.92 g/cm³">
+                        <span class="text-slate-700 text-sm font-medium">🫒 Minyak</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="mt-4 flex justify-between text-xs text-slate-500">
+                    <span>⬆️ Kurang Rapat</span>
+                    <span>⬇️ Lebih Rapat</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Gas Example -->
+              <div>
+                <h3 class="text-xl font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                  <span>💨</span> Gas di Udara
+                </h3>
+                <p class="text-slate-600 mb-4">
+                  Gas juga memiliki massa jenis yang berbeda-beda. Gas yang lebih ringan akan naik ke atas.
+                </p>
+                
+                <div class="bg-gradient-to-b from-sky-200 to-sky-100 rounded-2xl p-6 relative h-64 overflow-hidden">
+                  <!-- Sky background -->
+                  <div class="absolute top-4 right-4 text-4xl">☁️</div>
+                  <div class="absolute top-12 left-8 text-2xl">☁️</div>
+                  
+                  <!-- Helium balloon floating -->
+                  <div class="absolute top-8 left-1/2 -translate-x-1/2 float-animation">
+                    <div class="relative">
+                      <div class="w-16 h-20 bg-gradient-to-br from-red-400 to-red-600 rounded-full shadow-lg"></div>
+                      <div class="absolute -bottom-8 left-1/2 w-0.5 h-8 bg-slate-400"></div>
+                      <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 text-lg">🎈</div>
+                    </div>
+                  </div>
+                  
+                  <!-- Explanation -->
+                  <div class="absolute bottom-4 left-4 right-4 bg-white/80 backdrop-blur-sm rounded-xl p-4">
+                    <p class="text-sm text-slate-700">
+                      <strong>🎈 Balon Helium Terbang</strong><br>
+                      Gas helium (ρ = 0.179 g/L) lebih ringan dari udara (ρ = 1.29 g/L), sehingga balon naik ke atas!
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 7: Eksperimen -->
+      <section id="eksperimen" class="mb-16 scroll-mt-24">
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden card-hover">
+          <div class="bg-gradient-to-r from-orange-500 to-amber-500 p-6">
+            <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center gap-3 heading-font">
+              <span class="text-4xl">🔬</span> Aktivitas Eksperimen (Lab)
+            </h2>
+          </div>
+          <div class="p-6 md:p-8">
+            <div class="grid md:grid-cols-3 gap-6">
+              
+              <!-- Experiment 1 -->
+              <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-5 border border-blue-200">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                  <span class="text-3xl">⚖️</span>
+                </div>
+                <h4 class="font-bold text-blue-800 mb-2">Eksperimen 1</h4>
+                <p class="text-blue-700 font-medium mb-3">Menentukan Massa Jenis Logam</p>
+                <div class="space-y-2 text-sm text-slate-600">
+                  <p>🔹 Siapkan blok tembaga, besi, dan aluminium</p>
+                  <p>🔹 Ukur massa dengan neraca</p>
+                  <p>🔹 Ukur volume dengan gelas ukur</p>
+                  <p>🔹 Hitung massa jenis masing-masing</p>
+                </div>
+                <div class="mt-4 bg-white rounded-lg p-3">
+                  <p class="text-xs text-slate-500">Hasil yang diharapkan:</p>
+                  <p class="text-sm font-mono">Cu: 8.96 | Fe: 7.87 | Al: 2.70 g/cm³</p>
+                </div>
+              </div>
+              
+              <!-- Experiment 2 -->
+              <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-5 border border-green-200">
+                <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                  <span class="text-3xl">🪨</span>
+                </div>
+                <h4 class="font-bold text-green-800 mb-2">Eksperimen 2</h4>
+                <p class="text-green-700 font-medium mb-3">Benda Tidak Beraturan</p>
+                <div class="space-y-2 text-sm text-slate-600">
+                  <p>🔹 Siapkan batu atau benda tidak beraturan</p>
+                  <p>🔹 Timbang massa benda</p>
+                  <p>🔹 Ukur volume dengan metode Archimedes</p>
+                  <p>🔹 Hitung dan identifikasi jenis batunya</p>
+                </div>
+                <div class="mt-4 bg-white rounded-lg p-3">
+                  <p class="text-xs text-slate-500">Metode:</p>
+                  <p class="text-sm">V = V₂ - V₁ (selisih volume air)</p>
+                </div>
+              </div>
+              
+              <!-- Experiment 3 -->
+              <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-5 border border-purple-200">
+                <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                  <span class="text-3xl">🗼</span>
+                </div>
+                <h4 class="font-bold text-purple-800 mb-2">Eksperimen 3</h4>
+                <p class="text-purple-700 font-medium mb-3">Menara Cairan</p>
+                <div class="space-y-2 text-sm text-slate-600">
+                  <p>🔹 Siapkan madu, sirup, air, dan minyak</p>
+                  <p>🔹 Tuang perlahan ke dalam gelas tinggi</p>
+                  <p>🔹 Amati urutan lapisan yang terbentuk</p>
+                  <p>🔹 Coba masukkan benda kecil berbeda</p>
+                </div>
+                <div class="mt-4 bg-white rounded-lg p-3">
+                  <p class="text-xs text-slate-500">Urutan (bawah ke atas):</p>
+                  <p class="text-sm">Madu → Sirup → Air → Minyak</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 8: Studi Kasus - Kapal Titanic -->
+      <section class="mb-16 scroll-mt-24">
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden card-hover">
+          <div class="bg-gradient-to-r from-slate-700 to-slate-900 p-6">
+            <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center gap-3 heading-font">
+              <span class="text-4xl">🚢</span> Studi Kasus - Kapal Titanic
+            </h2>
+          </div>
+          <div class="p-6 md:p-8">
+            <div class="grid md:grid-cols-2 gap-8">
+              <div>
+                <div class="bg-slate-100 rounded-2xl p-6 mb-6">
+                  <h4 class="font-bold text-slate-800 text-lg mb-3">❓ Pertanyaan Diskusi:</h4>
+                  <p class="text-slate-700 text-lg">
+                    "Mengapa kapal seberat <strong class="text-blue-600">46.328 ton</strong> bisa mengapung, namun tenggelam setelah menabrak gunung es?"
+                  </p>
+                </div>
+                
+                <div class="space-y-4">
+                  <div class="bg-green-50 rounded-xl p-4 border border-green-200">
+                    <h5 class="font-semibold text-green-800 mb-2">✅ Mengapa Kapal Bisa Mengapung?</h5>
+                    <ul class="text-sm text-green-700 space-y-1">
+                      <li>• Kapal memiliki ruang kosong (rongga udara) yang besar</li>
+                      <li>• Massa jenis rata-rata kapal < massa jenis air laut</li>
+                      <li>• Prinsip Archimedes: gaya apung = berat air yang dipindahkan</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="bg-red-50 rounded-xl p-4 border border-red-200">
+                    <h5 class="font-semibold text-red-800 mb-2">❌ Mengapa Titanic Tenggelam?</h5>
+                    <ul class="text-sm text-red-700 space-y-1">
+                      <li>• Tabrakan membuat lubang besar di lambung kapal</li>
+                      <li>• Air masuk dan mengisi ruang kosong</li>
+                      <li>• Massa jenis rata-rata kapal menjadi > air laut</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <!-- Titanic Illustration -->
+                <div class="bg-gradient-to-b from-slate-800 to-blue-900 rounded-2xl p-6 h-full relative overflow-hidden">
+                  <!-- Stars -->
+                  <div class="absolute top-4 left-4 w-1 h-1 bg-white rounded-full"></div>
+                  <div class="absolute top-8 left-12 w-0.5 h-0.5 bg-white rounded-full"></div>
+                  <div class="absolute top-6 right-8 w-1 h-1 bg-white rounded-full"></div>
+                  
+                  <!-- Ship -->
+                  <div class="relative mt-8">
+                    <div class="bg-gradient-to-r from-slate-600 to-slate-700 w-full h-20 rounded-lg relative">
+                      <!-- Smoke stacks -->
+                      <div class="absolute -top-12 left-1/4 w-4 h-12 bg-gradient-to-t from-amber-700 to-amber-800 rounded-t-lg">
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-2 h-4 bg-slate-500 rounded-full opacity-50 float-animation"></div>
+                      </div>
+                      <div class="absolute -top-16 left-1/2 -translate-x-1/2 w-5 h-16 bg-gradient-to-t from-amber-700 to-amber-800 rounded-t-lg">
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-3 h-4 bg-slate-500 rounded-full opacity-50 float-animation" style="animation-delay: 0.5s;"></div>
+                      </div>
+                      <div class="absolute -top-10 right-1/4 w-4 h-10 bg-gradient-to-t from-amber-700 to-amber-800 rounded-t-lg">
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-2 h-4 bg-slate-500 rounded-full opacity-50 float-animation" style="animation-delay: 1s;"></div>
+                      </div>
+                      
+                      <!-- Windows -->
+                      <div class="flex gap-2 px-4 pt-2">
+                        ${Array(8).fill('').map(() => '<div class="w-2 h-2 bg-yellow-300 rounded-full"></div>').join('')}
+                      </div>
+                    </div>
+                    
+                    <!-- Hull -->
+                    <div class="bg-slate-900 w-full h-8 rounded-b-3xl"></div>
+                  </div>
+                  
+                  <!-- Water line -->
+                  <div class="absolute bottom-16 left-0 right-0">
+                    <div class="h-1 bg-blue-400/50 wave-animation"></div>
+                  </div>
+                  
+                  <!-- Iceberg -->
+                  <div class="absolute bottom-8 right-8">
+                    <div class="w-20 h-16 bg-gradient-to-b from-white to-cyan-200 rounded-t-3xl opacity-90"></div>
+                    <div class="w-32 h-20 bg-gradient-to-b from-cyan-300 to-cyan-600 rounded-b-3xl -mt-2 opacity-70"></div>
+                  </div>
+                  
+                  <!-- Caption -->
+                  <div class="absolute bottom-2 left-4 right-4 text-center">
+                    <p class="text-xs text-cyan-200">Ilustrasi Titanic dan Gunung Es</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Environmental Issue -->
+            <div class="mt-8 bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200">
+              <div class="flex items-start gap-4">
+                <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+                  <span class="text-3xl">🌍</span>
+                </div>
+                <div>
+                  <h4 class="font-bold text-amber-800 text-lg mb-2">Isu Lingkungan: Tumpahan Minyak</h4>
+                  <p class="text-amber-700">
+                    Ketika kapal tanker mengalami kecelakaan, minyak yang tumpah akan <strong>mengapung di permukaan air laut</strong> karena massa jenis minyak (0.8-0.9 g/cm³) lebih kecil dari air laut (1.03 g/cm³).
+                  </p>
+                  <p class="text-amber-600 mt-2 text-sm">
+                    ⚠️ Dampaknya: Lapisan minyak menghalangi sinar matahari dan oksigen, merusak ekosistem laut dan membunuh kehidupan laut.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 9: Quiz HOTS -->
+      <section id="quiz" class="mb-16 scroll-mt-24">
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+          <div class="bg-gradient-to-r from-emerald-500 to-teal-500 p-6">
+            <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center gap-3 heading-font">
+              <span class="text-4xl">📝</span> Kuis HOTS - Uji Pemahamanmu!
+            </h2>
+          </div>
+          <div class="p-6 md:p-8">
+            
+            <!-- Quiz Progress -->
+            <div class="mb-8">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-medium text-slate-600">Progres Kuis</span>
+                <span id="quiz-progress-text" class="text-sm font-bold text-emerald-600">0/10 Soal</span>
+              </div>
+              <div class="h-3 bg-slate-200 rounded-full overflow-hidden">
+                <div id="quiz-progress-bar" class="progress-bar h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+            
+            <!-- Quiz Container -->
+            <div id="quiz-container">
+              <!-- Quiz questions will be rendered here -->
+            </div>
+            
+            <!-- Quiz Results -->
+            <div id="quiz-results" class="hidden">
+              <div class="text-center py-12">
+                <div class="w-32 h-32 mx-auto bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center mb-6 shadow-xl">
+                  <span id="results-emoji" class="text-6xl">🎉</span>
+                </div>
+                <h3 class="text-3xl font-bold text-slate-800 mb-2">Kuis Selesai!</h3>
+                <p id="results-score" class="text-xl text-slate-600 mb-6">Skor: 0/10</p>
+                <div id="results-message" class="bg-emerald-50 rounded-xl p-4 mb-6 max-w-md mx-auto">
+                  <p class="text-emerald-700">Pesan hasil</p>
+                </div>
+                <button onclick="resetQuiz()" class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition">
+                  🔄 Ulangi Kuis
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-slate-800 to-slate-900 text-white py-8 px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <img src="https://i.imgur.com/mRmw86t.jpeg" alt="Foto Pembuat" class="w-16 h-16 rounded-full object-cover border-2 border-white/30 shadow-lg" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #3b82f6, #8b5cf6)'; this.alt=''; this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';">
+          <div class="text-left">
+            <p class="font-semibold text-lg">Algian Manggara, S.Agr</p>
+            <p class="text-slate-400 text-sm">Pembuat Konten Pembelajaran</p>
+          </div>
+        </div>
+        <div class="border-t border-slate-700 pt-4 mt-4">
+          <p class="text-slate-400 text-sm">© 2026 Algian Manggara, S.Agr - Media Pembelajaran Kerapatan Zat</p>
+          <p class="text-slate-500 text-xs mt-2">Dibuat dengan ❤️ untuk pendidikan Indonesia</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Kerapatan Zat',
+      subtitle: 'Massa Jenis - IPA Kelas 7',
+      primary_color: '#3b82f6',
+      secondary_color: '#8b5cf6',
+      text_color: '#1e293b',
+      background_color: '#f8fafc',
+      accent_color: '#10b981'
+    };
+
+    // Quiz Data - 10 HOTS Questions
+    const quizData = [
+      {
+        question: "Seorang penyelam profesional menggunakan sabuk pemberat berisi timah hitam saat menyelam di laut. Jika massa jenis tubuh manusia sekitar 0,985 g/cm³ dan massa jenis air laut 1,03 g/cm³, mengapa penyelam perlu menggunakan sabuk pemberat?",
+        options: [
+          "Agar penyelam dapat berenang lebih cepat",
+          "Untuk meningkatkan massa jenis rata-rata tubuh agar lebih mudah tenggelam ke kedalaman",
+          "Untuk melindungi tubuh dari tekanan air",
+          "Agar penyelam tidak terseret arus laut"
+        ],
+        correct: 1,
+        explanation: "Sabuk pemberat meningkatkan massa jenis rata-rata tubuh penyelam sehingga lebih besar dari air laut, memudahkan penyelam untuk tenggelam ke kedalaman yang diinginkan."
+      },
+      {
+        question: "Sebuah bola pejal dimasukkan ke dalam tiga cairan berbeda. Di cairan A bola tenggelam, di cairan B bola melayang, dan di cairan C bola mengapung. Urutkan massa jenis ketiga cairan dari yang terkecil ke terbesar!",
+        options: [
+          "A < B < C",
+          "C < B < A",
+          "B < A < C",
+          "A < C < B"
+        ],
+        correct: 0,
+        explanation: "Bola tenggelam di A (ρA < ρbola), melayang di B (ρB = ρbola), mengapung di C (ρC > ρbola). Maka urutan massa jenis: A < B < C."
+      },
+      {
+        question: "Seorang siswa menemukan dua batang logam dengan volume yang sama. Batang X memiliki massa 270 gram dan batang Y memiliki massa 790 gram. Jika massa jenis aluminium = 2,7 g/cm³ dan besi = 7,9 g/cm³, logam apakah X dan Y?",
+        options: [
+          "X = Besi, Y = Aluminium",
+          "X = Aluminium, Y = Besi",
+          "X dan Y keduanya Aluminium",
+          "X dan Y keduanya Besi"
+        ],
+        correct: 1,
+        explanation: "Dengan volume yang sama, massa berbanding lurus dengan massa jenis. ρX = 270/V dan ρY = 790/V. Perbandingan massa sesuai dengan perbandingan massa jenis Al dan Fe, jadi X = Aluminium, Y = Besi."
+      },
+      {
+        question: "Mengapa es batu mengapung di air padahal keduanya terbuat dari zat yang sama (H₂O)?",
+        options: [
+          "Karena es batu lebih dingin dari air",
+          "Karena es batu memiliki massa jenis lebih kecil dari air akibat struktur kristalnya yang renggang",
+          "Karena air mendorong es batu ke atas",
+          "Karena es batu berbentuk padat sedangkan air berbentuk cair"
+        ],
+        correct: 1,
+        explanation: "Saat air membeku, molekul H₂O membentuk struktur kristal heksagonal yang lebih renggang, sehingga volume es lebih besar dari air dengan massa yang sama. Ini membuat massa jenis es (0,92 g/cm³) lebih kecil dari air (1,00 g/cm³)."
+      },
+      {
+        question: "Dalam percobaan, seorang siswa menuangkan 100 ml minyak goreng (ρ = 0,92 g/cm³) ke dalam 200 ml air (ρ = 1,00 g/cm³). Kemudian ia menambahkan es batu. Di manakah posisi es batu akan stabil?",
+        options: [
+          "Di permukaan minyak",
+          "Di antara lapisan minyak dan air",
+          "Di dasar wadah",
+          "Bergantian naik turun"
+        ],
+        correct: 1,
+        explanation: "Massa jenis es (0,92 g/cm³) sama dengan minyak dan lebih kecil dari air. Es akan tenggelam melewati minyak tapi mengapung di air, sehingga berada di antara kedua lapisan."
+      },
+      {
+        question: "Kapal selam dapat mengapung, melayang, dan tenggelam di laut dengan mengatur tangki balasnya. Bagaimana cara kerja tangki balas untuk membuat kapal selam tenggelam?",
+        options: [
+          "Mengisi tangki dengan udara untuk menambah volume",
+          "Mengisi tangki dengan air laut untuk menambah massa total",
+          "Mengurangi air dari tangki untuk mengurangi massa",
+          "Menutup semua lubang ventilasi"
+        ],
+        correct: 1,
+        explanation: "Untuk tenggelam, tangki balas diisi air laut sehingga massa total kapal bertambah tanpa mengubah volume. Ini meningkatkan massa jenis rata-rata kapal menjadi lebih besar dari air laut."
+      },
+      {
+        question: "Seorang peneliti ingin mengidentifikasi jenis logam dari sebuah artefak kuno tanpa merusaknya. Ia mengukur massa artefak = 156 gram dan volumenya = 20 cm³ menggunakan metode Archimedes. Logam apakah artefak tersebut? (ρ perak = 10,5 g/cm³, ρ tembaga = 8,9 g/cm³, ρ emas = 19,3 g/cm³, ρ besi = 7,8 g/cm³)",
+        options: [
+          "Emas",
+          "Perak",
+          "Tembaga",
+          "Besi"
+        ],
+        correct: 3,
+        explanation: "ρ = m/V = 156/20 = 7,8 g/cm³. Nilai ini sesuai dengan massa jenis besi (7,8 g/cm³)."
+      },
+      {
+        question: "Di sebuah kolam renang, seorang anak mengembangkan paru-parunya penuh dengan udara dan mengapung. Ketika ia mengeluarkan semua udara, ia mulai tenggelam. Fenomena ini dapat dijelaskan dengan konsep...",
+        options: [
+          "Gaya gravitasi yang berubah-ubah",
+          "Perubahan massa jenis rata-rata tubuh akibat perubahan volume",
+          "Perubahan tekanan air kolam",
+          "Perubahan suhu tubuh"
+        ],
+        correct: 1,
+        explanation: "Saat paru-paru terisi udara, volume tubuh bertambah sementara massa tetap, sehingga massa jenis rata-rata tubuh mengecil dan mengapung. Saat udara dikeluarkan, volume berkurang dan massa jenis bertambah menyebabkan tenggelam."
+      },
+      {
+        question: "Sebuah tabung berisi campuran madu (ρ = 1,42 g/cm³), air (ρ = 1,00 g/cm³), dan minyak (ρ = 0,92 g/cm³). Sebutir kelereng plastik dengan massa jenis 1,15 g/cm³ dimasukkan. Di lapisan manakah kelereng akan stabil?",
+        options: [
+          "Di permukaan minyak",
+          "Di antara minyak dan air",
+          "Di antara air dan madu",
+          "Di dasar tabung (dalam madu)"
+        ],
+        correct: 2,
+        explanation: "Massa jenis kelereng (1,15 g/cm³) lebih besar dari air (1,00 g/cm³) tapi lebih kecil dari madu (1,42 g/cm³). Kelereng akan tenggelam melewati minyak dan air, lalu mengapung di atas madu."
+      },
+      {
+        question: "Seorang ahli forensik menemukan sepotong logam mencurigakan di TKP. Setelah pengukuran, diperoleh massa 54 gram. Untuk mengukur volume, logam dimasukkan ke gelas ukur berisi 40 ml air dan permukaan air naik menjadi 60 ml. Jika tersangka mengklaim itu adalah emas murni (ρ = 19,3 g/cm³), apakah klaim tersebut benar?",
+        options: [
+          "Benar, karena massa jenisnya sama dengan emas",
+          "Salah, karena massa jenisnya 2,7 g/cm³ (kemungkinan aluminium)",
+          "Salah, karena massa jenisnya 8,9 g/cm³ (kemungkinan tembaga)",
+          "Tidak dapat ditentukan karena data tidak lengkap"
+        ],
+        correct: 1,
+        explanation: "Volume logam = 60 - 40 = 20 ml = 20 cm³. ρ = m/V = 54/20 = 2,7 g/cm³. Ini jauh dari emas (19,3 g/cm³) dan sesuai dengan aluminium (2,7 g/cm³). Klaim tersangka salah."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answeredQuestions = [];
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+          document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => window.elementSdk.setConfig({ primary_color: value })
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => window.elementSdk.setConfig({ secondary_color: value })
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => window.elementSdk.setConfig({ text_color: value })
+            },
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => window.elementSdk.setConfig({ background_color: value })
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => window.elementSdk.setConfig({ accent_color: value })
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['main_title', config.main_title || defaultConfig.main_title],
+          ['subtitle', config.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
+
+    // Navigation functions
+    function scrollToSection(sectionId) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+      // Close mobile nav
+      document.getElementById('mobile-nav').classList.add('hidden');
+    }
+
+    function toggleMobileNav() {
+      const nav = document.getElementById('mobile-nav');
+      nav.classList.toggle('hidden');
+    }
+
+    // Calculator function
+    function calculateDensity() {
+      const mass = parseFloat(document.getElementById('calc-mass').value) || 0;
+      const volume = parseFloat(document.getElementById('calc-volume').value) || 1;
+      const density = (mass / volume).toFixed(2);
+      
+      document.getElementById('calc-result').innerHTML = `
+        <p class="text-sm text-slate-500">Hasil:</p>
+        <p class="text-2xl font-bold text-purple-600">${density} g/cm³</p>
+      `;
+    }
+
+    // Simulation reset
+    function resetSimulation() {
+      const float = document.getElementById('obj-float');
+      const suspend = document.getElementById('obj-suspend');
+      const sink = document.getElementById('obj-sink');
+      
+      float.style.top = '8px';
+      suspend.style.top = '50%';
+      sink.style.bottom = '16px';
+    }
+
+    // Quiz functions
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      const question = quizData[currentQuestion];
+      
+      container.innerHTML = `
+        <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-6 mb-6">
+          <div class="flex items-start gap-4 mb-6">
+            <span class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+              ${currentQuestion + 1}
+            </span>
+            <p class="text-lg text-slate-800 leading-relaxed">${question.question}</p>
+          </div>
+          
+          <div class="space-y-3">
+            ${question.options.map((option, index) => `
+              <button onclick="selectAnswer(${index})" id="option-${index}" class="quiz-option w-full text-left p-4 rounded-xl border-2 border-slate-200 bg-white hover:border-emerald-400 transition-all">
+                <span class="inline-flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center font-semibold text-sm text-slate-600">
+                    ${String.fromCharCode(65 + index)}
+                  </span>
+                  <span class="text-slate-700">${option}</span>
+                </span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+        
+        <div id="explanation" class="hidden bg-blue-50 rounded-xl p-4 mb-6 border border-blue-200">
+          <p class="font-semibold text-blue-800 mb-2">💡 Pembahasan:</p>
+          <p class="text-blue-700">${question.explanation}</p>
+        </div>
+        
+        <div class="flex justify-between items-center">
+          <button onclick="previousQuestion()" class="px-6 py-3 bg-slate-200 text-slate-700 font-medium rounded-xl hover:bg-slate-300 transition ${currentQuestion === 0 ? 'opacity-50 cursor-not-allowed' : ''}" ${currentQuestion === 0 ? 'disabled' : ''}>
+            ← Sebelumnya
+          </button>
+          <button id="next-btn" onclick="nextQuestion()" class="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-medium rounded-xl hover:shadow-lg transition opacity-50 cursor-not-allowed" disabled>
+            ${currentQuestion === quizData.length - 1 ? 'Lihat Hasil' : 'Selanjutnya'} →
+          </button>
+        </div>
+      `;
+      
+      updateProgress();
+      
+      // If already answered, show the answer
+      if (answeredQuestions[currentQuestion] !== undefined) {
+        showAnswer(answeredQuestions[currentQuestion]);
+      }
+    }
+
+    function selectAnswer(selectedIndex) {
+      if (answeredQuestions[currentQuestion] !== undefined) return;
+      
+      answeredQuestions[currentQuestion] = selectedIndex;
+      const question = quizData[currentQuestion];
+      
+      if (selectedIndex === question.correct) {
+        score++;
+      }
+      
+      showAnswer(selectedIndex);
+    }
+
+    function showAnswer(selectedIndex) {
+      const question = quizData[currentQuestion];
+      
+      // Highlight correct and incorrect
+      for (let i = 0; i < question.options.length; i++) {
+        const btn = document.getElementById(`option-${i}`);
+        btn.classList.remove('quiz-option');
+        btn.disabled = true;
+        btn.style.cursor = 'default';
+        
+        if (i === question.correct) {
+          btn.classList.add('correct');
+        } else if (i === selectedIndex && selectedIndex !== question.correct) {
+          btn.classList.add('incorrect');
+        }
+      }
+      
+      // Show explanation
+      document.getElementById('explanation').classList.remove('hidden');
+      
+      // Enable next button
+      const nextBtn = document.getElementById('next-btn');
+      nextBtn.disabled = false;
+      nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      
+      updateProgress();
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        renderQuiz();
+      } else {
+        showResults();
+      }
+    }
+
+    function previousQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuiz();
+      }
+    }
+
+    function updateProgress() {
+      const answered = answeredQuestions.filter(a => a !== undefined).length;
+      const percentage = (answered / quizData.length) * 100;
+      
+      document.getElementById('quiz-progress-bar').style.width = `${percentage}%`;
+      document.getElementById('quiz-progress-text').textContent = `${answered}/${quizData.length} Soal`;
+    }
+
+    function showResults() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-results').classList.remove('hidden');
+      
+      const percentage = (score / quizData.length) * 100;
+      
+      let emoji, message;
+      if (percentage >= 90) {
+        emoji = '🏆';
+        message = 'Luar biasa! Kamu benar-benar menguasai materi Kerapatan Zat!';
+      } else if (percentage >= 70) {
+        emoji = '🎉';
+        message = 'Bagus sekali! Kamu memahami konsep dengan baik. Terus belajar!';
+      } else if (percentage >= 50) {
+        emoji = '💪';
+        message = 'Lumayan! Coba pelajari kembali materi yang belum dikuasai.';
+      } else {
+        emoji = '📚';
+        message = 'Jangan menyerah! Ulangi membaca materi dan coba lagi.';
+      }
+      
+      document.getElementById('results-emoji').textContent = emoji;
+      document.getElementById('results-score').textContent = `Skor: ${score}/${quizData.length} (${percentage}%)`;
+      document.getElementById('results-message').innerHTML = `<p class="text-emerald-700">${message}</p>`;
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answeredQuestions = [];
+      
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('quiz-results').classList.add('hidden');
+      
+      renderQuiz();
+    }
+
+    // Initialize quiz on page load
+    renderQuiz();
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf6a22d96a3e787',t:'MTc3MTM0NTQ1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

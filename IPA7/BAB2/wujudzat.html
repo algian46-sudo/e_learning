@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mengenal Zat dan Model Partikel</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { font-family: 'Nunito', sans-serif; }
+    .heading-font { font-family: 'Poppins', sans-serif; }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #1e293b; }
+    ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
+    
+    /* Particle animation */
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+      50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); }
+    }
+    
+    .animate-float { animation: float 3s ease-in-out infinite; }
+    .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    
+    /* Card hover effect */
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Progress bar */
+    .progress-fill {
+      transition: width 0.5s ease;
+    }
+    
+    /* Quiz option styling */
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      background: #334155;
+      border-color: #60a5fa;
+    }
+    .quiz-option.selected { background: #1e40af; border-color: #3b82f6; }
+    .quiz-option.correct { background: #166534; border-color: #22c55e; }
+    .quiz-option.incorrect { background: #991b1b; border-color: #ef4444; }
+    
+    /* Diffusion animation */
+    @keyframes diffuse {
+      0% { transform: translate(0, 0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--dx), var(--dy)) scale(0.5); opacity: 0.3; }
+    }
+    
+    .particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      animation: diffuse 3s ease-out infinite;
+    }
+    
+    /* Tab styling */
+    .tab-btn {
+      transition: all 0.3s ease;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+    }
+    
+    /* Image container */
+    .img-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+    .img-container::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.8) 0%, transparent 50%);
+    }
+  </style>
+</head>
+<body class="h-full bg-slate-900 text-white overflow-auto">
+  <div id="app" class="w-full min-h-full">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-900 via-slate-800 to-purple-900 py-6 px-4 shadow-2xl sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center animate-pulse-glow">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+            </svg>
+          </div>
+          <div>
+            <h1 id="main-title" class="heading-font text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              Mengenal Zat dan Model Partikel
+            </h1>
+            <p class="text-slate-400 text-sm">Pembelajaran Interaktif IPA</p>
+          </div>
+        </div>
+        <!-- Progress Indicator -->
+        <div class="hidden md:flex items-center gap-3">
+          <span class="text-slate-400 text-sm">Progress:</span>
+          <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
+            <div id="progress-bar" class="h-full bg-gradient-to-r from-blue-500 to-purple-500 progress-fill" style="width: 0%"></div>
+          </div>
+          <span id="progress-text" class="text-blue-400 text-sm font-bold">0%</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="bg-slate-800/50 backdrop-blur-sm sticky top-24 z-40 border-b border-slate-700">
+      <div class="max-w-6xl mx-auto px-4 py-3">
+        <div class="flex gap-2 overflow-x-auto pb-2" id="nav-tabs">
+          <button onclick="showSection(0)" class="tab-btn active px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap bg-slate-700">🌍 Pendahuluan</button>
+          <button onclick="showSection(1)" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap bg-slate-700">📦 Materi</button>
+          <button onclick="showSection(2)" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap bg-slate-700">🔬 Sifat Zat</button>
+          <button onclick="showSection(3)" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap bg-slate-700">⚛️ Model Partikel</button>
+          <button onclick="showSection(4)" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap bg-slate-700">💨 Difusi</button>
+          <button onclick="showSection(5)" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap bg-slate-700">👃 Fakta Sains</button>
+          <button onclick="showSection(6)" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap bg-slate-700">📝 Aktivitas</button>
+          <button onclick="showSection(7)" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap bg-slate-700">🎯 Kuis HOTS</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+      <!-- Section 0: Pendahuluan -->
+      <section id="section-0" class="content-section">
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-4xl">🌍</span>
+              <h2 class="heading-font text-2xl font-bold text-blue-400">Pemanasan Global</h2>
+            </div>
+            <div class="img-container mb-4 h-48">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop" alt="Es kutub mencair" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='linear-gradient(135deg, #1e40af, #7c3aed)'; this.alt='Ilustrasi pemanasan global';">
+              <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                <p class="text-sm text-slate-300">Es kutub yang mencair akibat pemanasan global</p>
+              </div>
+            </div>
+            <p class="text-slate-300 leading-relaxed">
+              Peningkatan aktivitas manusia seperti pembakaran bahan bakar fosil dan deforestasi menyebabkan 
+              <span class="text-yellow-400 font-semibold">suhu global meningkat drastis</span>, yang berdampak pada 
+              <span class="text-cyan-400 font-semibold">melelehnya es di kutub</span> dengan kecepatan yang mengkhawatirkan.
+            </p>
+            <div class="mt-4 p-4 bg-red-900/30 rounded-xl border border-red-700">
+              <p class="text-red-300 text-sm">
+                ⚠️ <strong>Fakta:</strong> Permukaan laut global telah naik sekitar 20 cm sejak tahun 1900 dan terus meningkat!
+              </p>
+            </div>
+          </div>
+          
+          <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-4xl">🎯</span>
+              <h2 class="heading-font text-2xl font-bold text-green-400">Tujuan Pembelajaran</h2>
+            </div>
+            <div class="img-container mb-4 h-48">
+              <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&auto=format&fit=crop" alt="Penelitian sains" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='linear-gradient(135deg, #166534, #1e40af)'; this.alt='Ilustrasi pembelajaran sains';">
+              <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                <p class="text-sm text-slate-300">Memahami sains untuk menjaga Bumi</p>
+              </div>
+            </div>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center text-sm flex-shrink-0">✓</span>
+                <span class="text-slate-300">Memahami sifat-sifat zat padat, cair, dan gas</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center text-sm flex-shrink-0">✓</span>
+                <span class="text-slate-300">Menjelaskan model partikel untuk setiap wujud zat</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center text-sm flex-shrink-0">✓</span>
+                <span class="text-slate-300">Memahami fenomena difusi dalam kehidupan sehari-hari</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center text-sm flex-shrink-0">✓</span>
+                <span class="text-slate-300">Berkontribusi dalam menjaga kelestarian Bumi</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="mt-8 text-center">
+          <button onclick="showSection(1)" class="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl font-bold text-lg hover:from-blue-500 hover:to-purple-500 transition-all transform hover:scale-105 shadow-lg shadow-blue-500/30">
+            Mulai Belajar →
+          </button>
+        </div>
+      </section>
+
+      <!-- Section 1: Apa itu Materi -->
+      <section id="section-1" class="content-section hidden">
+        <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 border border-slate-700 mb-8">
+          <h2 class="heading-font text-3xl font-bold text-center mb-6 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            📦 Apa itu Materi?
+          </h2>
+          
+          <div class="bg-blue-900/30 rounded-xl p-6 border border-blue-700 mb-8">
+            <p class="text-xl text-center text-slate-200">
+              <span class="text-blue-400 font-bold">Materi</span> adalah segala sesuatu yang memiliki 
+              <span class="text-yellow-400 font-semibold">massa</span> dan menempati 
+              <span class="text-green-400 font-semibold">ruang</span>.
+            </p>
+            <p class="text-slate-400 text-center mt-2">Semua benda di sekitar kita adalah materi!</p>
+          </div>
+
+          <h3 class="heading-font text-xl font-bold text-purple-400 mb-4">Tiga Wujud Materi:</h3>
+          
+          <div class="grid md:grid-cols-3 gap-6 mb-8">
+            <!-- Padat -->
+            <div class="bg-slate-700/50 rounded-xl p-5 border border-slate-600 text-center transform hover:scale-105 transition-all">
+              <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-gray-400 to-gray-600 rounded-lg flex items-center justify-center">
+                <span class="text-4xl">🧊</span>
+              </div>
+              <h4 class="font-bold text-lg text-gray-300 mb-2">ZAT PADAT</h4>
+              <p class="text-slate-400 text-sm">Bentuk & volume tetap</p>
+              <div class="mt-3 flex justify-center gap-2">
+                <span class="px-2 py-1 bg-gray-600 rounded text-xs">Batu</span>
+                <span class="px-2 py-1 bg-gray-600 rounded text-xs">Es</span>
+                <span class="px-2 py-1 bg-gray-600 rounded text-xs">Besi</span>
+              </div>
+            </div>
+            
+            <!-- Cair -->
+            <div class="bg-slate-700/50 rounded-xl p-5 border border-slate-600 text-center transform hover:scale-105 transition-all">
+              <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center">
+                <span class="text-4xl">💧</span>
+              </div>
+              <h4 class="font-bold text-lg text-blue-300 mb-2">ZAT CAIR</h4>
+              <p class="text-slate-400 text-sm">Bentuk berubah, volume tetap</p>
+              <div class="mt-3 flex justify-center gap-2">
+                <span class="px-2 py-1 bg-blue-600 rounded text-xs">Air</span>
+                <span class="px-2 py-1 bg-blue-600 rounded text-xs">Minyak</span>
+                <span class="px-2 py-1 bg-blue-600 rounded text-xs">Susu</span>
+              </div>
+            </div>
+            
+            <!-- Gas -->
+            <div class="bg-slate-700/50 rounded-xl p-5 border border-slate-600 text-center transform hover:scale-105 transition-all">
+              <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg flex items-center justify-center">
+                <span class="text-4xl">💨</span>
+              </div>
+              <h4 class="font-bold text-lg text-purple-300 mb-2">GAS</h4>
+              <p class="text-slate-400 text-sm">Bentuk & volume berubah</p>
+              <div class="mt-3 flex justify-center gap-2">
+                <span class="px-2 py-1 bg-purple-600 rounded text-xs">Udara</span>
+                <span class="px-2 py-1 bg-purple-600 rounded text-xs">Uap</span>
+                <span class="px-2 py-1 bg-purple-600 rounded text-xs">CO₂</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contoh Air -->
+          <div class="bg-gradient-to-r from-cyan-900/50 to-blue-900/50 rounded-xl p-6 border border-cyan-700">
+            <h3 class="heading-font text-xl font-bold text-cyan-400 mb-4 text-center">💡 Contoh Unik: Air (H₂O)</h3>
+            <div class="img-container h-48 mb-4">
+              <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=800&auto=format&fit=crop" alt="Tiga wujud air" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='linear-gradient(135deg, #0891b2, #1e40af)'; this.alt='Ilustrasi tiga wujud air';">
+            </div>
+            <p class="text-center text-slate-300">
+              Air adalah zat yang unik karena bisa berada dalam <span class="text-gray-300 font-bold">tiga wujud</span>:
+            </p>
+            <div class="flex justify-center gap-4 mt-4 flex-wrap">
+              <div class="flex items-center gap-2 bg-slate-700 px-4 py-2 rounded-full">
+                <span>🧊</span>
+                <span class="text-gray-300">Es (Padat)</span>
+              </div>
+              <span class="text-2xl">→</span>
+              <div class="flex items-center gap-2 bg-slate-700 px-4 py-2 rounded-full">
+                <span>💧</span>
+                <span class="text-blue-300">Air (Cair)</span>
+              </div>
+              <span class="text-2xl">→</span>
+              <div class="flex items-center gap-2 bg-slate-700 px-4 py-2 rounded-full">
+                <span>♨️</span>
+                <span class="text-purple-300">Uap (Gas)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <button onclick="showSection(0)" class="px-6 py-3 bg-slate-700 rounded-xl font-semibold hover:bg-slate-600 transition-all">
+            ← Sebelumnya
+          </button>
+          <button onclick="showSection(2)" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl font-semibold hover:from-blue-500 hover:to-purple-500 transition-all">
+            Selanjutnya →
+          </button>
+        </div>
+      </section>
+
+      <!-- Section 2: Sifat-Sifat Wujud Materi -->
+      <section id="section-2" class="content-section hidden">
+        <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 border border-slate-700 mb-8">
+          <h2 class="heading-font text-3xl font-bold text-center mb-6 bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+            🔬 Sifat-Sifat Wujud Materi
+          </h2>
+          
+          <p class="text-center text-slate-400 mb-8">
+            Berdasarkan hasil eksperimen, berikut perbedaan sifat ketiga wujud zat:
+          </p>
+
+          <!-- Comparison Table -->
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full border-collapse">
+              <thead>
+                <tr class="bg-slate-700">
+                  <th class="p-4 text-left border border-slate-600 rounded-tl-xl">Sifat</th>
+                  <th class="p-4 text-center border border-slate-600 text-gray-300">🧊 Padat</th>
+                  <th class="p-4 text-center border border-slate-600 text-blue-300">💧 Cair</th>
+                  <th class="p-4 text-center border border-slate-600 rounded-tr-xl text-purple-300">💨 Gas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-slate-800/50">
+                  <td class="p-4 border border-slate-600 font-semibold">Bentuk</td>
+                  <td class="p-4 border border-slate-600 text-center">
+                    <span class="px-3 py-1 bg-green-900/50 text-green-400 rounded-full">Tetap</span>
+                  </td>
+                  <td class="p-4 border border-slate-600 text-center">
+                    <span class="px-3 py-1 bg-yellow-900/50 text-yellow-400 rounded-full">Sesuai Wadah</span>
+                  </td>
+                  <td class="p-4 border border-slate-600 text-center">
+                    <span class="px-3 py-1 bg-red-900/50 text-red-400 rounded-full">Berubah-ubah</span>
+                  </td>
+                </tr>
+                <tr class="bg-slate-800/30">
+                  <td class="p-4 border border-slate-600 font-semibold">Volume</td>
+                  <td class="p-4 border border-slate-600 text-center">
+                    <span class="px-3 py-1 bg-green-900/50 text-green-400 rounded-full">Tetap</span>
+                  </td>
+                  <td class="p-4 border border-slate-600 text-center">
+                    <span class="px-3 py-1 bg-green-900/50 text-green-400 rounded-full">Tetap</span>
+                  </td>
+                  <td class="p-4 border border-slate-600 text-center">
+                    <span class="px-3 py-1 bg-red-900/50 text-red-400 rounded-full">Berubah-ubah</span>
+                  </td>
+                </tr>
+                <tr class="bg-slate-800/50">
+                  <td class="p-4 border border-slate-600 font-semibold">Kompresibilitas</td>
+                  <td class="p-4 border border-slate-600 text-center">
+                    <span class="px-3 py-1 bg-blue-900/50 text-blue-400 rounded-full">Tidak dapat ditekan</span>
+                  </td>
+                  <td class="p-4 border border-slate-600 text-center">
+                    <span class="px-3 py-1 bg-yellow-900/50 text-yellow-400 rounded-full">Sulit ditekan</span>
+                  </td>
+                  <td class="p-4 border border-slate-600 text-center">
+                    <span class="px-3 py-1 bg-green-900/50 text-green-400 rounded-full">Mudah ditekan</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Visual Cards -->
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl p-5 border border-gray-600">
+              <div class="img-container h-32 mb-4">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&auto=format&fit=crop" alt="Batu dan mineral padat" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='linear-gradient(135deg, #374151, #1f2937)'; this.alt='Ilustrasi zat padat';">
+              </div>
+              <h3 class="font-bold text-gray-300 text-lg mb-2">🧊 Zat Padat</h3>
+              <ul class="text-sm text-slate-400 space-y-1">
+                <li>• Bentuk dan volume tetap</li>
+                <li>• Tidak dapat ditekan</li>
+                <li>• Umumnya keras</li>
+                <li>• Partikel tersusun rapat</li>
+              </ul>
+            </div>
+            
+            <div class="bg-gradient-to-br from-blue-700 to-blue-800 rounded-xl p-5 border border-blue-600">
+              <div class="img-container h-32 mb-4">
+                <img src="https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?w=400&auto=format&fit=crop" alt="Air dalam gelas" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='linear-gradient(135deg, #1d4ed8, #1e40af)'; this.alt='Ilustrasi zat cair';">
+              </div>
+              <h3 class="font-bold text-blue-300 text-lg mb-2">💧 Zat Cair</h3>
+              <ul class="text-sm text-slate-300 space-y-1">
+                <li>• Bentuk sesuai wadah</li>
+                <li>• Volume tetap</li>
+                <li>• Sulit ditekan</li>
+                <li>• Dapat mengalir</li>
+              </ul>
+            </div>
+            
+            <div class="bg-gradient-to-br from-purple-700 to-purple-800 rounded-xl p-5 border border-purple-600">
+              <div class="img-container h-32 mb-4">
+                <img src="https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=400&auto=format&fit=crop" alt="Asap dan uap" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='linear-gradient(135deg, #7c3aed, #6d28d9)'; this.alt='Ilustrasi gas';">
+              </div>
+              <h3 class="font-bold text-purple-300 text-lg mb-2">💨 Gas</h3>
+              <ul class="text-sm text-slate-300 space-y-1">
+                <li>• Bentuk dan volume berubah</li>
+                <li>• Mengisi seluruh ruangan</li>
+                <li>• Sangat mudah ditekan</li>
+                <li>• Partikel bergerak bebas</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <button onclick="showSection(1)" class="px-6 py-3 bg-slate-700 rounded-xl font-semibold hover:bg-slate-600 transition-all">
+            ← Sebelumnya
+          </button>
+          <button onclick="showSection(3)" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl font-semibold hover:from-blue-500 hover:to-purple-500 transition-all">
+            Selanjutnya →
+          </button>
+        </div>
+      </section>
+
+      <!-- Section 3: Model Partikel -->
+      <section id="section-3" class="content-section hidden">
+        <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 border border-slate-700 mb-8">
+          <h2 class="heading-font text-3xl font-bold text-center mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+            ⚛️ Model Partikel
+          </h2>
+          
+          <p class="text-center text-slate-300 mb-8 text-lg">
+            Ilmuwan menggunakan <span class="text-purple-400 font-bold">model partikel</span> untuk menjelaskan 
+            sifat zat yang tidak terlihat mata.
+          </p>
+
+          <!-- Interactive Particle Models -->
+          <div class="grid md:grid-cols-3 gap-8 mb-8">
+            <!-- Padat -->
+            <div class="bg-slate-700/50 rounded-xl p-6 border border-slate-600">
+              <h3 class="font-bold text-gray-300 text-xl mb-4 text-center">🧊 Partikel Zat Padat</h3>
+              <div class="relative h-40 bg-slate-800 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
+                <!-- Particle visualization -->
+                <div class="grid grid-cols-5 gap-1">
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                  <div class="w-5 h-5 bg-gray-400 rounded-full"></div>
+                </div>
+              </div>
+              <ul class="text-sm text-slate-300 space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-green-400">✓</span>
+                  <span>Tersusun sangat <strong class="text-gray-300">rapat dan teratur</strong></span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-green-400">✓</span>
+                  <span>Ikatan antar partikel <strong class="text-gray-300">sangat kuat</strong></span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-green-400">✓</span>
+                  <span>Hanya bisa <strong class="text-gray-300">bergetar di tempat</strong></span>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- Cair -->
+            <div class="bg-slate-700/50 rounded-xl p-6 border border-slate-600">
+              <h3 class="font-bold text-blue-300 text-xl mb-4 text-center">💧 Partikel Zat Cair</h3>
+              <div class="relative h-40 bg-slate-800 rounded-xl mb-4 flex items-center justify-center overflow-hidden" id="liquid-container">
+                <!-- Animated liquid particles -->
+                <div class="flex flex-wrap gap-2 justify-center items-center p-4">
+                  <div class="w-5 h-5 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+                  <div class="w-5 h-5 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+                  <div class="w-5 h-5 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.3s;"></div>
+                  <div class="w-5 h-5 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.15s;"></div>
+                  <div class="w-5 h-5 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.25s;"></div>
+                  <div class="w-5 h-5 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.35s;"></div>
+                  <div class="w-5 h-5 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.12s;"></div>
+                  <div class="w-5 h-5 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.22s;"></div>
+                  <div class="w-5 h-5 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.32s;"></div>
+                  <div class="w-5 h-5 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.18s;"></div>
+                  <div class="w-5 h-5 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.28s;"></div>
+                  <div class="w-5 h-5 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.38s;"></div>
+                </div>
+              </div>
+              <ul class="text-sm text-slate-300 space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-blue-400">✓</span>
+                  <span>Memiliki <strong class="text-blue-300">sedikit jarak</strong> antar partikel</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-blue-400">✓</span>
+                  <span>Ikatan <strong class="text-blue-300">tidak terlalu kuat</strong></span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-blue-400">✓</span>
+                  <span>Dapat <strong class="text-blue-300">bergerak dan bergeser</strong></span>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- Gas -->
+            <div class="bg-slate-700/50 rounded-xl p-6 border border-slate-600">
+              <h3 class="font-bold text-purple-300 text-xl mb-4 text-center">💨 Partikel Gas</h3>
+              <div class="relative h-40 bg-slate-800 rounded-xl mb-4 overflow-hidden" id="gas-container">
+                <!-- Random moving particles -->
+                <div class="absolute w-4 h-4 bg-purple-400 rounded-full animate-float" style="top: 10%; left: 20%;"></div>
+                <div class="absolute w-4 h-4 bg-purple-400 rounded-full animate-float" style="top: 60%; left: 80%; animation-delay: 0.5s;"></div>
+                <div class="absolute w-4 h-4 bg-purple-400 rounded-full animate-float" style="top: 30%; left: 50%; animation-delay: 1s;"></div>
+                <div class="absolute w-4 h-4 bg-purple-400 rounded-full animate-float" style="top: 70%; left: 30%; animation-delay: 1.5s;"></div>
+                <div class="absolute w-4 h-4 bg-purple-400 rounded-full animate-float" style="top: 20%; left: 70%; animation-delay: 2s;"></div>
+                <div class="absolute w-4 h-4 bg-purple-400 rounded-full animate-float" style="top: 80%; left: 60%; animation-delay: 0.3s;"></div>
+                <div class="absolute w-4 h-4 bg-purple-400 rounded-full animate-float" style="top: 40%; left: 10%; animation-delay: 0.8s;"></div>
+                <div class="absolute w-4 h-4 bg-purple-400 rounded-full animate-float" style="top: 50%; left: 90%; animation-delay: 1.3s;"></div>
+              </div>
+              <ul class="text-sm text-slate-300 space-y-2">
+                <li class="flex items-start gap-2">
+                  <span class="text-purple-400">✓</span>
+                  <span>Partikel sangat <strong class="text-purple-300">renggang</strong></span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-purple-400">✓</span>
+                  <span>Bergerak <strong class="text-purple-300">cepat dan acak</strong></span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-purple-400">✓</span>
+                  <span>Ikatan antar partikel <strong class="text-purple-300">sangat lemah</strong></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Summary Box -->
+          <div class="bg-gradient-to-r from-purple-900/50 to-blue-900/50 rounded-xl p-6 border border-purple-700">
+            <h3 class="font-bold text-xl text-center mb-4 text-purple-300">💡 Kesimpulan Model Partikel</h3>
+            <p class="text-slate-300 text-center">
+              Semakin <span class="text-green-400 font-bold">kuat ikatan</span> dan 
+              <span class="text-blue-400 font-bold">rapat susunan</span> partikelnya, 
+              maka zat akan semakin <span class="text-yellow-400 font-bold">keras dan sulit berubah bentuk</span>.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <button onclick="showSection(2)" class="px-6 py-3 bg-slate-700 rounded-xl font-semibold hover:bg-slate-600 transition-all">
+            ← Sebelumnya
+          </button>
+          <button onclick="showSection(4)" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl font-semibold hover:from-blue-500 hover:to-purple-500 transition-all">
+            Selanjutnya →
+          </button>
+        </div>
+      </section>
+
+      <!-- Section 4: Fenomena Difusi -->
+      <section id="section-4" class="content-section hidden">
+        <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 border border-slate-700 mb-8">
+          <h2 class="heading-font text-3xl font-bold text-center mb-6 bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
+            💨 Fenomena Difusi
+          </h2>
+          
+          <div class="bg-orange-900/30 rounded-xl p-6 border border-orange-700 mb-8">
+            <p class="text-xl text-center text-slate-200">
+              <span class="text-orange-400 font-bold">Difusi</span> adalah pergerakan partikel dari daerah 
+              <span class="text-yellow-400 font-semibold">konsentrasi tinggi</span> ke daerah 
+              <span class="text-green-400 font-semibold">konsentrasi rendah</span> hingga seimbang.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-8 mb-8">
+            <!-- Difusi pada Gas -->
+            <div class="bg-slate-700/50 rounded-xl p-6 border border-slate-600">
+              <h3 class="font-bold text-purple-400 text-xl mb-4 flex items-center gap-2">
+                <span>💨</span> Difusi pada Gas
+              </h3>
+              <div class="img-container h-40 mb-4">
+                <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&auto=format&fit=crop" alt="Aroma kopi menyebar" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='linear-gradient(135deg, #7c3aed, #6d28d9)'; this.alt='Ilustrasi difusi gas';">
+              </div>
+              <p class="text-slate-300 mb-4">
+                Partikel gas bergerak <strong class="text-purple-300">cepat dan acak</strong>, 
+                sehingga difusi terjadi dengan <strong class="text-yellow-300">sangat cepat</strong>.
+              </p>
+              <div class="space-y-2">
+                <div class="flex items-center gap-2 bg-slate-600/50 px-3 py-2 rounded-lg">
+                  <span>☕</span>
+                  <span class="text-sm">Wangi kopi yang menyebar di ruangan</span>
+                </div>
+                <div class="flex items-center gap-2 bg-slate-600/50 px-3 py-2 rounded-lg">
+                  <span>🍳</span>
+                  <span class="text-sm">Aroma masakan dari dapur</span>
+                </div>
+                <div class="flex items-center gap-2 bg-slate-600/50 px-3 py-2 rounded-lg">
+                  <span>🌸</span>
+                  <span class="text-sm">Parfum yang tercium dari jauh</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Difusi pada Cair -->
+            <div class="bg-slate-700/50 rounded-xl p-6 border border-slate-600">
+              <h3 class="font-bold text-blue-400 text-xl mb-4 flex items-center gap-2">
+                <span>💧</span> Difusi pada Cairan
+              </h3>
+              <div class="img-container h-40 mb-4">
+                <img src="https://images.unsplash.com/photo-1605001011156-cbf0b0f67a51?w=600&auto=format&fit=crop" alt="Pewarna menyebar dalam air" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='linear-gradient(135deg, #1d4ed8, #1e40af)'; this.alt='Ilustrasi difusi cairan';">
+              </div>
+              <p class="text-slate-300 mb-4">
+                Partikel cair bergerak <strong class="text-blue-300">lebih lambat</strong> dibanding gas, 
+                sehingga difusi membutuhkan <strong class="text-yellow-300">waktu lebih lama</strong>.
+              </p>
+              <div class="space-y-2">
+                <div class="flex items-center gap-2 bg-slate-600/50 px-3 py-2 rounded-lg">
+                  <span>🎨</span>
+                  <span class="text-sm">Pewarna makanan menyebar di air</span>
+                </div>
+                <div class="flex items-center gap-2 bg-slate-600/50 px-3 py-2 rounded-lg">
+                  <span>🍵</span>
+                  <span class="text-sm">Teh yang menyebar tanpa diaduk</span>
+                </div>
+                <div class="flex items-center gap-2 bg-slate-600/50 px-3 py-2 rounded-lg">
+                  <span>🩸</span>
+                  <span class="text-sm">Tinta yang menyebar di air</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Diffusion Demo -->
+          <div class="bg-slate-700/30 rounded-xl p-6 border border-slate-600">
+            <h3 class="font-bold text-xl text-center mb-4 text-yellow-400">🧪 Simulasi Difusi Interaktif</h3>
+            <p class="text-center text-slate-400 mb-4">Klik tombol untuk melihat simulasi difusi!</p>
+            
+            <div class="flex justify-center gap-4 mb-4">
+              <button onclick="startDiffusion('gas')" class="px-4 py-2 bg-purple-600 rounded-lg hover:bg-purple-500 transition-all font-semibold">
+                💨 Difusi Gas
+              </button>
+              <button onclick="startDiffusion('liquid')" class="px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-500 transition-all font-semibold">
+                💧 Difusi Cair
+              </button>
+              <button onclick="resetDiffusion()" class="px-4 py-2 bg-slate-600 rounded-lg hover:bg-slate-500 transition-all font-semibold">
+                🔄 Reset
+              </button>
+            </div>
+            
+            <div id="diffusion-container" class="relative h-48 bg-slate-800 rounded-xl overflow-hidden mx-auto max-w-md border-2 border-slate-600">
+              <div class="absolute inset-0 flex items-center justify-center text-slate-500">
+                Klik tombol di atas untuk memulai simulasi
+              </div>
+            </div>
+            <p id="diffusion-info" class="text-center text-slate-400 mt-4 text-sm"></p>
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <button onclick="showSection(3)" class="px-6 py-3 bg-slate-700 rounded-xl font-semibold hover:bg-slate-600 transition-all">
+            ← Sebelumnya
+          </button>
+          <button onclick="showSection(5)" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl font-semibold hover:from-blue-500 hover:to-purple-500 transition-all">
+            Selanjutnya →
+          </button>
+        </div>
+      </section>
+
+      <!-- Section 5: Fakta Sains -->
+      <section id="section-5" class="content-section hidden">
+        <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 border border-slate-700 mb-8">
+          <h2 class="heading-font text-3xl font-bold text-center mb-6 bg-gradient-to-r from-pink-400 to-red-400 bg-clip-text text-transparent">
+            👃 Fakta Sains - Indera Penciuman
+          </h2>
+          
+          <div class="bg-pink-900/30 rounded-xl p-6 border border-pink-700 mb-8">
+            <h3 class="font-bold text-xl text-pink-300 mb-4">🔬 Bagaimana Kita Mencium Bau?</h3>
+            <div class="img-container h-48 mb-4">
+              <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&auto=format&fit=crop" alt="Ilustrasi sistem penciuman" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='linear-gradient(135deg, #be185d, #9d174d)'; this.alt='Ilustrasi indera penciuman';">
+            </div>
+            <div class="flex items-center gap-4 justify-center flex-wrap">
+              <div class="bg-slate-700 px-4 py-2 rounded-lg text-center">
+                <span class="text-2xl">👃</span>
+                <p class="text-xs text-slate-400">Aroma masuk</p>
+              </div>
+              <span class="text-xl">→</span>
+              <div class="bg-slate-700 px-4 py-2 rounded-lg text-center">
+                <span class="text-2xl">🧬</span>
+                <p class="text-xs text-slate-400">Rongga hidung</p>
+              </div>
+              <span class="text-xl">→</span>
+              <div class="bg-slate-700 px-4 py-2 rounded-lg text-center">
+                <span class="text-2xl">🔬</span>
+                <p class="text-xs text-slate-400">Silia (rambut halus)</p>
+              </div>
+              <span class="text-xl">→</span>
+              <div class="bg-slate-700 px-4 py-2 rounded-lg text-center">
+                <span class="text-2xl">⚡</span>
+                <p class="text-xs text-slate-400">Saraf pembau</p>
+              </div>
+              <span class="text-xl">→</span>
+              <div class="bg-slate-700 px-4 py-2 rounded-lg text-center">
+                <span class="text-2xl">🧠</span>
+                <p class="text-xs text-slate-400">Otak</p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="heading-font text-xl font-bold text-yellow-400 mb-6 text-center">🏆 Kecanggihan Makhluk Hidup</h3>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <!-- Manusia -->
+            <div class="bg-gradient-to-br from-blue-800 to-blue-900 rounded-xl p-6 border border-blue-600 text-center transform hover:scale-105 transition-all">
+              <div class="text-6xl mb-4">🧑</div>
+              <h4 class="font-bold text-xl text-blue-300 mb-2">Manusia</h4>
+              <div class="img-container h-28 mb-4">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop" alt="Manusia" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='linear-gradient(135deg, #1e40af, #1d4ed8)'; this.alt='Ilustrasi manusia';">
+              </div>
+              <div class="bg-slate-700/50 rounded-lg p-3 mb-3">
+                <p class="text-3xl font-bold text-yellow-400">5 Juta</p>
+                <p class="text-sm text-slate-400">Sel Reseptor</p>
+              </div>
+              <div class="bg-slate-700/50 rounded-lg p-3">
+                <p class="text-2xl font-bold text-green-400">350</p>
+                <p class="text-sm text-slate-400">Gen Penciuman</p>
+              </div>
+            </div>
+            
+            <!-- Anjing -->
+            <div class="bg-gradient-to-br from-orange-800 to-orange-900 rounded-xl p-6 border border-orange-600 text-center transform hover:scale-105 transition-all">
+              <div class="text-6xl mb-4">🐕</div>
+              <h4 class="font-bold text-xl text-orange-300 mb-2">Anjing (K9)</h4>
+              <div class="img-container h-28 mb-4">
+                <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&auto=format&fit=crop" alt="Anjing pelacak" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='linear-gradient(135deg, #c2410c, #ea580c)'; this.alt='Ilustrasi anjing';">
+              </div>
+              <div class="bg-slate-700/50 rounded-lg p-3 mb-3">
+                <p class="text-3xl font-bold text-yellow-400">220 Juta</p>
+                <p class="text-sm text-slate-400">Sel Reseptor</p>
+              </div>
+              <p class="text-sm text-slate-300 mt-3">44x lebih tajam dari manusia!</p>
+            </div>
+            
+            <!-- Gajah Afrika -->
+            <div class="bg-gradient-to-br from-green-800 to-green-900 rounded-xl p-6 border border-green-600 text-center transform hover:scale-105 transition-all">
+              <div class="text-6xl mb-4">🐘</div>
+              <h4 class="font-bold text-xl text-green-300 mb-2">Gajah Afrika</h4>
+              <div class="img-container h-28 mb-4">
+                <img src="https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=400&auto=format&fit=crop" alt="Gajah Afrika" loading="lazy" class="w-full h-full object-cover" onerror="this.style.background='linear-gradient(135deg, #166534, #15803d)'; this.alt='Ilustrasi gajah';">
+              </div>
+              <div class="bg-slate-700/50 rounded-lg p-3 mb-3">
+                <p class="text-3xl font-bold text-yellow-400">~2.000</p>
+                <p class="text-sm text-slate-400">Gen Penciuman</p>
+              </div>
+              <p class="text-sm text-slate-300 mt-3">🏆 Penciuman Paling Tajam!</p>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-xl p-6 border border-yellow-700">
+            <p class="text-center text-slate-300">
+              <span class="text-yellow-400 font-bold">💡 Tahukah kamu?</span> Gajah Afrika dapat mencium air dari jarak 
+              <span class="text-green-400 font-bold">19 km</span> dan dapat mendeteksi bahan peledak yang terkubur di tanah!
+            </p>
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <button onclick="showSection(4)" class="px-6 py-3 bg-slate-700 rounded-xl font-semibold hover:bg-slate-600 transition-all">
+            ← Sebelumnya
+          </button>
+          <button onclick="showSection(6)" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl font-semibold hover:from-blue-500 hover:to-purple-500 transition-all">
+            Selanjutnya →
+          </button>
+        </div>
+      </section>
+
+      <!-- Section 6: Aktivitas -->
+      <section id="section-6" class="content-section hidden">
+        <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 border border-slate-700 mb-8">
+          <h2 class="heading-font text-3xl font-bold text-center mb-6 bg-gradient-to-r from-green-400 to-teal-400 bg-clip-text text-transparent">
+            📝 Aktivitas & Diskusi
+          </h2>
+
+          <!-- Aktivitas 1 -->
+          <div class="bg-gradient-to-r from-blue-900/50 to-purple-900/50 rounded-xl p-6 border border-blue-700 mb-6">
+            <h3 class="font-bold text-xl text-blue-300 mb-4 flex items-center gap-2">
+              <span class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">1</span>
+              Tugas Mandiri
+            </h3>
+            <div class="bg-slate-800 rounded-xl p-4 mb-4">
+              <p class="text-slate-200 text-lg">
+                <span class="text-yellow-400 font-bold">❓ Pertanyaan:</span><br>
+                Jelaskan mengapa kita <span class="text-red-400 font-semibold">tidak bisa menghancurkan baja</span> 
+                hanya dengan tangan kosong menggunakan penjelasan <span class="text-purple-400 font-semibold">model partikel</span>!
+              </p>
+            </div>
+            <div class="bg-slate-700/50 rounded-xl p-4">
+              <label for="answer1" class="block text-sm text-slate-400 mb-2">Tulis jawabanmu di sini:</label>
+              <textarea id="answer1" rows="4" class="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-slate-200 focus:border-blue-500 focus:outline-none resize-none" placeholder="Ketik jawaban kamu..."></textarea>
+              <button onclick="checkAnswer1()" class="mt-3 px-6 py-2 bg-blue-600 rounded-lg hover:bg-blue-500 transition-all font-semibold">
+                Lihat Petunjuk Jawaban
+              </button>
+            </div>
+            <div id="hint1" class="hidden mt-4 bg-green-900/30 rounded-xl p-4 border border-green-700">
+              <p class="text-green-300">
+                <span class="font-bold">💡 Petunjuk Jawaban:</span><br>
+                Baja adalah zat padat yang partikelnya tersusun <strong>sangat rapat dan teratur</strong> dengan 
+                <strong>ikatan antar partikel yang sangat kuat</strong>. Partikel-partikelnya hanya bisa <strong>bergetar di tempat</strong> 
+                dan tidak dapat dipisahkan dengan mudah. Karena itulah, kekuatan tangan manusia tidak cukup untuk 
+                memutuskan ikatan antar partikel baja yang sangat kuat tersebut.
+              </p>
+            </div>
+          </div>
+
+          <!-- Aktivitas 2 -->
+          <div class="bg-gradient-to-r from-orange-900/50 to-red-900/50 rounded-xl p-6 border border-orange-700">
+            <h3 class="font-bold text-xl text-orange-300 mb-4 flex items-center gap-2">
+              <span class="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center">2</span>
+              Diskusi Kelompok
+            </h3>
+            <div class="bg-slate-800 rounded-xl p-4 mb-4">
+              <p class="text-slate-200 text-lg">
+                <span class="text-yellow-400 font-bold">❓ Pertanyaan:</span><br>
+                Apakah <span class="text-blue-400 font-semibold">difusi</span> terjadi lebih cepat pada 
+                <span class="text-blue-300">zat cair</span> atau <span class="text-purple-300">gas</span>? 
+                Berikan alasanmu!
+              </p>
+            </div>
+            
+            <!-- Poll/Vote System -->
+            <div class="bg-slate-700/50 rounded-xl p-4 mb-4">
+              <p class="text-sm text-slate-400 mb-3">Pilih pendapatmu:</p>
+              <div class="flex gap-4 mb-4">
+                <button onclick="vote('liquid')" id="vote-liquid" class="flex-1 py-3 bg-blue-700 rounded-lg hover:bg-blue-600 transition-all font-semibold border-2 border-transparent">
+                  💧 Zat Cair
+                </button>
+                <button onclick="vote('gas')" id="vote-gas" class="flex-1 py-3 bg-purple-700 rounded-lg hover:bg-purple-600 transition-all font-semibold border-2 border-transparent">
+                  💨 Gas
+                </button>
+              </div>
+              <div id="vote-result" class="hidden">
+                <div class="flex justify-between text-sm mb-2">
+                  <span class="text-blue-300">Zat Cair: <span id="liquid-percent">0</span>%</span>
+                  <span class="text-purple-300">Gas: <span id="gas-percent">0</span>%</span>
+                </div>
+                <div class="h-4 bg-slate-600 rounded-full overflow-hidden flex">
+                  <div id="liquid-bar" class="bg-blue-500 transition-all duration-500" style="width: 0%"></div>
+                  <div id="gas-bar" class="bg-purple-500 transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+            
+            <button onclick="showAnswer2()" class="px-6 py-2 bg-orange-600 rounded-lg hover:bg-orange-500 transition-all font-semibold">
+              Lihat Jawaban Benar
+            </button>
+            
+            <div id="answer2" class="hidden mt-4 bg-green-900/30 rounded-xl p-4 border border-green-700">
+              <p class="text-green-300">
+                <span class="font-bold">✅ Jawaban:</span> Difusi terjadi <strong class="text-yellow-300">lebih cepat pada gas</strong>!<br><br>
+                <span class="font-bold">Alasan:</span> Partikel gas bergerak <strong>lebih cepat dan acak</strong> dengan 
+                jarak antar partikel yang <strong>sangat renggang</strong>, sehingga partikel dapat berpindah dengan lebih mudah. 
+                Sedangkan partikel zat cair bergerak lebih lambat karena jarak antar partikelnya lebih rapat dan 
+                masih ada ikatan yang menghambat pergerakan.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <button onclick="showSection(5)" class="px-6 py-3 bg-slate-700 rounded-xl font-semibold hover:bg-slate-600 transition-all">
+            ← Sebelumnya
+          </button>
+          <button onclick="showSection(7)" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl font-semibold hover:from-blue-500 hover:to-purple-500 transition-all">
+            Mulai Kuis HOTS →
+          </button>
+        </div>
+      </section>
+
+      <!-- Section 7: Kuis HOTS -->
+      <section id="section-7" class="content-section hidden">
+        <div class="card-hover bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 border border-slate-700 mb-8">
+          <h2 class="heading-font text-3xl font-bold text-center mb-2 bg-gradient-to-r from-yellow-400 to-red-400 bg-clip-text text-transparent">
+            🎯 Kuis HOTS
+          </h2>
+          <p class="text-center text-slate-400 mb-6">Higher Order Thinking Skills - 10 Soal</p>
+          
+          <!-- Quiz Progress -->
+          <div class="bg-slate-700/50 rounded-xl p-4 mb-6">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-slate-300">Soal <span id="current-question">1</span> dari 10</span>
+              <span class="text-yellow-400 font-bold">Skor: <span id="quiz-score">0</span>/10</span>
+            </div>
+            <div class="h-3 bg-slate-600 rounded-full overflow-hidden">
+              <div id="quiz-progress" class="h-full bg-gradient-to-r from-yellow-500 to-red-500 transition-all duration-300" style="width: 10%"></div>
+            </div>
+          </div>
+
+          <!-- Quiz Container -->
+          <div id="quiz-container">
+            <!-- Questions will be loaded here -->
+          </div>
+
+          <!-- Quiz Results -->
+          <div id="quiz-results" class="hidden text-center">
+            <div class="text-8xl mb-6" id="result-emoji">🎉</div>
+            <h3 class="heading-font text-3xl font-bold mb-4" id="result-title">Selamat!</h3>
+            <p class="text-xl text-slate-300 mb-6">Skor Akhir: <span id="final-score" class="text-yellow-400 font-bold">0</span>/10</p>
+            <div id="result-message" class="bg-slate-700/50 rounded-xl p-6 mb-6"></div>
+            <button onclick="restartQuiz()" class="px-8 py-4 bg-gradient-to-r from-yellow-600 to-red-600 rounded-xl font-bold text-lg hover:from-yellow-500 hover:to-red-500 transition-all">
+              🔄 Ulangi Kuis
+            </button>
+          </div>
+        </div>
+
+        <div class="flex justify-start">
+          <button onclick="showSection(6)" class="px-6 py-3 bg-slate-700 rounded-xl font-semibold hover:bg-slate-600 transition-all">
+            ← Kembali ke Aktivitas
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800/80 border-t border-slate-700 py-8 px-4 mt-12">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" loading="lazy" class="w-12 h-12 rounded-full object-cover border-2 border-blue-500" onerror="this.style.background='linear-gradient(135deg, #3b82f6, #6366f1)'; this.alt='AM';">
+            <div>
+              <p id="author-name" class="font-bold text-slate-200">Algian Manggara, S.Agr</p>
+              <p class="text-sm text-slate-400">Pendidik & Pengembang Media Pembelajaran</p>
+            </div>
+          </div>
+          <div class="text-center md:text-right">
+            <p class="text-slate-400 text-sm">Media Pembelajaran Interaktif IPA</p>
+            <p class="text-slate-500 text-sm">© 2026 Algian Manggara, S.Agr. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Mengenal Zat dan Model Partikel',
+      author_name: 'Algian Manggara, S.Agr',
+      primary_color: '#3b82f6',
+      secondary_color: '#6366f1',
+      background_color: '#0f172a',
+      text_color: '#e2e8f0',
+      accent_color: '#fbbf24'
+    };
+
+    let config = { ...defaultConfig };
+    let currentSection = 0;
+    let sectionsVisited = [true, false, false, false, false, false, false, false];
+    
+    // Quiz data
+    const quizQuestions = [
+      {
+        question: "Jika kamu memasukkan balon yang terisi udara ke dalam freezer, apa yang akan terjadi pada volume balon dan mengapa?",
+        options: [
+          "Volume bertambah karena partikel udara mengembang",
+          "Volume berkurang karena partikel udara bergerak lebih lambat dan jarak antar partikel mengecil",
+          "Volume tetap karena udara adalah gas yang tidak terpengaruh suhu",
+          "Volume berkurang karena udara berubah menjadi cair"
+        ],
+        correct: 1,
+        explanation: "Saat suhu menurun, partikel gas bergerak lebih lambat sehingga tekanan dalam balon berkurang dan volumenya mengecil. Ini sesuai dengan model partikel yang menjelaskan bahwa kecepatan partikel gas bergantung pada suhu."
+      },
+      {
+        question: "Mengapa parfum dapat tercium dari jarak jauh meskipun kita tidak bisa melihat partikelnya bergerak?",
+        options: [
+          "Karena parfum memiliki partikel yang sangat besar",
+          "Karena partikel parfum adalah gas yang bergerak cepat dan acak melalui proses difusi",
+          "Karena angin membawa parfum ke hidung kita",
+          "Karena hidung manusia sangat sensitif"
+        ],
+        correct: 1,
+        explanation: "Parfum menguap menjadi gas dan partikel-partikelnya berdifusi dari konsentrasi tinggi (sumber parfum) ke konsentrasi rendah (udara sekitar). Karena partikel gas bergerak cepat dan acak, aroma dapat menyebar ke segala arah."
+      },
+      {
+        question: "Seorang ilmuwan ingin mempercepat proses difusi pewarna dalam air. Tindakan mana yang paling efektif berdasarkan model partikel?",
+        options: [
+          "Menambahkan lebih banyak pewarna",
+          "Memanaskan air karena partikel akan bergerak lebih cepat",
+          "Mendinginkan air agar pewarna lebih stabil",
+          "Menggunakan wadah yang lebih besar"
+        ],
+        correct: 1,
+        explanation: "Memanaskan air akan meningkatkan energi kinetik partikel, sehingga partikel air dan pewarna bergerak lebih cepat. Ini mempercepat proses difusi karena partikel lebih sering bertumbukan dan berpindah tempat."
+      },
+      {
+        question: "Mengapa es mengapung di atas air, padahal keduanya adalah H₂O?",
+        options: [
+          "Karena es lebih ringan dari air",
+          "Karena susunan partikel es lebih renggang sehingga massa jenisnya lebih kecil",
+          "Karena es mengandung udara di dalamnya",
+          "Karena air memiliki gaya dorong ke atas"
+        ],
+        correct: 1,
+        explanation: "Saat air membeku, partikel H₂O tersusun dalam struktur kristal yang lebih renggang dibanding saat cair. Hal ini membuat volume es lebih besar dengan massa yang sama, sehingga massa jenisnya lebih kecil dari air cair."
+      },
+      {
+        question: "Jika difusi pada gas terjadi dalam waktu 5 detik, berapa perkiraan waktu yang dibutuhkan untuk difusi pada cairan dengan kondisi yang sama?",
+        options: [
+          "Kurang dari 5 detik",
+          "Sama, yaitu 5 detik",
+          "Lebih dari 5 detik, bisa berjam-jam hingga berhari-hari",
+          "Tidak bisa diprediksi"
+        ],
+        correct: 2,
+        explanation: "Difusi pada cairan jauh lebih lambat dari gas karena partikel cairan bergerak lebih lambat dan jarak antar partikelnya lebih rapat. Proses yang memakan detik pada gas bisa memakan jam atau hari pada cairan."
+      },
+      {
+        question: "Gajah Afrika dapat mencium air dari jarak 19 km. Fenomena apa yang memungkinkan hal ini terjadi?",
+        options: [
+          "Konduksi partikel air melalui tanah",
+          "Difusi partikel air yang menguap ke udara dan tersebar hingga jarak jauh",
+          "Getaran partikel air yang dirasakan gajah melalui kakinya",
+          "Kemampuan khusus gajah melihat partikel air"
+        ],
+        correct: 1,
+        explanation: "Air menguap dan partikel-partikelnya berdifusi di udara. Meskipun konsentrasinya sangat rendah di jarak jauh, gajah Afrika dengan ~2000 gen penciuman dapat mendeteksi partikel air yang sangat sedikit tersebut."
+      },
+      {
+        question: "Mengapa ban sepeda bisa kempes sendiri setelah beberapa minggu meskipun tidak ada kebocoran yang terlihat?",
+        options: [
+          "Karena karet ban menyerap udara",
+          "Karena partikel udara sangat kecil dan dapat merembes melalui celah mikroskopis pada karet",
+          "Karena udara dalam ban berubah menjadi cair",
+          "Karena tekanan atmosfer menekan ban"
+        ],
+        correct: 1,
+        explanation: "Partikel gas sangat kecil dan bergerak acak dengan kecepatan tinggi. Mereka dapat menembus celah-celah mikroskopis pada material karet yang tidak terlihat mata. Proses ini lambat tapi terus-menerus terjadi."
+      },
+      {
+        question: "Dalam pembuatan es krim, garam ditambahkan ke es. Berdasarkan model partikel, mengapa ini membantu membekukan es krim lebih cepat?",
+        options: [
+          "Garam membuat es lebih keras",
+          "Garam menurunkan titik beku es sehingga es menjadi lebih dingin dan menyerap panas lebih efektif",
+          "Garam mempercepat gerakan partikel es",
+          "Garam membuat es krim lebih padat"
+        ],
+        correct: 1,
+        explanation: "Garam menurunkan titik beku air, membuat campuran es-garam bisa mencapai suhu di bawah 0°C. Es yang lebih dingin ini menyerap energi panas dari campuran es krim lebih efektif, mempercepat pembekuan."
+      },
+      {
+        question: "Seorang siswa mengklaim bahwa zat padat tidak memiliki gerakan partikel sama sekali. Apakah klaim ini benar?",
+        options: [
+          "Benar, partikel zat padat diam sempurna",
+          "Salah, partikel zat padat masih bergetar di tempatnya meskipun tidak berpindah posisi",
+          "Benar, hanya zat cair dan gas yang memiliki gerakan partikel",
+          "Salah, partikel zat padat bergerak bebas seperti gas"
+        ],
+        correct: 1,
+        explanation: "Partikel zat padat tidak diam sempurna. Mereka tetap memiliki energi kinetik dan bergetar di tempatnya. Getaran ini semakin cepat jika suhu dinaikkan, yang akhirnya bisa menyebabkan perubahan wujud menjadi cair."
+      },
+      {
+        question: "Jika pemanasan global terus berlanjut dan es kutub mencair, bagaimana model partikel menjelaskan proses ini?",
+        options: [
+          "Partikel es hancur menjadi partikel yang lebih kecil",
+          "Peningkatan suhu membuat partikel es bergetar lebih cepat, melemahkan ikatan antar partikel hingga struktur kristal rusak dan berubah menjadi cair",
+          "Partikel es menguap langsung menjadi gas",
+          "Partikel es menyerap karbon dioksida dan larut"
+        ],
+        correct: 1,
+        explanation: "Saat suhu naik, energi kinetik partikel es meningkat dan getarannya semakin kuat. Ketika energi ini cukup besar untuk mengatasi gaya tarik antar partikel dalam struktur kristal, ikatan melemah dan es berubah menjadi air cair."
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let quizScore = 0;
+    let answeredQuestions = [];
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (value) => { cfg.primary_color = value; window.elementSdk.setConfig({ primary_color: value }); }
+            },
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (value) => { cfg.secondary_color = value; window.elementSdk.setConfig({ secondary_color: value }); }
+            },
+            {
+              get: () => cfg.accent_color || defaultConfig.accent_color,
+              set: (value) => { cfg.accent_color = value; window.elementSdk.setConfig({ accent_color: value }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['main_title', cfg.main_title || defaultConfig.main_title],
+          ['author_name', cfg.author_name || defaultConfig.author_name]
+        ])
+      });
+    }
+
+    function applyConfig() {
+      const mainTitle = document.getElementById('main-title');
+      const authorName = document.getElementById('author-name');
+      
+      if (mainTitle) mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      if (authorName) authorName.textContent = config.author_name || defaultConfig.author_name;
+    }
+
+    // Section navigation
+    function showSection(index) {
+      const sections = document.querySelectorAll('.content-section');
+      const tabs = document.querySelectorAll('#nav-tabs button');
+      
+      sections.forEach((section, i) => {
+        section.classList.toggle('hidden', i !== index);
+      });
+      
+      tabs.forEach((tab, i) => {
+        tab.classList.toggle('active', i === index);
+      });
+      
+      currentSection = index;
+      sectionsVisited[index] = true;
+      updateProgress();
+      
+      // Initialize quiz when section 7 is shown
+      if (index === 7 && document.getElementById('quiz-container').innerHTML === '') {
+        loadQuestion();
+      }
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateProgress() {
+      const visitedCount = sectionsVisited.filter(Boolean).length;
+      const progress = Math.round((visitedCount / sectionsVisited.length) * 100);
+      
+      const progressBar = document.getElementById('progress-bar');
+      const progressText = document.getElementById('progress-text');
+      
+      if (progressBar) progressBar.style.width = progress + '%';
+      if (progressText) progressText.textContent = progress + '%';
+    }
+
+    // Diffusion simulation
+    function startDiffusion(type) {
+      const container = document.getElementById('diffusion-container');
+      const info = document.getElementById('diffusion-info');
+      
+      container.innerHTML = '';
+      
+      const colors = type === 'gas' ? ['#a855f7', '#c084fc', '#e879f9'] : ['#3b82f6', '#60a5fa', '#93c5fd'];
+      const speed = type === 'gas' ? 1 : 4;
+      const particleCount = 20;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'absolute rounded-full';
+        particle.style.width = '10px';
+        particle.style.height = '10px';
+        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.left = '45%';
+        particle.style.top = '45%';
+        particle.style.transition = `all ${speed + Math.random() * 2}s ease-out`;
+        container.appendChild(particle);
+        
+        setTimeout(() => {
+          particle.style.left = Math.random() * 90 + '%';
+          particle.style.top = Math.random() * 90 + '%';
+          particle.style.opacity = '0.7';
+        }, 100 + i * 50);
+      }
+      
+      info.textContent = type === 'gas' 
+        ? '💨 Difusi gas terjadi SANGAT CEPAT karena partikel bergerak cepat dan acak!'
+        : '💧 Difusi cairan lebih LAMBAT karena partikel bergerak lebih lambat dan jaraknya lebih rapat.';
+    }
+
+    function resetDiffusion() {
+      const container = document.getElementById('diffusion-container');
+      const info = document.getElementById('diffusion-info');
+      container.innerHTML = '<div class="absolute inset-0 flex items-center justify-center text-slate-500">Klik tombol di atas untuk memulai simulasi</div>';
+      info.textContent = '';
+    }
+
+    // Activity functions
+    function checkAnswer1() {
+      document.getElementById('hint1').classList.remove('hidden');
+    }
+
+    let votes = { liquid: 0, gas: 0 };
+    function vote(choice) {
+      votes[choice]++;
+      const total = votes.liquid + votes.gas;
+      const liquidPercent = Math.round((votes.liquid / total) * 100);
+      const gasPercent = 100 - liquidPercent;
+      
+      document.getElementById('vote-result').classList.remove('hidden');
+      document.getElementById('liquid-percent').textContent = liquidPercent;
+      document.getElementById('gas-percent').textContent = gasPercent;
+      document.getElementById('liquid-bar').style.width = liquidPercent + '%';
+      document.getElementById('gas-bar').style.width = gasPercent + '%';
+      
+      document.getElementById('vote-liquid').classList.toggle('border-blue-400', choice === 'liquid');
+      document.getElementById('vote-gas').classList.toggle('border-purple-400', choice === 'gas');
+    }
+
+    function showAnswer2() {
+      document.getElementById('answer2').classList.remove('hidden');
+    }
+
+    // Quiz functions
+    function loadQuestion() {
+      const container = document.getElementById('quiz-container');
+      const question = quizQuestions[currentQuestionIndex];
+      
+      document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+      document.getElementById('quiz-progress').style.width = ((currentQuestionIndex + 1) / quizQuestions.length * 100) + '%';
+      
+      let optionsHTML = question.options.map((opt, i) => `
+        <button onclick="selectAnswer(${i})" class="quiz-option w-full text-left p-4 bg-slate-700 border-2 border-slate-600 rounded-xl hover:border-blue-400 transition-all" data-index="${i}">
+          <span class="inline-block w-8 h-8 bg-slate-600 rounded-full text-center leading-8 mr-3 font-bold">${String.fromCharCode(65 + i)}</span>
+          ${opt}
+        </button>
+      `).join('');
+      
+      container.innerHTML = `
+        <div class="bg-slate-700/50 rounded-xl p-6 mb-6">
+          <p class="text-lg text-slate-200">${question.question}</p>
+        </div>
+        <div class="space-y-3" id="options-container">
+          ${optionsHTML}
+        </div>
+        <div id="explanation" class="hidden mt-6 bg-blue-900/30 rounded-xl p-4 border border-blue-700">
+          <p class="text-blue-300"><span class="font-bold">💡 Penjelasan:</span> ${question.explanation}</p>
+        </div>
+        <div id="next-btn-container" class="hidden mt-6 text-center">
+          <button onclick="nextQuestion()" class="px-8 py-3 bg-gradient-to-r from-yellow-600 to-red-600 rounded-xl font-bold hover:from-yellow-500 hover:to-red-500 transition-all">
+            ${currentQuestionIndex < quizQuestions.length - 1 ? 'Soal Berikutnya →' : 'Lihat Hasil 🎯'}
+          </button>
+        </div>
+      `;
+    }
+
+    function selectAnswer(index) {
+      if (answeredQuestions.includes(currentQuestionIndex)) return;
+      
+      answeredQuestions.push(currentQuestionIndex);
+      const question = quizQuestions[currentQuestionIndex];
+      const options = document.querySelectorAll('.quiz-option');
+      
+      options.forEach((opt, i) => {
+        opt.classList.remove('selected');
+        if (i === question.correct) {
+          opt.classList.add('correct');
+        } else if (i === index && index !== question.correct) {
+          opt.classList.add('incorrect');
+        }
+      });
+      
+      if (index === question.correct) {
+        quizScore++;
+        document.getElementById('quiz-score').textContent = quizScore;
+      }
+      
+      document.getElementById('explanation').classList.remove('hidden');
+      document.getElementById('next-btn-container').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      
+      if (currentQuestionIndex >= quizQuestions.length) {
+        showResults();
+      } else {
+        loadQuestion();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-results').classList.remove('hidden');
+      document.getElementById('final-score').textContent = quizScore;
+      
+      let emoji, title, message;
+      const percent = (quizScore / quizQuestions.length) * 100;
+      
+      if (percent >= 90) {
+        emoji = '🏆';
+        title = 'Luar Biasa!';
+        message = 'Kamu menguasai materi dengan sangat baik! Pemahaman tentang zat dan model partikel sudah sangat mendalam.';
+      } else if (percent >= 70) {
+        emoji = '🌟';
+        title = 'Hebat!';
+        message = 'Pemahaman kamu sudah baik! Terus pelajari lagi bagian yang masih kurang untuk hasil yang lebih sempurna.';
+      } else if (percent >= 50) {
+        emoji = '💪';
+        title = 'Bagus!';
+        message = 'Kamu sudah memahami dasar-dasarnya. Coba pelajari lagi materi dan ulangi kuis untuk meningkatkan skor!';
+      } else {
+        emoji = '📚';
+        title = 'Semangat!';
+        message = 'Jangan menyerah! Baca ulang materi dengan teliti dan coba lagi. Setiap usaha pasti membuahkan hasil!';
+      }
+      
+      document.getElementById('result-emoji').textContent = emoji;
+      document.getElementById('result-title').textContent = title;
+      document.getElementById('result-message').innerHTML = `<p class="text-slate-300">${message}</p>`;
+    }
+
+    function restartQuiz() {
+      currentQuestionIndex = 0;
+      quizScore = 0;
+      answeredQuestions = [];
+      
+      document.getElementById('quiz-score').textContent = '0';
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('quiz-results').classList.add('hidden');
+      
+      loadQuestion();
+    }
+
+    // Initialize
+    applyConfig();
+    updateProgress();
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf66aa466c06d1b',t:'MTc3MTM0MzE3Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

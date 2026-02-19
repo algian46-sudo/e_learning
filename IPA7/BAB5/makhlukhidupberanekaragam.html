@@ -1,0 +1,2222 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Klasifikasi Makhluk Hidup - Media Pembelajaran</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { box-sizing: border-box; }
+    
+    .nav-btn.active {
+      background: linear-gradient(135deg, #059669, #10b981);
+      color: white;
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4);
+    }
+    
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .kingdom-card {
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+    
+    .kingdom-card:hover {
+      transform: scale(1.03);
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.wrong) {
+      background: #ecfdf5;
+      border-color: #10b981;
+    }
+    
+    .quiz-option.selected {
+      background: #dbeafe;
+      border-color: #3b82f6;
+    }
+    
+    .quiz-option.correct {
+      background: #dcfce7;
+      border-color: #22c55e;
+    }
+    
+    .quiz-option.wrong {
+      background: #fee2e2;
+      border-color: #ef4444;
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .pulse-glow {
+      animation: pulseGlow 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.6); }
+    }
+    
+    .tree-line {
+      position: relative;
+    }
+    
+    .tree-line::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: -20px;
+      width: 2px;
+      height: 20px;
+      background: #10b981;
+    }
+    
+    .scroll-container {
+      scrollbar-width: thin;
+      scrollbar-color: #10b981 #f0fdf4;
+    }
+    
+    .scroll-container::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-track {
+      background: #f0fdf4;
+      border-radius: 4px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb {
+      background: #10b981;
+      border-radius: 4px;
+    }
+    
+    .interactive-diagram {
+      transition: all 0.3s ease;
+    }
+    
+    .interactive-diagram:hover {
+      filter: brightness(1.1);
+    }
+  </style>
+</head>
+<body class="h-full bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 overflow-auto scroll-container">
+  <div id="app-container" class="w-full min-h-full flex flex-col">
+    <!-- Header -->
+    <header id="main-header" class="bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 text-white py-6 px-4 shadow-xl">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex items-center justify-center gap-4 mb-2">
+          <svg class="w-12 h-12" viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="28" fill="#065f46" opacity="0.3"/>
+            <path d="M32 8C32 8 20 20 20 32C20 44 32 56 32 56C32 56 44 44 44 32C44 20 32 8 32 8Z" fill="#10b981"/>
+            <path d="M32 16V48M24 28H40M26 36H38" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="32" cy="22" r="3" fill="#34d399"/>
+          </svg>
+          <h1 id="main-title" class="text-2xl md:text-4xl font-extrabold tracking-tight" style="font-family: 'Playfair Display', serif;">
+            Karakteristik & Klasifikasi Makhluk Hidup
+          </h1>
+        </div>
+        <p class="text-center text-emerald-100 text-sm md:text-base">Media Pembelajaran Interaktif Biologi</p>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-md py-3 px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-wrap justify-center gap-2">
+          <button onclick="showSection('intro')" class="nav-btn active px-3 py-2 text-xs md:text-sm font-semibold rounded-full border-2 border-emerald-200 text-emerald-700 hover:bg-emerald-50 transition-all" data-section="intro">
+            📚 Pendahuluan
+          </button>
+          <button onclick="showSection('takson')" class="nav-btn px-3 py-2 text-xs md:text-sm font-semibold rounded-full border-2 border-emerald-200 text-emerald-700 hover:bg-emerald-50 transition-all" data-section="takson">
+            📊 Tingkatan Takson
+          </button>
+          <button onclick="showSection('kingdom')" class="nav-btn px-3 py-2 text-xs md:text-sm font-semibold rounded-full border-2 border-emerald-200 text-emerald-700 hover:bg-emerald-50 transition-all" data-section="kingdom">
+            👑 5 Kingdom
+          </button>
+          <button onclick="showSection('plantae')" class="nav-btn px-3 py-2 text-xs md:text-sm font-semibold rounded-full border-2 border-emerald-200 text-emerald-700 hover:bg-emerald-50 transition-all" data-section="plantae">
+            🌿 Plantae
+          </button>
+          <button onclick="showSection('animalia')" class="nav-btn px-3 py-2 text-xs md:text-sm font-semibold rounded-full border-2 border-emerald-200 text-emerald-700 hover:bg-emerald-50 transition-all" data-section="animalia">
+            🦁 Animalia
+          </button>
+          <button onclick="showSection('linnaeus')" class="nav-btn px-3 py-2 text-xs md:text-sm font-semibold rounded-full border-2 border-emerald-200 text-emerald-700 hover:bg-emerald-50 transition-all" data-section="linnaeus">
+            👨‍🔬 Carolus Linnaeus
+          </button>
+          <button onclick="showSection('quiz')" class="nav-btn px-3 py-2 text-xs md:text-sm font-semibold rounded-full border-2 border-amber-300 text-amber-700 hover:bg-amber-50 transition-all" data-section="quiz">
+            ✍️ Quiz HOTS
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-6xl mx-auto w-full px-4 py-8">
+      
+      <!-- Section 1: Pendahuluan -->
+      <section id="intro" class="section fade-in">
+        <div class="bg-white rounded-3xl shadow-xl p-6 md:p-10 mb-8">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-4xl">🔬</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-emerald-800" style="font-family: 'Playfair Display', serif;">Mengapa Kita Perlu Klasifikasi?</h2>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-8 mb-8">
+            <div class="space-y-6">
+              <!-- Problem Card -->
+              <div class="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-6 border-l-4 border-red-400 card-hover">
+                <div class="flex items-center gap-3 mb-3">
+                  <span class="text-2xl">❓</span>
+                  <h3 class="font-bold text-red-700 text-lg">Masalah</h3>
+                </div>
+                <p class="text-gray-700 leading-relaxed">
+                  Jumlah makhluk hidup di dunia sangat banyak dan beraneka ragam, dari yang <strong>raksasa</strong> seperti paus biru hingga yang <strong>mikroskopis</strong> seperti bakteri. Diperkirakan ada lebih dari <span class="font-bold text-red-600">8,7 juta spesies</span> di Bumi!
+                </p>
+              </div>
+              
+              <!-- Solution Card -->
+              <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-6 border-l-4 border-emerald-400 card-hover">
+                <div class="flex items-center gap-3 mb-3">
+                  <span class="text-2xl">💡</span>
+                  <h3 class="font-bold text-emerald-700 text-lg">Solusi</h3>
+                </div>
+                <p class="text-gray-700 leading-relaxed">
+                  Melakukan <strong class="text-emerald-600">Klasifikasi</strong>, yaitu pengelompokan makhluk hidup secara sistematis berdasarkan <em>persamaan</em> dan <em>perbedaan</em> ciri-cirinya.
+                </p>
+              </div>
+              
+              <!-- Purpose Card -->
+              <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border-l-4 border-blue-400 card-hover">
+                <div class="flex items-center gap-3 mb-3">
+                  <span class="text-2xl">🎯</span>
+                  <h3 class="font-bold text-blue-700 text-lg">Tujuan</h3>
+                </div>
+                <p class="text-gray-700 leading-relaxed">
+                  Menyederhanakan objek studi agar lebih <strong>mudah dikenali</strong> dan <strong>dipelajari</strong>. Bayangkan betapa sulitnya mempelajari jutaan spesies tanpa sistem pengelompokan!
+                </p>
+              </div>
+            </div>
+            
+            <!-- Analogy Visual -->
+            <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 card-hover">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="text-2xl">🛒</span>
+                <h3 class="font-bold text-amber-700 text-lg">Analogi: Supermarket</h3>
+              </div>
+              
+              <div class="relative">
+                <!-- Supermarket Illustration -->
+                <svg viewBox="0 0 400 280" class="w-full h-auto">
+                  <!-- Background -->
+                  <rect x="10" y="10" width="380" height="260" rx="15" fill="#fef3c7"/>
+                  
+                  <!-- Store Sign -->
+                  <rect x="120" y="20" width="160" height="35" rx="8" fill="#f59e0b"/>
+                  <text x="200" y="45" text-anchor="middle" fill="white" font-weight="bold" font-size="16">SUPERMARKET</text>
+                  
+                  <!-- Shelves -->
+                  <!-- Aisle 1 - Fruits -->
+                  <rect x="30" y="70" width="100" height="90" rx="8" fill="#22c55e" opacity="0.2"/>
+                  <rect x="30" y="70" width="100" height="25" rx="8" fill="#22c55e"/>
+                  <text x="80" y="88" text-anchor="middle" fill="white" font-weight="bold" font-size="11">🍎 BUAH</text>
+                  <circle cx="50" cy="115" r="12" fill="#ef4444"/>
+                  <circle cx="80" cy="115" r="12" fill="#eab308"/>
+                  <circle cx="110" cy="115" r="12" fill="#f97316"/>
+                  <circle cx="65" cy="140" r="10" fill="#84cc16"/>
+                  <circle cx="95" cy="140" r="10" fill="#a855f7"/>
+                  
+                  <!-- Aisle 2 - Medicine -->
+                  <rect x="150" y="70" width="100" height="90" rx="8" fill="#3b82f6" opacity="0.2"/>
+                  <rect x="150" y="70" width="100" height="25" rx="8" fill="#3b82f6"/>
+                  <text x="200" y="88" text-anchor="middle" fill="white" font-weight="bold" font-size="11">💊 OBAT</text>
+                  <rect x="160" y="105" width="20" height="30" rx="3" fill="#dbeafe"/>
+                  <rect x="185" y="105" width="20" height="30" rx="3" fill="#bfdbfe"/>
+                  <rect x="210" y="105" width="20" height="30" rx="3" fill="#93c5fd"/>
+                  <rect x="170" y="140" width="25" height="15" rx="3" fill="#60a5fa"/>
+                  <rect x="200" y="140" width="25" height="15" rx="3" fill="#3b82f6"/>
+                  
+                  <!-- Aisle 3 - Bath -->
+                  <rect x="270" y="70" width="100" height="90" rx="8" fill="#ec4899" opacity="0.2"/>
+                  <rect x="270" y="70" width="100" height="25" rx="8" fill="#ec4899"/>
+                  <text x="320" y="88" text-anchor="middle" fill="white" font-weight="bold" font-size="11">🧴 MANDI</text>
+                  <rect x="285" y="100" width="15" height="40" rx="5" fill="#fbcfe8"/>
+                  <rect x="305" y="105" width="15" height="35" rx="5" fill="#f9a8d4"/>
+                  <rect x="325" y="100" width="15" height="40" rx="5" fill="#f472b6"/>
+                  <rect x="345" y="108" width="15" height="32" rx="5" fill="#ec4899"/>
+                  
+                  <!-- Person with cart -->
+                  <circle cx="200" cy="200" r="15" fill="#fcd34d"/>
+                  <text x="200" y="205" text-anchor="middle" font-size="12">😊</text>
+                  <rect x="170" y="220" width="60" height="30" rx="5" fill="#a1a1aa"/>
+                  <circle cx="180" cy="255" r="8" fill="#525252"/>
+                  <circle cx="220" cy="255" r="8" fill="#525252"/>
+                  
+                  <!-- Speech bubble -->
+                  <path d="M250 185 Q280 175 280 195 Q280 215 250 205 L245 220 L248 200 Q240 195 250 185" fill="white" stroke="#d1d5db" stroke-width="1"/>
+                  <text x="262" y="198" text-anchor="middle" fill="#374151" font-size="8" font-weight="bold">Mudah</text>
+                  <text x="262" y="208" text-anchor="middle" fill="#374151" font-size="8" font-weight="bold">dicari!</text>
+                </svg>
+              </div>
+              
+              <p class="text-gray-700 text-center mt-4 leading-relaxed">
+                Seperti barang di supermarket yang dikelompokkan dalam <strong>lorong-lorong tertentu</strong>, makhluk hidup juga perlu dikelompokkan agar mudah ditemukan dan dipelajari!
+              </p>
+            </div>
+          </div>
+          
+          <!-- Interactive Activity -->
+          <div class="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-6">
+            <h3 class="font-bold text-purple-800 text-lg mb-4 flex items-center gap-2">
+              <span>🎮</span> Aktivitas: Kelompokkan Makhluk Hidup!
+            </h3>
+            <p class="text-gray-700 mb-4">Klik pada makhluk hidup di bawah ini untuk mengelompokkannya:</p>
+            
+            <div id="grouping-activity" class="space-y-4">
+              <div class="flex flex-wrap gap-3 justify-center" id="organisms-to-group">
+                <button onclick="groupOrganism(this, 'plant')" class="organism-btn px-4 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all text-lg" data-type="plant">🌸 Mawar</button>
+                <button onclick="groupOrganism(this, 'animal')" class="organism-btn px-4 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all text-lg" data-type="animal">🐕 Anjing</button>
+                <button onclick="groupOrganism(this, 'fungi')" class="organism-btn px-4 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all text-lg" data-type="fungi">🍄 Jamur</button>
+                <button onclick="groupOrganism(this, 'animal')" class="organism-btn px-4 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all text-lg" data-type="animal">🦋 Kupu-kupu</button>
+                <button onclick="groupOrganism(this, 'plant')" class="organism-btn px-4 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all text-lg" data-type="plant">🌴 Kelapa</button>
+                <button onclick="groupOrganism(this, 'bacteria')" class="organism-btn px-4 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all text-lg" data-type="bacteria">🦠 Bakteri</button>
+              </div>
+              
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                <div class="group-box bg-green-100 rounded-xl p-3 min-h-24" id="plant-group">
+                  <h4 class="font-bold text-green-700 text-center text-sm mb-2">🌿 Tumbuhan</h4>
+                  <div class="grouped-items flex flex-wrap gap-1 justify-center"></div>
+                </div>
+                <div class="group-box bg-orange-100 rounded-xl p-3 min-h-24" id="animal-group">
+                  <h4 class="font-bold text-orange-700 text-center text-sm mb-2">🦁 Hewan</h4>
+                  <div class="grouped-items flex flex-wrap gap-1 justify-center"></div>
+                </div>
+                <div class="group-box bg-purple-100 rounded-xl p-3 min-h-24" id="fungi-group">
+                  <h4 class="font-bold text-purple-700 text-center text-sm mb-2">🍄 Jamur</h4>
+                  <div class="grouped-items flex flex-wrap gap-1 justify-center"></div>
+                </div>
+                <div class="group-box bg-blue-100 rounded-xl p-3 min-h-24" id="bacteria-group">
+                  <h4 class="font-bold text-blue-700 text-center text-sm mb-2">🦠 Bakteri</h4>
+                  <div class="grouped-items flex flex-wrap gap-1 justify-center"></div>
+                </div>
+              </div>
+              
+              <div id="grouping-feedback" class="text-center mt-4 font-semibold hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Tingkatan Takson -->
+      <section id="takson" class="section hidden">
+        <div class="bg-white rounded-3xl shadow-xl p-6 md:p-10 mb-8 fade-in">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-4xl">📊</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-emerald-800" style="font-family: 'Playfair Display', serif;">Tingkatan Takson: Urutan Hierarki</h2>
+          </div>
+          
+          <div class="bg-emerald-50 rounded-2xl p-4 mb-8">
+            <p class="text-emerald-800 text-center">
+              <strong>Taksonomi</strong> adalah ilmu yang mempelajari klasifikasi makhluk hidup. Makhluk hidup disusun dalam tingkatan dari yang <em>tertinggi</em> hingga <em>terendah</em>.
+            </p>
+          </div>
+          
+          <!-- Interactive Taxonomy Pyramid -->
+          <div class="relative mb-8">
+            <h3 class="text-center font-bold text-gray-700 mb-4">🔺 Piramida Taksonomi (Klik untuk detail)</h3>
+            
+            <div class="flex flex-col items-center space-y-2">
+              <!-- Kingdom -->
+              <div onclick="showTaksonDetail('kingdom')" class="takson-level cursor-pointer w-full max-w-xs md:max-w-sm px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg text-center font-bold shadow-lg hover:scale-105 transition-transform">
+                <span class="text-lg">👑 KINGDOM</span>
+                <p class="text-xs opacity-80">Tingkat Tertinggi</p>
+              </div>
+              
+              <!-- Phylum/Divisio -->
+              <div onclick="showTaksonDetail('phylum')" class="takson-level cursor-pointer w-full max-w-sm md:max-w-md px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg text-center font-bold shadow-lg hover:scale-105 transition-transform">
+                <span class="text-lg">📦 PHYLUM / DIVISIO</span>
+                <p class="text-xs opacity-80">Hewan / Tumbuhan</p>
+              </div>
+              
+              <!-- Classis -->
+              <div onclick="showTaksonDetail('classis')" class="takson-level cursor-pointer w-full max-w-md md:max-w-lg px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-lg text-center font-bold shadow-lg hover:scale-105 transition-transform">
+                <span class="text-lg">🏫 CLASSIS (Kelas)</span>
+                <p class="text-xs opacity-80">Akhiran: -opsida (tumbuhan)</p>
+              </div>
+              
+              <!-- Ordo -->
+              <div onclick="showTaksonDetail('ordo')" class="takson-level cursor-pointer w-full max-w-lg md:max-w-xl px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg text-center font-bold shadow-lg hover:scale-105 transition-transform">
+                <span class="text-lg">📋 ORDO (Bangsa)</span>
+                <p class="text-xs opacity-80">Akhiran: -ales (tumbuhan)</p>
+              </div>
+              
+              <!-- Familia -->
+              <div onclick="showTaksonDetail('familia')" class="takson-level cursor-pointer w-full max-w-xl md:max-w-2xl px-6 py-3 bg-gradient-to-r from-teal-500 to-teal-600 text-white rounded-lg text-center font-bold shadow-lg hover:scale-105 transition-transform">
+                <span class="text-lg">👨‍👩‍👧‍👦 FAMILIA (Suku)</span>
+                <p class="text-xs opacity-80">Tumbuhan: -aceae | Hewan: -idae</p>
+              </div>
+              
+              <!-- Genus -->
+              <div onclick="showTaksonDetail('genus')" class="takson-level cursor-pointer w-full max-w-2xl md:max-w-3xl px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg text-center font-bold shadow-lg hover:scale-105 transition-transform">
+                <span class="text-lg">🔤 GENUS (Marga)</span>
+                <p class="text-xs opacity-80">Huruf kapital, cetak miring</p>
+              </div>
+              
+              <!-- Species -->
+              <div onclick="showTaksonDetail('species')" class="takson-level cursor-pointer w-full max-w-3xl md:max-w-4xl px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg text-center font-bold shadow-lg hover:scale-105 transition-transform pulse-glow">
+                <span class="text-lg">🧬 SPECIES (Jenis)</span>
+                <p class="text-xs opacity-80">Tingkat Terendah - Persamaan Terbanyak</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Takson Detail Panel -->
+          <div id="takson-detail" class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 mb-8">
+            <p class="text-gray-600 text-center">👆 Klik salah satu tingkatan takson di atas untuk melihat detail dan contohnya!</p>
+          </div>
+          
+          <!-- Important Principle -->
+          <div class="grid md:grid-cols-2 gap-6 mt-8">
+            <div class="bg-gradient-to-br from-amber-100 to-yellow-100 rounded-2xl p-6 card-hover">
+              <div class="text-center mb-4">
+                <span class="text-5xl">📈</span>
+              </div>
+              <h4 class="font-bold text-amber-800 text-center text-lg mb-3">Semakin TINGGI Takson</h4>
+              <ul class="space-y-2 text-gray-700">
+                <li class="flex items-center gap-2">
+                  <span class="text-green-500">✓</span> Jumlah anggota semakin <strong>BANYAK</strong>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-red-500">✗</span> Persamaan ciri semakin <strong>SEDIKIT</strong>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl p-6 card-hover">
+              <div class="text-center mb-4">
+                <span class="text-5xl">📉</span>
+              </div>
+              <h4 class="font-bold text-emerald-800 text-center text-lg mb-3">Semakin RENDAH Takson</h4>
+              <ul class="space-y-2 text-gray-700">
+                <li class="flex items-center gap-2">
+                  <span class="text-red-500">✗</span> Jumlah anggota semakin <strong>SEDIKIT</strong>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-green-500">✓</span> Persamaan ciri semakin <strong>BANYAK</strong>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Memory Aid -->
+          <div class="bg-gradient-to-r from-pink-100 to-rose-100 rounded-2xl p-6 mt-8">
+            <h3 class="font-bold text-pink-800 text-lg mb-4 flex items-center gap-2">
+              <span>🧠</span> Tips Mengingat Urutan Takson!
+            </h3>
+            <div class="bg-white rounded-xl p-4">
+              <p class="text-center text-xl font-bold text-gray-800 mb-2">
+                "<span class="text-red-500">K</span>ang 
+                <span class="text-orange-500">P</span>aijo 
+                <span class="text-yellow-500">C</span>ari 
+                <span class="text-green-500">O</span>bat 
+                <span class="text-teal-500">F</span>lu di 
+                <span class="text-blue-500">G</span>udang 
+                <span class="text-purple-500">S</span>ambil"
+              </p>
+              <p class="text-center text-sm text-gray-600">
+                (Kingdom - Phylum - Classis - Ordo - Familia - Genus - Species)
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Lima Kingdom -->
+      <section id="kingdom" class="section hidden">
+        <div class="bg-white rounded-3xl shadow-xl p-6 md:p-10 mb-8 fade-in">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-4xl">👑</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-emerald-800" style="font-family: 'Playfair Display', serif;">Sistem Klasifikasi Lima Kingdom</h2>
+          </div>
+          
+          <p class="text-gray-700 text-center mb-8 text-lg">
+            Sistem klasifikasi yang paling umum digunakan saat ini membagi makhluk hidup menjadi <strong>5 Kingdom</strong>:
+          </p>
+          
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Monera -->
+            <div class="kingdom-card bg-gradient-to-br from-blue-400 to-cyan-500 rounded-2xl p-6 text-white shadow-xl" onclick="showKingdomDetail('monera')">
+              <div class="text-center mb-4">
+                <svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto">
+                  <circle cx="50" cy="50" r="35" fill="rgba(255,255,255,0.3)"/>
+                  <ellipse cx="50" cy="50" rx="30" ry="18" fill="rgba(255,255,255,0.5)"/>
+                  <circle cx="35" cy="45" r="4" fill="white"/>
+                  <circle cx="55" cy="48" r="3" fill="white"/>
+                  <circle cx="65" cy="52" r="2" fill="white"/>
+                  <path d="M25 50 Q30 40 35 50" stroke="white" stroke-width="2" fill="none"/>
+                  <path d="M75 50 Q80 45 85 55" stroke="white" stroke-width="2" fill="none"/>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-center mb-2">🦠 MONERA</h3>
+              <p class="text-center text-sm opacity-90">Prokariotik (tanpa membran inti)</p>
+              <p class="text-center text-xs mt-2 bg-white/20 rounded-full px-3 py-1">Contoh: Bakteri, Cyanobacteria</p>
+            </div>
+            
+            <!-- Protista -->
+            <div class="kingdom-card bg-gradient-to-br from-teal-400 to-emerald-500 rounded-2xl p-6 text-white shadow-xl" onclick="showKingdomDetail('protista')">
+              <div class="text-center mb-4">
+                <svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto">
+                  <ellipse cx="50" cy="50" rx="35" ry="25" fill="rgba(255,255,255,0.3)"/>
+                  <circle cx="40" cy="45" r="10" fill="rgba(255,255,255,0.5)"/>
+                  <circle cx="40" cy="45" r="5" fill="white"/>
+                  <ellipse cx="60" cy="50" rx="15" ry="10" fill="rgba(255,255,255,0.3)"/>
+                  <path d="M20 40 C10 50 10 60 25 55" stroke="white" stroke-width="3" fill="none"/>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-center mb-2">🧫 PROTISTA</h3>
+              <p class="text-center text-sm opacity-90">Eukariotik, jaringan sederhana</p>
+              <p class="text-center text-xs mt-2 bg-white/20 rounded-full px-3 py-1">Contoh: Amoeba, Rumput Laut</p>
+            </div>
+            
+            <!-- Fungi -->
+            <div class="kingdom-card bg-gradient-to-br from-purple-400 to-violet-500 rounded-2xl p-6 text-white shadow-xl" onclick="showKingdomDetail('fungi')">
+              <div class="text-center mb-4">
+                <svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto">
+                  <ellipse cx="50" cy="35" rx="30" ry="20" fill="rgba(255,255,255,0.5)"/>
+                  <rect x="45" y="35" width="10" height="35" fill="rgba(255,255,255,0.4)"/>
+                  <circle cx="35" cy="30" r="5" fill="white" opacity="0.5"/>
+                  <circle cx="55" cy="25" r="4" fill="white" opacity="0.5"/>
+                  <circle cx="65" cy="35" r="3" fill="white" opacity="0.5"/>
+                  <path d="M30 70 Q50 80 70 70" stroke="white" stroke-width="2" fill="none" opacity="0.6"/>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-center mb-2">🍄 FUNGI</h3>
+              <p class="text-center text-sm opacity-90">Dinding sel kitin, tanpa kloroplas</p>
+              <p class="text-center text-xs mt-2 bg-white/20 rounded-full px-3 py-1">Contoh: Jamur Merang, Ragi</p>
+            </div>
+            
+            <!-- Plantae -->
+            <div class="kingdom-card bg-gradient-to-br from-green-400 to-emerald-600 rounded-2xl p-6 text-white shadow-xl" onclick="showKingdomDetail('plantae')">
+              <div class="text-center mb-4">
+                <svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto">
+                  <rect x="45" y="50" width="10" height="35" fill="rgba(139,69,19,0.6)"/>
+                  <ellipse cx="50" cy="35" rx="25" ry="25" fill="rgba(255,255,255,0.4)"/>
+                  <ellipse cx="35" cy="45" rx="15" ry="12" fill="rgba(255,255,255,0.3)"/>
+                  <ellipse cx="65" cy="45" rx="15" ry="12" fill="rgba(255,255,255,0.3)"/>
+                  <ellipse cx="50" cy="25" rx="12" ry="10" fill="rgba(255,255,255,0.5)"/>
+                  <circle cx="50" cy="40" r="5" fill="#fff176"/>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-center mb-2">🌿 PLANTAE</h3>
+              <p class="text-center text-sm opacity-90">Eukariotik, fotosintesis, multiseluler</p>
+              <p class="text-center text-xs mt-2 bg-white/20 rounded-full px-3 py-1">Contoh: Padi, Mangga, Paku</p>
+            </div>
+            
+            <!-- Animalia -->
+            <div class="kingdom-card bg-gradient-to-br from-orange-400 to-amber-500 rounded-2xl p-6 text-white shadow-xl" onclick="showKingdomDetail('animalia')">
+              <div class="text-center mb-4">
+                <svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto">
+                  <ellipse cx="50" cy="55" rx="30" ry="20" fill="rgba(255,255,255,0.4)"/>
+                  <circle cx="50" cy="30" r="18" fill="rgba(255,255,255,0.5)"/>
+                  <circle cx="43" cy="27" r="4" fill="#333"/>
+                  <circle cx="57" cy="27" r="4" fill="#333"/>
+                  <ellipse cx="50" cy="35" rx="5" ry="3" fill="#333"/>
+                  <path d="M35 15 Q40 5 45 18" stroke="rgba(255,255,255,0.6)" stroke-width="3" fill="none"/>
+                  <path d="M65 15 Q60 5 55 18" stroke="rgba(255,255,255,0.6)" stroke-width="3" fill="none"/>
+                  <path d="M25 60 L15 75" stroke="rgba(255,255,255,0.5)" stroke-width="4"/>
+                  <path d="M75 60 L85 75" stroke="rgba(255,255,255,0.5)" stroke-width="4"/>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-center mb-2">🦁 ANIMALIA</h3>
+              <p class="text-center text-sm opacity-90">Eukariotik, heterotrof, dapat bergerak</p>
+              <p class="text-center text-xs mt-2 bg-white/20 rounded-full px-3 py-1">Contoh: Kucing, Ikan, Cacing</p>
+            </div>
+          </div>
+          
+          <!-- Kingdom Detail Panel -->
+          <div id="kingdom-detail" class="mt-8 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 hidden">
+            <!-- Content will be dynamically inserted -->
+          </div>
+          
+          <!-- Comparison Table -->
+          <div class="mt-8 overflow-x-auto">
+            <h3 class="font-bold text-gray-800 text-lg mb-4 flex items-center gap-2">
+              <span>📋</span> Tabel Perbandingan Lima Kingdom
+            </h3>
+            <table class="w-full text-sm border-collapse">
+              <thead>
+                <tr class="bg-emerald-600 text-white">
+                  <th class="p-3 rounded-tl-lg">Kingdom</th>
+                  <th class="p-3">Tipe Sel</th>
+                  <th class="p-3">Dinding Sel</th>
+                  <th class="p-3">Nutrisi</th>
+                  <th class="p-3 rounded-tr-lg">Contoh</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-blue-50">
+                  <td class="p-3 font-bold text-blue-700">Monera</td>
+                  <td class="p-3">Prokariotik</td>
+                  <td class="p-3">Ada (peptidoglikan)</td>
+                  <td class="p-3">Autotrof/Heterotrof</td>
+                  <td class="p-3">Bakteri E.coli</td>
+                </tr>
+                <tr class="bg-teal-50">
+                  <td class="p-3 font-bold text-teal-700">Protista</td>
+                  <td class="p-3">Eukariotik</td>
+                  <td class="p-3">Ada/Tidak ada</td>
+                  <td class="p-3">Autotrof/Heterotrof</td>
+                  <td class="p-3">Amoeba, Paramecium</td>
+                </tr>
+                <tr class="bg-purple-50">
+                  <td class="p-3 font-bold text-purple-700">Fungi</td>
+                  <td class="p-3">Eukariotik</td>
+                  <td class="p-3">Ada (kitin)</td>
+                  <td class="p-3">Heterotrof (saprofit)</td>
+                  <td class="p-3">Jamur tiram, Ragi</td>
+                </tr>
+                <tr class="bg-green-50">
+                  <td class="p-3 font-bold text-green-700">Plantae</td>
+                  <td class="p-3">Eukariotik</td>
+                  <td class="p-3">Ada (selulosa)</td>
+                  <td class="p-3">Autotrof (fotosintesis)</td>
+                  <td class="p-3">Padi, Mangga</td>
+                </tr>
+                <tr class="bg-orange-50">
+                  <td class="p-3 font-bold text-orange-700 rounded-bl-lg">Animalia</td>
+                  <td class="p-3">Eukariotik</td>
+                  <td class="p-3">Tidak ada</td>
+                  <td class="p-3">Heterotrof</td>
+                  <td class="p-3 rounded-br-lg">Kucing, Ikan</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Kingdom Plantae -->
+      <section id="plantae" class="section hidden">
+        <div class="bg-white rounded-3xl shadow-xl p-6 md:p-10 mb-8 fade-in">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-4xl">🌿</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-emerald-800" style="font-family: 'Playfair Display', serif;">Kingdom Plantae (Tumbuhan)</h2>
+          </div>
+          
+          <div class="bg-green-50 rounded-2xl p-4 mb-8">
+            <p class="text-green-800 text-center">
+              Tumbuhan adalah organisme <strong>eukariotik</strong>, <strong>multiseluler</strong>, memiliki <strong>dinding sel</strong> dan <strong>kloroplas</strong> untuk fotosintesis. Dibedakan berdasarkan <em>cara berkembang biak</em>.
+            </p>
+          </div>
+          
+          <!-- Plant Classification Diagram -->
+          <div class="relative mb-8">
+            <h3 class="text-center font-bold text-gray-700 mb-6">🌳 Klasifikasi Tumbuhan Berdasarkan Cara Berkembang Biak</h3>
+            
+            <!-- Main Tree -->
+            <div class="flex flex-col items-center">
+              <!-- Root -->
+              <div class="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-xl">
+                🌿 PLANTAE
+              </div>
+              
+              <!-- Branches Line -->
+              <div class="w-1 h-8 bg-green-400"></div>
+              <div class="w-64 h-1 bg-green-400"></div>
+              
+              <!-- Two Main Branches -->
+              <div class="flex justify-center gap-8 md:gap-16 mt-2">
+                <!-- Berspora Branch -->
+                <div class="flex flex-col items-center">
+                  <div class="w-1 h-6 bg-green-400"></div>
+                  <div class="bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg">
+                    🌱 BERSPORA
+                  </div>
+                  <div class="w-1 h-6 bg-teal-400"></div>
+                  <div class="w-32 h-1 bg-teal-400"></div>
+                  
+                  <div class="flex gap-4 mt-2">
+                    <!-- Lumut -->
+                    <div class="flex flex-col items-center">
+                      <div class="w-1 h-4 bg-teal-400"></div>
+                      <div onclick="showPlantDetail('lumut')" class="cursor-pointer bg-gradient-to-br from-lime-100 to-green-100 p-4 rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-lime-300">
+                        <div class="text-center mb-2">
+                          <svg viewBox="0 0 60 60" class="w-12 h-12 mx-auto">
+                            <rect x="25" y="35" width="10" height="20" fill="#8b5a2b"/>
+                            <ellipse cx="30" cy="30" rx="18" ry="15" fill="#90ee90"/>
+                            <ellipse cx="22" cy="28" rx="8" ry="6" fill="#32cd32"/>
+                            <ellipse cx="38" cy="28" rx="8" ry="6" fill="#32cd32"/>
+                            <ellipse cx="30" cy="22" rx="6" ry="5" fill="#228b22"/>
+                          </svg>
+                        </div>
+                        <p class="font-bold text-green-700 text-sm text-center">LUMUT</p>
+                        <p class="text-xs text-gray-600 text-center">Daun muda tidak menggulung</p>
+                      </div>
+                    </div>
+                    
+                    <!-- Paku -->
+                    <div class="flex flex-col items-center">
+                      <div class="w-1 h-4 bg-teal-400"></div>
+                      <div onclick="showPlantDetail('paku')" class="cursor-pointer bg-gradient-to-br from-emerald-100 to-teal-100 p-4 rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-emerald-300">
+                        <div class="text-center mb-2">
+                          <svg viewBox="0 0 60 60" class="w-12 h-12 mx-auto">
+                            <rect x="27" y="40" width="6" height="15" fill="#5d4037"/>
+                            <path d="M30 40 Q20 30 15 15" stroke="#228b22" stroke-width="3" fill="none"/>
+                            <path d="M30 40 Q35 25 45 15" stroke="#228b22" stroke-width="3" fill="none"/>
+                            <path d="M30 38 Q25 28 20 18" stroke="#32cd32" stroke-width="2" fill="none"/>
+                            <path d="M30 38 Q38 28 40 20" stroke="#32cd32" stroke-width="2" fill="none"/>
+                            <circle cx="15" cy="15" r="4" fill="#228b22"/>
+                            <circle cx="45" cy="15" r="4" fill="#228b22"/>
+                          </svg>
+                        </div>
+                        <p class="font-bold text-emerald-700 text-sm text-center">PAKU</p>
+                        <p class="text-xs text-gray-600 text-center">Daun muda menggulung</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Berbiji Branch -->
+                <div class="flex flex-col items-center">
+                  <div class="w-1 h-6 bg-green-400"></div>
+                  <div class="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg">
+                    🌰 BERBIJI
+                  </div>
+                  <div class="w-1 h-6 bg-amber-400"></div>
+                  <div class="w-32 h-1 bg-amber-400"></div>
+                  
+                  <div class="flex gap-4 mt-2">
+                    <!-- Gymnospermae -->
+                    <div class="flex flex-col items-center">
+                      <div class="w-1 h-4 bg-amber-400"></div>
+                      <div onclick="showPlantDetail('gymno')" class="cursor-pointer bg-gradient-to-br from-amber-100 to-yellow-100 p-4 rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-amber-300">
+                        <div class="text-center mb-2">
+                          <svg viewBox="0 0 60 60" class="w-12 h-12 mx-auto">
+                            <rect x="27" y="40" width="6" height="15" fill="#5d4037"/>
+                            <polygon points="30,5 15,45 45,45" fill="#228b22"/>
+                            <polygon points="30,15 20,40 40,40" fill="#32cd32"/>
+                            <ellipse cx="30" cy="30" rx="4" ry="6" fill="#8b4513" opacity="0.7"/>
+                          </svg>
+                        </div>
+                        <p class="font-bold text-amber-700 text-sm text-center">GYMNOSPERMAE</p>
+                        <p class="text-xs text-gray-600 text-center">Biji terbuka, strobilus</p>
+                      </div>
+                    </div>
+                    
+                    <!-- Angiospermae -->
+                    <div class="flex flex-col items-center">
+                      <div class="w-1 h-4 bg-amber-400"></div>
+                      <div onclick="showPlantDetail('angio')" class="cursor-pointer bg-gradient-to-br from-pink-100 to-rose-100 p-4 rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-pink-300">
+                        <div class="text-center mb-2">
+                          <svg viewBox="0 0 60 60" class="w-12 h-12 mx-auto">
+                            <rect x="27" y="40" width="6" height="15" fill="#228b22"/>
+                            <ellipse cx="30" cy="35" rx="12" ry="8" fill="#90ee90"/>
+                            <circle cx="30" cy="20" r="12" fill="#ff69b4"/>
+                            <circle cx="30" cy="20" r="6" fill="#ffeb3b"/>
+                            <circle cx="27" cy="18" r="2" fill="#ff9800"/>
+                            <circle cx="33" cy="18" r="2" fill="#ff9800"/>
+                            <circle cx="30" cy="23" r="2" fill="#ff9800"/>
+                          </svg>
+                        </div>
+                        <p class="font-bold text-pink-700 text-sm text-center">ANGIOSPERMAE</p>
+                        <p class="text-xs text-gray-600 text-center">Biji tertutup, berbunga</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Plant Detail Panel -->
+          <div id="plant-detail" class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 mb-8">
+            <p class="text-gray-600 text-center">👆 Klik pada jenis tumbuhan di atas untuk melihat detail lebih lanjut!</p>
+          </div>
+          
+          <!-- Angiospermae Subdivision -->
+          <div class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-6 mt-8">
+            <h3 class="font-bold text-pink-800 text-lg mb-4 flex items-center gap-2">
+              <span>🌸</span> Pembagian Angiospermae (Tumbuhan Berbunga)
+            </h3>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+              <!-- Monokotil -->
+              <div class="bg-white rounded-xl p-5 shadow-md card-hover">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                    <svg viewBox="0 0 50 50" class="w-10 h-10">
+                      <ellipse cx="25" cy="25" rx="15" ry="20" fill="#90ee90"/>
+                      <line x1="25" y1="8" x2="25" y2="42" stroke="#228b22" stroke-width="2"/>
+                      <line x1="12" y1="15" x2="38" y2="35" stroke="#228b22" stroke-width="1.5"/>
+                      <line x1="12" y1="25" x2="38" y2="25" stroke="#228b22" stroke-width="1.5"/>
+                      <line x1="12" y1="35" x2="38" y2="15" stroke="#228b22" stroke-width="1.5"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-green-700 text-lg">MONOKOTIL</h4>
+                    <p class="text-sm text-gray-600">Berkeping biji satu</p>
+                  </div>
+                </div>
+                <ul class="space-y-2 text-sm text-gray-700">
+                  <li class="flex items-center gap-2">
+                    <span class="text-green-500">✓</span> Tulang daun <strong>sejajar/melengkung</strong>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-green-500">✓</span> Akar <strong>serabut</strong>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-green-500">✓</span> Batang tidak bercabang
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-green-500">✓</span> Contoh: Padi 🌾, Jagung 🌽, Kelapa 🥥
+                  </li>
+                </ul>
+              </div>
+              
+              <!-- Dikotil -->
+              <div class="bg-white rounded-xl p-5 shadow-md card-hover">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center">
+                    <svg viewBox="0 0 50 50" class="w-10 h-10">
+                      <ellipse cx="25" cy="25" rx="15" ry="18" fill="#90ee90"/>
+                      <line x1="25" y1="8" x2="25" y2="42" stroke="#228b22" stroke-width="2"/>
+                      <line x1="25" y1="15" x2="12" y2="20" stroke="#228b22" stroke-width="1.5"/>
+                      <line x1="25" y1="15" x2="38" y2="20" stroke="#228b22" stroke-width="1.5"/>
+                      <line x1="25" y1="25" x2="10" y2="32" stroke="#228b22" stroke-width="1.5"/>
+                      <line x1="25" y1="25" x2="40" y2="32" stroke="#228b22" stroke-width="1.5"/>
+                      <line x1="25" y1="35" x2="15" y2="40" stroke="#228b22" stroke-width="1.5"/>
+                      <line x1="25" y1="35" x2="35" y2="40" stroke="#228b22" stroke-width="1.5"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-emerald-700 text-lg">DIKOTIL</h4>
+                    <p class="text-sm text-gray-600">Berkeping biji dua</p>
+                  </div>
+                </div>
+                <ul class="space-y-2 text-sm text-gray-700">
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-500">✓</span> Tulang daun <strong>menyirip/menjari</strong>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-500">✓</span> Akar <strong>tunggang</strong>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-500">✓</span> Batang bercabang
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-500">✓</span> Contoh: Mangga 🥭, Kacang 🥜, Mawar 🌹
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Kingdom Animalia -->
+      <section id="animalia" class="section hidden">
+        <div class="bg-white rounded-3xl shadow-xl p-6 md:p-10 mb-8 fade-in">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-4xl">🦁</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-emerald-800" style="font-family: 'Playfair Display', serif;">Kingdom Animalia (Hewan)</h2>
+          </div>
+          
+          <div class="bg-orange-50 rounded-2xl p-4 mb-8">
+            <p class="text-orange-800 text-center">
+              Hewan adalah organisme <strong>eukariotik</strong>, <strong>tidak memiliki dinding sel</strong>, bersifat <strong>heterotrof</strong> (memakan organisme lain), dan umumnya dapat <strong>berpindah tempat</strong>.
+            </p>
+          </div>
+          
+          <!-- Animal Classification -->
+          <div class="mb-8">
+            <h3 class="text-center font-bold text-gray-700 mb-6">🐾 Klasifikasi Hewan dari Sederhana ke Kompleks</h3>
+            
+            <div class="flex flex-col items-center mb-8">
+              <div class="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-xl">
+                🦁 ANIMALIA
+              </div>
+              <div class="w-1 h-8 bg-orange-400"></div>
+              <div class="w-64 h-1 bg-orange-400"></div>
+              
+              <div class="flex justify-center gap-8 mt-2">
+                <div class="flex flex-col items-center">
+                  <div class="w-1 h-6 bg-orange-400"></div>
+                  <div class="bg-gradient-to-r from-rose-500 to-pink-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg text-center">
+                    🐛 INVERTEBRATA<br>
+                    <span class="text-xs font-normal">Tidak bertulang belakang</span>
+                  </div>
+                </div>
+                
+                <div class="flex flex-col items-center">
+                  <div class="w-1 h-6 bg-orange-400"></div>
+                  <div class="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg text-center">
+                    🦴 VERTEBRATA<br>
+                    <span class="text-xs font-normal">Bertulang belakang</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Invertebrata Grid -->
+          <div class="mb-8">
+            <h4 class="font-bold text-rose-700 text-lg mb-4 flex items-center gap-2">
+              <span>🐛</span> Kelompok Invertebrata (Klik untuk detail)
+            </h4>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <!-- Porifera -->
+              <div onclick="showAnimalDetail('porifera')" class="cursor-pointer bg-gradient-to-br from-yellow-100 to-amber-100 p-4 rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-yellow-300 card-hover">
+                <div class="text-center mb-2">
+                  <svg viewBox="0 0 60 60" class="w-14 h-14 mx-auto">
+                    <ellipse cx="30" cy="35" rx="20" ry="18" fill="#ffd54f"/>
+                    <circle cx="20" cy="30" r="3" fill="#fff9c4"/>
+                    <circle cx="35" cy="28" r="4" fill="#fff9c4"/>
+                    <circle cx="25" cy="40" r="3" fill="#fff9c4"/>
+                    <circle cx="38" cy="38" r="2" fill="#fff9c4"/>
+                    <circle cx="30" cy="25" r="2" fill="#fff9c4"/>
+                    <ellipse cx="30" cy="20" rx="8" ry="5" fill="#ffca28"/>
+                  </svg>
+                </div>
+                <p class="font-bold text-amber-700 text-sm text-center">PORIFERA</p>
+                <p class="text-xs text-gray-600 text-center">Berpori (Spons)</p>
+              </div>
+              
+              <!-- Coelenterata -->
+              <div onclick="showAnimalDetail('coelenterata')" class="cursor-pointer bg-gradient-to-br from-pink-100 to-rose-100 p-4 rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-pink-300 card-hover">
+                <div class="text-center mb-2">
+                  <svg viewBox="0 0 60 60" class="w-14 h-14 mx-auto">
+                    <ellipse cx="30" cy="35" rx="12" ry="15" fill="#f48fb1"/>
+                    <path d="M20 20 Q15 10 20 15 Q18 5 25 12" stroke="#ec407a" stroke-width="2" fill="none"/>
+                    <path d="M25 18 Q22 8 28 14" stroke="#ec407a" stroke-width="2" fill="none"/>
+                    <path d="M35 18 Q38 8 32 14" stroke="#ec407a" stroke-width="2" fill="none"/>
+                    <path d="M40 20 Q45 10 40 15 Q42 5 35 12" stroke="#ec407a" stroke-width="2" fill="none"/>
+                    <circle cx="26" cy="32" r="2" fill="#fff"/>
+                    <circle cx="34" cy="32" r="2" fill="#fff"/>
+                  </svg>
+                </div>
+                <p class="font-bold text-pink-700 text-sm text-center">COELENTERATA</p>
+                <p class="text-xs text-gray-600 text-center">Berongga (Ubur-ubur)</p>
+              </div>
+              
+              <!-- Vermes -->
+              <div onclick="showAnimalDetail('vermes')" class="cursor-pointer bg-gradient-to-br from-red-100 to-orange-100 p-4 rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-red-300 card-hover">
+                <div class="text-center mb-2">
+                  <svg viewBox="0 0 60 60" class="w-14 h-14 mx-auto">
+                    <path d="M15 30 Q20 20 30 25 Q40 30 45 20 Q50 15 48 25 Q45 35 35 30 Q25 25 20 35 Q15 45 12 35 Z" fill="#ef9a9a" stroke="#e57373" stroke-width="2"/>
+                    <circle cx="48" cy="22" r="2" fill="#333"/>
+                  </svg>
+                </div>
+                <p class="font-bold text-red-700 text-sm text-center">VERMES</p>
+                <p class="text-xs text-gray-600 text-center">Cacing</p>
+              </div>
+              
+              <!-- Mollusca -->
+              <div onclick="showAnimalDetail('mollusca')" class="cursor-pointer bg-gradient-to-br from-purple-100 to-violet-100 p-4 rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-purple-300 card-hover">
+                <div class="text-center mb-2">
+                  <svg viewBox="0 0 60 60" class="w-14 h-14 mx-auto">
+                    <ellipse cx="30" cy="38" rx="18" ry="12" fill="#ce93d8"/>
+                    <path d="M12 38 Q15 25 25 20 Q35 15 45 20 Q50 25 48 38" fill="#ba68c8"/>
+                    <path d="M20 30 Q25 25 30 27 Q35 25 40 30" stroke="#9c27b0" stroke-width="1" fill="none"/>
+                    <circle cx="18" cy="28" r="2" fill="#333"/>
+                    <path d="M15 25 Q12 20 15 18" stroke="#ce93d8" stroke-width="2" fill="none"/>
+                    <path d="M18 23 Q16 18 19 16" stroke="#ce93d8" stroke-width="2" fill="none"/>
+                  </svg>
+                </div>
+                <p class="font-bold text-purple-700 text-sm text-center">MOLLUSCA</p>
+                <p class="text-xs text-gray-600 text-center">Tubuh lunak (Keong)</p>
+              </div>
+              
+              <!-- Arthropoda -->
+              <div onclick="showAnimalDetail('arthropoda')" class="cursor-pointer bg-gradient-to-br from-orange-100 to-amber-100 p-4 rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-orange-300 card-hover">
+                <div class="text-center mb-2">
+                  <svg viewBox="0 0 60 60" class="w-14 h-14 mx-auto">
+                    <ellipse cx="30" cy="25" rx="10" ry="8" fill="#ffb74d"/>
+                    <ellipse cx="30" cy="38" rx="12" ry="10" fill="#ffa726"/>
+                    <circle cx="26" cy="23" r="2" fill="#333"/>
+                    <circle cx="34" cy="23" r="2" fill="#333"/>
+                    <path d="M22 20 Q18 12 15 15" stroke="#ff9800" stroke-width="2" fill="none"/>
+                    <path d="M38 20 Q42 12 45 15" stroke="#ff9800" stroke-width="2" fill="none"/>
+                    <line x1="18" y1="35" x2="10" y2="45" stroke="#8d6e63" stroke-width="2"/>
+                    <line x1="20" y1="40" x2="12" y2="52" stroke="#8d6e63" stroke-width="2"/>
+                    <line x1="42" y1="35" x2="50" y2="45" stroke="#8d6e63" stroke-width="2"/>
+                    <line x1="40" y1="40" x2="48" y2="52" stroke="#8d6e63" stroke-width="2"/>
+                  </svg>
+                </div>
+                <p class="font-bold text-orange-700 text-sm text-center">ARTHROPODA</p>
+                <p class="text-xs text-gray-600 text-center">Kaki beruas (Serangga)</p>
+              </div>
+              
+              <!-- Echinodermata -->
+              <div onclick="showAnimalDetail('echinodermata')" class="cursor-pointer bg-gradient-to-br from-blue-100 to-cyan-100 p-4 rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-blue-300 card-hover">
+                <div class="text-center mb-2">
+                  <svg viewBox="0 0 60 60" class="w-14 h-14 mx-auto">
+                    <polygon points="30,8 35,22 50,22 38,32 42,48 30,38 18,48 22,32 10,22 25,22" fill="#64b5f6"/>
+                    <circle cx="30" cy="28" r="6" fill="#90caf9"/>
+                    <circle cx="30" cy="28" r="3" fill="#1976d2"/>
+                  </svg>
+                </div>
+                <p class="font-bold text-blue-700 text-sm text-center">ECHINODERMATA</p>
+                <p class="text-xs text-gray-600 text-center">Kulit berduri (Bintang laut)</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Vertebrata (Chordata) -->
+          <div class="mb-8">
+            <h4 class="font-bold text-blue-700 text-lg mb-4 flex items-center gap-2">
+              <span>🦴</span> Kelompok Vertebrata/Chordata (Klik untuk detail)
+            </h4>
+            
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+              <!-- Pisces -->
+              <div onclick="showAnimalDetail('pisces')" class="cursor-pointer bg-gradient-to-br from-cyan-100 to-blue-100 p-4 rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-cyan-300 card-hover">
+                <div class="text-center mb-2">
+                  <svg viewBox="0 0 60 60" class="w-12 h-12 mx-auto">
+                    <ellipse cx="28" cy="30" rx="18" ry="10" fill="#4dd0e1"/>
+                    <polygon points="48,30 58,22 58,38" fill="#00bcd4"/>
+                    <circle cx="18" cy="28" r="3" fill="#fff"/>
+                    <circle cx="18" cy="28" r="1.5" fill="#333"/>
+                    <path d="M28 22 Q33 18 38 22" stroke="#00838f" stroke-width="1.5" fill="none"/>
+                  </svg>
+                </div>
+                <p class="font-bold text-cyan-700 text-sm text-center">PISCES</p>
+                <p class="text-xs text-gray-600 text-center">Ikan</p>
+              </div>
+              
+              <!-- Amphibia -->
+              <div onclick="showAnimalDetail('amphibia')" class="cursor-pointer bg-gradient-to-br from-green-100 to-lime-100 p-4 rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-green-300 card-hover">
+                <div class="text-center mb-2">
+                  <svg viewBox="0 0 60 60" class="w-12 h-12 mx-auto">
+                    <ellipse cx="30" cy="35" rx="16" ry="12" fill="#81c784"/>
+                    <circle cx="22" cy="22" r="8" fill="#66bb6a"/>
+                    <circle cx="38" cy="22" r="8" fill="#66bb6a"/>
+                    <circle cx="22" cy="20" r="4" fill="#fff"/>
+                    <circle cx="38" cy="20" r="4" fill="#fff"/>
+                    <circle cx="22" cy="20" r="2" fill="#333"/>
+                    <circle cx="38" cy="20" r="2" fill="#333"/>
+                    <line x1="15" y1="42" x2="8" y2="52" stroke="#4caf50" stroke-width="3"/>
+                    <line x1="45" y1="42" x2="52" y2="52" stroke="#4caf50" stroke-width="3"/>
+                  </svg>
+                </div>
+                <p class="font-bold text-green-700 text-sm text-center">AMPHIBIA</p>
+                <p class="text-xs text-gray-600 text-center">Katak</p>
+              </div>
+              
+              <!-- Reptilia -->
+              <div onclick="showAnimalDetail('reptilia')" class="cursor-pointer bg-gradient-to-br from-lime-100 to-yellow-100 p-4 rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-lime-300 card-hover">
+                <div class="text-center mb-2">
+                  <svg viewBox="0 0 60 60" class="w-12 h-12 mx-auto">
+                    <path d="M10 30 Q15 25 25 28 Q35 30 45 25 Q55 20 58 28 Q55 35 45 32 Q35 28 25 32 Q15 35 10 30" fill="#c0ca33"/>
+                    <circle cx="55" cy="26" r="2" fill="#333"/>
+                    <path d="M58 28 L62 26" stroke="#827717" stroke-width="1"/>
+                    <path d="M58 28 L62 30" stroke="#827717" stroke-width="1"/>
+                  </svg>
+                </div>
+                <p class="font-bold text-lime-700 text-sm text-center">REPTILIA</p>
+                <p class="text-xs text-gray-600 text-center">Ular, Buaya</p>
+              </div>
+              
+              <!-- Aves -->
+              <div onclick="showAnimalDetail('aves')" class="cursor-pointer bg-gradient-to-br from-sky-100 to-indigo-100 p-4 rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-sky-300 card-hover">
+                <div class="text-center mb-2">
+                  <svg viewBox="0 0 60 60" class="w-12 h-12 mx-auto">
+                    <ellipse cx="30" cy="35" rx="14" ry="10" fill="#90caf9"/>
+                    <circle cx="30" cy="20" r="10" fill="#64b5f6"/>
+                    <polygon points="40,20 52,18 40,22" fill="#ff9800"/>
+                    <circle cx="34" cy="18" r="2" fill="#333"/>
+                    <path d="M18 30 Q5 25 15 40" fill="#42a5f5"/>
+                    <path d="M42 30 Q55 25 45 40" fill="#42a5f5"/>
+                    <line x1="26" y1="45" x2="24" y2="55" stroke="#ff9800" stroke-width="2"/>
+                    <line x1="34" y1="45" x2="36" y2="55" stroke="#ff9800" stroke-width="2"/>
+                  </svg>
+                </div>
+                <p class="font-bold text-sky-700 text-sm text-center">AVES</p>
+                <p class="text-xs text-gray-600 text-center">Burung</p>
+              </div>
+              
+              <!-- Mammalia -->
+              <div onclick="showAnimalDetail('mammalia')" class="cursor-pointer bg-gradient-to-br from-amber-100 to-orange-100 p-4 rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-amber-300 card-hover">
+                <div class="text-center mb-2">
+                  <svg viewBox="0 0 60 60" class="w-12 h-12 mx-auto">
+                    <ellipse cx="30" cy="38" rx="18" ry="12" fill="#ffcc80"/>
+                    <circle cx="30" cy="20" r="12" fill="#ffb74d"/>
+                    <ellipse cx="22" cy="12" rx="4" ry="6" fill="#ffa726"/>
+                    <ellipse cx="38" cy="12" rx="4" ry="6" fill="#ffa726"/>
+                    <circle cx="25" cy="18" r="2" fill="#333"/>
+                    <circle cx="35" cy="18" r="2" fill="#333"/>
+                    <ellipse cx="30" cy="24" rx="3" ry="2" fill="#333"/>
+                    <path d="M26 28 Q30 32 34 28" stroke="#333" stroke-width="1" fill="none"/>
+                  </svg>
+                </div>
+                <p class="font-bold text-amber-700 text-sm text-center">MAMMALIA</p>
+                <p class="text-xs text-gray-600 text-center">Sapi, Kucing</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Animal Detail Panel -->
+          <div id="animal-detail" class="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-6">
+            <p class="text-gray-600 text-center">👆 Klik pada kelompok hewan di atas untuk melihat detail lebih lanjut!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Carolus Linnaeus -->
+      <section id="linnaeus" class="section hidden">
+        <div class="bg-white rounded-3xl shadow-xl p-6 md:p-10 mb-8 fade-in">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-4xl">👨‍🔬</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-emerald-800" style="font-family: 'Playfair Display', serif;">Carolus Linnaeus - Bapak Taksonomi</h2>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-8">
+            <!-- Portrait and Bio -->
+            <div class="flex flex-col items-center">
+              <div class="w-48 h-48 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-full shadow-xl flex items-center justify-center mb-6 overflow-hidden border-4 border-amber-300">
+                <svg viewBox="0 0 200 200" class="w-full h-full">
+                  <!-- Background -->
+                  <circle cx="100" cy="100" r="95" fill="#fef3c7"/>
+                  
+                  <!-- Wig/Hair -->
+                  <ellipse cx="100" cy="75" rx="55" ry="45" fill="#e5e7eb"/>
+                  <path d="M50 80 Q40 100 55 120 Q50 90 60 75" fill="#d1d5db"/>
+                  <path d="M150 80 Q160 100 145 120 Q150 90 140 75" fill="#d1d5db"/>
+                  <ellipse cx="60" cy="90" rx="12" ry="20" fill="#e5e7eb"/>
+                  <ellipse cx="140" cy="90" rx="12" ry="20" fill="#e5e7eb"/>
+                  
+                  <!-- Face -->
+                  <ellipse cx="100" cy="100" rx="40" ry="45" fill="#fcd9b6"/>
+                  
+                  <!-- Eyes -->
+                  <ellipse cx="85" cy="95" rx="8" ry="5" fill="#fff"/>
+                  <circle cx="85" cy="95" r="3" fill="#4a5568"/>
+                  <ellipse cx="115" cy="95" rx="8" ry="5" fill="#fff"/>
+                  <circle cx="115" cy="95" r="3" fill="#4a5568"/>
+                  
+                  <!-- Eyebrows -->
+                  <path d="M75 88 Q85 85 95 88" stroke="#6b7280" stroke-width="2" fill="none"/>
+                  <path d="M105 88 Q115 85 125 88" stroke="#6b7280" stroke-width="2" fill="none"/>
+                  
+                  <!-- Nose -->
+                  <path d="M100 95 L98 110 Q100 115 102 110 L100 95" fill="#e5c4a8"/>
+                  
+                  <!-- Mouth -->
+                  <path d="M90 125 Q100 130 110 125" stroke="#9b6b5a" stroke-width="2" fill="none"/>
+                  
+                  <!-- Collar/Clothing -->
+                  <path d="M60 145 Q100 160 140 145 L150 180 Q100 190 50 180 Z" fill="#1e3a5f"/>
+                  <path d="M80 145 L85 170 Q100 175 115 170 L120 145" fill="#fff"/>
+                  <ellipse cx="100" cy="155" rx="8" ry="4" fill="#fef3c7"/>
+                </svg>
+              </div>
+              
+              <div class="text-center">
+                <h3 class="text-2xl font-bold text-amber-800">Carl von Linné</h3>
+                <p class="text-gray-600">(Carolus Linnaeus)</p>
+                <p class="text-sm text-gray-500 mt-2">1707 - 1778 | Swedia 🇸🇪</p>
+              </div>
+            </div>
+            
+            <!-- Achievements -->
+            <div class="space-y-4">
+              <div class="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-xl p-5 card-hover">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-2xl">👑</span>
+                  <h4 class="font-bold text-amber-800">Julukan</h4>
+                </div>
+                <p class="text-gray-700"><strong>"Bapak Taksonomi Modern"</strong> - Karena kontribusinya yang luar biasa dalam mengembangkan sistem klasifikasi makhluk hidup.</p>
+              </div>
+              
+              <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl p-5 card-hover">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-2xl">📝</span>
+                  <h4 class="font-bold text-emerald-800">Kontribusi Utama</h4>
+                </div>
+                <p class="text-gray-700">Menciptakan sistem <strong>Binomial Nomenclature</strong> (Tata Nama Ganda) - sistem penamaan ilmiah untuk semua makhluk hidup menggunakan dua kata Latin.</p>
+              </div>
+              
+              <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 card-hover">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-2xl">📚</span>
+                  <h4 class="font-bold text-blue-800">Karya Terkenal</h4>
+                </div>
+                <p class="text-gray-700"><em>"Systema Naturae"</em> (1735) - Buku yang menjadi dasar taksonomi modern dan telah direvisi berkali-kali.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Binomial Nomenclature -->
+          <div class="mt-8 bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-6">
+            <h3 class="font-bold text-purple-800 text-xl mb-4 flex items-center gap-2">
+              <span>🔤</span> Sistem Binomial Nomenclature
+            </h3>
+            
+            <div class="bg-white rounded-xl p-6 mb-6">
+              <h4 class="font-bold text-gray-800 mb-4">Aturan Penulisan Nama Ilmiah:</h4>
+              <ol class="space-y-3 text-gray-700">
+                <li class="flex items-start gap-3">
+                  <span class="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+                  <span>Terdiri dari <strong>2 kata</strong> dalam bahasa Latin atau yang dilatinkan</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                  <span>Kata pertama = <strong>Nama Genus</strong> (diawali huruf KAPITAL)</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                  <span>Kata kedua = <strong>Nama Spesies</strong> (diawali huruf kecil)</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                  <span>Ditulis <strong>cetak miring</strong> atau <strong>digaris bawahi</strong></span>
+                </li>
+              </ol>
+            </div>
+            
+            <!-- Examples -->
+            <h4 class="font-bold text-purple-800 mb-4">Contoh Nama Ilmiah:</h4>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="bg-white rounded-xl p-4 text-center card-hover">
+                <span class="text-4xl mb-2 block">🌾</span>
+                <p class="font-bold text-gray-800">Padi</p>
+                <p class="text-purple-700 italic text-lg">Oryza sativa</p>
+              </div>
+              <div class="bg-white rounded-xl p-4 text-center card-hover">
+                <span class="text-4xl mb-2 block">🌽</span>
+                <p class="font-bold text-gray-800">Jagung</p>
+                <p class="text-purple-700 italic text-lg">Zea mays</p>
+              </div>
+              <div class="bg-white rounded-xl p-4 text-center card-hover">
+                <span class="text-4xl mb-2 block">🐱</span>
+                <p class="font-bold text-gray-800">Kucing</p>
+                <p class="text-purple-700 italic text-lg">Felis catus</p>
+              </div>
+              <div class="bg-white rounded-xl p-4 text-center card-hover">
+                <span class="text-4xl mb-2 block">👤</span>
+                <p class="font-bold text-gray-800">Manusia</p>
+                <p class="text-purple-700 italic text-lg">Homo sapiens</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Interactive Naming Practice -->
+          <div class="mt-8 bg-gradient-to-r from-teal-100 to-cyan-100 rounded-2xl p-6">
+            <h3 class="font-bold text-teal-800 text-lg mb-4 flex items-center gap-2">
+              <span>✍️</span> Latihan: Tulis Nama Ilmiah dengan Benar!
+            </h3>
+            
+            <div class="bg-white rounded-xl p-6">
+              <p class="text-gray-700 mb-4">Pilih format penulisan yang <strong>BENAR</strong> untuk nama ilmiah Harimau (<em>Panthera tigris</em>):</p>
+              
+              <div class="space-y-3" id="naming-quiz">
+                <button onclick="checkNamingAnswer(this, false)" class="naming-option w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-teal-400 transition-all">
+                  A. panthera tigris
+                </button>
+                <button onclick="checkNamingAnswer(this, false)" class="naming-option w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-teal-400 transition-all">
+                  B. PANTHERA TIGRIS
+                </button>
+                <button onclick="checkNamingAnswer(this, true)" class="naming-option w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-teal-400 transition-all">
+                  C. <em>Panthera tigris</em>
+                </button>
+                <button onclick="checkNamingAnswer(this, false)" class="naming-option w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-teal-400 transition-all">
+                  D. Panthera Tigris
+                </button>
+              </div>
+              
+              <div id="naming-feedback" class="mt-4 hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 7: Quiz HOTS -->
+      <section id="quiz" class="section hidden">
+        <div class="bg-white rounded-3xl shadow-xl p-6 md:p-10 mb-8 fade-in">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-4xl">✍️</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-emerald-800" style="font-family: 'Playfair Display', serif;">Quiz HOTS - Uji Pemahamanmu!</h2>
+          </div>
+          
+          <div class="bg-amber-50 rounded-2xl p-4 mb-8">
+            <p class="text-amber-800 text-center">
+              <strong>HOTS</strong> = Higher Order Thinking Skills (Keterampilan Berpikir Tingkat Tinggi)<br>
+              Soal-soal ini menguji kemampuan <em>analisis, evaluasi, dan kreativitas</em> kamu!
+            </p>
+          </div>
+          
+          <!-- Quiz Progress -->
+          <div class="mb-8">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-semibold text-gray-700">Progres Quiz</span>
+              <span id="quiz-progress-text" class="font-semibold text-emerald-600">0/10</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-3">
+              <div id="quiz-progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-500 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+          </div>
+          
+          <!-- Quiz Container -->
+          <div id="quiz-container">
+            <!-- Questions will be loaded here -->
+          </div>
+          
+          <!-- Quiz Results -->
+          <div id="quiz-results" class="hidden">
+            <div class="bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl p-8 text-center">
+              <div id="results-icon" class="text-6xl mb-4">🏆</div>
+              <h3 id="results-title" class="text-2xl font-bold text-emerald-800 mb-2">Hasil Quiz</h3>
+              <p id="results-score" class="text-4xl font-bold text-emerald-600 mb-4">0/10</p>
+              <p id="results-message" class="text-gray-700 mb-6"></p>
+              <button onclick="restartQuiz()" class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-8 py-3 rounded-xl font-bold hover:shadow-lg transition-all">
+                🔄 Ulangi Quiz
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-emerald-700 via-green-700 to-teal-700 text-white py-6 px-4 mt-auto">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-12 h-12 rounded-full border-2 border-white shadow-lg object-cover" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='#065f46'; this.alt='Photo unavailable';">
+            <div>
+              <p id="teacher-name" class="font-bold">Algian Manggara, S.Agr</p>
+              <p class="text-emerald-200 text-sm">Media Pembelajaran Biologi</p>
+            </div>
+          </div>
+          <div class="text-center md:text-right">
+            <p class="text-emerald-200 text-sm">© 2026 Algian Manggara, S.Agr</p>
+            <p class="text-emerald-300 text-xs mt-1">Karakteristik & Klasifikasi Makhluk Hidup</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: "Karakteristik & Klasifikasi Makhluk Hidup",
+      teacher_name: "Algian Manggara, S.Agr",
+      primary_color: "#059669",
+      secondary_color: "#10b981",
+      accent_color: "#f59e0b",
+      text_color: "#1f2937",
+      background_color: "#ecfdf5"
+    };
+
+    let config = { ...defaultConfig };
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (value) => { cfg.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+            },
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (value) => { cfg.primary_color = value; window.elementSdk.setConfig({ primary_color: value }); }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (value) => { cfg.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+            },
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (value) => { cfg.secondary_color = value; window.elementSdk.setConfig({ secondary_color: value }); }
+            },
+            {
+              get: () => cfg.accent_color || defaultConfig.accent_color,
+              set: (value) => { cfg.accent_color = value; window.elementSdk.setConfig({ accent_color: value }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ["main_title", cfg.main_title || defaultConfig.main_title],
+          ["teacher_name", cfg.teacher_name || defaultConfig.teacher_name]
+        ])
+      });
+    }
+
+    function applyConfig() {
+      const title = config.main_title || defaultConfig.main_title;
+      const teacherName = config.teacher_name || defaultConfig.teacher_name;
+      
+      document.getElementById('main-title').textContent = title;
+      document.getElementById('teacher-name').textContent = teacherName;
+      
+      // Apply colors
+      document.body.style.background = `linear-gradient(135deg, ${config.background_color || defaultConfig.background_color}, ${adjustColor(config.background_color || defaultConfig.background_color, -10)})`;
+      
+      const header = document.getElementById('main-header');
+      if (header) {
+        header.style.background = `linear-gradient(to right, ${config.primary_color || defaultConfig.primary_color}, ${config.secondary_color || defaultConfig.secondary_color})`;
+      }
+    }
+
+    function adjustColor(hex, percent) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      const amt = Math.round(2.55 * percent);
+      const R = (num >> 16) + amt;
+      const G = (num >> 8 & 0x00FF) + amt;
+      const B = (num & 0x0000FF) + amt;
+      return '#' + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 + (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
+    }
+
+    // Section Navigation
+    function showSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('.section').forEach(section => {
+        section.classList.add('hidden');
+      });
+      
+      // Show selected section
+      const targetSection = document.getElementById(sectionId);
+      if (targetSection) {
+        targetSection.classList.remove('hidden');
+        targetSection.classList.add('fade-in');
+      }
+      
+      // Update navigation buttons
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.section === sectionId) {
+          btn.classList.add('active');
+        }
+      });
+      
+      // Initialize quiz if quiz section
+      if (sectionId === 'quiz' && !quizInitialized) {
+        initializeQuiz();
+      }
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Grouping Activity
+    let groupedCount = 0;
+    function groupOrganism(btn, type) {
+      const targetGroup = document.getElementById(type + '-group');
+      if (targetGroup && !btn.classList.contains('grouped')) {
+        const emoji = btn.textContent.trim();
+        const item = document.createElement('span');
+        item.className = 'text-lg';
+        item.textContent = emoji.split(' ')[0];
+        targetGroup.querySelector('.grouped-items').appendChild(item);
+        
+        btn.classList.add('grouped', 'opacity-50', 'cursor-not-allowed');
+        btn.disabled = true;
+        
+        groupedCount++;
+        
+        if (groupedCount === 6) {
+          const feedback = document.getElementById('grouping-feedback');
+          feedback.classList.remove('hidden');
+          feedback.innerHTML = '<span class="text-green-600">🎉 Hebat! Kamu berhasil mengelompokkan semua makhluk hidup dengan benar!</span>';
+        }
+      }
+    }
+
+    // Takson Detail
+    const taksonDetails = {
+      kingdom: {
+        title: "👑 Kingdom (Kerajaan)",
+        content: `<p class="mb-3">Tingkatan <strong>tertinggi</strong> dalam klasifikasi dengan jumlah anggota paling <strong>banyak</strong> namun persamaan ciri paling <strong>sedikit</strong>.</p>
+        <p class="mb-3"><strong>Contoh:</strong> Kingdom Animalia mencakup semua hewan dari serangga hingga mamalia.</p>
+        <div class="bg-white rounded-lg p-3 mt-3">
+          <p class="text-sm text-gray-600">💡 Bayangkan Kingdom seperti negara besar dengan banyak penduduk yang berbeda-beda!</p>
+        </div>`
+      },
+      phylum: {
+        title: "📦 Phylum / Divisio",
+        content: `<p class="mb-3"><strong>Phylum</strong> digunakan untuk hewan, <strong>Divisio</strong> untuk tumbuhan. Pengelompokan berdasarkan ciri-ciri besar yang mendasar.</p>
+        <p class="mb-3"><strong>Contoh:</strong></p>
+        <ul class="list-disc list-inside mb-3">
+          <li>Phylum Chordata (hewan bertulang belakang)</li>
+          <li>Divisio Spermatophyta (tumbuhan berbiji)</li>
+        </ul>`
+      },
+      classis: {
+        title: "🏫 Classis (Kelas)",
+        content: `<p class="mb-3">Pengelompokan lebih spesifik berdasarkan karakteristik yang lebih detail.</p>
+        <p class="mb-3"><strong>Akhiran untuk tumbuhan:</strong> -opsida</p>
+        <p class="mb-3"><strong>Contoh:</strong></p>
+        <ul class="list-disc list-inside">
+          <li>Classis Mammalia (mamalia)</li>
+          <li>Classis Magnoliopsida (dikotil)</li>
+        </ul>`
+      },
+      ordo: {
+        title: "📋 Ordo (Bangsa)",
+        content: `<p class="mb-3">Tingkatan di bawah Classis dengan persamaan ciri yang lebih banyak.</p>
+        <p class="mb-3"><strong>Akhiran untuk tumbuhan:</strong> -ales</p>
+        <p class="mb-3"><strong>Contoh:</strong></p>
+        <ul class="list-disc list-inside">
+          <li>Ordo Carnivora (pemakan daging)</li>
+          <li>Ordo Poales (rumput-rumputan)</li>
+        </ul>`
+      },
+      familia: {
+        title: "👨‍👩‍👧‍👦 Familia (Suku)",
+        content: `<p class="mb-3">Kelompok yang anggotanya memiliki banyak kesamaan, seperti keluarga!</p>
+        <p class="mb-3"><strong>Akhiran:</strong></p>
+        <ul class="list-disc list-inside mb-3">
+          <li>Tumbuhan: -aceae</li>
+          <li>Hewan: -idae</li>
+        </ul>
+        <p><strong>Contoh:</strong> Felidae (keluarga kucing), Poaceae (keluarga padi)</p>`
+      },
+      genus: {
+        title: "🔤 Genus (Marga)",
+        content: `<p class="mb-3">Kelompok spesies yang sangat mirip. <strong>Kata pertama</strong> dalam nama ilmiah!</p>
+        <p class="mb-3"><strong>Aturan penulisan:</strong></p>
+        <ul class="list-disc list-inside mb-3">
+          <li>Huruf pertama <strong>KAPITAL</strong></li>
+          <li>Dicetak <em>miring</em> atau <u>digaris bawahi</u></li>
+        </ul>
+        <p><strong>Contoh:</strong> <em>Panthera</em> (genus harimau dan singa)</p>`
+      },
+      species: {
+        title: "🧬 Species (Jenis)",
+        content: `<p class="mb-3">Tingkatan <strong>terendah</strong> dengan persamaan ciri paling <strong>banyak</strong>. Anggota spesies sama dapat kawin dan menghasilkan keturunan fertil.</p>
+        <p class="mb-3"><strong>Kata kedua</strong> dalam nama ilmiah, ditulis huruf kecil semua.</p>
+        <p class="mb-3"><strong>Contoh:</strong></p>
+        <ul class="list-disc list-inside">
+          <li><em>Panthera tigris</em> (Harimau)</li>
+          <li><em>Oryza sativa</em> (Padi)</li>
+        </ul>`
+      }
+    };
+
+    function showTaksonDetail(level) {
+      const detail = taksonDetails[level];
+      if (detail) {
+        document.getElementById('takson-detail').innerHTML = `
+          <h4 class="font-bold text-emerald-800 text-lg mb-3">${detail.title}</h4>
+          ${detail.content}
+        `;
+      }
+    }
+
+    // Kingdom Detail
+    const kingdomDetails = {
+      monera: {
+        title: "🦠 Kingdom Monera",
+        color: "blue",
+        content: `
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <h5 class="font-bold text-blue-700 mb-2">Ciri-ciri:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>✓ Sel <strong>prokariotik</strong> (tidak punya membran inti)</li>
+                <li>✓ Ukuran <strong>mikroskopis</strong></li>
+                <li>✓ Dinding sel dari <strong>peptidoglikan</strong></li>
+                <li>✓ Tidak memiliki organel bermembran</li>
+              </ul>
+            </div>
+            <div>
+              <h5 class="font-bold text-blue-700 mb-2">Contoh:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>🦠 <em>Escherichia coli</em> (bakteri usus)</li>
+                <li>🦠 <em>Lactobacillus</em> (bakteri yogurt)</li>
+                <li>💙 Cyanobacteria (alga hijau-biru)</li>
+              </ul>
+            </div>
+          </div>
+        `
+      },
+      protista: {
+        title: "🧫 Kingdom Protista",
+        color: "teal",
+        content: `
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <h5 class="font-bold text-teal-700 mb-2">Ciri-ciri:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>✓ Sel <strong>eukariotik</strong> (punya membran inti)</li>
+                <li>✓ Jaringan <strong>sederhana</strong></li>
+                <li>✓ Bisa autotrof atau heterotrof</li>
+                <li>✓ Hidup di air atau tempat lembab</li>
+              </ul>
+            </div>
+            <div>
+              <h5 class="font-bold text-teal-700 mb-2">Contoh:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>🔬 <em>Amoeba</em> (mirip hewan)</li>
+                <li>🔬 <em>Paramecium</em> (berkilia)</li>
+                <li>🌿 Rumput laut (mirip tumbuhan)</li>
+              </ul>
+            </div>
+          </div>
+        `
+      },
+      fungi: {
+        title: "🍄 Kingdom Fungi",
+        color: "purple",
+        content: `
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <h5 class="font-bold text-purple-700 mb-2">Ciri-ciri:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>✓ Dinding sel dari <strong>kitin</strong></li>
+                <li>✓ <strong>Tidak</strong> memiliki kloroplas</li>
+                <li>✓ Berkembang biak dengan <strong>spora</strong></li>
+                <li>✓ <strong>Saprofit</strong> (mengurai bahan organik)</li>
+              </ul>
+            </div>
+            <div>
+              <h5 class="font-bold text-purple-700 mb-2">Contoh:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>🍄 Jamur merang</li>
+                <li>🍄 Jamur kuping</li>
+                <li>🍞 <em>Saccharomyces</em> (ragi)</li>
+              </ul>
+            </div>
+          </div>
+        `
+      },
+      plantae: {
+        title: "🌿 Kingdom Plantae",
+        color: "green",
+        content: `
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <h5 class="font-bold text-green-700 mb-2">Ciri-ciri:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>✓ Sel <strong>eukariotik</strong></li>
+                <li>✓ Memiliki <strong>dinding sel</strong> (selulosa)</li>
+                <li>✓ Memiliki <strong>kloroplas</strong></li>
+                <li>✓ <strong>Autotrof</strong> (fotosintesis)</li>
+                <li>✓ <strong>Multiseluler</strong></li>
+              </ul>
+            </div>
+            <div>
+              <h5 class="font-bold text-green-700 mb-2">Contoh:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>🌾 <em>Oryza sativa</em> (Padi)</li>
+                <li>🥭 <em>Mangifera indica</em> (Mangga)</li>
+                <li>🌹 <em>Rosa hybrida</em> (Mawar)</li>
+              </ul>
+            </div>
+          </div>
+        `
+      },
+      animalia: {
+        title: "🦁 Kingdom Animalia",
+        color: "orange",
+        content: `
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <h5 class="font-bold text-orange-700 mb-2">Ciri-ciri:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>✓ Sel <strong>eukariotik</strong></li>
+                <li>✓ <strong>Tidak</strong> ada dinding sel</li>
+                <li>✓ <strong>Heterotrof</strong> (makan organisme lain)</li>
+                <li>✓ Umumnya dapat <strong>berpindah tempat</strong></li>
+                <li>✓ <strong>Multiseluler</strong></li>
+              </ul>
+            </div>
+            <div>
+              <h5 class="font-bold text-orange-700 mb-2">Contoh:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>🐱 <em>Felis catus</em> (Kucing)</li>
+                <li>🐕 <em>Canis familiaris</em> (Anjing)</li>
+                <li>👤 <em>Homo sapiens</em> (Manusia)</li>
+              </ul>
+            </div>
+          </div>
+        `
+      }
+    };
+
+    function showKingdomDetail(kingdom) {
+      const detail = kingdomDetails[kingdom];
+      if (detail) {
+        const detailPanel = document.getElementById('kingdom-detail');
+        detailPanel.classList.remove('hidden');
+        detailPanel.innerHTML = `
+          <h4 class="font-bold text-${detail.color}-800 text-lg mb-4">${detail.title}</h4>
+          ${detail.content}
+        `;
+      }
+    }
+
+    // Plant Details
+    const plantDetails = {
+      lumut: {
+        title: "🌱 Tumbuhan Lumut (Bryophyta)",
+        content: `
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <h5 class="font-bold text-green-700 mb-2">Ciri-ciri:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>✓ Berkembang biak dengan <strong>spora</strong></li>
+                <li>✓ Daun muda <strong>TIDAK menggulung</strong></li>
+                <li>✓ Belum memiliki pembuluh sejati</li>
+                <li>✓ Hidup di tempat lembab</li>
+                <li>✓ Ukuran kecil</li>
+              </ul>
+            </div>
+            <div>
+              <h5 class="font-bold text-green-700 mb-2">Contoh:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>🌱 Lumut hati (<em>Marchantia</em>)</li>
+                <li>🌱 Lumut daun (<em>Polytrichum</em>)</li>
+                <li>🌱 Lumut tanduk (<em>Anthoceros</em>)</li>
+              </ul>
+            </div>
+          </div>
+        `
+      },
+      paku: {
+        title: "🌿 Tumbuhan Paku (Pteridophyta)",
+        content: `
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <h5 class="font-bold text-emerald-700 mb-2">Ciri-ciri:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>✓ Berkembang biak dengan <strong>spora</strong></li>
+                <li>✓ Daun muda <strong>MENGGULUNG</strong> 🔄</li>
+                <li>✓ Memiliki pembuluh sejati</li>
+                <li>✓ Spora di bawah daun (sorus)</li>
+              </ul>
+            </div>
+            <div>
+              <h5 class="font-bold text-emerald-700 mb-2">Contoh:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>🌿 Paku ekor kuda (<em>Equisetum</em>)</li>
+                <li>🌿 Paku kawat (<em>Lycopodium</em>)</li>
+                <li>🌿 Suplir (<em>Adiantum</em>)</li>
+              </ul>
+            </div>
+          </div>
+        `
+      },
+      gymno: {
+        title: "🌲 Gymnospermae (Biji Terbuka)",
+        content: `
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <h5 class="font-bold text-amber-700 mb-2">Ciri-ciri:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>✓ Biji <strong>TERBUKA</strong> (tidak dibungkus daging buah)</li>
+                <li>✓ <strong>Tidak berbunga</strong></li>
+                <li>✓ Alat reproduksi: <strong>Strobilus</strong></li>
+                <li>✓ Daun berbentuk jarum</li>
+              </ul>
+            </div>
+            <div>
+              <h5 class="font-bold text-amber-700 mb-2">Contoh:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>🌲 Pinus (<em>Pinus merkusii</em>)</li>
+                <li>🌲 Pakis haji (<em>Cycas rumphii</em>)</li>
+                <li>🌲 Melinjo (<em>Gnetum gnemon</em>)</li>
+              </ul>
+            </div>
+          </div>
+        `
+      },
+      angio: {
+        title: "🌸 Angiospermae (Biji Tertutup)",
+        content: `
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <h5 class="font-bold text-pink-700 mb-2">Ciri-ciri:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>✓ Biji <strong>TERTUTUP</strong> (dibungkus daging buah)</li>
+                <li>✓ Memiliki <strong>BUNGA</strong> 🌸</li>
+                <li>✓ Terbagi: Monokotil & Dikotil</li>
+                <li>✓ Kelompok tumbuhan paling banyak</li>
+              </ul>
+            </div>
+            <div>
+              <h5 class="font-bold text-pink-700 mb-2">Contoh:</h5>
+              <ul class="space-y-1 text-sm">
+                <li>🌾 Padi (<em>Oryza sativa</em>) - Monokotil</li>
+                <li>🥭 Mangga (<em>Mangifera indica</em>) - Dikotil</li>
+                <li>🌹 Mawar (<em>Rosa</em>) - Dikotil</li>
+              </ul>
+            </div>
+          </div>
+        `
+      }
+    };
+
+    function showPlantDetail(type) {
+      const detail = plantDetails[type];
+      if (detail) {
+        document.getElementById('plant-detail').innerHTML = `
+          <h4 class="font-bold text-green-800 text-lg mb-3">${detail.title}</h4>
+          ${detail.content}
+        `;
+      }
+    }
+
+    // Animal Details
+    const animalDetails = {
+      porifera: {
+        title: "🧽 Porifera (Hewan Berpori)",
+        content: `
+          <ul class="space-y-1 text-sm">
+            <li>✓ Tubuh penuh <strong>pori-pori</strong></li>
+            <li>✓ Hidup <strong>menetap</strong> di dasar laut</li>
+            <li>✓ Menyaring makanan dari air</li>
+            <li>✓ Contoh: Spons laut, <em>Euspongia</em></li>
+          </ul>
+        `
+      },
+      coelenterata: {
+        title: "🎐 Coelenterata (Hewan Berongga)",
+        content: `
+          <ul class="space-y-1 text-sm">
+            <li>✓ Memiliki <strong>rongga gastrovaskuler</strong></li>
+            <li>✓ Memiliki <strong>tentakel</strong> penyengat</li>
+            <li>✓ Hidup di air (laut/tawar)</li>
+            <li>✓ Contoh: Ubur-ubur, Anemon laut, Karang</li>
+          </ul>
+        `
+      },
+      vermes: {
+        title: "🪱 Vermes (Cacing)",
+        content: `
+          <ul class="space-y-1 text-sm">
+            <li>✓ Tubuh <strong>lunak, panjang</strong></li>
+            <li>✓ Tidak memiliki rangka</li>
+            <li>✓ Ada yang parasit, ada yang bebas</li>
+            <li>✓ Contoh: Cacing tanah, Cacing pita, Planaria</li>
+          </ul>
+        `
+      },
+      mollusca: {
+        title: "🐌 Mollusca (Hewan Bertubuh Lunak)",
+        content: `
+          <ul class="space-y-1 text-sm">
+            <li>✓ Tubuh <strong>lunak</strong></li>
+            <li>✓ Banyak yang punya <strong>cangkang</strong></li>
+            <li>✓ Memiliki kaki otot</li>
+            <li>✓ Contoh: Keong, Kerang, Cumi-cumi, Gurita</li>
+          </ul>
+        `
+      },
+      arthropoda: {
+        title: "🦗 Arthropoda (Hewan Berkaki Beruas)",
+        content: `
+          <ul class="space-y-1 text-sm">
+            <li>✓ Kaki dan tubuh <strong>beruas-ruas</strong></li>
+            <li>✓ Rangka luar dari <strong>kitin</strong></li>
+            <li>✓ Kelompok hewan terbanyak</li>
+            <li>✓ Contoh: Serangga, Laba-laba, Udang, Kepiting</li>
+          </ul>
+        `
+      },
+      echinodermata: {
+        title: "⭐ Echinodermata (Hewan Berkulit Duri)",
+        content: `
+          <ul class="space-y-1 text-sm">
+            <li>✓ Kulit berduri dari <strong>zite kapur</strong></li>
+            <li>✓ Simetri <strong>radial</strong> (bintang)</li>
+            <li>✓ Hidup di laut</li>
+            <li>✓ Contoh: Bintang laut, Bulu babi, Teripang</li>
+          </ul>
+        `
+      },
+      pisces: {
+        title: "🐟 Pisces (Ikan)",
+        content: `
+          <ul class="space-y-1 text-sm">
+            <li>✓ Bernapas dengan <strong>insang</strong></li>
+            <li>✓ Berdarah <strong>dingin</strong></li>
+            <li>✓ Tubuh bersisik</li>
+            <li>✓ Bergerak dengan <strong>sirip</strong></li>
+            <li>✓ Contoh: Ikan mas, Hiu, Pari</li>
+          </ul>
+        `
+      },
+      amphibia: {
+        title: "🐸 Amphibia (Amfibi)",
+        content: `
+          <ul class="space-y-1 text-sm">
+            <li>✓ Hidup di <strong>dua alam</strong> (air & darat)</li>
+            <li>✓ Berdarah <strong>dingin</strong></li>
+            <li>✓ Kulit lembab, tanpa sisik</li>
+            <li>✓ Metamorfosis</li>
+            <li>✓ Contoh: Katak, Salamander, Kodok</li>
+          </ul>
+        `
+      },
+      reptilia: {
+        title: "🦎 Reptilia (Reptil)",
+        content: `
+          <ul class="space-y-1 text-sm">
+            <li>✓ Kulit bersisik <strong>kering</strong></li>
+            <li>✓ Berdarah <strong>dingin</strong></li>
+            <li>✓ Bernapas dengan <strong>paru-paru</strong></li>
+            <li>✓ Bertelur</li>
+            <li>✓ Contoh: Ular, Buaya, Kadal, Kura-kura</li>
+          </ul>
+        `
+      },
+      aves: {
+        title: "🐦 Aves (Burung)",
+        content: `
+          <ul class="space-y-1 text-sm">
+            <li>✓ Tubuh ditutupi <strong>bulu</strong></li>
+            <li>✓ Berdarah <strong>panas</strong></li>
+            <li>✓ Memiliki <strong>sayap</strong></li>
+            <li>✓ Paruh tanpa gigi</li>
+            <li>✓ Contoh: Elang, Merpati, Penguin</li>
+          </ul>
+        `
+      },
+      mammalia: {
+        title: "🐄 Mammalia (Mamalia)",
+        content: `
+          <ul class="space-y-1 text-sm">
+            <li>✓ Menyusui <strong>anaknya</strong></li>
+            <li>✓ Berdarah <strong>panas</strong></li>
+            <li>✓ Tubuh ditutupi <strong>rambut</strong></li>
+            <li>✓ Melahirkan (vivipar)</li>
+            <li>✓ Contoh: Kucing, Sapi, Paus, Manusia</li>
+          </ul>
+        `
+      }
+    };
+
+    function showAnimalDetail(type) {
+      const detail = animalDetails[type];
+      if (detail) {
+        document.getElementById('animal-detail').innerHTML = `
+          <h4 class="font-bold text-orange-800 text-lg mb-3">${detail.title}</h4>
+          ${detail.content}
+        `;
+      }
+    }
+
+    // Naming Quiz
+    function checkNamingAnswer(btn, isCorrect) {
+      const options = document.querySelectorAll('.naming-option');
+      options.forEach(opt => {
+        opt.disabled = true;
+        opt.classList.add('opacity-50');
+      });
+      
+      if (isCorrect) {
+        btn.classList.remove('opacity-50');
+        btn.classList.add('bg-green-100', 'border-green-500');
+        document.getElementById('naming-feedback').classList.remove('hidden');
+        document.getElementById('naming-feedback').innerHTML = `
+          <div class="bg-green-100 text-green-800 p-4 rounded-lg">
+            ✅ <strong>Benar!</strong> Penulisan yang tepat adalah <em>Panthera tigris</em> - huruf pertama genus kapital, spesies kecil, dan dicetak miring!
+          </div>
+        `;
+      } else {
+        btn.classList.remove('opacity-50');
+        btn.classList.add('bg-red-100', 'border-red-500');
+        document.querySelectorAll('.naming-option')[2].classList.remove('opacity-50');
+        document.querySelectorAll('.naming-option')[2].classList.add('bg-green-100', 'border-green-500');
+        document.getElementById('naming-feedback').classList.remove('hidden');
+        document.getElementById('naming-feedback').innerHTML = `
+          <div class="bg-red-100 text-red-800 p-4 rounded-lg">
+            ❌ <strong>Kurang tepat!</strong> Jawaban yang benar adalah <em>Panthera tigris</em> - ingat: genus kapital, spesies kecil, cetak miring!
+          </div>
+        `;
+      }
+    }
+
+    // Quiz Data
+    const quizQuestions = [
+      {
+        question: "Seorang siswa menemukan organisme bersel satu yang memiliki membran inti dan dapat bergerak dengan pseudopodia. Berdasarkan sistem klasifikasi lima kingdom, organisme tersebut termasuk kingdom...",
+        options: ["Monera", "Protista", "Fungi", "Animalia"],
+        correct: 1,
+        explanation: "Organisme tersebut adalah Protista karena eukariotik (punya membran inti) tapi bersel satu dengan struktur sederhana. Monera tidak memiliki membran inti."
+      },
+      {
+        question: "Perhatikan klasifikasi berikut:\n- Organisme A: Kingdom Animalia, Phylum Chordata, Classis Mammalia\n- Organisme B: Kingdom Animalia, Phylum Chordata, Classis Aves\n\nPernyataan yang TEPAT tentang kedua organisme adalah...",
+        options: [
+          "A dan B tidak memiliki persamaan ciri sama sekali",
+          "A dan B memiliki persamaan hingga tingkat Phylum",
+          "A dan B pasti dapat kawin dan menghasilkan keturunan fertil",
+          "A dan B memiliki persamaan ciri yang lebih banyak daripada yang berbeda"
+        ],
+        correct: 1,
+        explanation: "Kedua organisme sama-sama termasuk Phylum Chordata, artinya memiliki kesamaan ciri hingga tingkat tersebut (bertulang belakang). Perbedaan baru muncul di tingkat Classis."
+      },
+      {
+        question: "Seorang petani menemukan tanaman dengan ciri: tulang daun sejajar, akar serabut, dan bunga memiliki kelopak kelipatan 3. Berdasarkan ciri tersebut, tanaman ini termasuk kelompok...",
+        options: ["Gymnospermae", "Monokotil", "Dikotil", "Pteridophyta"],
+        correct: 1,
+        explanation: "Ciri-ciri tersebut (tulang daun sejajar, akar serabut, bagian bunga kelipatan 3) adalah ciri khas tumbuhan Monokotil."
+      },
+      {
+        question: "Di bawah ini yang merupakan penulisan nama ilmiah yang BENAR menurut aturan binomial nomenclature adalah...",
+        options: [
+          "oryza sativa",
+          "ORYZA SATIVA",
+          "Oryza Sativa",
+          "Oryza sativa"
+        ],
+        correct: 3,
+        explanation: "Penulisan yang benar adalah Oryza sativa - genus (Oryza) diawali huruf kapital, species (sativa) huruf kecil, dan keduanya dicetak miring."
+      },
+      {
+        question: "Analisis pernyataan berikut:\n1. Semakin tinggi tingkatan takson, semakin banyak persamaan ciri antar anggotanya\n2. Semakin rendah tingkatan takson, semakin sedikit jumlah anggotanya\n\nPernyataan yang BENAR adalah...",
+        options: [
+          "1 dan 2 benar",
+          "1 benar, 2 salah",
+          "1 salah, 2 benar",
+          "1 dan 2 salah"
+        ],
+        correct: 2,
+        explanation: "Pernyataan 1 SALAH (semakin tinggi takson, persamaan ciri semakin SEDIKIT). Pernyataan 2 BENAR (semakin rendah takson, anggota semakin sedikit tapi persamaan ciri semakin banyak)."
+      },
+      {
+        question: "Seekor hewan memiliki ciri: bertulang belakang, bernapas dengan paru-paru, kulit kering bersisik, dan bertelur. Hewan tersebut termasuk kelompok...",
+        options: ["Amphibia", "Reptilia", "Aves", "Mammalia"],
+        correct: 1,
+        explanation: "Ciri kulit kering bersisik dan bertelur adalah ciri khas Reptilia. Amphibia memiliki kulit lembab, Aves berbulu, dan Mammalia berambut."
+      },
+      {
+        question: "Perhatikan tabel klasifikasi kucing dan harimau:\n\n| Takson | Kucing | Harimau |\n| Kingdom | Animalia | Animalia |\n| Familia | Felidae | Felidae |\n| Genus | Felis | Panthera |\n\nBerdasarkan tabel, pernyataan yang TEPAT adalah...",
+        options: [
+          "Kucing dan harimau adalah spesies yang sama",
+          "Kucing dan harimau memiliki kekerabatan yang sangat dekat",
+          "Kucing dan harimau tidak memiliki persamaan ciri",
+          "Kucing lebih berkerabat dengan anjing daripada harimau"
+        ],
+        correct: 1,
+        explanation: "Kucing dan harimau memiliki kesamaan hingga tingkat Familia (Felidae), menunjukkan kekerabatan yang dekat meskipun genus berbeda."
+      },
+      {
+        question: "Seorang peneliti menemukan tumbuhan dengan ciri: daun muda menggulung, memiliki spora di bawah daun, dan tidak berbunga. Tumbuhan tersebut termasuk kelompok...",
+        options: ["Bryophyta (Lumut)", "Pteridophyta (Paku)", "Gymnospermae", "Angiospermae"],
+        correct: 1,
+        explanation: "Daun muda menggulung adalah ciri khas tumbuhan Paku (Pteridophyta). Lumut daunnya tidak menggulung, sedangkan Gymnospermae dan Angiospermae adalah tumbuhan berbiji."
+      },
+      {
+        question: "Hubungan antara jumlah anggota dan kesamaan ciri pada tingkatan takson yang BENAR adalah...",
+        options: [
+          "Kingdom: anggota sedikit, kesamaan ciri banyak",
+          "Species: anggota banyak, kesamaan ciri sedikit",
+          "Species: anggota sedikit, kesamaan ciri banyak",
+          "Genus: anggota paling banyak di semua takson"
+        ],
+        correct: 2,
+        explanation: "Species adalah takson terendah dengan anggota paling sedikit namun memiliki kesamaan ciri paling banyak. Sebaliknya, Kingdom memiliki anggota terbanyak tapi kesamaan ciri paling sedikit."
+      },
+      {
+        question: "Jamur dimasukkan ke dalam Kingdom Fungi dan BUKAN Plantae karena...",
+        options: [
+          "Jamur tidak memiliki kloroplas sehingga tidak dapat berfotosintesis",
+          "Jamur berukuran lebih kecil dari tumbuhan",
+          "Jamur berkembang biak dengan spora",
+          "Jamur hidup di tempat lembab"
+        ],
+        correct: 0,
+        explanation: "Perbedaan utama adalah jamur TIDAK memiliki kloroplas sehingga tidak bisa fotosintesis (heterotrof), sedangkan tumbuhan memiliki kloroplas dan autotrof."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answeredQuestions = [];
+    let quizInitialized = false;
+
+    function initializeQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answeredQuestions = [];
+      quizInitialized = true;
+      document.getElementById('quiz-results').classList.add('hidden');
+      document.getElementById('quiz-container').classList.remove('hidden');
+      updateProgress();
+      displayQuestion();
+    }
+
+    function displayQuestion() {
+      const q = quizQuestions[currentQuestion];
+      const container = document.getElementById('quiz-container');
+      
+      container.innerHTML = `
+        <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 mb-6 fade-in">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-bold">Soal ${currentQuestion + 1}/10</span>
+            <span class="text-gray-500 text-sm">HOTS</span>
+          </div>
+          <p class="text-gray-800 text-lg mb-6 whitespace-pre-line">${q.question}</p>
+          <div class="space-y-3" id="options-container">
+            ${q.options.map((opt, idx) => `
+              <button onclick="selectAnswer(${idx})" class="quiz-option w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-emerald-400 transition-all bg-white">
+                <span class="font-bold text-emerald-600 mr-2">${String.fromCharCode(65 + idx)}.</span>
+                ${opt}
+              </button>
+            `).join('')}
+          </div>
+        </div>
+        <div id="explanation" class="hidden"></div>
+        <div class="flex justify-between items-center">
+          <button onclick="prevQuestion()" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition-all ${currentQuestion === 0 ? 'invisible' : ''}" ${currentQuestion === 0 ? 'disabled' : ''}>
+            ← Sebelumnya
+          </button>
+          <button id="next-btn" onclick="nextQuestion()" class="px-6 py-2 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-all hidden">
+            ${currentQuestion === quizQuestions.length - 1 ? 'Lihat Hasil →' : 'Selanjutnya →'}
+          </button>
+        </div>
+      `;
+      
+      // Restore previous answer if exists
+      if (answeredQuestions[currentQuestion] !== undefined) {
+        const options = document.querySelectorAll('.quiz-option');
+        const prevAnswer = answeredQuestions[currentQuestion];
+        options.forEach((opt, idx) => {
+          opt.disabled = true;
+          if (idx === q.correct) {
+            opt.classList.add('correct');
+          } else if (idx === prevAnswer && prevAnswer !== q.correct) {
+            opt.classList.add('wrong');
+          }
+        });
+        showExplanation(q, prevAnswer === q.correct);
+        document.getElementById('next-btn').classList.remove('hidden');
+      }
+    }
+
+    function selectAnswer(idx) {
+      const q = quizQuestions[currentQuestion];
+      const options = document.querySelectorAll('.quiz-option');
+      const isCorrect = idx === q.correct;
+      
+      // Disable all options
+      options.forEach((opt, i) => {
+        opt.disabled = true;
+        if (i === q.correct) {
+          opt.classList.add('correct');
+        } else if (i === idx) {
+          opt.classList.add('wrong');
+        }
+      });
+      
+      // Record answer
+      if (answeredQuestions[currentQuestion] === undefined) {
+        answeredQuestions[currentQuestion] = idx;
+        if (isCorrect) score++;
+      }
+      
+      showExplanation(q, isCorrect);
+      document.getElementById('next-btn').classList.remove('hidden');
+      updateProgress();
+    }
+
+    function showExplanation(q, isCorrect) {
+      const expDiv = document.getElementById('explanation');
+      expDiv.classList.remove('hidden');
+      expDiv.innerHTML = `
+        <div class="p-4 rounded-xl mb-4 ${isCorrect ? 'bg-green-100 border-2 border-green-300' : 'bg-red-100 border-2 border-red-300'}">
+          <p class="font-bold ${isCorrect ? 'text-green-800' : 'text-red-800'} mb-2">
+            ${isCorrect ? '✅ Benar!' : '❌ Kurang Tepat!'}
+          </p>
+          <p class="text-gray-700"><strong>Pembahasan:</strong> ${q.explanation}</p>
+        </div>
+      `;
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        displayQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion();
+      }
+    }
+
+    function updateProgress() {
+      const answered = answeredQuestions.filter(a => a !== undefined).length;
+      document.getElementById('quiz-progress-text').textContent = `${answered}/10`;
+      document.getElementById('quiz-progress-bar').style.width = `${(answered / 10) * 100}%`;
+    }
+
+    function showResults() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      const resultsDiv = document.getElementById('quiz-results');
+      resultsDiv.classList.remove('hidden');
+      
+      const percentage = (score / 10) * 100;
+      let icon, title, message;
+      
+      if (percentage >= 80) {
+        icon = '🏆';
+        title = 'Luar Biasa!';
+        message = 'Kamu menguasai materi klasifikasi makhluk hidup dengan sangat baik! Pertahankan prestasimu!';
+      } else if (percentage >= 60) {
+        icon = '👍';
+        title = 'Bagus!';
+        message = 'Pemahamanmu sudah cukup baik. Pelajari lagi bagian yang masih kurang ya!';
+      } else if (percentage >= 40) {
+        icon = '💪';
+        title = 'Terus Belajar!';
+        message = 'Masih perlu belajar lebih giat. Coba baca ulang materinya dan ulangi quiz ini!';
+      } else {
+        icon = '📚';
+        title = 'Jangan Menyerah!';
+        message = 'Baca kembali semua materi dengan teliti, lalu coba lagi. Kamu pasti bisa!';
+      }
+      
+      document.getElementById('results-icon').textContent = icon;
+      document.getElementById('results-title').textContent = title;
+      document.getElementById('results-score').textContent = `${score}/10 (${percentage}%)`;
+      document.getElementById('results-message').textContent = message;
+    }
+
+    function restartQuiz() {
+      initializeQuiz();
+    }
+
+    // Initialize
+    applyConfig();
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cfa3bb6a5c04ad9',t:'MTc3MTM4MzE5Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pembelajaran Tata Surya - IPA</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; padding: 0; }
+    
+    .font-space { font-family: 'Orbitron', sans-serif; }
+    .font-body { font-family: 'Exo 2', sans-serif; }
+    
+    .stars {
+      background: radial-gradient(ellipse at bottom, #1a1a3e 0%, #0a0a1a 100%);
+      position: relative;
+    }
+    
+    .stars::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: 
+        radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+        radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 230px 80px, #fff, transparent),
+        radial-gradient(2px 2px at 300px 150px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 370px 60px, #fff, transparent),
+        radial-gradient(2px 2px at 450px 200px, rgba(255,255,255,0.8), transparent);
+      background-repeat: repeat;
+      background-size: 500px 300px;
+      animation: twinkle 4s ease-in-out infinite alternate;
+    }
+    
+    @keyframes twinkle {
+      0% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes rotate-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 200, 100, 0.5); }
+      50% { box-shadow: 0 0 40px rgba(255, 200, 100, 0.8); }
+    }
+    
+    .float-animation { animation: float 3s ease-in-out infinite; }
+    .rotate-animation { animation: rotate-slow 20s linear infinite; }
+    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    
+    .planet-card {
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    .planet-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    
+    .nav-btn {
+      transition: all 0.3s ease;
+    }
+    .nav-btn:hover {
+      transform: scale(1.05);
+    }
+    .nav-btn.active {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      background: rgba(99, 102, 241, 0.3);
+      border-color: #6366f1;
+    }
+    .quiz-option.selected { background: rgba(99, 102, 241, 0.4); border-color: #6366f1; }
+    .quiz-option.correct { background: rgba(34, 197, 94, 0.4); border-color: #22c55e; }
+    .quiz-option.incorrect { background: rgba(239, 68, 68, 0.4); border-color: #ef4444; }
+    
+    .progress-bar {
+      background: linear-gradient(90deg, #6366f1, #8b5cf6, #a855f7);
+      background-size: 200% 100%;
+      animation: shimmer 2s linear infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    
+    .section-content { display: none; }
+    .section-content.active { display: block; }
+    
+    .orbit-ring {
+      border: 1px dashed rgba(255,255,255,0.2);
+      border-radius: 50%;
+      position: absolute;
+    }
+    
+    .info-box {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+    
+    .scroll-container {
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    
+    .scroll-container::-webkit-scrollbar { width: 6px; }
+    .scroll-container::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 3px; }
+    .scroll-container::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.5); border-radius: 3px; }
+    .scroll-container::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.7); }
+  </style>
+</head>
+<body class="h-full stars font-body text-white">
+  <div class="h-full flex flex-col relative z-10">
+    
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-indigo-900/80 via-purple-900/80 to-indigo-900/80 backdrop-blur-md border-b border-indigo-500/30 px-4 py-3 flex-shrink-0">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 pulse-glow flex items-center justify-center">
+            <span class="text-2xl">☀️</span>
+          </div>
+          <div>
+            <h1 id="mainTitle" class="font-space text-xl md:text-2xl font-bold bg-gradient-to-r from-yellow-200 via-white to-purple-200 bg-clip-text text-transparent">
+              Menjelajahi Tata Surya
+            </h1>
+            <p class="text-xs text-indigo-300">Pembelajaran IPA Interaktif</p>
+          </div>
+        </div>
+        <div class="hidden md:flex items-center gap-2 text-sm">
+          <span class="px-3 py-1 bg-indigo-600/50 rounded-full border border-indigo-400/30">🎓 Kelas VII-IX</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-slate-900/60 backdrop-blur-sm border-b border-slate-700/50 px-4 py-2 flex-shrink-0 overflow-x-auto">
+      <div class="max-w-7xl mx-auto flex gap-2 min-w-max">
+        <button onclick="showSection('intro')" class="nav-btn active px-4 py-2 rounded-lg text-sm font-medium bg-slate-800/50 border border-slate-600/30" data-section="intro">
+          🌌 Pengantar
+        </button>
+        <button onclick="showSection('distance')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium bg-slate-800/50 border border-slate-600/30" data-section="distance">
+          📏 Jarak & Gerak
+        </button>
+        <button onclick="showSection('groups')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium bg-slate-800/50 border border-slate-600/30" data-section="groups">
+          📊 Klasifikasi
+        </button>
+        <button onclick="showSection('terrestrial')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium bg-slate-800/50 border border-slate-600/30" data-section="terrestrial">
+          🪨 Terestrial
+        </button>
+        <button onclick="showSection('jovian')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium bg-slate-800/50 border border-slate-600/30" data-section="jovian">
+          💨 Jovian
+        </button>
+        <button onclick="showSection('earth')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium bg-slate-800/50 border border-slate-600/30" data-section="earth">
+          🌍 Bumi
+        </button>
+        <button onclick="showSection('quiz')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium bg-slate-800/50 border border-slate-600/30" data-section="quiz">
+          📝 Kuis HOTS
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-hidden">
+      <div class="h-full scroll-container">
+        <div class="max-w-6xl mx-auto px-4 py-6">
+
+          <!-- Section 1: Pengantar Tata Surya -->
+          <section id="intro" class="section-content active space-y-6">
+            <div class="text-center mb-8">
+              <h2 class="font-space text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-yellow-300 via-orange-300 to-red-300 bg-clip-text text-transparent">
+                🌌 Apa Itu Tata Surya?
+              </h2>
+              <p class="text-indigo-200 max-w-2xl mx-auto">
+                Bumi adalah bagian dari sistem kosmis yang luas dan teratur yang disebut Tata Surya
+              </p>
+            </div>
+
+            <!-- Solar System Illustration -->
+            <div class="relative bg-gradient-to-br from-slate-900/80 to-indigo-950/80 rounded-2xl p-6 border border-indigo-500/20 overflow-hidden">
+              <div class="text-center mb-4">
+                <span class="text-sm text-indigo-300 bg-indigo-900/50 px-3 py-1 rounded-full">🔭 Model Tata Surya Interaktif</span>
+              </div>
+              
+              <div class="relative h-64 md:h-80 flex items-center justify-center">
+                <!-- Sun -->
+                <div class="absolute w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-yellow-300 via-yellow-500 to-orange-500 rounded-full pulse-glow z-20 flex items-center justify-center">
+                  <span class="text-2xl md:text-3xl">☀️</span>
+                </div>
+                
+                <!-- Orbit rings and planets -->
+                <div class="orbit-ring w-24 h-24 md:w-32 md:h-32" style="animation: rotate-slow 4s linear infinite;">
+                  <div class="absolute -top-1 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-gray-400 rounded-full" title="Merkurius">🔘</div>
+                </div>
+                <div class="orbit-ring w-36 h-36 md:w-48 md:h-48" style="animation: rotate-slow 6s linear infinite reverse;">
+                  <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-yellow-600 rounded-full" title="Venus">🟡</div>
+                </div>
+                <div class="orbit-ring w-48 h-48 md:w-64 md:h-64" style="animation: rotate-slow 8s linear infinite;">
+                  <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-500 rounded-full" title="Bumi">🔵</div>
+                </div>
+                <div class="orbit-ring w-60 h-60 md:w-80 md:h-80" style="animation: rotate-slow 10s linear infinite reverse;">
+                  <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-red-500 rounded-full" title="Mars">🔴</div>
+                </div>
+                <div class="orbit-ring w-72 h-72 md:w-96 md:h-96" style="animation: rotate-slow 15s linear infinite;">
+                  <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-orange-300 rounded-full" title="Jupiter">🟠</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+              <div class="info-box rounded-xl p-4 text-center float-animation" style="animation-delay: 0s;">
+                <div class="text-3xl mb-2">🪐</div>
+                <div class="text-2xl font-bold text-yellow-300">8</div>
+                <div class="text-xs text-slate-400">Planet Utama</div>
+              </div>
+              <div class="info-box rounded-xl p-4 text-center float-animation" style="animation-delay: 0.1s;">
+                <div class="text-3xl mb-2">⚪</div>
+                <div class="text-2xl font-bold text-purple-300">5</div>
+                <div class="text-xs text-slate-400">Planet Kerdil</div>
+              </div>
+              <div class="info-box rounded-xl p-4 text-center float-animation" style="animation-delay: 0.2s;">
+                <div class="text-3xl mb-2">🌙</div>
+                <div class="text-2xl font-bold text-blue-300">200+</div>
+                <div class="text-xs text-slate-400">Satelit</div>
+              </div>
+              <div class="info-box rounded-xl p-4 text-center float-animation" style="animation-delay: 0.3s;">
+                <div class="text-3xl mb-2">☄️</div>
+                <div class="text-2xl font-bold text-orange-300">995.369</div>
+                <div class="text-xs text-slate-400">Asteroid</div>
+              </div>
+              <div class="info-box rounded-xl p-4 text-center float-animation" style="animation-delay: 0.4s;">
+                <div class="text-3xl mb-2">💫</div>
+                <div class="text-2xl font-bold text-cyan-300">3.679</div>
+                <div class="text-xs text-slate-400">Komet</div>
+              </div>
+              <div class="info-box rounded-xl p-4 text-center float-animation" style="animation-delay: 0.5s;">
+                <div class="text-3xl mb-2">⭐</div>
+                <div class="text-2xl font-bold text-yellow-300">1</div>
+                <div class="text-xs text-slate-400">Bintang</div>
+              </div>
+            </div>
+
+            <!-- Dwarf Planets -->
+            <div class="info-box rounded-2xl p-6">
+              <h3 class="font-space text-xl font-bold text-purple-300 mb-4 flex items-center gap-2">
+                <span>⚪</span> Planet Kerdil dalam Tata Surya
+              </h3>
+              <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div class="text-center p-3 bg-slate-800/50 rounded-xl">
+                  <div class="text-4xl mb-2">🔘</div>
+                  <div class="font-semibold text-white">Pluto</div>
+                  <div class="text-xs text-slate-400">Sabuk Kuiper</div>
+                </div>
+                <div class="text-center p-3 bg-slate-800/50 rounded-xl">
+                  <div class="text-4xl mb-2">⚫</div>
+                  <div class="font-semibold text-white">Eris</div>
+                  <div class="text-xs text-slate-400">Piringan Tersebar</div>
+                </div>
+                <div class="text-center p-3 bg-slate-800/50 rounded-xl">
+                  <div class="text-4xl mb-2">🥚</div>
+                  <div class="font-semibold text-white">Haumea</div>
+                  <div class="text-xs text-slate-400">Bentuk Lonjong</div>
+                </div>
+                <div class="text-center p-3 bg-slate-800/50 rounded-xl">
+                  <div class="text-4xl mb-2">🟤</div>
+                  <div class="font-semibold text-white">Makemake</div>
+                  <div class="text-xs text-slate-400">Sabuk Kuiper</div>
+                </div>
+                <div class="text-center p-3 bg-slate-800/50 rounded-xl">
+                  <div class="text-4xl mb-2">⬜</div>
+                  <div class="font-semibold text-white">Ceres</div>
+                  <div class="text-xs text-slate-400">Sabuk Asteroid</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Key Concept -->
+            <div class="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 rounded-2xl p-6 border border-indigo-400/30">
+              <div class="flex items-start gap-4">
+                <div class="text-4xl">💡</div>
+                <div>
+                  <h4 class="font-space font-bold text-yellow-300 mb-2">Konsep Kunci: Keteraturan Tata Surya</h4>
+                  <p class="text-slate-300 leading-relaxed">
+                    Setiap benda langit dalam tata surya bergerak pada <strong class="text-white">orbitnya masing-masing</strong> secara tertib dan terus-menerus. 
+                    Keteraturan ini memungkinkan para ilmuwan memprediksi posisi planet, gerhana, dan fenomena astronomi lainnya dengan sangat akurat.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Section 2: Jarak dan Gerakan -->
+          <section id="distance" class="section-content space-y-6">
+            <div class="text-center mb-8">
+              <h2 class="font-space text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent">
+                📏 Jarak dan Gerakan Planet
+              </h2>
+              <p class="text-indigo-200 max-w-2xl mx-auto">
+                Memahami skala kosmis dan dinamika pergerakan planet dalam tata surya
+              </p>
+            </div>
+
+            <!-- AU Explanation -->
+            <div class="info-box rounded-2xl p-6">
+              <h3 class="font-space text-xl font-bold text-cyan-300 mb-4 flex items-center gap-2">
+                <span>📐</span> Satuan Astronomi (SA/AU)
+              </h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <div class="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-xl p-6 text-center mb-4">
+                    <div class="text-5xl mb-3">☀️ ←→ 🌍</div>
+                    <div class="text-3xl font-bold text-yellow-300">1 AU</div>
+                    <div class="text-lg text-slate-300">= 149.600.000 km</div>
+                  </div>
+                  <p class="text-slate-300 text-sm">
+                    <strong class="text-white">Satuan Astronomi (AU)</strong> adalah jarak rata-rata antara Bumi dan Matahari. 
+                    Satuan ini digunakan karena jarak antarplanet terlalu besar jika dihitung dalam kilometer.
+                  </p>
+                </div>
+                <div class="space-y-3">
+                  <h4 class="font-semibold text-white">Jarak Planet ke Matahari:</h4>
+                  <div class="space-y-2 text-sm">
+                    <div class="flex justify-between items-center bg-slate-800/50 rounded-lg px-3 py-2">
+                      <span>🔘 Merkurius</span>
+                      <span class="text-cyan-300 font-mono">0.39 AU</span>
+                    </div>
+                    <div class="flex justify-between items-center bg-slate-800/50 rounded-lg px-3 py-2">
+                      <span>🟡 Venus</span>
+                      <span class="text-cyan-300 font-mono">0.72 AU</span>
+                    </div>
+                    <div class="flex justify-between items-center bg-slate-800/50 rounded-lg px-3 py-2">
+                      <span>🔵 Bumi</span>
+                      <span class="text-cyan-300 font-mono">1.00 AU</span>
+                    </div>
+                    <div class="flex justify-between items-center bg-slate-800/50 rounded-lg px-3 py-2">
+                      <span>🔴 Mars</span>
+                      <span class="text-cyan-300 font-mono">1.52 AU</span>
+                    </div>
+                    <div class="flex justify-between items-center bg-slate-800/50 rounded-lg px-3 py-2">
+                      <span>🟠 Jupiter</span>
+                      <span class="text-cyan-300 font-mono">5.20 AU</span>
+                    </div>
+                    <div class="flex justify-between items-center bg-slate-800/50 rounded-lg px-3 py-2">
+                      <span>🪐 Saturnus</span>
+                      <span class="text-cyan-300 font-mono">9.58 AU</span>
+                    </div>
+                    <div class="flex justify-between items-center bg-slate-800/50 rounded-lg px-3 py-2">
+                      <span>💠 Uranus</span>
+                      <span class="text-cyan-300 font-mono">19.22 AU</span>
+                    </div>
+                    <div class="flex justify-between items-center bg-slate-800/50 rounded-lg px-3 py-2">
+                      <span>🔷 Neptunus</span>
+                      <span class="text-cyan-300 font-mono">30.05 AU</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Rotation vs Revolution -->
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="info-box rounded-2xl p-6">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center rotate-animation">
+                    🌍
+                  </div>
+                  <h3 class="font-space text-xl font-bold text-blue-300">Rotasi</h3>
+                </div>
+                <p class="text-slate-300 mb-4">
+                  <strong class="text-white">Rotasi</strong> adalah gerakan planet berputar pada <strong class="text-cyan-300">sumbunya sendiri</strong>. 
+                  Gerakan ini menyebabkan pergantian siang dan malam.
+                </p>
+                <div class="bg-slate-800/50 rounded-xl p-4">
+                  <h4 class="text-sm font-semibold text-white mb-2">Periode Rotasi Planet:</h4>
+                  <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div class="flex justify-between"><span>Merkurius:</span><span class="text-cyan-300">59 hari</span></div>
+                    <div class="flex justify-between"><span>Venus:</span><span class="text-cyan-300">243 hari</span></div>
+                    <div class="flex justify-between"><span>Bumi:</span><span class="text-cyan-300">24 jam</span></div>
+                    <div class="flex justify-between"><span>Mars:</span><span class="text-cyan-300">24.6 jam</span></div>
+                    <div class="flex justify-between"><span>Jupiter:</span><span class="text-cyan-300">10 jam</span></div>
+                    <div class="flex justify-between"><span>Saturnus:</span><span class="text-cyan-300">10.7 jam</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-box rounded-2xl p-6">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-full flex items-center justify-center">
+                    <div class="w-6 h-6 bg-blue-500 rounded-full" style="animation: rotate-slow 3s linear infinite; transform-origin: 200% 50%;"></div>
+                  </div>
+                  <h3 class="font-space text-xl font-bold text-orange-300">Revolusi</h3>
+                </div>
+                <p class="text-slate-300 mb-4">
+                  <strong class="text-white">Revolusi</strong> adalah gerakan planet <strong class="text-orange-300">mengelilingi Matahari</strong>. 
+                  Gerakan ini menentukan panjang satu tahun pada setiap planet.
+                </p>
+                <div class="bg-slate-800/50 rounded-xl p-4">
+                  <h4 class="text-sm font-semibold text-white mb-2">Periode Revolusi Planet:</h4>
+                  <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div class="flex justify-between"><span>Merkurius:</span><span class="text-orange-300">88 hari</span></div>
+                    <div class="flex justify-between"><span>Venus:</span><span class="text-orange-300">225 hari</span></div>
+                    <div class="flex justify-between"><span>Bumi:</span><span class="text-orange-300">365 hari</span></div>
+                    <div class="flex justify-between"><span>Mars:</span><span class="text-orange-300">687 hari</span></div>
+                    <div class="flex justify-between"><span>Jupiter:</span><span class="text-orange-300">12 tahun</span></div>
+                    <div class="flex justify-between"><span>Neptunus:</span><span class="text-orange-300">165 tahun</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Demo -->
+            <div class="info-box rounded-2xl p-6">
+              <h3 class="font-space text-xl font-bold text-green-300 mb-4 flex items-center gap-2">
+                <span>🎮</span> Simulasi Interaktif: Rotasi vs Revolusi
+              </h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="text-center">
+                  <div class="relative w-32 h-32 mx-auto mb-4">
+                    <div id="rotationDemo" class="w-full h-full bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-4xl" style="animation: rotate-slow 3s linear infinite;">
+                      🌍
+                    </div>
+                    <div class="absolute top-0 left-1/2 w-1 h-full bg-yellow-400/50 transform -translate-x-1/2"></div>
+                  </div>
+                  <p class="text-sm text-slate-300">Rotasi: Bumi berputar pada sumbunya</p>
+                  <button onclick="toggleRotation()" class="mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm transition-colors">
+                    ⏯️ Play/Pause
+                  </button>
+                </div>
+                <div class="text-center">
+                  <div class="relative w-32 h-32 mx-auto mb-4">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                      <div class="w-8 h-8 bg-gradient-to-br from-yellow-300 to-orange-500 rounded-full">☀️</div>
+                    </div>
+                    <div id="revolutionDemo" class="absolute w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-sm" style="animation: rotate-slow 5s linear infinite; transform-origin: 64px 64px; top: calc(50% - 12px); left: calc(50% - 12px);">
+                      🌍
+                    </div>
+                    <div class="absolute inset-2 border-2 border-dashed border-white/20 rounded-full"></div>
+                  </div>
+                  <p class="text-sm text-slate-300">Revolusi: Bumi mengelilingi Matahari</p>
+                  <button onclick="toggleRevolution()" class="mt-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 rounded-lg text-sm transition-colors">
+                    ⏯️ Play/Pause
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Section 3: Klasifikasi Planet -->
+          <section id="groups" class="section-content space-y-6">
+            <div class="text-center mb-8">
+              <h2 class="font-space text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-green-300 via-emerald-300 to-teal-300 bg-clip-text text-transparent">
+                📊 Klasifikasi Planet
+              </h2>
+              <p class="text-indigo-200 max-w-2xl mx-auto">
+                Para ilmuwan mengelompokkan planet berdasarkan berbagai kriteria
+              </p>
+            </div>
+
+            <!-- Classification 1: Earth Reference -->
+            <div class="info-box rounded-2xl p-6">
+              <h3 class="font-space text-xl font-bold text-emerald-300 mb-4">
+                1️⃣ Berdasarkan Posisi Terhadap Bumi
+              </h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gradient-to-br from-amber-900/30 to-orange-900/30 rounded-xl p-5 border border-amber-500/30">
+                  <h4 class="font-bold text-amber-300 mb-3 flex items-center gap-2">
+                    <span class="text-2xl">🌅</span> Planet Inferior
+                  </h4>
+                  <p class="text-slate-300 text-sm mb-4">
+                    Planet yang orbitnya berada di antara Matahari dan Bumi
+                  </p>
+                  <div class="flex justify-center gap-4">
+                    <div class="text-center">
+                      <div class="text-4xl mb-1">🔘</div>
+                      <div class="text-sm font-medium">Merkurius</div>
+                    </div>
+                    <div class="text-center">
+                      <div class="text-4xl mb-1">🟡</div>
+                      <div class="text-sm font-medium">Venus</div>
+                    </div>
+                  </div>
+                  <div class="mt-4 text-center text-xs text-amber-200 bg-amber-900/30 rounded-lg p-2">
+                    ☀️ → 🔘 → 🟡 → 🌍
+                  </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-blue-900/30 to-indigo-900/30 rounded-xl p-5 border border-blue-500/30">
+                  <h4 class="font-bold text-blue-300 mb-3 flex items-center gap-2">
+                    <span class="text-2xl">🌌</span> Planet Superior
+                  </h4>
+                  <p class="text-slate-300 text-sm mb-4">
+                    Planet yang orbitnya berada di luar orbit Bumi
+                  </p>
+                  <div class="flex justify-center gap-3 flex-wrap">
+                    <div class="text-center">
+                      <div class="text-3xl mb-1">🔴</div>
+                      <div class="text-xs">Mars</div>
+                    </div>
+                    <div class="text-center">
+                      <div class="text-3xl mb-1">🟠</div>
+                      <div class="text-xs">Jupiter</div>
+                    </div>
+                    <div class="text-center">
+                      <div class="text-3xl mb-1">🪐</div>
+                      <div class="text-xs">Saturnus</div>
+                    </div>
+                    <div class="text-center">
+                      <div class="text-3xl mb-1">💠</div>
+                      <div class="text-xs">Uranus</div>
+                    </div>
+                    <div class="text-center">
+                      <div class="text-3xl mb-1">🔷</div>
+                      <div class="text-xs">Neptunus</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Classification 2: Asteroid Belt -->
+            <div class="info-box rounded-2xl p-6">
+              <h3 class="font-space text-xl font-bold text-teal-300 mb-4">
+                2️⃣ Berdasarkan Sabuk Asteroid
+              </h3>
+              <div class="relative bg-slate-800/50 rounded-xl p-6 overflow-hidden">
+                <div class="flex items-center justify-between flex-wrap gap-4">
+                  <!-- Inner Planets -->
+                  <div class="flex items-center gap-2">
+                    <div class="text-center px-2">
+                      <div class="text-3xl">☀️</div>
+                      <div class="text-xs text-yellow-300">Matahari</div>
+                    </div>
+                    <div class="text-center px-2">
+                      <div class="text-2xl">🔘</div>
+                      <div class="text-xs">Merkurius</div>
+                    </div>
+                    <div class="text-center px-2">
+                      <div class="text-2xl">🟡</div>
+                      <div class="text-xs">Venus</div>
+                    </div>
+                    <div class="text-center px-2">
+                      <div class="text-2xl">🔵</div>
+                      <div class="text-xs">Bumi</div>
+                    </div>
+                    <div class="text-center px-2">
+                      <div class="text-2xl">🔴</div>
+                      <div class="text-xs">Mars</div>
+                    </div>
+                  </div>
+                  
+                  <!-- Asteroid Belt -->
+                  <div class="text-center px-4 py-2 bg-gradient-to-b from-gray-600/50 to-gray-800/50 rounded-lg border border-gray-500/30">
+                    <div class="text-2xl">☄️💫⭐☄️</div>
+                    <div class="text-xs text-gray-300 font-bold">SABUK ASTEROID</div>
+                  </div>
+                  
+                  <!-- Outer Planets -->
+                  <div class="flex items-center gap-2">
+                    <div class="text-center px-2">
+                      <div class="text-3xl">🟠</div>
+                      <div class="text-xs">Jupiter</div>
+                    </div>
+                    <div class="text-center px-2">
+                      <div class="text-3xl">🪐</div>
+                      <div class="text-xs">Saturnus</div>
+                    </div>
+                    <div class="text-center px-2">
+                      <div class="text-2xl">💠</div>
+                      <div class="text-xs">Uranus</div>
+                    </div>
+                    <div class="text-center px-2">
+                      <div class="text-2xl">🔷</div>
+                      <div class="text-xs">Neptunus</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="mt-4 grid grid-cols-2 gap-4 text-center">
+                  <div class="bg-teal-900/30 rounded-lg p-3 border border-teal-500/30">
+                    <div class="font-bold text-teal-300">Planet Dalam</div>
+                    <div class="text-sm text-slate-400">Merkurius, Venus, Bumi, Mars</div>
+                  </div>
+                  <div class="bg-purple-900/30 rounded-lg p-3 border border-purple-500/30">
+                    <div class="font-bold text-purple-300">Planet Luar</div>
+                    <div class="text-sm text-slate-400">Jupiter, Saturnus, Uranus, Neptunus</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Classification 3: Composition -->
+            <div class="info-box rounded-2xl p-6">
+              <h3 class="font-space text-xl font-bold text-pink-300 mb-4">
+                3️⃣ Berdasarkan Ukuran dan Komposisi
+              </h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gradient-to-br from-amber-900/30 to-red-900/30 rounded-xl p-5 border border-amber-500/30">
+                  <h4 class="font-bold text-amber-300 mb-3 flex items-center gap-2">
+                    <span class="text-2xl">🪨</span> Planet Terestrial (Kebumian)
+                  </h4>
+                  <ul class="text-slate-300 text-sm space-y-2">
+                    <li>✓ Ukuran lebih <strong class="text-white">kecil</strong></li>
+                    <li>✓ Tersusun dari <strong class="text-white">batuan dan logam</strong></li>
+                    <li>✓ Memiliki <strong class="text-white">permukaan padat</strong></li>
+                    <li>✓ Dapat diamati <strong class="text-white">tanpa alat bantu</strong></li>
+                  </ul>
+                  <div class="mt-4 flex justify-center gap-3">
+                    <span class="px-3 py-1 bg-gray-700/50 rounded-full text-sm">🔘 Merkurius</span>
+                    <span class="px-3 py-1 bg-gray-700/50 rounded-full text-sm">🟡 Venus</span>
+                    <span class="px-3 py-1 bg-gray-700/50 rounded-full text-sm">🔵 Bumi</span>
+                    <span class="px-3 py-1 bg-gray-700/50 rounded-full text-sm">🔴 Mars</span>
+                  </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-blue-900/30 to-purple-900/30 rounded-xl p-5 border border-blue-500/30">
+                  <h4 class="font-bold text-blue-300 mb-3 flex items-center gap-2">
+                    <span class="text-2xl">💨</span> Planet Jovian (Raksasa Gas)
+                  </h4>
+                  <ul class="text-slate-300 text-sm space-y-2">
+                    <li>✓ Ukuran <strong class="text-white">sangat besar</strong></li>
+                    <li>✓ Tersusun dari <strong class="text-white">gas (hidrogen, helium)</strong></li>
+                    <li>✓ <strong class="text-white">Tidak memiliki</strong> permukaan padat</li>
+                    <li>✓ Memiliki <strong class="text-white">banyak satelit</strong> dan cincin</li>
+                  </ul>
+                  <div class="mt-4 flex justify-center gap-3 flex-wrap">
+                    <span class="px-3 py-1 bg-gray-700/50 rounded-full text-sm">🟠 Jupiter</span>
+                    <span class="px-3 py-1 bg-gray-700/50 rounded-full text-sm">🪐 Saturnus</span>
+                    <span class="px-3 py-1 bg-gray-700/50 rounded-full text-sm">💠 Uranus</span>
+                    <span class="px-3 py-1 bg-gray-700/50 rounded-full text-sm">🔷 Neptunus</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Activity -->
+            <div class="bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-2xl p-6 border border-green-500/30">
+              <h3 class="font-space text-xl font-bold text-green-300 mb-4 flex items-center gap-2">
+                <span>🎯</span> Aktivitas: Klasifikasikan Planet!
+              </h3>
+              <p class="text-slate-300 mb-4">Klik planet untuk melihat klasifikasinya:</p>
+              <div class="grid grid-cols-4 md:grid-cols-8 gap-3" id="classifyActivity">
+                <button onclick="showClassification('merkurius')" class="p-3 bg-slate-800/50 rounded-xl hover:bg-slate-700/50 transition-colors text-center">
+                  <div class="text-3xl">🔘</div>
+                  <div class="text-xs mt-1">Merkurius</div>
+                </button>
+                <button onclick="showClassification('venus')" class="p-3 bg-slate-800/50 rounded-xl hover:bg-slate-700/50 transition-colors text-center">
+                  <div class="text-3xl">🟡</div>
+                  <div class="text-xs mt-1">Venus</div>
+                </button>
+                <button onclick="showClassification('bumi')" class="p-3 bg-slate-800/50 rounded-xl hover:bg-slate-700/50 transition-colors text-center">
+                  <div class="text-3xl">🔵</div>
+                  <div class="text-xs mt-1">Bumi</div>
+                </button>
+                <button onclick="showClassification('mars')" class="p-3 bg-slate-800/50 rounded-xl hover:bg-slate-700/50 transition-colors text-center">
+                  <div class="text-3xl">🔴</div>
+                  <div class="text-xs mt-1">Mars</div>
+                </button>
+                <button onclick="showClassification('jupiter')" class="p-3 bg-slate-800/50 rounded-xl hover:bg-slate-700/50 transition-colors text-center">
+                  <div class="text-3xl">🟠</div>
+                  <div class="text-xs mt-1">Jupiter</div>
+                </button>
+                <button onclick="showClassification('saturnus')" class="p-3 bg-slate-800/50 rounded-xl hover:bg-slate-700/50 transition-colors text-center">
+                  <div class="text-3xl">🪐</div>
+                  <div class="text-xs mt-1">Saturnus</div>
+                </button>
+                <button onclick="showClassification('uranus')" class="p-3 bg-slate-800/50 rounded-xl hover:bg-slate-700/50 transition-colors text-center">
+                  <div class="text-3xl">💠</div>
+                  <div class="text-xs mt-1">Uranus</div>
+                </button>
+                <button onclick="showClassification('neptunus')" class="p-3 bg-slate-800/50 rounded-xl hover:bg-slate-700/50 transition-colors text-center">
+                  <div class="text-3xl">🔷</div>
+                  <div class="text-xs mt-1">Neptunus</div>
+                </button>
+              </div>
+              <div id="classificationResult" class="mt-4 p-4 bg-slate-800/50 rounded-xl text-center hidden">
+                <!-- Result will appear here -->
+              </div>
+            </div>
+          </section>
+
+          <!-- Section 4: Planet Terestrial -->
+          <section id="terrestrial" class="section-content space-y-6">
+            <div class="text-center mb-8">
+              <h2 class="font-space text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-amber-300 via-orange-300 to-red-300 bg-clip-text text-transparent">
+                🪨 Planet Terestrial
+              </h2>
+              <p class="text-indigo-200 max-w-2xl mx-auto">
+                Planet-planet berbatu yang memiliki permukaan padat
+              </p>
+            </div>
+
+            <!-- Mercury -->
+            <div class="planet-card info-box rounded-2xl p-6">
+              <div class="flex flex-col md:flex-row gap-6">
+                <div class="md:w-1/3 text-center">
+                  <div class="w-32 h-32 mx-auto bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600 rounded-full flex items-center justify-center text-6xl shadow-2xl mb-4 float-animation">
+                    🔘
+                  </div>
+                  <h3 class="font-space text-2xl font-bold text-gray-300">Merkurius</h3>
+                  <p class="text-sm text-slate-400">Planet Terkecil & Terdekat</p>
+                </div>
+                <div class="md:w-2/3 space-y-4">
+                  <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Jarak ke Matahari</div>
+                      <div class="font-bold text-white">0.39 AU</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Periode Revolusi</div>
+                      <div class="font-bold text-white">88 hari</div>
+                    </div>
+                    <div class="bg-red-900/30 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Suhu Siang</div>
+                      <div class="font-bold text-red-400">430°C</div>
+                    </div>
+                    <div class="bg-blue-900/30 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Suhu Malam</div>
+                      <div class="font-bold text-blue-400">-170°C</div>
+                    </div>
+                  </div>
+                  <div class="bg-amber-900/20 border border-amber-500/30 rounded-lg p-4">
+                    <h4 class="font-semibold text-amber-300 mb-2">🌟 Fakta Menarik</h4>
+                    <ul class="text-sm text-slate-300 space-y-1">
+                      <li>• Dijuluki <strong class="text-white">Bintang Fajar</strong> atau <strong class="text-white">Bintang Malam</strong></li>
+                      <li>• Hanya terlihat saat subuh atau setelah matahari tenggelam</li>
+                      <li>• Atmosfer sangat tipis sehingga tidak bisa menahan panas</li>
+                      <li>• Permukaannya dipenuhi kawah seperti Bulan</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Venus -->
+            <div class="planet-card info-box rounded-2xl p-6">
+              <div class="flex flex-col md:flex-row gap-6">
+                <div class="md:w-1/3 text-center">
+                  <div class="w-32 h-32 mx-auto bg-gradient-to-br from-yellow-500 via-orange-400 to-yellow-600 rounded-full flex items-center justify-center text-6xl shadow-2xl mb-4 float-animation" style="animation-delay: 0.5s;">
+                    🟡
+                  </div>
+                  <h3 class="font-space text-2xl font-bold text-yellow-300">Venus</h3>
+                  <p class="text-sm text-slate-400">Planet Terpanas</p>
+                </div>
+                <div class="md:w-2/3 space-y-4">
+                  <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Jarak ke Matahari</div>
+                      <div class="font-bold text-white">0.72 AU</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Periode Revolusi</div>
+                      <div class="font-bold text-white">225 hari</div>
+                    </div>
+                    <div class="bg-red-900/30 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Suhu Permukaan</div>
+                      <div class="font-bold text-red-400">460°C</div>
+                    </div>
+                    <div class="bg-purple-900/30 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Rotasi</div>
+                      <div class="font-bold text-purple-400">Retrograde</div>
+                    </div>
+                  </div>
+                  <div class="bg-orange-900/20 border border-orange-500/30 rounded-lg p-4">
+                    <h4 class="font-semibold text-orange-300 mb-2">🔥 Fakta Menarik</h4>
+                    <ul class="text-sm text-slate-300 space-y-1">
+                      <li>• Planet <strong class="text-white">terpanas</strong> meski bukan terdekat ke Matahari</li>
+                      <li>• Atmosfer tebal CO₂ memerangkap panas (efek rumah kaca ekstrem)</li>
+                      <li>• Berotasi <strong class="text-white">dari Timur ke Barat</strong> (kebalikan planet lain)</li>
+                      <li>• Memiliki awan <strong class="text-yellow-300">asam sulfat</strong> yang sangat pekat</li>
+                      <li>• Dijuluki "kembaran Bumi" karena ukurannya mirip</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mars -->
+            <div class="planet-card info-box rounded-2xl p-6">
+              <div class="flex flex-col md:flex-row gap-6">
+                <div class="md:w-1/3 text-center">
+                  <div class="w-32 h-32 mx-auto bg-gradient-to-br from-red-500 via-red-600 to-red-800 rounded-full flex items-center justify-center text-6xl shadow-2xl mb-4 float-animation" style="animation-delay: 1s;">
+                    🔴
+                  </div>
+                  <h3 class="font-space text-2xl font-bold text-red-400">Mars</h3>
+                  <p class="text-sm text-slate-400">Planet Merah</p>
+                </div>
+                <div class="md:w-2/3 space-y-4">
+                  <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Jarak ke Matahari</div>
+                      <div class="font-bold text-white">1.52 AU</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Periode Revolusi</div>
+                      <div class="font-bold text-white">687 hari</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Satelit</div>
+                      <div class="font-bold text-white">2 (Phobos, Deimos)</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Suhu Rata-rata</div>
+                      <div class="font-bold text-blue-400">-65°C</div>
+                    </div>
+                  </div>
+                  <div class="bg-red-900/20 border border-red-500/30 rounded-lg p-4">
+                    <h4 class="font-semibold text-red-300 mb-2">🚀 Fakta Menarik</h4>
+                    <ul class="text-sm text-slate-300 space-y-1">
+                      <li>• Dijuluki <strong class="text-white">Planet Merah</strong> karena kandungan besi oksida</li>
+                      <li>• Memiliki gunung tertinggi di tata surya: <strong class="text-white">Olympus Mons</strong> (21 km)</li>
+                      <li>• Target utama eksplorasi manusia di masa depan</li>
+                      <li>• Memiliki kutub es dari air dan karbon dioksida beku</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="info-box rounded-2xl p-6">
+              <h3 class="font-space text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <span>📊</span> Perbandingan Planet Terestrial
+              </h3>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="border-b border-slate-700">
+                      <th class="text-left py-3 px-2 text-slate-400">Planet</th>
+                      <th class="text-center py-3 px-2 text-slate-400">Diameter</th>
+                      <th class="text-center py-3 px-2 text-slate-400">Massa (Bumi=1)</th>
+                      <th class="text-center py-3 px-2 text-slate-400">Satelit</th>
+                      <th class="text-center py-3 px-2 text-slate-400">Atmosfer</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-b border-slate-800">
+                      <td class="py-3 px-2">🔘 Merkurius</td>
+                      <td class="text-center py-3 px-2">4.879 km</td>
+                      <td class="text-center py-3 px-2">0.055</td>
+                      <td class="text-center py-3 px-2">0</td>
+                      <td class="text-center py-3 px-2 text-red-400">Hampir tidak ada</td>
+                    </tr>
+                    <tr class="border-b border-slate-800">
+                      <td class="py-3 px-2">🟡 Venus</td>
+                      <td class="text-center py-3 px-2">12.104 km</td>
+                      <td class="text-center py-3 px-2">0.815</td>
+                      <td class="text-center py-3 px-2">0</td>
+                      <td class="text-center py-3 px-2 text-orange-400">CO₂ sangat tebal</td>
+                    </tr>
+                    <tr class="border-b border-slate-800">
+                      <td class="py-3 px-2">🔵 Bumi</td>
+                      <td class="text-center py-3 px-2">12.742 km</td>
+                      <td class="text-center py-3 px-2">1.000</td>
+                      <td class="text-center py-3 px-2">1</td>
+                      <td class="text-center py-3 px-2 text-green-400">N₂, O₂ (ideal)</td>
+                    </tr>
+                    <tr>
+                      <td class="py-3 px-2">🔴 Mars</td>
+                      <td class="text-center py-3 px-2">6.779 km</td>
+                      <td class="text-center py-3 px-2">0.107</td>
+                      <td class="text-center py-3 px-2">2</td>
+                      <td class="text-center py-3 px-2 text-yellow-400">CO₂ tipis</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- Section 5: Planet Jovian -->
+          <section id="jovian" class="section-content space-y-6">
+            <div class="text-center mb-8">
+              <h2 class="font-space text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
+                💨 Planet Jovian (Raksasa Gas)
+              </h2>
+              <p class="text-indigo-200 max-w-2xl mx-auto">
+                Planet-planet raksasa yang tersusun dari gas hidrogen dan helium
+              </p>
+            </div>
+
+            <!-- Jupiter -->
+            <div class="planet-card info-box rounded-2xl p-6">
+              <div class="flex flex-col md:flex-row gap-6">
+                <div class="md:w-1/3 text-center">
+                  <div class="w-40 h-40 mx-auto bg-gradient-to-br from-orange-300 via-amber-400 to-orange-600 rounded-full flex items-center justify-center text-7xl shadow-2xl mb-4 float-animation relative">
+                    🟠
+                    <div class="absolute w-8 h-3 bg-red-600 rounded-full top-1/2 left-1/4 transform -translate-y-1/2 opacity-80"></div>
+                  </div>
+                  <h3 class="font-space text-2xl font-bold text-orange-300">Jupiter</h3>
+                  <p class="text-sm text-slate-400">Planet Terbesar</p>
+                </div>
+                <div class="md:w-2/3 space-y-4">
+                  <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Jarak ke Matahari</div>
+                      <div class="font-bold text-white">5.20 AU</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Periode Revolusi</div>
+                      <div class="font-bold text-white">12 tahun</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Satelit</div>
+                      <div class="font-bold text-white">95+ satelit</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Rotasi</div>
+                      <div class="font-bold text-white">~10 jam</div>
+                    </div>
+                  </div>
+                  <div class="bg-orange-900/20 border border-orange-500/30 rounded-lg p-4">
+                    <h4 class="font-semibold text-orange-300 mb-2">🌪️ Fakta Menarik</h4>
+                    <ul class="text-sm text-slate-300 space-y-1">
+                      <li>• <strong class="text-white">Great Red Spot</strong>: badai raksasa yang sudah berlangsung 400+ tahun</li>
+                      <li>• Massa 2.5x dari semua planet lain digabungkan</li>
+                      <li>• Satelit Ganymede lebih besar dari Merkurius</li>
+                      <li>• Memiliki cincin tipis (tidak seterang Saturnus)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Saturn -->
+            <div class="planet-card info-box rounded-2xl p-6">
+              <div class="flex flex-col md:flex-row gap-6">
+                <div class="md:w-1/3 text-center">
+                  <div class="relative w-44 h-32 mx-auto mb-4">
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-gradient-to-br from-yellow-200 via-amber-300 to-yellow-500 rounded-full text-5xl flex items-center justify-center float-animation" style="animation-delay: 0.3s;">
+                      🪐
+                    </div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-8 border-4 border-amber-400/60 rounded-full" style="transform: translate(-50%, -50%) rotateX(70deg);"></div>
+                  </div>
+                  <h3 class="font-space text-2xl font-bold text-yellow-200">Saturnus</h3>
+                  <p class="text-sm text-slate-400">Planet Bercincin</p>
+                </div>
+                <div class="md:w-2/3 space-y-4">
+                  <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Jarak ke Matahari</div>
+                      <div class="font-bold text-white">9.58 AU</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Periode Revolusi</div>
+                      <div class="font-bold text-white">29 tahun</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Satelit</div>
+                      <div class="font-bold text-white">146 satelit</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-xs text-slate-400">Kepadatan</div>
+                      <div class="font-bold text-cyan-400">Lebih rendah dari air!</div>
+                    </div>
+                  </div>
+                  <div class="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-4">
+                    <h4 class="font-semibold text-yellow-300 mb-2">💍 Fakta Menarik</h4>
+                    <ul class="text-sm text-slate-300 space-y-1">
+                      <li>• Cincin terdiri dari miliaran partikel <strong class="text-white">es dan batuan</strong></li>
+                      <li>• Satu-satunya planet dengan kepadatan <strong class="text-cyan-300">lebih rendah dari air</strong></li>
+                      <li>• Satelit Titan memiliki atmosfer tebal dan danau metana</li>
+                      <li>• Lebar cincin mencapai 282.000 km tapi tebalnya hanya 10 m</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Uranus & Neptune -->
+            <div class="grid md:grid-cols-2 gap-6">
+              <!-- Uranus -->
+              <div class="planet-card info-box rounded-2xl p-5">
+                <div class="text-center mb-4">
+                  <div class="w-24 h-24 mx-auto bg-gradient-to-br from-cyan-300 via-teal-400 to-cyan-500 rounded-full flex items-center justify-center text-5xl shadow-xl float-animation" style="animation-delay: 0.6s;">
+                    💠
+                  </div>
+                  <h3 class="font-space text-xl font-bold text-cyan-300 mt-3">Uranus</h3>
+                  <p class="text-xs text-slate-400">Planet Es Raksasa</p>
+                </div>
+                <div class="space-y-3">
+                  <div class="grid grid-cols-2 gap-2 text-sm">
+                    <div class="bg-slate-800/50 rounded-lg p-2 text-center">
+                      <div class="text-xs text-slate-400">Jarak</div>
+                      <div class="font-bold">19.22 AU</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-2 text-center">
+                      <div class="text-xs text-slate-400">Revolusi</div>
+                      <div class="font-bold">84 tahun</div>
+                    </div>
+                  </div>
+                  <div class="bg-cyan-900/20 border border-cyan-500/30 rounded-lg p-3">
+                    <ul class="text-xs text-slate-300 space-y-1">
+                      <li>• Berotasi <strong class="text-white">miring 98°</strong> (seperti menggelinding)</li>
+                      <li>• Tersusun dari es air, metana, dan amonia</li>
+                      <li>• Memiliki 27 satelit dan 13 cincin</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Neptune -->
+              <div class="planet-card info-box rounded-2xl p-5">
+                <div class="text-center mb-4">
+                  <div class="w-24 h-24 mx-auto bg-gradient-to-br from-blue-400 via-indigo-500 to-blue-700 rounded-full flex items-center justify-center text-5xl shadow-xl float-animation" style="animation-delay: 0.9s;">
+                    🔷
+                  </div>
+                  <h3 class="font-space text-xl font-bold text-blue-300 mt-3">Neptunus</h3>
+                  <p class="text-xs text-slate-400">Planet Terjauh</p>
+                </div>
+                <div class="space-y-3">
+                  <div class="grid grid-cols-2 gap-2 text-sm">
+                    <div class="bg-slate-800/50 rounded-lg p-2 text-center">
+                      <div class="text-xs text-slate-400">Jarak</div>
+                      <div class="font-bold">30.05 AU</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-2 text-center">
+                      <div class="text-xs text-slate-400">Revolusi</div>
+                      <div class="font-bold">165 tahun</div>
+                    </div>
+                  </div>
+                  <div class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-3">
+                    <ul class="text-xs text-slate-300 space-y-1">
+                      <li>• Memiliki <strong class="text-white">angin tercepat</strong> di tata surya (2.100 km/jam)</li>
+                      <li>• Ditemukan melalui perhitungan matematika (1846)</li>
+                      <li>• Satelit Triton mengorbit berlawanan arah</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Size Comparison -->
+            <div class="info-box rounded-2xl p-6">
+              <h3 class="font-space text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <span>📏</span> Perbandingan Ukuran Planet Jovian vs Bumi
+              </h3>
+              <div class="flex items-end justify-center gap-4 py-6">
+                <div class="text-center">
+                  <div class="w-6 h-6 bg-blue-500 rounded-full mx-auto mb-2"></div>
+                  <div class="text-xs">Bumi</div>
+                  <div class="text-xs text-slate-400">1x</div>
+                </div>
+                <div class="text-center">
+                  <div class="w-24 h-24 bg-gradient-to-br from-orange-300 to-orange-600 rounded-full mx-auto mb-2"></div>
+                  <div class="text-xs">Jupiter</div>
+                  <div class="text-xs text-orange-400">11x</div>
+                </div>
+                <div class="text-center">
+                  <div class="w-20 h-20 bg-gradient-to-br from-yellow-200 to-amber-400 rounded-full mx-auto mb-2"></div>
+                  <div class="text-xs">Saturnus</div>
+                  <div class="text-xs text-yellow-400">9x</div>
+                </div>
+                <div class="text-center">
+                  <div class="w-10 h-10 bg-gradient-to-br from-cyan-300 to-teal-500 rounded-full mx-auto mb-2"></div>
+                  <div class="text-xs">Uranus</div>
+                  <div class="text-xs text-cyan-400">4x</div>
+                </div>
+                <div class="text-center">
+                  <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-full mx-auto mb-2"></div>
+                  <div class="text-xs">Neptunus</div>
+                  <div class="text-xs text-blue-400">4x</div>
+                </div>
+              </div>
+              <p class="text-center text-sm text-slate-400">
+                *Ukuran relatif terhadap diameter Bumi (tidak sesuai skala sebenarnya)
+              </p>
+            </div>
+          </section>
+
+          <!-- Section 6: Bumi -->
+          <section id="earth" class="section-content space-y-6">
+            <div class="text-center mb-8">
+              <h2 class="font-space text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-green-300 via-blue-300 to-cyan-300 bg-clip-text text-transparent">
+                🌍 Bumi - Rumah Kita
+              </h2>
+              <p class="text-indigo-200 max-w-2xl mx-auto">
+                Planet istimewa yang mendukung kehidupan
+              </p>
+            </div>
+
+            <!-- Earth Hero -->
+            <div class="planet-card info-box rounded-2xl p-8 text-center">
+              <div class="w-48 h-48 mx-auto bg-gradient-to-br from-blue-400 via-green-400 to-blue-600 rounded-full flex items-center justify-center text-8xl shadow-2xl mb-6 relative overflow-hidden float-animation">
+                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent"></div>
+                🌍
+              </div>
+              <h3 class="font-space text-3xl font-bold text-green-300 mb-2">Planet Bumi</h3>
+              <p class="text-slate-300 max-w-xl mx-auto">
+                Satu-satunya planet yang diketahui memiliki <strong class="text-white">kehidupan</strong>. 
+                Bumi memiliki kondisi yang sempurna untuk mendukung berbagai bentuk kehidupan.
+              </p>
+            </div>
+
+            <!-- Atmosphere Composition -->
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="info-box rounded-2xl p-6">
+                <h3 class="font-space text-xl font-bold text-blue-300 mb-4 flex items-center gap-2">
+                  <span>🌬️</span> Komposisi Atmosfer
+                </h3>
+                <div class="space-y-4">
+                  <div>
+                    <div class="flex justify-between text-sm mb-1">
+                      <span>Nitrogen (N₂)</span>
+                      <span class="text-blue-300 font-bold">78%</span>
+                    </div>
+                    <div class="h-4 bg-slate-700 rounded-full overflow-hidden">
+                      <div class="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full" style="width: 78%"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between text-sm mb-1">
+                      <span>Oksigen (O₂)</span>
+                      <span class="text-green-300 font-bold">21%</span>
+                    </div>
+                    <div class="h-4 bg-slate-700 rounded-full overflow-hidden">
+                      <div class="h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full" style="width: 21%"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between text-sm mb-1">
+                      <span>Gas lain (Ar, CO₂, dll)</span>
+                      <span class="text-gray-300 font-bold">1%</span>
+                    </div>
+                    <div class="h-4 bg-slate-700 rounded-full overflow-hidden">
+                      <div class="h-full bg-gradient-to-r from-gray-500 to-gray-400 rounded-full" style="width: 1%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-box rounded-2xl p-6">
+                <h3 class="font-space text-xl font-bold text-yellow-300 mb-4 flex items-center gap-2">
+                  <span>🛡️</span> Perlindungan Atmosfer
+                </h3>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-3">
+                    <span class="text-2xl">☄️</span>
+                    <div>
+                      <div class="font-semibold text-white">Melindungi dari Meteorit</div>
+                      <div class="text-sm text-slate-400">Meteorit kecil terbakar di atmosfer</div>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="text-2xl">☀️</span>
+                    <div>
+                      <div class="font-semibold text-white">Menyaring Radiasi UV</div>
+                      <div class="text-sm text-slate-400">Lapisan ozon menyerap sinar UV berbahaya</div>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="text-2xl">🌡️</span>
+                    <div>
+                      <div class="font-semibold text-white">Mengatur Suhu</div>
+                      <div class="text-sm text-slate-400">Menjaga suhu stabil untuk kehidupan</div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Moon -->
+            <div class="info-box rounded-2xl p-6">
+              <div class="flex flex-col md:flex-row gap-6 items-center">
+                <div class="md:w-1/3 text-center">
+                  <div class="w-24 h-24 mx-auto bg-gradient-to-br from-gray-200 via-gray-300 to-gray-400 rounded-full flex items-center justify-center text-5xl shadow-xl float-animation">
+                    🌙
+                  </div>
+                  <h3 class="font-space text-xl font-bold text-gray-200 mt-3">Bulan</h3>
+                  <p class="text-sm text-slate-400">Satelit Alami Bumi</p>
+                </div>
+                <div class="md:w-2/3">
+                  <h4 class="font-semibold text-white mb-3">Peran Penting Bulan:</h4>
+                  <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-2xl mb-1">🌊</div>
+                      <div class="text-sm font-medium">Pasang Surut</div>
+                      <div class="text-xs text-slate-400">Gravitasi Bulan menyebabkan pasang surut air laut</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-2xl mb-1">🌓</div>
+                      <div class="text-sm font-medium">Fase Bulan</div>
+                      <div class="text-xs text-slate-400">Purnama, separuh, sabit, bulan baru</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-2xl mb-1">⚖️</div>
+                      <div class="text-sm font-medium">Stabilisasi Sumbu</div>
+                      <div class="text-xs text-slate-400">Menjaga kemiringan Bumi tetap stabil</div>
+                    </div>
+                    <div class="bg-slate-800/50 rounded-lg p-3">
+                      <div class="text-2xl mb-1">🌑</div>
+                      <div class="text-sm font-medium">Gerhana</div>
+                      <div class="text-xs text-slate-400">Gerhana Matahari dan Bulan</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Why Pluto is not a planet -->
+            <div class="bg-gradient-to-r from-purple-900/50 to-indigo-900/50 rounded-2xl p-6 border border-purple-500/30">
+              <h3 class="font-space text-xl font-bold text-purple-300 mb-4 flex items-center gap-2">
+                <span>❓</span> Mengapa Pluto Bukan Planet Utama Lagi?
+              </h3>
+              <div class="grid md:grid-cols-3 gap-4 mb-4">
+                <div class="bg-slate-800/50 rounded-lg p-4 text-center">
+                  <div class="text-3xl mb-2">1️⃣</div>
+                  <div class="font-medium text-white">Mengorbit Matahari</div>
+                  <div class="text-green-400 text-sm">✓ Pluto memenuhi</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-4 text-center">
+                  <div class="text-3xl mb-2">2️⃣</div>
+                  <div class="font-medium text-white">Massa cukup untuk bentuk bulat</div>
+                  <div class="text-green-400 text-sm">✓ Pluto memenuhi</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-4 text-center">
+                  <div class="text-3xl mb-2">3️⃣</div>
+                  <div class="font-medium text-white">Membersihkan orbitnya</div>
+                  <div class="text-red-400 text-sm">✗ Pluto TIDAK memenuhi</div>
+                </div>
+              </div>
+              <p class="text-slate-300 text-sm">
+                Pada tahun <strong class="text-white">2006</strong>, IAU (International Astronomical Union) menetapkan definisi baru untuk planet. 
+                Pluto tidak memenuhi kriteria ketiga karena orbitnya berada di <strong class="text-purple-300">Sabuk Kuiper</strong> yang penuh dengan objek lain. 
+                Pluto kini diklasifikasikan sebagai <strong class="text-white">planet kerdil</strong>.
+              </p>
+            </div>
+
+            <!-- Moral Message -->
+            <div class="bg-gradient-to-r from-emerald-900/50 to-teal-900/50 rounded-2xl p-6 border border-emerald-500/30">
+              <div class="flex items-start gap-4">
+                <div class="text-5xl">🙏</div>
+                <div>
+                  <h4 class="font-space text-xl font-bold text-emerald-300 mb-2">Pesan Moral</h4>
+                  <p class="text-slate-200 leading-relaxed">
+                    Tuhan telah menciptakan sistem alam semesta yang <strong class="text-white">teratur</strong> agar manusia dapat hidup dengan nyaman di Bumi. 
+                    Atmosfer yang melindungi, air yang berlimpah, dan suhu yang tepat adalah anugerah yang harus kita syukuri dan jaga.
+                  </p>
+                  <p class="text-emerald-300 mt-3 italic">
+                    "Sesungguhnya dalam penciptaan langit dan bumi, dan silih bergantinya malam dan siang terdapat tanda-tanda bagi orang-orang yang berakal."
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Section 7: Quiz HOTS -->
+          <section id="quiz" class="section-content space-y-6">
+            <div class="text-center mb-8">
+              <h2 class="font-space text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-yellow-300 via-orange-300 to-red-300 bg-clip-text text-transparent">
+                📝 Kuis HOTS
+              </h2>
+              <p class="text-indigo-200 max-w-2xl mx-auto">
+                10 Soal Higher Order Thinking Skills untuk menguji pemahamanmu
+              </p>
+            </div>
+
+            <!-- Progress -->
+            <div class="info-box rounded-xl p-4">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-slate-400">Progres Kuis</span>
+                <span id="quizProgress" class="text-sm font-bold text-white">0/10</span>
+              </div>
+              <div class="h-3 bg-slate-700 rounded-full overflow-hidden">
+                <div id="progressBar" class="h-full progress-bar rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <!-- Score Display (Hidden initially) -->
+            <div id="scoreDisplay" class="hidden info-box rounded-2xl p-8 text-center">
+              <div class="text-6xl mb-4">🏆</div>
+              <h3 class="font-space text-2xl font-bold text-yellow-300 mb-2">Hasil Kuis</h3>
+              <div id="finalScore" class="text-5xl font-bold text-white mb-4">0/10</div>
+              <p id="scoreMessage" class="text-slate-300 mb-6"></p>
+              <button onclick="resetQuiz()" class="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-xl font-semibold transition-all">
+                🔄 Ulangi Kuis
+              </button>
+            </div>
+
+            <!-- Quiz Container -->
+            <div id="quizContainer" class="space-y-6">
+              <!-- Questions will be rendered here -->
+            </div>
+
+            <!-- Submit Button -->
+            <div id="submitSection" class="text-center hidden">
+              <button onclick="submitQuiz()" class="px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 rounded-xl font-bold text-lg transition-all transform hover:scale-105 shadow-lg">
+                ✅ Selesai & Lihat Hasil
+              </button>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-slate-900/80 backdrop-blur-sm border-t border-slate-700/50 px-4 py-6 mt-8">
+          <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <img src="https://i.imgur.com/mRmw86t.jpeg" alt="Pembuat" class="w-12 h-12 rounded-full border-2 border-indigo-500 object-cover" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #6366f1, #8b5cf6)'; this.alt='👨‍🏫';">
+                <div>
+                  <p id="creatorName" class="font-semibold text-white">Algian Manggara, S.Agr</p>
+                  <p class="text-xs text-slate-400">Pembuat Materi</p>
+                </div>
+              </div>
+              <div class="text-center md:text-right">
+                <p class="text-sm text-slate-400">© 2026 <span class="text-white">Algian Manggara, S.Agr</span></p>
+                <p class="text-xs text-slate-500">Media Pembelajaran IPA - Tata Surya</p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Default config
+    const defaultConfig = {
+      main_title: 'Menjelajahi Tata Surya',
+      creator_name: 'Algian Manggara, S.Agr',
+      background_color: '#0a0a1a',
+      surface_color: '#1e293b',
+      text_color: '#e2e8f0',
+      primary_action: '#6366f1',
+      secondary_action: '#8b5cf6'
+    };
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          const title = config.main_title || defaultConfig.main_title;
+          const creator = config.creator_name || defaultConfig.creator_name;
+          
+          document.getElementById('mainTitle').textContent = title;
+          document.getElementById('creatorName').textContent = creator;
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.primary_action || defaultConfig.primary_action,
+              set: (value) => window.elementSdk.setConfig({ primary_action: value })
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['main_title', config.main_title || defaultConfig.main_title],
+          ['creator_name', config.creator_name || defaultConfig.creator_name]
+        ])
+      });
+    }
+
+    // Navigation
+    function showSection(sectionId) {
+      document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      
+      document.getElementById(sectionId).classList.add('active');
+      document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+      
+      document.querySelector('.scroll-container').scrollTop = 0;
+      
+      if (sectionId === 'quiz' && !quizInitialized) {
+        initQuiz();
+      }
+    }
+
+    // Rotation/Revolution Demo
+    let rotationPaused = false;
+    let revolutionPaused = false;
+
+    function toggleRotation() {
+      const demo = document.getElementById('rotationDemo');
+      rotationPaused = !rotationPaused;
+      demo.style.animationPlayState = rotationPaused ? 'paused' : 'running';
+    }
+
+    function toggleRevolution() {
+      const demo = document.getElementById('revolutionDemo');
+      revolutionPaused = !revolutionPaused;
+      demo.style.animationPlayState = revolutionPaused ? 'paused' : 'running';
+    }
+
+    // Classification Activity
+    const classifications = {
+      merkurius: { name: 'Merkurius', position: 'Inferior', belt: 'Dalam', type: 'Terestrial' },
+      venus: { name: 'Venus', position: 'Inferior', belt: 'Dalam', type: 'Terestrial' },
+      bumi: { name: 'Bumi', position: '-', belt: 'Dalam', type: 'Terestrial' },
+      mars: { name: 'Mars', position: 'Superior', belt: 'Dalam', type: 'Terestrial' },
+      jupiter: { name: 'Jupiter', position: 'Superior', belt: 'Luar', type: 'Jovian' },
+      saturnus: { name: 'Saturnus', position: 'Superior', belt: 'Luar', type: 'Jovian' },
+      uranus: { name: 'Uranus', position: 'Superior', belt: 'Luar', type: 'Jovian' },
+      neptunus: { name: 'Neptunus', position: 'Superior', belt: 'Luar', type: 'Jovian' }
+    };
+
+    function showClassification(planet) {
+      const data = classifications[planet];
+      const result = document.getElementById('classificationResult');
+      result.classList.remove('hidden');
+      result.innerHTML = `
+        <h4 class="font-bold text-lg text-white mb-3">${data.name}</h4>
+        <div class="grid grid-cols-3 gap-4">
+          <div class="bg-amber-900/30 rounded-lg p-3">
+            <div class="text-xs text-slate-400">Posisi thd Bumi</div>
+            <div class="font-bold text-amber-300">${data.position}</div>
+          </div>
+          <div class="bg-teal-900/30 rounded-lg p-3">
+            <div class="text-xs text-slate-400">Sabuk Asteroid</div>
+            <div class="font-bold text-teal-300">Planet ${data.belt}</div>
+          </div>
+          <div class="bg-purple-900/30 rounded-lg p-3">
+            <div class="text-xs text-slate-400">Komposisi</div>
+            <div class="font-bold text-purple-300">${data.type}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Quiz System
+    let quizInitialized = false;
+    let userAnswers = {};
+    
+    const quizQuestions = [
+      {
+        id: 1,
+        question: "Mengapa Venus lebih panas dari Merkurius padahal Merkurius lebih dekat ke Matahari?",
+        options: [
+          "Venus memiliki atmosfer CO₂ tebal yang memerangkap panas (efek rumah kaca)",
+          "Venus berputar lebih lambat sehingga terkena sinar Matahari lebih lama",
+          "Venus memiliki inti yang lebih panas dari Merkurius",
+          "Merkurius memiliki es di kutubnya yang mendinginkan planet"
+        ],
+        correct: 0,
+        explanation: "Atmosfer Venus yang sangat tebal (96% CO₂) memerangkap panas Matahari melalui efek rumah kaca yang ekstrem, sehingga suhunya mencapai 460°C, lebih panas dari Merkurius yang hanya 430°C."
+      },
+      {
+        id: 2,
+        question: "Sebuah pesawat ruang angkasa menempuh jarak 1 AU dalam waktu 6 bulan. Berapa lama waktu yang dibutuhkan untuk mencapai Jupiter (5.2 AU)?",
+        options: [
+          "15.6 bulan",
+          "26 bulan",
+          "31.2 bulan",
+          "52 bulan"
+        ],
+        correct: 2,
+        explanation: "Jika 1 AU = 6 bulan, maka 5.2 AU = 5.2 × 6 = 31.2 bulan. Ini mengasumsikan kecepatan konstan dan lintasan lurus."
+      },
+      {
+        id: 3,
+        question: "Mengapa planet Jovian tidak bisa memiliki kehidupan seperti di Bumi?",
+        options: [
+          "Karena terlalu jauh dari Matahari dan sangat dingin",
+          "Karena tidak memiliki permukaan padat dan tersusun dari gas bertekanan tinggi",
+          "Karena memiliki terlalu banyak satelit yang menghalangi cahaya",
+          "Karena rotasinya terlalu cepat"
+        ],
+        correct: 1,
+        explanation: "Planet Jovian tidak memiliki permukaan padat seperti Bumi. Mereka tersusun dari gas (hidrogen dan helium) yang semakin padat ke arah inti. Tidak ada tempat untuk makhluk hidup berpijak dan tekanannya sangat tinggi."
+      },
+      {
+        id: 4,
+        question: "Jika seorang astronot berdiri di Merkurius saat siang hari, pengalaman apa yang paling berbahaya baginya?",
+        options: [
+          "Tidak ada gravitasi sehingga akan melayang",
+          "Suhu ekstrem 430°C dan tidak ada atmosfer untuk melindungi dari radiasi",
+          "Angin kencang yang bisa meniupnya ke luar angkasa",
+          "Badai pasir seperti di Mars"
+        ],
+        correct: 1,
+        explanation: "Merkurius memiliki suhu siang hari mencapai 430°C yang bisa melelehkan timah. Tanpa atmosfer yang signifikan, tidak ada perlindungan dari radiasi Matahari langsung dan tidak ada medium untuk mendistribusikan panas."
+      },
+      {
+        id: 5,
+        question: "Mengapa Saturnus bisa mengapung di air (jika ada kolam yang cukup besar)?",
+        options: [
+          "Karena Saturnus adalah planet terkecil",
+          "Karena kepadatan rata-rata Saturnus lebih rendah dari kepadatan air",
+          "Karena cincinnya membuat Saturnus lebih ringan",
+          "Karena Saturnus tersusun dari es"
+        ],
+        correct: 1,
+        explanation: "Kepadatan rata-rata Saturnus adalah 0.687 g/cm³, sedangkan air adalah 1 g/cm³. Karena Saturnus tersusun dari gas ringan (hidrogen dan helium), kepadatannya lebih rendah dari air, sehingga secara teoritis bisa mengapung."
+      },
+      {
+        id: 6,
+        question: "Analisis mengapa Pluto tidak lagi dianggap sebagai planet utama berdasarkan definisi IAU 2006!",
+        options: [
+          "Karena Pluto terlalu kecil dan terlalu jauh dari Matahari",
+          "Karena Pluto tidak mengorbit Matahari dengan benar",
+          "Karena Pluto tidak membersihkan lingkungan orbitnya dari benda langit lain",
+          "Karena Pluto tidak berbentuk bulat sempurna"
+        ],
+        correct: 2,
+        explanation: "Menurut IAU, planet harus: (1) mengorbit Matahari, (2) bermassa cukup untuk berbentuk bulat, dan (3) membersihkan lingkungan orbitnya. Pluto memenuhi kriteria 1 dan 2, tetapi orbitnya berada di Sabuk Kuiper yang penuh objek lain."
+      },
+      {
+        id: 7,
+        question: "Bagaimana perbedaan mendasar antara rotasi Venus dan planet lainnya, dan apa akibatnya?",
+        options: [
+          "Venus tidak berotasi sama sekali, sehingga satu sisi selalu panas",
+          "Venus berotasi retrograde (timur ke barat), sehingga matahari terbit di barat",
+          "Venus berotasi sangat cepat, sehingga harinya sangat pendek",
+          "Venus berotasi pada sumbunya yang tegak lurus, sehingga tidak ada musim"
+        ],
+        correct: 1,
+        explanation: "Venus berotasi dari timur ke barat (retrograde), berlawanan dengan rotasi planet lain. Akibatnya, jika seseorang bisa berdiri di Venus, Matahari akan terbit dari barat dan terbenam di timur."
+      },
+      {
+        id: 8,
+        question: "Evaluasi peran Bulan dalam menjaga kestabilan kehidupan di Bumi!",
+        options: [
+          "Bulan hanya memberikan cahaya di malam hari",
+          "Bulan menyebabkan pasang surut, menstabilkan kemiringan sumbu Bumi, dan memperlambat rotasi Bumi",
+          "Bulan hanya penting untuk penanggalan kalender",
+          "Bulan melindungi Bumi dari asteroid"
+        ],
+        correct: 1,
+        explanation: "Bulan memiliki peran krusial: gravitasinya menyebabkan pasang surut yang penting untuk ekosistem pesisir, menstabilkan kemiringan sumbu Bumi (23.5°) sehingga musim tetap teratur, dan interaksi gravitasinya memperlambat rotasi Bumi secara bertahap."
+      },
+      {
+        id: 9,
+        question: "Jika Bumi tidak memiliki atmosfer, perubahan apa yang paling signifikan terjadi?",
+        options: [
+          "Langit akan berwarna merah sepanjang waktu",
+          "Suhu akan ekstrem (sangat panas siang, sangat dingin malam), tidak ada perlindungan radiasi, dan tidak ada suara",
+          "Gravitasi Bumi akan berkurang drastis",
+          "Semua air di Bumi akan langsung menguap ke luar angkasa"
+        ],
+        correct: 1,
+        explanation: "Tanpa atmosfer: (1) tidak ada insulasi termal sehingga suhu ekstrem seperti Bulan, (2) tidak ada perlindungan dari radiasi UV dan kosmik, (3) tidak ada medium untuk gelombang suara, (4) tidak ada cuaca, dan (5) tekanan akan sangat rendah sehingga air langsung mendidih."
+      },
+      {
+        id: 10,
+        question: "Berdasarkan data periode revolusi, planet manakah yang paling sering mengalami 'tahun baru' dalam 100 tahun Bumi?",
+        options: [
+          "Merkurius (88 hari) - sekitar 414 kali",
+          "Venus (225 hari) - sekitar 162 kali",
+          "Mars (687 hari) - sekitar 53 kali",
+          "Jupiter (12 tahun) - sekitar 8 kali"
+        ],
+        correct: 0,
+        explanation: "Dalam 100 tahun Bumi: Merkurius = 100×365/88 ≈ 414 revolusi (tahun baru), Venus = 100×365/225 ≈ 162 kali, Mars = 100×365/687 ≈ 53 kali, Jupiter = 100/12 ≈ 8 kali. Merkurius paling sering karena orbitnya paling pendek."
+      }
+    ];
+
+    function initQuiz() {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = '';
+      
+      quizQuestions.forEach((q, index) => {
+        const questionHTML = `
+          <div class="info-box rounded-2xl p-6" id="question-${q.id}">
+            <div class="flex items-start gap-4 mb-4">
+              <span class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full flex items-center justify-center font-bold text-lg">
+                ${index + 1}
+              </span>
+              <p class="text-white font-medium leading-relaxed">${q.question}</p>
+            </div>
+            <div class="space-y-3 ml-14">
+              ${q.options.map((opt, i) => `
+                <button 
+                  onclick="selectAnswer(${q.id}, ${i})"
+                  class="quiz-option w-full text-left p-4 rounded-xl border border-slate-600 bg-slate-800/30 hover:border-indigo-500 transition-all"
+                  data-question="${q.id}"
+                  data-option="${i}"
+                >
+                  <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-slate-700 text-sm font-bold mr-3">
+                    ${String.fromCharCode(65 + i)}
+                  </span>
+                  ${opt}
+                </button>
+              `).join('')}
+            </div>
+            <div class="explanation hidden mt-4 ml-14 p-4 rounded-xl bg-gradient-to-r from-indigo-900/50 to-purple-900/50 border border-indigo-500/30" id="explanation-${q.id}">
+              <div class="flex items-start gap-2">
+                <span class="text-xl">💡</span>
+                <div>
+                  <span class="font-semibold text-indigo-300">Penjelasan:</span>
+                  <p class="text-slate-300 text-sm mt-1">${q.explanation}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        container.innerHTML += questionHTML;
+      });
+      
+      quizInitialized = true;
+      updateProgress();
+    }
+
+    function selectAnswer(questionId, optionIndex) {
+      userAnswers[questionId] = optionIndex;
+      
+      const buttons = document.querySelectorAll(`[data-question="${questionId}"]`);
+      buttons.forEach(btn => {
+        btn.classList.remove('selected');
+        if (parseInt(btn.dataset.option) === optionIndex) {
+          btn.classList.add('selected');
+        }
+      });
+      
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const answered = Object.keys(userAnswers).length;
+      const total = quizQuestions.length;
+      const percentage = (answered / total) * 100;
+      
+      document.getElementById('quizProgress').textContent = `${answered}/${total}`;
+      document.getElementById('progressBar').style.width = `${percentage}%`;
+      
+      if (answered === total) {
+        document.getElementById('submitSection').classList.remove('hidden');
+      }
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      
+      quizQuestions.forEach(q => {
+        const userAnswer = userAnswers[q.id];
+        const buttons = document.querySelectorAll(`[data-question="${q.id}"]`);
+        
+        buttons.forEach(btn => {
+          btn.disabled = true;
+          const optIndex = parseInt(btn.dataset.option);
+          
+          if (optIndex === q.correct) {
+            btn.classList.add('correct');
+          } else if (optIndex === userAnswer && userAnswer !== q.correct) {
+            btn.classList.add('incorrect');
+          }
+        });
+        
+        if (userAnswer === q.correct) {
+          score++;
+        }
+        
+        document.getElementById(`explanation-${q.id}`).classList.remove('hidden');
+      });
+      
+      document.getElementById('submitSection').classList.add('hidden');
+      document.getElementById('scoreDisplay').classList.remove('hidden');
+      document.getElementById('finalScore').textContent = `${score}/10`;
+      
+      let message = '';
+      if (score === 10) {
+        message = '🌟 Luar Biasa! Kamu menguasai materi tata surya dengan sempurna!';
+      } else if (score >= 8) {
+        message = '👏 Hebat! Pemahamanmu tentang tata surya sangat baik!';
+      } else if (score >= 6) {
+        message = '👍 Bagus! Terus belajar untuk meningkatkan pemahamanmu!';
+      } else if (score >= 4) {
+        message = '📚 Cukup baik. Pelajari kembali materi yang belum dipahami!';
+      } else {
+        message = '💪 Jangan menyerah! Baca ulang materinya dan coba lagi!';
+      }
+      document.getElementById('scoreMessage').textContent = message;
+      
+      document.querySelector('.scroll-container').scrollTop = 0;
+    }
+
+    function resetQuiz() {
+      userAnswers = {};
+      quizInitialized = false;
+      
+      document.getElementById('scoreDisplay').classList.add('hidden');
+      document.getElementById('submitSection').classList.add('hidden');
+      
+      initQuiz();
+    }
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cfbacb7f7ff6d1b',t:'MTc3MTM5ODMxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

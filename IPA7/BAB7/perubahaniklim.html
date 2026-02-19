@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perubahan Iklim Bumi - Media Pembelajaran</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { font-family: 'Nunito', sans-serif; }
+    .title-font { font-family: 'Playfair Display', serif; }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #0c4a6e 0%, #164e63 50%, #134e4a 100%);
+    }
+    
+    .card-glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:hover, .nav-item.active {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(5px);
+    }
+    
+    .content-section {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .content-section.active {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .quiz-option:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .quiz-option.selected {
+      border-color: #0891b2;
+      background: #ecfeff;
+    }
+    
+    .quiz-option.correct {
+      border-color: #10b981;
+      background: #d1fae5;
+    }
+    
+    .quiz-option.incorrect {
+      border-color: #ef4444;
+      background: #fee2e2;
+    }
+    
+    .progress-ring {
+      transform: rotate(-90deg);
+    }
+    
+    .impact-card {
+      transition: all 0.4s ease;
+    }
+    
+    .impact-card:hover {
+      transform: translateY(-8px);
+    }
+    
+    .fact-box {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-left: 4px solid #f59e0b;
+    }
+    
+    .scroll-container {
+      scrollbar-width: thin;
+      scrollbar-color: #0891b2 #e5e7eb;
+    }
+    
+    .scroll-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-track {
+      background: #e5e7eb;
+      border-radius: 3px;
+    }
+    
+    .scroll-container::-webkit-scrollbar-thumb {
+      background: #0891b2;
+      border-radius: 3px;
+    }
+    
+    .illustration-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    
+    .illustration-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      padding: 20px;
+    }
+  </style>
+</head>
+<body class="h-full gradient-bg">
+  <div class="h-full flex flex-col lg:flex-row overflow-hidden">
+    
+    <!-- Sidebar Navigation -->
+    <nav class="lg:w-72 bg-slate-900/50 backdrop-blur-lg p-4 lg:p-6 flex-shrink-0">
+      <div class="flex items-center gap-3 mb-6 lg:mb-8">
+        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-teal-500 flex items-center justify-center float-animation">
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 id="main-title" class="text-white font-bold text-lg">Perubahan Iklim</h1>
+          <p class="text-cyan-300 text-sm">Media Pembelajaran</p>
+        </div>
+      </div>
+      
+      <div class="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
+        <button onclick="showSection('intro')" class="nav-item active flex items-center gap-3 px-4 py-3 rounded-xl text-white text-left whitespace-nowrap" data-section="intro">
+          <span class="text-xl">🌍</span>
+          <span class="text-sm font-medium">Apa itu Perubahan Iklim?</span>
+        </button>
+        <button onclick="showSection('dampak')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-white text-left whitespace-nowrap" data-section="dampak">
+          <span class="text-xl">⚠️</span>
+          <span class="text-sm font-medium">Dampak Nyata</span>
+        </button>
+        <button onclick="showSection('faktor')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-white text-left whitespace-nowrap" data-section="faktor">
+          <span class="text-xl">🔬</span>
+          <span class="text-sm font-medium">Faktor Alami</span>
+        </button>
+        <button onclick="showSection('studi')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-white text-left whitespace-nowrap" data-section="studi">
+          <span class="text-xl">⛏️</span>
+          <span class="text-sm font-medium">Studi Kasus</span>
+        </button>
+        <button onclick="showSection('fakta')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-white text-left whitespace-nowrap" data-section="fakta">
+          <span class="text-xl">💡</span>
+          <span class="text-sm font-medium">Fakta Menarik</span>
+        </button>
+        <button onclick="showSection('aktivitas')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-white text-left whitespace-nowrap" data-section="aktivitas">
+          <span class="text-xl">🎯</span>
+          <span class="text-sm font-medium">Aktivitas Interaktif</span>
+        </button>
+        <button onclick="showSection('quiz')" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-white text-left whitespace-nowrap" data-section="quiz">
+          <span class="text-xl">📝</span>
+          <span class="text-sm font-medium">Soal HOTS</span>
+        </button>
+      </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="flex-1 overflow-auto scroll-container p-4 lg:p-8">
+      
+      <!-- Section 1: Intro -->
+      <section id="intro" class="content-section active">
+        <div class="card-glass rounded-3xl p-6 lg:p-8 shadow-2xl max-w-5xl mx-auto">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-teal-600 flex items-center justify-center">
+              <span class="text-3xl">🌍</span>
+            </div>
+            <div>
+              <h2 class="title-font text-2xl lg:text-3xl font-bold text-slate-800">Apa itu Perubahan Iklim?</h2>
+              <p class="text-slate-500">Memahami dasar-dasar perubahan iklim global</p>
+            </div>
+          </div>
+          
+          <!-- Ilustrasi -->
+          <div class="illustration-container mb-8 h-64 lg:h-80">
+            <img src="https://images.unsplash.com/photo-1569163139599-0f4517e36f51?w=1200&h=600&fit=crop" 
+                 alt="Bumi dari luar angkasa menunjukkan atmosfer dan awan" 
+                 class="w-full h-full object-cover"
+                 loading="lazy"
+                 onerror="this.style.background='linear-gradient(135deg, #0c4a6e 0%, #164e63 100%)'; this.alt='Ilustrasi Bumi';">
+            <div class="illustration-overlay">
+              <p class="text-white font-semibold text-lg">Planet Bumi dan atmosfernya yang terus berubah</p>
+              <p class="text-cyan-200 text-sm">Perubahan iklim memengaruhi seluruh sistem kehidupan di Bumi</p>
+            </div>
+          </div>
+          
+          <div class="grid lg:grid-cols-2 gap-6 mb-8">
+            <div class="bg-gradient-to-br from-cyan-50 to-teal-50 rounded-2xl p-6 border-2 border-cyan-200">
+              <h3 class="font-bold text-xl text-cyan-800 mb-3 flex items-center gap-2">
+                <span class="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center text-white text-sm">📖</span>
+                Definisi
+              </h3>
+              <p class="text-slate-700 leading-relaxed">
+                <strong>Perubahan iklim</strong> adalah perubahan jangka panjang dalam pola cuaca dan suhu rata-rata di Bumi. 
+                Ini bukan sekadar perubahan cuaca harian, melainkan pergeseran signifikan yang terjadi dalam skala waktu yang sangat panjang.
+              </p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border-2 border-amber-200">
+              <h3 class="font-bold text-xl text-amber-800 mb-3 flex items-center gap-2">
+                <span class="w-8 h-8 bg-amber-500 rounded-lg flex items-center justify-center text-white text-sm">⏱️</span>
+                Sifat Perubahan
+              </h3>
+              <p class="text-slate-700 leading-relaxed">
+                Secara alami, perubahan iklim berlangsung <strong>sangat lambat</strong> — puluhan hingga jutaan tahun — sehingga 
+                hampir tidak terasa oleh manusia dalam satu generasi. Namun, aktivitas manusia modern telah mempercepat proses ini secara drastis.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Perbedaan Cuaca vs Iklim -->
+          <div class="bg-slate-100 rounded-2xl p-6 mb-6">
+            <h3 class="font-bold text-xl text-slate-800 mb-4">🔄 Perbedaan Cuaca dan Iklim</h3>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="bg-white rounded-xl p-4 border-l-4 border-blue-500">
+                <h4 class="font-bold text-blue-700 mb-2">☁️ Cuaca</h4>
+                <ul class="text-slate-600 text-sm space-y-1">
+                  <li>• Kondisi atmosfer dalam waktu singkat</li>
+                  <li>• Berubah dalam hitungan jam/hari</li>
+                  <li>• Contoh: hujan hari ini, panas besok</li>
+                </ul>
+              </div>
+              <div class="bg-white rounded-xl p-4 border-l-4 border-teal-500">
+                <h4 class="font-bold text-teal-700 mb-2">🌡️ Iklim</h4>
+                <ul class="text-slate-600 text-sm space-y-1">
+                  <li>• Rata-rata kondisi atmosfer jangka panjang</li>
+                  <li>• Berubah dalam puluhan/ribuan tahun</li>
+                  <li>• Contoh: Indonesia beriklim tropis</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-gradient-to-r from-rose-50 to-pink-50 rounded-2xl p-6 border-2 border-rose-200">
+            <h3 class="font-bold text-xl text-rose-800 mb-3 flex items-center gap-2">
+              <span class="w-8 h-8 bg-rose-500 rounded-lg flex items-center justify-center text-white text-sm">⚡</span>
+              Faktor Pemicu
+            </h3>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="bg-white/70 rounded-xl p-4">
+                <h4 class="font-semibold text-slate-800 mb-2">🌋 Aktivitas Alami</h4>
+                <ul class="text-slate-600 text-sm space-y-1">
+                  <li>• Letusan gunung berapi</li>
+                  <li>• Perubahan orbit Bumi</li>
+                  <li>• Variasi aktivitas matahari</li>
+                  <li>• Pergerakan lempeng tektonik</li>
+                </ul>
+              </div>
+              <div class="bg-white/70 rounded-xl p-4">
+                <h4 class="font-semibold text-slate-800 mb-2">🏭 Aktivitas Manusia</h4>
+                <ul class="text-slate-600 text-sm space-y-1">
+                  <li>• Pembakaran bahan bakar fosil</li>
+                  <li>• Deforestasi skala besar</li>
+                  <li>• Industrialisasi masif</li>
+                  <li>• Pertanian intensif</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Section 2: Dampak -->
+      <section id="dampak" class="content-section">
+        <div class="card-glass rounded-3xl p-6 lg:p-8 shadow-2xl max-w-5xl mx-auto">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-orange-600 flex items-center justify-center">
+              <span class="text-3xl">⚠️</span>
+            </div>
+            <div>
+              <h2 class="title-font text-2xl lg:text-3xl font-bold text-slate-800">Dampak Nyata Perubahan Iklim</h2>
+              <p class="text-slate-500">Bukti perubahan yang sudah terjadi di seluruh dunia</p>
+            </div>
+          </div>
+          
+          <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-4 mb-8">
+            <p class="text-red-800 font-medium text-center">
+              ⚡ Perubahan iklim bukan sekadar teori — dampaknya sudah terlihat nyata di berbagai belahan dunia, termasuk Indonesia!
+            </p>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <!-- Dampak 1 -->
+            <div class="impact-card bg-gradient-to-br from-orange-100 to-red-100 rounded-2xl overflow-hidden shadow-lg">
+              <div class="h-40 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=600&h=300&fit=crop" 
+                     alt="Lahan kering akibat gelombang panas dan kekeringan"
+                     class="w-full h-full object-cover"
+                     loading="lazy"
+                     onerror="this.style.background='linear-gradient(135deg, #f97316 0%, #dc2626 100%)'; this.alt='Ilustrasi Kekeringan';">
+              </div>
+              <div class="p-5">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="text-2xl">🌡️</span>
+                  <h3 class="font-bold text-lg text-orange-800">Kenaikan Suhu Global</h3>
+                </div>
+                <ul class="text-slate-700 text-sm space-y-2">
+                  <li class="flex items-start gap-2">
+                    <span class="text-orange-500 mt-1">•</span>
+                    <span>Gelombang panas ekstrem semakin sering terjadi</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-orange-500 mt-1">•</span>
+                    <span>Kekeringan berkepanjangan di berbagai wilayah</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-orange-500 mt-1">•</span>
+                    <span>Gagal panen dan krisis pangan</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-orange-500 mt-1">•</span>
+                    <span>Kebakaran hutan meningkat drastis</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <!-- Dampak 2 -->
+            <div class="impact-card bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl overflow-hidden shadow-lg">
+              <div class="h-40 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1551524164-687a55dd1126?w=600&h=300&fit=crop" 
+                     alt="Es kutub yang mencair karena pemanasan global"
+                     class="w-full h-full object-cover"
+                     loading="lazy"
+                     onerror="this.style.background='linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%)'; this.alt='Ilustrasi Pencairan Es';">
+              </div>
+              <div class="p-5">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="text-2xl">🧊</span>
+                  <h3 class="font-bold text-lg text-blue-800">Pencairan Es & Kenaikan Laut</h3>
+                </div>
+                <ul class="text-slate-700 text-sm space-y-2">
+                  <li class="flex items-start gap-2">
+                    <span class="text-blue-500 mt-1">•</span>
+                    <span>Es di Kutub Utara dan Selatan mencair cepat</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-blue-500 mt-1">•</span>
+                    <span>Gletser di pegunungan menyusut drastis</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-blue-500 mt-1">•</span>
+                    <span>Permukaan air laut naik mengancam pesisir</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-blue-500 mt-1">•</span>
+                    <span>Pulau-pulau kecil terancam tenggelam</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <!-- Dampak 3 -->
+            <div class="impact-card bg-gradient-to-br from-teal-100 to-emerald-100 rounded-2xl overflow-hidden shadow-lg">
+              <div class="h-40 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1446034295857-c39f8844fad4?w=600&h=300&fit=crop" 
+                     alt="Banjir besar melanda pemukiman penduduk"
+                     class="w-full h-full object-cover"
+                     loading="lazy"
+                     onerror="this.style.background='linear-gradient(135deg, #14b8a6 0%, #10b981 100%)'; this.alt='Ilustrasi Banjir';">
+              </div>
+              <div class="p-5">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="text-2xl">🌧️</span>
+                  <h3 class="font-bold text-lg text-teal-800">Pola Hujan Tidak Menentu</h3>
+                </div>
+                <ul class="text-slate-700 text-sm space-y-2">
+                  <li class="flex items-start gap-2">
+                    <span class="text-teal-500 mt-1">•</span>
+                    <span>Banjir besar di beberapa daerah</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-teal-500 mt-1">•</span>
+                    <span>Kekeringan ekstrem di wilayah lain</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-teal-500 mt-1">•</span>
+                    <span>Musim tanam petani terganggu</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-teal-500 mt-1">•</span>
+                    <span>Krisis air bersih di berbagai wilayah</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <!-- Dampak 4 -->
+            <div class="impact-card bg-gradient-to-br from-purple-100 to-violet-100 rounded-2xl overflow-hidden shadow-lg">
+              <div class="h-40 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1527482797697-8795b05a13fe?w=600&h=300&fit=crop" 
+                     alt="Badai tropis dahsyat melanda wilayah pesisir"
+                     class="w-full h-full object-cover"
+                     loading="lazy"
+                     onerror="this.style.background='linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%)'; this.alt='Ilustrasi Badai';">
+              </div>
+              <div class="p-5">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="text-2xl">🌪️</span>
+                  <h3 class="font-bold text-lg text-purple-800">Cuaca Ekstrem</h3>
+                </div>
+                <ul class="text-slate-700 text-sm space-y-2">
+                  <li class="flex items-start gap-2">
+                    <span class="text-purple-500 mt-1">•</span>
+                    <span>Badai dan topan semakin kuat</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-purple-500 mt-1">•</span>
+                    <span>Tornado lebih sering terjadi</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-purple-500 mt-1">•</span>
+                    <span>Cuaca sulit diprediksi</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-purple-500 mt-1">•</span>
+                    <span>Kerugian ekonomi meningkat tajam</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Dampak di Indonesia -->
+          <div class="bg-gradient-to-r from-red-50 via-white to-red-50 border-2 border-red-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-red-800 mb-4 flex items-center gap-2">
+              🇮🇩 Dampak di Indonesia
+            </h3>
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="bg-white rounded-xl p-4 shadow-sm">
+                <div class="text-3xl mb-2">🌊</div>
+                <h4 class="font-semibold text-slate-800 mb-1">Rob & Banjir Pesisir</h4>
+                <p class="text-slate-600 text-sm">Jakarta, Semarang, dan kota pesisir lainnya mengalami banjir rob semakin sering</p>
+              </div>
+              <div class="bg-white rounded-xl p-4 shadow-sm">
+                <div class="text-3xl mb-2">🔥</div>
+                <h4 class="font-semibold text-slate-800 mb-1">Kebakaran Hutan</h4>
+                <p class="text-slate-600 text-sm">Kalimantan dan Sumatera mengalami kebakaran hutan parah setiap tahun</p>
+              </div>
+              <div class="bg-white rounded-xl p-4 shadow-sm">
+                <div class="text-3xl mb-2">🌾</div>
+                <h4 class="font-semibold text-slate-800 mb-1">Gagal Panen</h4>
+                <p class="text-slate-600 text-sm">Petani kesulitan menentukan musim tanam akibat cuaca tidak menentu</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Section 3: Faktor Alami -->
+      <section id="faktor" class="content-section">
+        <div class="card-glass rounded-3xl p-6 lg:p-8 shadow-2xl max-w-5xl mx-auto">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+              <span class="text-3xl">🔬</span>
+            </div>
+            <div>
+              <h2 class="title-font text-2xl lg:text-3xl font-bold text-slate-800">Faktor Alami Penyebab Perubahan Iklim</h2>
+              <p class="text-slate-500">Faktor luar angkasa dan geologi yang memengaruhi iklim</p>
+            </div>
+          </div>
+          
+          <!-- Ilustrasi Utama -->
+          <div class="illustration-container mb-8 h-56">
+            <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1200&h=500&fit=crop" 
+                 alt="Tata surya dan orbit planet Bumi mengelilingi matahari"
+                 class="w-full h-full object-cover"
+                 loading="lazy"
+                 onerror="this.style.background='linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)'; this.alt='Ilustrasi Tata Surya';">
+            <div class="illustration-overlay">
+              <p class="text-white font-semibold">Pergerakan Bumi dan Matahari memengaruhi iklim jangka panjang</p>
+            </div>
+          </div>
+          
+          <div class="space-y-6">
+            <!-- Faktor 1 -->
+            <div class="bg-gradient-to-r from-indigo-50 to-violet-50 rounded-2xl p-6 border-l-4 border-indigo-500">
+              <div class="flex flex-col lg:flex-row gap-6">
+                <div class="lg:w-1/3">
+                  <img src="https://images.unsplash.com/photo-1614642264762-d0a3b8bf3700?w=400&h=300&fit=crop" 
+                       alt="Visualisasi orbit elips Bumi mengelilingi matahari"
+                       class="w-full h-40 object-cover rounded-xl"
+                       loading="lazy"
+                       onerror="this.style.background='linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)'; this.alt='Orbit Bumi';">
+                </div>
+                <div class="lg:w-2/3">
+                  <h3 class="font-bold text-xl text-indigo-800 mb-3 flex items-center gap-2">
+                    <span>🌎</span> Pergerakan Bumi (Siklus Milankovitch)
+                  </h3>
+                  <p class="text-slate-700 mb-3">
+                    Perubahan pada orbit, kemiringan sumbu, dan goyangan rotasi Bumi memengaruhi jumlah sinar matahari yang diterima permukaan Bumi.
+                  </p>
+                  <div class="grid grid-cols-3 gap-2 text-sm">
+                    <div class="bg-white/80 p-3 rounded-lg text-center">
+                      <div class="text-2xl mb-1">🔄</div>
+                      <p class="font-semibold text-indigo-700">Eksentrisitas</p>
+                      <p class="text-xs text-slate-500">Bentuk orbit berubah</p>
+                    </div>
+                    <div class="bg-white/80 p-3 rounded-lg text-center">
+                      <div class="text-2xl mb-1">↗️</div>
+                      <p class="font-semibold text-indigo-700">Obliquitas</p>
+                      <p class="text-xs text-slate-500">Kemiringan sumbu</p>
+                    </div>
+                    <div class="bg-white/80 p-3 rounded-lg text-center">
+                      <div class="text-2xl mb-1">🌀</div>
+                      <p class="font-semibold text-indigo-700">Presesi</p>
+                      <p class="text-xs text-slate-500">Goyangan rotasi</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Faktor 2 -->
+            <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 border-l-4 border-amber-500">
+              <div class="flex flex-col lg:flex-row gap-6">
+                <div class="lg:w-1/3">
+                  <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=300&fit=crop" 
+                       alt="Pegunungan tinggi hasil aktivitas tektonik"
+                       class="w-full h-40 object-cover rounded-xl"
+                       loading="lazy"
+                       onerror="this.style.background='linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)'; this.alt='Pegunungan';">
+                </div>
+                <div class="lg:w-2/3">
+                  <h3 class="font-bold text-xl text-amber-800 mb-3 flex items-center gap-2">
+                    <span>🏔️</span> Aktivitas Tektonik
+                  </h3>
+                  <p class="text-slate-700 mb-3">
+                    Pergeseran lempeng bumi menciptakan pegunungan yang mengubah pola sirkulasi atmosfer, memengaruhi arah angin dan distribusi curah hujan secara global.
+                  </p>
+                  <div class="bg-white/80 p-4 rounded-xl">
+                    <p class="text-sm text-slate-600">
+                      <strong>Contoh:</strong> Terbentuknya Pegunungan Himalaya jutaan tahun lalu mengubah pola monsun Asia secara drastis, menciptakan iklim yang kita kenal sekarang.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Faktor 3 -->
+            <div class="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-2xl p-6 border-l-4 border-yellow-500">
+              <div class="flex flex-col lg:flex-row gap-6">
+                <div class="lg:w-1/3">
+                  <img src="https://images.unsplash.com/photo-1532693322450-2cb5c511067d?w=400&h=300&fit=crop" 
+                       alt="Matahari dengan korona dan aktivitas permukaan"
+                       class="w-full h-40 object-cover rounded-xl"
+                       loading="lazy"
+                       onerror="this.style.background='linear-gradient(135deg, #facc15 0%, #f59e0b 100%)'; this.alt='Matahari';">
+                </div>
+                <div class="lg:w-2/3">
+                  <h3 class="font-bold text-xl text-yellow-800 mb-3 flex items-center gap-2">
+                    <span>☀️</span> Aktivitas Matahari
+                  </h3>
+                  <p class="text-slate-700 mb-3">
+                    Variasi radiasi matahari berkontribusi pada perubahan suhu Bumi. Matahari memiliki siklus aktivitas 11 tahun yang memengaruhi jumlah energi yang dipancarkan.
+                  </p>
+                  <div class="bg-white/80 p-4 rounded-xl">
+                    <p class="text-sm text-slate-600">
+                      <strong>Catatan Penting:</strong> Meskipun berpengaruh, kontribusi aktivitas matahari terhadap pemanasan modern lebih kecil dibanding efek gas rumah kaca dari aktivitas manusia.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Faktor 4 -->
+            <div class="bg-gradient-to-r from-slate-100 to-gray-100 rounded-2xl p-6 border-l-4 border-slate-500">
+              <div class="flex flex-col lg:flex-row gap-6">
+                <div class="lg:w-1/3">
+                  <img src="https://images.unsplash.com/photo-1562077981-4d7eafd44932?w=400&h=300&fit=crop" 
+                       alt="Gunung berapi meletus dengan asap dan abu vulkanik"
+                       class="w-full h-40 object-cover rounded-xl"
+                       loading="lazy"
+                       onerror="this.style.background='linear-gradient(135deg, #64748b 0%, #475569 100%)'; this.alt='Gunung Berapi';">
+                </div>
+                <div class="lg:w-2/3">
+                  <h3 class="font-bold text-xl text-slate-800 mb-3 flex items-center gap-2">
+                    <span>🌋</span> Aktivitas Vulkanik
+                  </h3>
+                  <p class="text-slate-700 mb-3">
+                    Letusan gunung berapi melepaskan gas dan partikel ke atmosfer yang dapat mendinginkan atau memanaskan suhu global untuk sementara waktu.
+                  </p>
+                  <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-blue-100 p-3 rounded-lg">
+                      <p class="font-semibold text-blue-800 text-sm">❄️ Efek Pendinginan</p>
+                      <p class="text-xs text-slate-600">Partikel sulfat memantulkan sinar matahari</p>
+                    </div>
+                    <div class="bg-red-100 p-3 rounded-lg">
+                      <p class="font-semibold text-red-800 text-sm">🔥 Efek Pemanasan</p>
+                      <p class="text-xs text-slate-600">CO₂ vulkanik menambah gas rumah kaca</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Tabel Ringkasan -->
+          <div class="mt-8 overflow-x-auto">
+            <table class="w-full border-collapse">
+              <thead>
+                <tr class="bg-gradient-to-r from-violet-600 to-purple-600 text-white">
+                  <th class="p-4 text-left rounded-tl-xl">Faktor</th>
+                  <th class="p-4 text-left">Penjelasan</th>
+                  <th class="p-4 text-left rounded-tr-xl">Skala Waktu</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b">
+                  <td class="p-4 font-semibold">🌎 Pergerakan Bumi</td>
+                  <td class="p-4 text-slate-600">Perubahan orbit, kemiringan, dan putaran Bumi</td>
+                  <td class="p-4 text-slate-600">10.000 - 100.000 tahun</td>
+                </tr>
+                <tr class="bg-slate-50 border-b">
+                  <td class="p-4 font-semibold">🏔️ Aktivitas Tektonik</td>
+                  <td class="p-4 text-slate-600">Pergeseran lempeng menciptakan pegunungan</td>
+                  <td class="p-4 text-slate-600">Jutaan tahun</td>
+                </tr>
+                <tr class="bg-white border-b">
+                  <td class="p-4 font-semibold">☀️ Aktivitas Matahari</td>
+                  <td class="p-4 text-slate-600">Variasi radiasi matahari</td>
+                  <td class="p-4 text-slate-600">11 tahun (siklus)</td>
+                </tr>
+                <tr class="bg-slate-50">
+                  <td class="p-4 font-semibold rounded-bl-xl">🌋 Aktivitas Vulkanik</td>
+                  <td class="p-4 text-slate-600">Letusan melepaskan gas dan partikel</td>
+                  <td class="p-4 text-slate-600 rounded-br-xl">Bulan - tahun</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Section 4: Studi Kasus -->
+      <section id="studi" class="content-section">
+        <div class="card-glass rounded-3xl p-6 lg:p-8 shadow-2xl max-w-5xl mx-auto">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-600 to-zinc-700 flex items-center justify-center">
+              <span class="text-3xl">⛏️</span>
+            </div>
+            <div>
+              <h2 class="title-font text-2xl lg:text-3xl font-bold text-slate-800">Studi Kasus: Industri Pertambangan</h2>
+              <p class="text-slate-500">Bagaimana perubahan iklim memengaruhi sektor industri</p>
+            </div>
+          </div>
+          
+          <!-- Ilustrasi -->
+          <div class="illustration-container mb-8 h-56">
+            <img src="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?w=1200&h=500&fit=crop" 
+                 alt="Area pertambangan dengan alat berat dan infrastruktur"
+                 class="w-full h-full object-cover"
+                 loading="lazy"
+                 onerror="this.style.background='linear-gradient(135deg, #374151 0%, #1f2937 100%)'; this.alt='Ilustrasi Pertambangan';">
+            <div class="illustration-overlay">
+              <p class="text-white font-semibold">Industri pertambangan sangat rentan terhadap dampak perubahan iklim</p>
+            </div>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-6 border border-red-200">
+              <h3 class="font-bold text-lg text-red-800 mb-4 flex items-center gap-2">
+                <span class="w-10 h-10 bg-red-500 rounded-xl flex items-center justify-center text-white">⚠️</span>
+                Risiko Bencana
+              </h3>
+              <div class="h-32 mb-4 rounded-xl overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1547683905-f686c993aae5?w=400&h=200&fit=crop" 
+                     alt="Banjir melanda area industri"
+                     class="w-full h-full object-cover"
+                     loading="lazy"
+                     onerror="this.style.background='linear-gradient(135deg, #dc2626 0%, #ea580c 100%)'; this.alt='Banjir';">
+              </div>
+              <p class="text-slate-700">
+                Hujan lebat dan banjir bandang dapat merusak infrastruktur tambang, jalan akses, dan fasilitas pengolahan. Biaya perbaikan bisa mencapai miliaran rupiah.
+              </p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border border-amber-200">
+              <h3 class="font-bold text-lg text-amber-800 mb-4 flex items-center gap-2">
+                <span class="w-10 h-10 bg-amber-500 rounded-xl flex items-center justify-center text-white">🌡️</span>
+                Kesehatan Pekerja
+              </h3>
+              <div class="h-32 mb-4 rounded-xl overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=200&fit=crop" 
+                     alt="Pekerja dengan alat pelindung diri di lokasi kerja"
+                     class="w-full h-full object-cover"
+                     loading="lazy"
+                     onerror="this.style.background='linear-gradient(135deg, #f59e0b 0%, #eab308 100%)'; this.alt='Pekerja';">
+              </div>
+              <p class="text-slate-700">
+                Suhu yang terlalu tinggi meningkatkan risiko heat stroke, dehidrasi, dan kelelahan pada pekerja. Produktivitas menurun drastis saat gelombang panas.
+              </p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-gray-50 to-slate-50 rounded-2xl p-6 border border-gray-200">
+              <h3 class="font-bold text-lg text-gray-800 mb-4 flex items-center gap-2">
+                <span class="w-10 h-10 bg-gray-500 rounded-xl flex items-center justify-center text-white">💨</span>
+                Kualitas Udara
+              </h3>
+              <div class="h-32 mb-4 rounded-xl overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=400&h=200&fit=crop" 
+                     alt="Polusi udara dan debu di area industri"
+                     class="w-full h-full object-cover"
+                     loading="lazy"
+                     onerror="this.style.background='linear-gradient(135deg, #6b7280 0%, #374151 100%)'; this.alt='Polusi';">
+              </div>
+              <p class="text-slate-700">
+                Kekeringan meningkatkan debu di area tambang terbuka. Polusi debu menyebabkan masalah pernapasan dan mengganggu operasional alat berat.
+              </p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-2xl p-6 border border-teal-200">
+              <h3 class="font-bold text-lg text-teal-800 mb-4 flex items-center gap-2">
+                <span class="w-10 h-10 bg-teal-500 rounded-xl flex items-center justify-center text-white">💧</span>
+                Ketersediaan Air
+              </h3>
+              <div class="h-32 mb-4 rounded-xl overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1584824388878-91fd5e5c2a3f?w=400&h=200&fit=crop" 
+                     alt="Sumber air di area industri"
+                     class="w-full h-full object-cover"
+                     loading="lazy"
+                     onerror="this.style.background='linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%)'; this.alt='Air';">
+              </div>
+              <p class="text-slate-700">
+                Perubahan pola hujan memengaruhi ketersediaan air untuk operasional tambang. Kekeringan dapat menghentikan produksi sepenuhnya.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Solusi -->
+          <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-6 border-2 border-emerald-300">
+            <h3 class="font-bold text-xl text-emerald-800 mb-4 flex items-center gap-2">
+              ✅ Solusi untuk Industri
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="bg-white rounded-xl p-5 shadow-sm">
+                <h4 class="font-bold text-emerald-700 mb-3 flex items-center gap-2">
+                  <span class="text-xl">🛡️</span> Mitigasi
+                </h4>
+                <p class="text-slate-600 text-sm mb-3">Upaya mengurangi penyebab perubahan iklim:</p>
+                <ul class="text-slate-600 text-sm space-y-2">
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-500 mt-1">•</span>
+                    <span>Mengurangi emisi karbon dari operasional</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-500 mt-1">•</span>
+                    <span>Menggunakan energi terbarukan</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-500 mt-1">•</span>
+                    <span>Efisiensi penggunaan bahan bakar</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-500 mt-1">•</span>
+                    <span>Reklamasi lahan pasca tambang</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="bg-white rounded-xl p-5 shadow-sm">
+                <h4 class="font-bold text-cyan-700 mb-3 flex items-center gap-2">
+                  <span class="text-xl">🔄</span> Adaptasi
+                </h4>
+                <p class="text-slate-600 text-sm mb-3">Upaya menyesuaikan diri dengan dampak:</p>
+                <ul class="text-slate-600 text-sm space-y-2">
+                  <li class="flex items-start gap-2">
+                    <span class="text-cyan-500 mt-1">•</span>
+                    <span>Membangun infrastruktur tahan bencana</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-cyan-500 mt-1">•</span>
+                    <span>Sistem peringatan dini cuaca</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-cyan-500 mt-1">•</span>
+                    <span>Jadwal kerja menyesuaikan cuaca</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-cyan-500 mt-1">•</span>
+                    <span>Pengelolaan air yang lebih baik</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Section 5: Fakta Menarik -->
+      <section id="fakta" class="content-section">
+        <div class="card-glass rounded-3xl p-6 lg:p-8 shadow-2xl max-w-5xl mx-auto">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center">
+              <span class="text-3xl">💡</span>
+            </div>
+            <div>
+              <h2 class="title-font text-2xl lg:text-3xl font-bold text-slate-800">Fakta Menarik</h2>
+              <p class="text-slate-500">Informasi menakjubkan tentang perubahan iklim</p>
+            </div>
+          </div>
+          
+          <div class="space-y-6">
+            <!-- Fakta Toba -->
+            <div class="fact-box rounded-2xl p-6">
+              <div class="flex flex-col lg:flex-row gap-6">
+                <div class="lg:w-1/3">
+                  <img src="https://images.unsplash.com/photo-1593096486786-6680eca67df7?w=400&h=300&fit=crop" 
+                       alt="Danau Toba di Sumatera Utara hasil letusan dahsyat"
+                       class="w-full h-48 object-cover rounded-xl"
+                       loading="lazy"
+                       onerror="this.style.background='linear-gradient(135deg, #f59e0b 0%, #d97706 100%)'; this.alt='Danau Toba';">
+                </div>
+                <div class="lg:w-2/3">
+                  <h3 class="font-bold text-xl text-amber-800 mb-3 flex items-center gap-2">
+                    🌋 Letusan Gunung Toba
+                  </h3>
+                  <p class="text-slate-700 mb-4">
+                    Letusan dahsyat Gunung Toba <strong>74.000 tahun lalu</strong> adalah salah satu letusan terbesar dalam sejarah Bumi. Material vulkanik menyebar ke seluruh atmosfer dan menyebabkan "musim dingin vulkanik" yang berlangsung bertahun-tahun.
+                  </p>
+                  <div class="bg-white/80 rounded-xl p-4">
+                    <p class="text-amber-900 font-medium">
+                      🤯 <strong>Fakta Mengejutkan:</strong> Meskipun sangat dahsyat, emisi CO₂ dari letusan Toba hanya setara dengan emisi aktivitas manusia selama <strong>SATU TAHUN</strong> saja!
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Fakta Suhu -->
+            <div class="bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-red-500 rounded-2xl p-6">
+              <div class="flex flex-col lg:flex-row gap-6">
+                <div class="lg:w-2/3">
+                  <h3 class="font-bold text-xl text-red-800 mb-3 flex items-center gap-2">
+                    🌡️ Kenaikan Suhu Abad ke-20
+                  </h3>
+                  <p class="text-slate-700 mb-4">
+                    Rata-rata suhu permukaan Bumi meningkat sekitar <strong>1°C hingga 2°C</strong> sepanjang abad ke-20. Kenaikan ini mungkin terdengar kecil, tapi dampaknya sangat besar!
+                  </p>
+                  <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-white rounded-xl p-4 text-center">
+                      <div class="text-3xl font-bold text-red-600">+1.1°C</div>
+                      <p class="text-sm text-slate-500">Kenaikan sejak era pra-industri</p>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 text-center">
+                      <div class="text-3xl font-bold text-orange-600">2050</div>
+                      <p class="text-sm text-slate-500">Target kritis 1.5°C</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="lg:w-1/3">
+                  <img src="https://images.unsplash.com/photo-1569163139599-0f4517e36f51?w=400&h=300&fit=crop" 
+                       alt="Bumi dari luar angkasa dengan atmosfer terlihat"
+                       class="w-full h-48 object-cover rounded-xl"
+                       loading="lazy"
+                       onerror="this.style.background='linear-gradient(135deg, #ef4444 0%, #f97316 100%)'; this.alt='Bumi';">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Fakta Tambahan -->
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="bg-blue-50 rounded-xl p-5 border border-blue-200 text-center">
+                <div class="text-4xl mb-3">🌊</div>
+                <h4 class="font-bold text-blue-800 mb-2">Kenaikan Laut</h4>
+                <p class="text-3xl font-bold text-blue-600 mb-2">20 cm</p>
+                <p class="text-slate-600 text-sm">Permukaan laut naik sejak 1900</p>
+              </div>
+              <div class="bg-cyan-50 rounded-xl p-5 border border-cyan-200 text-center">
+                <div class="text-4xl mb-3">🧊</div>
+                <h4 class="font-bold text-cyan-800 mb-2">Es Kutub</h4>
+                <p class="text-3xl font-bold text-cyan-600 mb-2">13%</p>
+                <p class="text-slate-600 text-sm">Es Arktik menyusut per dekade</p>
+              </div>
+              <div class="bg-green-50 rounded-xl p-5 border border-green-200 text-center">
+                <div class="text-4xl mb-3">🌳</div>
+                <h4 class="font-bold text-green-800 mb-2">Deforestasi</h4>
+                <p class="text-3xl font-bold text-green-600 mb-2">10 juta</p>
+                <p class="text-slate-600 text-sm">Hektar hutan hilang per tahun</p>
+              </div>
+            </div>
+            
+            <!-- Konsentrasi CO2 -->
+            <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-6 border border-purple-200">
+              <h3 class="font-bold text-xl text-purple-800 mb-4">📊 Konsentrasi CO₂ Atmosfer</h3>
+              <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="flex-1">
+                  <div class="relative h-8 bg-gradient-to-r from-green-400 via-yellow-400 to-red-500 rounded-full overflow-hidden">
+                    <div class="absolute inset-0 flex items-center justify-between px-4 text-xs font-bold text-white">
+                      <span>280 ppm</span>
+                      <span>420 ppm</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between mt-2 text-xs text-slate-500">
+                    <span>Era Pra-Industri (1750)</span>
+                    <span>Saat Ini (2024)</span>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <div class="text-4xl font-bold text-purple-600">+50%</div>
+                  <p class="text-slate-600 text-sm">Peningkatan CO₂</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Section 6: Aktivitas Interaktif -->
+      <section id="aktivitas" class="content-section">
+        <div class="card-glass rounded-3xl p-6 lg:p-8 shadow-2xl max-w-5xl mx-auto">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+              <span class="text-3xl">🎯</span>
+            </div>
+            <div>
+              <h2 class="title-font text-2xl lg:text-3xl font-bold text-slate-800">Aktivitas Interaktif</h2>
+              <p class="text-slate-500">Eksplorasi dan diskusi untuk memperdalam pemahaman</p>
+            </div>
+          </div>
+          
+          <!-- Aktivitas 1: Simulator Suhu -->
+          <div class="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-6 mb-6 border-2 border-orange-200">
+            <h3 class="font-bold text-xl text-orange-800 mb-4 flex items-center gap-2">
+              <span class="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center text-white">1</span>
+              Simulator Dampak Kenaikan Suhu
+            </h3>
+            <p class="text-slate-700 mb-4">Geser slider untuk melihat dampak kenaikan suhu global:</p>
+            
+            <div class="bg-white rounded-xl p-6">
+              <div class="flex items-center gap-4 mb-4">
+                <span class="text-2xl">❄️</span>
+                <input type="range" id="tempSlider" min="0" max="4" step="0.5" value="1.1" class="flex-1 h-3 bg-gradient-to-r from-blue-400 via-yellow-400 to-red-500 rounded-full appearance-none cursor-pointer">
+                <span class="text-2xl">🔥</span>
+              </div>
+              <div class="text-center mb-4">
+                <span class="text-4xl font-bold text-orange-600">+<span id="tempValue">1.1</span>°C</span>
+                <p class="text-slate-500">Kenaikan suhu dari era pra-industri</p>
+              </div>
+              <div id="tempImpact" class="bg-slate-50 rounded-xl p-4">
+                <h4 class="font-bold text-slate-800 mb-2">Dampak pada +1.1°C (saat ini):</h4>
+                <ul class="text-slate-600 text-sm space-y-1">
+                  <li>• Gelombang panas lebih sering</li>
+                  <li>• Es kutub mulai mencair cepat</li>
+                  <li>• Cuaca ekstrem meningkat</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Aktivitas 2: Analisis Grafik -->
+          <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 mb-6 border-2 border-blue-200">
+            <h3 class="font-bold text-xl text-blue-800 mb-4 flex items-center gap-2">
+              <span class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center text-white">2</span>
+              Analisis Grafik: Suhu vs Radiasi Matahari
+            </h3>
+            <p class="text-slate-700 mb-4">Perhatikan grafik berikut dan diskusikan pertanyaannya:</p>
+            
+            <div class="bg-white rounded-xl p-4 mb-4">
+              <!-- Simplified Chart Visualization -->
+              <div class="relative h-48 border-b-2 border-l-2 border-slate-300">
+                <div class="absolute bottom-0 left-0 right-0 h-full flex items-end">
+                  <!-- Temperature bars -->
+                  <div class="flex-1 flex flex-col items-center justify-end h-full">
+                    <div class="w-8 bg-red-400 rounded-t" style="height: 20%"></div>
+                    <span class="text-xs mt-1">1900</span>
+                  </div>
+                  <div class="flex-1 flex flex-col items-center justify-end h-full">
+                    <div class="w-8 bg-red-400 rounded-t" style="height: 30%"></div>
+                    <span class="text-xs mt-1">1950</span>
+                  </div>
+                  <div class="flex-1 flex flex-col items-center justify-end h-full">
+                    <div class="w-8 bg-red-500 rounded-t" style="height: 50%"></div>
+                    <span class="text-xs mt-1">1980</span>
+                  </div>
+                  <div class="flex-1 flex flex-col items-center justify-end h-full">
+                    <div class="w-8 bg-red-500 rounded-t" style="height: 70%"></div>
+                    <span class="text-xs mt-1">2000</span>
+                  </div>
+                  <div class="flex-1 flex flex-col items-center justify-end h-full">
+                    <div class="w-8 bg-red-600 rounded-t" style="height: 90%"></div>
+                    <span class="text-xs mt-1">2024</span>
+                  </div>
+                </div>
+                <!-- Solar line (relatively flat) -->
+                <div class="absolute bottom-[45%] left-0 right-0 h-0.5 bg-yellow-500"></div>
+                <div class="absolute -right-2 bottom-[44%] w-4 h-4 bg-yellow-500 rounded-full"></div>
+              </div>
+              <div class="flex justify-center gap-6 mt-4">
+                <div class="flex items-center gap-2">
+                  <div class="w-4 h-4 bg-red-500 rounded"></div>
+                  <span class="text-sm text-slate-600">Suhu Global</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-4 h-4 bg-yellow-500 rounded"></div>
+                  <span class="text-sm text-slate-600">Radiasi Matahari</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-blue-100 rounded-xl p-4">
+              <h4 class="font-bold text-blue-800 mb-2">❓ Pertanyaan Diskusi:</h4>
+              <p class="text-slate-700">
+                Mengapa suhu global terus meningkat padahal radiasi matahari relatif stabil sepanjang abad ke-20? Apa penyebab utama kenaikan suhu tersebut?
+              </p>
+              <button onclick="toggleAnswer('answer1')" class="mt-3 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition text-sm">
+                Lihat Jawaban
+              </button>
+              <div id="answer1" class="hidden mt-3 bg-white rounded-lg p-4 text-slate-700 text-sm">
+                <strong>Jawaban:</strong> Kenaikan suhu terutama disebabkan oleh <strong>peningkatan gas rumah kaca</strong> (terutama CO₂) akibat aktivitas manusia seperti pembakaran bahan bakar fosil dan deforestasi. Meskipun matahari adalah sumber energi utama Bumi, radiasi matahari tidak berubah signifikan, sehingga bukan penyebab utama pemanasan modern.
+              </div>
+            </div>
+          </div>
+          
+          <!-- Aktivitas 3: Proyek Bumi Baru -->
+          <div class="bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl p-6 border-2 border-purple-200">
+            <h3 class="font-bold text-xl text-purple-800 mb-4 flex items-center gap-2">
+              <span class="w-10 h-10 bg-purple-500 rounded-xl flex items-center justify-center text-white">3</span>
+              Proyek "Bumi Baru" 🚀
+            </h3>
+            <p class="text-slate-700 mb-4">
+              Jika suatu saat Bumi tidak lagi layak huni, manusia perlu mencari tempat tinggal baru. Carilah 3 benda langit alternatif dan jelaskan alasannya!
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-4 mb-4">
+              <div class="bg-white rounded-xl p-4 border-2 border-dashed border-purple-300">
+                <div class="text-4xl text-center mb-2">🔴</div>
+                <h4 class="font-bold text-center text-purple-800">Mars</h4>
+                <p class="text-slate-600 text-sm text-center">Planet merah terdekat</p>
+              </div>
+              <div class="bg-white rounded-xl p-4 border-2 border-dashed border-purple-300">
+                <div class="text-4xl text-center mb-2">🌕</div>
+                <h4 class="font-bold text-center text-purple-800">Europa</h4>
+                <p class="text-slate-600 text-sm text-center">Bulan Jupiter dengan air</p>
+              </div>
+              <div class="bg-white rounded-xl p-4 border-2 border-dashed border-purple-300">
+                <div class="text-4xl text-center mb-2">🪐</div>
+                <h4 class="font-bold text-center text-purple-800">Titan</h4>
+                <p class="text-slate-600 text-sm text-center">Bulan Saturnus beratmosfer</p>
+              </div>
+            </div>
+            
+            <div class="bg-purple-100 rounded-xl p-4">
+              <h4 class="font-bold text-purple-800 mb-2">📝 Tugas:</h4>
+              <ol class="text-slate-700 text-sm space-y-2">
+                <li>1. Pilih 3 benda langit yang menurutmu paling potensial</li>
+                <li>2. Cari informasi tentang kondisi di benda langit tersebut</li>
+                <li>3. Jelaskan kelebihan dan tantangan tinggal di sana</li>
+                <li>4. Presentasikan hasilnya di kelas</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Section 7: Quiz HOTS -->
+      <section id="quiz" class="content-section">
+        <div class="card-glass rounded-3xl p-6 lg:p-8 shadow-2xl max-w-5xl mx-auto">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center">
+              <span class="text-3xl">📝</span>
+            </div>
+            <div>
+              <h2 class="title-font text-2xl lg:text-3xl font-bold text-slate-800">Soal HOTS</h2>
+              <p class="text-slate-500">10 Soal Higher Order Thinking Skills</p>
+            </div>
+          </div>
+          
+          <!-- Score Display -->
+          <div class="bg-gradient-to-r from-rose-100 to-pink-100 rounded-2xl p-4 mb-6 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="relative w-16 h-16">
+                <svg class="w-16 h-16 progress-ring" viewBox="0 0 64 64">
+                  <circle cx="32" cy="32" r="28" fill="none" stroke="#fecdd3" stroke-width="6"/>
+                  <circle id="progressCircle" cx="32" cy="32" r="28" fill="none" stroke="#e11d48" stroke-width="6" 
+                          stroke-dasharray="175.9" stroke-dashoffset="175.9" stroke-linecap="round"/>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span id="scoreText" class="text-lg font-bold text-rose-600">0/10</span>
+                </div>
+              </div>
+              <div>
+                <p class="font-semibold text-rose-800">Skor Kamu</p>
+                <p id="scoreMessage" class="text-sm text-slate-600">Jawab semua soal untuk melihat skor</p>
+              </div>
+            </div>
+            <button onclick="resetQuiz()" class="px-4 py-2 bg-rose-500 text-white rounded-lg hover:bg-rose-600 transition text-sm font-medium">
+              🔄 Ulangi
+            </button>
+          </div>
+          
+          <!-- Quiz Questions -->
+          <div id="quizContainer" class="space-y-6">
+            <!-- Questions will be rendered by JavaScript -->
+          </div>
+        </div>
+      </section>
+      
+      <!-- Footer -->
+      <footer class="mt-8 text-center pb-6">
+        <div class="card-glass rounded-2xl p-6 max-w-md mx-auto">
+          <div class="flex items-center justify-center gap-3 mb-3">
+            <img src="https://i.imgur.com/mRmw86t.jpeg" 
+                 alt="Algian Manggara" 
+                 class="w-14 h-14 rounded-full object-cover border-2 border-cyan-400"
+                 loading="lazy"
+                 onerror="this.style.background='linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)'; this.alt='AM';">
+            <div class="text-left">
+              <p id="author-name" class="font-bold text-slate-800">Algian Manggara, S.Agr</p>
+              <p class="text-sm text-slate-500">Pembuat Materi</p>
+            </div>
+          </div>
+          <p class="text-slate-600 text-sm">© 2026 Algian Manggara, S.Agr</p>
+          <p class="text-slate-400 text-xs mt-1">Media Pembelajaran Perubahan Iklim Bumi</p>
+        </div>
+      </footer>
+    </main>
+  </div>
+  
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      page_title: 'Perubahan Iklim',
+      author_name: 'Algian Manggara, S.Agr',
+      background_color: '#0c4a6e',
+      card_color: '#ffffff',
+      text_color: '#1e293b',
+      accent_color: '#0891b2',
+      button_color: '#e11d48'
+    };
+    
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          const title = config.page_title || defaultConfig.page_title;
+          const author = config.author_name || defaultConfig.author_name;
+          
+          document.getElementById('main-title').textContent = title;
+          document.getElementById('author-name').textContent = author;
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => window.elementSdk.setConfig({ background_color: value })
+            },
+            {
+              get: () => config.card_color || defaultConfig.card_color,
+              set: (value) => window.elementSdk.setConfig({ card_color: value })
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => window.elementSdk.setConfig({ text_color: value })
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => window.elementSdk.setConfig({ accent_color: value })
+            },
+            {
+              get: () => config.button_color || defaultConfig.button_color,
+              set: (value) => window.elementSdk.setConfig({ button_color: value })
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['page_title', config.page_title || defaultConfig.page_title],
+          ['author_name', config.author_name || defaultConfig.author_name]
+        ])
+      });
+    }
+    
+    // Navigation
+    function showSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      // Remove active from all nav items
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      // Show selected section
+      document.getElementById(sectionId).classList.add('active');
+      
+      // Add active to clicked nav item
+      document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+      
+      // Scroll to top of main content
+      document.querySelector('main').scrollTop = 0;
+    }
+    
+    // Temperature Simulator
+    const tempSlider = document.getElementById('tempSlider');
+    const tempValue = document.getElementById('tempValue');
+    const tempImpact = document.getElementById('tempImpact');
+    
+    const impacts = {
+      '0': {
+        title: 'Dampak pada +0°C (era pra-industri):',
+        items: ['• Iklim stabil dan seimbang', '• Ekosistem dalam kondisi normal', '• Pola cuaca dapat diprediksi']
+      },
+      '0.5': {
+        title: 'Dampak pada +0.5°C:',
+        items: ['• Mulai terlihat perubahan pola cuaca', '• Beberapa spesies mulai bermigrasi', '• Es kutub mulai menipis']
+      },
+      '1': {
+        title: 'Dampak pada +1°C:',
+        items: ['• Gelombang panas meningkat', '• Cuaca ekstrem lebih sering', '• Permukaan laut naik signifikan']
+      },
+      '1.1': {
+        title: 'Dampak pada +1.1°C (saat ini):',
+        items: ['• Gelombang panas lebih sering', '• Es kutub mulai mencair cepat', '• Cuaca ekstrem meningkat']
+      },
+      '1.5': {
+        title: 'Dampak pada +1.5°C (target Paris):',
+        items: ['• 70-90% terumbu karang mati', '• Banjir pesisir meningkat drastis', '• 350 juta orang terkena kekeringan']
+      },
+      '2': {
+        title: 'Dampak pada +2°C:',
+        items: ['• 99% terumbu karang mati', '• Es Arktik musim panas hilang', '• Produksi pangan turun 20%']
+      },
+      '2.5': {
+        title: 'Dampak pada +2.5°C:',
+        items: ['• Kebakaran hutan masif global', '• Jutaan orang mengungsi', '• Krisis air bersih meluas']
+      },
+      '3': {
+        title: 'Dampak pada +3°C:',
+        items: ['• Amazon berubah jadi sabana', '• Kota pesisir terendam', '• Kepunahan massal spesies']
+      },
+      '3.5': {
+        title: 'Dampak pada +3.5°C:',
+        items: ['• Sebagian besar es kutub hilang', '• Pangan global sangat terbatas', '• Migrasi massal manusia']
+      },
+      '4': {
+        title: 'Dampak pada +4°C (bencana):',
+        items: ['• Banyak wilayah tidak layak huni', '• Permukaan laut naik >1 meter', '• Peradaban manusia terancam']
+      }
+    };
+    
+    tempSlider.addEventListener('input', function() {
+      const value = this.value;
+      tempValue.textContent = value;
+      
+      const impact = impacts[value] || impacts['1.1'];
+      tempImpact.innerHTML = `
+        <h4 class="font-bold text-slate-800 mb-2">${impact.title}</h4>
+        <ul class="text-slate-600 text-sm space-y-1">
+          ${impact.items.map(item => `<li>${item}</li>`).join('')}
+        </ul>
+      `;
+    });
+    
+    // Toggle Answer
+    function toggleAnswer(id) {
+      const answer = document.getElementById(id);
+      answer.classList.toggle('hidden');
+    }
+    
+    // Quiz System
+    const questions = [
+      {
+        question: "Jika radiasi matahari relatif stabil selama 50 tahun terakhir namun suhu global terus meningkat, manakah kesimpulan yang paling tepat?",
+        options: [
+          "Matahari bukan satu-satunya faktor penentu suhu Bumi",
+          "Pengukuran radiasi matahari tidak akurat",
+          "Suhu global tidak dipengaruhi matahari sama sekali",
+          "Data suhu global tidak dapat dipercaya"
+        ],
+        correct: 0,
+        explanation: "Data menunjukkan bahwa meskipun radiasi matahari stabil, suhu terus naik. Ini membuktikan ada faktor lain (gas rumah kaca) yang lebih dominan."
+      },
+      {
+        question: "Seorang petani di Jawa Tengah mengalami gagal panen 3 tahun berturut-turut karena musim hujan datang tidak sesuai kalender tradisional. Berdasarkan materi, apa analisis terbaik untuk fenomena ini?",
+        options: [
+          "Petani kurang terampil dalam bertani",
+          "Perubahan iklim mengubah pola curah hujan sehingga kalender tradisional tidak lagi akurat",
+          "Tanah sudah tidak subur lagi",
+          "Benih yang digunakan berkualitas buruk"
+        ],
+        correct: 1,
+        explanation: "Perubahan iklim menyebabkan pola hujan menjadi tidak menentu, sehingga sistem pertanian berbasis kalender tradisional menjadi tidak efektif."
+      },
+      {
+        question: "Mengapa letusan Gunung Toba 74.000 tahun lalu yang sangat dahsyat hanya menghasilkan emisi CO₂ setara dengan aktivitas manusia selama satu tahun?",
+        options: [
+          "Gunung Toba tidak benar-benar besar",
+          "Aktivitas manusia modern menghasilkan emisi yang sangat masif dan terus-menerus setiap tahun",
+          "Pengukuran emisi Gunung Toba tidak akurat",
+          "CO₂ dari gunung berapi berbeda dengan CO₂ dari aktivitas manusia"
+        ],
+        correct: 1,
+        explanation: "Meskipun letusan vulkanik besar, aktivitas manusia (industri, transportasi, deforestasi) yang berlangsung terus-menerus menghasilkan emisi kumulatif yang jauh lebih besar."
+      },
+      {
+        question: "Sebuah perusahaan tambang ingin membangun fasilitas di daerah pesisir. Berdasarkan studi kasus dalam materi, pertimbangan utama apa yang harus mereka prioritaskan?",
+        options: [
+          "Memilih lokasi termurah tanpa mempertimbangkan risiko iklim",
+          "Membangun infrastruktur tahan banjir dan memiliki sistem drainase yang baik",
+          "Mengabaikan faktor iklim karena tidak terlalu penting",
+          "Hanya fokus pada produktivitas tanpa mempertimbangkan keselamatan"
+        ],
+        correct: 1,
+        explanation: "Adaptasi terhadap perubahan iklim dalam industri pertambangan mencakup pembangunan infrastruktur tahan bencana untuk mengantisipasi risiko banjir dan cuaca ekstrem."
+      },
+      {
+        question: "Perhatikan pernyataan berikut: 'Kenaikan suhu 1°C terdengar kecil, jadi dampaknya juga pasti kecil.' Evaluasi pernyataan ini berdasarkan materi!",
+        options: [
+          "Pernyataan benar karena 1 derajat memang sangat kecil",
+          "Pernyataan salah karena dalam skala planet, kenaikan 1°C menyebabkan perubahan ekosistem yang sangat signifikan",
+          "Pernyataan benar untuk wilayah tropis tapi salah untuk kutub",
+          "Tidak dapat ditentukan tanpa data tambahan"
+        ],
+        correct: 1,
+        explanation: "Dalam skala planet, kenaikan suhu rata-rata 1°C menyebabkan dampak besar: pencairan es kutub, kenaikan permukaan laut, cuaca ekstrem, dan gangguan ekosistem global."
+      },
+      {
+        question: "Jika Siklus Milankovitch menyebabkan perubahan iklim dalam puluhan ribu tahun, mengapa perubahan iklim saat ini dianggap berbahaya padahal baru terjadi dalam 150 tahun?",
+        options: [
+          "Perubahan cepat tidak memberikan waktu bagi ekosistem untuk beradaptasi",
+          "Perubahan dalam 150 tahun sebenarnya tidak signifikan",
+          "Siklus Milankovitch tidak ada hubungannya dengan iklim modern",
+          "Manusia sudah terbiasa dengan perubahan cepat"
+        ],
+        correct: 0,
+        explanation: "Perubahan alami yang lambat memberikan waktu bagi makhluk hidup untuk beradaptasi. Perubahan cepat akibat aktivitas manusia tidak memberikan kesempatan adaptasi yang cukup."
+      },
+      {
+        question: "Sebuah kota pesisir menghadapi dilema: membangun tanggul laut yang mahal atau merelokasi penduduk. Berdasarkan pemahaman tentang mitigasi dan adaptasi, opsi mana yang termasuk strategi adaptasi?",
+        options: [
+          "Keduanya bukan strategi adaptasi",
+          "Hanya membangun tanggul yang termasuk adaptasi",
+          "Keduanya merupakan bentuk strategi adaptasi terhadap dampak perubahan iklim",
+          "Hanya relokasi yang termasuk adaptasi"
+        ],
+        correct: 2,
+        explanation: "Adaptasi adalah upaya menyesuaikan diri dengan dampak perubahan iklim. Baik tanggul maupun relokasi adalah bentuk penyesuaian terhadap ancaman kenaikan permukaan laut."
+      },
+      {
+        question: "Mengapa aktivitas tektonik yang membentuk Pegunungan Himalaya jutaan tahun lalu masih memengaruhi iklim Asia hingga saat ini?",
+        options: [
+          "Pegunungan masih mengeluarkan gas vulkanik",
+          "Pegunungan tinggi mengubah pola sirkulasi atmosfer dan monsun secara permanen",
+          "Aktivitas tektonik masih berlangsung sangat aktif",
+          "Himalaya menyerap semua radiasi matahari"
+        ],
+        correct: 1,
+        explanation: "Pegunungan tinggi seperti Himalaya menjadi penghalang fisik yang mengubah arah angin dan pola distribusi kelembaban, menciptakan sistem monsun yang kita kenal."
+      },
+      {
+        question: "Seorang siswa berargumen: 'Karena gunung berapi juga mengeluarkan CO₂, maka emisi manusia tidak perlu dikurangi.' Bagaimana kamu akan menanggapi argumen ini?",
+        options: [
+          "Setuju karena emisi vulkanik memang besar",
+          "Tidak setuju karena emisi manusia jauh lebih besar dan terus-menerus, sedangkan emisi vulkanik sporadis dan relatif kecil secara kumulatif",
+          "Setuju karena pengurangan emisi tidak akan efektif",
+          "Tidak dapat menentukan tanpa penelitian lebih lanjut"
+        ],
+        correct: 1,
+        explanation: "Fakta Gunung Toba membuktikan bahwa emisi vulkanik besar sekalipun tidak sebanding dengan emisi manusia tahunan. Emisi manusia bersifat kumulatif dan terus meningkat."
+      },
+      {
+        question: "Jika kamu diminta merancang kebijakan untuk industri pertambangan dalam menghadapi perubahan iklim, kombinasi strategi mana yang paling komprehensif?",
+        options: [
+          "Fokus hanya pada peningkatan produksi",
+          "Mitigasi (mengurangi emisi) tanpa adaptasi",
+          "Kombinasi mitigasi (energi terbarukan, efisiensi) dan adaptasi (infrastruktur tahan bencana, sistem peringatan dini)",
+          "Adaptasi tanpa mitigasi karena mitigasi terlalu mahal"
+        ],
+        correct: 2,
+        explanation: "Pendekatan komprehensif memerlukan keduanya: mitigasi untuk mengurangi penyebab perubahan iklim dan adaptasi untuk menghadapi dampak yang sudah/akan terjadi."
+      }
+    ];
+    
+    let userAnswers = new Array(questions.length).fill(null);
+    let score = 0;
+    
+    function renderQuiz() {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = questions.map((q, index) => `
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200" id="question-${index}">
+          <div class="flex items-start gap-3 mb-4">
+            <span class="w-8 h-8 bg-rose-500 rounded-lg flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+              ${index + 1}
+            </span>
+            <p class="text-slate-800 font-medium">${q.question}</p>
+          </div>
+          <div class="space-y-3 ml-11">
+            ${q.options.map((opt, optIndex) => `
+              <div class="quiz-option border-2 border-slate-200 rounded-xl p-4 ${userAnswers[index] === optIndex ? 'selected' : ''}"
+                   onclick="selectAnswer(${index}, ${optIndex})"
+                   id="option-${index}-${optIndex}">
+                <div class="flex items-center gap-3">
+                  <span class="w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center text-sm font-medium">
+                    ${String.fromCharCode(65 + optIndex)}
+                  </span>
+                  <span class="text-slate-700">${opt}</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          <div id="explanation-${index}" class="hidden mt-4 ml-11 bg-slate-50 rounded-xl p-4">
+            <p class="text-sm text-slate-600"><strong>Penjelasan:</strong> ${q.explanation}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function selectAnswer(questionIndex, optionIndex) {
+      // If already answered, don't allow change
+      if (userAnswers[questionIndex] !== null) return;
+      
+      userAnswers[questionIndex] = optionIndex;
+      const question = questions[questionIndex];
+      const isCorrect = optionIndex === question.correct;
+      
+      // Update visual
+      const selectedOption = document.getElementById(`option-${questionIndex}-${optionIndex}`);
+      const correctOption = document.getElementById(`option-${questionIndex}-${question.correct}`);
+      
+      if (isCorrect) {
+        selectedOption.classList.remove('selected');
+        selectedOption.classList.add('correct');
+        score++;
+      } else {
+        selectedOption.classList.remove('selected');
+        selectedOption.classList.add('incorrect');
+        correctOption.classList.add('correct');
+      }
+      
+      // Show explanation
+      document.getElementById(`explanation-${questionIndex}`).classList.remove('hidden');
+      
+      // Update score
+      updateScore();
+    }
+    
+    function updateScore() {
+      const answeredCount = userAnswers.filter(a => a !== null).length;
+      const scoreText = document.getElementById('scoreText');
+      const scoreMessage = document.getElementById('scoreMessage');
+      const progressCircle = document.getElementById('progressCircle');
+      
+      scoreText.textContent = `${score}/${questions.length}`;
+      
+      // Update progress circle
+      const circumference = 2 * Math.PI * 28;
+      const progress = (answeredCount / questions.length) * circumference;
+      progressCircle.style.strokeDashoffset = circumference - progress;
+      
+      if (answeredCount === questions.length) {
+        const percentage = (score / questions.length) * 100;
+        if (percentage >= 80) {
+          scoreMessage.textContent = '🎉 Luar biasa! Pemahaman sangat baik!';
+        } else if (percentage >= 60) {
+          scoreMessage.textContent = '👍 Bagus! Terus tingkatkan!';
+        } else {
+          scoreMessage.textContent = '💪 Jangan menyerah! Pelajari lagi materinya.';
+        }
+      } else {
+        scoreMessage.textContent = `${answeredCount} dari ${questions.length} soal terjawab`;
+      }
+    }
+    
+    function resetQuiz() {
+      userAnswers = new Array(questions.length).fill(null);
+      score = 0;
+      renderQuiz();
+      updateScore();
+      document.getElementById('progressCircle').style.strokeDashoffset = 175.9;
+      document.getElementById('scoreMessage').textContent = 'Jawab semua soal untuk melihat skor';
+    }
+    
+    // Initialize quiz
+    renderQuiz();
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cfbe9b583fcb5b8',t:'MTc3MTQwMDgxMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

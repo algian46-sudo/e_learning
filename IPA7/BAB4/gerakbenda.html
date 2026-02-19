@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memahami Konsep Gerak Benda</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { font-family: 'Poppins', sans-serif; }
+    .content-text { font-family: 'Nunito', sans-serif; }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 50%, #1e3a5f 100%);
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    .nav-item:hover, .nav-item.active {
+      background: rgba(255,255,255,0.2);
+      transform: scale(1.02);
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    .quiz-option:hover {
+      transform: scale(1.02);
+      border-color: #3b82f6;
+    }
+    .quiz-option.selected {
+      background: #dbeafe;
+      border-color: #3b82f6;
+    }
+    .quiz-option.correct {
+      background: #dcfce7;
+      border-color: #22c55e;
+    }
+    .quiz-option.incorrect {
+      background: #fee2e2;
+      border-color: #ef4444;
+    }
+    
+    .formula-box {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-left: 4px solid #f59e0b;
+    }
+    
+    .concept-card {
+      background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+      border-left: 4px solid #0ea5e9;
+    }
+    
+    .example-card {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border-left: 4px solid #22c55e;
+    }
+    
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .animate-pulse-slow {
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .section-title {
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .rocket-animation {
+      animation: rocketMove 4s ease-in-out infinite;
+    }
+    @keyframes rocketMove {
+      0% { transform: translateY(0) rotate(-45deg); }
+      50% { transform: translateY(-30px) rotate(-45deg); }
+      100% { transform: translateY(0) rotate(-45deg); }
+    }
+    
+    .scroll-smooth {
+      scroll-behavior: smooth;
+    }
+    
+    .image-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+    .image-container img {
+      transition: transform 0.3s ease;
+    }
+    .image-container:hover img {
+      transform: scale(1.05);
+    }
+    
+    .interactive-demo {
+      background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+  </style>
+</head>
+<body class="h-full bg-gray-50 overflow-auto">
+  <div class="min-h-full">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-6 px-4 shadow-lg sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <div class="text-4xl animate-float">🚀</div>
+          <div>
+            <h1 id="main-title" class="text-2xl md:text-3xl font-bold">Memahami Konsep Gerak Benda</h1>
+            <p class="text-blue-200 text-sm">Fisika Kelas VII - Kurikulum Merdeka</p>
+          </div>
+        </div>
+        <div class="hidden md:flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
+          <i class="fas fa-book-open"></i>
+          <span class="text-sm">Media Pembelajaran Interaktif</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-20 z-40 overflow-x-auto">
+      <div class="max-w-6xl mx-auto flex gap-2 p-3">
+        <button onclick="scrollToSection('pendahuluan')" class="nav-item px-4 py-2 rounded-full bg-blue-100 text-blue-700 font-medium text-sm whitespace-nowrap">
+          <i class="fas fa-play mr-2"></i>Pendahuluan
+        </button>
+        <button onclick="scrollToSection('gerak')" class="nav-item px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-medium text-sm whitespace-nowrap">
+          <i class="fas fa-running mr-2"></i>Apa itu Gerak?
+        </button>
+        <button onclick="scrollToSection('perpindahan')" class="nav-item px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-medium text-sm whitespace-nowrap">
+          <i class="fas fa-arrows-alt mr-2"></i>Perpindahan
+        </button>
+        <button onclick="scrollToSection('kecepatan')" class="nav-item px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-medium text-sm whitespace-nowrap">
+          <i class="fas fa-tachometer-alt mr-2"></i>Kecepatan
+        </button>
+        <button onclick="scrollToSection('gaya')" class="nav-item px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-medium text-sm whitespace-nowrap">
+          <i class="fas fa-hand-rock mr-2"></i>Gaya
+        </button>
+        <button onclick="scrollToSection('aktivitas')" class="nav-item px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-medium text-sm whitespace-nowrap">
+          <i class="fas fa-flask mr-2"></i>Aktivitas
+        </button>
+        <button onclick="scrollToSection('quiz')" class="nav-item px-4 py-2 rounded-full bg-gray-100 text-gray-700 font-medium text-sm whitespace-nowrap">
+          <i class="fas fa-question-circle mr-2"></i>Quiz HOTS
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+      
+      <!-- Section 1: Pendahuluan -->
+      <section id="pendahuluan" class="mb-12">
+        <div class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-2xl p-8 text-white shadow-xl">
+          <div class="flex flex-col md:flex-row items-center gap-8">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="bg-white/20 px-3 py-1 rounded-full text-sm">💡 Pertanyaan Pemantik</span>
+              </div>
+              <h2 class="text-2xl md:text-3xl font-bold mb-4">Pernahkah kamu berpikir bagaimana sebuah roket bisa meluncur ke luar angkasa?</h2>
+              <p class="text-white/90 content-text text-lg mb-6">Mari kita pelajari konsep gerak yang mendasari fenomena luar biasa ini!</p>
+              
+              <div class="bg-white/10 rounded-xl p-4 backdrop-blur">
+                <h3 class="font-semibold mb-2"><i class="fas fa-bullseye mr-2"></i>Tujuan Pembelajaran</h3>
+                <ul class="content-text space-y-2 text-sm">
+                  <li>✓ Memahami konsep gerak dan sifat relatifnya</li>
+                  <li>✓ Membedakan perpindahan dan jarak tempuh</li>
+                  <li>✓ Menghitung kelajuan dan kecepatan benda</li>
+                  <li>✓ Mengenal berbagai jenis gaya dalam kehidupan</li>
+                </ul>
+              </div>
+            </div>
+            <div class="text-center">
+              <div class="relative">
+                <div class="text-9xl rocket-animation">🚀</div>
+                <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2">
+                  <div class="flex gap-1">
+                    <div class="w-3 h-3 bg-orange-400 rounded-full animate-pulse"></div>
+                    <div class="w-3 h-3 bg-yellow-400 rounded-full animate-pulse delay-100"></div>
+                    <div class="w-3 h-3 bg-red-400 rounded-full animate-pulse delay-200"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Kata Kunci -->
+          <div class="mt-8 flex flex-wrap gap-3 justify-center">
+            <span class="bg-white text-purple-600 px-4 py-2 rounded-full font-semibold shadow-lg">📍 Gerak</span>
+            <span class="bg-white text-purple-600 px-4 py-2 rounded-full font-semibold shadow-lg">📏 Perpindahan</span>
+            <span class="bg-white text-purple-600 px-4 py-2 rounded-full font-semibold shadow-lg">⚡ Kecepatan</span>
+            <span class="bg-white text-purple-600 px-4 py-2 rounded-full font-semibold shadow-lg">🔥 Percepatan</span>
+            <span class="bg-white text-purple-600 px-4 py-2 rounded-full font-semibold shadow-lg">💪 Gaya</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Apa itu Gerak? -->
+      <section id="gerak" class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-white text-xl">
+            <i class="fas fa-running"></i>
+          </div>
+          <h2 class="text-3xl font-bold section-title">Apa itu Gerak?</h2>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Definisi Gerak -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+            <div class="concept-card rounded-xl p-4 mb-4">
+              <h3 class="font-bold text-blue-800 mb-2"><i class="fas fa-book mr-2"></i>Definisi Gerak</h3>
+              <p class="content-text text-gray-700">Benda dikatakan <strong>bergerak</strong> jika mengalami <strong>perubahan posisi</strong> atau perpindahan dari satu titik acuan ke posisi lainnya.</p>
+            </div>
+            
+            <!-- Ilustrasi Mobil Bergerak -->
+            <div class="bg-gradient-to-r from-sky-100 to-blue-100 rounded-xl p-4 mb-4">
+              <p class="text-sm text-blue-600 font-medium mb-3"><i class="fas fa-image mr-2"></i>Ilustrasi: Mobil Bergerak di Jalan</p>
+              <div class="relative h-32 bg-gradient-to-b from-sky-300 to-sky-400 rounded-lg overflow-hidden">
+                <!-- Sky -->
+                <div class="absolute top-2 right-4 text-3xl">☀️</div>
+                <div class="absolute top-4 left-8 text-xl">☁️</div>
+                <div class="absolute top-6 left-20 text-lg">☁️</div>
+                <!-- Road -->
+                <div class="absolute bottom-0 left-0 right-0 h-12 bg-gray-600">
+                  <div class="absolute top-1/2 left-0 right-0 h-1 flex justify-around">
+                    <div class="w-8 h-1 bg-yellow-400"></div>
+                    <div class="w-8 h-1 bg-yellow-400"></div>
+                    <div class="w-8 h-1 bg-yellow-400"></div>
+                    <div class="w-8 h-1 bg-yellow-400"></div>
+                  </div>
+                </div>
+                <!-- Trees -->
+                <div class="absolute bottom-12 left-4 text-2xl">🌳</div>
+                <div class="absolute bottom-12 right-8 text-2xl">🌲</div>
+                <!-- Car Animation -->
+                <div id="moving-car" class="absolute bottom-8 text-3xl transition-all duration-1000" style="left: 10%;">🚗</div>
+                <!-- Position markers -->
+                <div class="absolute bottom-2 left-[10%] text-xs text-white font-bold">A</div>
+                <div class="absolute bottom-2 left-[80%] text-xs text-white font-bold">B</div>
+              </div>
+              <button onclick="animateCar()" class="mt-3 bg-blue-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-600 transition">
+                <i class="fas fa-play mr-2"></i>Lihat Mobil Bergerak
+              </button>
+            </div>
+          </div>
+
+          <!-- Sifat Relatif Gerak -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+            <div class="example-card rounded-xl p-4 mb-4">
+              <h3 class="font-bold text-green-800 mb-2"><i class="fas fa-eye mr-2"></i>Sifat Relatif Gerak</h3>
+              <p class="content-text text-gray-700">Gerak benda bersifat <strong>relatif</strong>, artinya tergantung pada <strong>pengamat</strong> dan <strong>titik acuan</strong> yang digunakan.</p>
+            </div>
+            
+            <!-- Ilustrasi Gerak Semu -->
+            <div class="bg-gradient-to-r from-green-100 to-emerald-100 rounded-xl p-4">
+              <p class="text-sm text-green-600 font-medium mb-3"><i class="fas fa-bus mr-2"></i>Contoh: Gerak Semu</p>
+              <div class="relative h-36 bg-gradient-to-b from-green-200 to-green-300 rounded-lg overflow-hidden">
+                <!-- Background scenery -->
+                <div class="absolute top-4 left-4 text-2xl">🌤️</div>
+                <!-- Trees that appear to move -->
+                <div id="tree-container" class="absolute bottom-12 left-0 right-0 flex justify-around transition-transform duration-1000">
+                  <span class="text-2xl">🌳</span>
+                  <span class="text-2xl">🌲</span>
+                  <span class="text-2xl">🌳</span>
+                  <span class="text-2xl">🌲</span>
+                </div>
+                <!-- Road -->
+                <div class="absolute bottom-0 left-0 right-0 h-8 bg-gray-500"></div>
+                <!-- Bus (stationary in frame) -->
+                <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-4xl">🚌</div>
+                <!-- Person inside bus -->
+                <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-lg">👤</div>
+              </div>
+              <button onclick="animateTrees()" class="mt-3 bg-green-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-600 transition">
+                <i class="fas fa-play mr-2"></i>Lihat dari Dalam Bus
+              </button>
+              <p class="mt-2 text-xs text-gray-600 content-text">
+                <i class="fas fa-info-circle mr-1"></i>Dari dalam bus yang bergerak, pohon-pohon tampak berlari mundur. Ini adalah <strong>gerak semu</strong>!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Posisi, Perpindahan vs Jarak Tempuh -->
+      <section id="perpindahan" class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center text-white text-xl">
+            <i class="fas fa-arrows-alt"></i>
+          </div>
+          <h2 class="text-3xl font-bold section-title">Posisi, Perpindahan & Jarak Tempuh</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-6">
+          <!-- Posisi -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+            <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="fas fa-map-marker-alt text-3xl text-indigo-500"></i>
+            </div>
+            <h3 class="text-xl font-bold text-center text-indigo-600 mb-3">Posisi</h3>
+            <p class="content-text text-gray-600 text-center">Letak suatu benda pada waktu tertentu terhadap <strong>titik acuan</strong>.</p>
+            <div class="mt-4 bg-indigo-50 rounded-lg p-3">
+              <p class="text-sm text-center"><i class="fas fa-home mr-2"></i>Contoh: "Sekolah berada 2 km dari rumah"</p>
+            </div>
+          </div>
+
+          <!-- Jarak Tempuh -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+            <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="fas fa-route text-3xl text-orange-500"></i>
+            </div>
+            <h3 class="text-xl font-bold text-center text-orange-600 mb-3">Jarak Tempuh</h3>
+            <p class="content-text text-gray-600 text-center">Panjang <strong>total lintasan</strong> yang dilalui benda (besaran <strong>skalar</strong>).</p>
+            <div class="mt-4 bg-orange-50 rounded-lg p-3">
+              <p class="text-sm text-center"><i class="fas fa-road mr-2"></i>Tidak memperhitungkan arah</p>
+            </div>
+          </div>
+
+          <!-- Perpindahan -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="fas fa-long-arrow-alt-right text-3xl text-green-500"></i>
+            </div>
+            <h3 class="text-xl font-bold text-center text-green-600 mb-3">Perpindahan (Δx)</h3>
+            <p class="content-text text-gray-600 text-center">Perubahan posisi benda (garis lurus), besaran <strong>vektor</strong>.</p>
+            <div class="formula-box mt-4 rounded-lg p-3">
+              <p class="text-center font-bold text-amber-800">Δx = x<sub>t</sub> - x<sub>0</sub></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ilustrasi Interaktif Perpindahan vs Jarak -->
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+          <h3 class="text-xl font-bold mb-4"><i class="fas fa-map mr-2 text-purple-500"></i>Ilustrasi: Perjalanan Ahmad ke Sekolah</h3>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4">
+              <div class="relative h-64 bg-white rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
+                <!-- Map illustration -->
+                <svg viewBox="0 0 300 200" class="w-full h-full">
+                  <!-- Background grid -->
+                  <defs>
+                    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e5e7eb" stroke-width="0.5"/>
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#grid)"/>
+                  
+                  <!-- Curved path (jarak tempuh) -->
+                  <path id="curved-path" d="M 40 160 Q 60 140 80 120 Q 120 80 150 100 Q 180 120 200 80 Q 220 50 260 40" fill="none" stroke="#f97316" stroke-width="3" stroke-dasharray="5,5"/>
+                  
+                  <!-- Straight path (perpindahan) -->
+                  <line x1="40" y1="160" x2="260" y2="40" stroke="#22c55e" stroke-width="3"/>
+                  
+                  <!-- House (start) -->
+                  <text x="30" y="175" font-size="24">🏠</text>
+                  <text x="20" y="195" font-size="10" fill="#4b5563">Rumah</text>
+                  
+                  <!-- School (end) -->
+                  <text x="250" y="35" font-size="24">🏫</text>
+                  <text x="245" y="15" font-size="10" fill="#4b5563">Sekolah</text>
+                  
+                  <!-- Landmarks -->
+                  <text x="70" y="115" font-size="16">🏪</text>
+                  <text x="145" y="105" font-size="16">⛪</text>
+                  <text x="200" y="75" font-size="16">🌳</text>
+                </svg>
+              </div>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="bg-orange-50 border-l-4 border-orange-400 rounded-r-xl p-4">
+                <h4 class="font-bold text-orange-700 flex items-center gap-2">
+                  <span class="w-4 h-4 bg-orange-400 rounded-full"></span>
+                  Jarak Tempuh (Garis Putus-putus)
+                </h4>
+                <p class="content-text text-gray-700 mt-2">Ahmad melewati toko, gereja, dan taman. Total jarak yang ia tempuh adalah <strong>3 km</strong>.</p>
+              </div>
+              
+              <div class="bg-green-50 border-l-4 border-green-400 rounded-r-xl p-4">
+                <h4 class="font-bold text-green-700 flex items-center gap-2">
+                  <span class="w-4 h-4 bg-green-400 rounded-full"></span>
+                  Perpindahan (Garis Lurus)
+                </h4>
+                <p class="content-text text-gray-700 mt-2">Jarak garis lurus dari rumah ke sekolah hanya <strong>2 km ke arah timur laut</strong>.</p>
+              </div>
+              
+              <div class="bg-purple-100 rounded-xl p-4">
+                <h4 class="font-bold text-purple-700"><i class="fas fa-lightbulb mr-2"></i>Kesimpulan</h4>
+                <p class="content-text text-gray-700 mt-2">Jarak tempuh ≥ Perpindahan, karena jarak memperhitungkan seluruh lintasan, sedangkan perpindahan hanya garis lurus!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Kelajuan vs Kecepatan -->
+      <section id="kecepatan" class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center text-white text-xl">
+            <i class="fas fa-tachometer-alt"></i>
+          </div>
+          <h2 class="text-3xl font-bold section-title">Kelajuan vs Kecepatan</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <!-- Kelajuan -->
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <div class="bg-gradient-to-r from-blue-500 to-cyan-500 p-4 text-white">
+              <h3 class="text-xl font-bold"><i class="fas fa-gauge-high mr-2"></i>Kelajuan (v)</h3>
+              <p class="text-blue-100 text-sm">Besaran Skalar</p>
+            </div>
+            <div class="p-6">
+              <p class="content-text text-gray-700 mb-4">Seberapa cepat <strong>jarak</strong> ditempuh dalam waktu tertentu <strong>tanpa memperhatikan arah</strong>.</p>
+              
+              <div class="formula-box rounded-xl p-4 mb-4">
+                <p class="text-center text-lg font-bold text-amber-800">v = s / t</p>
+                <p class="text-center text-sm text-gray-600 mt-2">v = kelajuan (m/s), s = jarak (m), t = waktu (s)</p>
+              </div>
+              
+              <!-- Speedometer illustration -->
+              <div class="bg-gray-100 rounded-xl p-4 text-center">
+                <div class="text-6xl mb-2">🏎️</div>
+                <p class="text-sm text-gray-600 content-text">Contoh: Speedometer motor menunjukkan 60 km/jam - ini adalah <strong>kelajuan</strong></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kecepatan -->
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <div class="bg-gradient-to-r from-purple-500 to-pink-500 p-4 text-white">
+              <h3 class="text-xl font-bold"><i class="fas fa-compass mr-2"></i>Kecepatan (v⃗)</h3>
+              <p class="text-purple-100 text-sm">Besaran Vektor</p>
+            </div>
+            <div class="p-6">
+              <p class="content-text text-gray-700 mb-4">Besarnya <strong>perpindahan</strong> per satuan waktu dan <strong>harus dinyatakan arahnya</strong>.</p>
+              
+              <div class="formula-box rounded-xl p-4 mb-4">
+                <p class="text-center text-lg font-bold text-amber-800">⟨v⃗⟩ = Δx / Δt</p>
+                <p class="text-center text-sm text-gray-600 mt-2">v⃗ = kecepatan (m/s), Δx = perpindahan (m)</p>
+              </div>
+              
+              <!-- Direction illustration -->
+              <div class="bg-gray-100 rounded-xl p-4 text-center">
+                <div class="text-6xl mb-2">🧭</div>
+                <p class="text-sm text-gray-600 content-text">Contoh: Mobil bergerak 60 km/jam <strong>ke arah utara</strong> - ini adalah <strong>kecepatan</strong></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kelajuan Rata-rata dan Sesaat -->
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+          <h3 class="text-xl font-bold mb-4"><i class="fas fa-chart-line mr-2 text-indigo-500"></i>Kelajuan Rata-rata vs Sesaat</h3>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="concept-card rounded-xl p-4">
+              <h4 class="font-bold text-blue-800 mb-2"><i class="fas fa-stopwatch mr-2"></i>Kelajuan Sesaat</h4>
+              <p class="content-text text-gray-700">Kelajuan benda pada <strong>waktu yang sangat singkat</strong>.</p>
+              <div class="mt-3 bg-white rounded-lg p-3 flex items-center gap-3">
+                <span class="text-3xl">🏍️</span>
+                <p class="text-sm">Seperti saat kamu melihat <strong>speedometer</strong> motor - menunjukkan kelajuan saat itu juga!</p>
+              </div>
+            </div>
+            
+            <div class="example-card rounded-xl p-4">
+              <h4 class="font-bold text-green-800 mb-2"><i class="fas fa-calculator mr-2"></i>Kelajuan Rata-rata (v̄)</h4>
+              <p class="content-text text-gray-700">Total jarak dibagi total waktu perjalanan.</p>
+              <div class="formula-box rounded-lg p-3 mt-3">
+                <p class="text-center font-bold text-amber-800">v̄ = Σs / Σt</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Interactive Speed Calculator -->
+          <div class="mt-6 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6">
+            <h4 class="font-bold text-indigo-700 mb-4"><i class="fas fa-calculator mr-2"></i>Kalkulator Kelajuan Interaktif</h4>
+            <div class="grid md:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Jarak (m)</label>
+                <input type="number" id="calc-distance" value="100" class="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:border-indigo-500 focus:outline-none" placeholder="Masukkan jarak">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Waktu (s)</label>
+                <input type="number" id="calc-time" value="10" class="w-full px-4 py-2 border-2 border-indigo-200 rounded-lg focus:border-indigo-500 focus:outline-none" placeholder="Masukkan waktu">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Hasil</label>
+                <button onclick="calculateSpeed()" class="w-full bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 transition font-medium">
+                  Hitung Kelajuan
+                </button>
+              </div>
+            </div>
+            <div id="speed-result" class="mt-4 bg-white rounded-lg p-4 text-center hidden">
+              <p class="text-lg">Kelajuan = <span id="speed-value" class="text-2xl font-bold text-indigo-600">0</span> m/s</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Gaya -->
+      <section id="gaya" class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center text-white text-xl">
+            <i class="fas fa-hand-rock"></i>
+          </div>
+          <h2 class="text-3xl font-bold section-title">Peta Konsep Gaya</h2>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+          <p class="content-text text-gray-700 mb-6 text-lg">Materi gerak berkaitan erat dengan <strong>Gaya</strong>. Gaya adalah tarikan atau dorongan yang dapat memengaruhi gerak benda.</p>
+          
+          <!-- Hukum Newton -->
+          <h3 class="text-xl font-bold mb-4 text-blue-700"><i class="fas fa-gavel mr-2"></i>Hukum Newton</h3>
+          <div class="grid md:grid-cols-3 gap-4 mb-8">
+            <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-4 border-2 border-red-200 card-hover">
+              <div class="text-3xl mb-2 text-center">🛋️</div>
+              <h4 class="font-bold text-red-700 text-center">Hukum I Newton</h4>
+              <p class="text-sm text-center text-gray-600 mt-2">(Inersia/Kelembaman)</p>
+              <p class="content-text text-sm mt-2 text-center">Benda cenderung mempertahankan keadaannya</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border-2 border-green-200 card-hover">
+              <div class="text-3xl mb-2 text-center">⚡</div>
+              <h4 class="font-bold text-green-700 text-center">Hukum II Newton</h4>
+              <div class="formula-box rounded-lg p-2 mt-2">
+                <p class="text-center font-bold text-amber-800">F = m × a</p>
+              </div>
+              <p class="content-text text-sm mt-2 text-center">Percepatan sebanding dengan gaya</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border-2 border-blue-200 card-hover">
+              <div class="text-3xl mb-2 text-center">↔️</div>
+              <h4 class="font-bold text-blue-700 text-center">Hukum III Newton</h4>
+              <p class="text-sm text-center text-gray-600 mt-2">(Aksi-Reaksi)</p>
+              <p class="content-text text-sm mt-2 text-center">Setiap aksi ada reaksi yang sama besar</p>
+            </div>
+          </div>
+          
+          <!-- Macam-macam Gaya -->
+          <h3 class="text-xl font-bold mb-4 text-purple-700"><i class="fas fa-bolt mr-2"></i>Macam-macam Gaya</h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-gray-50 rounded-xl p-4 text-center card-hover">
+              <div class="text-4xl mb-2">🧲</div>
+              <p class="font-medium text-sm">Gaya Magnet</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 text-center card-hover">
+              <div class="text-4xl mb-2">🌍</div>
+              <p class="font-medium text-sm">Gaya Gravitasi</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 text-center card-hover">
+              <div class="text-4xl mb-2">🤸</div>
+              <p class="font-medium text-sm">Gaya Otot</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 text-center card-hover">
+              <div class="text-4xl mb-2">🔩</div>
+              <p class="font-medium text-sm">Gaya Pegas</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 text-center card-hover">
+              <div class="text-4xl mb-2">🛞</div>
+              <p class="font-medium text-sm">Gaya Gesek</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 text-center card-hover">
+              <div class="text-4xl mb-2">⚙️</div>
+              <p class="font-medium text-sm">Gaya Mesin</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 text-center card-hover">
+              <div class="text-4xl mb-2">⚡</div>
+              <p class="font-medium text-sm">Gaya Listrik</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 text-center card-hover">
+              <div class="text-4xl mb-2">💨</div>
+              <p class="font-medium text-sm">Gaya Dorong</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Aktivitas -->
+      <section id="aktivitas" class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center text-white text-xl">
+            <i class="fas fa-flask"></i>
+          </div>
+          <h2 class="text-3xl font-bold section-title">Aktivitas Eksperimen</h2>
+        </div>
+
+        <div class="bg-gradient-to-r from-green-400 to-emerald-500 rounded-2xl p-6 text-white shadow-xl">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="text-4xl animate-float">🏃</div>
+            <div>
+              <h3 class="text-2xl font-bold">Aktivitas 4.1: Balapan Berpindah Posisi</h3>
+              <p class="text-green-100">Ayo praktikkan konsep kelajuan!</p>
+            </div>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white/20 backdrop-blur rounded-xl p-4">
+              <h4 class="font-bold mb-3"><i class="fas fa-list-ol mr-2"></i>Langkah-langkah:</h4>
+              <ol class="content-text space-y-2 text-sm">
+                <li class="flex gap-2"><span class="bg-white/30 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">1</span> Susun empat bangku dengan jarak berbeda</li>
+                <li class="flex gap-2"><span class="bg-white/30 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">2</span> Berjalan cepat dari bangku pertama ke terakhir</li>
+                <li class="flex gap-2"><span class="bg-white/30 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">3</span> Ukur waktu menggunakan stopwatch</li>
+                <li class="flex gap-2"><span class="bg-white/30 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">4</span> Hitung kelajuanmu (jarak ÷ waktu)</li>
+                <li class="flex gap-2"><span class="bg-white/30 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">5</span> Bandingkan hasilnya dengan temanmu!</li>
+              </ol>
+            </div>
+            
+            <!-- Ilustrasi Bangku -->
+            <div class="bg-white/20 backdrop-blur rounded-xl p-4">
+              <h4 class="font-bold mb-3"><i class="fas fa-image mr-2"></i>Ilustrasi:</h4>
+              <div class="bg-white rounded-lg p-4 h-40 relative">
+                <div class="absolute bottom-4 left-0 right-0 flex justify-between px-4">
+                  <div class="text-center">
+                    <div class="text-2xl">🪑</div>
+                    <div class="text-xs text-gray-600">Start</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-2xl">🪑</div>
+                    <div class="text-xs text-gray-600">2m</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-2xl">🪑</div>
+                    <div class="text-xs text-gray-600">5m</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-2xl">🪑</div>
+                    <div class="text-xs text-gray-600">Finish</div>
+                  </div>
+                </div>
+                <!-- Arrow -->
+                <div class="absolute top-1/2 left-8 right-8 h-0.5 bg-gray-400">
+                  <div class="absolute right-0 top-1/2 transform -translate-y-1/2 border-l-8 border-l-gray-400 border-y-4 border-y-transparent"></div>
+                </div>
+                <div id="runner-icon" class="absolute text-2xl transition-all duration-500" style="bottom: 50px; left: 10%;">🏃</div>
+              </div>
+              <button onclick="animateRunner()" class="mt-3 w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+                <i class="fas fa-play mr-2"></i>Jalankan Simulasi
+              </button>
+            </div>
+          </div>
+          
+          <!-- Stopwatch -->
+          <div class="mt-6 bg-white/20 backdrop-blur rounded-xl p-4">
+            <h4 class="font-bold mb-3"><i class="fas fa-stopwatch mr-2"></i>Stopwatch Digital</h4>
+            <div class="flex flex-col md:flex-row items-center gap-4">
+              <div class="bg-black text-green-400 font-mono text-4xl px-6 py-3 rounded-lg">
+                <span id="stopwatch-display">00:00:00</span>
+              </div>
+              <div class="flex gap-2">
+                <button onclick="startStopwatch()" id="btn-start" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+                  <i class="fas fa-play mr-2"></i>Mulai
+                </button>
+                <button onclick="stopStopwatch()" id="btn-stop" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                  <i class="fas fa-stop mr-2"></i>Berhenti
+                </button>
+                <button onclick="resetStopwatch()" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition">
+                  <i class="fas fa-redo mr-2"></i>Reset
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 7: Quiz HOTS -->
+      <section id="quiz" class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-pink-500 rounded-xl flex items-center justify-center text-white text-xl">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h2 class="text-3xl font-bold section-title">Quiz HOTS (10 Soal)</h2>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+          <!-- Progress Bar -->
+          <div class="mb-6">
+            <div class="flex justify-between text-sm text-gray-600 mb-2">
+              <span>Progres Quiz</span>
+              <span id="quiz-progress-text">Soal 1 dari 10</span>
+            </div>
+            <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
+              <div id="quiz-progress-bar" class="h-full bg-gradient-to-r from-pink-500 to-purple-500 progress-bar" style="width: 10%"></div>
+            </div>
+          </div>
+
+          <!-- Quiz Container -->
+          <div id="quiz-container">
+            <!-- Questions will be inserted here by JavaScript -->
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="flex justify-between mt-6">
+            <button onclick="prevQuestion()" id="btn-prev" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition disabled:opacity-50" disabled>
+              <i class="fas fa-arrow-left mr-2"></i>Sebelumnya
+            </button>
+            <button onclick="nextQuestion()" id="btn-next" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
+              Selanjutnya<i class="fas fa-arrow-right ml-2"></i>
+            </button>
+            <button onclick="submitQuiz()" id="btn-submit" class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition hidden">
+              <i class="fas fa-check mr-2"></i>Selesai
+            </button>
+          </div>
+
+          <!-- Results Container (Hidden by default) -->
+          <div id="quiz-results" class="hidden mt-6">
+            <div class="bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl p-6 text-white text-center">
+              <div class="text-6xl mb-4">🎉</div>
+              <h3 class="text-2xl font-bold mb-2">Quiz Selesai!</h3>
+              <p class="text-lg mb-4">Skormu:</p>
+              <div class="text-5xl font-bold" id="final-score">0/10</div>
+              <p class="mt-4 text-indigo-200" id="score-message"></p>
+              <button onclick="resetQuiz()" class="mt-4 bg-white text-indigo-600 px-6 py-2 rounded-lg hover:bg-indigo-100 transition font-medium">
+                <i class="fas fa-redo mr-2"></i>Ulangi Quiz
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-8">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <img src="https://i.imgur.com/mRmw86t.jpeg" alt="Author" class="w-12 h-12 rounded-full border-2 border-white object-cover" loading="lazy" onerror="this.style.background='#4f46e5'; this.alt='Author Photo';">
+            <div>
+              <p id="author-name" class="font-semibold">Algian Manggara, S.Agr</p>
+              <p class="text-blue-200 text-sm">Pengembang Media Pembelajaran</p>
+            </div>
+          </div>
+          <div class="text-center md:text-right">
+            <p class="text-sm text-blue-200">Media Pembelajaran Interaktif</p>
+            <p class="text-sm">© 2026 <span id="footer-author">Algian Manggara, S.Agr</span></p>
+          </div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-white/20 text-center text-sm text-blue-200">
+          <p>Dibuat dengan ❤️ untuk pendidikan Indonesia</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Default Configuration
+    const defaultConfig = {
+      main_title: 'Memahami Konsep Gerak Benda',
+      author_name: 'Algian Manggara, S.Agr',
+      primary_color: '#1e3a5f',
+      secondary_color: '#3b82f6',
+      text_color: '#1f2937',
+      accent_color: '#8b5cf6',
+      background_color: '#f9fafb'
+    };
+
+    // Quiz Questions (HOTS)
+    const quizQuestions = [
+      {
+        question: "Seorang pelari menempuh jarak 400 m mengelilingi lapangan berbentuk lingkaran dan kembali ke titik start. Berapakah perpindahan pelari tersebut?",
+        options: ["400 m", "200 m", "0 m", "800 m"],
+        correct: 2,
+        explanation: "Perpindahan adalah perubahan posisi dari titik awal ke titik akhir. Karena pelari kembali ke titik start, perpindahannya adalah 0 m."
+      },
+      {
+        question: "Sebuah mobil bergerak ke utara sejauh 30 km, kemudian berbelok ke timur sejauh 40 km. Berapa perpindahan total mobil tersebut?",
+        options: ["70 km", "50 km", "10 km", "35 km"],
+        correct: 1,
+        explanation: "Menggunakan teorema Pythagoras: √(30² + 40²) = √(900 + 1600) = √2500 = 50 km"
+      },
+      {
+        question: "Mengapa penumpang dalam bus yang tiba-tiba berhenti akan terdorong ke depan?",
+        options: ["Karena gaya gravitasi", "Karena Hukum I Newton (Inersia)", "Karena gaya gesek", "Karena Hukum III Newton"],
+        correct: 1,
+        explanation: "Hukum I Newton menyatakan benda cenderung mempertahankan keadaannya. Saat bus berhenti, tubuh penumpang masih ingin bergerak ke depan."
+      },
+      {
+        question: "Sebuah benda bergerak dengan kelajuan rata-rata 20 m/s selama 5 detik, kemudian 30 m/s selama 5 detik. Berapa kelajuan rata-rata totalnya?",
+        options: ["25 m/s", "50 m/s", "10 m/s", "20 m/s"],
+        correct: 0,
+        explanation: "Jarak total = (20×5) + (30×5) = 100 + 150 = 250 m. Waktu total = 10 s. Kelajuan rata-rata = 250/10 = 25 m/s"
+      },
+      {
+        question: "Roket dapat meluncur ke angkasa berdasarkan prinsip hukum Newton yang mana?",
+        options: ["Hukum I Newton", "Hukum II Newton", "Hukum III Newton", "Semua hukum Newton"],
+        correct: 2,
+        explanation: "Roket bekerja berdasarkan Hukum III Newton (aksi-reaksi). Gas yang dikeluarkan ke bawah memberikan gaya aksi, sedangkan roket terdorong ke atas sebagai reaksi."
+      },
+      {
+        question: "Jika kecepatan sebuah mobil adalah 60 km/jam ke arah utara, informasi apa yang membedakannya dari kelajuan?",
+        options: ["Besarnya saja", "Arahnya saja", "Besaran dan arahnya", "Waktu tempuhnya"],
+        correct: 1,
+        explanation: "Kecepatan adalah besaran vektor yang memiliki arah, sedangkan kelajuan adalah besaran skalar tanpa arah."
+      },
+      {
+        question: "Sebuah sepeda bergerak dengan percepatan 2 m/s². Jika massa sepeda dan pengendaranya 50 kg, berapa gaya yang diperlukan?",
+        options: ["25 N", "52 N", "100 N", "48 N"],
+        correct: 2,
+        explanation: "Menggunakan Hukum II Newton: F = m × a = 50 kg × 2 m/s² = 100 N"
+      },
+      {
+        question: "Mengapa astronot di stasiun luar angkasa tampak melayang?",
+        options: ["Tidak ada gravitasi", "Mereka jatuh bebas bersama stasiun", "Gaya magnet bumi", "Tekanan udara nol"],
+        correct: 1,
+        explanation: "Astronot dan stasiun sama-sama jatuh bebas mengelilingi Bumi, sehingga astronot tampak melayang relatif terhadap stasiun."
+      },
+      {
+        question: "Seorang anak berjalan 3 meter ke timur, lalu 4 meter ke selatan. Jika waktu tempuhnya 7 detik, berapa kecepatan rata-ratanya?",
+        options: ["1 m/s ke tenggara", "7/7 m/s", "5/7 m/s ke tenggara", "7/5 m/s ke tenggara"],
+        correct: 2,
+        explanation: "Perpindahan = √(3² + 4²) = 5 m ke arah tenggara. Kecepatan rata-rata = 5/7 m/s ke tenggara."
+      },
+      {
+        question: "Sebuah bola dilempar vertikal ke atas. Pada titik tertinggi, berapakah kecepatan dan percepatan bola?",
+        options: ["Kecepatan 0, percepatan 0", "Kecepatan 0, percepatan = g", "Kecepatan maksimum, percepatan 0", "Kecepatan maksimum, percepatan = g"],
+        correct: 1,
+        explanation: "Di titik tertinggi, kecepatan bola = 0 (berhenti sesaat), tetapi percepatan tetap = g (gravitasi selalu bekerja ke bawah)."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(10).fill(null);
+    let stopwatchInterval = null;
+    let stopwatchTime = 0;
+
+    // Initialize Quiz
+    function initQuiz() {
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = quizQuestions[currentQuestion];
+      const container = document.getElementById('quiz-container');
+      
+      container.innerHTML = `
+        <div class="mb-6">
+          <span class="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm font-medium">
+            Soal ${currentQuestion + 1}
+          </span>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-800 mb-4 content-text">${q.question}</h3>
+        <div class="space-y-3">
+          ${q.options.map((opt, idx) => `
+            <div onclick="selectAnswer(${idx})" class="quiz-option cursor-pointer p-4 border-2 rounded-xl ${userAnswers[currentQuestion] === idx ? 'selected' : 'border-gray-200'}">
+              <div class="flex items-center gap-3">
+                <span class="w-8 h-8 flex items-center justify-center rounded-full ${userAnswers[currentQuestion] === idx ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'} font-medium">
+                  ${String.fromCharCode(65 + idx)}
+                </span>
+                <span class="content-text">${opt}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      updateNavigation();
+      updateProgress();
+    }
+
+    function selectAnswer(idx) {
+      userAnswers[currentQuestion] = idx;
+      renderQuestion();
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    function updateNavigation() {
+      const btnPrev = document.getElementById('btn-prev');
+      const btnNext = document.getElementById('btn-next');
+      const btnSubmit = document.getElementById('btn-submit');
+
+      btnPrev.disabled = currentQuestion === 0;
+      
+      if (currentQuestion === quizQuestions.length - 1) {
+        btnNext.classList.add('hidden');
+        btnSubmit.classList.remove('hidden');
+      } else {
+        btnNext.classList.remove('hidden');
+        btnSubmit.classList.add('hidden');
+      }
+    }
+
+    function updateProgress() {
+      const progressBar = document.getElementById('quiz-progress-bar');
+      const progressText = document.getElementById('quiz-progress-text');
+      const progress = ((currentQuestion + 1) / quizQuestions.length) * 100;
+      
+      progressBar.style.width = `${progress}%`;
+      progressText.textContent = `Soal ${currentQuestion + 1} dari ${quizQuestions.length}`;
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      userAnswers.forEach((answer, idx) => {
+        if (answer === quizQuestions[idx].correct) {
+          score++;
+        }
+      });
+
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('btn-prev').classList.add('hidden');
+      document.getElementById('btn-submit').classList.add('hidden');
+      document.getElementById('quiz-results').classList.remove('hidden');
+      document.getElementById('final-score').textContent = `${score}/10`;
+
+      let message = '';
+      if (score >= 9) message = '🏆 Luar biasa! Kamu menguasai materi dengan sangat baik!';
+      else if (score >= 7) message = '👏 Hebat! Pemahaman kamu sudah bagus!';
+      else if (score >= 5) message = '💪 Bagus! Terus belajar untuk hasil yang lebih baik!';
+      else message = '📚 Jangan menyerah! Pelajari lagi materinya ya!';
+      
+      document.getElementById('score-message').textContent = message;
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      userAnswers = new Array(10).fill(null);
+      
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('btn-prev').classList.remove('hidden');
+      document.getElementById('btn-next').classList.remove('hidden');
+      document.getElementById('quiz-results').classList.add('hidden');
+      
+      renderQuestion();
+    }
+
+    // Animation Functions
+    function animateCar() {
+      const car = document.getElementById('moving-car');
+      car.style.left = '10%';
+      setTimeout(() => {
+        car.style.left = '75%';
+      }, 100);
+      setTimeout(() => {
+        car.style.left = '10%';
+      }, 2000);
+    }
+
+    function animateTrees() {
+      const trees = document.getElementById('tree-container');
+      trees.style.transform = 'translateX(0)';
+      setTimeout(() => {
+        trees.style.transform = 'translateX(-100px)';
+      }, 100);
+      setTimeout(() => {
+        trees.style.transform = 'translateX(0)';
+      }, 2000);
+    }
+
+    function animateRunner() {
+      const runner = document.getElementById('runner-icon');
+      runner.style.left = '10%';
+      setTimeout(() => {
+        runner.style.left = '85%';
+      }, 100);
+      setTimeout(() => {
+        runner.style.left = '10%';
+      }, 2500);
+    }
+
+    // Speed Calculator
+    function calculateSpeed() {
+      const distance = parseFloat(document.getElementById('calc-distance').value);
+      const time = parseFloat(document.getElementById('calc-time').value);
+      
+      if (distance > 0 && time > 0) {
+        const speed = (distance / time).toFixed(2);
+        document.getElementById('speed-value').textContent = speed;
+        document.getElementById('speed-result').classList.remove('hidden');
+      }
+    }
+
+    // Stopwatch Functions
+    function startStopwatch() {
+      if (!stopwatchInterval) {
+        stopwatchInterval = setInterval(() => {
+          stopwatchTime++;
+          updateStopwatchDisplay();
+        }, 10);
+      }
+    }
+
+    function stopStopwatch() {
+      clearInterval(stopwatchInterval);
+      stopwatchInterval = null;
+    }
+
+    function resetStopwatch() {
+      stopStopwatch();
+      stopwatchTime = 0;
+      updateStopwatchDisplay();
+    }
+
+    function updateStopwatchDisplay() {
+      const minutes = Math.floor(stopwatchTime / 6000);
+      const seconds = Math.floor((stopwatchTime % 6000) / 100);
+      const centiseconds = stopwatchTime % 100;
+      
+      document.getElementById('stopwatch-display').textContent = 
+        `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}:${String(centiseconds).padStart(2, '0')}`;
+    }
+
+    // Scroll to Section
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Element SDK Integration
+    async function onConfigChange(config) {
+      const mainTitle = document.getElementById('main-title');
+      const authorName = document.getElementById('author-name');
+      const footerAuthor = document.getElementById('footer-author');
+      
+      if (mainTitle) mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      if (authorName) authorName.textContent = config.author_name || defaultConfig.author_name;
+      if (footerAuthor) footerAuthor.textContent = config.author_name || defaultConfig.author_name;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['main_title', config.main_title || defaultConfig.main_title],
+        ['author_name', config.author_name || defaultConfig.author_name]
+      ]);
+    }
+
+    // Initialize
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    // Initialize quiz on page load
+    initQuiz();
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf9321c972a807d',t:'MTc3MTM3MjMxOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

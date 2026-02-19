@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keajaiban Energi Kalor dalam Kehidupan</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { font-family: 'Nunito', sans-serif; }
+    h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ffcc02 100%);
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(255, 107, 53, 0.2);
+    }
+    
+    .flame-animation {
+      animation: flicker 1.5s ease-in-out infinite alternate;
+    }
+    @keyframes flicker {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .pulse-glow {
+      animation: pulseGlow 2s ease-in-out infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 53, 0.4); }
+      50% { box-shadow: 0 0 40px rgba(255, 107, 53, 0.8); }
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ff6b35;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+    }
+    .quiz-option:hover {
+      transform: scale(1.02);
+    }
+    .quiz-option.correct {
+      background: linear-gradient(135deg, #10b981, #059669) !important;
+      color: white !important;
+    }
+    .quiz-option.incorrect {
+      background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+      color: white !important;
+    }
+    
+    .section-divider {
+      background: linear-gradient(90deg, transparent, #ff6b35, transparent);
+      height: 2px;
+    }
+
+    .illustration-card {
+      background: linear-gradient(145deg, #fff5f0, #ffffff);
+      border: 2px solid #ffedd5;
+    }
+
+    .scroll-indicator {
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+  </style>
+</head>
+<body class="h-full bg-orange-50">
+  <div id="app" class="w-full h-full overflow-auto">
+    
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-md">
+      <div class="max-w-7xl mx-auto px-4 py-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center flame-animation">
+              <span class="text-white text-xl">🔥</span>
+            </div>
+            <span id="nav-title" class="font-bold text-lg text-gray-800">Energi Kalor</span>
+          </div>
+          <div class="hidden md:flex items-center gap-6">
+            <a href="#materi" class="nav-link text-gray-600 hover:text-orange-500 font-medium">Materi</a>
+            <a href="#aktivitas" class="nav-link text-gray-600 hover:text-orange-500 font-medium">Aktivitas</a>
+            <a href="#quiz" class="nav-link text-gray-600 hover:text-orange-500 font-medium">Quiz HOTS</a>
+          </div>
+          <div class="md:hidden">
+            <button onclick="toggleMobileMenu()" class="text-gray-600 p-2">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t pt-4">
+          <div class="flex flex-col gap-3">
+            <a href="#materi" class="text-gray-600 hover:text-orange-500 font-medium" onclick="toggleMobileMenu()">Materi</a>
+            <a href="#aktivitas" class="text-gray-600 hover:text-orange-500 font-medium" onclick="toggleMobileMenu()">Aktivitas</a>
+            <a href="#quiz" class="text-gray-600 hover:text-orange-500 font-medium" onclick="toggleMobileMenu()">Quiz HOTS</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="gradient-bg relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 left-10 w-20 h-20 bg-white rounded-full float-animation"></div>
+        <div class="absolute top-40 right-20 w-16 h-16 bg-white rounded-full float-animation" style="animation-delay: 0.5s;"></div>
+        <div class="absolute bottom-20 left-1/4 w-12 h-12 bg-white rounded-full float-animation" style="animation-delay: 1s;"></div>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 py-16 md:py-24 relative z-10">
+        <div class="text-center">
+          <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+            <span class="text-white text-sm font-medium">📚 Materi IPA Kelas 5-6 SD</span>
+          </div>
+          <h1 id="main-title" class="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+            Keajaiban Energi Kalor<br/>dalam Kehidupan
+          </h1>
+          <p class="text-white/90 text-lg md:text-xl max-w-2xl mx-auto mb-8">
+            Jelajahi dunia energi panas yang menakjubkan dan temukan bagaimana kalor membantu kehidupan kita sehari-hari! 🌟
+          </p>
+          <a href="#materi" class="inline-flex items-center gap-2 bg-white text-orange-500 font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105">
+            Mulai Belajar
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 scroll-indicator">
+        <svg class="w-8 h-8 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+        </svg>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="materi" class="max-w-7xl mx-auto px-4 py-12">
+      
+      <!-- Section 1: Apa itu Energi Kalor -->
+      <section class="mb-16">
+        <div class="text-center mb-10">
+          <span class="inline-block bg-orange-100 text-orange-600 font-semibold px-4 py-1 rounded-full text-sm mb-4">BAB 1</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Apa itu Energi Kalor? 🤔</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">Sebelum mempelajari manfaatnya, mari pahami dasar-dasar energi kalor!</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <div class="illustration-card rounded-2xl p-6 card-hover">
+            <!-- Ilustrasi Api dan Matahari -->
+            <div class="relative h-64 bg-gradient-to-b from-sky-200 to-orange-100 rounded-xl overflow-hidden flex items-center justify-center">
+              <!-- Matahari -->
+              <div class="absolute top-4 right-8">
+                <div class="w-20 h-20 bg-yellow-400 rounded-full shadow-lg pulse-glow flex items-center justify-center">
+                  <span class="text-4xl">☀️</span>
+                </div>
+                <div class="absolute -inset-4 bg-yellow-300/30 rounded-full animate-ping"></div>
+              </div>
+              <!-- Api -->
+              <div class="relative">
+                <div class="flame-animation text-8xl">🔥</div>
+                <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-4 bg-gray-700 rounded"></div>
+              </div>
+              <!-- Partikel panas -->
+              <div class="absolute bottom-8 left-8 flex gap-1">
+                <div class="w-3 h-3 bg-red-400 rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+                <div class="w-3 h-3 bg-orange-400 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+                <div class="w-3 h-3 bg-yellow-400 rounded-full animate-bounce" style="animation-delay: 0.3s;"></div>
+              </div>
+            </div>
+            <p class="text-center text-gray-500 text-sm mt-3 italic">Ilustrasi: Sumber energi kalor dari matahari dan api</p>
+          </div>
+
+          <div class="space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-lg border-l-4 border-orange-500">
+              <h3 class="font-bold text-xl text-gray-800 mb-3 flex items-center gap-2">
+                <span class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">📖</span>
+                Definisi Kalor
+              </h3>
+              <p class="text-gray-600 leading-relaxed">
+                <strong class="text-orange-600">Kalor</strong> adalah salah satu bentuk energi yang sangat bermanfaat bagi manusia. Kalor dapat berpindah dari benda yang bersuhu tinggi ke benda yang bersuhu lebih rendah.
+              </p>
+            </div>
+
+            <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 shadow-lg border-l-4 border-amber-500">
+              <h3 class="font-bold text-xl text-gray-800 mb-3 flex items-center gap-2">
+                <span class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">🔋</span>
+                Energi sebagai "Baterai"
+              </h3>
+              <p class="text-gray-600 leading-relaxed">
+                Energi adalah kemampuan untuk melakukan kerja atau menghasilkan perubahan. Bayangkan energi seperti <strong class="text-amber-600">baterai pada mobil mainan</strong> - tanpa energi, segala sesuatu akan diam dan tidak berfungsi!
+              </p>
+            </div>
+
+            <!-- Info Box -->
+            <div class="bg-blue-50 rounded-xl p-4 border border-blue-200">
+              <div class="flex items-start gap-3">
+                <span class="text-2xl">💡</span>
+                <div>
+                  <h4 class="font-semibold text-blue-800">Tahukah Kamu?</h4>
+                  <p class="text-blue-700 text-sm">Satuan kalor adalah <strong>Joule (J)</strong> atau <strong>Kalori (kal)</strong>. 1 kalori = 4,2 Joule!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider my-12"></div>
+
+      <!-- Section 2: Pemanfaatan Kalor di Rumah -->
+      <section class="mb-16">
+        <div class="text-center mb-10">
+          <span class="inline-block bg-orange-100 text-orange-600 font-semibold px-4 py-1 rounded-full text-sm mb-4">BAB 2</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Pemanfaatan Kalor di Rumah 🏠</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">Energi panas bekerja di sekitar kita setiap hari!</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Card Memasak -->
+          <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
+            <div class="h-48 bg-gradient-to-br from-red-100 to-orange-100 relative flex items-center justify-center">
+              <!-- Ilustrasi Memasak -->
+              <div class="relative">
+                <div class="w-24 h-16 bg-gray-700 rounded-t-full relative">
+                  <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-28 h-3 bg-gray-800 rounded"></div>
+                  <!-- Uap -->
+                  <div class="absolute -top-8 left-4 text-2xl animate-bounce" style="animation-delay: 0.1s;">💨</div>
+                  <div class="absolute -top-10 left-12 text-xl animate-bounce" style="animation-delay: 0.3s;">💨</div>
+                  <div class="absolute -top-6 right-4 text-lg animate-bounce" style="animation-delay: 0.5s;">💨</div>
+                </div>
+                <!-- Api kompor -->
+                <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 flex gap-1">
+                  <span class="text-2xl flame-animation">🔥</span>
+                  <span class="text-xl flame-animation" style="animation-delay: 0.2s;">🔥</span>
+                  <span class="text-2xl flame-animation" style="animation-delay: 0.4s;">🔥</span>
+                </div>
+              </div>
+              <div class="absolute top-3 right-3 bg-white/80 rounded-full px-3 py-1 text-xs font-semibold text-orange-600">🍳 Dapur</div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-bold text-xl text-gray-800 mb-3 flex items-center gap-2">
+                🍲 Memasak Makanan
+              </h3>
+              <p class="text-gray-600 text-sm mb-4">
+                Kalor digunakan untuk menggoreng, merebus, atau memanggang makanan. Proses ini membuat makanan menjadi matang dan lebih lezat!
+              </p>
+              <div class="bg-green-50 rounded-lg p-3 border border-green-200">
+                <p class="text-green-700 text-sm"><strong>✅ Manfaat:</strong> Membuat makanan matang, lebih lezat, dan membunuh kuman berbahaya.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Menghangatkan Tubuh -->
+          <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
+            <div class="h-48 bg-gradient-to-br from-amber-100 to-yellow-100 relative flex items-center justify-center">
+              <!-- Ilustrasi Perapian -->
+              <div class="relative">
+                <div class="w-32 h-24 bg-gray-600 rounded-t-lg relative">
+                  <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2">
+                    <span class="text-4xl flame-animation">🔥</span>
+                  </div>
+                  <!-- Kayu -->
+                  <div class="absolute bottom-1 left-2 w-6 h-2 bg-amber-700 rounded transform -rotate-12"></div>
+                  <div class="absolute bottom-2 right-3 w-5 h-2 bg-amber-800 rounded transform rotate-6"></div>
+                </div>
+                <!-- Orang -->
+                <div class="absolute -right-12 bottom-0 text-4xl">🧑</div>
+              </div>
+              <div class="absolute top-3 right-3 bg-white/80 rounded-full px-3 py-1 text-xs font-semibold text-amber-600">🏠 Rumah</div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-bold text-xl text-gray-800 mb-3 flex items-center gap-2">
+                🧥 Menghangatkan Tubuh
+              </h3>
+              <p class="text-gray-600 text-sm mb-4">
+                Saat cuaca dingin atau musim hujan, kita menggunakan pemanas agar rumah tetap nyaman dan hangat.
+              </p>
+              <div class="bg-amber-50 rounded-lg p-3 border border-amber-200">
+                <p class="text-amber-700 text-sm"><strong>🔥 Contoh:</strong> Kompor kayu tradisional, pemanas listrik, penghangat ruangan.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Relaksasi -->
+          <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
+            <div class="h-48 bg-gradient-to-br from-blue-100 to-cyan-100 relative flex items-center justify-center overflow-hidden">
+              <!-- Ilustrasi Kolam Air Panas -->
+              <div class="relative">
+                <div class="w-28 h-16 bg-cyan-400 rounded-full relative overflow-hidden">
+                  <!-- Gelembung -->
+                  <div class="absolute bottom-2 left-4 w-2 h-2 bg-white/60 rounded-full animate-bounce"></div>
+                  <div class="absolute bottom-3 right-6 w-3 h-3 bg-white/60 rounded-full animate-bounce" style="animation-delay: 0.3s;"></div>
+                  <!-- Uap -->
+                  <div class="absolute -top-4 left-6 text-lg animate-bounce">💨</div>
+                  <div class="absolute -top-6 right-8 text-sm animate-bounce" style="animation-delay: 0.4s;">💨</div>
+                </div>
+                <!-- Orang berendam -->
+                <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 text-3xl">😌</div>
+              </div>
+              <div class="absolute top-3 right-3 bg-white/80 rounded-full px-3 py-1 text-xs font-semibold text-cyan-600">♨️ Spa</div>
+            </div>
+            <div class="p-6">
+              <h3 class="font-bold text-xl text-gray-800 mb-3 flex items-center gap-2">
+                ♨️ Relaksasi
+              </h3>
+              <p class="text-gray-600 text-sm mb-4">
+                Berendam di kolam air panas dapat membantu tubuh menjadi rileks, nyaman, dan melancarkan peredaran darah.
+              </p>
+              <div class="bg-cyan-50 rounded-lg p-3 border border-cyan-200">
+                <p class="text-cyan-700 text-sm"><strong>💆 Manfaat:</strong> Mengurangi stres, meredakan nyeri otot, meningkatkan kualitas tidur.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider my-12"></div>
+
+      <!-- Section 3: Kalor dalam Skala Besar -->
+      <section class="mb-16">
+        <div class="text-center mb-10">
+          <span class="inline-block bg-orange-100 text-orange-600 font-semibold px-4 py-1 rounded-full text-sm mb-4">BAB 3</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Kalor dalam Skala Besar 🏭</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">Kalor bukan hanya untuk memasak, tapi juga penggerak peradaban!</p>
+        </div>
+
+        <!-- PLTU Card -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden mb-8">
+          <div class="md:flex">
+            <div class="md:w-1/2 p-8 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+              <!-- Diagram PLTU -->
+              <div class="relative w-full max-w-sm">
+                <svg viewBox="0 0 300 200" class="w-full">
+                  <!-- Boiler -->
+                  <rect x="20" y="60" width="60" height="80" fill="#64748b" rx="5"/>
+                  <text x="50" y="105" text-anchor="middle" fill="white" font-size="10">BOILER</text>
+                  <!-- Api di boiler -->
+                  <text x="50" y="150" font-size="20">🔥</text>
+                  
+                  <!-- Pipa uap -->
+                  <path d="M80 80 L120 80" stroke="#f97316" stroke-width="6" fill="none"/>
+                  <circle cx="100" cy="80" r="4" fill="#fbbf24" class="animate-pulse"/>
+                  
+                  <!-- Turbin -->
+                  <circle cx="150" cy="80" r="30" fill="#3b82f6" stroke="#1e40af" stroke-width="3"/>
+                  <text x="150" y="85" text-anchor="middle" fill="white" font-size="10">TURBIN</text>
+                  <!-- Baling-baling turbin -->
+                  <g class="origin-center" style="transform-origin: 150px 80px; animation: spin 3s linear infinite;">
+                    <line x1="150" y1="55" x2="150" y2="105" stroke="#fff" stroke-width="2"/>
+                    <line x1="125" y1="80" x2="175" y2="80" stroke="#fff" stroke-width="2"/>
+                  </g>
+                  
+                  <!-- Pipa ke generator -->
+                  <path d="M180 80 L210 80" stroke="#6b7280" stroke-width="4" fill="none"/>
+                  
+                  <!-- Generator -->
+                  <rect x="210" y="55" width="50" height="50" fill="#10b981" rx="5"/>
+                  <text x="235" y="85" text-anchor="middle" fill="white" font-size="8">GENERATOR</text>
+                  
+                  <!-- Kabel listrik -->
+                  <path d="M260 80 L280 80 L280 150" stroke="#fbbf24" stroke-width="3" fill="none"/>
+                  <text x="280" y="165" font-size="16">💡</text>
+                  
+                  <!-- Label -->
+                  <text x="50" y="180" fill="#64748b" font-size="9">Air dipanaskan</text>
+                  <text x="140" y="130" fill="#64748b" font-size="9">Uap memutar</text>
+                  <text x="220" y="130" fill="#64748b" font-size="9">Listrik!</text>
+                </svg>
+                <style>
+                  @keyframes spin {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                  }
+                </style>
+              </div>
+            </div>
+            <div class="md:w-1/2 p-8">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl">⚡</span>
+                <h3 class="font-bold text-2xl text-gray-800">Pembangkit Listrik (PLTU)</h3>
+              </div>
+              <p class="text-gray-600 mb-4 leading-relaxed">
+                Di PLTU (Pembangkit Listrik Tenaga Uap), air dipanaskan hingga menjadi <strong>uap bertekanan tinggi</strong>. Uap ini kemudian menggerakkan <strong>turbin</strong>, yang dihubungkan dengan <strong>generator</strong> untuk menghasilkan listrik untuk rumah kita!
+              </p>
+              <div class="bg-blue-50 rounded-xl p-4 border border-blue-200">
+                <h4 class="font-semibold text-blue-800 mb-2">📊 Proses PLTU:</h4>
+                <ol class="text-blue-700 text-sm space-y-1">
+                  <li>1️⃣ Batu bara dibakar → menghasilkan kalor</li>
+                  <li>2️⃣ Air dipanaskan → menjadi uap</li>
+                  <li>3️⃣ Uap memutar → turbin bergerak</li>
+                  <li>4️⃣ Generator bekerja → listrik mengalir! 💡</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transportasi Card -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden mb-8">
+          <div class="md:flex flex-row-reverse">
+            <div class="md:w-1/2 p-8 bg-gradient-to-br from-red-50 to-orange-100 flex items-center justify-center">
+              <!-- Diagram Mesin 4 Tak -->
+              <div class="relative w-full max-w-sm">
+                <div class="grid grid-cols-2 gap-4">
+                  <!-- Langkah 1: Hisap -->
+                  <div class="bg-white rounded-xl p-4 text-center shadow-md">
+                    <div class="text-3xl mb-2">💨➡️</div>
+                    <div class="font-bold text-orange-600 text-sm">1. HISAP</div>
+                    <p class="text-xs text-gray-500">Campuran udara & bahan bakar masuk</p>
+                  </div>
+                  <!-- Langkah 2: Kompresi -->
+                  <div class="bg-white rounded-xl p-4 text-center shadow-md">
+                    <div class="text-3xl mb-2">⬆️⬇️</div>
+                    <div class="font-bold text-blue-600 text-sm">2. KOMPRESI</div>
+                    <p class="text-xs text-gray-500">Piston menekan campuran</p>
+                  </div>
+                  <!-- Langkah 3: Usaha -->
+                  <div class="bg-white rounded-xl p-4 text-center shadow-md">
+                    <div class="text-3xl mb-2">💥🔥</div>
+                    <div class="font-bold text-red-600 text-sm">3. USAHA</div>
+                    <p class="text-xs text-gray-500">Busi menyala, ledakan mendorong piston</p>
+                  </div>
+                  <!-- Langkah 4: Buang -->
+                  <div class="bg-white rounded-xl p-4 text-center shadow-md">
+                    <div class="text-3xl mb-2">💨⬅️</div>
+                    <div class="font-bold text-gray-600 text-sm">4. BUANG</div>
+                    <p class="text-xs text-gray-500">Gas sisa dikeluarkan</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="md:w-1/2 p-8">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center text-2xl">🚗</span>
+                <h3 class="font-bold text-2xl text-gray-800">Transportasi (Mesin 4 Tak)</h3>
+              </div>
+              <p class="text-gray-600 mb-4 leading-relaxed">
+                Mesin kendaraan (mobil/motor) bekerja dengan membakar <strong>bahan bakar</strong> untuk menghasilkan tenaga dorong yang menggerakkan roda. Proses ini disebut <strong>mesin 4 langkah (4 tak)</strong>.
+              </p>
+              <div class="bg-red-50 rounded-xl p-4 border border-red-200">
+                <h4 class="font-semibold text-red-800 mb-2">🔧 Cara Kerja Mesin:</h4>
+                <p class="text-red-700 text-sm">
+                  Energi kalor dari pembakaran bahan bakar diubah menjadi energi gerak (kinetik) yang membuat kendaraan bergerak maju!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pabrik Industri -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Pabrik Kaca -->
+          <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+            <div class="h-40 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden">
+              <div class="relative">
+                <!-- Tungku -->
+                <div class="w-20 h-16 bg-gray-700 rounded-t-lg relative">
+                  <div class="absolute inset-2 bg-orange-500 rounded animate-pulse"></div>
+                  <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-2xl flame-animation">🔥</div>
+                </div>
+                <!-- Kaca cair -->
+                <div class="absolute -right-16 top-4 flex items-center">
+                  <div class="w-8 h-2 bg-orange-400 rounded animate-pulse"></div>
+                  <span class="text-2xl">→</span>
+                  <div class="w-12 h-12 bg-cyan-200 rounded border-2 border-cyan-400 flex items-center justify-center">
+                    <span class="text-xl">🪟</span>
+                  </div>
+                </div>
+              </div>
+              <div class="absolute top-2 left-2 bg-white/80 rounded-full px-2 py-1 text-xs font-semibold">🏭 1700°C</div>
+            </div>
+            <h3 class="font-bold text-xl text-gray-800 mb-2">🏭 Pabrik Kaca</h3>
+            <p class="text-gray-600 text-sm">Menggunakan suhu sangat tinggi (~1700°C) untuk melelehkan pasir silika menjadi kaca cair yang dapat dibentuk menjadi berbagai produk.</p>
+          </div>
+
+          <!-- Pabrik Logam -->
+          <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+            <div class="h-40 bg-gradient-to-br from-orange-100 to-red-100 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden">
+              <div class="relative">
+                <!-- Tungku logam -->
+                <div class="w-16 h-20 bg-gray-800 rounded relative">
+                  <div class="absolute inset-2 bottom-4 bg-orange-600 rounded animate-pulse"></div>
+                  <!-- Logam cair mengalir -->
+                  <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-2 h-8 bg-orange-500 animate-pulse"></div>
+                </div>
+                <!-- Cetakan -->
+                <div class="absolute -bottom-10 left-1/2 transform -translate-x-1/2">
+                  <div class="w-12 h-6 border-2 border-gray-600 bg-gray-200 rounded-b"></div>
+                </div>
+                <!-- Hasil -->
+                <div class="absolute -right-20 top-0 text-4xl">🔩</div>
+              </div>
+              <div class="absolute top-2 left-2 bg-white/80 rounded-full px-2 py-1 text-xs font-semibold">🔥 1500°C</div>
+            </div>
+            <h3 class="font-bold text-xl text-gray-800 mb-2">⚙️ Pabrik Logam</h3>
+            <p class="text-gray-600 text-sm">Mencairkan logam dengan suhu tinggi agar bisa dicetak dan dibentuk menjadi berbagai alat seperti paku, baut, dan peralatan mesin.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider my-12"></div>
+
+      <!-- Section 4: Proyek Sains -->
+      <section class="mb-16">
+        <div class="text-center mb-10">
+          <span class="inline-block bg-orange-100 text-orange-600 font-semibold px-4 py-1 rounded-full text-sm mb-4">BAB 4</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Proyek Sains: Balon Udara 🎈</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">Energi kalor juga bisa menciptakan gaya angkat!</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl p-8 shadow-xl">
+          <div class="md:flex gap-8 items-center">
+            <div class="md:w-1/2 mb-6 md:mb-0">
+              <!-- Ilustrasi Balon Udara -->
+              <div class="relative h-72 bg-gradient-to-b from-sky-300 via-sky-200 to-green-200 rounded-2xl overflow-hidden">
+                <!-- Awan -->
+                <div class="absolute top-4 left-4 text-3xl">☁️</div>
+                <div class="absolute top-8 right-8 text-2xl">☁️</div>
+                
+                <!-- Balon udara utama -->
+                <div class="absolute top-12 left-1/2 transform -translate-x-1/2 float-animation">
+                  <div class="relative">
+                    <div class="w-24 h-28 bg-gradient-to-b from-red-500 via-yellow-500 to-orange-500 rounded-t-full rounded-b-3xl relative">
+                      <!-- Garis dekorasi -->
+                      <div class="absolute inset-0 flex justify-around">
+                        <div class="w-0.5 h-full bg-white/30"></div>
+                        <div class="w-0.5 h-full bg-white/30"></div>
+                        <div class="w-0.5 h-full bg-white/30"></div>
+                      </div>
+                    </div>
+                    <!-- Keranjang -->
+                    <div class="absolute -bottom-10 left-1/2 transform -translate-x-1/2">
+                      <div class="flex justify-center gap-2">
+                        <div class="w-0.5 h-8 bg-amber-800"></div>
+                        <div class="w-0.5 h-8 bg-amber-800"></div>
+                      </div>
+                      <div class="w-10 h-6 bg-amber-700 rounded -mt-1 flex items-center justify-center">
+                        <span class="text-xs">🔥</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Lampion kecil -->
+                <div class="absolute bottom-20 left-8 float-animation" style="animation-delay: 0.5s;">
+                  <div class="w-8 h-10 bg-red-400 rounded-full relative">
+                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-xs">🔥</div>
+                  </div>
+                </div>
+                
+                <!-- Rumah/pohon di bawah -->
+                <div class="absolute bottom-2 left-4 text-2xl">🏠</div>
+                <div class="absolute bottom-2 right-8 text-3xl">🌲</div>
+              </div>
+            </div>
+            
+            <div class="md:w-1/2">
+              <div class="bg-white rounded-2xl p-6 shadow-lg mb-4">
+                <h3 class="font-bold text-xl text-purple-800 mb-3 flex items-center gap-2">
+                  <span class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">🔬</span>
+                  Konsep Lampion/Balon Udara
+                </h3>
+                <p class="text-gray-600 mb-4">
+                  Dengan memanaskan udara di dalam balon, kita bisa membuat benda terbang! <strong>Udara panas lebih ringan</strong> daripada udara dingin, sehingga menciptakan gaya angkat.
+                </p>
+                <div class="bg-purple-50 rounded-lg p-3 border border-purple-200">
+                  <p class="text-purple-700 text-sm">
+                    <strong>📚 Prinsip Archimedes:</strong> Benda yang lebih ringan dari udara sekitarnya akan mengapung dan terbang ke atas!
+                  </p>
+                </div>
+              </div>
+
+              <div class="bg-gradient-to-r from-amber-100 to-yellow-100 rounded-2xl p-6 shadow-lg">
+                <h3 class="font-bold text-xl text-amber-800 mb-3 flex items-center gap-2">
+                  <span class="w-8 h-8 bg-amber-200 rounded-full flex items-center justify-center">💡</span>
+                  Tantangan Kreatif
+                </h3>
+                <p class="text-amber-700">
+                  Bagaimana cara membuat balon udara dari bahan bekas yang mampu mengangkat beban (seperti lilin) sebagai penerangan di daerah yang terbatas listrik?
+                </p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <span class="bg-white px-3 py-1 rounded-full text-sm text-amber-600 shadow">🛍️ Kantong plastik</span>
+                  <span class="bg-white px-3 py-1 rounded-full text-sm text-amber-600 shadow">🕯️ Lilin kecil</span>
+                  <span class="bg-white px-3 py-1 rounded-full text-sm text-amber-600 shadow">📎 Kawat</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider my-12"></div>
+
+      <!-- Section 5: Aktivitas Interaktif -->
+      <section id="aktivitas" class="mb-16">
+        <div class="text-center mb-10">
+          <span class="inline-block bg-orange-100 text-orange-600 font-semibold px-4 py-1 rounded-full text-sm mb-4">BAB 5</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Diskusi Interaktif 💬</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">Ayo uji kemampuanmu dengan pertanyaan-pertanyaan menarik!</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Diskusi 1: Ayam Goreng -->
+          <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-2 border-transparent hover:border-orange-300">
+            <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center text-3xl mb-4 mx-auto">
+              🍗
+            </div>
+            <h3 class="font-bold text-lg text-gray-800 text-center mb-3">Studi Kasus Ayam Goreng</h3>
+            <p class="text-gray-600 text-sm text-center mb-4">
+              Jenis perpindahan kalor apa saja yang terjadi saat kita menggoreng ayam dengan minyak kelapa?
+            </p>
+            <button onclick="showDiscussion(1)" class="w-full bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold py-2 px-4 rounded-xl transition-all">
+              Lihat Jawaban
+            </button>
+            <div id="discussion-1" class="hidden mt-4 p-4 bg-green-50 rounded-xl border border-green-200">
+              <p class="text-green-800 text-sm">
+                <strong>✅ Jawaban:</strong><br/>
+                1. <strong>Konduksi:</strong> Panas dari wajan ke minyak dan dari minyak ke ayam<br/>
+                2. <strong>Konveksi:</strong> Aliran minyak panas mengelilingi ayam<br/>
+                3. <strong>Radiasi:</strong> Panas dari api ke dasar wajan
+              </p>
+            </div>
+          </div>
+
+          <!-- Diskusi 2: Pemuaian -->
+          <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-2 border-transparent hover:border-blue-300">
+            <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-4 mx-auto">
+              🌡️
+            </div>
+            <h3 class="font-bold text-lg text-gray-800 text-center mb-3">Fenomena Pemuaian</h3>
+            <p class="text-gray-600 text-sm text-center mb-4">
+              Sebutkan contoh fenomena pemuaian yang bisa kamu temukan di sekolah atau rumah!
+            </p>
+            <button onclick="showDiscussion(2)" class="w-full bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold py-2 px-4 rounded-xl transition-all">
+              Lihat Jawaban
+            </button>
+            <div id="discussion-2" class="hidden mt-4 p-4 bg-green-50 rounded-xl border border-green-200">
+              <p class="text-green-800 text-sm">
+                <strong>✅ Contoh Pemuaian:</strong><br/>
+                • Rel kereta api diberi celah<br/>
+                • Kabel listrik kendur saat panas<br/>
+                • Tutup botol susah dibuka (bisa direndam air panas)<br/>
+                • Jembatan punya sambungan ekspansi<br/>
+                • Ban mobil bisa meletus jika terlalu panas
+              </p>
+            </div>
+          </div>
+
+          <!-- Diskusi 3: Bimetal -->
+          <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-2 border-transparent hover:border-purple-300">
+            <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center text-3xl mb-4 mx-auto">
+              🔧
+            </div>
+            <h3 class="font-bold text-lg text-gray-800 text-center mb-3">Prinsip Bimetal</h3>
+            <p class="text-gray-600 text-sm text-center mb-4">
+              Jika bimetal terbuat dari tembaga dan kuningan dipanaskan, ke arah mana lempeng melengkung?
+            </p>
+            <button onclick="showDiscussion(3)" class="w-full bg-purple-100 hover:bg-purple-200 text-purple-700 font-semibold py-2 px-4 rounded-xl transition-all">
+              Lihat Jawaban
+            </button>
+            <div id="discussion-3" class="hidden mt-4 p-4 bg-green-50 rounded-xl border border-green-200">
+              <p class="text-green-800 text-sm">
+                <strong>✅ Jawaban:</strong><br/>
+                Lempeng akan <strong>melengkung ke arah kuningan</strong> karena tembaga memiliki koefisien muai lebih besar daripada kuningan. Logam yang memuai lebih besar akan berada di sisi luar lengkungan!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulasi Perpindahan Kalor -->
+        <div class="mt-10 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-3xl p-8 shadow-xl">
+          <h3 class="text-2xl font-bold text-gray-800 text-center mb-6">🔬 Simulasi Perpindahan Kalor</h3>
+          
+          <div class="grid md:grid-cols-3 gap-6">
+            <!-- Konduksi -->
+            <div class="bg-white rounded-2xl p-6 shadow-lg text-center">
+              <h4 class="font-bold text-lg text-red-600 mb-3">KONDUKSI</h4>
+              <div class="h-24 flex items-center justify-center mb-3">
+                <div class="flex items-center">
+                  <div class="w-8 h-16 bg-gradient-to-b from-red-500 to-red-300 rounded-l animate-pulse"></div>
+                  <div class="w-8 h-16 bg-gradient-to-b from-red-400 to-orange-300"></div>
+                  <div class="w-8 h-16 bg-gradient-to-b from-orange-300 to-yellow-200"></div>
+                  <div class="w-8 h-16 bg-gradient-to-b from-yellow-200 to-gray-200 rounded-r"></div>
+                </div>
+              </div>
+              <p class="text-gray-600 text-sm">Panas merambat melalui <strong>zat padat</strong> tanpa disertai perpindahan partikel.</p>
+              <div class="mt-3 text-xs text-gray-500">Contoh: Sendok logam di panci panas</div>
+            </div>
+
+            <!-- Konveksi -->
+            <div class="bg-white rounded-2xl p-6 shadow-lg text-center">
+              <h4 class="font-bold text-lg text-blue-600 mb-3">KONVEKSI</h4>
+              <div class="h-24 flex items-center justify-center mb-3">
+                <div class="relative w-20 h-20 bg-blue-100 rounded-full border-2 border-blue-300">
+                  <div class="absolute top-2 left-1/2 transform -translate-x-1/2 animate-bounce">⬆️</div>
+                  <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 animate-bounce" style="animation-delay: 0.5s;">⬇️</div>
+                  <div class="absolute left-2 top-1/2 transform -translate-y-1/2">↩️</div>
+                  <div class="absolute right-2 top-1/2 transform -translate-y-1/2">↪️</div>
+                  <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-lg">🔥</div>
+                </div>
+              </div>
+              <p class="text-gray-600 text-sm">Panas merambat melalui <strong>aliran zat cair/gas</strong> (partikel berpindah).</p>
+              <div class="mt-3 text-xs text-gray-500">Contoh: Air mendidih, angin darat-laut</div>
+            </div>
+
+            <!-- Radiasi -->
+            <div class="bg-white rounded-2xl p-6 shadow-lg text-center">
+              <h4 class="font-bold text-lg text-yellow-600 mb-3">RADIASI</h4>
+              <div class="h-24 flex items-center justify-center mb-3">
+                <div class="relative">
+                  <div class="w-12 h-12 bg-yellow-400 rounded-full pulse-glow flex items-center justify-center text-2xl">☀️</div>
+                  <div class="absolute -inset-8">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 text-yellow-400 animate-ping">〰️</div>
+                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-yellow-400 animate-ping" style="animation-delay: 0.3s;">〰️</div>
+                    <div class="absolute left-0 top-1/2 transform -translate-y-1/2 text-yellow-400 animate-ping" style="animation-delay: 0.6s;">〰️</div>
+                    <div class="absolute right-0 top-1/2 transform -translate-y-1/2 text-yellow-400 animate-ping" style="animation-delay: 0.9s;">〰️</div>
+                  </div>
+                </div>
+              </div>
+              <p class="text-gray-600 text-sm">Panas merambat dalam bentuk <strong>gelombang</strong> tanpa medium.</p>
+              <div class="mt-3 text-xs text-gray-500">Contoh: Panas matahari ke bumi</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider my-12"></div>
+
+      <!-- Section 6: Kesimpulan -->
+      <section class="mb-16">
+        <div class="bg-gradient-to-br from-orange-500 to-red-500 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
+          <div class="max-w-3xl mx-auto text-center">
+            <span class="inline-block bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6 text-sm">📝 Kesimpulan</span>
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Kesimpulan & Refleksi</h2>
+            <p class="text-lg md:text-xl text-white/90 mb-8 leading-relaxed">
+              Energi kalor ada di mana-mana dan membantu kita dalam berbagai cara. Kita harus belajar <strong>menghargai dan memanfaatkannya dengan bijak</strong> agar terus dinikmati generasi mendatang.
+            </p>
+            <div class="grid md:grid-cols-3 gap-4 text-left">
+              <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                <span class="text-2xl">🏠</span>
+                <h4 class="font-bold mt-2">Di Rumah</h4>
+                <p class="text-sm text-white/80">Memasak, menghangatkan tubuh, relaksasi</p>
+              </div>
+              <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                <span class="text-2xl">🏭</span>
+                <h4 class="font-bold mt-2">Di Industri</h4>
+                <p class="text-sm text-white/80">PLTU, transportasi, pabrik kaca & logam</p>
+              </div>
+              <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                <span class="text-2xl">🔬</span>
+                <h4 class="font-bold mt-2">Di Sains</h4>
+                <p class="text-sm text-white/80">Balon udara, eksperimen perpindahan kalor</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider my-12"></div>
+
+      <!-- Section 7: Quiz HOTS -->
+      <section id="quiz" class="mb-16">
+        <div class="text-center mb-10">
+          <span class="inline-block bg-green-100 text-green-600 font-semibold px-4 py-1 rounded-full text-sm mb-4">EVALUASI</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Quiz HOTS 🧠</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">10 Soal Higher Order Thinking Skills untuk menguji pemahamanmu!</p>
+        </div>
+
+        <div id="quiz-container" class="bg-white rounded-3xl p-6 md:p-10 shadow-2xl">
+          <!-- Progress Bar -->
+          <div class="mb-8">
+            <div class="flex justify-between text-sm text-gray-600 mb-2">
+              <span>Soal <span id="current-question">1</span> dari 10</span>
+              <span>Skor: <span id="score">0</span>/10</span>
+            </div>
+            <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
+              <div id="progress-bar" class="h-full bg-gradient-to-r from-green-400 to-emerald-500 progress-bar" style="width: 10%"></div>
+            </div>
+          </div>
+
+          <!-- Question Area -->
+          <div id="question-area">
+            <div class="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-6 mb-6 border-l-4 border-orange-500">
+              <p id="question-text" class="text-lg md:text-xl text-gray-800 font-medium"></p>
+            </div>
+
+            <div id="options-container" class="grid gap-4">
+              <!-- Options will be inserted here -->
+            </div>
+
+            <div id="feedback-area" class="hidden mt-6">
+              <div id="feedback-content" class="rounded-xl p-4"></div>
+              <button id="next-btn" onclick="nextQuestion()" class="mt-4 w-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold py-4 px-6 rounded-xl hover:shadow-lg transition-all">
+                Soal Berikutnya →
+              </button>
+            </div>
+          </div>
+
+          <!-- Result Area (Hidden initially) -->
+          <div id="result-area" class="hidden text-center">
+            <div class="text-6xl mb-4" id="result-emoji">🎉</div>
+            <h3 class="text-3xl font-bold text-gray-800 mb-2">Quiz Selesai!</h3>
+            <p class="text-xl text-gray-600 mb-6">Skor Akhir: <span id="final-score" class="font-bold text-orange-500">0</span>/10</p>
+            <div id="result-message" class="bg-green-50 rounded-xl p-4 mb-6 border border-green-200">
+              <p class="text-green-700"></p>
+            </div>
+            <button onclick="resetQuiz()" class="bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold py-4 px-8 rounded-xl hover:shadow-lg transition-all">
+              🔄 Ulangi Quiz
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="flex items-center gap-4">
+            <img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-16 h-16 rounded-full object-cover border-2 border-orange-500" onerror="this.style.background='linear-gradient(135deg, #ff6b35, #f7931e)'; this.alt='AM';">
+            <div>
+              <p id="footer-author" class="font-bold text-lg">Algian Manggara, S.Agr</p>
+              <p class="text-gray-400 text-sm">Pembuat Materi Pembelajaran</p>
+            </div>
+          </div>
+          <div class="text-center md:text-right">
+            <div class="flex items-center justify-center md:justify-end gap-2 mb-2">
+              <span class="text-2xl flame-animation">🔥</span>
+              <span class="font-bold text-xl">Energi Kalor</span>
+            </div>
+            <p class="text-gray-400 text-sm">© 2026 <span id="footer-copyright">Algian Manggara, S.Agr</span></p>
+            <p class="text-gray-500 text-xs mt-1">Media Pembelajaran IPA Interaktif</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Default Config
+    const defaultConfig = {
+      page_title: 'Keajaiban Energi Kalor dalam Kehidupan',
+      author_name: 'Algian Manggara, S.Agr',
+      primary_color: '#ff6b35',
+      secondary_color: '#f7931e',
+      accent_color: '#ffcc02',
+      text_color: '#1f2937',
+      background_color: '#fff7ed',
+      font_family: 'Nunito',
+      font_size: 16
+    };
+
+    // Quiz Data - 10 Soal HOTS
+    const quizData = [
+      {
+        question: "Seorang petani memasang jaring hitam di atas kolam ikannya saat musim kemarau. Berdasarkan prinsip perpindahan kalor, mengapa tindakan ini dapat menjaga suhu air kolam tetap stabil?",
+        options: [
+          "Jaring hitam menyerap radiasi matahari sehingga panas tidak langsung mengenai air kolam",
+          "Jaring hitam memantulkan semua cahaya matahari ke atmosfer",
+          "Jaring hitam menghentikan proses konduksi dari udara ke air",
+          "Jaring hitam mempercepat penguapan air kolam"
+        ],
+        correct: 0,
+        explanation: "Jaring hitam menyerap radiasi matahari dan mengurangi intensitas panas yang langsung mengenai permukaan air, sehingga suhu air lebih stabil."
+      },
+      {
+        question: "Di daerah pegunungan, penduduk sering menggunakan tungku kayu untuk memasak. Jika mereka ingin air mendidih lebih cepat dengan bahan bakar yang sama, modifikasi apa yang paling efektif dilakukan pada sistem masaknya?",
+        options: [
+          "Menggunakan panci yang lebih besar",
+          "Menggunakan panci dengan dasar tebal berwarna hitam dan tutup",
+          "Memasak di tempat terbuka agar sirkulasi udara lancar",
+          "Menambah jumlah air yang dimasak"
+        ],
+        correct: 1,
+        explanation: "Panci dengan dasar tebal berwarna hitam menyerap kalor lebih baik (konduksi efektif), dan tutup mencegah hilangnya panas melalui konveksi, sehingga air lebih cepat mendidih."
+      },
+      {
+        question: "Sebuah termos air panas dirancang dengan dinding ganda yang diberi vakum dan lapisan perak mengkilap di bagian dalam. Analisis bagaimana desain ini dapat menghambat ketiga jenis perpindahan kalor!",
+        options: [
+          "Vakum menghambat konduksi dan konveksi, lapisan perak memantulkan radiasi",
+          "Vakum hanya menghambat radiasi, lapisan perak menghambat konduksi",
+          "Vakum menyerap semua kalor, lapisan perak mencegah konveksi",
+          "Vakum dan lapisan perak hanya menghambat konveksi saja"
+        ],
+        correct: 0,
+        explanation: "Vakum mencegah konduksi dan konveksi karena tidak ada medium perantara. Lapisan perak yang mengkilap memantulkan radiasi kembali ke dalam, sehingga panas tetap terjaga."
+      },
+      {
+        question: "Saat terjadi kebakaran hutan, api dapat menyebar dengan cepat meskipun tidak ada angin. Faktor perpindahan kalor apa yang paling berperan dalam penyebaran api tersebut?",
+        options: [
+          "Konduksi melalui tanah ke pohon-pohon terdekat",
+          "Radiasi yang memanaskan material kering di sekitarnya hingga titik nyala",
+          "Konveksi horizontal yang membawa partikel api",
+          "Konduksi melalui udara kering"
+        ],
+        correct: 1,
+        explanation: "Radiasi dari api sangat intens dan dapat memanaskan material kering (dedaunan, ranting) di sekitarnya hingga mencapai titik nyala tanpa kontak langsung, menyebabkan api menyebar."
+      },
+      {
+        question: "Sebuah pabrik cokelat menggunakan metode water bath (merendam wadah cokelat dalam air panas) untuk mencairkan cokelat, bukan memanaskan langsung di atas api. Evaluasi keuntungan metode ini berdasarkan perpindahan kalor!",
+        options: [
+          "Air panas memberikan pemanasan merata melalui konveksi dan mencegah cokelat gosong akibat suhu berlebih",
+          "Air panas lebih cepat mendidih sehingga cokelat lebih cepat cair",
+          "Air panas menghambat radiasi dari api ke cokelat",
+          "Water bath hanya menggunakan konduksi sehingga lebih efisien"
+        ],
+        correct: 0,
+        explanation: "Water bath memanfaatkan konveksi air untuk mendistribusikan panas secara merata. Suhu air maksimal 100°C mencegah cokelat terkena panas berlebih yang bisa membuatnya gosong atau berubah tekstur."
+      },
+      {
+        question: "Pada PLTU, mengapa air harus dipanaskan hingga menjadi uap bertekanan tinggi, bukan hanya air panas biasa untuk memutar turbin?",
+        options: [
+          "Air panas tidak memiliki energi kinetik",
+          "Uap bertekanan tinggi memiliki energi kinetik jauh lebih besar yang mampu memutar turbin dengan kecepatan tinggi",
+          "Air panas akan merusak turbin karena sifat korosifnya",
+          "Uap lebih mudah dikontrol daripada air"
+        ],
+        correct: 1,
+        explanation: "Uap bertekanan tinggi memiliki volume yang sangat besar dan energi kinetik tinggi. Ketika uap ini mengembang dan bergerak melalui bilah turbin, ia mentransfer energi yang cukup untuk memutar generator dan menghasilkan listrik."
+      },
+      {
+        question: "Seorang arsitek merancang rumah dengan jendela besar menghadap timur dan barat. Apa masalah yang mungkin timbul dan solusi berbasis perpindahan kalor yang tepat?",
+        options: [
+          "Rumah terlalu gelap; solusi: tambah lampu",
+          "Rumah terlalu panas karena radiasi matahari langsung; solusi: pasang kaca film atau overhang untuk menghalangi radiasi",
+          "Rumah terlalu dingin; solusi: tambah AC",
+          "Rumah lembap; solusi: tambah ventilasi"
+        ],
+        correct: 1,
+        explanation: "Jendela menghadap timur-barat menerima radiasi matahari langsung yang intens, menyebabkan pemanasan berlebih. Kaca film atau overhang (kanopi) dapat menghalangi atau memantulkan radiasi, mengurangi beban panas dalam rumah."
+      },
+      {
+        question: "Pada proses pengelasan logam, tukang las menggunakan kacamata khusus dan sarung tangan tebal. Jenis perpindahan kalor apa yang diatasi oleh masing-masing alat pelindung tersebut?",
+        options: [
+          "Kacamata untuk konduksi, sarung tangan untuk radiasi",
+          "Kacamata untuk konveksi, sarung tangan untuk konduksi",
+          "Kacamata untuk radiasi (cahaya/panas intens), sarung tangan untuk konduksi (kontak dengan logam panas)",
+          "Keduanya untuk mengatasi konveksi udara panas"
+        ],
+        correct: 2,
+        explanation: "Kacamata las melindungi mata dari radiasi intens (UV, cahaya terang, inframerah). Sarung tangan tebal mencegah konduksi panas saat memegang atau menyentuh logam yang baru dilas."
+      },
+      {
+        question: "Sebuah eksperimen menunjukkan bahwa es batu di dalam wadah aluminium mencair lebih cepat daripada di wadah styrofoam dengan kondisi lingkungan yang sama. Jelaskan fenomena ini!",
+        options: [
+          "Aluminium lebih berat sehingga menekan es lebih kuat",
+          "Aluminium memiliki konduktivitas termal tinggi sehingga kalor dari lingkungan lebih cepat merambat ke es",
+          "Styrofoam menyerap air dari es sehingga memperlambat pencairan",
+          "Aluminium memantulkan radiasi sehingga es lebih cepat mencair"
+        ],
+        correct: 1,
+        explanation: "Aluminium adalah konduktor termal yang sangat baik. Kalor dari lingkungan sekitar dengan cepat merambat melalui aluminium ke es. Styrofoam adalah isolator yang menghambat perpindahan kalor."
+      },
+      {
+        question: "Dalam sistem pendingin AC, refrigeran menyerap kalor dari ruangan saat berubah dari cair ke gas di evaporator, lalu melepaskan kalor ke luar saat berubah dari gas ke cair di kondensor. Prinsip termodinamika apa yang mendasari kerja AC?",
+        options: [
+          "Hukum kekekalan massa - refrigeran tidak hilang",
+          "Perubahan wujud memerlukan atau melepaskan kalor laten tanpa perubahan suhu",
+          "Kalor selalu mengalir dari dingin ke panas secara alami",
+          "Gas selalu lebih panas daripada cairan"
+        ],
+        correct: 1,
+        explanation: "AC memanfaatkan kalor laten. Saat refrigeran menguap (cair → gas), ia menyerap kalor dari ruangan (efek pendinginan). Saat mengembun (gas → cair) di luar, ia melepaskan kalor ke lingkungan. Proses ini memindahkan panas dari dalam ke luar ruangan."
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let answered = false;
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    function showDiscussion(num) {
+      const discussion = document.getElementById(`discussion-${num}`);
+      discussion.classList.toggle('hidden');
+    }
+
+    function loadQuestion() {
+      const question = quizData[currentQuestionIndex];
+      document.getElementById('question-text').textContent = question.question;
+      document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+      document.getElementById('progress-bar').style.width = `${((currentQuestionIndex + 1) / quizData.length) * 100}%`;
+      
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+      
+      question.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'quiz-option w-full text-left p-4 bg-gray-50 hover:bg-orange-50 rounded-xl border-2 border-gray-200 hover:border-orange-300 transition-all font-medium';
+        button.innerHTML = `<span class="inline-block w-8 h-8 bg-orange-100 text-orange-600 rounded-full text-center leading-8 mr-3 font-bold">${String.fromCharCode(65 + index)}</span>${option}`;
+        button.onclick = () => selectAnswer(index);
+        optionsContainer.appendChild(button);
+      });
+      
+      document.getElementById('feedback-area').classList.add('hidden');
+      answered = false;
+    }
+
+    function selectAnswer(selectedIndex) {
+      if (answered) return;
+      answered = true;
+      
+      const question = quizData[currentQuestionIndex];
+      const options = document.querySelectorAll('.quiz-option');
+      const feedbackArea = document.getElementById('feedback-area');
+      const feedbackContent = document.getElementById('feedback-content');
+      
+      options.forEach((opt, index) => {
+        opt.disabled = true;
+        if (index === question.correct) {
+          opt.classList.add('correct');
+        } else if (index === selectedIndex && selectedIndex !== question.correct) {
+          opt.classList.add('incorrect');
+        }
+      });
+      
+      if (selectedIndex === question.correct) {
+        score++;
+        document.getElementById('score').textContent = score;
+        feedbackContent.className = 'rounded-xl p-4 bg-green-50 border border-green-200';
+        feedbackContent.innerHTML = `<p class="text-green-800"><strong>✅ Benar!</strong><br/>${question.explanation}</p>`;
+      } else {
+        feedbackContent.className = 'rounded-xl p-4 bg-red-50 border border-red-200';
+        feedbackContent.innerHTML = `<p class="text-red-800"><strong>❌ Kurang tepat.</strong><br/>${question.explanation}</p>`;
+      }
+      
+      feedbackArea.classList.remove('hidden');
+      
+      if (currentQuestionIndex === quizData.length - 1) {
+        document.getElementById('next-btn').textContent = 'Lihat Hasil 🎯';
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      
+      if (currentQuestionIndex >= quizData.length) {
+        showResults();
+      } else {
+        loadQuestion();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('question-area').classList.add('hidden');
+      document.getElementById('result-area').classList.remove('hidden');
+      document.getElementById('final-score').textContent = score;
+      
+      let emoji, message;
+      if (score >= 9) {
+        emoji = '🏆';
+        message = 'Luar biasa! Kamu sangat menguasai materi Energi Kalor!';
+      } else if (score >= 7) {
+        emoji = '🌟';
+        message = 'Hebat! Pemahamanmu tentang Energi Kalor sangat baik!';
+      } else if (score >= 5) {
+        emoji = '👍';
+        message = 'Bagus! Terus belajar untuk meningkatkan pemahamanmu!';
+      } else {
+        emoji = '💪';
+        message = 'Jangan menyerah! Coba pelajari lagi materinya dan ulangi quiz ini!';
+      }
+      
+      document.getElementById('result-emoji').textContent = emoji;
+      document.getElementById('result-message').querySelector('p').textContent = message;
+    }
+
+    function resetQuiz() {
+      currentQuestionIndex = 0;
+      score = 0;
+      document.getElementById('score').textContent = 0;
+      document.getElementById('question-area').classList.remove('hidden');
+      document.getElementById('result-area').classList.add('hidden');
+      document.getElementById('next-btn').textContent = 'Soal Berikutnya →';
+      loadQuestion();
+    }
+
+    // SDK Integration
+    async function initializeApp() {
+      if (window.elementSdk) {
+        await window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (config) => {
+            const pageTitle = config.page_title || defaultConfig.page_title;
+            const authorName = config.author_name || defaultConfig.author_name;
+            
+            const mainTitle = document.getElementById('main-title');
+            if (mainTitle) {
+              const titleParts = pageTitle.split(' dalam ');
+              if (titleParts.length > 1) {
+                mainTitle.innerHTML = `${titleParts[0]}<br/>dalam ${titleParts[1]}`;
+              } else {
+                mainTitle.textContent = pageTitle;
+              }
+            }
+            
+            const navTitle = document.getElementById('nav-title');
+            if (navTitle) {
+              navTitle.textContent = 'Energi Kalor';
+            }
+            
+            const footerAuthor = document.getElementById('footer-author');
+            if (footerAuthor) footerAuthor.textContent = authorName;
+            
+            const footerCopyright = document.getElementById('footer-copyright');
+            if (footerCopyright) footerCopyright.textContent = authorName;
+          },
+          mapToCapabilities: (config) => ({
+            recolorables: [],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ['page_title', config.page_title || defaultConfig.page_title],
+            ['author_name', config.author_name || defaultConfig.author_name]
+          ])
+        });
+      }
+      
+      // Initialize quiz
+      loadQuestion();
+    }
+
+    initializeApp();
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf9284f22d0e791',t:'MTc3MTM3MTkxNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

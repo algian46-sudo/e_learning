@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pengaruh Pergerakan Bumi dan Benda Langit</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { box-sizing: border-box; }
+    
+    .font-heading { font-family: 'Poppins', sans-serif; }
+    .font-body { font-family: 'Nunito', sans-serif; }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes rotate-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.4); }
+      50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.8); }
+    }
+    
+    @keyframes moon-phase {
+      0% { clip-path: circle(50% at 50% 50%); }
+      25% { clip-path: circle(50% at 30% 50%); }
+      50% { clip-path: circle(50% at 50% 50%); }
+      75% { clip-path: circle(50% at 70% 50%); }
+      100% { clip-path: circle(50% at 50% 50%); }
+    }
+    
+    .animate-float { animation: float 3s ease-in-out infinite; }
+    .animate-rotate { animation: rotate-slow 20s linear infinite; }
+    .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:hover {
+      transform: translateX(5px);
+    }
+    
+    .nav-item.active {
+      background: linear-gradient(90deg, #1e40af, #3b82f6);
+      color: white;
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      background: #dbeafe;
+      border-color: #3b82f6;
+    }
+    
+    .quiz-option.selected {
+      background: #fef3c7;
+      border-color: #f59e0b;
+    }
+    
+    .quiz-option.correct {
+      background: #d1fae5;
+      border-color: #10b981;
+    }
+    
+    .quiz-option.incorrect {
+      background: #fee2e2;
+      border-color: #ef4444;
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .section-content {
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .illustration-container {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    
+    /* Earth illustration */
+    .earth {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%);
+      position: relative;
+      box-shadow: inset -20px -10px 40px rgba(0,0,0,0.3), 0 0 30px rgba(59, 130, 246, 0.5);
+    }
+    
+    .earth::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: 
+        radial-gradient(circle at 30% 30%, rgba(34, 197, 94, 0.6) 0%, transparent 20%),
+        radial-gradient(circle at 60% 40%, rgba(34, 197, 94, 0.5) 0%, transparent 25%),
+        radial-gradient(circle at 45% 70%, rgba(34, 197, 94, 0.4) 0%, transparent 15%);
+    }
+    
+    /* Sun illustration */
+    .sun {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+      box-shadow: 0 0 60px rgba(251, 191, 36, 0.8);
+    }
+    
+    /* Moon illustration */
+    .moon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e5e7eb 0%, #9ca3af 50%, #6b7280 100%);
+      box-shadow: inset -10px -5px 20px rgba(0,0,0,0.3);
+    }
+    
+    .moon::before {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(75, 85, 99, 0.5);
+      top: 15px;
+      left: 20px;
+    }
+    
+    /* Satellite illustration */
+    .satellite {
+      width: 40px;
+      height: 20px;
+      background: linear-gradient(90deg, #6b7280, #9ca3af);
+      position: relative;
+    }
+    
+    .satellite::before,
+    .satellite::after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 8px;
+      background: linear-gradient(180deg, #3b82f6, #1d4ed8);
+      top: 6px;
+    }
+    
+    .satellite::before { left: -35px; }
+    .satellite::after { right: -35px; }
+    
+    .interactive-btn {
+      transition: all 0.3s ease;
+    }
+    
+    .interactive-btn:hover {
+      transform: scale(1.05);
+    }
+    
+    .interactive-btn:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+<body class="h-full font-body overflow-auto" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
+  <div id="app-wrapper" class="w-full h-full">
+    <!-- Header -->
+    <header id="main-header" class="sticky top-0 z-50 bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 text-white shadow-xl">
+      <div class="max-w-7xl mx-auto px-4 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="relative">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 animate-pulse-glow flex items-center justify-center">
+                🌍
+              </div>
+            </div>
+            <div>
+              <h1 id="main-title" class="font-heading text-xl md:text-2xl font-bold">Pengaruh Pergerakan Bumi dan Benda Langit</h1>
+              <p class="text-blue-200 text-sm">Terhadap Kehidupan di Bumi</p>
+            </div>
+          </div>
+          <div class="hidden md:flex items-center gap-2 bg-white/10 rounded-full px-4 py-2">
+            <span class="text-yellow-400">⭐</span>
+            <span id="score-display" class="font-semibold">Skor: 0</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col lg:flex-row gap-6">
+      <!-- Sidebar Navigation -->
+      <nav class="lg:w-72 flex-shrink-0">
+        <div class="bg-white rounded-2xl shadow-lg p-4 sticky top-24">
+          <h2 class="font-heading font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <span class="text-2xl">📚</span> Daftar Materi
+          </h2>
+          <ul id="nav-menu" class="space-y-2">
+            <li>
+              <button onclick="showSection(0)" class="nav-item active w-full text-left px-4 py-3 rounded-xl flex items-center gap-3">
+                <span class="text-xl">🛰️</span>
+                <span class="font-semibold">Pengenalan Satelit</span>
+              </button>
+            </li>
+            <li>
+              <button onclick="showSection(1)" class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 bg-gray-50 hover:bg-blue-50">
+                <span class="text-xl">🔄</span>
+                <span class="font-semibold">Rotasi Bumi</span>
+              </button>
+            </li>
+            <li>
+              <button onclick="showSection(2)" class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 bg-gray-50 hover:bg-blue-50">
+                <span class="text-xl">🌞</span>
+                <span class="font-semibold">Revolusi Bumi</span>
+              </button>
+            </li>
+            <li>
+              <button onclick="showSection(3)" class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 bg-gray-50 hover:bg-blue-50">
+                <span class="text-xl">🍂</span>
+                <span class="font-semibold">Pergantian Musim</span>
+              </button>
+            </li>
+            <li>
+              <button onclick="showSection(4)" class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 bg-gray-50 hover:bg-blue-50">
+                <span class="text-xl">🌙</span>
+                <span class="font-semibold">Fase Bulan</span>
+              </button>
+            </li>
+            <li>
+              <button onclick="showSection(5)" class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 bg-gray-50 hover:bg-blue-50">
+                <span class="text-xl">🙏</span>
+                <span class="font-semibold">Manfaat Gerak Bulan</span>
+              </button>
+            </li>
+            <li>
+              <button onclick="showSection(6)" class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 bg-gray-50 hover:bg-blue-50">
+                <span class="text-xl">🧪</span>
+                <span class="font-semibold">Aktivitas Interaktif</span>
+              </button>
+            </li>
+            <li>
+              <button onclick="showSection(7)" class="nav-item w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white">
+                <span class="text-xl">📝</span>
+                <span class="font-semibold">Quiz HOTS</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0">
+        <!-- Section 0: Satelit -->
+        <section id="section-0" class="section-content">
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white">
+              <h2 class="font-heading text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="text-4xl">🛰️</span> Pengenalan Satelit
+              </h2>
+              <p class="mt-2 text-purple-100">Benda-benda yang mengorbit planet dan perannya</p>
+            </div>
+            
+            <div class="p-6 space-y-6">
+              <!-- Definisi -->
+              <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-5 border-l-4 border-purple-500">
+                <h3 class="font-heading font-bold text-purple-800 text-lg mb-2">📖 Definisi Satelit</h3>
+                <p class="text-gray-700 leading-relaxed">
+                  <strong>Satelit</strong> adalah benda yang bergerak mengelilingi planet dalam orbit tertentu. 
+                  Satelit terikat oleh gaya gravitasi planet yang dikelilinginya.
+                </p>
+              </div>
+
+              <!-- Ilustrasi Satelit -->
+              <div class="illustration-container p-8">
+                <div class="flex flex-col items-center">
+                  <h4 class="text-white font-heading font-semibold mb-6">🌍 Bumi dan Satelitnya</h4>
+                  <div class="relative w-64 h-64">
+                    <!-- Earth -->
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                      <div class="earth"></div>
+                    </div>
+                    <!-- Moon orbit -->
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-56 h-56 border-2 border-dashed border-gray-500 rounded-full"></div>
+                    <!-- Moon -->
+                    <div class="absolute animate-rotate" style="width: 224px; height: 224px; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                      <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <div class="moon"></div>
+                        <span class="text-white text-xs mt-1 block text-center">Bulan</span>
+                      </div>
+                    </div>
+                    <!-- Satellite orbit -->
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 border border-cyan-400 rounded-full"></div>
+                    <!-- Artificial Satellite -->
+                    <div class="absolute" style="animation: rotate-slow 8s linear infinite; width: 160px; height: 160px; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                      <div class="absolute top-0 left-1/2 transform -translate-x-1/2 text-2xl">🛰️</div>
+                    </div>
+                  </div>
+                  <p class="text-gray-300 text-sm mt-4 text-center">Bulan (satelit alami) dan satelit buatan mengorbit Bumi</p>
+                </div>
+              </div>
+
+              <!-- Jenis Satelit -->
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="card-hover bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-5 border border-blue-200">
+                  <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-2xl">🌙</div>
+                    <h3 class="font-heading font-bold text-blue-800">Satelit Alami</h3>
+                  </div>
+                  <p class="text-gray-700 mb-3">Satelit yang terbentuk secara alami dan sudah ada sejak terbentuknya tata surya.</p>
+                  <div class="bg-white rounded-lg p-4">
+                    <p class="font-semibold text-blue-700 mb-2">Contoh:</p>
+                    <ul class="space-y-2 text-gray-600">
+                      <li class="flex items-center gap-2">🌍➡️🌙 <span><strong>Bulan</strong> - satelit alami Bumi</span></li>
+                      <li class="flex items-center gap-2">🪐➡️ <span><strong>Titan</strong> - satelit Saturnus</span></li>
+                      <li class="flex items-center gap-2">🔴➡️ <span><strong>Phobos & Deimos</strong> - satelit Mars</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="card-hover bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-5 border border-orange-200">
+                  <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-2xl">🛰️</div>
+                    <h3 class="font-heading font-bold text-orange-800">Satelit Buatan</h3>
+                  </div>
+                  <p class="text-gray-700 mb-3">Satelit yang dibuat oleh manusia dan diluncurkan ke orbit untuk tujuan tertentu.</p>
+                  <div class="bg-white rounded-lg p-4">
+                    <p class="font-semibold text-orange-700 mb-2">Contoh Satelit Indonesia:</p>
+                    <ul class="space-y-2 text-gray-600">
+                      <li class="flex items-center gap-2">🇮🇩 <span><strong>Palapa B1</strong> - Komunikasi (1976)</span></li>
+                      <li class="flex items-center gap-2">🇮🇩 <span><strong>LAPAN-A1</strong> - Pemantauan</span></li>
+                      <li class="flex items-center gap-2">🇮🇩 <span><strong>Telkom 4</strong> - Telekomunikasi</span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Manfaat Satelit Buatan -->
+              <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200">
+                <h3 class="font-heading font-bold text-green-800 text-xl mb-4 flex items-center gap-2">
+                  ✨ Manfaat Satelit Buatan
+                </h3>
+                <div class="grid md:grid-cols-3 gap-4">
+                  <div class="bg-white rounded-lg p-4 text-center card-hover">
+                    <div class="text-4xl mb-3">🌤️</div>
+                    <h4 class="font-bold text-gray-800 mb-2">Prakiraan Cuaca</h4>
+                    <p class="text-gray-600 text-sm">Memantau dan memprediksi perubahan cuaca untuk keselamatan</p>
+                  </div>
+                  <div class="bg-white rounded-lg p-4 text-center card-hover">
+                    <div class="text-4xl mb-3">🌍</div>
+                    <h4 class="font-bold text-gray-800 mb-2">Pengamatan Bumi</h4>
+                    <p class="text-gray-600 text-sm">Memantau hutan, lautan, dan kondisi permukaan Bumi</p>
+                  </div>
+                  <div class="bg-white rounded-lg p-4 text-center card-hover">
+                    <div class="text-4xl mb-3">📡</div>
+                    <h4 class="font-bold text-gray-800 mb-2">Telekomunikasi</h4>
+                    <p class="text-gray-600 text-sm">Memungkinkan komunikasi jarak jauh: TV, internet, telepon</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gambar Nyata -->
+              <div class="bg-gray-900 rounded-xl p-6">
+                <h4 class="text-white font-heading font-bold mb-4 text-center">📸 Satelit Palapa dan Bulan (Satelit Alami)</h4>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div class="bg-gray-800 rounded-lg p-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Palapa_B2_satellite.jpg/800px-Palapa_B2_satellite.jpg" alt="Satelit Palapa B2" class="w-full h-48 object-cover rounded-lg" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #4b5563, #1f2937)'; this.alt='Gambar Satelit Palapa';">
+                    <p class="text-gray-300 text-sm mt-2 text-center">Satelit Palapa - Satelit komunikasi Indonesia</p>
+                  </div>
+                  <div class="bg-gray-800 rounded-lg p-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1200px-FullMoon2010.jpg" alt="Bulan Purnama" class="w-full h-48 object-cover rounded-lg" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #6b7280, #374151)'; this.alt='Gambar Bulan Purnama';">
+                    <p class="text-gray-300 text-sm mt-2 text-center">Bulan - Satelit alami Bumi</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 1: Rotasi Bumi -->
+        <section id="section-1" class="section-content hidden">
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-orange-500 to-red-500 p-6 text-white">
+              <h2 class="font-heading text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="text-4xl">🔄</span> Rotasi Bumi dan Dampaknya
+              </h2>
+              <p class="mt-2 text-orange-100">Perputaran Bumi pada porosnya dan pengaruhnya</p>
+            </div>
+            
+            <div class="p-6 space-y-6">
+              <!-- Definisi -->
+              <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-5 border-l-4 border-orange-500">
+                <h3 class="font-heading font-bold text-orange-800 text-lg mb-2">📖 Definisi Rotasi Bumi</h3>
+                <p class="text-gray-700 leading-relaxed">
+                  <strong>Rotasi Bumi</strong> adalah gerakan Bumi berputar pada sumbu atau porosnya dari arah <strong>Barat ke Timur</strong>. 
+                  Waktu yang diperlukan Bumi untuk satu kali rotasi penuh disebut <strong>satu hari</strong> (24 jam).
+                </p>
+              </div>
+
+              <!-- Ilustrasi Rotasi -->
+              <div class="illustration-container p-8">
+                <h4 class="text-white font-heading font-semibold mb-6 text-center">🌍 Simulasi Rotasi Bumi</h4>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                  <!-- Sun -->
+                  <div class="flex flex-col items-center">
+                    <div class="sun animate-pulse-glow"></div>
+                    <span class="text-yellow-400 mt-2 font-semibold">Matahari</span>
+                  </div>
+                  
+                  <!-- Arrow -->
+                  <div class="text-4xl text-yellow-400">☀️→</div>
+                  
+                  <!-- Earth rotating -->
+                  <div class="relative">
+                    <div class="earth animate-rotate"></div>
+                    <div class="absolute -top-8 left-1/2 transform -translate-x-1/2">
+                      <span class="text-white text-sm">↻ Arah rotasi</span>
+                    </div>
+                    <div class="absolute top-1/2 -right-20 transform -translate-y-1/2 text-right">
+                      <span class="text-cyan-400 text-xs">Siang ☀️</span>
+                    </div>
+                    <div class="absolute top-1/2 -left-20 transform -translate-y-1/2">
+                      <span class="text-indigo-400 text-xs">🌙 Malam</span>
+                    </div>
+                  </div>
+                </div>
+                <p class="text-gray-300 text-sm mt-6 text-center">Bagian Bumi yang menghadap Matahari mengalami siang, yang membelakangi mengalami malam</p>
+              </div>
+
+              <!-- Dampak Rotasi -->
+              <h3 class="font-heading font-bold text-gray-800 text-xl flex items-center gap-2">
+                ⚡ Dampak Rotasi Bumi
+              </h3>
+              
+              <div class="space-y-4">
+                <!-- Dampak 1 -->
+                <div class="card-hover bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-5 border border-yellow-200">
+                  <div class="flex items-start gap-4">
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-3xl flex-shrink-0">
+                      🌓
+                    </div>
+                    <div>
+                      <h4 class="font-heading font-bold text-orange-800 text-lg">1. Pergantian Siang dan Malam</h4>
+                      <p class="text-gray-700 mt-2">
+                        Bagian Bumi yang terkena cahaya Matahari mengalami <strong>siang</strong>, 
+                        sedangkan bagian yang membelakangi Matahari mengalami <strong>malam</strong>.
+                      </p>
+                      <div class="mt-3 flex gap-4">
+                        <span class="bg-yellow-100 px-3 py-1 rounded-full text-sm">☀️ Siang = Terkena cahaya</span>
+                        <span class="bg-indigo-100 px-3 py-1 rounded-full text-sm">🌙 Malam = Tidak terkena</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Dampak 2 -->
+                <div class="card-hover bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-200">
+                  <div class="flex items-start gap-4">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full flex items-center justify-center text-3xl flex-shrink-0">
+                      🕐
+                    </div>
+                    <div>
+                      <h4 class="font-heading font-bold text-blue-800 text-lg">2. Perbedaan Waktu</h4>
+                      <p class="text-gray-700 mt-2">
+                        Di Indonesia, Matahari terbit lebih dulu di wilayah Timur, kemudian Tengah, dan terakhir Barat.
+                      </p>
+                      <div class="mt-3 grid grid-cols-3 gap-2 text-center">
+                        <div class="bg-red-100 px-3 py-2 rounded-lg">
+                          <div class="font-bold text-red-700">WIT</div>
+                          <div class="text-sm text-gray-600">Papua</div>
+                          <div class="text-xs">+9 GMT</div>
+                        </div>
+                        <div class="bg-yellow-100 px-3 py-2 rounded-lg">
+                          <div class="font-bold text-yellow-700">WITA</div>
+                          <div class="text-sm text-gray-600">Bali</div>
+                          <div class="text-xs">+8 GMT</div>
+                        </div>
+                        <div class="bg-green-100 px-3 py-2 rounded-lg">
+                          <div class="font-bold text-green-700">WIB</div>
+                          <div class="text-sm text-gray-600">Jakarta</div>
+                          <div class="text-xs">+7 GMT</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Dampak 3 -->
+                <div class="card-hover bg-gradient-to-r from-pink-50 to-rose-50 rounded-xl p-5 border border-pink-200">
+                  <div class="flex items-start gap-4">
+                    <div class="w-16 h-16 bg-gradient-to-br from-pink-400 to-rose-500 rounded-full flex items-center justify-center text-3xl flex-shrink-0">
+                      🌅
+                    </div>
+                    <div>
+                      <h4 class="font-heading font-bold text-pink-800 text-lg">3. Perubahan Suhu dan Cahaya</h4>
+                      <p class="text-gray-700 mt-2">
+                        Rotasi Bumi menyebabkan perubahan kondisi atmosfer sepanjang hari.
+                      </p>
+                      <div class="mt-3 grid md:grid-cols-2 gap-3">
+                        <div class="bg-gradient-to-r from-orange-100 to-pink-100 p-3 rounded-lg">
+                          <div class="font-bold text-orange-700">🌄 Fajar</div>
+                          <p class="text-sm text-gray-600">Udara sejuk, langit berwarna oranye/merah muda</p>
+                        </div>
+                        <div class="bg-gradient-to-r from-purple-100 to-indigo-100 p-3 rounded-lg">
+                          <div class="font-bold text-purple-700">🌇 Senja</div>
+                          <p class="text-sm text-gray-600">Suhu turun, langit didominasi warna kemerahan</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gambar Nyata -->
+              <div class="bg-gray-900 rounded-xl p-6">
+                <h4 class="text-white font-heading font-bold mb-4 text-center">📸 Fenomena Akibat Rotasi Bumi</h4>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div class="bg-gray-800 rounded-lg p-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Sunset_2007-1.jpg/1200px-Sunset_2007-1.jpg" alt="Sunset/Senja" class="w-full h-40 object-cover rounded-lg" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #f97316, #7c3aed)'; this.alt='Gambar Senja';">
+                    <p class="text-gray-300 text-sm mt-2 text-center">Senja - Fenomena pergantian siang ke malam</p>
+                  </div>
+                  <div class="bg-gray-800 rounded-lg p-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Earth_rotating.gif/220px-Earth_rotating.gif" alt="Rotasi Bumi" class="w-full h-40 object-contain rounded-lg bg-black" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #3b82f6, #1e40af)'; this.alt='Animasi Rotasi Bumi';">
+                    <p class="text-gray-300 text-sm mt-2 text-center">Animasi Rotasi Bumi dari luar angkasa</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: Revolusi Bumi -->
+        <section id="section-2" class="section-content hidden">
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-yellow-500 to-amber-500 p-6 text-white">
+              <h2 class="font-heading text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="text-4xl">🌞</span> Revolusi Bumi dan Pergantian Tahun
+              </h2>
+              <p class="mt-2 text-yellow-100">Pergerakan Bumi mengelilingi Matahari</p>
+            </div>
+            
+            <div class="p-6 space-y-6">
+              <!-- Definisi -->
+              <div class="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl p-5 border-l-4 border-yellow-500">
+                <h3 class="font-heading font-bold text-yellow-800 text-lg mb-2">📖 Definisi Revolusi Bumi</h3>
+                <p class="text-gray-700 leading-relaxed">
+                  <strong>Revolusi Bumi</strong> adalah gerakan Bumi mengelilingi Matahari pada bidang orbitnya (ekliptika). 
+                  Bumi membutuhkan waktu <strong>365,25 hari</strong> (1 tahun) untuk satu kali revolusi lengkap.
+                </p>
+              </div>
+
+              <!-- Ilustrasi Revolusi -->
+              <div class="illustration-container p-8">
+                <h4 class="text-white font-heading font-semibold mb-6 text-center">🌍 Revolusi Bumi Mengelilingi Matahari</h4>
+                <div class="relative w-full max-w-md mx-auto" style="height: 300px;">
+                  <!-- Sun at center -->
+                  <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <div class="sun"></div>
+                  </div>
+                  
+                  <!-- Orbit path -->
+                  <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-56 border-2 border-dashed border-cyan-400 rounded-full" style="border-radius: 50%;"></div>
+                  
+                  <!-- Earth positions -->
+                  <div class="absolute top-2 left-1/2 transform -translate-x-1/2 text-center">
+                    <div class="text-3xl">🌍</div>
+                    <span class="text-cyan-300 text-xs">Juni (Musim Panas Utara)</span>
+                  </div>
+                  <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-center">
+                    <div class="text-3xl">🌍</div>
+                    <span class="text-cyan-300 text-xs">Desember (Musim Dingin Utara)</span>
+                  </div>
+                  <div class="absolute top-1/2 left-2 transform -translate-y-1/2 text-center">
+                    <div class="text-3xl">🌍</div>
+                    <span class="text-cyan-300 text-xs block">Maret</span>
+                  </div>
+                  <div class="absolute top-1/2 right-2 transform -translate-y-1/2 text-center">
+                    <div class="text-3xl">🌍</div>
+                    <span class="text-cyan-300 text-xs block">September</span>
+                  </div>
+                  
+                  <!-- Arrow -->
+                  <div class="absolute top-16 right-16 text-cyan-400 text-xl">↻</div>
+                </div>
+                <p class="text-gray-300 text-sm mt-4 text-center">Bumi mengelilingi Matahari dalam waktu 365,25 hari</p>
+              </div>
+
+              <!-- Periode Tahun -->
+              <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-5 border border-blue-200">
+                <h3 class="font-heading font-bold text-blue-800 text-lg mb-3 flex items-center gap-2">
+                  📅 Periode Tahun
+                </h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div class="bg-white rounded-lg p-4">
+                    <div class="text-4xl mb-2">🗓️</div>
+                    <h4 class="font-bold text-gray-800">Tahun Biasa</h4>
+                    <p class="text-gray-600">365 hari</p>
+                    <p class="text-sm text-gray-500">Februari = 28 hari</p>
+                  </div>
+                  <div class="bg-white rounded-lg p-4">
+                    <div class="text-4xl mb-2">🎯</div>
+                    <h4 class="font-bold text-gray-800">Tahun Kabisat</h4>
+                    <p class="text-gray-600">366 hari</p>
+                    <p class="text-sm text-gray-500">Februari = 29 hari</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tahun Kabisat -->
+              <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200">
+                <h3 class="font-heading font-bold text-green-800 text-xl mb-4 flex items-center gap-2">
+                  🎯 Tahun Kabisat
+                </h3>
+                <p class="text-gray-700 mb-4">
+                  Karena revolusi Bumi memakan waktu 365,25 hari (ada kelebihan 0,25 hari), maka setiap <strong>4 tahun sekali</strong> 
+                  ditambahkan 1 hari ekstra (29 Februari).
+                </p>
+                
+                <div class="bg-white rounded-lg p-4 mb-4">
+                  <h4 class="font-bold text-gray-800 mb-2">📐 Rumus Menghitung Tahun Kabisat:</h4>
+                  <ul class="space-y-2 text-gray-700">
+                    <li class="flex items-start gap-2">
+                      <span class="text-green-500">✓</span>
+                      <span>Tahun yang <strong>habis dibagi 4</strong> adalah tahun kabisat</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-red-500">✗</span>
+                      <span>Kecuali tahun yang berakhiran "00" harus <strong>habis dibagi 400</strong></span>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div class="bg-green-100 p-3 rounded-lg text-center">
+                    <div class="font-bold text-green-700">2020</div>
+                    <div class="text-sm text-gray-600">✓ Kabisat</div>
+                    <div class="text-xs text-gray-500">2020 ÷ 4 = 505</div>
+                  </div>
+                  <div class="bg-green-100 p-3 rounded-lg text-center">
+                    <div class="font-bold text-green-700">2024</div>
+                    <div class="text-sm text-gray-600">✓ Kabisat</div>
+                    <div class="text-xs text-gray-500">2024 ÷ 4 = 506</div>
+                  </div>
+                  <div class="bg-red-100 p-3 rounded-lg text-center">
+                    <div class="font-bold text-red-700">1900</div>
+                    <div class="text-sm text-gray-600">✗ Bukan Kabisat</div>
+                    <div class="text-xs text-gray-500">1900 ÷ 400 ≠ bulat</div>
+                  </div>
+                  <div class="bg-green-100 p-3 rounded-lg text-center">
+                    <div class="font-bold text-green-700">2000</div>
+                    <div class="text-sm text-gray-600">✓ Kabisat</div>
+                    <div class="text-xs text-gray-500">2000 ÷ 400 = 5</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interactive Leap Year Checker -->
+              <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-6 border border-purple-200">
+                <h3 class="font-heading font-bold text-purple-800 text-xl mb-4 flex items-center gap-2">
+                  🧮 Cek Tahun Kabisat
+                </h3>
+                <div class="flex flex-col sm:flex-row gap-4 items-center">
+                  <input type="number" id="leapYearInput" placeholder="Masukkan tahun (misal: 2024)" 
+                    class="flex-1 px-4 py-3 rounded-lg border-2 border-purple-300 focus:border-purple-500 focus:outline-none text-lg w-full sm:w-auto">
+                  <button onclick="checkLeapYear()" class="interactive-btn bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-6 py-3 rounded-lg font-bold hover:from-purple-600 hover:to-indigo-600 w-full sm:w-auto">
+                    Cek Sekarang!
+                  </button>
+                </div>
+                <div id="leapYearResult" class="mt-4 p-4 rounded-lg hidden"></div>
+              </div>
+
+              <!-- Gambar Nyata -->
+              <div class="bg-gray-900 rounded-xl p-6">
+                <h4 class="text-white font-heading font-bold mb-4 text-center">📸 Orbit Bumi dan Tata Surya</h4>
+                <div class="bg-gray-800 rounded-lg p-4">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Solar_sys8.jpg/1200px-Solar_sys8.jpg" alt="Tata Surya" class="w-full h-64 object-cover rounded-lg" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #1f2937, #0f172a)'; this.alt='Gambar Tata Surya';">
+                  <p class="text-gray-300 text-sm mt-2 text-center">Tata Surya - Planet-planet mengelilingi Matahari</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 3: Pergantian Musim -->
+        <section id="section-3" class="section-content hidden">
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-green-500 to-teal-500 p-6 text-white">
+              <h2 class="font-heading text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="text-4xl">🍂</span> Kemiringan Poros Bumi dan Pergantian Musim
+              </h2>
+              <p class="mt-2 text-green-100">Mengapa terjadi pergantian musim di Bumi</p>
+            </div>
+            
+            <div class="p-6 space-y-6">
+              <!-- Kemiringan Poros -->
+              <div class="bg-gradient-to-r from-green-50 to-teal-50 rounded-xl p-5 border-l-4 border-green-500">
+                <h3 class="font-heading font-bold text-green-800 text-lg mb-2">📐 Kemiringan Poros Bumi</h3>
+                <p class="text-gray-700 leading-relaxed">
+                  Bumi berputar dengan <strong>kemiringan 23,5°</strong> terhadap sumbu rotasinya. 
+                  Kemiringan ini menyebabkan perbedaan penerimaan cahaya Matahari di berbagai belahan Bumi 
+                  sepanjang tahun, yang mengakibatkan pergantian musim.
+                </p>
+              </div>
+
+              <!-- Ilustrasi Kemiringan -->
+              <div class="illustration-container p-8">
+                <h4 class="text-white font-heading font-semibold mb-6 text-center">🌍 Kemiringan Poros Bumi 23,5°</h4>
+                <div class="flex justify-center items-center">
+                  <svg viewBox="0 0 300 200" class="w-full max-w-md">
+                    <!-- Vertical reference line -->
+                    <line x1="150" y1="20" x2="150" y2="180" stroke="#6b7280" stroke-width="1" stroke-dasharray="5,5"/>
+                    
+                    <!-- Earth's tilted axis -->
+                    <line x1="120" y1="30" x2="180" y2="170" stroke="#f59e0b" stroke-width="3"/>
+                    
+                    <!-- Earth -->
+                    <ellipse cx="150" cy="100" rx="50" ry="50" fill="url(#earthGradient)"/>
+                    
+                    <!-- Equator line -->
+                    <ellipse cx="150" cy="100" rx="50" ry="15" fill="none" stroke="#10b981" stroke-width="2"/>
+                    
+                    <!-- Angle indicator -->
+                    <path d="M 150 60 Q 160 55 165 65" fill="none" stroke="#f59e0b" stroke-width="2"/>
+                    <text x="170" y="55" fill="#f59e0b" font-size="14" font-weight="bold">23,5°</text>
+                    
+                    <!-- Labels -->
+                    <text x="115" y="25" fill="#f59e0b" font-size="12">Kutub Utara</text>
+                    <text x="155" y="185" fill="#f59e0b" font-size="12">Kutub Selatan</text>
+                    <text x="210" y="100" fill="#10b981" font-size="11">Khatulistiwa</text>
+                    
+                    <defs>
+                      <radialGradient id="earthGradient" cx="30%" cy="30%">
+                        <stop offset="0%" stop-color="#60a5fa"/>
+                        <stop offset="50%" stop-color="#3b82f6"/>
+                        <stop offset="100%" stop-color="#1e40af"/>
+                      </radialGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <p class="text-gray-300 text-sm mt-4 text-center">Kemiringan poros Bumi 23,5° dari garis vertikal menyebabkan musim</p>
+              </div>
+
+              <!-- Dampak Kemiringan -->
+              <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-200">
+                <h3 class="font-heading font-bold text-blue-800 text-lg mb-3 flex items-center gap-2">
+                  ⚡ Dampak Kemiringan Poros
+                </h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div class="bg-white rounded-lg p-4">
+                    <div class="text-3xl mb-2">🏔️</div>
+                    <h4 class="font-bold text-gray-800">Daerah Kutub</h4>
+                    <p class="text-gray-600 text-sm">Siang/malam bisa sangat panjang (hingga 6 bulan)</p>
+                  </div>
+                  <div class="bg-white rounded-lg p-4">
+                    <div class="text-3xl mb-2">🏝️</div>
+                    <h4 class="font-bold text-gray-800">Daerah Khatulistiwa</h4>
+                    <p class="text-gray-600 text-sm">Durasi siang dan malam cenderung seimbang (12 jam)</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pergantian Musim -->
+              <h3 class="font-heading font-bold text-gray-800 text-xl flex items-center gap-2">
+                🍂 Pergantian Musim di Berbagai Wilayah
+              </h3>
+              
+              <div class="grid md:grid-cols-2 gap-6">
+                <!-- Indonesia -->
+                <div class="card-hover bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-5 border border-green-200">
+                  <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-2xl">🇮🇩</div>
+                    <div>
+                      <h3 class="font-heading font-bold text-green-800">Indonesia (Khatulistiwa)</h3>
+                      <span class="text-green-600 text-sm">2 Musim</span>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-white rounded-lg p-3 text-center">
+                      <div class="text-3xl mb-1">☀️</div>
+                      <h4 class="font-bold text-orange-600">Kemarau</h4>
+                      <p class="text-xs text-gray-500">April - Oktober</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-3 text-center">
+                      <div class="text-3xl mb-1">🌧️</div>
+                      <h4 class="font-bold text-blue-600">Hujan</h4>
+                      <p class="text-xs text-gray-500">November - Maret</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Belahan Utara/Selatan -->
+                <div class="card-hover bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-5 border border-purple-200">
+                  <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full flex items-center justify-center text-2xl">🌍</div>
+                    <div>
+                      <h3 class="font-heading font-bold text-purple-800">Belahan Utara/Selatan</h3>
+                      <span class="text-purple-600 text-sm">4 Musim</span>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-2 gap-2">
+                    <div class="bg-white rounded-lg p-2 text-center">
+                      <div class="text-2xl">🌸</div>
+                      <h4 class="font-bold text-pink-600 text-sm">Semi</h4>
+                    </div>
+                    <div class="bg-white rounded-lg p-2 text-center">
+                      <div class="text-2xl">☀️</div>
+                      <h4 class="font-bold text-orange-600 text-sm">Panas</h4>
+                    </div>
+                    <div class="bg-white rounded-lg p-2 text-center">
+                      <div class="text-2xl">🍂</div>
+                      <h4 class="font-bold text-amber-600 text-sm">Gugur</h4>
+                    </div>
+                    <div class="bg-white rounded-lg p-2 text-center">
+                      <div class="text-2xl">❄️</div>
+                      <h4 class="font-bold text-cyan-600 text-sm">Dingin</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gambar Nyata 4 Musim -->
+              <div class="bg-gray-900 rounded-xl p-6">
+                <h4 class="text-white font-heading font-bold mb-4 text-center">📸 Empat Musim di Belahan Bumi Utara/Selatan</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div class="bg-gray-800 rounded-lg p-2">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Cherry_blossoms_in_Vancouver_3_crop.jpg/800px-Cherry_blossoms_in_Vancouver_3_crop.jpg" alt="Musim Semi" class="w-full h-24 object-cover rounded-lg" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #f472b6, #a855f7)'; this.alt='Gambar Musim Semi';">
+                    <p class="text-pink-300 text-xs mt-1 text-center">🌸 Musim Semi</p>
+                  </div>
+                  <div class="bg-gray-800 rounded-lg p-2">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Maui_Tropical_Plantation_Pond.jpg/1200px-Maui_Tropical_Plantation_Pond.jpg" alt="Musim Panas" class="w-full h-24 object-cover rounded-lg" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #fbbf24, #f97316)'; this.alt='Gambar Musim Panas';">
+                    <p class="text-orange-300 text-xs mt-1 text-center">☀️ Musim Panas</p>
+                  </div>
+                  <div class="bg-gray-800 rounded-lg p-2">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Fall-trees.jpg/1200px-Fall-trees.jpg" alt="Musim Gugur" class="w-full h-24 object-cover rounded-lg" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #f59e0b, #dc2626)'; this.alt='Gambar Musim Gugur';">
+                    <p class="text-amber-300 text-xs mt-1 text-center">🍂 Musim Gugur</p>
+                  </div>
+                  <div class="bg-gray-800 rounded-lg p-2">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Southwest_corner_of_Central_Park%2C_looking_east%2C_NYC.jpg/1200px-Southwest_corner_of_Central_Park%2C_looking_east%2C_NYC.jpg" alt="Musim Dingin" class="w-full h-24 object-cover rounded-lg" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #67e8f9, #a5b4fc)'; this.alt='Gambar Musim Dingin';">
+                    <p class="text-cyan-300 text-xs mt-1 text-center">❄️ Musim Dingin</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4: Fase Bulan -->
+        <section id="section-4" class="section-content hidden">
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white">
+              <h2 class="font-heading text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="text-4xl">🌙</span> Pergerakan Bulan dan Fasenya
+              </h2>
+              <p class="mt-2 text-indigo-100">Perubahan bentuk Bulan yang terlihat dari Bumi</p>
+            </div>
+            
+            <div class="p-6 space-y-6">
+              <!-- Definisi -->
+              <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-5 border-l-4 border-indigo-500">
+                <h3 class="font-heading font-bold text-indigo-800 text-lg mb-2">📖 Definisi Fase Bulan</h3>
+                <p class="text-gray-700 leading-relaxed">
+                  <strong>Fase Bulan</strong> adalah perubahan bentuk Bulan yang terlihat dari Bumi akibat posisi Bulan 
+                  yang mengelilingi Bumi. Siklus lengkap fase Bulan membutuhkan waktu sekitar <strong>29,5 hari</strong> (1 bulan sinodis).
+                </p>
+              </div>
+
+              <!-- 8 Fase Bulan -->
+              <div class="bg-gradient-to-r from-gray-900 to-indigo-900 rounded-xl p-6">
+                <h3 class="font-heading font-bold text-white text-xl mb-6 text-center">🌙 8 Fase Utama Bulan</h3>
+                <div class="grid grid-cols-4 md:grid-cols-8 gap-3">
+                  <div class="text-center">
+                    <div class="w-12 h-12 mx-auto bg-gray-800 rounded-full border-2 border-gray-600 flex items-center justify-center">
+                      <div class="w-10 h-10 bg-gray-900 rounded-full"></div>
+                    </div>
+                    <p class="text-gray-300 text-xs mt-2">Bulan Baru</p>
+                  </div>
+                  <div class="text-center">
+                    <div class="w-12 h-12 mx-auto bg-gray-800 rounded-full border-2 border-gray-600 flex items-center justify-center overflow-hidden">
+                      <div class="w-10 h-10 bg-gray-300 rounded-full" style="clip-path: polygon(70% 0%, 100% 0%, 100% 100%, 70% 100%);"></div>
+                    </div>
+                    <p class="text-gray-300 text-xs mt-2">Sabit Awal</p>
+                  </div>
+                  <div class="text-center">
+                    <div class="w-12 h-12 mx-auto bg-gray-800 rounded-full border-2 border-gray-600 flex items-center justify-center overflow-hidden">
+                      <div class="w-5 h-10 bg-gray-300 rounded-r-full ml-auto"></div>
+                    </div>
+                    <p class="text-gray-300 text-xs mt-2">Kuartal 1</p>
+                  </div>
+                  <div class="text-center">
+                    <div class="w-12 h-12 mx-auto bg-gray-800 rounded-full border-2 border-gray-600 flex items-center justify-center overflow-hidden">
+                      <div class="w-8 h-10 bg-gray-300 rounded-r-full ml-auto"></div>
+                    </div>
+                    <p class="text-gray-300 text-xs mt-2">Cembung Awal</p>
+                  </div>
+                  <div class="text-center">
+                    <div class="w-12 h-12 mx-auto bg-gradient-to-br from-gray-200 to-gray-400 rounded-full border-2 border-gray-400 shadow-lg shadow-gray-400/50"></div>
+                    <p class="text-gray-300 text-xs mt-2">Purnama</p>
+                  </div>
+                  <div class="text-center">
+                    <div class="w-12 h-12 mx-auto bg-gray-800 rounded-full border-2 border-gray-600 flex items-center justify-center overflow-hidden">
+                      <div class="w-8 h-10 bg-gray-300 rounded-l-full mr-auto"></div>
+                    </div>
+                    <p class="text-gray-300 text-xs mt-2">Cembung Akhir</p>
+                  </div>
+                  <div class="text-center">
+                    <div class="w-12 h-12 mx-auto bg-gray-800 rounded-full border-2 border-gray-600 flex items-center justify-center overflow-hidden">
+                      <div class="w-5 h-10 bg-gray-300 rounded-l-full mr-auto"></div>
+                    </div>
+                    <p class="text-gray-300 text-xs mt-2">Kuartal 3</p>
+                  </div>
+                  <div class="text-center">
+                    <div class="w-12 h-12 mx-auto bg-gray-800 rounded-full border-2 border-gray-600 flex items-center justify-center overflow-hidden">
+                      <div class="w-10 h-10 bg-gray-300 rounded-full" style="clip-path: polygon(0% 0%, 30% 0%, 30% 100%, 0% 100%);"></div>
+                    </div>
+                    <p class="text-gray-300 text-xs mt-2">Sabit Akhir</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Ilustrasi Posisi Bulan -->
+              <div class="illustration-container p-8">
+                <h4 class="text-white font-heading font-semibold mb-6 text-center">🌍 Posisi Bulan Saat Fase Berbeda</h4>
+                <div class="relative w-full max-w-lg mx-auto" style="height: 280px;">
+                  <!-- Sun -->
+                  <div class="absolute left-0 top-1/2 transform -translate-y-1/2">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 shadow-lg shadow-yellow-500/50"></div>
+                    <span class="text-yellow-400 text-xs block text-center mt-1">Matahari</span>
+                  </div>
+                  
+                  <!-- Light rays -->
+                  <div class="absolute left-20 top-1/2 w-32 h-1 bg-gradient-to-r from-yellow-400 to-transparent transform -translate-y-1/2"></div>
+                  
+                  <!-- Earth -->
+                  <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 shadow-lg"></div>
+                    <span class="text-cyan-400 text-xs block text-center mt-1">Bumi</span>
+                  </div>
+                  
+                  <!-- Moon orbit -->
+                  <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-dashed border-gray-500 rounded-full"></div>
+                  
+                  <!-- Moon positions -->
+                  <div class="absolute text-center" style="left: calc(50% - 96px); top: calc(50% - 10px); transform: translateX(-50%);">
+                    <div class="w-8 h-8 rounded-full bg-gray-800 border border-gray-600"></div>
+                    <span class="text-gray-400 text-xs">Baru</span>
+                  </div>
+                  <div class="absolute text-center" style="left: calc(50% + 96px); top: calc(50% - 10px); transform: translateX(-50%);">
+                    <div class="w-8 h-8 rounded-full bg-gray-300"></div>
+                    <span class="text-gray-400 text-xs">Purnama</span>
+                  </div>
+                  <div class="absolute text-center" style="left: 50%; top: calc(50% - 96px); transform: translate(-50%, -50%);">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-r from-gray-800 to-gray-300"></div>
+                    <span class="text-gray-400 text-xs">Kuartal 1</span>
+                  </div>
+                  <div class="absolute text-center" style="left: 50%; top: calc(50% + 80px); transform: translate(-50%, -50%);">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-l from-gray-800 to-gray-300"></div>
+                    <span class="text-gray-400 text-xs">Kuartal 3</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gerhana Bulan -->
+              <div class="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-6 border border-red-200">
+                <h3 class="font-heading font-bold text-red-800 text-xl mb-4 flex items-center gap-2">
+                  🌑 Gerhana Bulan
+                </h3>
+                <p class="text-gray-700 mb-4">
+                  <strong>Gerhana Bulan</strong> terjadi saat Bumi berada di antara Matahari dan Bulan, 
+                  sehingga Bulan masuk ke bayangan Bumi.
+                </p>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div class="bg-white rounded-lg p-4">
+                    <h4 class="font-bold text-gray-800 mb-2">🔴 Umbra (Bayangan Inti)</h4>
+                    <p class="text-gray-600 text-sm">Bayangan gelap sempurna. Jika Bulan masuk seluruhnya = Gerhana Bulan Total</p>
+                  </div>
+                  <div class="bg-white rounded-lg p-4">
+                    <h4 class="font-bold text-gray-800 mb-2">⚫ Penumbra (Bayangan Kabur)</h4>
+                    <p class="text-gray-600 text-sm">Bayangan sebagian. Jika Bulan hanya masuk penumbra = Gerhana Bulan Penumbra</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gambar Nyata -->
+              <div class="bg-gray-900 rounded-xl p-6">
+                <h4 class="text-white font-heading font-bold mb-4 text-center">📸 Fase Bulan dan Gerhana Bulan</h4>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div class="bg-gray-800 rounded-lg p-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Lunar_phase_1.svg/1200px-Lunar_phase_1.svg.png" alt="Fase Bulan" class="w-full h-40 object-contain rounded-lg bg-gray-900" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #1f2937, #374151)'; this.alt='Gambar Fase Bulan';">
+                    <p class="text-gray-300 text-sm mt-2 text-center">Siklus lengkap fase Bulan</p>
+                  </div>
+                  <div class="bg-gray-800 rounded-lg p-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Lunar_eclipse_April_15_2014_California_Lubos_Rojka.jpg/1200px-Lunar_eclipse_April_15_2014_California_Lubos_Rojka.jpg" alt="Gerhana Bulan" class="w-full h-40 object-cover rounded-lg" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #7f1d1d, #1f2937)'; this.alt='Gambar Gerhana Bulan';">
+                    <p class="text-gray-300 text-sm mt-2 text-center">Gerhana Bulan Total (Blood Moon)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 5: Manfaat Gerak Bulan -->
+        <section id="section-5" class="section-content hidden">
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-teal-500 to-cyan-500 p-6 text-white">
+              <h2 class="font-heading text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="text-4xl">🙏</span> Manfaat Gerak Bulan bagi Manusia
+              </h2>
+              <p class="mt-2 text-teal-100">Peran Bulan dalam kehidupan sehari-hari</p>
+            </div>
+            
+            <div class="p-6 space-y-6">
+              <!-- Aspek Religius -->
+              <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl p-6 border border-emerald-200">
+                <h3 class="font-heading font-bold text-emerald-800 text-xl mb-4 flex items-center gap-2">
+                  🕌 Aspek Religius & Budaya
+                </h3>
+                
+                <div class="space-y-4">
+                  <!-- Islam -->
+                  <div class="card-hover bg-white rounded-xl p-5 border border-emerald-100">
+                    <div class="flex items-start gap-4">
+                      <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center text-3xl flex-shrink-0">
+                        ☪️
+                      </div>
+                      <div>
+                        <h4 class="font-heading font-bold text-emerald-800 text-lg">Kalender Hijriah (Islam)</h4>
+                        <p class="text-gray-700 mt-2">
+                          Kalender Hijriah berdasarkan <strong>fase Bulan</strong>. Setiap bulan dimulai saat terlihatnya hilal (bulan sabit muda).
+                        </p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                          <span class="bg-emerald-100 px-3 py-1 rounded-full text-sm text-emerald-700">🌙 Awal Ramadhan</span>
+                          <span class="bg-emerald-100 px-3 py-1 rounded-full text-sm text-emerald-700">🎉 Hari Raya Idul Fitri</span>
+                          <span class="bg-emerald-100 px-3 py-1 rounded-full text-sm text-emerald-700">🌅 Waktu Maghrib</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Kristen -->
+                  <div class="card-hover bg-white rounded-xl p-5 border border-purple-100">
+                    <div class="flex items-start gap-4">
+                      <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full flex items-center justify-center text-3xl flex-shrink-0">
+                        ✝️
+                      </div>
+                      <div>
+                        <h4 class="font-heading font-bold text-purple-800 text-lg">Hari Paskah (Kristen)</h4>
+                        <p class="text-gray-700 mt-2">
+                          Tanggal Paskah ditentukan berdasarkan <strong>bulan purnama pertama setelah tanggal 21 Maret</strong> (titik balik musim semi).
+                        </p>
+                        <div class="mt-3 bg-purple-50 rounded-lg p-3">
+                          <p class="text-sm text-purple-700">
+                            <strong>Rumus:</strong> Minggu pertama setelah purnama pertama setelah 21 Maret
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Navigasi -->
+              <div class="card-hover bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-6 border border-blue-200">
+                <div class="flex items-start gap-4">
+                  <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-full flex items-center justify-center text-4xl flex-shrink-0">
+                    ⛵
+                  </div>
+                  <div>
+                    <h3 class="font-heading font-bold text-blue-800 text-xl">Navigasi Pelayaran</h3>
+                    <p class="text-gray-700 mt-2">
+                      Nelayan tradisional menggunakan <strong>posisi Bulan dan bintang</strong> untuk menentukan arah di laut. 
+                      Fase bulan juga mempengaruhi <strong>pasang surut air laut</strong> yang penting untuk kegiatan melaut.
+                    </p>
+                    <div class="mt-4 grid grid-cols-2 gap-3">
+                      <div class="bg-white rounded-lg p-3 text-center">
+                        <div class="text-2xl mb-1">🌕</div>
+                        <h4 class="font-bold text-gray-800 text-sm">Bulan Purnama</h4>
+                        <p class="text-xs text-gray-500">Pasang tinggi maksimal</p>
+                      </div>
+                      <div class="bg-white rounded-lg p-3 text-center">
+                        <div class="text-2xl mb-1">🌑</div>
+                        <h4 class="font-bold text-gray-800 text-sm">Bulan Baru</h4>
+                        <p class="text-xs text-gray-500">Pasang tinggi maksimal</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pasang Surut -->
+              <div class="illustration-container p-8">
+                <h4 class="text-white font-heading font-semibold mb-6 text-center">🌊 Pengaruh Bulan terhadap Pasang Surut</h4>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                  <div class="text-center">
+                    <div class="relative">
+                      <div class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 to-blue-600"></div>
+                      <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-gray-300"></div>
+                    </div>
+                    <p class="text-cyan-300 mt-3 text-sm">Gaya gravitasi Bulan</p>
+                    <p class="text-cyan-300 text-sm">menarik air laut</p>
+                  </div>
+                  <div class="text-4xl text-cyan-400">→</div>
+                  <div class="bg-gray-800 rounded-lg p-4 text-center">
+                    <p class="text-white font-bold mb-2">Hasil:</p>
+                    <div class="grid grid-cols-2 gap-3">
+                      <div class="bg-blue-600 rounded p-2">
+                        <span class="text-white text-sm">🌊 Pasang</span>
+                      </div>
+                      <div class="bg-blue-900 rounded p-2">
+                        <span class="text-white text-sm">〰️ Surut</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gambar Nyata -->
+              <div class="bg-gray-900 rounded-xl p-6">
+                <h4 class="text-white font-heading font-bold mb-4 text-center">📸 Manfaat Bulan dalam Kehidupan</h4>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div class="bg-gray-800 rounded-lg p-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Hilal_over_Muscat%2C_Oman.jpg/800px-Hilal_over_Muscat%2C_Oman.jpg" alt="Hilal" class="w-full h-40 object-cover rounded-lg" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #1f2937, #0f172a)'; this.alt='Gambar Hilal';">
+                    <p class="text-gray-300 text-sm mt-2 text-center">Hilal - Penanda awal bulan Hijriah</p>
+                  </div>
+                  <div class="bg-gray-800 rounded-lg p-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Pescadores_artesanales.jpg/1200px-Pescadores_artesanales.jpg" alt="Nelayan" class="w-full h-40 object-cover rounded-lg" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #0369a1, #1e40af)'; this.alt='Gambar Nelayan';">
+                    <p class="text-gray-300 text-sm mt-2 text-center">Nelayan memanfaatkan fase bulan</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 6: Aktivitas Interaktif -->
+        <section id="section-6" class="section-content hidden">
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-pink-500 to-rose-500 p-6 text-white">
+              <h2 class="font-heading text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="text-4xl">🧪</span> Aktivitas Interaktif
+              </h2>
+              <p class="mt-2 text-pink-100">Eksperimen dan kegiatan seru untuk memahami materi</p>
+            </div>
+            
+            <div class="p-6 space-y-6">
+              <!-- Aktivitas 1: Simulasi Siang Malam -->
+              <div class="card-hover bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-6 border border-yellow-200">
+                <div class="flex items-start gap-4">
+                  <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-3xl flex-shrink-0">
+                    🔦
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="font-heading font-bold text-orange-800 text-xl">Eksperimen 1: Simulasi Siang dan Malam</h3>
+                    <p class="text-gray-700 mt-2">Gunakan senter dan globe untuk memahami rotasi Bumi!</p>
+                    
+                    <div class="mt-4 bg-white rounded-lg p-4">
+                      <h4 class="font-bold text-gray-800 mb-3">📋 Alat dan Bahan:</h4>
+                      <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center gap-2">✓ Senter atau lampu kecil</li>
+                        <li class="flex items-center gap-2">✓ Globe atau bola (sebagai Bumi)</li>
+                        <li class="flex items-center gap-2">✓ Ruangan gelap</li>
+                        <li class="flex items-center gap-2">✓ Stiker kecil (untuk menandai lokasi)</li>
+                      </ul>
+                    </div>
+                    
+                    <div class="mt-4 bg-white rounded-lg p-4">
+                      <h4 class="font-bold text-gray-800 mb-3">📝 Langkah-langkah:</h4>
+                      <ol class="space-y-2 text-gray-600 list-decimal list-inside">
+                        <li>Tempelkan stiker di posisi Indonesia pada globe</li>
+                        <li>Matikan lampu ruangan</li>
+                        <li>Sorotkan senter ke globe (senter = Matahari)</li>
+                        <li>Putar globe perlahan dari Barat ke Timur</li>
+                        <li>Amati kapan Indonesia terkena cahaya (siang) dan tidak (malam)</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Simulasi Interaktif Rotasi -->
+              <div class="bg-gradient-to-r from-indigo-900 to-purple-900 rounded-xl p-6">
+                <h3 class="font-heading font-bold text-white text-xl mb-4 text-center">🌍 Simulasi Rotasi Interaktif</h3>
+                <div class="flex flex-col items-center gap-4">
+                  <div class="relative">
+                    <div id="interactive-earth" class="w-32 h-32 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 shadow-lg relative" style="transform: rotate(0deg);">
+                      <div class="absolute top-4 left-1/2 transform -translate-x-1/2 text-xl">🇮🇩</div>
+                    </div>
+                    <div class="absolute -left-20 top-1/2 transform -translate-y-1/2 text-4xl animate-pulse-glow">☀️</div>
+                  </div>
+                  <div class="flex gap-4">
+                    <button onclick="rotateEarth(-45)" class="interactive-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-bold">
+                      ← Putar Barat
+                    </button>
+                    <button onclick="rotateEarth(45)" class="interactive-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-bold">
+                      Putar Timur →
+                    </button>
+                  </div>
+                  <p id="rotation-status" class="text-cyan-300 text-sm">Indonesia sedang mengalami: <strong>Siang ☀️</strong></p>
+                </div>
+              </div>
+
+              <!-- Aktivitas 2: Pengamatan Fase Bulan -->
+              <div class="card-hover bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 border border-indigo-200">
+                <div class="flex items-start gap-4">
+                  <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-3xl flex-shrink-0">
+                    📔
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="font-heading font-bold text-indigo-800 text-xl">Aktivitas 2: Pengamatan Fase Bulan</h3>
+                    <p class="text-gray-700 mt-2">Tugas mandiri mencatat bentuk bulan selama satu bulan penuh!</p>
+                    
+                    <div class="mt-4 bg-white rounded-lg p-4">
+                      <h4 class="font-bold text-gray-800 mb-3">📋 Petunjuk:</h4>
+                      <ol class="space-y-2 text-gray-600 list-decimal list-inside">
+                        <li>Siapkan buku catatan khusus pengamatan</li>
+                        <li>Setiap malam (cuaca cerah), amati bentuk Bulan</li>
+                        <li>Gambar bentuk Bulan yang terlihat</li>
+                        <li>Catat tanggal dan waktu pengamatan</li>
+                        <li>Setelah 1 bulan, bandingkan hasilnya dengan fase Bulan</li>
+                      </ol>
+                    </div>
+                    
+                    <!-- Template Catatan -->
+                    <div class="mt-4 bg-indigo-100 rounded-lg p-4">
+                      <h4 class="font-bold text-indigo-800 mb-3">📝 Template Catatan:</h4>
+                      <div class="grid grid-cols-7 gap-2 text-center text-xs">
+                        <div class="bg-white p-2 rounded">Sen</div>
+                        <div class="bg-white p-2 rounded">Sel</div>
+                        <div class="bg-white p-2 rounded">Rab</div>
+                        <div class="bg-white p-2 rounded">Kam</div>
+                        <div class="bg-white p-2 rounded">Jum</div>
+                        <div class="bg-white p-2 rounded">Sab</div>
+                        <div class="bg-white p-2 rounded">Min</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Aktivitas 3: Diskusi Kelompok -->
+              <div class="card-hover bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200">
+                <div class="flex items-start gap-4">
+                  <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-3xl flex-shrink-0">
+                    👥
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="font-heading font-bold text-green-800 text-xl">Aktivitas 3: Diskusi Kelompok</h3>
+                    <p class="text-gray-700 mt-2">Bandingkan perbedaan satelit alami dan buatan!</p>
+                    
+                    <div class="mt-4 overflow-x-auto">
+                      <table class="w-full bg-white rounded-lg overflow-hidden">
+                        <thead class="bg-green-500 text-white">
+                          <tr>
+                            <th class="px-4 py-3 text-left">Aspek</th>
+                            <th class="px-4 py-3 text-left">Satelit Alami</th>
+                            <th class="px-4 py-3 text-left">Satelit Buatan</th>
+                          </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                          <tr>
+                            <td class="px-4 py-3 font-semibold">Asal</td>
+                            <td class="px-4 py-3">Terbentuk alami</td>
+                            <td class="px-4 py-3">Dibuat manusia</td>
+                          </tr>
+                          <tr class="bg-gray-50">
+                            <td class="px-4 py-3 font-semibold">Contoh</td>
+                            <td class="px-4 py-3">Bulan</td>
+                            <td class="px-4 py-3">Palapa, ISS</td>
+                          </tr>
+                          <tr>
+                            <td class="px-4 py-3 font-semibold">Ukuran</td>
+                            <td class="px-4 py-3">Sangat besar</td>
+                            <td class="px-4 py-3">Relatif kecil</td>
+                          </tr>
+                          <tr class="bg-gray-50">
+                            <td class="px-4 py-3 font-semibold">Fungsi</td>
+                            <td class="px-4 py-3">Alami (pasang surut)</td>
+                            <td class="px-4 py-3">Sesuai tujuan</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 7: Quiz HOTS -->
+        <section id="section-7" class="section-content hidden">
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-green-500 to-emerald-500 p-6 text-white">
+              <h2 class="font-heading text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="text-4xl">📝</span> Quiz HOTS (Higher Order Thinking Skills)
+              </h2>
+              <p class="mt-2 text-green-100">Uji pemahamanmu dengan 10 soal berpikir tingkat tinggi!</p>
+            </div>
+            
+            <div class="p-6">
+              <!-- Progress Bar -->
+              <div class="mb-6">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="font-semibold text-gray-700">Progress</span>
+                  <span id="quiz-progress" class="font-bold text-green-600">0/10</span>
+                </div>
+                <div class="h-4 bg-gray-200 rounded-full overflow-hidden">
+                  <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-green-500 to-emerald-500" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <!-- Quiz Container -->
+              <div id="quiz-container">
+                <!-- Questions will be loaded here -->
+              </div>
+
+              <!-- Quiz Result -->
+              <div id="quiz-result" class="hidden text-center py-8">
+                <div class="text-6xl mb-4">🏆</div>
+                <h3 class="font-heading text-2xl font-bold text-gray-800 mb-2">Quiz Selesai!</h3>
+                <p id="final-score" class="text-xl text-gray-600 mb-4"></p>
+                <div id="score-badge" class="inline-block px-6 py-3 rounded-full text-white font-bold text-lg mb-6"></div>
+                <br>
+                <button onclick="restartQuiz()" class="interactive-btn bg-gradient-to-r from-green-500 to-emerald-500 text-white px-8 py-3 rounded-lg font-bold hover:from-green-600 hover:to-emerald-600">
+                  🔄 Ulangi Quiz
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-gray-900 to-indigo-900 text-white mt-8">
+      <div class="max-w-7xl mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-16 h-16 rounded-full border-2 border-white object-cover" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #3b82f6, #8b5cf6)'; this.alt='Foto Pembuat';">
+            <div>
+              <p id="teacher-name" class="font-heading font-bold text-lg">Algian Manggara, S.Agr</p>
+              <p class="text-gray-400 text-sm">Pengembang Media Pembelajaran</p>
+            </div>
+          </div>
+          <div class="text-center md:text-right">
+            <p class="text-gray-400 text-sm">Media Pembelajaran Interaktif</p>
+            <p class="font-semibold">© 2026 Algian Manggara, S.Agr</p>
+            <p class="text-gray-500 text-xs mt-1">Pengaruh Pergerakan Bumi dan Benda Langit terhadap Kehidupan</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Pengaruh Pergerakan Bumi dan Benda Langit',
+      teacher_name: 'Algian Manggara, S.Agr',
+      background_color: '#f0f9ff',
+      header_color: '#1e3a8a',
+      text_color: '#1f2937',
+      primary_action_color: '#3b82f6',
+      secondary_action_color: '#10b981'
+    };
+
+    let config = { ...defaultConfig };
+    let currentSection = 0;
+    let currentQuestion = 0;
+    let score = 0;
+    let answeredQuestions = new Set();
+    let earthRotation = 0;
+
+    // Quiz questions (HOTS)
+    const quizQuestions = [
+      {
+        question: "Jika Indonesia berada di garis khatulistiwa dan Bumi tidak memiliki kemiringan poros 23,5°, apa yang akan terjadi dengan musim di Indonesia?",
+        options: [
+          "Indonesia akan memiliki 4 musim seperti Eropa",
+          "Indonesia tidak akan mengalami pergantian musim sama sekali",
+          "Indonesia akan selalu mengalami musim hujan",
+          "Indonesia akan selalu mengalami musim kemarau"
+        ],
+        correct: 1,
+        explanation: "Tanpa kemiringan poros, tidak ada variasi penerimaan cahaya matahari sepanjang tahun, sehingga tidak ada pergantian musim."
+      },
+      {
+        question: "Mengapa tahun 1900 bukan tahun kabisat meskipun habis dibagi 4, tetapi tahun 2000 adalah tahun kabisat?",
+        options: [
+          "Karena 1900 adalah awal abad baru",
+          "Karena tahun berakhiran 00 harus habis dibagi 400 (1900÷400≠bulat, 2000÷400=5)",
+          "Karena terjadi kesalahan perhitungan kalender",
+          "Karena revolusi Bumi berubah-ubah setiap abad"
+        ],
+        correct: 1,
+        explanation: "Aturan khusus: tahun berakhiran 00 harus habis dibagi 400. 1900÷400=4,75 (bukan bilangan bulat), sedangkan 2000÷400=5 (bilangan bulat)."
+      },
+      {
+        question: "Seorang nelayan di Maluku mengamati air laut sedang pasang tinggi. Berdasarkan pemahaman tentang fase bulan, kemungkinan besar bulan sedang dalam fase apa?",
+        options: [
+          "Bulan sabit awal atau sabit akhir",
+          "Bulan kuartal pertama saja",
+          "Bulan purnama atau bulan baru",
+          "Bulan cembung awal saja"
+        ],
+        correct: 2,
+        explanation: "Pasang tinggi maksimal terjadi saat bulan purnama atau bulan baru karena gaya gravitasi Bulan dan Matahari searah."
+      },
+      {
+        question: "Jika kamu berada di Papua (WIT) dan ingin menelepon temanmu di Jakarta (WIB) pukul 07.00 waktu Papua, pukul berapa waktu Jakarta saat itu?",
+        options: [
+          "Pukul 09.00 WIB",
+          "Pukul 07.00 WIB",
+          "Pukul 05.00 WIB",
+          "Pukul 06.00 WIB"
+        ],
+        correct: 2,
+        explanation: "WIT lebih cepat 2 jam dari WIB. Jadi jika di Papua pukul 07.00 WIT, di Jakarta masih pukul 05.00 WIB (07.00 - 2 jam = 05.00)."
+      },
+      {
+        question: "Mengapa umat Islam di Indonesia bisa memulai puasa Ramadhan pada tanggal yang berbeda dengan umat Islam di Arab Saudi?",
+        options: [
+          "Karena perbedaan zona waktu saja",
+          "Karena penampakan hilal (bulan sabit muda) bisa berbeda di setiap lokasi geografis",
+          "Karena kalender Hijriah berbeda di setiap negara",
+          "Karena Indonesia dan Arab Saudi menggunakan metode berbeda"
+        ],
+        correct: 1,
+        explanation: "Hilal (bulan sabit muda) mungkin terlihat di satu tempat tetapi belum terlihat di tempat lain karena posisi geografis dan kondisi atmosfer yang berbeda."
+      },
+      {
+        question: "Apa yang akan terjadi jika Bumi berhenti berotasi tetapi tetap berevolusi mengelilingi Matahari?",
+        options: [
+          "Tidak ada perubahan yang signifikan",
+          "Satu sisi Bumi akan selalu siang (sangat panas) dan sisi lain selalu malam (sangat dingin)",
+          "Semua tempat di Bumi akan memiliki durasi siang dan malam yang sama",
+          "Musim di seluruh dunia akan hilang"
+        ],
+        correct: 1,
+        explanation: "Tanpa rotasi, satu sisi Bumi akan terus menghadap Matahari (sangat panas) dan sisi lainnya akan selalu gelap (sangat dingin), membuat kehidupan hampir mustahil."
+      },
+      {
+        question: "Satelit cuaca dapat memprediksi badai tropis yang akan menerjang Indonesia. Jenis analisis apa yang dilakukan satelit untuk prediksi ini?",
+        options: [
+          "Mengukur suhu permukaan tanah saja",
+          "Memantau pergerakan awan, suhu permukaan laut, dan pola angin dari ruang angkasa",
+          "Menghitung jumlah penduduk di daerah terdampak",
+          "Mengukur ketinggian gelombang laut saja"
+        ],
+        correct: 1,
+        explanation: "Satelit cuaca menganalisis berbagai data: citra awan, suhu permukaan laut (yang mempengaruhi intensitas badai), dan pola angin untuk memprediksi jalur dan kekuatan badai."
+      },
+      {
+        question: "Di bulan Juni, wilayah kutub utara mengalami fenomena 'matahari tengah malam' (midnight sun). Apa penyebab utama fenomena ini?",
+        options: [
+          "Bumi berada paling dekat dengan Matahari",
+          "Kemiringan poros Bumi 23,5° membuat kutub utara terus menghadap Matahari selama musim panas",
+          "Rotasi Bumi melambat di musim panas",
+          "Matahari bergerak lebih dekat ke kutub utara"
+        ],
+        correct: 1,
+        explanation: "Kemiringan poros Bumi 23,5° menyebabkan kutub utara condong ke arah Matahari saat musim panas, sehingga mendapat cahaya matahari 24 jam."
+      },
+      {
+        question: "Saat terjadi gerhana bulan total, mengapa bulan terlihat berwarna merah kecoklatan (blood moon) dan bukan hitam total?",
+        options: [
+          "Karena Bulan memiliki atmosfer yang memantulkan cahaya merah",
+          "Karena cahaya merah dari Matahari dibiaskan oleh atmosfer Bumi dan masih mencapai Bulan",
+          "Karena Bumi memiliki permukaan berwarna merah",
+          "Karena Bulan memantulkan cahaya dari bintang-bintang lain"
+        ],
+        correct: 1,
+        explanation: "Atmosfer Bumi membiaskan cahaya Matahari. Cahaya merah (gelombang panjang) dapat menembus atmosfer dan dibelokkan ke arah Bulan, memberikan warna merah kecoklatan."
+      },
+      {
+        question: "Jepang yang terletak di belahan bumi utara mengalami musim semi pada bulan Maret-Mei. Pada saat yang sama, apa yang dialami Australia yang terletak di belahan bumi selatan?",
+        options: [
+          "Musim semi juga",
+          "Musim panas",
+          "Musim gugur",
+          "Musim dingin"
+        ],
+        correct: 2,
+        explanation: "Musim di belahan bumi utara dan selatan berlawanan. Saat utara mengalami musim semi, selatan mengalami musim gugur karena posisi kemiringan Bumi terhadap Matahari."
+      }
+    ];
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...config, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (value) => {
+                cfg.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => cfg.header_color || defaultConfig.header_color,
+              set: (value) => {
+                cfg.header_color = value;
+                window.elementSdk.setConfig({ header_color: value });
+              }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (value) => {
+                cfg.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => cfg.primary_action_color || defaultConfig.primary_action_color,
+              set: (value) => {
+                cfg.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            },
+            {
+              get: () => cfg.secondary_action_color || defaultConfig.secondary_action_color,
+              set: (value) => {
+                cfg.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ["main_title", cfg.main_title || defaultConfig.main_title],
+          ["teacher_name", cfg.teacher_name || defaultConfig.teacher_name]
+        ])
+      });
+    }
+
+    function applyConfig() {
+      const mainTitle = document.getElementById('main-title');
+      const teacherName = document.getElementById('teacher-name');
+      
+      if (mainTitle) mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      if (teacherName) teacherName.textContent = config.teacher_name || defaultConfig.teacher_name;
+    }
+
+    function showSection(index) {
+      // Hide all sections
+      for (let i = 0; i < 8; i++) {
+        const section = document.getElementById(`section-${i}`);
+        if (section) section.classList.add('hidden');
+      }
+      
+      // Show selected section
+      const selectedSection = document.getElementById(`section-${index}`);
+      if (selectedSection) {
+        selectedSection.classList.remove('hidden');
+      }
+      
+      // Update nav
+      const navButtons = document.querySelectorAll('#nav-menu button');
+      navButtons.forEach((btn, i) => {
+        btn.classList.remove('active');
+        if (i === index) {
+          btn.classList.add('active');
+        }
+      });
+      
+      currentSection = index;
+      
+      // Initialize quiz if section 7
+      if (index === 7 && !document.querySelector('#quiz-container .quiz-question')) {
+        loadQuestion();
+      }
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function checkLeapYear() {
+      const input = document.getElementById('leapYearInput');
+      const result = document.getElementById('leapYearResult');
+      const year = parseInt(input.value);
+      
+      if (isNaN(year) || year < 1) {
+        result.className = 'mt-4 p-4 rounded-lg bg-red-100 border border-red-300';
+        result.innerHTML = '<p class="text-red-700 font-semibold">⚠️ Masukkan tahun yang valid!</p>';
+        result.classList.remove('hidden');
+        return;
+      }
+      
+      let isLeap = false;
+      let explanation = '';
+      
+      if (year % 400 === 0) {
+        isLeap = true;
+        explanation = `${year} habis dibagi 400 (${year} ÷ 400 = ${year/400})`;
+      } else if (year % 100 === 0) {
+        isLeap = false;
+        explanation = `${year} habis dibagi 100 tapi tidak habis dibagi 400`;
+      } else if (year % 4 === 0) {
+        isLeap = true;
+        explanation = `${year} habis dibagi 4 (${year} ÷ 4 = ${year/4})`;
+      } else {
+        isLeap = false;
+        explanation = `${year} tidak habis dibagi 4`;
+      }
+      
+      if (isLeap) {
+        result.className = 'mt-4 p-4 rounded-lg bg-green-100 border border-green-300';
+        result.innerHTML = `
+          <p class="text-green-700 font-bold text-lg">✓ ${year} adalah TAHUN KABISAT!</p>
+          <p class="text-green-600 mt-2">${explanation}</p>
+          <p class="text-green-600 mt-1">Februari ${year} memiliki 29 hari</p>
+        `;
+      } else {
+        result.className = 'mt-4 p-4 rounded-lg bg-red-100 border border-red-300';
+        result.innerHTML = `
+          <p class="text-red-700 font-bold text-lg">✗ ${year} BUKAN tahun kabisat</p>
+          <p class="text-red-600 mt-2">${explanation}</p>
+          <p class="text-red-600 mt-1">Februari ${year} memiliki 28 hari</p>
+        `;
+      }
+      
+      result.classList.remove('hidden');
+    }
+
+    function rotateEarth(degrees) {
+      earthRotation += degrees;
+      const earth = document.getElementById('interactive-earth');
+      const status = document.getElementById('rotation-status');
+      
+      earth.style.transform = `rotate(${earthRotation}deg)`;
+      
+      // Determine day/night based on rotation
+      const normalizedRotation = ((earthRotation % 360) + 360) % 360;
+      
+      if (normalizedRotation >= 270 || normalizedRotation < 90) {
+        status.innerHTML = 'Indonesia sedang mengalami: <strong>Siang ☀️</strong>';
+      } else {
+        status.innerHTML = 'Indonesia sedang mengalami: <strong>Malam 🌙</strong>';
+      }
+    }
+
+    function loadQuestion() {
+      const container = document.getElementById('quiz-container');
+      const resultDiv = document.getElementById('quiz-result');
+      
+      if (currentQuestion >= quizQuestions.length) {
+        container.innerHTML = '';
+        resultDiv.classList.remove('hidden');
+        
+        const percentage = Math.round((score / quizQuestions.length) * 100);
+        document.getElementById('final-score').textContent = `Skor Akhir: ${score}/${quizQuestions.length} (${percentage}%)`;
+        
+        const badge = document.getElementById('score-badge');
+        if (percentage >= 90) {
+          badge.textContent = '🌟 Luar Biasa!';
+          badge.className = 'inline-block px-6 py-3 rounded-full text-white font-bold text-lg bg-gradient-to-r from-yellow-400 to-orange-500';
+        } else if (percentage >= 70) {
+          badge.textContent = '👍 Hebat!';
+          badge.className = 'inline-block px-6 py-3 rounded-full text-white font-bold text-lg bg-gradient-to-r from-green-500 to-emerald-500';
+        } else if (percentage >= 50) {
+          badge.textContent = '📚 Terus Belajar!';
+          badge.className = 'inline-block px-6 py-3 rounded-full text-white font-bold text-lg bg-gradient-to-r from-blue-500 to-indigo-500';
+        } else {
+          badge.textContent = '💪 Jangan Menyerah!';
+          badge.className = 'inline-block px-6 py-3 rounded-full text-white font-bold text-lg bg-gradient-to-r from-purple-500 to-pink-500';
+        }
+        
+        // Update global score display
+        document.getElementById('score-display').textContent = `Skor: ${score}`;
+        return;
+      }
+      
+      const q = quizQuestions[currentQuestion];
+      
+      container.innerHTML = `
+        <div class="quiz-question bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mb-4">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+              ${currentQuestion + 1}
+            </div>
+            <div class="flex-1">
+              <h3 class="font-heading font-bold text-gray-800 text-lg">${q.question}</h3>
+            </div>
+          </div>
+        </div>
+        
+        <div class="space-y-3" id="options-container">
+          ${q.options.map((opt, i) => `
+            <button onclick="selectAnswer(${i})" class="quiz-option w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-blue-400 transition-all flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-bold text-gray-600">${String.fromCharCode(65 + i)}</span>
+              <span class="flex-1">${opt}</span>
+            </button>
+          `).join('')}
+        </div>
+        
+        <div id="answer-feedback" class="hidden mt-4 p-4 rounded-xl"></div>
+        
+        <div class="mt-6 flex justify-between items-center">
+          <button onclick="previousQuestion()" class="interactive-btn bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold ${currentQuestion === 0 ? 'invisible' : ''}">
+            ← Sebelumnya
+          </button>
+          <button id="next-btn" onclick="nextQuestion()" class="interactive-btn bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hidden">
+            ${currentQuestion === quizQuestions.length - 1 ? 'Lihat Hasil →' : 'Selanjutnya →'}
+          </button>
+        </div>
+      `;
+      
+      updateProgress();
+    }
+
+    function selectAnswer(index) {
+      if (answeredQuestions.has(currentQuestion)) return;
+      
+      const q = quizQuestions[currentQuestion];
+      const options = document.querySelectorAll('.quiz-option');
+      const feedback = document.getElementById('answer-feedback');
+      const nextBtn = document.getElementById('next-btn');
+      
+      answeredQuestions.add(currentQuestion);
+      
+      options.forEach((opt, i) => {
+        opt.classList.remove('hover:border-blue-400');
+        opt.style.pointerEvents = 'none';
+        
+        if (i === q.correct) {
+          opt.classList.add('correct');
+        } else if (i === index && i !== q.correct) {
+          opt.classList.add('incorrect');
+        }
+      });
+      
+      if (index === q.correct) {
+        score++;
+        feedback.className = 'mt-4 p-4 rounded-xl bg-green-100 border border-green-300';
+        feedback.innerHTML = `
+          <p class="text-green-700 font-bold">✓ Benar! Kamu hebat!</p>
+          <p class="text-green-600 mt-2">${q.explanation}</p>
+        `;
+      } else {
+        feedback.className = 'mt-4 p-4 rounded-xl bg-red-100 border border-red-300';
+        feedback.innerHTML = `
+          <p class="text-red-700 font-bold">✗ Kurang tepat</p>
+          <p class="text-red-600 mt-2">Jawaban yang benar: <strong>${String.fromCharCode(65 + q.correct)}. ${q.options[q.correct]}</strong></p>
+          <p class="text-gray-600 mt-2">${q.explanation}</p>
+        `;
+      }
+      
+      feedback.classList.remove('hidden');
+      nextBtn.classList.remove('hidden');
+      
+      // Update score display
+      document.getElementById('score-display').textContent = `Skor: ${score}`;
+      updateProgress();
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      loadQuestion();
+    }
+
+    function previousQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+      }
+    }
+
+    function updateProgress() {
+      const progress = document.getElementById('quiz-progress');
+      const progressBar = document.getElementById('progress-bar');
+      
+      progress.textContent = `${answeredQuestions.size}/${quizQuestions.length}`;
+      progressBar.style.width = `${(answeredQuestions.size / quizQuestions.length) * 100}%`;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answeredQuestions.clear();
+      
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('score-display').textContent = 'Skor: 0';
+      
+      loadQuestion();
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      applyConfig();
+    });
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cfbc019c5a4e78d',t:'MTc3MTM5OTEwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

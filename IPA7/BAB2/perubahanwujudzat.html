@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keajaiban Perubahan Wujud Zat</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { font-family: 'Poppins', sans-serif; }
+    .heading-font { font-family: 'Playfair Display', serif; }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+    
+    .card-glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .glow-effect {
+      box-shadow: 0 0 30px rgba(79, 209, 197, 0.3);
+    }
+    
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(79, 209, 197, 0.4); }
+      50% { box-shadow: 0 0 40px rgba(79, 209, 197, 0.8); }
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    
+    .animate-float { animation: float 3s ease-in-out infinite; }
+    .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    
+    .shimmer-text {
+      background: linear-gradient(90deg, #4fd1c5, #63b3ed, #4fd1c5);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite;
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:hover {
+      transform: translateX(10px);
+      background: rgba(79, 209, 197, 0.2);
+    }
+    
+    .nav-item.active {
+      background: linear-gradient(90deg, rgba(79, 209, 197, 0.3), transparent);
+      border-left: 3px solid #4fd1c5;
+    }
+    
+    .content-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.5s ease;
+    }
+    
+    .content-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .molecule {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-block;
+      margin: 3px;
+    }
+    
+    .solid-particle {
+      animation: vibrate-slow 0.3s infinite;
+    }
+    
+    .liquid-particle {
+      animation: vibrate-medium 0.2s infinite;
+    }
+    
+    .gas-particle {
+      animation: vibrate-fast 0.1s infinite;
+    }
+    
+    @keyframes vibrate-slow {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(1px, 1px); }
+    }
+    
+    @keyframes vibrate-medium {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(3px, -2px); }
+      75% { transform: translate(-3px, 2px); }
+    }
+    
+    @keyframes vibrate-fast {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(8px, -5px); }
+      50% { transform: translate(-5px, 8px); }
+      75% { transform: translate(-8px, -3px); }
+      100% { transform: translate(5px, 5px); }
+    }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+    }
+    
+    .quiz-option:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 30px rgba(79, 209, 197, 0.3);
+    }
+    
+    .quiz-option.correct {
+      background: linear-gradient(135deg, #10b981, #059669) !important;
+      border-color: #10b981 !important;
+    }
+    
+    .quiz-option.incorrect {
+      background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+      border-color: #ef4444 !important;
+    }
+    
+    .progress-bar {
+      background: linear-gradient(90deg, #4fd1c5, #63b3ed);
+      transition: width 0.5s ease;
+    }
+    
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #4fd1c5, #63b3ed);
+      border-radius: 4px;
+    }
+    
+    .illustration-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    
+    .illustration-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(79, 209, 197, 0.1), rgba(99, 179, 237, 0.1));
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="h-full gradient-bg text-white overflow-auto">
+  <div id="app" class="h-full w-full flex flex-col lg:flex-row">
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar" class="w-full lg:w-72 bg-black/30 backdrop-blur-xl border-b lg:border-b-0 lg:border-r border-white/10 p-4 lg:p-6 lg:overflow-y-auto flex-shrink-0">
+      <div class="flex items-center gap-3 mb-6 lg:mb-8">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-400 to-blue-500 flex items-center justify-center animate-pulse-glow">
+          <span class="text-2xl">🔬</span>
+        </div>
+        <div>
+          <h1 id="main-title" class="text-lg font-bold shimmer-text">Perubahan Wujud</h1>
+          <p class="text-xs text-gray-400">Media Pembelajaran IPA</p>
+        </div>
+      </div>
+      
+      <div class="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0" id="nav-menu">
+        <!-- Navigation items will be generated by JS -->
+      </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto p-4 lg:p-8">
+      <div id="content-container" class="max-w-4xl mx-auto">
+        <!-- Content sections will be generated by JS -->
+      </div>
+    </main>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="bg-black/40 backdrop-blur-xl border-t border-white/10 py-4 px-6">
+    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <img src="https://i.imgur.com/mRmw86t.jpeg" alt="Author" class="w-10 h-10 rounded-full object-cover border-2 border-teal-400" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #4fd1c5, #63b3ed)'; this.alt='👤';">
+        <div>
+          <p id="author-name" class="text-sm font-semibold text-teal-400">Algian Manggara, S.Agr</p>
+          <p class="text-xs text-gray-400">© 2026 - All Rights Reserved</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4 text-gray-400 text-xs">
+        <span>📚 Media Pembelajaran Interaktif</span>
+        <span>🎓 Untuk Siswa Indonesia</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Perubahan Wujud',
+      author_name: 'Algian Manggara, S.Agr',
+      primary_color: '#4fd1c5',
+      secondary_color: '#1a1a2e',
+      text_color: '#ffffff',
+      accent_color: '#63b3ed',
+      surface_color: '#16213e'
+    };
+
+    // Navigation items
+    const navItems = [
+      { id: 'intro', icon: '🏠', title: 'Pendahuluan' },
+      { id: 'partikel', icon: '⚛️', title: 'Konsep Partikel' },
+      { id: 'meleleh', icon: '🧊', title: 'Meleleh & Membeku' },
+      { id: 'menguap', icon: '💨', title: 'Menguap & Mengembun' },
+      { id: 'sublim', icon: '✨', title: 'Menyublim & Mengkristal' },
+      { id: 'grafik', icon: '📊', title: 'Grafik & Data' },
+      { id: 'detektif', icon: '🔍', title: 'Tantangan Detektif' },
+      { id: 'proyek', icon: '🛠️', title: 'Aktivitas Proyek' },
+      { id: 'quiz', icon: '📝', title: 'Kuis HOTS' }
+    ];
+
+    // Content data
+    const contentData = {
+      intro: {
+        title: 'Keajaiban Perubahan Wujud Zat',
+        subtitle: 'Mengapa Materi Berubah?',
+        content: `
+          <div class="text-center mb-8">
+            <div class="inline-block p-6 rounded-2xl card-glass mb-6">
+              <p class="text-xl italic text-teal-300 heading-font">"Satu-satunya hal yang tetap dalam hidup adalah perubahan itu sendiri."</p>
+              <p class="text-sm text-gray-400 mt-2">— Heraclitus</p>
+            </div>
+          </div>
+          
+          <div class="illustration-container mb-8">
+            <img src="https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?w=800&q=80" alt="Air dalam berbagai wujud - es, air, dan uap di alam" class="w-full h-64 object-cover rounded-2xl" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #4fd1c5, #63b3ed)'; this.alt='Ilustrasi perubahan wujud zat';">
+            <p class="text-center text-sm text-gray-400 mt-2">Air di alam mengalami siklus perubahan wujud yang terus menerus</p>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="card-glass rounded-2xl p-6">
+              <div class="text-4xl mb-4">🌱</div>
+              <h3 class="text-lg font-semibold text-teal-400 mb-2">Analogi Pertumbuhan</h3>
+              <p class="text-gray-300 text-sm">Sama seperti manusia yang tumbuh dari bayi menjadi remaja lalu dewasa, materi juga mengalami perubahan fisik dari satu wujud ke wujud lainnya.</p>
+            </div>
+            <div class="card-glass rounded-2xl p-6">
+              <div class="text-4xl mb-4">🔄</div>
+              <h3 class="text-lg font-semibold text-teal-400 mb-2">Siklus Perubahan</h3>
+              <p class="text-gray-300 text-sm">Perubahan wujud zat adalah proses alami yang terjadi di sekitar kita setiap hari, dari es yang mencair hingga air yang menguap.</p>
+            </div>
+          </div>
+          
+          <div class="mt-8 p-6 bg-gradient-to-r from-teal-500/20 to-blue-500/20 rounded-2xl border border-teal-500/30">
+            <h3 class="font-semibold text-teal-400 mb-3">🎯 Tujuan Pembelajaran:</h3>
+            <ul class="space-y-2 text-sm text-gray-300">
+              <li class="flex items-start gap-2"><span class="text-teal-400">✓</span> Memahami konsep partikel dan hubungannya dengan perubahan wujud</li>
+              <li class="flex items-start gap-2"><span class="text-teal-400">✓</span> Menjelaskan proses meleleh, membeku, menguap, mengembun, menyublim, dan mengkristal</li>
+              <li class="flex items-start gap-2"><span class="text-teal-400">✓</span> Menganalisis grafik titik didih dan titik leleh berbagai zat</li>
+              <li class="flex items-start gap-2"><span class="text-teal-400">✓</span> Menerapkan konsep perubahan wujud dalam kehidupan sehari-hari</li>
+            </ul>
+          </div>
+        `
+      },
+      partikel: {
+        title: 'Konsep Dasar Partikel',
+        subtitle: 'Analogi "Energi Makan"',
+        content: `
+          <div class="mb-8 p-6 card-glass rounded-2xl">
+            <p class="text-gray-300 mb-4">Untuk memahami perubahan wujud, bayangkan dirimu sebagai partikel! Mari kita pelajari bagaimana energi mempengaruhi gerakan partikel.</p>
+          </div>
+          
+          <div class="illustration-container mb-8">
+            <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&q=80" alt="Ilustrasi molekul dan partikel dalam laboratorium" class="w-full h-56 object-cover rounded-2xl" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #4fd1c5, #63b3ed)'; this.alt='Ilustrasi partikel';">
+            <p class="text-center text-sm text-gray-400 mt-2">Partikel-partikel penyusun materi bergerak sesuai energi yang dimilikinya</p>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card-glass rounded-2xl p-6 border-2 border-red-500/30">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="text-4xl">😫</span>
+                <h3 class="text-lg font-semibold text-red-400">Kondisi Lapar (Energi Rendah)</h3>
+              </div>
+              <p class="text-gray-300 text-sm mb-4">Seperti manusia yang lapar, partikel dengan energi rendah cenderung <strong class="text-red-400">diam dan tidak banyak bergerak</strong>.</p>
+              <div class="bg-black/30 rounded-xl p-4" id="solid-demo">
+                <p class="text-xs text-gray-400 mb-2 text-center">Simulasi Partikel Padat (Energi Rendah)</p>
+                <div class="flex flex-wrap justify-center gap-1">
+                  ${Array(16).fill().map(() => `<div class="molecule solid-particle bg-red-400"></div>`).join('')}
+                </div>
+                <p class="text-xs text-center mt-2 text-red-400">Partikel rapat & bergetar pelan</p>
+              </div>
+            </div>
+            
+            <div class="card-glass rounded-2xl p-6 border-2 border-green-500/30">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="text-4xl">😄</span>
+                <h3 class="text-lg font-semibold text-green-400">Kondisi Kenyang (Energi Tinggi)</h3>
+              </div>
+              <p class="text-gray-300 text-sm mb-4">Setelah mendapat energi (panas), partikel <strong class="text-green-400">bergerak lebih lincah dan bergetar lebih cepat</strong>.</p>
+              <div class="bg-black/30 rounded-xl p-4" id="gas-demo">
+                <p class="text-xs text-gray-400 mb-2 text-center">Simulasi Partikel Gas (Energi Tinggi)</p>
+                <div class="flex flex-wrap justify-center gap-3">
+                  ${Array(9).fill().map(() => `<div class="molecule gas-particle bg-green-400"></div>`).join('')}
+                </div>
+                <p class="text-xs text-center mt-2 text-green-400">Partikel renggang & bergerak bebas</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card-glass rounded-2xl p-6 bg-gradient-to-r from-orange-500/10 to-yellow-500/10 border border-orange-500/30">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-4xl">🔥</span>
+              <h3 class="text-lg font-semibold text-orange-400">Efek Panas pada Partikel</h3>
+            </div>
+            <p class="text-gray-300">Panas memberikan <strong class="text-orange-400">energi kinetik</strong> bagi partikel untuk memutus ikatan kuat antar sesamanya. Semakin banyak panas yang diberikan, semakin cepat partikel bergerak dan semakin lemah ikatan antar partikel.</p>
+            
+            <div class="mt-6 grid grid-cols-3 gap-4 text-center">
+              <div class="bg-blue-500/20 rounded-xl p-4">
+                <div class="text-3xl mb-2">🧊</div>
+                <p class="text-xs text-blue-400 font-semibold">PADAT</p>
+                <p class="text-xs text-gray-400">Ikatan kuat</p>
+              </div>
+              <div class="bg-teal-500/20 rounded-xl p-4">
+                <div class="text-3xl mb-2">💧</div>
+                <p class="text-xs text-teal-400 font-semibold">CAIR</p>
+                <p class="text-xs text-gray-400">Ikatan sedang</p>
+              </div>
+              <div class="bg-purple-500/20 rounded-xl p-4">
+                <div class="text-3xl mb-2">💨</div>
+                <p class="text-xs text-purple-400 font-semibold">GAS</p>
+                <p class="text-xs text-gray-400">Ikatan lemah</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      meleleh: {
+        title: 'Meleleh dan Membeku',
+        subtitle: 'Perubahan Padat ⟷ Cair',
+        content: `
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="illustration-container">
+              <img src="https://images.unsplash.com/photo-1551524559-8af4e6624178?w=600&q=80" alt="Es batu yang sedang mencair menjadi air" class="w-full h-48 object-cover rounded-2xl" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #60a5fa, #3b82f6)'; this.alt='Es mencair';">
+              <p class="text-center text-sm text-gray-400 mt-2">Es batu mencair pada suhu 0°C</p>
+            </div>
+            <div class="illustration-container">
+              <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=600&q=80" alt="Air yang membeku menjadi es di permukaan danau" class="w-full h-48 object-cover rounded-2xl" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #a5b4fc, #6366f1)'; this.alt='Air membeku';">
+              <p class="text-center text-sm text-gray-400 mt-2">Permukaan danau membeku di musim dingin</p>
+            </div>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card-glass rounded-2xl p-6 border-l-4 border-orange-400">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
+                  <span class="text-2xl">🔥</span>
+                </div>
+                <h3 class="text-xl font-semibold text-orange-400">Meleleh (Mencair)</h3>
+              </div>
+              <div class="space-y-3 text-sm text-gray-300">
+                <div class="flex items-start gap-2">
+                  <span class="text-orange-400 mt-1">1.</span>
+                  <p>Zat padat <strong class="text-orange-400">dipanaskan</strong></p>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="text-orange-400 mt-1">2.</span>
+                  <p>Partikel <strong class="text-orange-400">bergetar lebih cepat</strong></p>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="text-orange-400 mt-1">3.</span>
+                  <p>Terbentuk <strong class="text-orange-400">ruang antar partikel</strong></p>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="text-orange-400 mt-1">4.</span>
+                  <p>Ikatan antar partikel <strong class="text-orange-400">melemah</strong></p>
+                </div>
+              </div>
+              <div class="mt-4 p-3 bg-orange-500/20 rounded-xl">
+                <p class="text-xs"><strong class="text-orange-400">Titik Leleh:</strong> Suhu saat padatan berubah menjadi cairan</p>
+                <p class="text-xs mt-1">Contoh: Es meleleh pada <strong>0°C</strong></p>
+              </div>
+            </div>
+            
+            <div class="card-glass rounded-2xl p-6 border-l-4 border-blue-400">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center">
+                  <span class="text-2xl">❄️</span>
+                </div>
+                <h3 class="text-xl font-semibold text-blue-400">Membeku</h3>
+              </div>
+              <div class="space-y-3 text-sm text-gray-300">
+                <div class="flex items-start gap-2">
+                  <span class="text-blue-400 mt-1">1.</span>
+                  <p>Zat cair <strong class="text-blue-400">didinginkan</strong></p>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="text-blue-400 mt-1">2.</span>
+                  <p><strong class="text-blue-400">Kehilangan energi</strong> panas</p>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="text-blue-400 mt-1">3.</span>
+                  <p>Partikel bergerak <strong class="text-blue-400">lambat & mendekat</strong></p>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="text-blue-400 mt-1">4.</span>
+                  <p>Ikatan <strong class="text-blue-400">menguat kembali</strong></p>
+                </div>
+              </div>
+              <div class="mt-4 p-3 bg-blue-500/20 rounded-xl">
+                <p class="text-xs"><strong class="text-blue-400">Titik Beku:</strong> Suhu saat cairan menjadi padat</p>
+                <p class="text-xs mt-1">Nilainya <strong>sama dengan titik leleh!</strong></p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card-glass rounded-2xl p-6">
+            <h4 class="font-semibold text-teal-400 mb-4">🧪 Simulasi Interaktif: Kontrol Suhu</h4>
+            <div class="bg-black/30 rounded-xl p-6">
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-sm text-gray-400">Suhu: <span id="temp-value" class="text-2xl font-bold text-teal-400">0°C</span></span>
+                <div class="flex gap-2">
+                  <button onclick="changeTemp(-10)" class="px-4 py-2 bg-blue-500/30 hover:bg-blue-500/50 rounded-lg text-sm transition-all">❄️ Dinginkan</button>
+                  <button onclick="changeTemp(10)" class="px-4 py-2 bg-orange-500/30 hover:bg-orange-500/50 rounded-lg text-sm transition-all">🔥 Panaskan</button>
+                </div>
+              </div>
+              <div class="relative h-4 bg-gradient-to-r from-blue-500 via-teal-500 to-orange-500 rounded-full mb-4">
+                <div id="temp-indicator" class="absolute w-4 h-4 bg-white rounded-full shadow-lg transform -translate-x-1/2" style="left: 50%; top: 0;"></div>
+              </div>
+              <div class="flex justify-between text-xs text-gray-400">
+                <span>-50°C</span>
+                <span>0°C (Titik Leleh)</span>
+                <span>50°C</span>
+              </div>
+              <div id="state-display" class="mt-4 text-center">
+                <div class="inline-flex items-center gap-3 px-6 py-3 bg-teal-500/20 rounded-xl">
+                  <span class="text-3xl" id="state-emoji">🧊↔💧</span>
+                  <div>
+                    <p class="font-semibold text-teal-400" id="state-name">Titik Leleh/Beku</p>
+                    <p class="text-xs text-gray-400" id="state-desc">Perubahan wujud sedang terjadi</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      menguap: {
+        title: 'Menguap dan Mengembun',
+        subtitle: 'Perubahan Cair ⟷ Gas',
+        content: `
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="illustration-container">
+              <img src="https://images.unsplash.com/photo-1585155784229-aff921ccfa10?w=600&q=80" alt="Pakaian yang dijemur di bawah sinar matahari mengering karena penguapan" class="w-full h-48 object-cover rounded-2xl" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #fbbf24, #f59e0b)'; this.alt='Penguapan';">
+              <p class="text-center text-sm text-gray-400 mt-2">Pakaian mengering karena air menguap</p>
+            </div>
+            <div class="illustration-container">
+              <img src="https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=600&q=80" alt="Embun pagi yang mengembun pada daun dan rumput" class="w-full h-48 object-cover rounded-2xl" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #34d399, #10b981)'; this.alt='Embun';">
+              <p class="text-center text-sm text-gray-400 mt-2">Embun pagi terbentuk dari proses mengembun</p>
+            </div>
+          </div>
+          
+          <div class="card-glass rounded-2xl p-6 mb-8">
+            <h4 class="font-semibold text-teal-400 mb-4 flex items-center gap-2">
+              <span class="text-2xl">🔬</span> Perbedaan Menguap vs Mendidih
+            </h4>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-white/10">
+                    <th class="text-left p-3 text-gray-400">Aspek</th>
+                    <th class="text-left p-3 text-purple-400">Menguap</th>
+                    <th class="text-left p-3 text-orange-400">Mendidih</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b border-white/5">
+                    <td class="p-3 text-gray-400">📍 Lokasi</td>
+                    <td class="p-3">Hanya di <strong class="text-purple-400">permukaan</strong> zat cair</td>
+                    <td class="p-3">Di <strong class="text-orange-400">semua bagian</strong> zat cair</td>
+                  </tr>
+                  <tr class="border-b border-white/5">
+                    <td class="p-3 text-gray-400">🌡️ Suhu</td>
+                    <td class="p-3">Bisa <strong class="text-purple-400">di bawah</strong> titik didih</td>
+                    <td class="p-3">Saat mencapai <strong class="text-orange-400">titik didih</strong></td>
+                  </tr>
+                  <tr class="border-b border-white/5">
+                    <td class="p-3 text-gray-400">⚡ Kecepatan</td>
+                    <td class="p-3"><strong class="text-purple-400">Lambat</strong> dan bertahap</td>
+                    <td class="p-3"><strong class="text-orange-400">Cepat</strong> dengan gelembung</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 text-gray-400">📌 Contoh</td>
+                    <td class="p-3 text-purple-300">Baju dijemur kering</td>
+                    <td class="p-3 text-orange-300">Air mendidih di panci</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card-glass rounded-2xl p-6 border-l-4 border-purple-400">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="text-4xl">☀️</span>
+                <h3 class="text-lg font-semibold text-purple-400">Menguap (Evaporasi)</h3>
+              </div>
+              <p class="text-sm text-gray-300 mb-4">Partikel di permukaan zat cair mendapat energi dari lingkungan dan melepaskan diri menjadi gas.</p>
+              <div class="bg-black/30 rounded-xl p-4">
+                <div class="relative h-24 bg-gradient-to-t from-blue-500/30 to-transparent rounded-lg overflow-hidden">
+                  <div class="absolute bottom-0 w-full h-12 bg-blue-500/40"></div>
+                  <div class="absolute bottom-10 left-1/4 text-lg animate-float" style="animation-delay: 0s;">💨</div>
+                  <div class="absolute bottom-8 left-1/2 text-lg animate-float" style="animation-delay: 0.5s;">💨</div>
+                  <div class="absolute bottom-12 left-3/4 text-lg animate-float" style="animation-delay: 1s;">💨</div>
+                </div>
+                <p class="text-xs text-center mt-2 text-purple-400">Partikel lepas dari permukaan</p>
+              </div>
+            </div>
+            
+            <div class="card-glass rounded-2xl p-6 border-l-4 border-cyan-400">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="text-4xl">🌙</span>
+                <h3 class="text-lg font-semibold text-cyan-400">Mengembun (Kondensasi)</h3>
+              </div>
+              <p class="text-sm text-gray-300 mb-4">Gas kehilangan energi panas saat bertemu permukaan dingin dan berubah kembali menjadi zat cair.</p>
+              <div class="bg-black/30 rounded-xl p-4">
+                <div class="relative h-24 bg-gradient-to-b from-cyan-500/20 to-cyan-500/40 rounded-lg overflow-hidden flex items-center justify-center">
+                  <div class="text-5xl">🥤</div>
+                  <div class="absolute inset-0 flex flex-wrap justify-center items-center gap-1 p-2">
+                    ${Array(8).fill().map(() => `<span class="text-xs opacity-60">💧</span>`).join('')}
+                  </div>
+                </div>
+                <p class="text-xs text-center mt-2 text-cyan-400">Tetesan air pada gelas dingin</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card-glass rounded-2xl p-6 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/30">
+            <h4 class="font-semibold text-blue-400 mb-3 flex items-center gap-2">
+              <span>🌧️</span> Siklus Air di Alam
+            </h4>
+            <p class="text-sm text-gray-300 mb-4">Proses menguap dan mengembun adalah bagian penting dari siklus air yang menjaga keseimbangan air di bumi.</p>
+            <div class="flex flex-wrap justify-center gap-4 text-center">
+              <div class="p-3">
+                <span class="text-3xl">🌊</span>
+                <p class="text-xs text-gray-400 mt-1">Air Laut</p>
+              </div>
+              <div class="p-3 text-2xl text-yellow-400">→</div>
+              <div class="p-3">
+                <span class="text-3xl">☀️💨</span>
+                <p class="text-xs text-gray-400 mt-1">Menguap</p>
+              </div>
+              <div class="p-3 text-2xl text-yellow-400">→</div>
+              <div class="p-3">
+                <span class="text-3xl">☁️</span>
+                <p class="text-xs text-gray-400 mt-1">Awan</p>
+              </div>
+              <div class="p-3 text-2xl text-yellow-400">→</div>
+              <div class="p-3">
+                <span class="text-3xl">🌧️</span>
+                <p class="text-xs text-gray-400 mt-1">Hujan</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      sublim: {
+        title: 'Menyublim dan Mengkristal',
+        subtitle: 'Perubahan Padat ⟷ Gas (Langsung)',
+        content: `
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="illustration-container">
+              <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&q=80" alt="Kabut atau asap yang menyerupai efek dry ice menyublim" class="w-full h-48 object-cover rounded-2xl" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #8b5cf6, #7c3aed)'; this.alt='Sublimasi';">
+              <p class="text-center text-sm text-gray-400 mt-2">Efek kabut dari dry ice yang menyublim</p>
+            </div>
+            <div class="illustration-container">
+              <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&q=80" alt="Kristal salju yang terbentuk langsung dari uap air di udara dingin" class="w-full h-48 object-cover rounded-2xl" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #60a5fa, #3b82f6)'; this.alt='Kristalisasi';">
+              <p class="text-center text-sm text-gray-400 mt-2">Kristal salju terbentuk dari proses mengkristal</p>
+            </div>
+          </div>
+          
+          <div class="p-6 card-glass rounded-2xl mb-8 text-center">
+            <p class="text-lg text-gray-300">Perubahan wujud ini <strong class="text-teal-400">melewati fase cair</strong>!</p>
+            <div class="flex items-center justify-center gap-4 mt-4">
+              <div class="p-4 bg-blue-500/20 rounded-xl">
+                <span class="text-3xl">🧊</span>
+                <p class="text-sm text-blue-400 mt-2">Padat</p>
+              </div>
+              <div class="text-3xl text-teal-400">⟷</div>
+              <div class="p-4 bg-purple-500/20 rounded-xl">
+                <span class="text-3xl">💨</span>
+                <p class="text-sm text-purple-400 mt-2">Gas</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card-glass rounded-2xl p-6 border-2 border-violet-500/30">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center">
+                  <span class="text-2xl">✨</span>
+                </div>
+                <div>
+                  <h3 class="text-xl font-semibold text-violet-400">Menyublim</h3>
+                  <p class="text-xs text-gray-400">Padat → Gas (langsung)</p>
+                </div>
+              </div>
+              <p class="text-sm text-gray-300 mb-4">Zat padat berubah langsung menjadi gas tanpa melewati fase cair terlebih dahulu.</p>
+              <div class="space-y-3">
+                <div class="flex items-center gap-3 p-3 bg-violet-500/10 rounded-lg">
+                  <span class="text-2xl">🧊💨</span>
+                  <div>
+                    <p class="text-sm font-semibold text-violet-400">Es Kering (Dry Ice)</p>
+                    <p class="text-xs text-gray-400">CO₂ padat untuk efek kabut panggung</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 p-3 bg-violet-500/10 rounded-lg">
+                  <span class="text-2xl">🔮</span>
+                  <div>
+                    <p class="text-sm font-semibold text-violet-400">Kapur Barus</p>
+                    <p class="text-xs text-gray-400">Pengharum ruangan yang menyublim perlahan</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 p-3 bg-violet-500/10 rounded-lg">
+                  <span class="text-2xl">❄️</span>
+                  <div>
+                    <p class="text-sm font-semibold text-violet-400">Salju di Gunung</p>
+                    <p class="text-xs text-gray-400">Menghilang tanpa mencair di udara kering</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-glass rounded-2xl p-6 border-2 border-cyan-500/30">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center">
+                  <span class="text-2xl">💎</span>
+                </div>
+                <div>
+                  <h3 class="text-xl font-semibold text-cyan-400">Mengkristal</h3>
+                  <p class="text-xs text-gray-400">Gas → Padat (langsung)</p>
+                </div>
+              </div>
+              <p class="text-sm text-gray-300 mb-4">Kebalikan dari menyublim - gas berubah langsung menjadi padatan kristal.</p>
+              <div class="space-y-3">
+                <div class="flex items-center gap-3 p-3 bg-cyan-500/10 rounded-lg">
+                  <span class="text-2xl">❄️</span>
+                  <div>
+                    <p class="text-sm font-semibold text-cyan-400">Kristal Salju</p>
+                    <p class="text-xs text-gray-400">Uap air membeku langsung di awan</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 p-3 bg-cyan-500/10 rounded-lg">
+                  <span class="text-2xl">🌿</span>
+                  <div>
+                    <p class="text-sm font-semibold text-cyan-400">Bunga Es (Frost)</p>
+                    <p class="text-xs text-gray-400">Terbentuk pada daun saat suhu sangat dingin</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 p-3 bg-cyan-500/10 rounded-lg">
+                  <span class="text-2xl">⭐</span>
+                  <div>
+                    <p class="text-sm font-semibold text-cyan-400">Deposisi di Luar Angkasa</p>
+                    <p class="text-xs text-gray-400">Pembentukan kristal pada komet</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card-glass rounded-2xl p-6 bg-gradient-to-r from-violet-500/10 to-cyan-500/10">
+            <h4 class="font-semibold text-teal-400 mb-4 flex items-center gap-2">
+              <span>💡</span> Mengapa Bisa Langsung?
+            </h4>
+            <p class="text-sm text-gray-300">Proses ini terjadi karena tekanan udara yang rendah atau suhu yang sangat ekstrem, sehingga partikel memiliki cukup energi untuk langsung berubah wujud tanpa melewati fase antara.</p>
+          </div>
+        `
+      },
+      grafik: {
+        title: 'Grafik Titik Didih & Titik Leleh',
+        subtitle: 'Memahami Data Eksperimen',
+        content: `
+          <div class="illustration-container mb-8">
+            <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&q=80" alt="Peralatan laboratorium untuk mengukur titik didih dan titik leleh" class="w-full h-48 object-cover rounded-2xl" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #4fd1c5, #63b3ed)'; this.alt='Laboratorium';">
+            <p class="text-center text-sm text-gray-400 mt-2">Pengukuran titik leleh dan titik didih di laboratorium</p>
+          </div>
+          
+          <div class="card-glass rounded-2xl p-6 mb-8">
+            <h4 class="font-semibold text-teal-400 mb-4 flex items-center gap-2">
+              <span class="text-2xl">📊</span> Tabel Data: Titik Leleh & Titik Didih Berbagai Zat
+            </h4>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="bg-teal-500/20">
+                    <th class="p-3 text-left text-teal-400">Zat</th>
+                    <th class="p-3 text-center text-blue-400">Titik Leleh (°C)</th>
+                    <th class="p-3 text-center text-orange-400">Titik Didih (°C)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                    <td class="p-3 font-semibold">💧 Air</td>
+                    <td class="p-3 text-center text-blue-300">0</td>
+                    <td class="p-3 text-center text-orange-300">100</td>
+                  </tr>
+                  <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                    <td class="p-3 font-semibold">🪨 Besi</td>
+                    <td class="p-3 text-center text-blue-300">1.535</td>
+                    <td class="p-3 text-center text-orange-300">2.750</td>
+                  </tr>
+                  <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                    <td class="p-3 font-semibold">🥫 Alumunium</td>
+                    <td class="p-3 text-center text-blue-300">660</td>
+                    <td class="p-3 text-center text-orange-300">2.467</td>
+                  </tr>
+                  <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                    <td class="p-3 font-semibold">🍫 Cokelat</td>
+                    <td class="p-3 text-center text-blue-300">34</td>
+                    <td class="p-3 text-center text-orange-300">-</td>
+                  </tr>
+                  <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                    <td class="p-3 font-semibold">🧈 Mentega</td>
+                    <td class="p-3 text-center text-blue-300">32</td>
+                    <td class="p-3 text-center text-orange-300">-</td>
+                  </tr>
+                  <tr class="hover:bg-white/5 transition-colors">
+                    <td class="p-3 font-semibold">🥃 Alkohol</td>
+                    <td class="p-3 text-center text-blue-300">-114</td>
+                    <td class="p-3 text-center text-orange-300">78</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card-glass rounded-2xl p-6 border-l-4 border-yellow-400">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="text-3xl">⚠️</span>
+                <h4 class="font-semibold text-yellow-400">Fenomena Penting!</h4>
+              </div>
+              <p class="text-sm text-gray-300 mb-3"><strong class="text-yellow-400">Suhu Konstan Saat Perubahan Wujud</strong></p>
+              <p class="text-sm text-gray-400">Saat zat sedang berubah wujud (misal: es sedang meleleh), suhunya <strong class="text-yellow-400">tidak akan naik</strong> meski terus dipanaskan!</p>
+            </div>
+            
+            <div class="card-glass rounded-2xl p-6 border-l-4 border-green-400">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="text-3xl">💡</span>
+                <h4 class="font-semibold text-green-400">Penjelasan Ilmiah</h4>
+              </div>
+              <p class="text-sm text-gray-300">Energi panas yang diberikan <strong class="text-green-400">tidak digunakan untuk menaikkan suhu</strong>, melainkan fokus digunakan untuk <strong class="text-green-400">melepaskan ikatan antar partikel</strong>.</p>
+            </div>
+          </div>
+          
+          <div class="card-glass rounded-2xl p-6">
+            <h4 class="font-semibold text-teal-400 mb-4">📈 Simulasi Grafik Pemanasan Air</h4>
+            <div class="bg-black/30 rounded-xl p-4">
+              <div class="relative h-64">
+                <!-- Y-axis labels -->
+                <div class="absolute left-0 top-0 bottom-8 w-12 flex flex-col justify-between text-xs text-gray-400">
+                  <span>120°C</span>
+                  <span>100°C</span>
+                  <span>50°C</span>
+                  <span>0°C</span>
+                  <span>-20°C</span>
+                </div>
+                
+                <!-- Graph area -->
+                <div class="absolute left-14 right-4 top-0 bottom-8 border-l-2 border-b-2 border-gray-600">
+                  <!-- Grid lines -->
+                  <div class="absolute w-full border-t border-dashed border-gray-700" style="top: 16.7%;"></div>
+                  <div class="absolute w-full border-t border-dashed border-gray-700" style="top: 33.3%;"></div>
+                  <div class="absolute w-full border-t border-dashed border-gray-700" style="top: 50%;"></div>
+                  <div class="absolute w-full border-t border-dashed border-gray-700" style="top: 66.7%;"></div>
+                  
+                  <!-- Temperature line -->
+                  <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <path d="M 0 85 L 15 70 L 30 70 L 45 35 L 60 20 L 85 20 L 100 10" 
+                          fill="none" 
+                          stroke="url(#gradient)" 
+                          stroke-width="0.8"
+                          stroke-linecap="round"/>
+                    <defs>
+                      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#60a5fa"/>
+                        <stop offset="50%" style="stop-color:#4fd1c5"/>
+                        <stop offset="100%" style="stop-color:#f97316"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  
+                  <!-- Flat lines annotation -->
+                  <div class="absolute text-xs bg-blue-500/30 px-2 py-1 rounded" style="left: 17%; top: 65%;">
+                    <span class="text-blue-400">← Es Meleleh</span>
+                  </div>
+                  <div class="absolute text-xs bg-orange-500/30 px-2 py-1 rounded" style="left: 55%; top: 12%;">
+                    <span class="text-orange-400">Air Mendidih →</span>
+                  </div>
+                </div>
+                
+                <!-- X-axis label -->
+                <div class="absolute bottom-0 left-14 right-4 text-center text-xs text-gray-400">
+                  Waktu Pemanasan →
+                </div>
+              </div>
+              
+              <div class="flex flex-wrap justify-center gap-4 mt-4 text-xs">
+                <div class="flex items-center gap-2">
+                  <div class="w-3 h-3 rounded-full bg-blue-400"></div>
+                  <span class="text-gray-400">Padat (Es)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-3 h-3 rounded-full bg-teal-400"></div>
+                  <span class="text-gray-400">Cair (Air)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-3 h-3 rounded-full bg-orange-400"></div>
+                  <span class="text-gray-400">Gas (Uap)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      detektif: {
+        title: 'Tantangan Detektif Materi',
+        subtitle: 'Uji Pemahamanmu!',
+        content: `
+          <div class="text-center mb-8">
+            <div class="inline-block p-4 rounded-2xl bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30">
+              <span class="text-5xl">🔍</span>
+              <p class="text-lg font-semibold text-amber-400 mt-2">Jadilah Detektif Materi!</p>
+              <p class="text-sm text-gray-400">Analisis wujud zat berdasarkan data titik leleh dan titik didih</p>
+            </div>
+          </div>
+          
+          <div class="space-y-6" id="detective-challenges">
+            <!-- Challenge 1 -->
+            <div class="card-glass rounded-2xl p-6" id="challenge-1">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center flex-shrink-0">
+                  <span class="text-xl font-bold">1</span>
+                </div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-blue-400 mb-2">Kasus Besi di Pabrik</h4>
+                  <p class="text-sm text-gray-300 mb-4">Berapa suhu minimum yang dibutuhkan untuk <strong class="text-blue-400">melelehkan besi</strong> di pabrik pengecoran logam?</p>
+                  <div class="grid grid-cols-2 gap-3">
+                    <button onclick="checkDetective(1, 'a', false)" class="detective-btn p-3 bg-white/5 hover:bg-white/10 rounded-xl text-sm transition-all border border-white/10">A. 100°C</button>
+                    <button onclick="checkDetective(1, 'b', false)" class="detective-btn p-3 bg-white/5 hover:bg-white/10 rounded-xl text-sm transition-all border border-white/10">B. 660°C</button>
+                    <button onclick="checkDetective(1, 'c', true)" class="detective-btn p-3 bg-white/5 hover:bg-white/10 rounded-xl text-sm transition-all border border-white/10">C. 1.535°C</button>
+                    <button onclick="checkDetective(1, 'd', false)" class="detective-btn p-3 bg-white/5 hover:bg-white/10 rounded-xl text-sm transition-all border border-white/10">D. 2.750°C</button>
+                  </div>
+                  <div id="feedback-1" class="mt-4 hidden"></div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Challenge 2 -->
+            <div class="card-glass rounded-2xl p-6" id="challenge-2">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center flex-shrink-0">
+                  <span class="text-xl font-bold">2</span>
+                </div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-teal-400 mb-2">Misteri Air Panas</h4>
+                  <p class="text-sm text-gray-300 mb-4">Jika air dipanaskan hingga <strong class="text-teal-400">120°C</strong> (dalam panci presto), berwujud apakah air tersebut?</p>
+                  <div class="grid grid-cols-3 gap-3">
+                    <button onclick="checkDetective(2, 'a', false)" class="detective-btn p-3 bg-white/5 hover:bg-white/10 rounded-xl text-sm transition-all border border-white/10">A. Padat 🧊</button>
+                    <button onclick="checkDetective(2, 'b', false)" class="detective-btn p-3 bg-white/5 hover:bg-white/10 rounded-xl text-sm transition-all border border-white/10">B. Cair 💧</button>
+                    <button onclick="checkDetective(2, 'c', true)" class="detective-btn p-3 bg-white/5 hover:bg-white/10 rounded-xl text-sm transition-all border border-white/10">C. Gas 💨</button>
+                  </div>
+                  <div id="feedback-2" class="mt-4 hidden"></div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Challenge 3 -->
+            <div class="card-glass rounded-2xl p-6" id="challenge-3">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center flex-shrink-0">
+                  <span class="text-xl font-bold">3</span>
+                </div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-orange-400 mb-2">Alumunium dalam Tungku</h4>
+                  <p class="text-sm text-gray-300 mb-4">Alumunium dipanaskan hingga suhu <strong class="text-orange-400">700°C</strong>. Apa wujudnya sekarang? (Titik leleh Al = 660°C)</p>
+                  <div class="grid grid-cols-3 gap-3">
+                    <button onclick="checkDetective(3, 'a', false)" class="detective-btn p-3 bg-white/5 hover:bg-white/10 rounded-xl text-sm transition-all border border-white/10">A. Padat 🧊</button>
+                    <button onclick="checkDetective(3, 'b', true)" class="detective-btn p-3 bg-white/5 hover:bg-white/10 rounded-xl text-sm transition-all border border-white/10">B. Cair 💧</button>
+                    <button onclick="checkDetective(3, 'c', false)" class="detective-btn p-3 bg-white/5 hover:bg-white/10 rounded-xl text-sm transition-all border border-white/10">C. Gas 💨</button>
+                  </div>
+                  <div id="feedback-3" class="mt-4 hidden"></div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Challenge 4 -->
+            <div class="card-glass rounded-2xl p-6" id="challenge-4">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center flex-shrink-0">
+                  <span class="text-xl font-bold">4</span>
+                </div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-purple-400 mb-2">Cokelat di Tangan</h4>
+                  <p class="text-sm text-gray-300 mb-4">Mengapa cokelat <strong class="text-purple-400">meleleh di tangan</strong> kita? (Suhu tubuh ≈ 37°C, Titik leleh cokelat = 34°C)</p>
+                  <div class="grid grid-cols-1 gap-3">
+                    <button onclick="checkDetective(4, 'a', false)" class="detective-btn p-3 bg-white/5 hover:bg-white/10 rounded-xl text-sm transition-all border border-white/10 text-left">A. Karena tangan kita basah</button>
+                    <button onclick="checkDetective(4, 'b', true)" class="detective-btn p-3 bg-white/5 hover:bg-white/10 rounded-xl text-sm transition-all border border-white/10 text-left">B. Suhu tangan lebih tinggi dari titik leleh cokelat</button>
+                    <button onclick="checkDetective(4, 'c', false)" class="detective-btn p-3 bg-white/5 hover:bg-white/10 rounded-xl text-sm transition-all border border-white/10 text-left">C. Cokelat menyublim di tangan</button>
+                  </div>
+                  <div id="feedback-4" class="mt-4 hidden"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div id="detective-result" class="hidden mt-8 p-6 card-glass rounded-2xl text-center">
+            <span class="text-5xl" id="result-emoji">🏆</span>
+            <h4 class="text-xl font-semibold text-teal-400 mt-4" id="result-title">Hasil Investigasi</h4>
+            <p class="text-gray-300 mt-2" id="result-text"></p>
+          </div>
+        `
+      },
+      proyek: {
+        title: 'Aktivitas Proyek',
+        subtitle: 'Belajar Sambil Berkreasi',
+        content: `
+          <div class="illustration-container mb-8">
+            <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?w=800&q=80" alt="Siswa melakukan eksperimen sains di laboratorium sekolah" class="w-full h-48 object-cover rounded-2xl" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #4fd1c5, #63b3ed)'; this.alt='Aktivitas proyek';">
+            <p class="text-center text-sm text-gray-400 mt-2">Mari berkreasi dan belajar dengan proyek menarik!</p>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="card-glass rounded-2xl p-6 border-2 border-teal-500/30">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-teal-400 to-green-500 flex items-center justify-center">
+                  <span class="text-2xl">🎨</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold text-teal-400">Proyek 1: Model Partikel 3 Lapis</h3>
+                  <p class="text-xs text-gray-400">Tingkat: Pemula</p>
+                </div>
+              </div>
+              
+              <p class="text-sm text-gray-300 mb-4">Buat model visual yang menunjukkan perbedaan susunan partikel pada ketiga wujud zat.</p>
+              
+              <div class="bg-black/30 rounded-xl p-4 mb-4">
+                <h5 class="text-sm font-semibold text-teal-400 mb-3">📦 Bahan yang Dibutuhkan:</h5>
+                <ul class="text-xs text-gray-300 space-y-1">
+                  <li>• Kardus bekas atau kotak sepatu</li>
+                  <li>• Bola-bola kecil (manik-manik/kelereng/bola styrofoam)</li>
+                  <li>• Lem tembak atau lem kuat</li>
+                  <li>• Cat/spidol warna</li>
+                  <li>• Label atau kertas untuk keterangan</li>
+                </ul>
+              </div>
+              
+              <div class="bg-black/30 rounded-xl p-4">
+                <h5 class="text-sm font-semibold text-teal-400 mb-3">📋 Langkah Pengerjaan:</h5>
+                <ol class="text-xs text-gray-300 space-y-2">
+                  <li><span class="text-teal-400">1.</span> Bagi kotak menjadi 3 bagian horizontal</li>
+                  <li><span class="text-teal-400">2.</span> <strong>Lapisan bawah (Padat):</strong> Susun bola rapat dan teratur</li>
+                  <li><span class="text-teal-400">3.</span> <strong>Lapisan tengah (Cair):</strong> Susun bola agak renggang</li>
+                  <li><span class="text-teal-400">4.</span> <strong>Lapisan atas (Gas):</strong> Tempel bola berjauhan</li>
+                  <li><span class="text-teal-400">5.</span> Beri label dan warna berbeda tiap lapisan</li>
+                </ol>
+              </div>
+            </div>
+            
+            <div class="card-glass rounded-2xl p-6 border-2 border-blue-500/30">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center">
+                  <span class="text-2xl">🌧️</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold text-blue-400">Proyek 2: Diskusi Hujan Buatan</h3>
+                  <p class="text-xs text-gray-400">Tingkat: Menengah</p>
+                </div>
+              </div>
+              
+              <p class="text-sm text-gray-300 mb-4">Pelajari bagaimana teknologi hujan buatan (cloud seeding) membantu mengatasi kekeringan.</p>
+              
+              <div class="bg-black/30 rounded-xl p-4 mb-4">
+                <h5 class="text-sm font-semibold text-blue-400 mb-3">🔬 Prinsip Ilmiah:</h5>
+                <ol class="text-xs text-gray-300 space-y-2">
+                  <li><span class="text-blue-400">1.</span> Pesawat menyebarkan bahan kimia (seperti AgI) ke awan</li>
+                  <li><span class="text-blue-400">2.</span> Partikel bahan kimia menjadi inti kondensasi</li>
+                  <li><span class="text-blue-400">3.</span> Uap air <strong class="text-blue-400">mengembun</strong> di sekitar partikel</li>
+                  <li><span class="text-blue-400">4.</span> Tetesan air membesar dan jatuh sebagai hujan</li>
+                </ol>
+              </div>
+              
+              <div class="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-xl p-4 border border-blue-500/20">
+                <h5 class="text-sm font-semibold text-blue-400 mb-2">💬 Bahan Diskusi:</h5>
+                <ul class="text-xs text-gray-300 space-y-1">
+                  <li>• Kapan hujan buatan perlu dilakukan?</li>
+                  <li>• Apa dampak positif dan negatifnya?</li>
+                  <li>• Adakah alternatif lain untuk mengatasi kekeringan?</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card-glass rounded-2xl p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-3xl">💡</span>
+              <h4 class="font-semibold text-amber-400">Tips Sukses Proyek</h4>
+            </div>
+            <div class="grid md:grid-cols-3 gap-4 text-sm">
+              <div class="bg-black/20 rounded-xl p-4">
+                <span class="text-2xl">📝</span>
+                <p class="mt-2 text-gray-300">Rencanakan dengan baik sebelum mulai mengerjakan</p>
+              </div>
+              <div class="bg-black/20 rounded-xl p-4">
+                <span class="text-2xl">👥</span>
+                <p class="mt-2 text-gray-300">Kerjakan bersama teman untuk hasil lebih baik</p>
+              </div>
+              <div class="bg-black/20 rounded-xl p-4">
+                <span class="text-2xl">📸</span>
+                <p class="mt-2 text-gray-300">Dokumentasikan proses dan hasil akhir proyekmu</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      quiz: {
+        title: 'Kuis HOTS',
+        subtitle: '10 Soal Higher Order Thinking Skills',
+        content: `
+          <div class="text-center mb-8">
+            <div class="inline-block p-6 rounded-2xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30">
+              <span class="text-5xl">🧠</span>
+              <h3 class="text-xl font-semibold text-purple-400 mt-3">Uji Kemampuan Berpikirmu!</h3>
+              <p class="text-sm text-gray-400 mt-1">Soal-soal ini menguji kemampuan analisis, evaluasi, dan kreasi</p>
+            </div>
+          </div>
+          
+          <div id="quiz-container">
+            <div class="mb-6">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm text-gray-400">Soal <span id="current-q">1</span> dari 10</span>
+                <span class="text-sm text-teal-400">Skor: <span id="quiz-score">0</span>/10</span>
+              </div>
+              <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                <div id="quiz-progress" class="progress-bar h-full" style="width: 10%;"></div>
+              </div>
+            </div>
+            
+            <div id="quiz-question-container" class="card-glass rounded-2xl p-6 mb-6">
+              <!-- Question will be loaded here -->
+            </div>
+            
+            <div id="quiz-options" class="space-y-3">
+              <!-- Options will be loaded here -->
+            </div>
+            
+            <div id="quiz-feedback" class="hidden mt-6 p-4 rounded-xl">
+              <!-- Feedback will be shown here -->
+            </div>
+            
+            <div id="quiz-navigation" class="mt-6 flex justify-between">
+              <button id="prev-btn" onclick="prevQuestion()" class="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl text-sm transition-all disabled:opacity-50" disabled>← Sebelumnya</button>
+              <button id="next-btn" onclick="nextQuestion()" class="px-6 py-3 bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-400 hover:to-blue-400 rounded-xl text-sm transition-all">Selanjutnya →</button>
+            </div>
+          </div>
+          
+          <div id="quiz-result" class="hidden">
+            <div class="card-glass rounded-2xl p-8 text-center">
+              <span class="text-6xl" id="final-emoji">🏆</span>
+              <h3 class="text-2xl font-bold text-teal-400 mt-4" id="final-title">Kuis Selesai!</h3>
+              <p class="text-4xl font-bold text-white mt-4">Skor: <span id="final-score">0</span>/10</p>
+              <p class="text-gray-400 mt-2" id="final-message"></p>
+              <button onclick="restartQuiz()" class="mt-6 px-8 py-3 bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-400 hover:to-blue-400 rounded-xl font-semibold transition-all">🔄 Ulangi Kuis</button>
+            </div>
+          </div>
+        `
+      }
+    };
+
+    // Quiz questions (HOTS)
+    const quizQuestions = [
+      {
+        question: "Seorang ilmuwan memanaskan es dari -20°C hingga 120°C. Ia mengamati bahwa suhu tetap konstan pada dua titik selama pemanasan. Pada suhu berapa saja hal ini terjadi dan mengapa?",
+        options: [
+          "A. 0°C dan 100°C - karena energi digunakan untuk memutus ikatan antar partikel",
+          "B. -20°C dan 120°C - karena ini adalah suhu awal dan akhir",
+          "C. 50°C dan 75°C - karena ini adalah titik tengah pemanasan",
+          "D. 25°C dan 80°C - karena partikel sedang bergerak paling cepat"
+        ],
+        correct: 0,
+        explanation: "Suhu konstan terjadi pada 0°C (titik leleh) dan 100°C (titik didih) karena energi panas yang diberikan digunakan untuk memutus ikatan antar partikel, bukan untuk menaikkan suhu."
+      },
+      {
+        question: "Di daerah pegunungan tinggi, air mendidih pada suhu di bawah 100°C. Bagaimana hal ini mempengaruhi waktu memasak makanan?",
+        options: [
+          "A. Waktu memasak lebih cepat karena air lebih panas",
+          "B. Waktu memasak lebih lama karena suhu didih lebih rendah",
+          "C. Waktu memasak sama saja karena air tetap mendidih",
+          "D. Makanan tidak bisa dimasak karena air tidak cukup panas"
+        ],
+        correct: 1,
+        explanation: "Di ketinggian, tekanan udara lebih rendah sehingga titik didih air turun. Karena suhu maksimum yang dicapai lebih rendah, waktu memasak menjadi lebih lama."
+      },
+      {
+        question: "Kapur barus di lemari lama-kelamaan habis tanpa meninggalkan cairan. Proses apakah yang terjadi dan bagaimana partikel berperilaku?",
+        options: [
+          "A. Menguap - partikel bergerak dari permukaan cairan",
+          "B. Menyublim - partikel langsung lepas dari padatan menjadi gas",
+          "C. Mengkristal - partikel gas menjadi padatan",
+          "D. Membeku - partikel kehilangan energi dan memadat"
+        ],
+        correct: 1,
+        explanation: "Kapur barus mengalami sublimasi, yaitu perubahan langsung dari padat ke gas tanpa melalui fase cair. Partikel mendapat energi dari lingkungan dan langsung berubah menjadi gas."
+      },
+      {
+        question: "Mengapa petani lebih khawatir dengan embun beku (frost) daripada salju biasa untuk tanaman mereka?",
+        options: [
+          "A. Embun beku terjadi lebih cepat dari salju",
+          "B. Embun beku terbentuk langsung dari uap air (mengkristal) di permukaan tanaman, merusak sel",
+          "C. Salju lebih dingin dari embun beku",
+          "D. Embun beku tidak bisa mencair"
+        ],
+        correct: 1,
+        explanation: "Embun beku (frost) terbentuk melalui proses deposisi langsung di permukaan tanaman. Kristal es yang terbentuk di dalam sel tanaman dapat merusak membran sel, sedangkan salju hanya menutupi permukaan."
+      },
+      {
+        question: "Seorang siswa mengamati bahwa baju yang dijemur di dalam ruangan juga bisa kering, meski tidak ada sinar matahari langsung. Analisis proses yang terjadi!",
+        options: [
+          "A. Air mendidih karena suhu ruangan tinggi",
+          "B. Air menguap karena partikel di permukaan mendapat energi dari udara sekitar",
+          "C. Air menyublim menjadi gas",
+          "D. Air diserap oleh udara tanpa proses penguapan"
+        ],
+        correct: 1,
+        explanation: "Penguapan dapat terjadi pada suhu di bawah titik didih. Partikel air di permukaan mendapat energi kinetik dari udara sekitar dan secara bertahap lepas menjadi uap air."
+      },
+      {
+        question: "Dalam pembuatan es krim, garam ditambahkan ke es batu yang mengelilingi wadah adonan. Mengapa ini dilakukan?",
+        options: [
+          "A. Garam membuat es lebih keras",
+          "B. Garam menurunkan titik beku campuran es, sehingga suhu bisa lebih rendah dari 0°C",
+          "C. Garam menambah rasa pada es krim",
+          "D. Garam membuat es mencair lebih lambat"
+        ],
+        correct: 1,
+        explanation: "Garam menurunkan titik beku air (depresi titik beku). Campuran es-garam dapat mencapai suhu sekitar -18°C, cukup dingin untuk membekukan adonan es krim."
+      },
+      {
+        question: "Dry ice (CO₂ padat) digunakan untuk efek kabut di panggung. Mengapa kabut tersebut turun ke lantai dan tidak naik ke atas?",
+        options: [
+          "A. Karena kabut itu sebenarnya adalah asap",
+          "B. Karena CO₂ gas lebih berat dari udara dan membawa uap air dingin bersamanya",
+          "C. Karena dry ice menarik kabut ke bawah",
+          "D. Karena lampu panggung mendorong kabut ke bawah"
+        ],
+        correct: 1,
+        explanation: "CO₂ yang dihasilkan dari sublimasi lebih berat dari udara. Gas dingin ini juga menyebabkan uap air di udara mengembun, membentuk kabut yang turun ke lantai karena densitasnya lebih tinggi."
+      },
+      {
+        question: "Dalam grafik pemanasan, mengapa garis mendatar pada saat perubahan wujud lebih panjang untuk proses mendidih daripada meleleh (untuk massa yang sama)?",
+        options: [
+          "A. Karena mendidih lebih lama prosesnya",
+          "B. Karena energi yang dibutuhkan untuk memutus semua ikatan saat menguap lebih besar",
+          "C. Karena termometer tidak akurat saat suhu tinggi",
+          "D. Karena partikel sudah lelah bergerak"
+        ],
+        correct: 1,
+        explanation: "Kalor laten penguapan jauh lebih besar dari kalor laten peleburan. Diperlukan lebih banyak energi untuk memutus semua ikatan antar partikel saat cairan menjadi gas dibanding saat padat menjadi cair."
+      },
+      {
+        question: "Mengapa kita merasa lebih dingin saat keluar dari kolam renang meskipun suhu udara sama dengan sebelum berenang?",
+        options: [
+          "A. Air kolam lebih dingin dari udara",
+          "B. Kulit kita menjadi lebih sensitif setelah berenang",
+          "C. Penguapan air dari kulit menyerap panas tubuh kita",
+          "D. Kolam renang mengandung bahan pendingin"
+        ],
+        correct: 2,
+        explanation: "Penguapan adalah proses endotermik yang memerlukan energi. Air yang menguap dari kulit mengambil energi panas dari tubuh kita, menyebabkan sensasi dingin."
+      },
+      {
+        question: "Seorang chef memasak dengan panci presto (pressure cooker). Mengapa makanan lebih cepat matang dibanding panci biasa?",
+        options: [
+          "A. Panci presto lebih panas karena terbuat dari logam khusus",
+          "B. Tekanan tinggi menaikkan titik didih air, sehingga makanan dimasak pada suhu lebih tinggi",
+          "C. Uap air dalam presto lebih basah",
+          "D. Panci presto memiliki pemanas tambahan di dalamnya"
+        ],
+        correct: 1,
+        explanation: "Tekanan tinggi dalam panci presto menaikkan titik didih air hingga sekitar 120°C. Suhu yang lebih tinggi ini mempercepat proses pemasakan makanan."
+      }
+    ];
+
+    // State variables
+    let currentSection = 'intro';
+    let currentTemp = 0;
+    let detectiveScore = 0;
+    let detectiveAnswered = [false, false, false, false];
+    let quizCurrentQ = 0;
+    let quizScore = 0;
+    let quizAnswers = [];
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig: defaultConfig,
+        onConfigChange: async (config) => {
+          const title = document.getElementById('main-title');
+          const author = document.getElementById('author-name');
+          
+          if (title) title.textContent = config.main_title || defaultConfig.main_title;
+          if (author) author.textContent = config.author_name || defaultConfig.author_name;
+          
+          // Apply colors
+          document.documentElement.style.setProperty('--primary-color', config.primary_color || defaultConfig.primary_color);
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                config.primary_color = value;
+                if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => {
+                config.secondary_color = value;
+                if (window.elementSdk) window.elementSdk.setConfig({ secondary_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => {
+                config.accent_color = value;
+                if (window.elementSdk) window.elementSdk.setConfig({ accent_color: value });
+              }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                if (window.elementSdk) window.elementSdk.setConfig({ surface_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['main_title', config.main_title || defaultConfig.main_title],
+          ['author_name', config.author_name || defaultConfig.author_name]
+        ])
+      });
+    }
+
+    // Render navigation
+    function renderNavigation() {
+      const navMenu = document.getElementById('nav-menu');
+      navMenu.innerHTML = navItems.map(item => `
+        <button onclick="navigateTo('${item.id}')" 
+                class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all whitespace-nowrap ${currentSection === item.id ? 'active' : ''}"
+                id="nav-${item.id}">
+          <span class="text-xl">${item.icon}</span>
+          <span class="text-sm hidden lg:inline">${item.title}</span>
+        </button>
+      `).join('');
+    }
+
+    // Navigate to section
+    function navigateTo(sectionId) {
+      currentSection = sectionId;
+      renderNavigation();
+      renderContent();
+      
+      // Scroll to top of content
+      document.getElementById('content-container').scrollTo(0, 0);
+    }
+
+    // Render content
+    function renderContent() {
+      const container = document.getElementById('content-container');
+      const data = contentData[currentSection];
+      
+      container.innerHTML = `
+        <div class="content-section" id="section-${currentSection}">
+          <div class="mb-8">
+            <h2 class="text-3xl lg:text-4xl font-bold heading-font shimmer-text mb-2">${data.title}</h2>
+            <p class="text-lg text-gray-400">${data.subtitle}</p>
+          </div>
+          ${data.content}
+        </div>
+      `;
+      
+      // Animate in
+      setTimeout(() => {
+        document.getElementById(`section-${currentSection}`).classList.add('visible');
+      }, 50);
+      
+      // Initialize quiz if on quiz section
+      if (currentSection === 'quiz') {
+        loadQuestion();
+      }
+    }
+
+    // Temperature simulation
+    function changeTemp(delta) {
+      currentTemp = Math.max(-50, Math.min(50, currentTemp + delta));
+      updateTempDisplay();
+    }
+
+    function updateTempDisplay() {
+      const tempValue = document.getElementById('temp-value');
+      const tempIndicator = document.getElementById('temp-indicator');
+      const stateEmoji = document.getElementById('state-emoji');
+      const stateName = document.getElementById('state-name');
+      const stateDesc = document.getElementById('state-desc');
+      const stateDisplay = document.getElementById('state-display');
+      
+      if (!tempValue) return;
+      
+      tempValue.textContent = `${currentTemp}°C`;
+      
+      // Position indicator (0-100%)
+      const position = ((currentTemp + 50) / 100) * 100;
+      tempIndicator.style.left = `${position}%`;
+      
+      // Update state display
+      if (currentTemp < 0) {
+        stateEmoji.textContent = '🧊';
+        stateName.textContent = 'Padat (Es)';
+        stateDesc.textContent = 'Partikel tersusun rapat dan teratur';
+        stateDisplay.querySelector('div').className = 'inline-flex items-center gap-3 px-6 py-3 bg-blue-500/20 rounded-xl';
+      } else if (currentTemp === 0) {
+        stateEmoji.textContent = '🧊↔💧';
+        stateName.textContent = 'Titik Leleh/Beku';
+        stateDesc.textContent = 'Perubahan wujud sedang terjadi';
+        stateDisplay.querySelector('div').className = 'inline-flex items-center gap-3 px-6 py-3 bg-teal-500/20 rounded-xl';
+      } else {
+        stateEmoji.textContent = '💧';
+        stateName.textContent = 'Cair (Air)';
+        stateDesc.textContent = 'Partikel bergerak bebas namun masih berdekatan';
+        stateDisplay.querySelector('div').className = 'inline-flex items-center gap-3 px-6 py-3 bg-cyan-500/20 rounded-xl';
+      }
+    }
+
+    // Detective challenge
+    function checkDetective(qNum, answer, isCorrect) {
+      if (detectiveAnswered[qNum - 1]) return;
+      
+      detectiveAnswered[qNum - 1] = true;
+      const feedback = document.getElementById(`feedback-${qNum}`);
+      const buttons = document.querySelectorAll(`#challenge-${qNum} .detective-btn`);
+      
+      buttons.forEach(btn => {
+        btn.disabled = true;
+        btn.classList.add('opacity-50');
+      });
+      
+      if (isCorrect) {
+        detectiveScore++;
+        feedback.innerHTML = `
+          <div class="p-3 bg-green-500/20 border border-green-500/30 rounded-xl">
+            <p class="text-green-400 font-semibold">✅ Benar! Analisis yang tepat!</p>
+          </div>
+        `;
+        event.target.classList.add('correct');
+      } else {
+        feedback.innerHTML = `
+          <div class="p-3 bg-red-500/20 border border-red-500/30 rounded-xl">
+            <p class="text-red-400 font-semibold">❌ Kurang tepat. Coba analisis lagi datanya!</p>
+          </div>
+        `;
+        event.target.classList.add('incorrect');
+      }
+      
+      feedback.classList.remove('hidden');
+      
+      // Check if all answered
+      if (detectiveAnswered.every(a => a)) {
+        showDetectiveResult();
+      }
+    }
+
+    function showDetectiveResult() {
+      const result = document.getElementById('detective-result');
+      const emoji = document.getElementById('result-emoji');
+      const title = document.getElementById('result-title');
+      const text = document.getElementById('result-text');
+      
+      result.classList.remove('hidden');
+      
+      if (detectiveScore === 4) {
+        emoji.textContent = '🏆';
+        title.textContent = 'Detektif Materi Ahli!';
+        text.textContent = 'Sempurna! Kamu menguasai analisis perubahan wujud zat!';
+      } else if (detectiveScore >= 3) {
+        emoji.textContent = '🥈';
+        title.textContent = 'Detektif Hebat!';
+        text.textContent = `Skor: ${detectiveScore}/4 - Hampir sempurna! Terus berlatih!`;
+      } else {
+        emoji.textContent = '📚';
+        title.textContent = 'Perlu Belajar Lagi';
+        text.textContent = `Skor: ${detectiveScore}/4 - Ayo pelajari kembali materi tentang titik leleh dan titik didih!`;
+      }
+    }
+
+    // Quiz functions
+    function loadQuestion() {
+      const container = document.getElementById('quiz-question-container');
+      const optionsContainer = document.getElementById('quiz-options');
+      const q = quizQuestions[quizCurrentQ];
+      
+      document.getElementById('current-q').textContent = quizCurrentQ + 1;
+      document.getElementById('quiz-progress').style.width = `${((quizCurrentQ + 1) / 10) * 100}%`;
+      
+      container.innerHTML = `
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center flex-shrink-0">
+            <span class="font-bold">${quizCurrentQ + 1}</span>
+          </div>
+          <p class="text-gray-200">${q.question}</p>
+        </div>
+      `;
+      
+      optionsContainer.innerHTML = q.options.map((opt, i) => `
+        <button onclick="selectAnswer(${i})" 
+                class="quiz-option w-full p-4 text-left bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all ${quizAnswers[quizCurrentQ] === i ? 'bg-teal-500/20 border-teal-500/50' : ''}">
+          ${opt}
+        </button>
+      `).join('');
+      
+      // Update navigation buttons
+      document.getElementById('prev-btn').disabled = quizCurrentQ === 0;
+      document.getElementById('next-btn').textContent = quizCurrentQ === 9 ? 'Selesai ✓' : 'Selanjutnya →';
+      
+      // Hide feedback
+      document.getElementById('quiz-feedback').classList.add('hidden');
+    }
+
+    function selectAnswer(index) {
+      quizAnswers[quizCurrentQ] = index;
+      
+      const options = document.querySelectorAll('.quiz-option');
+      options.forEach((opt, i) => {
+        opt.classList.remove('bg-teal-500/20', 'border-teal-500/50');
+        if (i === index) {
+          opt.classList.add('bg-teal-500/20', 'border-teal-500/50');
+        }
+      });
+      
+      // Show feedback
+      const q = quizQuestions[quizCurrentQ];
+      const feedback = document.getElementById('quiz-feedback');
+      
+      if (index === q.correct) {
+        feedback.innerHTML = `
+          <div class="p-4 bg-green-500/20 border border-green-500/30 rounded-xl">
+            <p class="text-green-400 font-semibold mb-2">✅ Benar!</p>
+            <p class="text-sm text-gray-300">${q.explanation}</p>
+          </div>
+        `;
+      } else {
+        feedback.innerHTML = `
+          <div class="p-4 bg-red-500/20 border border-red-500/30 rounded-xl">
+            <p class="text-red-400 font-semibold mb-2">❌ Kurang Tepat</p>
+            <p class="text-sm text-gray-300">${q.explanation}</p>
+          </div>
+        `;
+      }
+      feedback.classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      if (quizCurrentQ < 9) {
+        quizCurrentQ++;
+        loadQuestion();
+      } else {
+        finishQuiz();
+      }
+    }
+
+    function prevQuestion() {
+      if (quizCurrentQ > 0) {
+        quizCurrentQ--;
+        loadQuestion();
+      }
+    }
+
+    function finishQuiz() {
+      // Calculate score
+      quizScore = 0;
+      quizAnswers.forEach((ans, i) => {
+        if (ans === quizQuestions[i].correct) quizScore++;
+      });
+      
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      
+      const emoji = document.getElementById('final-emoji');
+      const title = document.getElementById('final-title');
+      const message = document.getElementById('final-message');
+      
+      document.getElementById('final-score').textContent = quizScore;
+      document.getElementById('quiz-score').textContent = quizScore;
+      
+      if (quizScore >= 9) {
+        emoji.textContent = '🏆';
+        title.textContent = 'Luar Biasa!';
+        message.textContent = 'Kamu menguasai konsep perubahan wujud dengan sangat baik!';
+      } else if (quizScore >= 7) {
+        emoji.textContent = '🥈';
+        title.textContent = 'Hebat!';
+        message.textContent = 'Pemahaman yang bagus! Sedikit lagi menuju sempurna!';
+      } else if (quizScore >= 5) {
+        emoji.textContent = '📚';
+        title.textContent = 'Cukup Baik';
+        message.textContent = 'Terus belajar untuk meningkatkan pemahamanmu!';
+      } else {
+        emoji.textContent = '💪';
+        title.textContent = 'Semangat!';
+        message.textContent = 'Jangan menyerah! Pelajari kembali materinya dan coba lagi!';
+      }
+    }
+
+    function restartQuiz() {
+      quizCurrentQ = 0;
+      quizScore = 0;
+      quizAnswers = [];
+      
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('quiz-score').textContent = '0';
+      
+      loadQuestion();
+    }
+
+    // Initialize
+    renderNavigation();
+    renderContent();
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf68bbb84b7afeb',t:'MTc3MTM0NDUzMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

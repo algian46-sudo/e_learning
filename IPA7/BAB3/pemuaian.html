@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memahami Fenomena Pemuaian</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { font-family: 'Nunito', sans-serif; }
+    .section-title { font-family: 'Poppins', sans-serif; }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .animate-pulse-slow {
+      animation: pulse-slow 2s ease-in-out infinite;
+    }
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    .animate-expand {
+      animation: expand 2s ease-in-out infinite;
+    }
+    @keyframes expand {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    .bimetal-animation {
+      animation: bend 2s ease-in-out infinite;
+      transform-origin: left center;
+    }
+    @keyframes bend {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(15deg); }
+    }
+    
+    .molecule-vibrate {
+      animation: vibrate 0.1s linear infinite;
+    }
+    @keyframes vibrate {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(-2px, 2px); }
+      50% { transform: translate(2px, -2px); }
+      75% { transform: translate(-2px, -2px); }
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: white;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      background: #f0f4ff;
+      border-color: #667eea;
+    }
+    .quiz-option.selected {
+      background: #e0e7ff;
+      border-color: #667eea;
+    }
+    .quiz-option.correct {
+      background: #d1fae5;
+      border-color: #10b981;
+    }
+    .quiz-option.incorrect {
+      background: #fee2e2;
+      border-color: #ef4444;
+    }
+    
+    .thermometer-liquid {
+      transition: height 1s ease;
+    }
+    
+    .balloon-animation {
+      animation: balloon-rise 3s ease-in-out infinite;
+    }
+    @keyframes balloon-rise {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-20px) scale(1.1); }
+    }
+    
+    .rail-gap {
+      animation: gap-change 2s ease-in-out infinite;
+    }
+    @keyframes gap-change {
+      0%, 100% { width: 8px; }
+      50% { width: 2px; }
+    }
+    
+    .scroll-indicator {
+      animation: scroll-bounce 2s ease-in-out infinite;
+    }
+    @keyframes scroll-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+  </style>
+</head>
+<body class="h-full bg-gray-50">
+  <div id="app" class="w-full h-full overflow-auto">
+    
+    <!-- Navigation -->
+    <nav class="gradient-bg sticky top-0 z-50 shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 py-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+              <span class="text-2xl">🔥</span>
+            </div>
+            <h1 id="page-title" class="text-white font-bold text-lg md:text-xl section-title">Fenomena Pemuaian</h1>
+          </div>
+          <div class="hidden md:flex items-center gap-6 text-white/90 text-sm">
+            <a href="#pengertian" class="nav-link hover:text-white">Pengertian</a>
+            <a href="#jenis" class="nav-link hover:text-white">Jenis</a>
+            <a href="#aplikasi" class="nav-link hover:text-white">Aplikasi</a>
+            <a href="#quiz" class="nav-link hover:text-white">Kuis</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Progress Bar -->
+    <div class="bg-white shadow-sm sticky top-14 z-40">
+      <div class="max-w-7xl mx-auto px-4 py-2">
+        <div class="flex items-center gap-3">
+          <span class="text-xs text-gray-500">Progress Belajar:</span>
+          <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-green-400 to-emerald-500 rounded-full" style="width: 0%"></div>
+          </div>
+          <span id="progress-text" class="text-xs font-semibold text-emerald-600">0%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="gradient-bg relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 left-10 w-32 h-32 bg-white rounded-full animate-float"></div>
+        <div class="absolute bottom-10 right-10 w-24 h-24 bg-white rounded-full animate-float" style="animation-delay: 1s"></div>
+        <div class="absolute top-1/2 left-1/3 w-16 h-16 bg-white rounded-full animate-float" style="animation-delay: 0.5s"></div>
+      </div>
+      
+      <div class="max-w-7xl mx-auto px-4 py-16 relative">
+        <div class="text-center text-white">
+          <div class="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full mb-6">
+            <span class="text-yellow-300">⭐</span>
+            <span class="text-sm font-medium">Materi Fisika Kelas VII</span>
+          </div>
+          <h1 class="text-4xl md:text-6xl font-extrabold mb-4 section-title">Memahami Fenomena</h1>
+          <h2 class="text-3xl md:text-5xl font-extrabold mb-6 text-yellow-300 section-title">PEMUAIAN</h2>
+          <p class="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-8">
+            Pelajari bagaimana panas dapat mengubah ukuran benda dan penerapannya dalam kehidupan sehari-hari
+          </p>
+          
+          <!-- Animated Demo -->
+          <div class="flex justify-center items-center gap-8 mb-8">
+            <div class="text-center">
+              <div class="w-16 h-16 bg-blue-300 rounded-lg flex items-center justify-center text-3xl mb-2">
+                🧊
+              </div>
+              <span class="text-sm">Dingin</span>
+            </div>
+            <div class="flex items-center">
+              <span class="text-3xl">➡️</span>
+              <span class="text-2xl mx-2">🔥</span>
+              <span class="text-3xl">➡️</span>
+            </div>
+            <div class="text-center">
+              <div class="w-20 h-20 bg-red-400 rounded-lg flex items-center justify-center text-3xl mb-2 animate-expand">
+                🔴
+              </div>
+              <span class="text-sm">Memuai</span>
+            </div>
+          </div>
+          
+          <a href="#pengertian" class="inline-flex items-center gap-2 bg-white text-purple-600 px-6 py-3 rounded-full font-bold hover:bg-yellow-300 transition-all hover:scale-105">
+            Mulai Belajar
+            <span class="scroll-indicator">↓</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-12">
+      
+      <!-- Section 1: Pengertian -->
+      <section id="pengertian" class="mb-16 scroll-mt-32">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-lg">1</div>
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-800 section-title">Apa itu Pemuaian?</h2>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+            <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl p-6 mb-6">
+              <h3 class="text-xl font-bold text-purple-800 mb-4">📖 Definisi</h3>
+              <p class="text-gray-700 leading-relaxed">
+                <strong>Pemuaian</strong> adalah peristiwa di mana ukuran suatu benda (panjang, lebar, tinggi, luas, atau volume) <span class="text-purple-600 font-bold">bertambah</span> karena dipengaruhi oleh <span class="text-red-500 font-bold">panas (kalor)</span>.
+              </p>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="flex items-start gap-3 p-3 bg-orange-50 rounded-lg">
+                <span class="text-2xl">🔬</span>
+                <div>
+                  <h4 class="font-bold text-orange-800">Penyebab</h4>
+                  <p class="text-sm text-gray-600">Saat suhu tinggi, atom dan molekul bergetar lebih cepat, sehingga benda memuai ke segala arah.</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
+                <span class="text-2xl">❄️</span>
+                <div>
+                  <h4 class="font-bold text-blue-800">Kebalikannya</h4>
+                  <p class="text-sm text-gray-600">Jika benda didinginkan, akan terjadi penyusutan (kontraksi).</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
+                <span class="text-2xl">🌡️</span>
+                <div>
+                  <h4 class="font-bold text-green-800">Medium</h4>
+                  <p class="text-sm text-gray-600">Pemuaian dapat terjadi pada zat padat, cair, dan gas.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Interactive Molecule Animation -->
+          <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">🔬 Simulasi Molekul</h3>
+            <p class="text-sm text-gray-600 text-center mb-4">Klik tombol untuk melihat pergerakan molekul!</p>
+            
+            <div id="molecule-container" class="bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl p-8 mb-4 relative h-64 overflow-hidden">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div id="molecules" class="grid grid-cols-4 gap-3 transition-all duration-500">
+                  <div class="molecule w-8 h-8 bg-blue-500 rounded-full shadow-lg"></div>
+                  <div class="molecule w-8 h-8 bg-blue-500 rounded-full shadow-lg"></div>
+                  <div class="molecule w-8 h-8 bg-blue-500 rounded-full shadow-lg"></div>
+                  <div class="molecule w-8 h-8 bg-blue-500 rounded-full shadow-lg"></div>
+                  <div class="molecule w-8 h-8 bg-blue-500 rounded-full shadow-lg"></div>
+                  <div class="molecule w-8 h-8 bg-blue-500 rounded-full shadow-lg"></div>
+                  <div class="molecule w-8 h-8 bg-blue-500 rounded-full shadow-lg"></div>
+                  <div class="molecule w-8 h-8 bg-blue-500 rounded-full shadow-lg"></div>
+                  <div class="molecule w-8 h-8 bg-blue-500 rounded-full shadow-lg"></div>
+                  <div class="molecule w-8 h-8 bg-blue-500 rounded-full shadow-lg"></div>
+                  <div class="molecule w-8 h-8 bg-blue-500 rounded-full shadow-lg"></div>
+                  <div class="molecule w-8 h-8 bg-blue-500 rounded-full shadow-lg"></div>
+                </div>
+              </div>
+              <div id="temp-indicator" class="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-sm font-bold text-blue-600">
+                🌡️ 25°C
+              </div>
+            </div>
+            
+            <div class="flex justify-center gap-4">
+              <button onclick="coolMolecules()" class="px-6 py-3 bg-blue-500 text-white rounded-xl font-bold hover:bg-blue-600 transition-all hover:scale-105 flex items-center gap-2">
+                <span>❄️</span> Dinginkan
+              </button>
+              <button onclick="heatMolecules()" class="px-6 py-3 bg-red-500 text-white rounded-xl font-bold hover:bg-red-600 transition-all hover:scale-105 flex items-center gap-2">
+                <span>🔥</span> Panaskan
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Pentingnya Belajar Pemuaian -->
+      <section id="pentingnya" class="mb-16 scroll-mt-32">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-lg">2</div>
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-800 section-title">Mengapa Harus Belajar Pemuaian?</h2>
+        </div>
+        
+        <div class="bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl p-6 mb-8 text-white">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-4xl">⚠️</span>
+            <h3 class="text-xl font-bold">Pemuaian yang Tidak Diperhitungkan Bisa Berbahaya!</h3>
+          </div>
+          <p class="text-white/90">Dalam kehidupan sehari-hari, kita harus memahami pemuaian agar terhindar dari bahaya dan kerusakan.</p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Kaca Jendela -->
+          <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
+            <div class="h-48 bg-gradient-to-br from-cyan-100 to-blue-200 flex items-center justify-center relative">
+              <svg viewBox="0 0 120 100" class="w-32 h-32">
+                <!-- Window Frame -->
+                <rect x="10" y="10" width="100" height="80" fill="#8B4513" stroke="#5D3A1A" stroke-width="3" rx="2"/>
+                <rect x="18" y="18" width="84" height="64" fill="#87CEEB" stroke="#4A90A4" stroke-width="2"/>
+                <!-- Glass Panes -->
+                <line x1="60" y1="18" x2="60" y2="82" stroke="#4A90A4" stroke-width="2"/>
+                <line x1="18" y1="50" x2="102" y2="50" stroke="#4A90A4" stroke-width="2"/>
+                <!-- Crack Animation -->
+                <path class="animate-pulse" d="M70 30 L80 45 L75 55 L85 70" fill="none" stroke="#DC2626" stroke-width="2" stroke-dasharray="4,2"/>
+                <!-- Sun -->
+                <circle cx="95" cy="5" r="12" fill="#FCD34D" class="animate-pulse-slow"/>
+              </svg>
+            </div>
+            <div class="p-5">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-2xl">🪟</span>
+                <h4 class="font-bold text-gray-800">Kaca Jendela</h4>
+              </div>
+              <p class="text-sm text-gray-600">Jika dipasang terlalu pas tanpa rongga, kaca bisa <span class="text-red-500 font-bold">retak atau pecah</span> saat cuaca panas karena tidak ada ruang untuk memuai.</p>
+            </div>
+          </div>
+          
+          <!-- Rel Kereta -->
+          <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
+            <div class="h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center relative">
+              <svg viewBox="0 0 150 80" class="w-40 h-28">
+                <!-- Ground -->
+                <rect x="0" y="55" width="150" height="25" fill="#8B7355"/>
+                <!-- Rail Ties -->
+                <rect x="10" y="50" width="15" height="8" fill="#5D4037"/>
+                <rect x="35" y="50" width="15" height="8" fill="#5D4037"/>
+                <rect x="60" y="50" width="15" height="8" fill="#5D4037"/>
+                <rect x="85" y="50" width="15" height="8" fill="#5D4037"/>
+                <rect x="110" y="50" width="15" height="8" fill="#5D4037"/>
+                <!-- Rails -->
+                <rect x="5" y="45" width="60" height="6" fill="#71717A" rx="1"/>
+                <rect x="85" y="45" width="60" height="6" fill="#71717A" rx="1"/>
+                <!-- Gap -->
+                <rect x="65" y="45" width="20" height="6" fill="#FCD34D" class="animate-pulse">
+                  <animate attributeName="width" values="20;8;20" dur="2s" repeatCount="indefinite"/>
+                </rect>
+                <!-- Arrow indicating gap -->
+                <text x="75" y="35" text-anchor="middle" fill="#DC2626" font-size="10" font-weight="bold">↔ Celah</text>
+              </svg>
+            </div>
+            <div class="p-5">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-2xl">🚂</span>
+                <h4 class="font-bold text-gray-800">Rel Kereta Api</h4>
+              </div>
+              <p class="text-sm text-gray-600">Sambungan rel harus diberi <span class="text-yellow-600 font-bold">celah/rongga</span> agar rel tidak melengkung saat suhu panas, yang bisa menyebabkan kecelakaan.</p>
+            </div>
+          </div>
+          
+          <!-- Kabel & Jembatan -->
+          <div class="bg-white rounded-2xl overflow-hidden shadow-lg card-hover">
+            <div class="h-48 bg-gradient-to-br from-orange-100 to-yellow-200 flex items-center justify-center relative">
+              <svg viewBox="0 0 140 100" class="w-36 h-28">
+                <!-- Poles -->
+                <rect x="15" y="30" width="8" height="60" fill="#5D4037"/>
+                <rect x="117" y="30" width="8" height="60" fill="#5D4037"/>
+                <!-- Cross arms -->
+                <rect x="5" y="25" width="28" height="5" fill="#5D4037"/>
+                <rect x="107" y="25" width="28" height="5" fill="#5D4037"/>
+                <!-- Cable with sag animation -->
+                <path d="M19 27 Q70 60 121 27" fill="none" stroke="#1F2937" stroke-width="3">
+                  <animate attributeName="d" values="M19 27 Q70 45 121 27;M19 27 Q70 65 121 27;M19 27 Q70 45 121 27" dur="3s" repeatCount="indefinite"/>
+                </path>
+                <!-- Sun indicator -->
+                <circle cx="70" cy="15" r="10" fill="#F59E0B">
+                  <animate attributeName="r" values="8;12;8" dur="2s" repeatCount="indefinite"/>
+                </circle>
+                <!-- Temperature labels -->
+                <text x="40" y="75" font-size="8" fill="#666">Pagi: Kencang</text>
+                <text x="85" y="75" font-size="8" fill="#666">Siang: Kendur</text>
+              </svg>
+            </div>
+            <div class="p-5">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-2xl">🔌</span>
+                <h4 class="font-bold text-gray-800">Kabel Listrik & Jembatan</h4>
+              </div>
+              <p class="text-sm text-gray-600">Ahli konstruksi harus menghitung <span class="text-purple-600 font-bold">ruang muai</span> agar bangunan dan infrastruktur tetap aman.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Jenis-Jenis Pemuaian -->
+      <section id="jenis" class="mb-16 scroll-mt-32">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-lg">3</div>
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-800 section-title">Jenis-Jenis Pemuaian</h2>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+          <!-- Pemuaian Panjang -->
+          <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-blue-500">
+            <div class="text-center mb-4">
+              <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span class="text-3xl">📏</span>
+              </div>
+              <h3 class="text-xl font-bold text-blue-800">Pemuaian Panjang</h3>
+              <span class="text-sm text-gray-500">(Linear)</span>
+            </div>
+            
+            <div class="bg-blue-50 rounded-xl p-4 mb-4">
+              <svg viewBox="0 0 200 60" class="w-full h-16">
+                <!-- Original bar -->
+                <rect x="20" y="15" width="80" height="15" fill="#3B82F6" rx="2">
+                  <animate attributeName="width" values="80;120;80" dur="2s" repeatCount="indefinite"/>
+                </rect>
+                <!-- Arrow -->
+                <path d="M110 22 L140 22 M135 17 L140 22 L135 27" fill="none" stroke="#1F2937" stroke-width="2">
+                  <animate attributeName="d" values="M110 22 L140 22 M135 17 L140 22 L135 27;M150 22 L180 22 M175 17 L180 22 L175 27;M110 22 L140 22 M135 17 L140 22 L135 27" dur="2s" repeatCount="indefinite"/>
+                </path>
+                <!-- Label -->
+                <text x="100" y="50" text-anchor="middle" font-size="10" fill="#666">ΔL (perubahan panjang)</text>
+              </svg>
+            </div>
+            
+            <p class="text-sm text-gray-600 mb-3">Terjadi pada <strong>satu sisi</strong> benda (misal: logam panjang)</p>
+            
+            <div class="bg-gray-100 rounded-lg p-3">
+              <p class="text-xs text-gray-500 mb-1">📌 Contoh:</p>
+              <p class="text-sm text-gray-700">Kabel listrik yang tampak kendur di siang hari</p>
+            </div>
+            
+            <div class="mt-4 p-3 bg-blue-100 rounded-lg">
+              <p class="text-xs font-bold text-blue-800">Rumus:</p>
+              <p class="text-center font-mono text-blue-900">ΔL = L₀ × α × ΔT</p>
+            </div>
+          </div>
+          
+          <!-- Pemuaian Luas -->
+          <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-green-500">
+            <div class="text-center mb-4">
+              <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span class="text-3xl">⬛</span>
+              </div>
+              <h3 class="text-xl font-bold text-green-800">Pemuaian Luas</h3>
+              <span class="text-sm text-gray-500">(Area)</span>
+            </div>
+            
+            <div class="bg-green-50 rounded-xl p-4 mb-4">
+              <svg viewBox="0 0 200 80" class="w-full h-20">
+                <!-- Original square -->
+                <rect x="50" y="15" width="40" height="40" fill="#22C55E" rx="2">
+                  <animate attributeName="width" values="40;60;40" dur="2s" repeatCount="indefinite"/>
+                  <animate attributeName="height" values="40;60;40" dur="2s" repeatCount="indefinite"/>
+                  <animate attributeName="x" values="50;40;50" dur="2s" repeatCount="indefinite"/>
+                  <animate attributeName="y" values="15;5;15" dur="2s" repeatCount="indefinite"/>
+                </rect>
+                <!-- Arrows -->
+                <text x="100" y="70" text-anchor="middle" font-size="10" fill="#666">ΔA (perubahan luas)</text>
+              </svg>
+            </div>
+            
+            <p class="text-sm text-gray-600 mb-3">Terjadi pada <strong>dua sisi</strong> benda (panjang & lebar)</p>
+            
+            <div class="bg-gray-100 rounded-lg p-3">
+              <p class="text-xs text-gray-500 mb-1">📌 Contoh:</p>
+              <p class="text-sm text-gray-700">Pemasangan pelat logam atau kaca jendela</p>
+            </div>
+            
+            <div class="mt-4 p-3 bg-green-100 rounded-lg">
+              <p class="text-xs font-bold text-green-800">Rumus:</p>
+              <p class="text-center font-mono text-green-900">β = 2α</p>
+            </div>
+          </div>
+          
+          <!-- Pemuaian Volume -->
+          <div class="bg-white rounded-2xl p-6 shadow-lg card-hover border-t-4 border-purple-500">
+            <div class="text-center mb-4">
+              <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span class="text-3xl">📦</span>
+              </div>
+              <h3 class="text-xl font-bold text-purple-800">Pemuaian Volume</h3>
+              <span class="text-sm text-gray-500">(Kubik)</span>
+            </div>
+            
+            <div class="bg-purple-50 rounded-xl p-4 mb-4 flex justify-center">
+              <div class="w-12 h-12 bg-purple-500 rounded-lg shadow-lg animate-expand"></div>
+            </div>
+            
+            <p class="text-sm text-gray-600 mb-3">Terjadi pada benda <strong>tiga dimensi</strong> (panjang, lebar, tinggi)</p>
+            
+            <div class="bg-gray-100 rounded-lg p-3">
+              <p class="text-xs text-gray-500 mb-1">📌 Contoh:</p>
+              <p class="text-sm text-gray-700">Balok besi atau air yang dipanaskan</p>
+            </div>
+            
+            <div class="mt-4 p-3 bg-purple-100 rounded-lg">
+              <p class="text-xs font-bold text-purple-800">Rumus:</p>
+              <p class="text-center font-mono text-purple-900">γ = 3α</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Info Box -->
+        <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-6 text-white">
+          <h4 class="text-lg font-bold mb-3 flex items-center gap-2">
+            <span>💡</span> Catatan Teknis Penting
+          </h4>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-white/10 rounded-xl p-4">
+              <p class="font-mono text-sm">Koefisien muai luas (β) = <strong>2×</strong> koefisien muai panjang (α)</p>
+            </div>
+            <div class="bg-white/10 rounded-xl p-4">
+              <p class="font-mono text-sm">Koefisien muai volume (γ) = <strong>3×</strong> koefisien muai panjang (α)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Pemuaian pada Berbagai Wujud Zat -->
+      <section id="wujud-zat" class="mb-16 scroll-mt-32">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-lg">4</div>
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-800 section-title">Pemuaian pada Berbagai Wujud Zat</h2>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Zat Cair - Termometer -->
+          <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-3xl">💧</span>
+              <h3 class="text-xl font-bold text-blue-800">Pemuaian Zat Cair</h3>
+            </div>
+            
+            <p class="text-gray-600 mb-4">Pemuaian zat cair lebih mudah teramati dibanding zat padat. Contoh utamanya adalah <strong>termometer</strong>.</p>
+            
+            <!-- Interactive Thermometer -->
+            <div class="bg-gradient-to-b from-blue-100 to-red-100 rounded-xl p-6">
+              <div class="flex items-center justify-center gap-8">
+                <div class="relative">
+                  <svg viewBox="0 0 60 180" class="w-16 h-48">
+                    <!-- Thermometer body -->
+                    <rect x="20" y="10" width="20" height="130" fill="white" stroke="#CBD5E1" stroke-width="2" rx="10"/>
+                    <!-- Mercury column -->
+                    <rect id="mercury-column" x="24" y="100" width="12" height="36" fill="#EF4444" rx="6">
+                      <animate attributeName="height" values="36;80;36" dur="3s" repeatCount="indefinite"/>
+                      <animate attributeName="y" values="100;56;100" dur="3s" repeatCount="indefinite"/>
+                    </rect>
+                    <!-- Bulb -->
+                    <circle cx="30" cy="150" r="16" fill="#EF4444"/>
+                    <!-- Scale marks -->
+                    <line x1="42" y1="30" x2="50" y2="30" stroke="#666" stroke-width="1"/>
+                    <text x="52" y="33" font-size="8" fill="#666">100°</text>
+                    <line x1="42" y1="70" x2="50" y2="70" stroke="#666" stroke-width="1"/>
+                    <text x="52" y="73" font-size="8" fill="#666">50°</text>
+                    <line x1="42" y1="110" x2="50" y2="110" stroke="#666" stroke-width="1"/>
+                    <text x="52" y="113" font-size="8" fill="#666">0°</text>
+                  </svg>
+                </div>
+                
+                <div class="text-center">
+                  <div class="text-sm text-gray-600 mb-2">Suhu naik</div>
+                  <div class="text-4xl mb-2">🔥</div>
+                  <div class="text-sm text-gray-600">Air raksa/alkohol<br/>naik & memuai</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Zat Gas - Balon Udara -->
+          <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-3xl">💨</span>
+              <h3 class="text-xl font-bold text-orange-800">Pemuaian Zat Gas</h3>
+            </div>
+            
+            <p class="text-gray-600 mb-4">Gas juga memuai jika diberi kalor. Fenomena ini digunakan pada <strong>balon udara</strong> dan <strong>lampion terbang</strong>.</p>
+            
+            <!-- Hot Air Balloon Animation -->
+            <div class="bg-gradient-to-b from-cyan-200 to-cyan-400 rounded-xl p-6 relative overflow-hidden h-64">
+              <!-- Clouds -->
+              <div class="absolute top-4 left-4 w-16 h-8 bg-white rounded-full opacity-80"></div>
+              <div class="absolute top-8 right-6 w-12 h-6 bg-white rounded-full opacity-80"></div>
+              
+              <!-- Hot Air Balloon -->
+              <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 balloon-animation">
+                <svg viewBox="0 0 100 140" class="w-24 h-32">
+                  <!-- Balloon -->
+                  <ellipse cx="50" cy="45" rx="40" ry="45" fill="#EF4444"/>
+                  <ellipse cx="50" cy="45" rx="40" ry="45" fill="url(#balloon-gradient)"/>
+                  <!-- Stripes -->
+                  <path d="M20 30 Q50 90 80 30" fill="none" stroke="#FCD34D" stroke-width="8"/>
+                  <path d="M15 45 Q50 100 85 45" fill="none" stroke="#3B82F6" stroke-width="6"/>
+                  <!-- Basket ropes -->
+                  <line x1="25" y1="85" x2="35" y2="110" stroke="#8B4513" stroke-width="2"/>
+                  <line x1="75" y1="85" x2="65" y2="110" stroke="#8B4513" stroke-width="2"/>
+                  <!-- Basket -->
+                  <rect x="30" y="110" width="40" height="25" fill="#8B4513" rx="3"/>
+                  <rect x="32" y="112" width="36" height="4" fill="#A0522D"/>
+                  <!-- Fire -->
+                  <ellipse cx="50" cy="95" rx="8" ry="10" fill="#FCD34D" class="animate-pulse"/>
+                  
+                  <defs>
+                    <linearGradient id="balloon-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" style="stop-color:#DC2626;stop-opacity:0.3"/>
+                      <stop offset="50%" style="stop-color:#ffffff;stop-opacity:0.1"/>
+                      <stop offset="100%" style="stop-color:#DC2626;stop-opacity:0.3"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              
+              <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-center">
+                <p class="text-xs text-white bg-black/30 px-2 py-1 rounded">Udara panas memuai → lebih ringan → naik</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Bimetal -->
+      <section id="bimetal" class="mb-16 scroll-mt-32">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-lg">5</div>
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-800 section-title">Teknologi Berbasis Pemuaian: Bimetal</h2>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 shadow-lg mb-8">
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <div class="flex items-center gap-3 mb-4">
+                <span class="text-3xl">⚡</span>
+                <h3 class="text-xl font-bold text-gray-800">Apa itu Bimetal?</h3>
+              </div>
+              
+              <p class="text-gray-600 mb-4">
+                <strong>Bimetal</strong> adalah alat yang terdiri dari <span class="text-blue-600 font-bold">dua jenis logam</span> dengan koefisien muai berbeda yang ditempelkan menjadi satu.
+              </p>
+              
+              <div class="bg-yellow-50 rounded-xl p-4 mb-4">
+                <h4 class="font-bold text-yellow-800 mb-2">⚙️ Cara Kerja:</h4>
+                <p class="text-sm text-gray-700">Saat dipanaskan, bimetal akan <strong>membengkok</strong> ke arah logam yang pemuaiannya lebih lambat.</p>
+              </div>
+              
+              <div class="bg-green-50 rounded-xl p-4">
+                <h4 class="font-bold text-green-800 mb-2">🔧 Kegunaan:</h4>
+                <ul class="text-sm text-gray-700 space-y-2">
+                  <li>• <strong>Sakelar otomatis (termostat)</strong> - mengatur suhu AC, kulkas</li>
+                  <li>• <strong>Sekering listrik</strong> - memutus arus saat panas berlebih</li>
+                  <li>• <strong>Alarm kebakaran</strong> - mendeteksi suhu tinggi</li>
+                </ul>
+              </div>
+            </div>
+            
+            <!-- Bimetal Animation -->
+            <div class="bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl p-6">
+              <h4 class="text-center font-bold text-gray-800 mb-4">Simulasi Bimetal</h4>
+              
+              <div class="relative h-48 flex items-center justify-center">
+                <svg viewBox="0 0 200 120" class="w-full h-full">
+                  <!-- Cold State Label -->
+                  <text x="30" y="20" font-size="10" fill="#3B82F6" font-weight="bold">Dingin</text>
+                  
+                  <!-- Cold Bimetal (straight) -->
+                  <g transform="translate(20, 30)">
+                    <rect x="0" y="0" width="70" height="8" fill="#FFD700" rx="1"/>
+                    <rect x="0" y="8" width="70" height="8" fill="#C0C0C0" rx="1"/>
+                    <text x="75" y="6" font-size="7" fill="#B8860B">Kuningan (α besar)</text>
+                    <text x="75" y="14" font-size="7" fill="#6B7280">Besi (α kecil)</text>
+                  </g>
+                  
+                  <!-- Arrow -->
+                  <path d="M100 55 L100 75" fill="none" stroke="#EF4444" stroke-width="2" marker-end="url(#arrowhead)"/>
+                  <text x="105" y="68" font-size="8" fill="#EF4444">🔥 Panas</text>
+                  
+                  <!-- Hot State Label -->
+                  <text x="30" y="90" font-size="10" fill="#EF4444" font-weight="bold">Panas</text>
+                  
+                  <!-- Hot Bimetal (curved) -->
+                  <g transform="translate(20, 85)">
+                    <path d="M0 8 Q35 -15 70 8" fill="none" stroke="#FFD700" stroke-width="8" stroke-linecap="round">
+                      <animate attributeName="d" values="M0 8 Q35 8 70 8;M0 8 Q35 -15 70 8;M0 8 Q35 8 70 8" dur="2s" repeatCount="indefinite"/>
+                    </path>
+                    <path d="M0 16 Q35 -7 70 16" fill="none" stroke="#C0C0C0" stroke-width="8" stroke-linecap="round">
+                      <animate attributeName="d" values="M0 16 Q35 16 70 16;M0 16 Q35 -7 70 16;M0 16 Q35 16 70 16" dur="2s" repeatCount="indefinite"/>
+                    </path>
+                  </g>
+                  
+                  <!-- Explanation -->
+                  <text x="100" y="115" font-size="8" fill="#666" text-anchor="middle">Melengkung ke arah besi (koef. muai kecil)</text>
+                  
+                  <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                      <polygon points="0 0, 10 3.5, 0 7" fill="#EF4444"/>
+                    </marker>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Application Examples -->
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-white rounded-xl p-5 shadow-lg card-hover text-center">
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <span class="text-3xl">❄️</span>
+            </div>
+            <h4 class="font-bold text-gray-800 mb-2">Termostat Kulkas</h4>
+            <p class="text-sm text-gray-600">Mengatur suhu agar tetap dingin secara otomatis</p>
+          </div>
+          
+          <div class="bg-white rounded-xl p-5 shadow-lg card-hover text-center">
+            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <span class="text-3xl">🔥</span>
+            </div>
+            <h4 class="font-bold text-gray-800 mb-2">Alarm Kebakaran</h4>
+            <p class="text-sm text-gray-600">Mendeteksi panas berlebih dan memberi peringatan</p>
+          </div>
+          
+          <div class="bg-white rounded-xl p-5 shadow-lg card-hover text-center">
+            <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <span class="text-3xl">⚡</span>
+            </div>
+            <h4 class="font-bold text-gray-800 mb-2">Sekering Listrik</h4>
+            <p class="text-sm text-gray-600">Memutus arus saat terjadi korsleting</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Koefisien Muai Panjang -->
+      <section id="koefisien" class="mb-16 scroll-mt-32">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-lg">6</div>
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-800 section-title">Koefisien Muai Panjang Berbagai Bahan</h2>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 shadow-lg mb-6">
+          <p class="text-gray-600 mb-4">
+            Setiap bahan memiliki kecepatan memuai yang berbeda. <span class="text-purple-600 font-bold">Semakin besar nilai koefisiennya, semakin cepat benda tersebut memuai.</span>
+          </p>
+          
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white">
+                  <th class="px-4 py-3 text-left rounded-tl-xl">Bahan</th>
+                  <th class="px-4 py-3 text-center">Koefisien Muai (×10⁻⁶ /°C)</th>
+                  <th class="px-4 py-3 text-center rounded-tr-xl">Kecepatan Muai</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b hover:bg-purple-50 transition-colors">
+                  <td class="px-4 py-3 font-medium">🔶 Aluminium</td>
+                  <td class="px-4 py-3 text-center font-mono">22,5</td>
+                  <td class="px-4 py-3 text-center">
+                    <span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-bold">Sangat Cepat</span>
+                  </td>
+                </tr>
+                <tr class="border-b hover:bg-purple-50 transition-colors">
+                  <td class="px-4 py-3 font-medium">🥈 Perak</td>
+                  <td class="px-4 py-3 text-center font-mono">19,0</td>
+                  <td class="px-4 py-3 text-center">
+                    <span class="bg-orange-100 text-orange-700 px-2 py-1 rounded-full text-xs font-bold">Cepat</span>
+                  </td>
+                </tr>
+                <tr class="border-b hover:bg-purple-50 transition-colors">
+                  <td class="px-4 py-3 font-medium">🥇 Emas</td>
+                  <td class="px-4 py-3 text-center font-mono">14,0</td>
+                  <td class="px-4 py-3 text-center">
+                    <span class="bg-orange-100 text-orange-700 px-2 py-1 rounded-full text-xs font-bold">Cepat</span>
+                  </td>
+                </tr>
+                <tr class="border-b hover:bg-purple-50 transition-colors">
+                  <td class="px-4 py-3 font-medium">🪨 Besi/Baja</td>
+                  <td class="px-4 py-3 text-center font-mono">10-12</td>
+                  <td class="px-4 py-3 text-center">
+                    <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs font-bold">Sedang</span>
+                  </td>
+                </tr>
+                <tr class="border-b hover:bg-purple-50 transition-colors">
+                  <td class="px-4 py-3 font-medium">🪟 Kaca Biasa</td>
+                  <td class="px-4 py-3 text-center font-mono">8,5</td>
+                  <td class="px-4 py-3 text-center">
+                    <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs font-bold">Sedang</span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-purple-50 transition-colors">
+                  <td class="px-4 py-3 font-medium">🧪 Kaca Pyrex</td>
+                  <td class="px-4 py-3 text-center font-mono">3,25</td>
+                  <td class="px-4 py-3 text-center">
+                    <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-bold">Lambat</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <div class="bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl p-6 text-white">
+          <h4 class="text-lg font-bold mb-3 flex items-center gap-2">
+            <span>🤔</span> Tahukah Kamu?
+          </h4>
+          <p class="text-white/90">
+            <strong>Kaca Pyrex</strong> sering digunakan untuk peralatan laboratorium dan oven karena memiliki koefisien muai yang rendah, sehingga lebih tahan terhadap perubahan suhu mendadak dibanding kaca biasa!
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 7: Aplikasi dalam Kehidupan -->
+      <section id="aplikasi" class="mb-16 scroll-mt-32">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-lg">7</div>
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-800 section-title">Aplikasi Pemuaian dalam Kehidupan</h2>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="bg-white rounded-2xl p-5 shadow-lg card-hover">
+            <div class="w-full h-32 bg-gradient-to-br from-gray-200 to-gray-300 rounded-xl mb-4 flex items-center justify-center">
+              <svg viewBox="0 0 100 80" class="w-20 h-16">
+                <!-- Bridge towers -->
+                <rect x="10" y="30" width="8" height="45" fill="#5D4037"/>
+                <rect x="82" y="30" width="8" height="45" fill="#5D4037"/>
+                <!-- Bridge deck with expansion joint -->
+                <rect x="5" y="50" width="42" height="8" fill="#78909C"/>
+                <rect x="53" y="50" width="42" height="8" fill="#78909C"/>
+                <!-- Expansion joint gap -->
+                <rect x="47" y="50" width="6" height="8" fill="#FFC107">
+                  <animate attributeName="width" values="6;2;6" dur="2s" repeatCount="indefinite"/>
+                </rect>
+                <!-- Cables -->
+                <line x1="14" y1="20" x2="14" y2="50" stroke="#333" stroke-width="2"/>
+                <line x1="86" y1="20" x2="86" y2="50" stroke="#333" stroke-width="2"/>
+              </svg>
+            </div>
+            <h4 class="font-bold text-gray-800 mb-2">🌉 Sambungan Jembatan</h4>
+            <p class="text-sm text-gray-600">Expansion joint memungkinkan jembatan memuai tanpa rusak</p>
+          </div>
+          
+          <div class="bg-white rounded-2xl p-5 shadow-lg card-hover">
+            <div class="w-full h-32 bg-gradient-to-br from-orange-100 to-red-200 rounded-xl mb-4 flex items-center justify-center">
+              <svg viewBox="0 0 80 80" class="w-20 h-20">
+                <!-- Jar -->
+                <ellipse cx="40" cy="70" rx="25" ry="8" fill="#5D4037"/>
+                <rect x="15" y="20" width="50" height="50" fill="#8B4513" rx="5"/>
+                <rect x="20" y="25" width="40" height="40" fill="#FFA726" rx="3"/>
+                <!-- Lid -->
+                <rect x="18" y="12" width="44" height="12" fill="#78909C" rx="3"/>
+                <!-- Hot water drops -->
+                <circle cx="60" cy="35" r="3" fill="#64B5F6" class="animate-pulse"/>
+                <circle cx="65" cy="45" r="2" fill="#64B5F6" class="animate-pulse"/>
+              </svg>
+            </div>
+            <h4 class="font-bold text-gray-800 mb-2">🫙 Membuka Tutup Toples</h4>
+            <p class="text-sm text-gray-600">Air panas membuat tutup logam memuai dan mudah dibuka</p>
+          </div>
+          
+          <div class="bg-white rounded-2xl p-5 shadow-lg card-hover">
+            <div class="w-full h-32 bg-gradient-to-br from-blue-100 to-cyan-200 rounded-xl mb-4 flex items-center justify-center">
+              <svg viewBox="0 0 80 80" class="w-20 h-20">
+                <!-- Thermometer base -->
+                <rect x="35" y="10" width="10" height="50" fill="white" stroke="#CBD5E1" stroke-width="2" rx="5"/>
+                <!-- Mercury -->
+                <rect x="38" y="30" width="4" height="27" fill="#EF4444" rx="2">
+                  <animate attributeName="height" values="27;40;27" dur="2s" repeatCount="indefinite"/>
+                  <animate attributeName="y" values="30;17;30" dur="2s" repeatCount="indefinite"/>
+                </rect>
+                <!-- Bulb -->
+                <circle cx="40" cy="62" r="8" fill="#EF4444"/>
+                <!-- Scale -->
+                <text x="50" y="20" font-size="6" fill="#666">°C</text>
+              </svg>
+            </div>
+            <h4 class="font-bold text-gray-800 mb-2">🌡️ Termometer</h4>
+            <p class="text-sm text-gray-600">Mengukur suhu berdasarkan pemuaian zat cair</p>
+          </div>
+          
+          <div class="bg-white rounded-2xl p-5 shadow-lg card-hover">
+            <div class="w-full h-32 bg-gradient-to-br from-yellow-100 to-orange-200 rounded-xl mb-4 flex items-center justify-center">
+              <svg viewBox="0 0 80 80" class="w-20 h-20">
+                <!-- Wheel rim -->
+                <circle cx="40" cy="40" r="28" fill="none" stroke="#5D4037" stroke-width="4"/>
+                <!-- Tire -->
+                <circle cx="40" cy="40" r="32" fill="none" stroke="#333" stroke-width="6">
+                  <animate attributeName="r" values="32;34;32" dur="2s" repeatCount="indefinite"/>
+                </circle>
+                <!-- Hub -->
+                <circle cx="40" cy="40" r="8" fill="#78909C"/>
+                <!-- Spokes -->
+                <line x1="40" y1="12" x2="40" y2="32" stroke="#5D4037" stroke-width="2"/>
+                <line x1="40" y1="48" x2="40" y2="68" stroke="#5D4037" stroke-width="2"/>
+                <line x1="12" y1="40" x2="32" y2="40" stroke="#5D4037" stroke-width="2"/>
+                <line x1="48" y1="40" x2="68" y2="40" stroke="#5D4037" stroke-width="2"/>
+              </svg>
+            </div>
+            <h4 class="font-bold text-gray-800 mb-2">🛞 Pemasangan Ban</h4>
+            <p class="text-sm text-gray-600">Ban dipanaskan agar memuai dan mudah dipasang ke velg</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 8: Aktivitas Interaktif -->
+      <section id="aktivitas" class="mb-16 scroll-mt-32">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-lg">8</div>
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-800 section-title">Aktivitas Interaktif</h2>
+        </div>
+        
+        <!-- Activity: Pecahnya Gelas -->
+        <div class="bg-white rounded-2xl p-6 shadow-lg mb-8">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-3xl">🧪</span>
+            <h3 class="text-xl font-bold text-gray-800">Eksperimen Virtual: Mengapa Gelas Bisa Pecah?</h3>
+          </div>
+          
+          <p class="text-gray-600 mb-6">
+            Klik tombol untuk melihat apa yang terjadi saat air mendidih dituang ke gelas dingin!
+          </p>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <div id="glass-experiment" class="bg-gradient-to-b from-gray-100 to-gray-200 rounded-xl p-6 relative h-64">
+              <div class="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-sm font-bold" id="exp-status">
+                Status: Siap
+              </div>
+              
+              <div class="flex items-end justify-center h-full pb-4 gap-8">
+                <!-- Kettle -->
+                <div id="kettle" class="relative">
+                  <svg viewBox="0 0 60 80" class="w-16 h-20">
+                    <ellipse cx="30" cy="70" rx="20" ry="5" fill="#666"/>
+                    <path d="M10 30 L10 65 Q10 70 15 70 L45 70 Q50 70 50 65 L50 30 Q50 20 40 20 L20 20 Q10 20 10 30" fill="#78909C"/>
+                    <path d="M50 35 L60 30 L60 45 L50 40" fill="#78909C"/>
+                    <ellipse cx="30" cy="20" rx="15" ry="5" fill="#90A4AE"/>
+                    <!-- Steam -->
+                    <g id="steam" class="opacity-0">
+                      <path d="M25 10 Q20 5 25 0" fill="none" stroke="white" stroke-width="2" opacity="0.7"/>
+                      <path d="M30 12 Q35 5 30 -2" fill="none" stroke="white" stroke-width="2" opacity="0.7"/>
+                      <path d="M35 10 Q30 3 35 -3" fill="none" stroke="white" stroke-width="2" opacity="0.7"/>
+                    </g>
+                  </svg>
+                </div>
+                
+                <!-- Glass -->
+                <div id="glass-container" class="relative">
+                  <svg viewBox="0 0 50 70" class="w-14 h-20">
+                    <path id="glass-shape" d="M10 10 L8 60 Q8 65 15 65 L35 65 Q42 65 42 60 L40 10 Q40 5 35 5 L15 5 Q10 5 10 10" fill="rgba(200,230,255,0.5)" stroke="#90CAF9" stroke-width="2"/>
+                    <!-- Crack (hidden initially) -->
+                    <g id="crack" class="opacity-0">
+                      <path d="M20 20 L25 35 L22 45 L28 55" fill="none" stroke="#333" stroke-width="2"/>
+                      <path d="M30 15 L28 25 L32 40" fill="none" stroke="#333" stroke-width="2"/>
+                    </g>
+                  </svg>
+                  <div id="glass-temp" class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs font-bold text-blue-600">🧊 Dingin</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="flex flex-col justify-center">
+              <button onclick="runGlassExperiment()" id="exp-btn" class="mb-4 px-6 py-3 bg-red-500 text-white rounded-xl font-bold hover:bg-red-600 transition-all hover:scale-105 flex items-center justify-center gap-2">
+                <span>🔥</span> Tuang Air Panas
+              </button>
+              
+              <div id="exp-explanation" class="bg-yellow-50 rounded-xl p-4 hidden">
+                <h4 class="font-bold text-yellow-800 mb-2">💡 Penjelasan:</h4>
+                <p class="text-sm text-gray-700">
+                  Saat air panas dituang ke gelas dingin, bagian dalam gelas memuai lebih cepat dari bagian luar. 
+                  <strong>Perbedaan pemuaian ini</strong> menyebabkan tegangan pada gelas dan akhirnya pecah!
+                </p>
+                <p class="text-sm text-gray-600 mt-2">
+                  <strong>Tips:</strong> Gunakan gelas Pyrex yang lebih tahan panas, atau panaskan gelas secara perlahan terlebih dahulu.
+                </p>
+              </div>
+              
+              <button onclick="resetGlassExperiment()" id="reset-btn" class="mt-4 px-6 py-3 bg-gray-500 text-white rounded-xl font-bold hover:bg-gray-600 transition-all hidden">
+                🔄 Ulangi Eksperimen
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Interactive Calculator -->
+        <div class="bg-white rounded-2xl p-6 shadow-lg">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-3xl">🔢</span>
+            <h3 class="text-xl font-bold text-gray-800">Kalkulator Pemuaian Panjang</h3>
+          </div>
+          
+          <p class="text-gray-600 mb-6">Hitung pertambahan panjang benda dengan rumus: <span class="font-mono bg-gray-100 px-2 py-1 rounded">ΔL = L₀ × α × ΔT</span></p>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2" for="initial-length">Panjang Awal (L₀) dalam meter:</label>
+                <input type="number" id="initial-length" value="1" min="0" step="0.1" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2" for="material-select">Pilih Bahan:</label>
+                <select id="material-select" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors">
+                  <option value="22.5">Aluminium (22,5 × 10⁻⁶)</option>
+                  <option value="19">Perak (19 × 10⁻⁶)</option>
+                  <option value="14">Emas (14 × 10⁻⁶)</option>
+                  <option value="11" selected>Besi/Baja (11 × 10⁻⁶)</option>
+                  <option value="8.5">Kaca Biasa (8,5 × 10⁻⁶)</option>
+                  <option value="3.25">Kaca Pyrex (3,25 × 10⁻⁶)</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2" for="temp-change">Perubahan Suhu (ΔT) dalam °C:</label>
+                <input type="number" id="temp-change" value="100" min="0" step="1" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors">
+              </div>
+              
+              <button onclick="calculateExpansion()" class="w-full px-6 py-3 gradient-bg text-white rounded-xl font-bold hover:opacity-90 transition-all hover:scale-105">
+                🧮 Hitung Pemuaian
+              </button>
+            </div>
+            
+            <div class="bg-gradient-to-br from-purple-100 to-indigo-100 rounded-xl p-6">
+              <h4 class="font-bold text-purple-800 mb-4">📊 Hasil Perhitungan:</h4>
+              <div id="calc-result" class="space-y-3">
+                <p class="text-gray-600">Klik tombol "Hitung Pemuaian" untuk melihat hasil</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 9: Quiz HOTS -->
+      <section id="quiz" class="mb-16 scroll-mt-32">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-lg">9</div>
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-800 section-title">Kuis HOTS - Uji Pemahamanmu!</h2>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 shadow-lg">
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+              <span class="text-3xl">🎯</span>
+              <div>
+                <h3 class="font-bold text-gray-800">10 Soal Higher Order Thinking Skills</h3>
+                <p class="text-sm text-gray-500">Analisis, Evaluasi & Kreasi</p>
+              </div>
+            </div>
+            <div id="quiz-score" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-full font-bold hidden">
+              Skor: <span id="score-value">0</span>/10
+            </div>
+          </div>
+          
+          <div id="quiz-container">
+            <!-- Questions will be rendered here -->
+          </div>
+          
+          <div id="quiz-navigation" class="flex justify-between items-center mt-6 pt-6 border-t hidden">
+            <button onclick="prevQuestion()" id="prev-btn" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-xl font-bold hover:bg-gray-300 transition-all disabled:opacity-50" disabled>
+              ← Sebelumnya
+            </button>
+            <span id="question-indicator" class="text-gray-500 font-medium">Soal 1 dari 10</span>
+            <button onclick="nextQuestion()" id="next-btn" class="px-6 py-3 gradient-bg text-white rounded-xl font-bold hover:opacity-90 transition-all">
+              Selanjutnya →
+            </button>
+          </div>
+          
+          <div id="quiz-start" class="text-center py-8">
+            <div class="w-24 h-24 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-5xl">📝</span>
+            </div>
+            <h4 class="text-xl font-bold text-gray-800 mb-2">Siap Mengerjakan Kuis?</h4>
+            <p class="text-gray-600 mb-6">Jawab 10 soal HOTS tentang pemuaian untuk menguji pemahamanmu!</p>
+            <button onclick="startQuiz()" class="px-8 py-4 gradient-bg text-white rounded-xl font-bold text-lg hover:opacity-90 transition-all hover:scale-105">
+              🚀 Mulai Kuis
+            </button>
+          </div>
+          
+          <div id="quiz-result" class="text-center py-8 hidden">
+            <div id="result-icon" class="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4"></div>
+            <h4 id="result-title" class="text-2xl font-bold mb-2"></h4>
+            <p id="result-message" class="text-gray-600 mb-6"></p>
+            <div id="final-score" class="text-4xl font-bold gradient-bg bg-clip-text text-transparent mb-6"></div>
+            <button onclick="restartQuiz()" class="px-8 py-4 bg-gray-200 text-gray-700 rounded-xl font-bold hover:bg-gray-300 transition-all">
+              🔄 Ulangi Kuis
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-8">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="flex items-center gap-4">
+            <img src="https://i.imgur.com/mRmw86t.jpeg" alt="Foto Pembuat" class="w-16 h-16 rounded-full border-4 border-white/30 object-cover" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'; this.alt='👨‍🏫';">
+            <div>
+              <p class="font-bold text-lg">Algian Manggara, S.Agr</p>
+              <p class="text-white/70 text-sm">Pembuat Materi Pembelajaran</p>
+            </div>
+          </div>
+          
+          <div class="text-center md:text-right">
+            <p class="text-white/70 text-sm">Media Pembelajaran Interaktif</p>
+            <p class="font-bold">Memahami Fenomena Pemuaian</p>
+            <p class="text-white/50 text-xs mt-2">© 2026 Algian Manggara, S.Agr</p>
+          </div>
+        </div>
+        
+        <div class="mt-6 pt-6 border-t border-white/20 text-center">
+          <p class="text-white/60 text-sm">
+            Dibuat dengan ❤️ untuk pembelajaran Fisika yang lebih menyenangkan
+          </p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      page_title: 'Fenomena Pemuaian',
+      primary_color: '#667eea',
+      secondary_color: '#764ba2',
+      background_color: '#f9fafb',
+      text_color: '#1f2937',
+      accent_color: '#fcd34d'
+    };
+
+    let config = { ...defaultConfig };
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                config.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+              get: () => cfg.secondary_color || defaultConfig.secondary_color,
+              set: (value) => {
+                config.secondary_color = value;
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            },
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => cfg.accent_color || defaultConfig.accent_color,
+              set: (value) => {
+                config.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['page_title', cfg.page_title || defaultConfig.page_title]
+        ])
+      });
+    }
+
+    function applyConfig() {
+      const pageTitle = document.getElementById('page-title');
+      if (pageTitle) {
+        pageTitle.textContent = config.page_title || defaultConfig.page_title;
+      }
+    }
+
+    // Molecule Animation State
+    let moleculeState = 'normal';
+    
+    function heatMolecules() {
+      moleculeState = 'hot';
+      const molecules = document.getElementById('molecules');
+      const tempIndicator = document.getElementById('temp-indicator');
+      const container = document.getElementById('molecule-container');
+      
+      molecules.style.gap = '12px';
+      molecules.classList.add('molecule-vibrate');
+      tempIndicator.innerHTML = '🌡️ 100°C';
+      tempIndicator.classList.remove('text-blue-600');
+      tempIndicator.classList.add('text-red-600');
+      container.style.background = 'linear-gradient(to br, #fecaca, #fca5a5)';
+      
+      document.querySelectorAll('.molecule').forEach(m => {
+        m.classList.remove('bg-blue-500');
+        m.classList.add('bg-red-500');
+      });
+      
+      updateProgress();
+    }
+    
+    function coolMolecules() {
+      moleculeState = 'cold';
+      const molecules = document.getElementById('molecules');
+      const tempIndicator = document.getElementById('temp-indicator');
+      const container = document.getElementById('molecule-container');
+      
+      molecules.style.gap = '2px';
+      molecules.classList.remove('molecule-vibrate');
+      tempIndicator.innerHTML = '🌡️ 0°C';
+      tempIndicator.classList.remove('text-red-600');
+      tempIndicator.classList.add('text-blue-600');
+      container.style.background = 'linear-gradient(to br, #dbeafe, #bfdbfe)';
+      
+      document.querySelectorAll('.molecule').forEach(m => {
+        m.classList.remove('bg-red-500');
+        m.classList.add('bg-blue-500');
+      });
+      
+      updateProgress();
+    }
+
+    // Glass Experiment
+    function runGlassExperiment() {
+      const status = document.getElementById('exp-status');
+      const steam = document.getElementById('steam');
+      const crack = document.getElementById('crack');
+      const glassTemp = document.getElementById('glass-temp');
+      const explanation = document.getElementById('exp-explanation');
+      const expBtn = document.getElementById('exp-btn');
+      const resetBtn = document.getElementById('reset-btn');
+      
+      status.textContent = 'Status: Menuang air panas...';
+      status.classList.add('bg-orange-100', 'text-orange-700');
+      steam.classList.remove('opacity-0');
+      steam.classList.add('animate-pulse');
+      expBtn.disabled = true;
+      expBtn.classList.add('opacity-50');
+      
+      setTimeout(() => {
+        status.textContent = 'Status: Gelas mengalami tegangan...';
+        glassTemp.innerHTML = '🔥 Bagian dalam panas!';
+        glassTemp.classList.remove('text-blue-600');
+        glassTemp.classList.add('text-red-600');
+      }, 1500);
+      
+      setTimeout(() => {
+        status.textContent = 'Status: PECAH! 💥';
+        status.classList.remove('bg-orange-100', 'text-orange-700');
+        status.classList.add('bg-red-100', 'text-red-700');
+        crack.classList.remove('opacity-0');
+        explanation.classList.remove('hidden');
+        resetBtn.classList.remove('hidden');
+      }, 3000);
+      
+      updateProgress();
+    }
+    
+    function resetGlassExperiment() {
+      const status = document.getElementById('exp-status');
+      const steam = document.getElementById('steam');
+      const crack = document.getElementById('crack');
+      const glassTemp = document.getElementById('glass-temp');
+      const explanation = document.getElementById('exp-explanation');
+      const expBtn = document.getElementById('exp-btn');
+      const resetBtn = document.getElementById('reset-btn');
+      
+      status.textContent = 'Status: Siap';
+      status.classList.remove('bg-orange-100', 'text-orange-700', 'bg-red-100', 'text-red-700');
+      steam.classList.add('opacity-0');
+      steam.classList.remove('animate-pulse');
+      crack.classList.add('opacity-0');
+      glassTemp.innerHTML = '🧊 Dingin';
+      glassTemp.classList.remove('text-red-600');
+      glassTemp.classList.add('text-blue-600');
+      explanation.classList.add('hidden');
+      expBtn.disabled = false;
+      expBtn.classList.remove('opacity-50');
+      resetBtn.classList.add('hidden');
+    }
+
+    // Expansion Calculator
+    function calculateExpansion() {
+      const L0 = parseFloat(document.getElementById('initial-length').value);
+      const alpha = parseFloat(document.getElementById('material-select').value);
+      const deltaT = parseFloat(document.getElementById('temp-change').value);
+      
+      const deltaL = L0 * alpha * Math.pow(10, -6) * deltaT;
+      const Lf = L0 + deltaL;
+      
+      const resultDiv = document.getElementById('calc-result');
+      resultDiv.innerHTML = `
+        <div class="bg-white rounded-lg p-4 mb-3">
+          <p class="text-sm text-gray-600 mb-1">Rumus:</p>
+          <p class="font-mono text-purple-800">ΔL = L₀ × α × ΔT</p>
+          <p class="font-mono text-purple-800">ΔL = ${L0} × ${alpha}×10⁻⁶ × ${deltaT}</p>
+        </div>
+        <div class="bg-green-100 rounded-lg p-4 mb-3">
+          <p class="text-sm text-green-700 mb-1">Pertambahan Panjang (ΔL):</p>
+          <p class="text-2xl font-bold text-green-800">${(deltaL * 1000).toFixed(4)} mm</p>
+          <p class="text-sm text-green-600">(${deltaL.toExponential(4)} m)</p>
+        </div>
+        <div class="bg-blue-100 rounded-lg p-4">
+          <p class="text-sm text-blue-700 mb-1">Panjang Akhir (L):</p>
+          <p class="text-2xl font-bold text-blue-800">${Lf.toFixed(6)} m</p>
+        </div>
+      `;
+      
+      updateProgress();
+    }
+
+    // Quiz System
+    const quizQuestions = [
+      {
+        question: "Seorang insinyur merancang jembatan di daerah tropis dengan perbedaan suhu siang-malam yang besar (20°C - 40°C). Jika jembatan terbuat dari baja sepanjang 500 meter, mengapa insinyur tersebut HARUS menyediakan celah ekspansi di beberapa titik?",
+        options: [
+          "Untuk menghemat biaya pembangunan",
+          "Untuk mencegah kerusakan akibat tegangan termal saat baja memuai dan menyusut",
+          "Untuk mempermudah perbaikan jembatan",
+          "Untuk membuat jembatan lebih estetis"
+        ],
+        correct: 1,
+        explanation: "Baja akan memuai dan menyusut secara signifikan dengan perubahan suhu 20°C. Tanpa celah ekspansi, tegangan yang dihasilkan dapat menyebabkan retakan atau kerusakan struktural pada jembatan."
+      },
+      {
+        question: "Di laboratorium, seorang siswa menuangkan air mendidih ke dalam gelas kaca biasa (koefisien muai 8,5 × 10⁻⁶/°C) dan gelas Pyrex (koefisien muai 3,25 × 10⁻⁶/°C). Gelas kaca biasa pecah, tetapi gelas Pyrex tidak. Analisis mengapa hal ini terjadi!",
+        options: [
+          "Gelas Pyrex lebih tebal sehingga lebih kuat",
+          "Gelas kaca biasa memiliki koefisien muai lebih besar, menyebabkan perbedaan pemuaian yang lebih besar antara permukaan dalam dan luar",
+          "Air mendidih memiliki tekanan yang lebih besar pada gelas biasa",
+          "Gelas Pyrex dibuat dari bahan yang lebih mahal"
+        ],
+        correct: 1,
+        explanation: "Koefisien muai kaca biasa (8,5 × 10⁻⁶/°C) hampir 3x lebih besar dari Pyrex (3,25 × 10⁻⁶/°C). Saat air panas dituang, bagian dalam gelas biasa memuai jauh lebih cepat dari bagian luar yang masih dingin, menciptakan tegangan yang menyebabkan pecah."
+      },
+      {
+        question: "Pada siang hari yang panas, kabel listrik antar tiang tampak lebih kendur dibanding malam hari. Jika seorang teknisi ingin memasang kabel baru, kapan waktu TERBAIK untuk pemasangan dan mengapa?",
+        options: [
+          "Siang hari, karena kabel sudah dalam kondisi maksimal sehingga tidak akan putus saat malam",
+          "Malam hari, karena kabel dalam kondisi menyusut sehingga saat memuai di siang hari tidak terlalu kendur",
+          "Kapan saja tidak masalah, karena kabel modern sudah dirancang tahan segala cuaca",
+          "Pagi hari, karena suhu paling stabil"
+        ],
+        correct: 1,
+        explanation: "Pemasangan di malam hari (saat kabel menyusut) memungkinkan penyesuaian tegangan yang tepat. Jika dipasang siang hari saat kabel sudah memuai maksimal, maka di malam hari kabel akan terlalu tegang dan berisiko putus."
+      },
+      {
+        question: "Sebuah bimetal terdiri dari kuningan (α = 19 × 10⁻⁶/°C) yang ditempel dengan besi (α = 11 × 10⁻⁶/°C). Saat dipanaskan, ke arah mana bimetal akan melengkung dan mengapa?",
+        options: [
+          "Melengkung ke arah kuningan, karena besi memuai lebih cepat",
+          "Melengkung ke arah besi, karena kuningan memuai lebih cepat mendorong besi",
+          "Tetap lurus, karena keduanya saling menyeimbangkan",
+          "Berputar, karena gaya memuai bekerja dari dua arah"
+        ],
+        correct: 1,
+        explanation: "Kuningan memiliki koefisien muai lebih besar (19 vs 11 × 10⁻⁶/°C), sehingga memuai lebih panjang. Karena kedua logam ditempel, kuningan yang lebih panjang akan 'mendorong' dan membuat bimetal melengkung ke arah besi."
+      },
+      {
+        question: "Seorang koki profesional menggunakan wajan aluminium untuk memasak. Ditinjau dari koefisien muai aluminium yang tinggi (22,5 × 10⁻⁶/°C), evaluasi KEUNTUNGAN dan KERUGIAN penggunaan bahan ini!",
+        options: [
+          "Keuntungan: panas merata cepat; Kerugian: mudah melengkung jika dipanaskan tidak merata",
+          "Keuntungan: ringan; Kerugian: cepat berkarat",
+          "Keuntungan: murah; Kerugian: tidak tahan panas",
+          "Keuntungan: mengkilap; Kerugian: sulit dibersihkan"
+        ],
+        correct: 0,
+        explanation: "Aluminium dengan koefisien muai tinggi akan memuai merata dengan cepat, mendistribusikan panas secara efisien. Namun, jika dipanaskan tidak merata (misalnya api hanya di satu titik), bagian yang lebih panas akan memuai lebih banyak dan menyebabkan wajan melengkung."
+      },
+      {
+        question: "Dalam pembuatan rel kereta api, celah antar rel (expansion gap) biasanya dibuat sekitar 6-10 mm di Indonesia. Jika rel dipasang di negara dengan empat musim seperti Rusia (rentang suhu -30°C hingga +35°C), bagaimana seharusnya ukuran celah dibandingkan Indonesia?",
+        options: [
+          "Lebih kecil, karena suhu rata-rata lebih rendah",
+          "Sama saja, karena baja yang digunakan sama",
+          "Lebih besar, karena rentang perubahan suhu lebih ekstrem",
+          "Tidak perlu celah, karena rel dibuat dari baja khusus"
+        ],
+        correct: 2,
+        explanation: "Rentang suhu di Rusia (65°C) jauh lebih besar dari Indonesia (sekitar 15°C). Dengan perubahan panjang yang proporsional terhadap perubahan suhu (ΔL = L₀ × α × ΔT), celah ekspansi harus lebih besar untuk mengakomodasi pemuaian dan penyusutan yang lebih ekstrem."
+      },
+      {
+        question: "Sebuah termometer raksa menunjukkan 37°C saat digunakan mengukur suhu tubuh. Jika termometer yang sama dimasukkan ke dalam air es (0°C), perubahan apa yang terjadi pada kolom raksa dan mengapa fenomena ini bisa digunakan untuk mengukur suhu?",
+        options: [
+          "Kolom raksa naik karena air es menekan raksa",
+          "Kolom raksa turun karena raksa menyusut, dan penyusutan ini proporsional terhadap penurunan suhu",
+          "Kolom raksa tetap karena raksa tidak bereaksi dengan air",
+          "Kolom raksa menghilang karena raksa membeku"
+        ],
+        correct: 1,
+        explanation: "Saat suhu turun dari 37°C ke 0°C, raksa akan menyusut secara proporsional. Karena hubungan antara perubahan volume dan perubahan suhu bersifat linear, kita dapat membuat skala suhu berdasarkan tinggi kolom raksa."
+      },
+      {
+        question: "Pada balon udara panas, udara di dalam balon dipanaskan hingga sekitar 100°C. Berdasarkan prinsip pemuaian gas, jelaskan mekanisme yang menyebabkan balon dapat mengangkat penumpang!",
+        options: [
+          "Udara panas lebih berat sehingga mendorong balon ke atas",
+          "Udara panas memuai, kerapatannya berkurang, menjadi lebih ringan dari udara sekitar sehingga menghasilkan gaya angkat",
+          "Api di dalam balon menciptakan gaya dorong seperti roket",
+          "Balon terbuat dari bahan yang lebih ringan dari udara"
+        ],
+        correct: 1,
+        explanation: "Saat dipanaskan, gas memuai (volumenya bertambah). Dengan massa yang sama tetapi volume lebih besar, kerapatan (massa/volume) udara panas menjadi lebih kecil. Udara dengan kerapatan lebih kecil dari lingkungannya akan mengalami gaya angkat (prinsip Archimedes)."
+      },
+      {
+        question: "Seorang mekanik kesulitan memasang cincin besi pada as roda kayu. Solusi cerdas apa yang bisa diterapkan berdasarkan prinsip pemuaian?",
+        options: [
+          "Menggunakan palu yang lebih besar untuk memaksa cincin masuk",
+          "Memanaskan cincin besi agar memuai, memasangnya, lalu membiarkan mendingin dan menyusut menggenggam as",
+          "Mendinginkan as kayu agar menyusut",
+          "Mengolesi minyak pada as kayu"
+        ],
+        correct: 1,
+        explanation: "Dengan memanaskan cincin besi, diameternya akan membesar sehingga mudah dipasang. Saat mendingin, cincin menyusut dan menggenggam as dengan sangat kuat. Teknik ini disebut 'shrink fitting' dan digunakan dalam industri."
+      },
+      {
+        question: "Sebuah gedung pencakar langit setinggi 300 meter dibangun dari baja dan beton. Jika perbedaan suhu antara musim panas dan dingin mencapai 30°C, PREDIKSI perubahan ketinggian gedung dan jelaskan mengapa arsitek harus memperhitungkan hal ini!",
+        options: [
+          "Tidak ada perubahan karena gedung kokoh",
+          "Perubahan sekitar 10 cm, harus diperhitungkan agar lift dan pipa air tetap berfungsi normal",
+          "Perubahan sangat kecil (< 1 mm) sehingga bisa diabaikan",
+          "Gedung akan roboh karena pemuaian terlalu besar"
+        ],
+        correct: 1,
+        explanation: "Dengan ΔL = 300m × 11×10⁻⁶/°C × 30°C ≈ 0,1m (10 cm). Perubahan 10 cm sangat signifikan untuk sistem lift, pipa air, dan instalasi listrik. Arsitek harus menyediakan ruang ekspansi dan sambungan fleksibel untuk mengakomodasi pergerakan ini."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = [];
+    let quizStarted = false;
+
+    function startQuiz() {
+      quizStarted = true;
+      currentQuestion = 0;
+      userAnswers = new Array(quizQuestions.length).fill(null);
+      
+      document.getElementById('quiz-start').classList.add('hidden');
+      document.getElementById('quiz-navigation').classList.remove('hidden');
+      document.getElementById('quiz-score').classList.remove('hidden');
+      document.getElementById('quiz-result').classList.add('hidden');
+      
+      renderQuestion();
+      updateProgress();
+    }
+
+    function renderQuestion() {
+      const container = document.getElementById('quiz-container');
+      const q = quizQuestions[currentQuestion];
+      
+      let optionsHtml = '';
+      q.options.forEach((opt, idx) => {
+        const isSelected = userAnswers[currentQuestion] === idx;
+        const isAnswered = userAnswers[currentQuestion] !== null;
+        const isCorrect = idx === q.correct;
+        
+        let stateClass = '';
+        if (isAnswered) {
+          if (isSelected && isCorrect) stateClass = 'correct';
+          else if (isSelected && !isCorrect) stateClass = 'incorrect';
+          else if (isCorrect) stateClass = 'correct';
+        } else if (isSelected) {
+          stateClass = 'selected';
+        }
+        
+        optionsHtml += `
+          <button 
+            onclick="selectAnswer(${idx})" 
+            class="quiz-option w-full text-left p-4 border-2 rounded-xl mb-3 transition-all ${stateClass}"
+            ${isAnswered ? 'disabled' : ''}
+          >
+            <div class="flex items-start gap-3">
+              <span class="w-8 h-8 flex-shrink-0 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-600">
+                ${String.fromCharCode(65 + idx)}
+              </span>
+              <span>${opt}</span>
+            </div>
+          </button>
+        `;
+      });
+      
+      let explanationHtml = '';
+      if (userAnswers[currentQuestion] !== null) {
+        const isCorrect = userAnswers[currentQuestion] === q.correct;
+        explanationHtml = `
+          <div class="mt-4 p-4 rounded-xl ${isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xl">${isCorrect ? '✅' : '❌'}</span>
+              <span class="font-bold ${isCorrect ? 'text-green-700' : 'text-red-700'}">
+                ${isCorrect ? 'Benar!' : 'Belum tepat!'}
+              </span>
+            </div>
+            <p class="text-sm text-gray-700"><strong>Penjelasan:</strong> ${q.explanation}</p>
+          </div>
+        `;
+      }
+      
+      container.innerHTML = `
+        <div class="mb-4">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-bold">
+              Soal ${currentQuestion + 1}
+            </span>
+            <span class="text-xs text-gray-500">HOTS - Analisis</span>
+          </div>
+          <p class="text-lg text-gray-800 leading-relaxed">${q.question}</p>
+        </div>
+        <div class="space-y-2">
+          ${optionsHtml}
+        </div>
+        ${explanationHtml}
+      `;
+      
+      updateNavigation();
+      updateScore();
+    }
+
+    function selectAnswer(idx) {
+      if (userAnswers[currentQuestion] !== null) return;
+      
+      userAnswers[currentQuestion] = idx;
+      renderQuestion();
+      updateScore();
+      updateProgress();
+    }
+
+    function updateNavigation() {
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const indicator = document.getElementById('question-indicator');
+      
+      prevBtn.disabled = currentQuestion === 0;
+      indicator.textContent = `Soal ${currentQuestion + 1} dari ${quizQuestions.length}`;
+      
+      if (currentQuestion === quizQuestions.length - 1) {
+        const allAnswered = userAnswers.every(a => a !== null);
+        nextBtn.textContent = allAnswered ? '🏆 Lihat Hasil' : 'Selanjutnya →';
+        nextBtn.onclick = allAnswered ? showResult : nextQuestion;
+      } else {
+        nextBtn.textContent = 'Selanjutnya →';
+        nextBtn.onclick = nextQuestion;
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      }
+    }
+
+    function updateScore() {
+      const correctCount = userAnswers.reduce((sum, ans, idx) => {
+        return sum + (ans === quizQuestions[idx].correct ? 1 : 0);
+      }, 0);
+      document.getElementById('score-value').textContent = correctCount;
+    }
+
+    function showResult() {
+      const correctCount = userAnswers.reduce((sum, ans, idx) => {
+        return sum + (ans === quizQuestions[idx].correct ? 1 : 0);
+      }, 0);
+      
+      const percentage = (correctCount / quizQuestions.length) * 100;
+      
+      document.getElementById('quiz-container').innerHTML = '';
+      document.getElementById('quiz-navigation').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      
+      const resultIcon = document.getElementById('result-icon');
+      const resultTitle = document.getElementById('result-title');
+      const resultMessage = document.getElementById('result-message');
+      const finalScore = document.getElementById('final-score');
+      
+      if (percentage >= 80) {
+        resultIcon.innerHTML = '<span class="text-5xl">🏆</span>';
+        resultIcon.className = 'w-24 h-24 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4';
+        resultTitle.textContent = 'Luar Biasa!';
+        resultTitle.className = 'text-2xl font-bold text-yellow-600 mb-2';
+        resultMessage.textContent = 'Kamu menguasai materi pemuaian dengan sangat baik!';
+      } else if (percentage >= 60) {
+        resultIcon.innerHTML = '<span class="text-5xl">👍</span>';
+        resultIcon.className = 'w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4';
+        resultTitle.textContent = 'Bagus!';
+        resultTitle.className = 'text-2xl font-bold text-green-600 mb-2';
+        resultMessage.textContent = 'Kamu sudah memahami konsep dasar pemuaian. Terus belajar!';
+      } else {
+        resultIcon.innerHTML = '<span class="text-5xl">💪</span>';
+        resultIcon.className = 'w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4';
+        resultTitle.textContent = 'Semangat!';
+        resultTitle.className = 'text-2xl font-bold text-blue-600 mb-2';
+        resultMessage.textContent = 'Pelajari kembali materinya dan coba lagi. Kamu pasti bisa!';
+      }
+      
+      finalScore.textContent = `${correctCount}/10 (${percentage}%)`;
+      
+      updateProgress();
+    }
+
+    function restartQuiz() {
+      quizStarted = false;
+      document.getElementById('quiz-start').classList.remove('hidden');
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('quiz-score').classList.add('hidden');
+      document.getElementById('quiz-navigation').classList.add('hidden');
+      document.getElementById('quiz-container').innerHTML = '';
+    }
+
+    // Progress Tracking
+    function updateProgress() {
+      let progress = 0;
+      
+      // Molecule interaction (20%)
+      if (moleculeState !== 'normal') progress += 20;
+      
+      // Glass experiment (20%)
+      if (document.getElementById('exp-explanation') && !document.getElementById('exp-explanation').classList.contains('hidden')) {
+        progress += 20;
+      }
+      
+      // Calculator used (20%)
+      const calcResult = document.getElementById('calc-result');
+      if (calcResult && calcResult.innerHTML.includes('Pertambahan Panjang')) {
+        progress += 20;
+      }
+      
+      // Quiz progress (40%)
+      if (quizStarted) {
+        const answeredCount = userAnswers.filter(a => a !== null).length;
+        progress += Math.round((answeredCount / quizQuestions.length) * 40);
+      }
+      
+      const progressBar = document.getElementById('progress-bar');
+      const progressText = document.getElementById('progress-text');
+      
+      progressBar.style.width = `${progress}%`;
+      progressText.textContent = `${progress}%`;
+    }
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Initialize
+    applyConfig();
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf9151530afe794',t:'MTc3MTM3MTEyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manusia dan Ekosistem</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; padding: 0; }
+    
+    .font-heading { font-family: 'Playfair Display', Georgia, serif; }
+    .font-body { font-family: 'Source Sans Pro', Arial, sans-serif; }
+    
+    .hero-gradient {
+      background: linear-gradient(135deg, #0d4f3c 0%, #1a7a5c 50%, #2d9a6e 100%);
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .section-fade {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .nav-item {
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #f59e0b;
+      transition: width 0.3s ease;
+    }
+    .nav-item:hover::after,
+    .nav-item.active::after {
+      width: 100%;
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .quiz-option:hover {
+      background: #f0fdf4;
+      border-color: #22c55e;
+    }
+    .quiz-option.selected {
+      background: #dcfce7;
+      border-color: #22c55e;
+    }
+    .quiz-option.correct {
+      background: #dcfce7;
+      border-color: #22c55e;
+    }
+    .quiz-option.incorrect {
+      background: #fef2f2;
+      border-color: #ef4444;
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .img-container {
+      overflow: hidden;
+      border-radius: 12px;
+    }
+    .img-container img {
+      transition: transform 0.5s ease;
+    }
+    .img-container:hover img {
+      transform: scale(1.05);
+    }
+    
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -25px;
+      top: 8px;
+      width: 12px;
+      height: 12px;
+      background: #f59e0b;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 3px #f59e0b;
+    }
+    
+    .stat-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
+      backdrop-filter: blur(10px);
+    }
+    
+    .interactive-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .interactive-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+    .interactive-btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .accordion-content.open {
+      max-height: 1000px;
+    }
+    
+    .floating-nav {
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.95);
+    }
+  </style>
+</head>
+<body class="h-full font-body bg-stone-50 text-stone-800 overflow-auto">
+  <div id="app" class="w-full min-h-full">
+    
+    <!-- Floating Navigation -->
+    <nav class="floating-nav fixed top-0 left-0 right-0 z-50 shadow-md">
+      <div class="max-w-7xl mx-auto px-4 py-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center">
+              <span class="text-white text-xl">🌍</span>
+            </div>
+            <span class="font-heading font-bold text-emerald-800 text-lg hidden sm:block" id="nav-title">Manusia & Ekosistem</span>
+          </div>
+          <div class="flex items-center gap-1 sm:gap-4 text-sm">
+            <button onclick="scrollToSection('materi')" class="nav-item px-2 sm:px-3 py-2 text-stone-600 hover:text-emerald-700 font-semibold">Materi</button>
+            <button onclick="scrollToSection('interaktif')" class="nav-item px-2 sm:px-3 py-2 text-stone-600 hover:text-emerald-700 font-semibold">Aktivitas</button>
+            <button onclick="scrollToSection('kuis')" class="nav-item px-2 sm:px-3 py-2 text-stone-600 hover:text-emerald-700 font-semibold">Kuis</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <header class="hero-gradient pt-20 pb-16 px-4 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <svg viewBox="0 0 800 600" class="w-full h-full">
+          <circle cx="100" cy="100" r="80" fill="white"/>
+          <circle cx="700" cy="500" r="120" fill="white"/>
+          <circle cx="400" cy="300" r="60" fill="white"/>
+        </svg>
+      </div>
+      <div class="max-w-5xl mx-auto text-center relative z-10">
+        <div class="inline-block mb-4 px-4 py-2 bg-white/20 rounded-full text-white/90 text-sm font-semibold">
+          📚 Media Pembelajaran Interaktif
+        </div>
+        <h1 id="main-title" class="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+          Manusia dan Ekosistem
+        </h1>
+        <p class="text-xl sm:text-2xl text-emerald-100 mb-8 max-w-3xl mx-auto">
+          Dampak, Tantangan, dan Solusi untuk Masa Depan Berkelanjutan
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <button onclick="scrollToSection('materi')" class="interactive-btn bg-amber-500 hover:bg-amber-400 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all">
+            Mulai Belajar →
+          </button>
+          <button onclick="scrollToSection('kuis')" class="interactive-btn bg-white/20 hover:bg-white/30 text-white font-bold py-3 px-8 rounded-full border-2 border-white/50 transition-all">
+            Langsung ke Kuis
+          </button>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Learning Objectives -->
+    <section class="py-12 px-4 bg-white">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-10">
+          <h2 class="font-heading text-3xl font-bold text-emerald-800 mb-3">🎯 Tujuan Pembelajaran</h2>
+          <p class="text-stone-600">Setelah mempelajari materi ini, kamu diharapkan dapat:</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="card-hover bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded-2xl border border-emerald-100">
+            <div class="w-14 h-14 bg-emerald-500 rounded-xl flex items-center justify-center text-2xl mb-4">🔍</div>
+            <h3 class="font-bold text-emerald-800 mb-2">Menganalisis</h3>
+            <p class="text-stone-600 text-sm">Dampak aktivitas manusia terhadap keseimbangan ekosistem</p>
+          </div>
+          <div class="card-hover bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-2xl border border-amber-100">
+            <div class="w-14 h-14 bg-amber-500 rounded-xl flex items-center justify-center text-2xl mb-4">💡</div>
+            <h3 class="font-bold text-amber-800 mb-2">Memahami</h3>
+            <p class="text-stone-600 text-sm">Pentingnya konservasi dan metode pelestarian keanekaragaman hayati</p>
+          </div>
+          <div class="card-hover bg-gradient-to-br from-blue-50 to-cyan-50 p-6 rounded-2xl border border-blue-100">
+            <div class="w-14 h-14 bg-blue-500 rounded-xl flex items-center justify-center text-2xl mb-4">🌱</div>
+            <h3 class="font-bold text-blue-800 mb-2">Menerapkan</h3>
+            <p class="text-stone-600 text-sm">Solusi kreatif untuk menjaga kelestarian lingkungan</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Main Content -->
+    <main id="materi" class="py-12 px-4">
+      <div class="max-w-6xl mx-auto">
+        
+        <!-- Section 1: Pendahuluan -->
+        <section class="mb-16 section-fade">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">1</div>
+            <h2 class="font-heading text-3xl font-bold text-emerald-800">Pendahuluan: Dominasi Manusia</h2>
+          </div>
+          
+          <div class="grid lg:grid-cols-2 gap-8 items-center">
+            <div>
+              <div class="img-container shadow-xl mb-6">
+                <img src="https://images.unsplash.com/photo-1473090826765-d54ac2fdc1eb?w=800&h=500&fit=crop" 
+                     alt="Kota metropolitan yang menggambarkan dominasi manusia di Bumi"
+                     class="w-full h-64 object-cover"
+                     loading="lazy"
+                     onerror="this.style.background='linear-gradient(135deg, #0d4f3c, #1a7a5c)'; this.alt='Ilustrasi dominasi manusia';">
+              </div>
+              <p class="text-sm text-stone-500 italic text-center">Kota metropolitan sebagai simbol dominasi manusia di planet Bumi</p>
+            </div>
+            <div class="space-y-6">
+              <div class="bg-emerald-50 border-l-4 border-emerald-500 p-5 rounded-r-xl">
+                <h3 class="font-bold text-emerald-800 mb-2">🏆 Spesies Paling Mendominasi</h3>
+                <p class="text-stone-700">Manusia (<em>Homo sapiens</em>) adalah spesies yang paling mendominasi di Bumi. Dengan populasi lebih dari 8 miliar jiwa, manusia telah mengubah hampir setiap sudut planet ini.</p>
+              </div>
+              <div class="bg-amber-50 border-l-4 border-amber-500 p-5 rounded-r-xl">
+                <h3 class="font-bold text-amber-800 mb-2">⚡ Dampak Aktivitas</h3>
+                <p class="text-stone-700">Setiap aktivitas manusia, baik disadari maupun tidak, akan berpengaruh terhadap keberadaan suatu ekosistem. Dari bernapas hingga industri besar, semuanya meninggalkan jejak.</p>
+              </div>
+              <div class="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-xl">
+                <h3 class="font-bold text-blue-800 mb-2">⚖️ Dua Sisi Pengaruh</h3>
+                <p class="text-stone-700">Pengaruh manusia bisa berdampak <strong>positif</strong> (seperti konservasi, reboisasi) maupun <strong>negatif</strong> (seperti polusi, deforestasi).</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Section 2: Dampak Negatif -->
+        <section class="mb-16 section-fade">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">2</div>
+            <h2 class="font-heading text-3xl font-bold text-stone-800">Dampak Negatif Aktivitas Manusia</h2>
+          </div>
+          
+          <p class="text-lg text-stone-600 mb-8">Ada empat area utama di mana aktivitas manusia sering kali merusak ekosistem:</p>
+          
+          <!-- Interactive Accordion -->
+          <div class="space-y-4" id="dampak-accordion">
+            
+            <!-- Pertanian -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-stone-200">
+              <button onclick="toggleAccordion('pertanian')" class="w-full p-6 flex items-center justify-between hover:bg-stone-50 transition-colors">
+                <div class="flex items-center gap-4">
+                  <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center text-3xl">🌾</div>
+                  <div class="text-left">
+                    <h3 class="font-bold text-xl text-stone-800">Pertanian & Produksi Pangan</h3>
+                    <p class="text-stone-500 text-sm">Dampak praktik pertanian intensif</p>
+                  </div>
+                </div>
+                <span class="text-2xl text-stone-400 accordion-icon" id="icon-pertanian">+</span>
+              </button>
+              <div class="accordion-content" id="content-pertanian">
+                <div class="p-6 pt-0 grid md:grid-cols-2 gap-6">
+                  <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&h=400&fit=crop" 
+                         alt="Lahan pertanian monokultur dengan traktor"
+                         class="w-full h-48 object-cover"
+                         loading="lazy"
+                         onerror="this.style.background='linear-gradient(135deg, #fbbf24, #f59e0b)'; this.alt='Ilustrasi pertanian';">
+                  </div>
+                  <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                      <span class="text-red-500 text-xl">❌</span>
+                      <p class="text-stone-700"><strong>Pupuk kimia berlebihan</strong> menyebabkan eutrofikasi dan penurunan kesuburan tanah jangka panjang.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <span class="text-red-500 text-xl">❌</span>
+                      <p class="text-stone-700"><strong>Pertanian monokultur</strong> (satu jenis tanaman) menurunkan keanekaragaman hayati secara drastis.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <span class="text-red-500 text-xl">❌</span>
+                      <p class="text-stone-700"><strong>Penggunaan pestisida</strong> dapat membunuh organisme non-target seperti lebah penyerbuk.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Kerusakan Habitat -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-stone-200">
+              <button onclick="toggleAccordion('habitat')" class="w-full p-6 flex items-center justify-between hover:bg-stone-50 transition-colors">
+                <div class="flex items-center gap-4">
+                  <div class="w-16 h-16 bg-gradient-to-br from-emerald-400 to-green-600 rounded-xl flex items-center justify-center text-3xl">🌳</div>
+                  <div class="text-left">
+                    <h3 class="font-bold text-xl text-stone-800">Kerusakan Habitat</h3>
+                    <p class="text-stone-500 text-sm">Hilangnya rumah alami flora dan fauna</p>
+                  </div>
+                </div>
+                <span class="text-2xl text-stone-400 accordion-icon" id="icon-habitat">+</span>
+              </button>
+              <div class="accordion-content" id="content-habitat">
+                <div class="p-6 pt-0 grid md:grid-cols-2 gap-6">
+                  <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=600&h=400&fit=crop" 
+                         alt="Deforestasi hutan tropis"
+                         class="w-full h-48 object-cover"
+                         loading="lazy"
+                         onerror="this.style.background='linear-gradient(135deg, #22c55e, #16a34a)'; this.alt='Ilustrasi deforestasi';">
+                  </div>
+                  <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                      <span class="text-red-500 text-xl">🔥</span>
+                      <p class="text-stone-700"><strong>Alih fungsi hutan</strong> menjadi lahan sawit, pertambangan, atau pemukiman.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <span class="text-red-500 text-xl">💔</span>
+                      <p class="text-stone-700">Menyebabkan banyak <strong>hewan dan tumbuhan terancam punah</strong> karena kehilangan rumah alami mereka.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <span class="text-red-500 text-xl">📊</span>
+                      <p class="text-stone-700">Indonesia kehilangan <strong>1,5 juta hektar</strong> hutan setiap tahunnya.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Polusi -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-stone-200">
+              <button onclick="toggleAccordion('polusi')" class="w-full p-6 flex items-center justify-between hover:bg-stone-50 transition-colors">
+                <div class="flex items-center gap-4">
+                  <div class="w-16 h-16 bg-gradient-to-br from-gray-400 to-gray-600 rounded-xl flex items-center justify-center text-3xl">🏭</div>
+                  <div class="text-left">
+                    <h3 class="font-bold text-xl text-stone-800">Polusi</h3>
+                    <p class="text-stone-500 text-sm">Pencemaran udara, air, dan tanah</p>
+                  </div>
+                </div>
+                <span class="text-2xl text-stone-400 accordion-icon" id="icon-polusi">+</span>
+              </button>
+              <div class="accordion-content" id="content-polusi">
+                <div class="p-6 pt-0 grid md:grid-cols-2 gap-6">
+                  <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=600&h=400&fit=crop" 
+                         alt="Polusi udara dari pabrik industri"
+                         class="w-full h-48 object-cover"
+                         loading="lazy"
+                         onerror="this.style.background='linear-gradient(135deg, #6b7280, #4b5563)'; this.alt='Ilustrasi polusi';">
+                  </div>
+                  <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                      <span class="text-gray-500 text-xl">💨</span>
+                      <p class="text-stone-700"><strong>Polusi udara:</strong> Emisi kendaraan bermotor dan industri menyebabkan penyakit pernapasan.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <span class="text-blue-500 text-xl">💧</span>
+                      <p class="text-stone-700"><strong>Polusi air:</strong> Membuang sampah ke sungai merusak ekosistem akuatik.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <span class="text-amber-600 text-xl">🪨</span>
+                      <p class="text-stone-700"><strong>Polusi tanah:</strong> Limbah industri dan sampah plastik mencemari tanah produktif.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Perubahan Iklim -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-stone-200">
+              <button onclick="toggleAccordion('iklim')" class="w-full p-6 flex items-center justify-between hover:bg-stone-50 transition-colors">
+                <div class="flex items-center gap-4">
+                  <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-xl flex items-center justify-center text-3xl">🌡️</div>
+                  <div class="text-left">
+                    <h3 class="font-bold text-xl text-stone-800">Perubahan Iklim</h3>
+                    <p class="text-stone-500 text-sm">Pemanasan global dan dampaknya</p>
+                  </div>
+                </div>
+                <span class="text-2xl text-stone-400 accordion-icon" id="icon-iklim">+</span>
+              </button>
+              <div class="accordion-content" id="content-iklim">
+                <div class="p-6 pt-0 grid md:grid-cols-2 gap-6">
+                  <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1569163139599-0f4517e36f51?w=600&h=400&fit=crop" 
+                         alt="Es kutub yang mencair akibat pemanasan global"
+                         class="w-full h-48 object-cover"
+                         loading="lazy"
+                         onerror="this.style.background='linear-gradient(135deg, #38bdf8, #0ea5e9)'; this.alt='Ilustrasi perubahan iklim';">
+                  </div>
+                  <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                      <span class="text-orange-500 text-xl">🔥</span>
+                      <p class="text-stone-700"><strong>Pembakaran bahan bakar fosil</strong> menghasilkan gas rumah kaca yang menaikkan suhu Bumi.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <span class="text-blue-500 text-xl">🧊</span>
+                      <p class="text-stone-700"><strong>Es kutub mencair</strong> menyebabkan permukaan laut naik dan mengancam kota pesisir.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <span class="text-red-500 text-xl">⚡</span>
+                      <p class="text-stone-700"><strong>Cuaca ekstrem</strong> seperti badai, kekeringan, dan banjir semakin sering terjadi.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Section 3: Studi Kasus -->
+        <section class="mb-16 section-fade">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">3</div>
+            <h2 class="font-heading text-3xl font-bold text-stone-800">Studi Kasus: Ancaman Nyata</h2>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-8">
+            <!-- Harimau Jawa -->
+            <div class="card-hover bg-white rounded-2xl shadow-xl overflow-hidden">
+              <div class="img-container">
+                <img src="https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=600&h=350&fit=crop" 
+                     alt="Harimau sebagai gambaran harimau jawa yang telah punah"
+                     class="w-full h-56 object-cover"
+                     loading="lazy"
+                     onerror="this.style.background='linear-gradient(135deg, #f59e0b, #d97706)'; this.alt='Ilustrasi harimau jawa';">
+              </div>
+              <div class="p-6">
+                <div class="inline-block px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-semibold mb-3">⚠️ PUNAH</div>
+                <h3 class="font-heading text-2xl font-bold text-stone-800 mb-3">Harimau Jawa</h3>
+                <p class="text-stone-600 mb-4">Contoh nyata kepunahan akibat perburuan masif pada pertengahan tahun 1970. Harimau Jawa (<em>Panthera tigris sondaica</em>) dinyatakan punah karena:</p>
+                <ul class="space-y-2 text-stone-700">
+                  <li class="flex items-start gap-2">
+                    <span class="text-red-500">•</span>
+                    <span>Perburuan liar untuk kulit dan tulangnya</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-red-500">•</span>
+                    <span>Hilangnya habitat hutan di Pulau Jawa</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-red-500">•</span>
+                    <span>Konflik dengan manusia</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <!-- Paus Wakatobi -->
+            <div class="card-hover bg-white rounded-2xl shadow-xl overflow-hidden">
+              <div class="img-container">
+                <img src="https://images.unsplash.com/photo-1568430462989-44163eb1752f?w=600&h=350&fit=crop" 
+                     alt="Paus sperma di lautan"
+                     class="w-full h-56 object-cover"
+                     loading="lazy"
+                     onerror="this.style.background='linear-gradient(135deg, #3b82f6, #1d4ed8)'; this.alt='Ilustrasi paus';">
+              </div>
+              <div class="p-6">
+                <div class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-3">📅 2018</div>
+                <h3 class="font-heading text-2xl font-bold text-stone-800 mb-3">Tragedi Paus Wakatobi</h3>
+                <p class="text-stone-600 mb-4">Seekor paus sperma ditemukan mati terdampar dengan <strong class="text-red-600">5,9 kg sampah plastik</strong> di perutnya:</p>
+                <div class="bg-red-50 p-4 rounded-xl">
+                  <ul class="space-y-2 text-stone-700">
+                    <li class="flex items-center gap-2">
+                      <span>🥤</span>
+                      <span>115 gelas plastik</span>
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <span>👟</span>
+                      <span>25 kantong plastik</span>
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <span>🩴</span>
+                      <span>4 botol plastik & sandal jepit</span>
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <span>🧵</span>
+                      <span>Ratusan potongan tali rafia</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Section 4: Fakta Sains -->
+        <section class="mb-16 section-fade">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="w-12 h-12 bg-teal-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">4</div>
+            <h2 class="font-heading text-3xl font-bold text-stone-800">Fakta Sains: Hutan Tropis Indonesia</h2>
+          </div>
+          
+          <div class="bg-gradient-to-br from-emerald-600 to-teal-700 rounded-3xl p-8 text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+            <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+            
+            <div class="relative z-10">
+              <div class="text-center mb-8">
+                <span class="text-5xl mb-4 block">🌴</span>
+                <h3 class="font-heading text-2xl font-bold mb-2">Indonesia: Penjaga Paru-Paru Dunia</h3>
+                <p class="text-emerald-100">Indonesia memiliki peran vital bagi keseimbangan ekosistem global</p>
+              </div>
+              
+              <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="stat-card bg-white/20 backdrop-blur p-5 rounded-2xl text-center">
+                  <div class="text-4xl font-bold text-amber-300 mb-2">3rd</div>
+                  <p class="text-sm text-emerald-100">Hutan tropis terbesar di dunia</p>
+                </div>
+                <div class="stat-card bg-white/20 backdrop-blur p-5 rounded-2xl text-center">
+                  <div class="text-4xl font-bold text-amber-300 mb-2">25K+</div>
+                  <p class="text-sm text-emerald-100">Spesies tumbuhan (10% dunia)</p>
+                </div>
+                <div class="stat-card bg-white/20 backdrop-blur p-5 rounded-2xl text-center">
+                  <div class="text-4xl font-bold text-amber-300 mb-2">25%</div>
+                  <p class="text-sm text-emerald-100">Obat-obatan alami dunia</p>
+                </div>
+                <div class="stat-card bg-white/20 backdrop-blur p-5 rounded-2xl text-center">
+                  <div class="text-4xl font-bold text-amber-300 mb-2">1/5</div>
+                  <p class="text-sm text-emerald-100">Cadangan air tawar dunia</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Section 5: Solusi Konservasi -->
+        <section class="mb-16 section-fade">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">5</div>
+            <h2 class="font-heading text-3xl font-bold text-stone-800">Solusi: Konservasi Keanekaragaman Hayati</h2>
+          </div>
+          
+          <div class="bg-green-50 border border-green-200 rounded-2xl p-6 mb-8">
+            <p class="text-lg text-stone-700">
+              <strong class="text-green-700">Konservasi</strong> adalah pengelolaan alam secara bijaksana untuk menjaga kesinambungan sumber daya alam bagi generasi sekarang dan masa depan.
+            </p>
+          </div>
+          
+          <div class="grid lg:grid-cols-2 gap-8">
+            <!-- In-situ -->
+            <div class="card-hover bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-emerald-200">
+              <div class="bg-emerald-600 p-4 text-center">
+                <span class="text-4xl">🏞️</span>
+                <h3 class="font-heading text-2xl font-bold text-white mt-2">Konservasi In-Situ</h3>
+                <p class="text-emerald-100 text-sm">Pelestarian di habitat asli</p>
+              </div>
+              <div class="p-6">
+                <div class="img-container mb-4">
+                  <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&h=300&fit=crop" 
+                       alt="Taman Nasional dengan pemandangan alam"
+                       class="w-full h-40 object-cover"
+                       loading="lazy"
+                       onerror="this.style.background='linear-gradient(135deg, #22c55e, #15803d)'; this.alt='Ilustrasi taman nasional';">
+                </div>
+                <p class="text-stone-600 mb-4">Pelestarian spesies di habitat asli mereka, menjaga ekosistem alami tetap utuh.</p>
+                <div class="space-y-3">
+                  <div class="flex items-center gap-3 p-3 bg-emerald-50 rounded-xl">
+                    <span class="text-2xl">🌲</span>
+                    <div>
+                      <p class="font-semibold text-emerald-800">Taman Nasional</p>
+                      <p class="text-sm text-stone-600">TN Komodo, TN Gunung Leuser</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3 p-3 bg-emerald-50 rounded-xl">
+                    <span class="text-2xl">🦜</span>
+                    <div>
+                      <p class="font-semibold text-emerald-800">Cagar Alam</p>
+                      <p class="text-sm text-stone-600">CA Pulau Dua, CA Tangkuban Perahu</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3 p-3 bg-emerald-50 rounded-xl">
+                    <span class="text-2xl">🦧</span>
+                    <div>
+                      <p class="font-semibold text-emerald-800">Suaka Margasatwa</p>
+                      <p class="text-sm text-stone-600">SM Way Kambas, SM Paliyan</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Eks-situ -->
+            <div class="card-hover bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-blue-200">
+              <div class="bg-blue-600 p-4 text-center">
+                <span class="text-4xl">🏛️</span>
+                <h3 class="font-heading text-2xl font-bold text-white mt-2">Konservasi Eks-Situ</h3>
+                <p class="text-blue-100 text-sm">Pelestarian di luar habitat asli</p>
+              </div>
+              <div class="p-6">
+                <div class="img-container mb-4">
+                  <img src="https://images.unsplash.com/photo-1534567153574-2b12153a87f0?w=600&h=300&fit=crop" 
+                       alt="Kebun binatang dengan hewan yang dilindungi"
+                       class="w-full h-40 object-cover"
+                       loading="lazy"
+                       onerror="this.style.background='linear-gradient(135deg, #3b82f6, #1d4ed8)'; this.alt='Ilustrasi kebun binatang';">
+                </div>
+                <p class="text-stone-600 mb-4">Pelestarian spesies di lingkungan buatan untuk perlindungan dan pembiakan.</p>
+                <div class="space-y-3">
+                  <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-xl">
+                    <span class="text-2xl">🦁</span>
+                    <div>
+                      <p class="font-semibold text-blue-800">Kebun Binatang</p>
+                      <p class="text-sm text-stone-600">Ragunan, Taman Safari Indonesia</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-xl">
+                    <span class="text-2xl">🐢</span>
+                    <div>
+                      <p class="font-semibold text-blue-800">Penangkaran</p>
+                      <p class="text-sm text-stone-600">Penangkaran Penyu Bali</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-xl">
+                    <span class="text-2xl">🌱</span>
+                    <div>
+                      <p class="font-semibold text-blue-800">Bank Benih</p>
+                      <p class="text-sm text-stone-600">Kebun Raya Bogor</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Section 6: Interaktif -->
+        <section id="interaktif" class="mb-16 section-fade">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center text-white font-bold text-xl">6</div>
+            <h2 class="font-heading text-3xl font-bold text-stone-800">Aksi Nyata: Refleksi & Diskusi</h2>
+          </div>
+          
+          <p class="text-lg text-stone-600 mb-8">Mari berpikir kritis! Jawab pertanyaan-pertanyaan berikut:</p>
+          
+          <div class="space-y-6">
+            <!-- Activity 1 -->
+            <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-6 text-white">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">🌱</div>
+                <div class="flex-1">
+                  <h3 class="font-bold text-xl mb-2">Pengurangan Jejak Karbon</h3>
+                  <p class="text-emerald-100 mb-4">Apa langkah kecil yang bisa kamu lakukan di sekolah untuk mengurangi emisi karbon?</p>
+                  <textarea id="answer1" class="w-full p-4 rounded-xl text-stone-800 bg-white/95 border-0 focus:ring-2 focus:ring-amber-400" rows="3" placeholder="Tuliskan jawabanmu di sini..."></textarea>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Activity 2 -->
+            <div class="bg-gradient-to-r from-blue-500 to-cyan-600 rounded-2xl p-6 text-white">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">🌊</div>
+                <div class="flex-1">
+                  <h3 class="font-bold text-xl mb-2">Solusi Sampah Plastik</h3>
+                  <p class="text-blue-100 mb-4">Bagaimana cara mencegah sampah plastik masuk ke ekosistem laut?</p>
+                  <textarea id="answer2" class="w-full p-4 rounded-xl text-stone-800 bg-white/95 border-0 focus:ring-2 focus:ring-amber-400" rows="3" placeholder="Tuliskan jawabanmu di sini..."></textarea>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Activity 3 -->
+            <div class="bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl p-6 text-white">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">💡</div>
+                <div class="flex-1">
+                  <h3 class="font-bold text-xl mb-2">Proyek Konservasi</h3>
+                  <p class="text-purple-100 mb-4">Identifikasi satu masalah lingkungan di sekitarmu dan tawarkan solusi kreatif!</p>
+                  <textarea id="answer3" class="w-full p-4 rounded-xl text-stone-800 bg-white/95 border-0 focus:ring-2 focus:ring-amber-400" rows="3" placeholder="Masalah: ... | Solusi: ..."></textarea>
+                </div>
+              </div>
+            </div>
+            
+            <button onclick="saveAnswers()" class="w-full interactive-btn bg-amber-500 hover:bg-amber-400 text-white font-bold py-4 px-8 rounded-xl shadow-lg transition-all text-lg">
+              💾 Simpan Jawaban Refleksi
+            </button>
+            <div id="save-message" class="hidden text-center p-4 bg-green-100 text-green-700 rounded-xl font-semibold"></div>
+          </div>
+        </section>
+        
+        <!-- Section 7: Kuis HOTS -->
+        <section id="kuis" class="mb-16 section-fade">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">7</div>
+            <h2 class="font-heading text-3xl font-bold text-stone-800">Kuis HOTS: Uji Pemahamanmu!</h2>
+          </div>
+          
+          <div class="bg-indigo-50 border border-indigo-200 rounded-2xl p-6 mb-8">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+              <div>
+                <p class="text-indigo-800 font-semibold">📝 10 Soal HOTS (Higher Order Thinking Skills)</p>
+                <p class="text-stone-600 text-sm">Soal berbasis analisis, evaluasi, dan kreasi</p>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="text-center">
+                  <p class="text-2xl font-bold text-indigo-600" id="score-display">0/10</p>
+                  <p class="text-xs text-stone-500">Skor</p>
+                </div>
+                <button onclick="resetQuiz()" class="bg-indigo-100 hover:bg-indigo-200 text-indigo-700 font-semibold py-2 px-4 rounded-lg transition-colors text-sm">
+                  🔄 Ulangi
+                </button>
+              </div>
+            </div>
+            <!-- Progress Bar -->
+            <div class="mt-4 bg-indigo-200 rounded-full h-3 overflow-hidden">
+              <div id="quiz-progress" class="progress-bar bg-indigo-600 h-full rounded-full" style="width: 0%"></div>
+            </div>
+          </div>
+          
+          <div id="quiz-container" class="space-y-6">
+            <!-- Questions will be rendered here by JavaScript -->
+          </div>
+          
+          <div id="quiz-result" class="hidden mt-8 p-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl text-white text-center">
+            <span class="text-6xl mb-4 block" id="result-emoji">🎉</span>
+            <h3 class="font-heading text-3xl font-bold mb-2">Kuis Selesai!</h3>
+            <p class="text-xl mb-4">Skor akhirmu: <span id="final-score" class="font-bold text-amber-300">0/10</span></p>
+            <p id="result-message" class="text-indigo-100"></p>
+          </div>
+        </section>
+        
+      </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-emerald-900 text-white py-12 px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="flex items-center gap-4">
+            <img src="https://i.imgur.com/mRmw86t.jpeg" 
+                 alt="Foto Algian Manggara" 
+                 class="w-16 h-16 rounded-full object-cover border-3 border-amber-400 shadow-lg"
+                 loading="lazy"
+                 onerror="this.style.background='#f59e0b'; this.alt='AM';">
+            <div>
+              <p class="font-heading text-xl font-bold" id="author-name">Algian Manggara, S.Agr</p>
+              <p class="text-emerald-300 text-sm">Pembuat Materi Pembelajaran</p>
+            </div>
+          </div>
+          <div class="text-center md:text-right">
+            <p class="text-emerald-300 text-sm mb-1">Media Pembelajaran Interaktif</p>
+            <p class="font-semibold">Manusia dan Ekosistem</p>
+            <p class="text-emerald-400 text-sm mt-2">© 2026 Algian Manggara, S.Agr</p>
+          </div>
+        </div>
+        <div class="mt-8 pt-6 border-t border-emerald-700 text-center">
+          <p class="text-emerald-400 text-sm">🌍 Mari jaga bumi kita bersama untuk generasi mendatang 🌱</p>
+        </div>
+      </div>
+    </footer>
+    
+  </div>
+  
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Manusia dan Ekosistem',
+      author_name: 'Algian Manggara, S.Agr',
+      background_color: '#fafaf9',
+      surface_color: '#ffffff',
+      text_color: '#292524',
+      primary_action_color: '#059669',
+      secondary_action_color: '#f59e0b',
+      font_family: 'Source Sans Pro',
+      font_size: 16
+    };
+    
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          // Update main title
+          const titleEl = document.getElementById('main-title');
+          if (titleEl) titleEl.textContent = config.main_title || defaultConfig.main_title;
+          
+          const navTitleEl = document.getElementById('nav-title');
+          if (navTitleEl) navTitleEl.textContent = config.main_title || defaultConfig.main_title;
+          
+          // Update author name
+          const authorEl = document.getElementById('author-name');
+          if (authorEl) authorEl.textContent = config.author_name || defaultConfig.author_name;
+          
+          // Update colors
+          document.body.style.backgroundColor = config.background_color || defaultConfig.background_color;
+          
+          // Update font
+          const fontFamily = config.font_family || defaultConfig.font_family;
+          document.body.style.fontFamily = `${fontFamily}, Arial, sans-serif`;
+          
+          // Update font size
+          const fontSize = config.font_size || defaultConfig.font_size;
+          document.body.style.fontSize = `${fontSize}px`;
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+            },
+            {
+              get: () => config.primary_action_color || defaultConfig.primary_action_color,
+              set: (v) => { config.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); }
+            },
+            {
+              get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+              set: (v) => { config.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['main_title', config.main_title || defaultConfig.main_title],
+          ['author_name', config.author_name || defaultConfig.author_name]
+        ])
+      });
+    }
+    
+    // Quiz data - 10 HOTS questions
+    const quizData = [
+      {
+        id: 1,
+        question: "Sebuah danau mengalami eutrofikasi akibat limpasan pupuk dari lahan pertanian di sekitarnya. Analisis mana dampak berantai yang paling tepat menggambarkan proses ini?",
+        options: [
+          "Pupuk → Alga berkembang → Oksigen meningkat → Ikan bertambah",
+          "Pupuk → Alga berkembang pesat → Oksigen berkurang → Kematian massal ikan",
+          "Pupuk → Air menjadi jernih → Tumbuhan air mati → Ikan berkembang",
+          "Pupuk → Bakteri mati → Alga berkurang → Ekosistem pulih"
+        ],
+        correct: 1,
+        explanation: "Eutrofikasi menyebabkan ledakan populasi alga (algae bloom) yang saat mati dan terurai akan menghabiskan oksigen terlarut, menyebabkan hipoksia dan kematian massal organisme akuatik."
+      },
+      {
+        id: 2,
+        question: "Indonesia kehilangan 1,5 juta hektar hutan setiap tahun. Evaluasi dampak mana yang BUKAN merupakan konsekuensi langsung dari deforestasi ini?",
+        options: [
+          "Peningkatan emisi karbon dioksida ke atmosfer",
+          "Punahnya spesies endemik yang bergantung pada hutan",
+          "Peningkatan populasi harimau jawa di habitat baru",
+          "Erosi tanah dan banjir bandang di musim hujan"
+        ],
+        correct: 2,
+        explanation: "Harimau Jawa telah punah sejak tahun 1970-an. Deforestasi justru mempercepat kepunahan, bukan menciptakan habitat baru. Opsi lainnya adalah konsekuensi langsung deforestasi."
+      },
+      {
+        id: 3,
+        question: "Paus Wakatobi mati dengan 5,9 kg plastik di perutnya. Berdasarkan kasus ini, sintesis solusi paling efektif untuk mencegah kejadian serupa adalah...",
+        options: [
+          "Melarang semua aktivitas manusia di laut",
+          "Kebijakan pengurangan plastik sekali pakai + edukasi masyarakat pesisir + sistem pengelolaan sampah terpadu",
+          "Memindahkan semua paus ke penangkaran",
+          "Membersihkan laut menggunakan jaring raksasa"
+        ],
+        correct: 1,
+        explanation: "Solusi sistematis yang menggabungkan kebijakan, edukasi, dan infrastruktur pengelolaan sampah adalah pendekatan paling komprehensif dan berkelanjutan."
+      },
+      {
+        id: 4,
+        question: "Petani menggunakan pestisida untuk membasmi hama. Analisis dampak tidak langsung yang mungkin terjadi pada rantai makanan ekosistem sawah adalah...",
+        options: [
+          "Produksi padi meningkat tanpa efek samping",
+          "Populasi katak dan burung predator menurun karena keracunan bioakumulasi",
+          "Hama menjadi lebih resisten dan populasinya meledak",
+          "Tanah menjadi lebih subur untuk musim tanam berikutnya"
+        ],
+        correct: 1,
+        explanation: "Bioakumulasi pestisida di rantai makanan menyebabkan organisme di tingkat trofik lebih tinggi (katak, burung) mengakumulasi toksin dalam konsentrasi yang mematikan."
+      },
+      {
+        id: 5,
+        question: "Kebun Raya Bogor merupakan contoh konservasi eks-situ. Evaluasi keunggulan utama metode ini dibandingkan konservasi in-situ adalah...",
+        options: [
+          "Lebih murah dan tidak memerlukan perawatan",
+          "Dapat melindungi spesies dari ancaman langsung seperti perburuan dan kerusakan habitat",
+          "Memungkinkan spesies berkembang biak secara alami tanpa intervensi",
+          "Lebih disukai oleh semua spesies hewan dan tumbuhan"
+        ],
+        correct: 1,
+        explanation: "Konservasi eks-situ memberikan perlindungan langsung dari ancaman di habitat asli, memungkinkan program breeding terkelola, dan menjadi 'bank genetik' untuk pemulihan populasi."
+      },
+      {
+        id: 6,
+        question: "Gas rumah kaca dari pembakaran bahan bakar fosil menyebabkan pemanasan global. Analisis mekanisme yang menyebabkan permukaan laut naik adalah...",
+        options: [
+          "Air laut menguap lebih cepat karena suhu tinggi",
+          "Es di kutub mencair dan ekspansi termal air laut akibat kenaikan suhu",
+          "Hujan lebih sering terjadi sehingga air laut bertambah",
+          "Gravitasi bulan menarik lebih banyak air ke permukaan"
+        ],
+        correct: 1,
+        explanation: "Kenaikan permukaan laut disebabkan oleh dua faktor: pencairan es di kutub dan gletser (menambah volume air) serta ekspansi termal (air memuai saat suhu naik)."
+      },
+      {
+        id: 7,
+        question: "Indonesia memiliki 25.000 spesies tumbuhan yang menyumbang 25% obat-obatan alami dunia. Ciptakan argumen paling kuat untuk meyakinkan pemerintah melestarikan hutan tropis adalah...",
+        options: [
+          "Hutan itu indah dan menarik wisatawan",
+          "Kepunahan spesies berpotensi menghilangkan sumber obat-obatan masa depan yang belum ditemukan",
+          "Hutan sudah ada sejak dahulu kala",
+          "Negara lain juga memiliki hutan yang perlu dijaga"
+        ],
+        correct: 1,
+        explanation: "Argumen berbasis nilai ekonomi dan ilmiah potensial yang belum tergali lebih meyakinkan karena menunjukkan dampak konkret jangka panjang dari kehilangan keanekaragaman hayati."
+      },
+      {
+        id: 8,
+        question: "Pertanian monokultur (satu jenis tanaman) menurunkan keanekaragaman hayati. Desain sistem pertanian yang lebih berkelanjutan adalah...",
+        options: [
+          "Memperluas lahan monokultur untuk meningkatkan produksi",
+          "Agroforestri yang mengombinasikan tanaman pangan dengan pohon dan ternak",
+          "Mengganti semua lahan pertanian dengan hutan",
+          "Mengimpor semua kebutuhan pangan dari luar negeri"
+        ],
+        correct: 1,
+        explanation: "Agroforestri menciptakan keragaman ekosistem, meningkatkan kesuburan tanah alami, menyediakan habitat satwa, dan tetap produktif secara ekonomi."
+      },
+      {
+        id: 9,
+        question: "Suaka Margasatwa Way Kambas melindungi gajah sumatera dari kepunahan. Evaluasi faktor utama yang membuat konservasi in-situ lebih ideal untuk spesies ini adalah...",
+        options: [
+          "Gajah tidak bisa hidup di kebun binatang",
+          "Biaya operasional lebih murah di habitat asli",
+          "Gajah dapat mempertahankan perilaku alami, struktur sosial, dan peran ekologis dalam ekosistem",
+          "Pengunjung lebih mudah melihat gajah di alam liar"
+        ],
+        correct: 2,
+        explanation: "Konservasi in-situ memungkinkan gajah mempertahankan perilaku alami (migrasi, struktur kawanan), dan peran ekologis penting mereka sebagai 'ecosystem engineer' yang membentuk habitat."
+      },
+      {
+        id: 10,
+        question: "Seorang siswa ingin mengurangi jejak karbon pribadinya. Prioritaskan tindakan dari yang paling berdampak hingga paling kecil berdasarkan prinsip pengurangan emisi...",
+        options: [
+          "Mematikan lampu → Naik sepeda → Kurangi konsumsi daging → Tanam pohon",
+          "Kurangi konsumsi daging → Naik sepeda/transportasi umum → Hemat energi → Tanam pohon",
+          "Tanam pohon → Mematikan lampu → Naik mobil listrik → Makan sayur",
+          "Beli barang lokal → Daur ulang → Hemat air → Gunakan AC hemat energi"
+        ],
+        correct: 1,
+        explanation: "Mengurangi konsumsi daging (terutama sapi) memiliki dampak terbesar karena industri peternakan menyumbang 14.5% emisi global. Diikuti transportasi, energi rumah tangga, dan penyerapan karbon."
+      }
+    ];
+    
+    let currentScore = 0;
+    let answeredQuestions = new Set();
+    
+    // Render quiz
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = quizData.map((q, index) => `
+        <div class="bg-white rounded-2xl shadow-lg p-6 border border-stone-200" id="question-${q.id}">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600 font-bold flex-shrink-0">${index + 1}</div>
+            <p class="text-lg text-stone-800 font-medium">${q.question}</p>
+          </div>
+          <div class="space-y-3 ml-14" id="options-${q.id}">
+            ${q.options.map((opt, i) => `
+              <button onclick="selectAnswer(${q.id}, ${i})" 
+                      class="quiz-option w-full text-left p-4 rounded-xl border-2 border-stone-200 hover:border-emerald-400 transition-all flex items-start gap-3"
+                      id="option-${q.id}-${i}">
+                <span class="w-8 h-8 bg-stone-100 rounded-lg flex items-center justify-center font-semibold text-stone-600 flex-shrink-0">${String.fromCharCode(65 + i)}</span>
+                <span class="text-stone-700">${opt}</span>
+              </button>
+            `).join('')}
+          </div>
+          <div class="hidden ml-14 mt-4 p-4 rounded-xl" id="explanation-${q.id}"></div>
+        </div>
+      `).join('');
+    }
+    
+    function selectAnswer(questionId, selectedIndex) {
+      if (answeredQuestions.has(questionId)) return;
+      
+      const question = quizData.find(q => q.id === questionId);
+      const isCorrect = selectedIndex === question.correct;
+      
+      answeredQuestions.add(questionId);
+      
+      // Style options
+      for (let i = 0; i < question.options.length; i++) {
+        const optEl = document.getElementById(`option-${questionId}-${i}`);
+        optEl.classList.remove('hover:border-emerald-400');
+        optEl.style.cursor = 'default';
+        
+        if (i === question.correct) {
+          optEl.classList.add('correct');
+          optEl.classList.remove('border-stone-200');
+          optEl.classList.add('border-emerald-500', 'bg-emerald-50');
+        } else if (i === selectedIndex && !isCorrect) {
+          optEl.classList.add('incorrect');
+          optEl.classList.remove('border-stone-200');
+          optEl.classList.add('border-red-500', 'bg-red-50');
+        }
+      }
+      
+      // Show explanation
+      const explanationEl = document.getElementById(`explanation-${questionId}`);
+      explanationEl.classList.remove('hidden');
+      explanationEl.classList.add(isCorrect ? 'bg-emerald-50' : 'bg-amber-50');
+      explanationEl.innerHTML = `
+        <div class="flex items-start gap-3">
+          <span class="text-2xl">${isCorrect ? '✅' : '💡'}</span>
+          <div>
+            <p class="font-semibold ${isCorrect ? 'text-emerald-700' : 'text-amber-700'} mb-1">
+              ${isCorrect ? 'Benar!' : 'Belum tepat.'}
+            </p>
+            <p class="text-stone-700 text-sm">${question.explanation}</p>
+          </div>
+        </div>
+      `;
+      
+      // Update score
+      if (isCorrect) currentScore++;
+      document.getElementById('score-display').textContent = `${currentScore}/10`;
+      
+      // Update progress bar
+      const progress = (answeredQuestions.size / quizData.length) * 100;
+      document.getElementById('quiz-progress').style.width = `${progress}%`;
+      
+      // Check if quiz is complete
+      if (answeredQuestions.size === quizData.length) {
+        showQuizResult();
+      }
+    }
+    
+    function showQuizResult() {
+      const resultEl = document.getElementById('quiz-result');
+      resultEl.classList.remove('hidden');
+      
+      document.getElementById('final-score').textContent = `${currentScore}/10`;
+      
+      let emoji, message;
+      if (currentScore >= 9) {
+        emoji = '🏆';
+        message = 'Luar biasa! Kamu sangat memahami materi ini dengan sangat baik!';
+      } else if (currentScore >= 7) {
+        emoji = '🌟';
+        message = 'Hebat! Pemahamanmu sudah sangat baik. Terus tingkatkan!';
+      } else if (currentScore >= 5) {
+        emoji = '💪';
+        message = 'Bagus! Kamu sudah menguasai sebagian besar materi. Coba pelajari lagi bagian yang belum dikuasai.';
+      } else {
+        emoji = '📚';
+        message = 'Jangan menyerah! Coba baca ulang materinya dan ulangi kuis ini.';
+      }
+      
+      document.getElementById('result-emoji').textContent = emoji;
+      document.getElementById('result-message').textContent = message;
+      
+      resultEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    function resetQuiz() {
+      currentScore = 0;
+      answeredQuestions.clear();
+      document.getElementById('score-display').textContent = '0/10';
+      document.getElementById('quiz-progress').style.width = '0%';
+      document.getElementById('quiz-result').classList.add('hidden');
+      renderQuiz();
+    }
+    
+    // Accordion toggle
+    function toggleAccordion(id) {
+      const content = document.getElementById(`content-${id}`);
+      const icon = document.getElementById(`icon-${id}`);
+      
+      if (content.classList.contains('open')) {
+        content.classList.remove('open');
+        icon.textContent = '+';
+      } else {
+        content.classList.add('open');
+        icon.textContent = '−';
+      }
+    }
+    
+    // Smooth scroll
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        const offset = 80;
+        const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    }
+    
+    // Save reflective answers
+    function saveAnswers() {
+      const answers = {
+        karbon: document.getElementById('answer1').value,
+        plastik: document.getElementById('answer2').value,
+        konservasi: document.getElementById('answer3').value
+      };
+      
+      const messageEl = document.getElementById('save-message');
+      
+      if (answers.karbon || answers.plastik || answers.konservasi) {
+        messageEl.textContent = '✅ Jawaban refleksimu telah tersimpan! Diskusikan dengan guru dan teman-temanmu.';
+        messageEl.classList.remove('hidden', 'bg-red-100', 'text-red-700');
+        messageEl.classList.add('bg-green-100', 'text-green-700');
+      } else {
+        messageEl.textContent = '⚠️ Silakan isi minimal satu pertanyaan refleksi terlebih dahulu.';
+        messageEl.classList.remove('hidden', 'bg-green-100', 'text-green-700');
+        messageEl.classList.add('bg-red-100', 'text-red-700');
+      }
+      
+      setTimeout(() => {
+        messageEl.classList.add('hidden');
+      }, 5000);
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderQuiz();
+      
+      // Open first accordion by default
+      toggleAccordion('pertanian');
+    });
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cfb5997c436490a',t:'MTc3MTM5NDkwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

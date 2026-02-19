@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memahami Pengukuran dalam Sains</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { font-family: 'Poppins', sans-serif; }
+    .title-font { font-family: 'Playfair Display', serif; }
+    
+    .slide-container {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    
+    .slide-container.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+    
+    .slide-container.prev {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    
+    .card-item {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    .slide-container.active .card-item {
+      animation: fadeInUp 0.5s ease forwards;
+    }
+    
+    .slide-container.active .card-item:nth-child(1) { animation-delay: 0.1s; }
+    .slide-container.active .card-item:nth-child(2) { animation-delay: 0.2s; }
+    .slide-container.active .card-item:nth-child(3) { animation-delay: 0.3s; }
+    .slide-container.active .card-item:nth-child(4) { animation-delay: 0.4s; }
+    .slide-container.active .card-item:nth-child(5) { animation-delay: 0.5s; }
+    .slide-container.active .card-item:nth-child(6) { animation-delay: 0.6s; }
+    
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .progress-dot {
+      transition: all 0.3s ease;
+    }
+    
+    .progress-dot.active {
+      transform: scale(1.3);
+    }
+    
+    .icon-bounce {
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+  </style>
+</head>
+<body class="h-full m-0 overflow-hidden">
+  <div id="app" class="h-full w-full relative" style="background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);">
+    
+    <!-- Navigation Bar -->
+    <nav class="absolute top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg">
+          <span class="text-white text-lg">📐</span>
+        </div>
+        <span class="text-white font-semibold text-sm opacity-90">Sains Kelas 7</span>
+      </div>
+      <div class="flex items-center gap-2" id="progress-dots"></div>
+      <div class="text-white text-sm font-medium px-4 py-2 rounded-full bg-white/10 backdrop-blur">
+        <span id="slide-counter">1 / 7</span>
+      </div>
+    </nav>
+    
+    <!-- Slides Container -->
+    <main id="slides-wrapper" class="h-full w-full relative overflow-hidden pt-16 pb-20">
+      
+      <!-- Slide 1: Title -->
+      <section class="slide-container active" data-slide="1">
+        <div class="h-full flex flex-col items-center justify-center px-8 text-center">
+          <div class="icon-bounce mb-6">
+            <div class="w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 flex items-center justify-center shadow-2xl">
+              <span class="text-5xl">🔬</span>
+            </div>
+          </div>
+          <h1 id="main-title" class="title-font text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+            Memahami Pengukuran<br>dalam Sains
+          </h1>
+          <p id="subtitle" class="text-lg md:text-xl text-cyan-200 max-w-2xl mb-8">
+            Pengamatan, Besaran, dan Satuan Standar Internasional (SI)
+          </p>
+          <button onclick="goToSlide(2)" class="group flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all backdrop-blur">
+            <span>Mulai Belajar</span>
+            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+          </button>
+        </div>
+      </section>
+      
+      <!-- Slide 2: Jenis Pengamatan -->
+      <section class="slide-container" data-slide="2">
+        <div class="h-full overflow-y-auto px-6 py-4">
+          <div class="max-w-4xl mx-auto">
+            <div class="card-item mb-6">
+              <span class="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-xs font-medium mb-2">Slide 2</span>
+              <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">Jenis Pengamatan dalam Eksperimen</h2>
+              <p class="text-cyan-200/80 text-sm">Pengamatan selama percobaan terbagi menjadi dua jenis</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="card-item glass-card rounded-2xl p-5 shadow-xl">
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
+                    <span class="text-2xl">💬</span>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Pengamatan Kualitatif</h3>
+                    <p class="text-gray-600 text-sm mb-3">Deskripsi yang hanya menggunakan kata-kata.</p>
+                    <div class="bg-purple-50 rounded-xl p-3">
+                      <p class="text-xs font-semibold text-purple-700 mb-1">📝 Contoh:</p>
+                      <ul class="text-xs text-purple-600 space-y-1">
+                        <li>• Munculnya gelembung udara saat air mendidih</li>
+                        <li>• Adanya asap tipis</li>
+                        <li>• Suara "fizz" pada minuman bersoda</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card-item glass-card rounded-2xl p-5 shadow-xl">
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
+                    <span class="text-2xl">🔢</span>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Pengamatan Kuantitatif</h3>
+                    <p class="text-gray-600 text-sm mb-3">Pengamatan yang dinyatakan dalam bentuk angka-angka.</p>
+                    <div class="bg-blue-50 rounded-xl p-3">
+                      <p class="text-xs font-semibold text-blue-700 mb-1">📝 Contoh:</p>
+                      <ul class="text-xs text-blue-600 space-y-1">
+                        <li>• Mengukur volume air sebanyak 200 mL</li>
+                        <li>• Mencatat suhu air mencapai 70°C</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Slide 3: Besaran dalam Sains -->
+      <section class="slide-container" data-slide="3">
+        <div class="h-full overflow-y-auto px-6 py-4">
+          <div class="max-w-4xl mx-auto">
+            <div class="card-item mb-6">
+              <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-xs font-medium mb-2">Slide 3</span>
+              <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">Besaran dalam Sains</h2>
+              <p class="text-cyan-200/80 text-sm">Segala sesuatu yang dapat diukur dan memiliki nilai</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="card-item glass-card rounded-2xl p-5 shadow-xl">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
+                    <span class="text-xl">📏</span>
+                  </div>
+                  <h3 class="font-bold text-gray-800 text-lg">Besaran Pokok</h3>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">Besaran dasar yang satuannya telah ditetapkan secara internasional (SI).</p>
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="bg-emerald-50 rounded-lg p-2 text-center">
+                    <p class="font-bold text-emerald-700 text-sm">Panjang</p>
+                    <p class="text-emerald-600 text-xs">meter (m)</p>
+                  </div>
+                  <div class="bg-emerald-50 rounded-lg p-2 text-center">
+                    <p class="font-bold text-emerald-700 text-sm">Massa</p>
+                    <p class="text-emerald-600 text-xs">kilogram (kg)</p>
+                  </div>
+                  <div class="bg-emerald-50 rounded-lg p-2 text-center">
+                    <p class="font-bold text-emerald-700 text-sm">Waktu</p>
+                    <p class="text-emerald-600 text-xs">sekon (s)</p>
+                  </div>
+                  <div class="bg-emerald-50 rounded-lg p-2 text-center">
+                    <p class="font-bold text-emerald-700 text-sm">Suhu</p>
+                    <p class="text-emerald-600 text-xs">Kelvin (K)</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card-item glass-card rounded-2xl p-5 shadow-xl">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center">
+                    <span class="text-xl">⚡</span>
+                  </div>
+                  <h3 class="font-bold text-gray-800 text-lg">Besaran Turunan</h3>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">Besaran yang diturunkan dari besaran pokok.</p>
+                <div class="space-y-2">
+                  <div class="bg-orange-50 rounded-lg p-3 flex justify-between items-center">
+                    <span class="font-semibold text-orange-700 text-sm">Kecepatan</span>
+                    <span class="text-orange-600 text-xs bg-orange-100 px-2 py-1 rounded">m/s</span>
+                  </div>
+                  <div class="bg-orange-50 rounded-lg p-3 flex justify-between items-center">
+                    <span class="font-semibold text-orange-700 text-sm">Luas</span>
+                    <span class="text-orange-600 text-xs bg-orange-100 px-2 py-1 rounded">m²</span>
+                  </div>
+                  <div class="bg-orange-50 rounded-lg p-3 flex justify-between items-center">
+                    <span class="font-semibold text-orange-700 text-sm">Volume</span>
+                    <span class="text-orange-600 text-xs bg-orange-100 px-2 py-1 rounded">m³</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Slide 4: Satuan Baku dan Konversi -->
+      <section class="slide-container" data-slide="4">
+        <div class="h-full overflow-y-auto px-6 py-4">
+          <div class="max-w-4xl mx-auto">
+            <div class="card-item mb-6">
+              <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-300 rounded-full text-xs font-medium mb-2">Slide 4</span>
+              <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">Satuan Baku dan Konversi</h2>
+            </div>
+            
+            <div class="card-item glass-card rounded-2xl p-5 shadow-xl mb-4">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center flex-shrink-0">
+                  <span class="text-2xl">📐</span>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-800 text-lg mb-2">Satuan Baku (SI)</h3>
+                  <p class="text-gray-600 text-sm">Satuan pembanding yang bersifat <strong>tetap</strong>, tidak berubah-ubah, dan <strong>berlaku umum</strong> di mana saja.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-item glass-card rounded-2xl p-5 shadow-xl">
+              <h3 class="font-bold text-gray-800 text-lg mb-4 flex items-center gap-2">
+                <span class="text-xl">🔄</span> Tangga Konversi Satuan Panjang
+              </h3>
+              <div class="flex flex-col items-center">
+                <div class="relative w-full max-w-md">
+                  <!-- Stairs visualization -->
+                  <div class="flex flex-col items-center space-y-1">
+                    <div class="w-20 bg-gradient-to-r from-red-400 to-red-500 text-white text-center py-2 rounded-lg text-xs font-bold shadow">km</div>
+                    <div class="w-28 bg-gradient-to-r from-orange-400 to-orange-500 text-white text-center py-2 rounded-lg text-xs font-bold shadow">hm</div>
+                    <div class="w-36 bg-gradient-to-r from-amber-400 to-amber-500 text-white text-center py-2 rounded-lg text-xs font-bold shadow">dam</div>
+                    <div class="w-44 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white text-center py-2 rounded-lg text-xs font-bold shadow">m</div>
+                    <div class="w-52 bg-gradient-to-r from-lime-400 to-lime-500 text-white text-center py-2 rounded-lg text-xs font-bold shadow">dm</div>
+                    <div class="w-60 bg-gradient-to-r from-green-400 to-green-500 text-white text-center py-2 rounded-lg text-xs font-bold shadow">cm</div>
+                    <div class="w-72 bg-gradient-to-r from-teal-400 to-teal-500 text-white text-center py-2 rounded-lg text-xs font-bold shadow">mm</div>
+                  </div>
+                </div>
+                <div class="flex justify-center gap-8 mt-4">
+                  <div class="text-center bg-blue-50 rounded-xl p-3">
+                    <span class="text-2xl">⬆️</span>
+                    <p class="text-xs font-bold text-blue-700">Naik = ÷10</p>
+                  </div>
+                  <div class="text-center bg-green-50 rounded-xl p-3">
+                    <span class="text-2xl">⬇️</span>
+                    <p class="text-xs font-bold text-green-700">Turun = ×10</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Slide 5: Teknik Pengukuran -->
+      <section class="slide-container" data-slide="5">
+        <div class="h-full overflow-y-auto px-6 py-4">
+          <div class="max-w-4xl mx-auto">
+            <div class="card-item mb-6">
+              <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-300 rounded-full text-xs font-medium mb-2">Slide 5</span>
+              <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">Teknik Pengukuran yang Benar</h2>
+              <p class="text-cyan-200/80 text-sm">Untuk mendapatkan hasil yang akurat</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-3">
+              <div class="card-item glass-card rounded-xl p-4 shadow-xl">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-red-500 to-rose-500 flex items-center justify-center flex-shrink-0">
+                    <span class="text-lg">🎯</span>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-gray-800 text-sm mb-1">Titik Nol</h3>
+                    <p class="text-gray-600 text-xs">Pastikan alat ukur dimulai dari angka 0 sebelum digunakan.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card-item glass-card rounded-xl p-4 shadow-xl">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-violet-500 flex items-center justify-center flex-shrink-0">
+                    <span class="text-lg">👁️</span>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-gray-800 text-sm mb-1">Hindari Kesalahan Paralaks</h3>
+                    <p class="text-gray-600 text-xs">Posisi mata harus sejajar dengan skala alat ukur.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card-item glass-card rounded-xl p-4 shadow-xl">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center flex-shrink-0">
+                    <span class="text-lg">💧</span>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-gray-800 text-sm mb-1">Membaca Meniskus</h3>
+                    <p class="text-gray-600 text-xs">Cairan cekung → baca bawah lengkungan. Cairan cembung → baca atas lengkungan.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card-item glass-card rounded-xl p-4 shadow-xl">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center flex-shrink-0">
+                    <span class="text-lg">📝</span>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-gray-800 text-sm mb-1">Catat Segera</h3>
+                    <p class="text-gray-600 text-xs">Jangan mengandalkan ingatan; catat hasil segera setelah pengukuran.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Slide 6: Aktivitas Praktikum -->
+      <section class="slide-container" data-slide="6">
+        <div class="h-full overflow-y-auto px-6 py-4">
+          <div class="max-w-4xl mx-auto">
+            <div class="card-item mb-6">
+              <span class="inline-block px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-xs font-medium mb-2">Slide 6</span>
+              <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">Aktivitas Praktikum Siswa</h2>
+              <p class="text-cyan-200/80 text-sm">Empat percobaan praktis untuk memperdalam pemahaman</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div class="card-item glass-card rounded-xl p-4 shadow-xl text-center">
+                <div class="w-14 h-14 mx-auto rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mb-3">
+                  <span class="text-2xl">📏</span>
+                </div>
+                <h3 class="font-bold text-gray-800 text-sm mb-1">Penggaris</h3>
+                <p class="text-gray-500 text-xs">Mengukur panjang benda & tinggi badan</p>
+              </div>
+              
+              <div class="card-item glass-card rounded-xl p-4 shadow-xl text-center">
+                <div class="w-14 h-14 mx-auto rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center mb-3">
+                  <span class="text-2xl">⏱️</span>
+                </div>
+                <h3 class="font-bold text-gray-800 text-sm mb-1">Stopwatch</h3>
+                <p class="text-gray-500 text-xs">Menghitung kecepatan denyut nadi</p>
+              </div>
+              
+              <div class="card-item glass-card rounded-xl p-4 shadow-xl text-center">
+                <div class="w-14 h-14 mx-auto rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center mb-3">
+                  <span class="text-2xl">🌡️</span>
+                </div>
+                <h3 class="font-bold text-gray-800 text-sm mb-1">Termometer</h3>
+                <p class="text-gray-500 text-xs">Mengukur suhu berbagai jenis air</p>
+              </div>
+              
+              <div class="card-item glass-card rounded-xl p-4 shadow-xl text-center">
+                <div class="w-14 h-14 mx-auto rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mb-3">
+                  <span class="text-2xl">🧪</span>
+                </div>
+                <h3 class="font-bold text-gray-800 text-sm mb-1">Gelas Ukur</h3>
+                <p class="text-gray-500 text-xs">Mengukur volume benda tidak beraturan</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Slide 7: Kesimpulan -->
+      <section class="slide-container" data-slide="7">
+        <div class="h-full flex flex-col items-center justify-center px-8 text-center">
+          <div class="card-item">
+            <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-2xl mb-6">
+              <span class="text-4xl">✨</span>
+            </div>
+          </div>
+          <div class="card-item">
+            <h2 class="title-font text-3xl md:text-4xl font-bold text-white mb-6">Kesimpulan</h2>
+          </div>
+          <div class="card-item max-w-2xl">
+            <div class="glass-card rounded-2xl p-6 shadow-2xl mb-6">
+              <div class="space-y-4 text-left">
+                <div class="flex items-start gap-3">
+                  <span class="text-xl">🎯</span>
+                  <p class="text-gray-700 text-sm">Pengukuran yang <strong>akurat</strong> sangat penting untuk menjawab tujuan percobaan dalam Sains.</p>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="text-xl">🌍</span>
+                  <p class="text-gray-700 text-sm">Penggunaan alat ukur yang tepat dan pemahaman terhadap <strong>satuan internasional</strong> memastikan hasil eksperimen dapat dipahami secara universal.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-item">
+            <button onclick="goToSlide(1)" class="group flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-all backdrop-blur">
+              <svg class="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"/>
+              </svg>
+              <span>Kembali ke Awal</span>
+            </button>
+          </div>
+        </div>
+      </section>
+      
+    </main>
+    
+    <!-- Navigation Buttons -->
+    <div class="absolute bottom-6 left-0 right-0 flex justify-center items-center gap-4 z-50">
+      <button id="prev-btn" onclick="prevSlide()" class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur flex items-center justify-center text-white transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <button id="next-btn" onclick="nextSlide()" class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur flex items-center justify-center text-white transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+    
+  </div>
+
+  <script>
+    const defaultConfig = {
+      main_title: 'Memahami Pengukuran<br>dalam Sains',
+      subtitle: 'Pengamatan, Besaran, dan Satuan Standar Internasional (SI)',
+      background_color: '#0f2027',
+      text_color: '#ffffff',
+      accent_color: '#f59e0b',
+      card_color: '#ffffff',
+      button_color: 'rgba(255,255,255,0.1)',
+      font_family: 'Poppins',
+      font_size: 16
+    };
+
+    let currentSlide = 1;
+    const totalSlides = 7;
+
+    function initProgressDots() {
+      const dotsContainer = document.getElementById('progress-dots');
+      dotsContainer.innerHTML = '';
+      for (let i = 1; i <= totalSlides; i++) {
+        const dot = document.createElement('button');
+        dot.className = `progress-dot w-2 h-2 rounded-full transition-all ${i === currentSlide ? 'bg-amber-400 active' : 'bg-white/30'}`;
+        dot.onclick = () => goToSlide(i);
+        dot.setAttribute('aria-label', `Go to slide ${i}`);
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    function updateSlideDisplay() {
+      const slides = document.querySelectorAll('.slide-container');
+      slides.forEach((slide, index) => {
+        const slideNum = index + 1;
+        slide.classList.remove('active', 'prev');
+        if (slideNum === currentSlide) {
+          slide.classList.add('active');
+        } else if (slideNum < currentSlide) {
+          slide.classList.add('prev');
+        }
+      });
+
+      document.getElementById('slide-counter').textContent = `${currentSlide} / ${totalSlides}`;
+      
+      const dots = document.querySelectorAll('.progress-dot');
+      dots.forEach((dot, index) => {
+        dot.className = `progress-dot w-2 h-2 rounded-full transition-all ${index + 1 === currentSlide ? 'bg-amber-400 active' : 'bg-white/30'}`;
+      });
+
+      document.getElementById('prev-btn').disabled = currentSlide === 1;
+      document.getElementById('next-btn').disabled = currentSlide === totalSlides;
+    }
+
+    function goToSlide(slideNum) {
+      if (slideNum >= 1 && slideNum <= totalSlides) {
+        currentSlide = slideNum;
+        updateSlideDisplay();
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        goToSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        goToSlide(currentSlide - 1);
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+      }
+    });
+
+    // Touch/swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    document.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+    }
+
+    async function onConfigChange(config) {
+      const mainTitle = document.getElementById('main-title');
+      const subtitle = document.getElementById('subtitle');
+      
+      if (mainTitle) {
+        mainTitle.innerHTML = config.main_title || defaultConfig.main_title;
+      }
+      if (subtitle) {
+        subtitle.textContent = config.subtitle || defaultConfig.subtitle;
+      }
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => { config.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => { config.accent_color = value; window.elementSdk.setConfig({ accent_color: value }); }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => { config.font_family = value; window.elementSdk.setConfig({ font_family: value }); }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => { config.font_size = value; window.elementSdk.setConfig({ font_size: value }); }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['main_title', config.main_title || defaultConfig.main_title],
+        ['subtitle', config.subtitle || defaultConfig.subtitle]
+      ]);
+    }
+
+    // Initialize
+    initProgressDots();
+    updateSlideDisplay();
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf651cab00c807d',t:'MTc3MTM0MjE1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

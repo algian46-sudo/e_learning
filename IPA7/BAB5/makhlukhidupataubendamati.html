@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karakteristik Makhluk Hidup</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * {
+      font-family: 'Nunito', sans-serif;
+    }
+    
+    .heading-font {
+      font-family: 'Quicksand', sans-serif;
+    }
+    
+    .slide {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    .slide.active {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .nav-btn {
+      transition: all 0.2s ease;
+    }
+    
+    .nav-btn:hover:not(:disabled) {
+      transform: scale(1.05);
+    }
+    
+    .nav-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .quiz-option:hover {
+      transform: translateX(5px);
+    }
+    
+    .quiz-option.selected {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+    }
+    
+    .quiz-option.correct {
+      border-color: #22c55e;
+      background-color: #f0fdf4;
+    }
+    
+    .quiz-option.incorrect {
+      border-color: #ef4444;
+      background-color: #fef2f2;
+    }
+    
+    .illustration-container {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    
+    .leaf-decoration {
+      position: absolute;
+      opacity: 0.1;
+    }
+  </style>
+</head>
+<body class="h-full bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 overflow-auto">
+  <div id="app-container" class="w-full min-h-full flex flex-col">
+    
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white py-4 px-6 shadow-lg">
+      <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl">
+            🌿
+          </div>
+          <div>
+            <h1 id="main-title" class="heading-font text-xl md:text-2xl font-bold">Karakteristik Makhluk Hidup</h1>
+            <p class="text-emerald-100 text-sm">Kelas VII - Ilmu Pengetahuan Alam</p>
+          </div>
+        </div>
+        <div class="hidden md:flex items-center gap-2 text-sm">
+          <span class="bg-white/20 px-3 py-1 rounded-full">Slide <span id="current-slide">1</span> / <span id="total-slides">10</span></span>
+        </div>
+      </div>
+      
+      <!-- Progress Bar -->
+      <div class="max-w-6xl mx-auto mt-3">
+        <div class="h-2 bg-white/20 rounded-full overflow-hidden">
+          <div id="progress-bar" class="progress-bar h-full bg-yellow-400 rounded-full" style="width: 10%"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-4 md:p-6">
+      <div class="max-w-6xl mx-auto">
+        
+        <!-- Slide 1: Judul & Pendahuluan -->
+        <div class="slide active" id="slide-1">
+          <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-emerald-500 to-teal-500 p-8 text-white text-center">
+              <div class="text-6xl mb-4 animate-float">🔬</div>
+              <h2 class="heading-font text-3xl md:text-4xl font-bold mb-2">Karakteristik dan Klasifikasi</h2>
+              <h3 class="heading-font text-2xl md:text-3xl font-semibold text-emerald-100">Makhluk Hidup</h3>
+            </div>
+            
+            <div class="p-6 md:p-8">
+              <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 mb-6">
+                <h4 class="heading-font text-lg font-bold text-blue-800 mb-3 flex items-center gap-2">
+                  🎯 Tujuan Pembelajaran
+                </h4>
+                <ul class="space-y-2 text-gray-700">
+                  <li class="flex items-start gap-2">
+                    <span class="text-blue-500 mt-1">✓</span>
+                    Mengidentifikasi karakteristik makhluk hidup
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-blue-500 mt-1">✓</span>
+                    Memahami perbedaan mendasar makhluk hidup dan benda mati
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-blue-500 mt-1">✓</span>
+                    Menjelaskan urutan taksonomi dalam klasifikasi
+                  </li>
+                </ul>
+              </div>
+              
+              <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6">
+                <h4 class="heading-font text-lg font-bold text-amber-800 mb-3 flex items-center gap-2">
+                  💭 Pertanyaan Pemantik
+                </h4>
+                <p class="text-gray-700 text-lg italic">
+                  "Apa yang membedakan <strong>kuda</strong> (makhluk hidup) dengan <strong>mobil</strong> (benda mati) meskipun keduanya sama-sama bisa bergerak?"
+                </p>
+                
+                <div class="mt-4 flex flex-wrap justify-center gap-4">
+                  <div class="bg-white rounded-xl p-4 shadow-md text-center w-32">
+                    <div class="text-4xl mb-2">🐴</div>
+                    <p class="font-semibold text-gray-700">Kuda</p>
+                    <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Makhluk Hidup</span>
+                  </div>
+                  <div class="text-4xl self-center text-gray-400">VS</div>
+                  <div class="bg-white rounded-xl p-4 shadow-md text-center w-32">
+                    <div class="text-4xl mb-2">🚗</div>
+                    <p class="font-semibold text-gray-700">Mobil</p>
+                    <span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full">Benda Mati</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2: Makhluk Hidup vs Benda Mati -->
+        <div class="slide" id="slide-2">
+          <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-purple-500 to-pink-500 p-6 text-white">
+              <h2 class="heading-font text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="bg-white/20 w-10 h-10 rounded-full flex items-center justify-center">1</span>
+                Makhluk Hidup vs Benda Mati
+              </h2>
+            </div>
+            
+            <div class="p-6 md:p-8">
+              <div class="bg-purple-50 rounded-2xl p-5 mb-6">
+                <p class="text-gray-700 text-lg">
+                  Sesuatu dikelompokkan sebagai <strong>makhluk hidup (organisme)</strong> jika memiliki <strong>seluruh karakteristik kehidupan</strong>. Benda mati mungkin memiliki satu atau dua ciri, tetapi tidak memiliki semua karakteristik secara lengkap.
+                </p>
+              </div>
+              
+              <div class="grid md:grid-cols-2 gap-6">
+                <!-- Benda Mati -->
+                <div class="card-hover bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden">
+                  <div class="bg-gray-600 text-white p-4 text-center">
+                    <h3 class="heading-font text-xl font-bold">🪨 Benda Mati</h3>
+                  </div>
+                  <div class="p-5">
+                    <div class="illustration-container p-6 mb-4 flex justify-center">
+                      <svg viewBox="0 0 200 150" class="w-full max-w-xs">
+                        <!-- Ground -->
+                        <ellipse cx="100" cy="140" rx="80" ry="10" fill="#8B7355"/>
+                        <!-- Large Rock -->
+                        <path d="M40 140 Q30 100 50 80 Q70 60 100 70 Q130 60 150 80 Q170 100 160 140 Z" fill="#9CA3AF"/>
+                        <path d="M50 130 Q45 110 60 95 Q75 80 95 85 Q115 80 130 95 Q145 110 140 130 Z" fill="#B0B8C4"/>
+                        <!-- Small rocks -->
+                        <ellipse cx="30" cy="135" rx="15" ry="8" fill="#6B7280"/>
+                        <ellipse cx="170" cy="138" rx="12" ry="6" fill="#7C8490"/>
+                        <!-- Soil/dirt -->
+                        <ellipse cx="100" cy="142" rx="70" ry="8" fill="#A0826D"/>
+                      </svg>
+                    </div>
+                    <ul class="space-y-2">
+                      <li class="flex items-center gap-2 text-gray-700">
+                        <span class="text-red-500">✗</span> Tidak bergerak sendiri
+                      </li>
+                      <li class="flex items-center gap-2 text-gray-700">
+                        <span class="text-red-500">✗</span> Tidak menanggapi rangsang
+                      </li>
+                      <li class="flex items-center gap-2 text-gray-700">
+                        <span class="text-red-500">✗</span> Tidak bernapas
+                      </li>
+                      <li class="flex items-center gap-2 text-gray-700">
+                        <span class="text-red-500">✗</span> Tidak berkembang biak
+                      </li>
+                    </ul>
+                    <p class="mt-4 text-sm text-gray-600 italic">Contoh: Batu, tanah, air, logam</p>
+                  </div>
+                </div>
+                
+                <!-- Makhluk Hidup -->
+                <div class="card-hover bg-gradient-to-br from-green-100 to-emerald-200 rounded-2xl overflow-hidden">
+                  <div class="bg-emerald-600 text-white p-4 text-center">
+                    <h3 class="heading-font text-xl font-bold">🌱 Makhluk Hidup</h3>
+                  </div>
+                  <div class="p-5">
+                    <div class="illustration-container p-6 mb-4 flex justify-center bg-gradient-to-b from-green-50 to-emerald-100">
+                      <svg viewBox="0 0 200 150" class="w-full max-w-xs">
+                        <!-- Ground -->
+                        <ellipse cx="100" cy="145" rx="90" ry="8" fill="#8B7355"/>
+                        <!-- Grass -->
+                        <path d="M20 145 Q25 130 22 145" stroke="#22C55E" stroke-width="2" fill="none"/>
+                        <path d="M30 145 Q35 125 32 145" stroke="#22C55E" stroke-width="2" fill="none"/>
+                        <path d="M170 145 Q175 128 172 145" stroke="#22C55E" stroke-width="2" fill="none"/>
+                        <path d="M180 145 Q185 132 182 145" stroke="#22C55E" stroke-width="2" fill="none"/>
+                        <!-- Tree trunk -->
+                        <rect x="90" y="90" width="20" height="55" fill="#8B4513"/>
+                        <rect x="93" y="90" width="5" height="55" fill="#A0522D"/>
+                        <!-- Tree foliage -->
+                        <circle cx="100" cy="50" r="35" fill="#22C55E"/>
+                        <circle cx="75" cy="60" r="25" fill="#16A34A"/>
+                        <circle cx="125" cy="60" r="25" fill="#16A34A"/>
+                        <circle cx="100" cy="35" r="20" fill="#4ADE80"/>
+                        <!-- Butterfly -->
+                        <ellipse cx="145" cy="45" rx="8" ry="6" fill="#F472B6"/>
+                        <ellipse cx="155" cy="45" rx="8" ry="6" fill="#F472B6"/>
+                        <circle cx="150" cy="48" r="3" fill="#333"/>
+                        <!-- Rabbit -->
+                        <ellipse cx="50" cy="130" rx="15" ry="12" fill="#D1D5DB"/>
+                        <circle cx="45" cy="118" r="8" fill="#D1D5DB"/>
+                        <ellipse cx="42" cy="108" rx="3" ry="8" fill="#E5E7EB"/>
+                        <ellipse cx="48" cy="108" rx="3" ry="8" fill="#E5E7EB"/>
+                        <circle cx="43" cy="117" r="2" fill="#333"/>
+                        <circle cx="48" cy="117" r="2" fill="#333"/>
+                        <ellipse cx="45" cy="121" rx="2" ry="1" fill="#F9A8D4"/>
+                      </svg>
+                    </div>
+                    <ul class="space-y-2">
+                      <li class="flex items-center gap-2 text-gray-700">
+                        <span class="text-green-500">✓</span> Bergerak
+                      </li>
+                      <li class="flex items-center gap-2 text-gray-700">
+                        <span class="text-green-500">✓</span> Menanggapi rangsang
+                      </li>
+                      <li class="flex items-center gap-2 text-gray-700">
+                        <span class="text-green-500">✓</span> Bernapas dan tumbuh
+                      </li>
+                      <li class="flex items-center gap-2 text-gray-700">
+                        <span class="text-green-500">✓</span> Berkembang biak
+                      </li>
+                    </ul>
+                    <p class="mt-4 text-sm text-gray-600 italic">Contoh: Hewan, tumbuhan, manusia, bakteri</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Interactive Activity -->
+              <div class="mt-6 bg-blue-50 rounded-2xl p-5">
+                <h4 class="heading-font text-lg font-bold text-blue-800 mb-3">🎮 Aktivitas Interaktif</h4>
+                <p class="text-gray-700 mb-4">Klik pada objek di bawah ini untuk menentukan apakah termasuk makhluk hidup atau benda mati:</p>
+                <div class="flex flex-wrap gap-3 justify-center" id="classify-activity">
+                  <button onclick="classifyItem(this, 'hidup')" class="bg-white px-4 py-2 rounded-full shadow hover:shadow-md transition text-2xl" data-answer="hidup">🐕 Anjing</button>
+                  <button onclick="classifyItem(this, 'mati')" class="bg-white px-4 py-2 rounded-full shadow hover:shadow-md transition text-2xl" data-answer="mati">🪑 Kursi</button>
+                  <button onclick="classifyItem(this, 'hidup')" class="bg-white px-4 py-2 rounded-full shadow hover:shadow-md transition text-2xl" data-answer="hidup">🌻 Bunga</button>
+                  <button onclick="classifyItem(this, 'mati')" class="bg-white px-4 py-2 rounded-full shadow hover:shadow-md transition text-2xl" data-answer="mati">📱 HP</button>
+                  <button onclick="classifyItem(this, 'hidup')" class="bg-white px-4 py-2 rounded-full shadow hover:shadow-md transition text-2xl" data-answer="hidup">🦋 Kupu-kupu</button>
+                </div>
+                <div id="classify-feedback" class="mt-3 text-center font-semibold"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Bergerak & Bernapas -->
+        <div class="slide" id="slide-3">
+          <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-500 to-cyan-500 p-6 text-white">
+              <h2 class="heading-font text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="bg-white/20 w-10 h-10 rounded-full flex items-center justify-center">2</span>
+                Bergerak & Bernapas
+              </h2>
+            </div>
+            
+            <div class="p-6 md:p-8">
+              <div class="grid md:grid-cols-2 gap-6">
+                <!-- Bergerak -->
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6">
+                  <div class="text-center mb-4">
+                    <div class="text-5xl mb-2">🏃‍♂️</div>
+                    <h3 class="heading-font text-xl font-bold text-blue-800">Kemampuan Bergerak</h3>
+                  </div>
+                  
+                  <div class="illustration-container p-4 mb-4">
+                    <svg viewBox="0 0 300 150" class="w-full">
+                      <!-- Background -->
+                      <rect x="0" y="120" width="300" height="30" fill="#8B7355"/>
+                      <!-- Mimosa plant -->
+                      <line x1="80" y1="120" x2="80" y2="70" stroke="#228B22" stroke-width="4"/>
+                      <g id="mimosa-leaves-open">
+                        <path d="M80 70 Q60 50 40 60" stroke="#22C55E" stroke-width="3" fill="none"/>
+                        <path d="M80 70 Q100 50 120 60" stroke="#22C55E" stroke-width="3" fill="none"/>
+                        <path d="M80 85 Q55 70 35 80" stroke="#22C55E" stroke-width="3" fill="none"/>
+                        <path d="M80 85 Q105 70 125 80" stroke="#22C55E" stroke-width="3" fill="none"/>
+                        <ellipse cx="40" cy="60" rx="12" ry="5" fill="#22C55E"/>
+                        <ellipse cx="120" cy="60" rx="12" ry="5" fill="#22C55E"/>
+                        <ellipse cx="35" cy="80" rx="12" ry="5" fill="#22C55E"/>
+                        <ellipse cx="125" cy="80" rx="12" ry="5" fill="#22C55E"/>
+                      </g>
+                      <!-- Hand touching -->
+                      <path d="M60 40 Q55 35 50 40 L45 50 L55 55 L60 45 Z" fill="#FDBCB4"/>
+                      <text x="70" y="30" font-size="10" fill="#666">Sentuh!</text>
+                      <!-- Arrow -->
+                      <path d="M150 75 L180 75 L175 70 M180 75 L175 80" stroke="#3B82F6" stroke-width="2" fill="none"/>
+                      <!-- Mimosa closed -->
+                      <line x1="230" y1="120" x2="230" y2="70" stroke="#228B22" stroke-width="4"/>
+                      <path d="M230 70 L230 50" stroke="#22C55E" stroke-width="3"/>
+                      <path d="M230 85 L230 65" stroke="#22C55E" stroke-width="3"/>
+                      <ellipse cx="230" cy="48" rx="5" ry="12" fill="#22C55E"/>
+                      <ellipse cx="230" cy="63" rx="5" ry="10" fill="#22C55E"/>
+                      <text x="200" y="140" font-size="10" fill="#666">Daun menutup</text>
+                    </svg>
+                  </div>
+                  
+                  <ul class="space-y-2 text-gray-700 text-sm">
+                    <li>• <strong>Hewan:</strong> Bergerak aktif untuk mencari makan, berlindung</li>
+                    <li>• <strong>Tumbuhan:</strong> Bergerak lambat (contoh: putri malu menutup saat disentuh)</li>
+                    <li>• Gerakan adalah respons terhadap lingkungan</li>
+                  </ul>
+                </div>
+                
+                <!-- Bernapas -->
+                <div class="bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-2xl p-6">
+                  <div class="text-center mb-4">
+                    <div class="text-5xl mb-2">💨</div>
+                    <h3 class="heading-font text-xl font-bold text-cyan-800">Bernapas (Respirasi)</h3>
+                  </div>
+                  
+                  <div class="illustration-container p-4 mb-4 bg-gradient-to-b from-cyan-50 to-blue-100">
+                    <svg viewBox="0 0 300 150" class="w-full">
+                      <!-- Lungs illustration -->
+                      <ellipse cx="120" cy="80" rx="40" ry="50" fill="#F87171" opacity="0.7"/>
+                      <ellipse cx="180" cy="80" rx="40" ry="50" fill="#F87171" opacity="0.7"/>
+                      <path d="M150 30 L150 60 Q130 70 120 80 M150 60 Q170 70 180 80" stroke="#DC2626" stroke-width="3" fill="none"/>
+                      <!-- O2 in -->
+                      <circle cx="50" cy="50" r="15" fill="#3B82F6" opacity="0.8"/>
+                      <text x="42" y="55" fill="white" font-size="12" font-weight="bold">O₂</text>
+                      <path d="M70 50 L100 60" stroke="#3B82F6" stroke-width="2" marker-end="url(#arrow)"/>
+                      <!-- CO2 out -->
+                      <circle cx="250" cy="50" r="15" fill="#6B7280" opacity="0.8"/>
+                      <text x="237" y="55" fill="white" font-size="10" font-weight="bold">CO₂</text>
+                      <path d="M200 60 L230 50" stroke="#6B7280" stroke-width="2"/>
+                      <!-- Labels -->
+                      <text x="30" y="85" font-size="10" fill="#3B82F6">Oksigen masuk</text>
+                      <text x="220" y="85" font-size="10" fill="#6B7280">CO₂ keluar</text>
+                    </svg>
+                  </div>
+                  
+                  <div class="bg-white rounded-xl p-4">
+                    <p class="text-gray-700 text-sm mb-2"><strong>Proses Respirasi:</strong></p>
+                    <div class="flex items-center justify-center gap-2 text-sm">
+                      <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded">O₂ + Makanan</span>
+                      <span>→</span>
+                      <span class="bg-green-100 text-green-700 px-2 py-1 rounded">Energi</span>
+                      <span>+</span>
+                      <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded">CO₂ + H₂O</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Fun Fact -->
+              <div class="mt-6 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-2xl p-5">
+                <h4 class="font-bold text-yellow-800 flex items-center gap-2">
+                  💡 Tahukah Kamu?
+                </h4>
+                <p class="text-gray-700 mt-2">
+                  Manusia bernapas sekitar <strong>20.000 kali sehari</strong>! Setiap kali bernapas, kita mengambil oksigen dan mengeluarkan karbon dioksida sebagai hasil pembakaran zat makanan dalam tubuh.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 4: Tumbuh, Berkembang, & Bereproduksi -->
+        <div class="slide" id="slide-4">
+          <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-green-500 to-emerald-500 p-6 text-white">
+              <h2 class="heading-font text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="bg-white/20 w-10 h-10 rounded-full flex items-center justify-center">3</span>
+                Tumbuh, Berkembang, & Bereproduksi
+              </h2>
+            </div>
+            
+            <div class="p-6 md:p-8">
+              <!-- Tumbuh & Berkembang -->
+              <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 mb-6">
+                <h3 class="heading-font text-xl font-bold text-green-800 mb-4 flex items-center gap-2">
+                  🌱 Tumbuh & Berkembang
+                </h3>
+                
+                <div class="illustration-container p-6 mb-4">
+                  <svg viewBox="0 0 400 120" class="w-full">
+                    <!-- Stage 1: Seed -->
+                    <g transform="translate(20, 0)">
+                      <ellipse cx="30" cy="100" rx="25" ry="8" fill="#8B7355"/>
+                      <ellipse cx="30" cy="95" rx="8" ry="5" fill="#F59E0B"/>
+                      <text x="15" y="115" font-size="8" fill="#666">Biji</text>
+                    </g>
+                    
+                    <!-- Arrow 1 -->
+                    <path d="M80 90 L100 90" stroke="#22C55E" stroke-width="2" marker-end="url(#arrowGreen)"/>
+                    
+                    <!-- Stage 2: Germinating -->
+                    <g transform="translate(100, 0)">
+                      <ellipse cx="30" cy="100" rx="25" ry="8" fill="#8B7355"/>
+                      <path d="M30 95 Q30 80 35 70" stroke="#22C55E" stroke-width="3" fill="none"/>
+                      <ellipse cx="35" cy="68" rx="6" ry="4" fill="#86EFAC"/>
+                      <text x="5" y="115" font-size="8" fill="#666">Kecambah</text>
+                    </g>
+                    
+                    <!-- Arrow 2 -->
+                    <path d="M160 90 L180 90" stroke="#22C55E" stroke-width="2"/>
+                    
+                    <!-- Stage 3: Young plant -->
+                    <g transform="translate(180, 0)">
+                      <ellipse cx="30" cy="100" rx="25" ry="8" fill="#8B7355"/>
+                      <line x1="30" y1="98" x2="30" y2="60" stroke="#22C55E" stroke-width="4"/>
+                      <ellipse cx="20" cy="65" rx="10" ry="6" fill="#22C55E"/>
+                      <ellipse cx="40" cy="65" rx="10" ry="6" fill="#22C55E"/>
+                      <ellipse cx="30" cy="55" rx="8" ry="5" fill="#4ADE80"/>
+                      <text x="5" y="115" font-size="8" fill="#666">Tumbuhan muda</text>
+                    </g>
+                    
+                    <!-- Arrow 3 -->
+                    <path d="M240 90 L260 90" stroke="#22C55E" stroke-width="2"/>
+                    
+                    <!-- Stage 4: Mature plant with corn -->
+                    <g transform="translate(260, 0)">
+                      <ellipse cx="40" cy="100" rx="35" ry="10" fill="#8B7355"/>
+                      <line x1="40" y1="98" x2="40" y2="30" stroke="#22C55E" stroke-width="5"/>
+                      <path d="M40 50 Q20 40 15 50 Q10 60 25 55" fill="#22C55E"/>
+                      <path d="M40 50 Q60 40 65 50 Q70 60 55 55" fill="#22C55E"/>
+                      <path d="M40 35 Q25 25 20 35 Q15 45 30 40" fill="#4ADE80"/>
+                      <path d="M40 35 Q55 25 60 35 Q65 45 50 40" fill="#4ADE80"/>
+                      <!-- Corn -->
+                      <ellipse cx="55" cy="65" rx="8" ry="15" fill="#FCD34D"/>
+                      <path d="M55 50 Q60 45 55 40 Q50 45 55 50" fill="#A0522D"/>
+                      <text x="10" y="115" font-size="8" fill="#666">Tanaman dewasa</text>
+                    </g>
+                  </svg>
+                </div>
+                
+                <p class="text-gray-700 text-center">
+                  <strong>Pertumbuhan:</strong> Bertambah ukuran (volume, tinggi, berat) <br>
+                  <strong>Perkembangan:</strong> Menjadi lebih kompleks dan matang
+                </p>
+              </div>
+              
+              <!-- Reproduksi -->
+              <div class="bg-gradient-to-r from-pink-50 to-rose-50 rounded-2xl p-6">
+                <h3 class="heading-font text-xl font-bold text-pink-800 mb-4 flex items-center gap-2">
+                  👶 Reproduksi (Berkembang Biak)
+                </h3>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                  <!-- Seksual -->
+                  <div class="bg-white rounded-xl p-4 shadow">
+                    <h4 class="font-bold text-pink-700 mb-3 text-center">Reproduksi Seksual</h4>
+                    <div class="flex justify-center mb-3">
+                      <svg viewBox="0 0 150 80" class="w-40">
+                        <circle cx="35" cy="40" r="20" fill="#60A5FA"/>
+                        <text x="28" y="45" fill="white" font-size="12">♂</text>
+                        <circle cx="115" cy="40" r="20" fill="#F472B6"/>
+                        <text x="108" y="45" fill="white" font-size="12">♀</text>
+                        <path d="M55 40 L95 40" stroke="#9333EA" stroke-width="2" stroke-dasharray="5,3"/>
+                        <circle cx="75" cy="40" r="8" fill="#9333EA"/>
+                        <text x="68" y="70" fill="#666" font-size="8">Keturunan</text>
+                      </svg>
+                    </div>
+                    <p class="text-sm text-gray-600 text-center">Melibatkan sel kelamin jantan & betina</p>
+                    <p class="text-xs text-gray-500 mt-2 text-center">Contoh: Manusia, hewan, tumbuhan berbunga</p>
+                  </div>
+                  
+                  <!-- Aseksual -->
+                  <div class="bg-white rounded-xl p-4 shadow">
+                    <h4 class="font-bold text-green-700 mb-3 text-center">Reproduksi Aseksual</h4>
+                    <div class="flex justify-center mb-3">
+                      <svg viewBox="0 0 150 80" class="w-40">
+                        <circle cx="40" cy="40" r="25" fill="#22C55E"/>
+                        <circle cx="40" cy="40" r="15" fill="#4ADE80"/>
+                        <path d="M65 40 L85 40" stroke="#22C55E" stroke-width="2"/>
+                        <circle cx="110" cy="30" r="15" fill="#22C55E"/>
+                        <circle cx="110" cy="30" r="8" fill="#4ADE80"/>
+                        <circle cx="110" cy="55" r="15" fill="#22C55E"/>
+                        <circle cx="110" cy="55" r="8" fill="#4ADE80"/>
+                        <text x="25" y="75" fill="#666" font-size="8">Induk</text>
+                        <text x="85" y="75" fill="#666" font-size="8">Keturunan</text>
+                      </svg>
+                    </div>
+                    <p class="text-sm text-gray-600 text-center">Hanya memerlukan satu induk</p>
+                    <p class="text-xs text-gray-500 mt-2 text-center">Contoh: Bakteri, hydra, stek tanaman</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 5: Energi & Menanggapi Rangsang -->
+        <div class="slide" id="slide-5">
+          <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-amber-500 to-orange-500 p-6 text-white">
+              <h2 class="heading-font text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="bg-white/20 w-10 h-10 rounded-full flex items-center justify-center">4</span>
+                Energi & Menanggapi Rangsang
+              </h2>
+            </div>
+            
+            <div class="p-6 md:p-8">
+              <div class="grid md:grid-cols-2 gap-6">
+                <!-- Menggunakan Energi -->
+                <div class="bg-gradient-to-br from-amber-50 to-yellow-100 rounded-2xl p-6">
+                  <div class="text-center mb-4">
+                    <div class="text-5xl mb-2">⚡</div>
+                    <h3 class="heading-font text-xl font-bold text-amber-800">Menggunakan Energi</h3>
+                  </div>
+                  
+                  <div class="grid grid-cols-2 gap-4 mb-4">
+                    <!-- Autotrof -->
+                    <div class="bg-white rounded-xl p-4 text-center shadow">
+                      <div class="illustration-container p-3 mb-2">
+                        <svg viewBox="0 0 80 80" class="w-full">
+                          <!-- Sun -->
+                          <circle cx="40" cy="20" r="12" fill="#FCD34D"/>
+                          <g stroke="#FCD34D" stroke-width="2">
+                            <line x1="40" y1="5" x2="40" y2="0"/>
+                            <line x1="55" y1="20" x2="60" y2="20"/>
+                            <line x1="25" y1="20" x2="20" y2="20"/>
+                            <line x1="50" y1="10" x2="55" y2="5"/>
+                            <line x1="30" y1="10" x2="25" y2="5"/>
+                          </g>
+                          <!-- Plant -->
+                          <line x1="40" y1="75" x2="40" y2="50" stroke="#22C55E" stroke-width="3"/>
+                          <ellipse cx="30" cy="50" rx="10" ry="6" fill="#22C55E"/>
+                          <ellipse cx="50" cy="50" rx="10" ry="6" fill="#22C55E"/>
+                          <ellipse cx="40" cy="42" rx="8" ry="5" fill="#4ADE80"/>
+                          <!-- Arrow from sun -->
+                          <path d="M40 32 L40 38" stroke="#FCD34D" stroke-width="2" marker-end="url(#arrowYellow)"/>
+                        </svg>
+                      </div>
+                      <h4 class="font-bold text-green-700 text-sm">Autotrof</h4>
+                      <p class="text-xs text-gray-600">(Produsen)</p>
+                      <p class="text-xs text-gray-500 mt-1">Membuat makanan sendiri via fotosintesis</p>
+                    </div>
+                    
+                    <!-- Heterotrof -->
+                    <div class="bg-white rounded-xl p-4 text-center shadow">
+                      <div class="illustration-container p-3 mb-2">
+                        <svg viewBox="0 0 80 80" class="w-full">
+                          <!-- Rabbit eating -->
+                          <ellipse cx="25" cy="60" rx="12" ry="10" fill="#D1D5DB"/>
+                          <circle cx="20" cy="50" r="8" fill="#D1D5DB"/>
+                          <ellipse cx="17" cy="42" rx="3" ry="7" fill="#E5E7EB"/>
+                          <ellipse cx="23" cy="42" rx="3" ry="7" fill="#E5E7EB"/>
+                          <circle cx="18" cy="49" r="2" fill="#333"/>
+                          <circle cx="23" cy="49" r="2" fill="#333"/>
+                          <!-- Carrot -->
+                          <path d="M35 55 L55 45 L50 55 Z" fill="#F97316"/>
+                          <path d="M55 45 Q60 40 58 35 Q55 40 52 38 Q55 43 55 45" fill="#22C55E"/>
+                          <!-- Arrow -->
+                          <path d="M45 55 L32 58" stroke="#F97316" stroke-width="2"/>
+                        </svg>
+                      </div>
+                      <h4 class="font-bold text-orange-700 text-sm">Heterotrof</h4>
+                      <p class="text-xs text-gray-600">(Konsumen)</p>
+                      <p class="text-xs text-gray-500 mt-1">Mendapat energi dari organisme lain</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Menanggapi Rangsang -->
+                <div class="bg-gradient-to-br from-orange-50 to-red-100 rounded-2xl p-6">
+                  <div class="text-center mb-4">
+                    <div class="text-5xl mb-2">👁️</div>
+                    <h3 class="heading-font text-xl font-bold text-orange-800">Menanggapi Rangsang (Iritabilitas)</h3>
+                  </div>
+                  
+                  <div class="illustration-container p-4 mb-4">
+                    <svg viewBox="0 0 200 120" class="w-full">
+                      <!-- Sun -->
+                      <circle cx="160" cy="30" r="20" fill="#FCD34D"/>
+                      <g stroke="#FCD34D" stroke-width="2">
+                        <line x1="160" y1="5" x2="160" y2="0"/>
+                        <line x1="185" y1="30" x2="195" y2="30"/>
+                        <line x1="175" y1="15" x2="185" y2="5"/>
+                        <line x1="175" y1="45" x2="185" y2="55"/>
+                      </g>
+                      
+                      <!-- Sun rays to flower -->
+                      <path d="M140 35 L100 50" stroke="#FCD34D" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+                      
+                      <!-- Ground -->
+                      <rect x="0" y="100" width="200" height="20" fill="#8B7355"/>
+                      
+                      <!-- Sunflower facing sun -->
+                      <line x1="50" y1="100" x2="70" y2="50" stroke="#228B22" stroke-width="4"/>
+                      <!-- Leaves -->
+                      <ellipse cx="45" cy="80" rx="12" ry="6" fill="#22C55E" transform="rotate(-30 45 80)"/>
+                      <ellipse cx="65" cy="70" rx="12" ry="6" fill="#22C55E" transform="rotate(20 65 70)"/>
+                      <!-- Flower head facing sun -->
+                      <circle cx="80" cy="45" r="15" fill="#FCD34D"/>
+                      <circle cx="80" cy="45" r="8" fill="#92400E"/>
+                      <!-- Petals -->
+                      <ellipse cx="80" cy="28" rx="5" ry="8" fill="#FBBF24"/>
+                      <ellipse cx="95" cy="38" rx="8" ry="5" fill="#FBBF24"/>
+                      <ellipse cx="92" cy="55" rx="7" ry="5" fill="#FBBF24"/>
+                      <ellipse cx="68" cy="55" rx="7" ry="5" fill="#FBBF24"/>
+                      <ellipse cx="65" cy="38" rx="8" ry="5" fill="#FBBF24"/>
+                      
+                      <!-- Label -->
+                      <text x="30" y="115" font-size="8" fill="#666">Bunga matahari mengikuti arah matahari</text>
+                    </svg>
+                  </div>
+                  
+                  <div class="bg-white rounded-xl p-3">
+                    <p class="text-sm text-gray-700"><strong>Iritabilitas:</strong> Kemampuan merespons stimulus dari lingkungan</p>
+                    <div class="mt-2 flex flex-wrap gap-2 justify-center">
+                      <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">☀️ Cahaya</span>
+                      <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">💧 Air</span>
+                      <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full">🌡️ Suhu</span>
+                      <span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full">👆 Sentuhan</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Interactive Demo -->
+              <div class="mt-6 bg-purple-50 rounded-2xl p-5">
+                <h4 class="heading-font text-lg font-bold text-purple-800 mb-3">🔬 Simulasi Interaktif: Respons Tumbuhan</h4>
+                <p class="text-gray-700 mb-4">Klik tombol di bawah untuk melihat bagaimana tumbuhan merespons rangsangan:</p>
+                <div class="flex flex-wrap gap-3 justify-center">
+                  <button onclick="showResponse('light')" class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 px-4 py-2 rounded-full font-semibold transition">☀️ Beri Cahaya</button>
+                  <button onclick="showResponse('water')" class="bg-blue-400 hover:bg-blue-500 text-blue-900 px-4 py-2 rounded-full font-semibold transition">💧 Beri Air</button>
+                  <button onclick="showResponse('touch')" class="bg-pink-400 hover:bg-pink-500 text-pink-900 px-4 py-2 rounded-full font-semibold transition">👆 Sentuh</button>
+                </div>
+                <div id="response-display" class="mt-4 p-4 bg-white rounded-xl text-center hidden">
+                  <p id="response-text" class="text-gray-700"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 6: Ekskresi & Susunan Sel -->
+        <div class="slide" id="slide-6">
+          <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-red-500 to-pink-500 p-6 text-white">
+              <h2 class="heading-font text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="bg-white/20 w-10 h-10 rounded-full flex items-center justify-center">5</span>
+                Ekskresi & Susunan Sel
+              </h2>
+            </div>
+            
+            <div class="p-6 md:p-8">
+              <div class="grid md:grid-cols-2 gap-6">
+                <!-- Ekskresi -->
+                <div class="bg-gradient-to-br from-red-50 to-pink-100 rounded-2xl p-6">
+                  <div class="text-center mb-4">
+                    <div class="text-5xl mb-2">🚿</div>
+                    <h3 class="heading-font text-xl font-bold text-red-800">Mengeluarkan Zat Sisa (Ekskresi)</h3>
+                  </div>
+                  
+                  <div class="illustration-container p-4 mb-4">
+                    <svg viewBox="0 0 200 140" class="w-full">
+                      <!-- Human silhouette -->
+                      <ellipse cx="100" cy="30" rx="20" ry="22" fill="#FDBCB4"/>
+                      <path d="M75 50 Q70 90 80 130 M125 50 Q130 90 120 130" stroke="#FDBCB4" stroke-width="12" fill="none" stroke-linecap="round"/>
+                      <ellipse cx="100" cy="80" rx="30" ry="35" fill="#60A5FA"/>
+                      
+                      <!-- Excretion arrows -->
+                      <!-- Sweat -->
+                      <circle cx="130" cy="60" r="3" fill="#3B82F6"/>
+                      <circle cx="135" cy="65" r="2" fill="#3B82F6"/>
+                      <text x="140" y="65" font-size="7" fill="#3B82F6">Keringat</text>
+                      
+                      <!-- CO2 from mouth -->
+                      <circle cx="125" cy="28" r="4" fill="#9CA3AF" opacity="0.7"/>
+                      <circle cx="132" cy="25" r="3" fill="#9CA3AF" opacity="0.5"/>
+                      <text x="137" y="30" font-size="7" fill="#6B7280">CO₂</text>
+                      
+                      <!-- Urine indicator -->
+                      <circle cx="100" cy="125" r="5" fill="#FCD34D"/>
+                      <text x="108" y="128" font-size="7" fill="#CA8A04">Urine</text>
+                    </svg>
+                  </div>
+                  
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2 bg-white rounded-lg p-2">
+                      <span class="text-xl">💧</span>
+                      <span class="text-sm text-gray-700"><strong>Keringat:</strong> Air, garam, urea</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-white rounded-lg p-2">
+                      <span class="text-xl">💨</span>
+                      <span class="text-sm text-gray-700"><strong>Napas:</strong> CO₂, uap air</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-white rounded-lg p-2">
+                      <span class="text-xl">🚽</span>
+                      <span class="text-sm text-gray-700"><strong>Urine:</strong> Air, urea, amonia</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Susunan Sel -->
+                <div class="bg-gradient-to-br from-indigo-50 to-purple-100 rounded-2xl p-6">
+                  <div class="text-center mb-4">
+                    <div class="text-5xl mb-2">🔬</div>
+                    <h3 class="heading-font text-xl font-bold text-indigo-800">Tersusun dari Sel</h3>
+                  </div>
+                  
+                  <div class="grid grid-cols-2 gap-4">
+                    <!-- Uniseluler -->
+                    <div class="bg-white rounded-xl p-4 text-center shadow">
+                      <div class="illustration-container p-3 mb-2">
+                        <svg viewBox="0 0 80 80" class="w-full">
+                          <!-- Amoeba -->
+                          <path d="M40 15 Q60 10 65 30 Q70 50 55 60 Q40 70 25 60 Q10 50 15 30 Q20 10 40 15" fill="#A78BFA" opacity="0.7"/>
+                          <circle cx="35" cy="35" r="10" fill="#7C3AED"/>
+                          <circle cx="50" cy="45" r="4" fill="#DDD6FE"/>
+                          <circle cx="30" cy="50" r="3" fill="#DDD6FE"/>
+                          <!-- Pseudopod -->
+                          <path d="M65 30 Q75 28 78 35" fill="#A78BFA" opacity="0.7"/>
+                        </svg>
+                      </div>
+                      <h4 class="font-bold text-purple-700 text-sm">Uniseluler</h4>
+                      <p class="text-xs text-gray-600">(Satu sel)</p>
+                      <p class="text-xs text-gray-500 mt-1">Amoeba, Paramecium, Bakteri</p>
+                    </div>
+                    
+                    <!-- Multiseluler -->
+                    <div class="bg-white rounded-xl p-4 text-center shadow">
+                      <div class="illustration-container p-3 mb-2">
+                        <svg viewBox="0 0 80 80" class="w-full">
+                          <!-- Multiple cells -->
+                          <circle cx="25" cy="25" r="12" fill="#F472B6" opacity="0.7" stroke="#EC4899" stroke-width="1"/>
+                          <circle cx="50" cy="20" r="12" fill="#F472B6" opacity="0.7" stroke="#EC4899" stroke-width="1"/>
+                          <circle cx="65" cy="40" r="12" fill="#F472B6" opacity="0.7" stroke="#EC4899" stroke-width="1"/>
+                          <circle cx="55" cy="60" r="12" fill="#F472B6" opacity="0.7" stroke="#EC4899" stroke-width="1"/>
+                          <circle cx="30" cy="55" r="12" fill="#F472B6" opacity="0.7" stroke="#EC4899" stroke-width="1"/>
+                          <circle cx="15" cy="40" r="12" fill="#F472B6" opacity="0.7" stroke="#EC4899" stroke-width="1"/>
+                          <circle cx="40" cy="40" r="12" fill="#F472B6" opacity="0.7" stroke="#EC4899" stroke-width="1"/>
+                          <!-- Nuclei -->
+                          <circle cx="25" cy="25" r="4" fill="#BE185D"/>
+                          <circle cx="50" cy="20" r="4" fill="#BE185D"/>
+                          <circle cx="65" cy="40" r="4" fill="#BE185D"/>
+                          <circle cx="55" cy="60" r="4" fill="#BE185D"/>
+                          <circle cx="30" cy="55" r="4" fill="#BE185D"/>
+                          <circle cx="15" cy="40" r="4" fill="#BE185D"/>
+                          <circle cx="40" cy="40" r="4" fill="#BE185D"/>
+                        </svg>
+                      </div>
+                      <h4 class="font-bold text-pink-700 text-sm">Multiseluler</h4>
+                      <p class="text-xs text-gray-600">(Banyak sel)</p>
+                      <p class="text-xs text-gray-500 mt-1">Manusia, Hewan, Tumbuhan</p>
+                    </div>
+                  </div>
+                  
+                  <!-- Virus note -->
+                  <div class="mt-4 bg-red-100 border border-red-300 rounded-xl p-3">
+                    <p class="text-sm text-red-800 flex items-start gap-2">
+                      <span class="text-lg">⚠️</span>
+                      <span><strong>Catatan:</strong> Virus BUKAN makhluk hidup karena tidak tersusun dari sel dan tidak dapat berkembang biak sendiri tanpa inang.</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 7: Ringkasan 7 Karakteristik -->
+        <div class="slide" id="slide-7">
+          <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-teal-500 to-emerald-500 p-6 text-white">
+              <h2 class="heading-font text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="bg-white/20 w-10 h-10 rounded-full flex items-center justify-center">6</span>
+                Ringkasan: 7 Karakteristik Makhluk Hidup
+              </h2>
+            </div>
+            
+            <div class="p-6 md:p-8">
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div class="card-hover bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl p-4 text-center">
+                  <div class="text-4xl mb-2">🏃</div>
+                  <h4 class="font-bold text-blue-800 text-sm">Bergerak</h4>
+                  <p class="text-xs text-gray-600 mt-1">Berpindah tempat atau menggerakkan bagian tubuh</p>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-br from-cyan-100 to-cyan-200 rounded-2xl p-4 text-center">
+                  <div class="text-4xl mb-2">💨</div>
+                  <h4 class="font-bold text-cyan-800 text-sm">Bernapas</h4>
+                  <p class="text-xs text-gray-600 mt-1">Mengambil O₂, mengeluarkan CO₂</p>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-br from-green-100 to-green-200 rounded-2xl p-4 text-center">
+                  <div class="text-4xl mb-2">🌱</div>
+                  <h4 class="font-bold text-green-800 text-sm">Tumbuh</h4>
+                  <p class="text-xs text-gray-600 mt-1">Bertambah ukuran dan kompleksitas</p>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-br from-pink-100 to-pink-200 rounded-2xl p-4 text-center">
+                  <div class="text-4xl mb-2">👶</div>
+                  <h4 class="font-bold text-pink-800 text-sm">Reproduksi</h4>
+                  <p class="text-xs text-gray-600 mt-1">Menghasilkan keturunan</p>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-br from-amber-100 to-amber-200 rounded-2xl p-4 text-center">
+                  <div class="text-4xl mb-2">⚡</div>
+                  <h4 class="font-bold text-amber-800 text-sm">Butuh Energi</h4>
+                  <p class="text-xs text-gray-600 mt-1">Memerlukan nutrisi untuk aktivitas</p>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl p-4 text-center">
+                  <div class="text-4xl mb-2">👁️</div>
+                  <h4 class="font-bold text-orange-800 text-sm">Iritabilitas</h4>
+                  <p class="text-xs text-gray-600 mt-1">Merespons rangsang lingkungan</p>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-br from-red-100 to-red-200 rounded-2xl p-4 text-center">
+                  <div class="text-4xl mb-2">🚿</div>
+                  <h4 class="font-bold text-red-800 text-sm">Ekskresi</h4>
+                  <p class="text-xs text-gray-600 mt-1">Mengeluarkan zat sisa</p>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-4 text-center">
+                  <div class="text-4xl mb-2">🔬</div>
+                  <h4 class="font-bold text-purple-800 text-sm">Tersusun Sel</h4>
+                  <p class="text-xs text-gray-600 mt-1">Terbentuk dari unit terkecil kehidupan</p>
+                </div>
+              </div>
+              
+              <!-- Mnemonic -->
+              <div class="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl p-5">
+                <h4 class="heading-font text-lg font-bold text-indigo-800 mb-3 text-center">💡 Tips Mengingat: "BRTB EIS"</h4>
+                <div class="flex flex-wrap justify-center gap-2">
+                  <span class="bg-blue-500 text-white px-3 py-1 rounded-full font-bold">B</span>
+                  <span class="text-gray-700">ergerak</span>
+                  <span class="bg-cyan-500 text-white px-3 py-1 rounded-full font-bold">R</span>
+                  <span class="text-gray-700">espirasi</span>
+                  <span class="bg-green-500 text-white px-3 py-1 rounded-full font-bold">T</span>
+                  <span class="text-gray-700">umbuh</span>
+                  <span class="bg-pink-500 text-white px-3 py-1 rounded-full font-bold">B</span>
+                  <span class="text-gray-700">erkembang biak</span>
+                  <span class="bg-amber-500 text-white px-3 py-1 rounded-full font-bold">E</span>
+                  <span class="text-gray-700">nergi</span>
+                  <span class="bg-orange-500 text-white px-3 py-1 rounded-full font-bold">I</span>
+                  <span class="text-gray-700">ritabilitas</span>
+                  <span class="bg-red-500 text-white px-3 py-1 rounded-full font-bold">S</span>
+                  <span class="text-gray-700">el</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 8: Aktivitas Praktikum -->
+        <div class="slide" id="slide-8">
+          <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-lime-500 to-green-500 p-6 text-white">
+              <h2 class="heading-font text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="bg-white/20 w-10 h-10 rounded-full flex items-center justify-center">7</span>
+                Aktivitas Praktikum: Ayo Amati! 🔬
+              </h2>
+            </div>
+            
+            <div class="p-6 md:p-8">
+              <div class="bg-lime-50 rounded-2xl p-6 mb-6">
+                <h3 class="heading-font text-xl font-bold text-lime-800 mb-3">Percobaan: Membandingkan Biji Kacang vs Kancing</h3>
+                <p class="text-gray-700">Mari kita buktikan perbedaan makhluk hidup dan benda mati melalui percobaan sederhana!</p>
+              </div>
+              
+              <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <!-- Pot A -->
+                <div class="bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl p-5">
+                  <div class="text-center mb-4">
+                    <span class="bg-green-600 text-white px-4 py-1 rounded-full font-bold">POT A</span>
+                  </div>
+                  
+                  <div class="illustration-container p-4 mb-4 bg-gradient-to-b from-green-50 to-emerald-100">
+                    <svg viewBox="0 0 150 120" class="w-full">
+                      <!-- Pot -->
+                      <path d="M30 50 L35 110 L115 110 L120 50 Z" fill="#D97706"/>
+                      <ellipse cx="75" cy="50" rx="45" ry="10" fill="#B45309"/>
+                      <!-- Soil -->
+                      <ellipse cx="75" cy="55" rx="40" ry="8" fill="#8B7355"/>
+                      <!-- Sprouting bean -->
+                      <ellipse cx="75" cy="52" rx="8" ry="5" fill="#84CC16"/>
+                      <path d="M75 52 Q75 35 80 25" stroke="#22C55E" stroke-width="3" fill="none"/>
+                      <ellipse cx="82" cy="23" rx="8" ry="5" fill="#22C55E"/>
+                      <ellipse cx="72" cy="28" rx="6" ry="4" fill="#4ADE80"/>
+                      <!-- Label -->
+                      <text x="50" y="15" font-size="10" fill="#166534" font-weight="bold">Biji Kacang</text>
+                    </svg>
+                  </div>
+                  
+                  <div class="bg-white rounded-xl p-3">
+                    <p class="text-sm text-gray-700"><strong>Isi:</strong> Biji kacang hijau + tanah + air</p>
+                    <p class="text-sm text-green-600 mt-2">✓ Akan tumbuh menjadi kecambah!</p>
+                  </div>
+                </div>
+                
+                <!-- Pot B -->
+                <div class="bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl p-5">
+                  <div class="text-center mb-4">
+                    <span class="bg-gray-600 text-white px-4 py-1 rounded-full font-bold">POT B</span>
+                  </div>
+                  
+                  <div class="illustration-container p-4 mb-4 bg-gradient-to-b from-gray-100 to-gray-200">
+                    <svg viewBox="0 0 150 120" class="w-full">
+                      <!-- Pot -->
+                      <path d="M30 50 L35 110 L115 110 L120 50 Z" fill="#D97706"/>
+                      <ellipse cx="75" cy="50" rx="45" ry="10" fill="#B45309"/>
+                      <!-- Soil -->
+                      <ellipse cx="75" cy="55" rx="40" ry="8" fill="#8B7355"/>
+                      <!-- Buttons (unchanged) -->
+                      <circle cx="60" cy="53" r="6" fill="#EF4444"/>
+                      <circle cx="75" cy="54" r="6" fill="#3B82F6"/>
+                      <circle cx="90" cy="53" r="6" fill="#22C55E"/>
+                      <!-- Button holes -->
+                      <circle cx="58" cy="52" r="1" fill="#fff"/>
+                      <circle cx="62" cy="52" r="1" fill="#fff"/>
+                      <circle cx="73" cy="53" r="1" fill="#fff"/>
+                      <circle cx="77" cy="53" r="1" fill="#fff"/>
+                      <circle cx="88" cy="52" r="1" fill="#fff"/>
+                      <circle cx="92" cy="52" r="1" fill="#fff"/>
+                      <!-- Label -->
+                      <text x="55" y="15" font-size="10" fill="#4B5563" font-weight="bold">Kancing</text>
+                    </svg>
+                  </div>
+                  
+                  <div class="bg-white rounded-xl p-3">
+                    <p class="text-sm text-gray-700"><strong>Isi:</strong> Kancing baju + tanah + air</p>
+                    <p class="text-sm text-red-600 mt-2">✗ Tidak akan berubah!</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Instructions -->
+              <div class="bg-blue-50 rounded-2xl p-5">
+                <h4 class="heading-font font-bold text-blue-800 mb-3">📋 Langkah Percobaan:</h4>
+                <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                  <li>Siapkan 2 pot yang sama ukurannya</li>
+                  <li>Isi kedua pot dengan tanah yang sama</li>
+                  <li>Tanam biji kacang di Pot A dan kancing di Pot B</li>
+                  <li>Siram dengan air yang sama banyaknya setiap hari</li>
+                  <li>Amati perubahan selama 10 hari</li>
+                  <li>Catat hasil pengamatan dalam tabel</li>
+                </ol>
+                
+                <div class="mt-4 p-3 bg-yellow-100 rounded-xl">
+                  <p class="text-sm text-yellow-800">
+                    <strong>💭 Pertanyaan Diskusi:</strong> Mengapa biji kacang bisa tumbuh sedangkan kancing tidak? Apa yang membuktikan bahwa biji kacang adalah makhluk hidup?
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 9: Klasifikasi & Taksonomi -->
+        <div class="slide" id="slide-9">
+          <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-violet-500 to-purple-500 p-6 text-white">
+              <h2 class="heading-font text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="bg-white/20 w-10 h-10 rounded-full flex items-center justify-center">8</span>
+                Klasifikasi & Urutan Taksonomi
+              </h2>
+            </div>
+            
+            <div class="p-6 md:p-8">
+              <div class="bg-violet-50 rounded-2xl p-5 mb-6">
+                <p class="text-gray-700 text-lg text-center">
+                  Memahami karakteristik makhluk hidup membantu ilmuwan dalam <strong>mengklasifikasikan</strong> keanekaragaman hayati di Bumi.
+                </p>
+              </div>
+              
+              <!-- Taxonomy Pyramid -->
+              <div class="max-w-2xl mx-auto">
+                <h3 class="heading-font text-xl font-bold text-center text-purple-800 mb-4">🔺 Urutan Taksonomi (Tinggi ke Rendah)</h3>
+                
+                <div class="space-y-2">
+                  <div class="bg-gradient-to-r from-red-400 to-red-500 text-white rounded-xl p-4 text-center mx-auto" style="width: 100%;">
+                    <p class="font-bold text-lg">KINGDOM (Kerajaan)</p>
+                    <p class="text-sm opacity-90">Tingkat tertinggi • Contoh: Animalia, Plantae</p>
+                  </div>
+                  
+                  <div class="bg-gradient-to-r from-orange-400 to-orange-500 text-white rounded-xl p-3 text-center mx-auto" style="width: 90%;">
+                    <p class="font-bold">FILUM / DIVISI</p>
+                    <p class="text-sm opacity-90">Contoh: Chordata, Magnoliophyta</p>
+                  </div>
+                  
+                  <div class="bg-gradient-to-r from-yellow-400 to-yellow-500 text-white rounded-xl p-3 text-center mx-auto" style="width: 80%;">
+                    <p class="font-bold">KELAS (Class)</p>
+                    <p class="text-sm opacity-90">Contoh: Mammalia, Dicotyledoneae</p>
+                  </div>
+                  
+                  <div class="bg-gradient-to-r from-green-400 to-green-500 text-white rounded-xl p-3 text-center mx-auto" style="width: 70%;">
+                    <p class="font-bold">ORDO (Order)</p>
+                    <p class="text-sm opacity-90">Contoh: Carnivora, Rosales</p>
+                  </div>
+                  
+                  <div class="bg-gradient-to-r from-teal-400 to-teal-500 text-white rounded-xl p-3 text-center mx-auto" style="width: 60%;">
+                    <p class="font-bold">FAMILI (Family)</p>
+                    <p class="text-sm opacity-90">Contoh: Felidae, Rosaceae</p>
+                  </div>
+                  
+                  <div class="bg-gradient-to-r from-blue-400 to-blue-500 text-white rounded-xl p-3 text-center mx-auto" style="width: 50%;">
+                    <p class="font-bold">GENUS</p>
+                    <p class="text-sm opacity-90">Contoh: Panthera, Rosa</p>
+                  </div>
+                  
+                  <div class="bg-gradient-to-r from-purple-400 to-purple-500 text-white rounded-xl p-4 text-center mx-auto" style="width: 40%;">
+                    <p class="font-bold text-lg">SPESIES</p>
+                    <p class="text-sm opacity-90">Tingkat terendah</p>
+                    <p class="text-xs opacity-80">Contoh: Panthera leo (Singa)</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Mnemonic -->
+              <div class="mt-6 bg-indigo-100 rounded-2xl p-5 text-center">
+                <h4 class="font-bold text-indigo-800 mb-2">💡 Tips Mengingat:</h4>
+                <p class="text-lg text-indigo-700 font-semibold">"<span class="text-red-600">K</span>amu <span class="text-orange-600">F</span>oto <span class="text-yellow-600">K</span>ucing <span class="text-green-600">O</span>rang <span class="text-teal-600">F</span>otonya <span class="text-blue-600">G</span>agal <span class="text-purple-600">S</span>emua"</p>
+                <p class="text-sm text-gray-600 mt-2">Kingdom - Filum - Kelas - Ordo - Famili - Genus - Spesies</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 10: Quiz HOTS -->
+        <div class="slide" id="slide-10">
+          <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-rose-500 to-red-500 p-6 text-white">
+              <h2 class="heading-font text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <span class="bg-white/20 w-10 h-10 rounded-full flex items-center justify-center">📝</span>
+                Uji Pemahaman: Soal HOTS
+              </h2>
+            </div>
+            
+            <div class="p-6 md:p-8">
+              <div class="mb-4 flex items-center justify-between">
+                <span class="text-gray-600">Soal <span id="quiz-current">1</span> dari 10</span>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">
+                  Skor: <span id="quiz-score">0</span>/10
+                </span>
+              </div>
+              
+              <div class="h-2 bg-gray-200 rounded-full mb-6">
+                <div id="quiz-progress" class="h-full bg-gradient-to-r from-rose-500 to-red-500 rounded-full transition-all duration-300" style="width: 10%"></div>
+              </div>
+              
+              <div id="quiz-container">
+                <!-- Quiz content will be dynamically inserted -->
+              </div>
+              
+              <div id="quiz-result" class="hidden text-center py-8">
+                <div class="text-6xl mb-4" id="result-emoji">🎉</div>
+                <h3 class="heading-font text-2xl font-bold text-gray-800 mb-2">Hasil Kuis</h3>
+                <p class="text-lg text-gray-600 mb-4">Skor kamu: <span id="final-score" class="font-bold text-rose-600">0</span>/10</p>
+                <p id="result-message" class="text-gray-700 mb-6"></p>
+                <button onclick="resetQuiz()" class="bg-gradient-to-r from-rose-500 to-red-500 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg transition">
+                  🔄 Ulangi Kuis
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Navigation -->
+    <nav class="bg-white border-t border-gray-200 py-4 px-6 sticky bottom-0">
+      <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <button onclick="prevSlide()" id="prev-btn" class="nav-btn bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-full font-semibold flex items-center gap-2 disabled:opacity-50" disabled>
+          <span>←</span> Sebelumnya
+        </button>
+        
+        <div class="flex gap-1 md:gap-2">
+          <button onclick="goToSlide(1)" class="slide-dot w-3 h-3 rounded-full bg-emerald-500 transition"></button>
+          <button onclick="goToSlide(2)" class="slide-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition"></button>
+          <button onclick="goToSlide(3)" class="slide-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition"></button>
+          <button onclick="goToSlide(4)" class="slide-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition"></button>
+          <button onclick="goToSlide(5)" class="slide-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition"></button>
+          <button onclick="goToSlide(6)" class="slide-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition"></button>
+          <button onclick="goToSlide(7)" class="slide-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition"></button>
+          <button onclick="goToSlide(8)" class="slide-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition"></button>
+          <button onclick="goToSlide(9)" class="slide-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition"></button>
+          <button onclick="goToSlide(10)" class="slide-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition"></button>
+        </div>
+        
+        <button onclick="nextSlide()" id="next-btn" class="nav-btn bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-4 py-2 rounded-full font-semibold flex items-center gap-2">
+          Selanjutnya <span>→</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-emerald-700 to-teal-700 text-white py-6 px-6">
+      <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-12 h-12 rounded-full object-cover border-2 border-white/30" onerror="this.style.background='linear-gradient(135deg, #10b981, #0d9488)'; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨‍🏫</text></svg>';">
+          <div>
+            <p class="font-semibold" id="footer-text">Algian Manggara, S.Agr</p>
+            <p class="text-emerald-200 text-sm">SMP NEGERI 8 CIKARANG UTARA</p>
+          </div>
+        </div>
+        <div class="text-center md:text-right">
+          <p class="text-emerald-200 text-sm">© 2026 Algian Manggara, S.Agr</p>
+          <p class="text-emerald-300 text-xs">Media Pembelajaran Interaktif - Karakteristik Makhluk Hidup</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Karakteristik Makhluk Hidup',
+      footer_text: 'Algian Manggara, S.Agr',
+      primary_color: '#059669',
+      secondary_color: '#0d9488',
+      text_color: '#1f2937',
+      accent_color: '#f59e0b',
+      background_color: '#ecfdf5'
+    };
+
+    let config = { ...defaultConfig };
+
+    // Slide Navigation
+    let currentSlide = 1;
+    const totalSlides = 10;
+
+    function updateSlide() {
+      // Hide all slides
+      document.querySelectorAll('.slide').forEach(slide => {
+        slide.classList.remove('active');
+      });
+      
+      // Show current slide
+      document.getElementById(`slide-${currentSlide}`).classList.add('active');
+      
+      // Update indicators
+      document.getElementById('current-slide').textContent = currentSlide;
+      document.getElementById('progress-bar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+      
+      // Update dots
+      document.querySelectorAll('.slide-dot').forEach((dot, index) => {
+        if (index + 1 === currentSlide) {
+          dot.classList.remove('bg-gray-300');
+          dot.classList.add('bg-emerald-500');
+        } else {
+          dot.classList.remove('bg-emerald-500');
+          dot.classList.add('bg-gray-300');
+        }
+      });
+      
+      // Update buttons
+      document.getElementById('prev-btn').disabled = currentSlide === 1;
+      
+      // Scroll to top of main content
+      document.querySelector('main').scrollTop = 0;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function goToSlide(num) {
+      currentSlide = num;
+      updateSlide();
+    }
+
+    // Interactive Activities
+    function classifyItem(button, type) {
+      const answer = button.getAttribute('data-answer');
+      if (answer === type) {
+        button.classList.add('bg-green-200', 'border-green-500');
+        button.classList.remove('bg-white');
+        document.getElementById('classify-feedback').innerHTML = '<span class="text-green-600">✓ Benar! ' + (type === 'hidup' ? 'Ini adalah makhluk hidup.' : 'Ini adalah benda mati.') + '</span>';
+      }
+      button.disabled = true;
+    }
+
+    function showResponse(type) {
+      const display = document.getElementById('response-display');
+      const text = document.getElementById('response-text');
+      display.classList.remove('hidden');
+      
+      const responses = {
+        light: '☀️ <strong>Fototropisme:</strong> Tumbuhan akan tumbuh mengarah ke sumber cahaya. Contohnya bunga matahari yang selalu menghadap ke arah matahari!',
+        water: '💧 <strong>Hidrotropisme:</strong> Akar tumbuhan akan tumbuh mengarah ke sumber air untuk mendapatkan nutrisi yang dibutuhkan.',
+        touch: '👆 <strong>Tigmotropisme:</strong> Beberapa tumbuhan seperti putri malu akan menutup daunnya saat disentuh sebagai mekanisme pertahanan!'
+      };
+      
+      text.innerHTML = responses[type];
+    }
+
+    // Quiz System
+    const quizQuestions = [
+      {
+        question: "Sebuah robot dapat bergerak, merespons perintah, dan menggunakan energi listrik. Mengapa robot tidak dapat dikategorikan sebagai makhluk hidup?",
+        options: [
+          "Karena robot tidak memiliki otak",
+          "Karena robot tidak dapat berkembang biak dan tidak tersusun dari sel",
+          "Karena robot terbuat dari logam",
+          "Karena robot membutuhkan manusia untuk mengoperasikannya"
+        ],
+        correct: 1,
+        explanation: "Meskipun robot memiliki beberapa karakteristik seperti bergerak dan menggunakan energi, robot tidak memenuhi semua karakteristik makhluk hidup, terutama tidak dapat berkembang biak secara mandiri dan tidak tersusun dari sel."
+      },
+      {
+        question: "Virus memiliki kemampuan untuk berkembang biak di dalam sel inang. Namun, virus tidak dianggap sebagai makhluk hidup. Analisis mana yang paling tepat menjelaskan hal ini?",
+        options: [
+          "Virus tidak memiliki warna",
+          "Virus tidak dapat dilihat dengan mata telanjang",
+          "Virus tidak tersusun dari sel dan tidak dapat melakukan metabolisme sendiri",
+          "Virus tidak dapat bergerak"
+        ],
+        correct: 2,
+        explanation: "Virus bukan makhluk hidup karena tidak tersusun dari sel (hanya berupa materi genetik yang dibungkus protein) dan tidak dapat melakukan aktivitas metabolisme sendiri tanpa sel inang."
+      },
+      {
+        question: "Seorang siswa menemukan organisme di kolam yang dapat bergerak dan merespons cahaya. Organisme tersebut berwarna hijau dan dapat membuat makanannya sendiri. Berdasarkan cara memperoleh energi, organisme ini termasuk kelompok...",
+        options: [
+          "Heterotrof karena dapat bergerak seperti hewan",
+          "Autotrof karena dapat membuat makanan sendiri melalui fotosintesis",
+          "Saprotrof karena hidup di kolam",
+          "Parasit karena berwarna hijau"
+        ],
+        correct: 1,
+        explanation: "Organisme yang dapat membuat makanan sendiri (berwarna hijau menandakan adanya klorofil untuk fotosintesis) termasuk kelompok autotrof, meskipun organisme tersebut dapat bergerak."
+      },
+      {
+        question: "Perhatikan pernyataan berikut: (1) Tumbuhan putri malu menutup daun saat disentuh, (2) Bunga matahari menghadap ke arah matahari, (3) Akar tumbuhan tumbuh ke arah air. Ketiga fenomena tersebut merupakan contoh dari karakteristik makhluk hidup berupa...",
+        options: [
+          "Respirasi",
+          "Ekskresi",
+          "Iritabilitas (menanggapi rangsang)",
+          "Reproduksi"
+        ],
+        correct: 2,
+        explanation: "Ketiga fenomena tersebut menunjukkan kemampuan tumbuhan dalam menanggapi rangsang (iritabilitas): sentuhan (tigmotropisme), cahaya (fototropisme), dan air (hidrotropisme)."
+      },
+      {
+        question: "Seekor ikan mas memiliki klasifikasi: Kingdom Animalia, Filum Chordata, Kelas Actinopterygii, Ordo Cypriniformes, Famili Cyprinidae, Genus Carassius, Spesies Carassius auratus. Dua organisme akan memiliki kemiripan paling banyak jika berada dalam tingkat takson yang sama pada level...",
+        options: [
+          "Kingdom",
+          "Filum",
+          "Famili",
+          "Spesies"
+        ],
+        correct: 3,
+        explanation: "Semakin rendah tingkat taksonomi, semakin banyak kesamaan ciri yang dimiliki. Spesies adalah tingkat taksonomi terendah, sehingga organisme dalam spesies yang sama memiliki kemiripan paling banyak."
+      },
+      {
+        question: "Dalam sebuah eksperimen, siswa mengamati bahwa tanaman di pot A yang disiram teratur tumbuh lebih besar, sedangkan tanaman di pot B yang tidak disiram menjadi layu dan mati. Kesimpulan yang paling tepat dari eksperimen ini adalah...",
+        options: [
+          "Air tidak penting untuk tumbuhan",
+          "Tumbuhan adalah makhluk hidup yang membutuhkan air untuk pertumbuhan dan kelangsungan hidupnya",
+          "Pot A lebih bagus dari pot B",
+          "Tanaman di pot B tidak termasuk makhluk hidup"
+        ],
+        correct: 1,
+        explanation: "Eksperimen ini membuktikan bahwa sebagai makhluk hidup, tumbuhan membutuhkan air untuk proses metabolisme, pertumbuhan, dan kelangsungan hidupnya."
+      },
+      {
+        question: "Manusia mengeluarkan keringat saat berolahraga dan mengeluarkan urine setiap hari. Jika proses ini terhambat, apa dampak yang paling mungkin terjadi pada tubuh?",
+        options: [
+          "Tubuh menjadi lebih sehat",
+          "Tidak ada dampak apapun",
+          "Zat-zat racun sisa metabolisme menumpuk dan dapat meracuni tubuh",
+          "Berat badan bertambah"
+        ],
+        correct: 2,
+        explanation: "Ekskresi berfungsi mengeluarkan zat sisa metabolisme yang bersifat racun. Jika proses ini terhambat, zat-zat berbahaya seperti urea, amonia, dan CO₂ akan menumpuk dan dapat meracuni tubuh."
+      },
+      {
+        question: "Seekor kucing betina melahirkan 4 anak kucing yang mirip dengan induknya. Sementara itu, bakteri berkembang biak dengan membelah diri menjadi dua. Pernyataan yang tepat tentang kedua cara reproduksi ini adalah...",
+        options: [
+          "Kucing melakukan reproduksi aseksual, bakteri melakukan reproduksi seksual",
+          "Kedua organisme melakukan reproduksi seksual",
+          "Kucing melakukan reproduksi seksual (memerlukan sel kelamin jantan dan betina), bakteri melakukan reproduksi aseksual (hanya memerlukan satu induk)",
+          "Kedua organisme melakukan reproduksi aseksual"
+        ],
+        correct: 2,
+        explanation: "Kucing berkembang biak secara seksual karena memerlukan pertemuan sel kelamin jantan (sperma) dan betina (sel telur). Bakteri berkembang biak secara aseksual dengan pembelahan biner yang hanya memerlukan satu induk."
+      },
+      {
+        question: "Sebuah batu di tepi sungai terlihat semakin besar dari tahun ke tahun karena lumut yang menempel di permukaannya. Apakah hal ini menunjukkan bahwa batu tersebut tumbuh seperti makhluk hidup?",
+        options: [
+          "Ya, karena ukuran batu bertambah besar",
+          "Ya, karena batu dapat menyerap air",
+          "Tidak, karena pertambahan ukuran batu disebabkan oleh organisme lain (lumut) yang menempel, bukan karena batu itu sendiri tumbuh",
+          "Tidak, karena batu tidak bisa bergerak"
+        ],
+        correct: 2,
+        explanation: "Pertumbuhan pada makhluk hidup terjadi dari dalam karena adanya pembelahan dan pertambahan sel. Batu yang terlihat membesar karena lumut bukan pertumbuhan sejati, melainkan penambahan organisme lain di permukaannya."
+      },
+      {
+        question: "Dalam klasifikasi makhluk hidup, harimau (Panthera tigris) dan singa (Panthera leo) memiliki genus yang sama yaitu Panthera. Berdasarkan informasi ini, prediksi mana yang paling logis?",
+        options: [
+          "Harimau dan singa adalah hewan yang persis sama",
+          "Harimau dan singa memiliki banyak kesamaan ciri morfologi dan dapat menghasilkan keturunan hibrida (liger/tigon)",
+          "Harimau dan singa tidak memiliki kesamaan sama sekali",
+          "Singa dan harimau berasal dari kingdom yang berbeda"
+        ],
+        correct: 1,
+        explanation: "Organisme dalam genus yang sama memiliki banyak kesamaan ciri. Harimau dan singa yang sama-sama dalam genus Panthera memiliki kesamaan morfologi yang tinggi dan bahkan dapat menghasilkan keturunan hibrida (liger dari singa jantan × harimau betina, atau tigon dari harimau jantan × singa betina)."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+
+    function loadQuestion() {
+      if (currentQuestion >= quizQuestions.length) {
+        showResult();
+        return;
+      }
+
+      answered = false;
+      const q = quizQuestions[currentQuestion];
+      
+      let html = `
+        <div class="bg-gray-50 rounded-2xl p-5 mb-6">
+          <p class="text-lg text-gray-800 font-medium">${currentQuestion + 1}. ${q.question}</p>
+        </div>
+        <div class="space-y-3" id="options-container">
+      `;
+      
+      q.options.forEach((option, index) => {
+        html += `
+          <button onclick="selectAnswer(${index})" class="quiz-option w-full text-left p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 transition" data-index="${index}">
+            <span class="inline-block w-8 h-8 rounded-full bg-gray-100 text-center leading-8 mr-3 font-semibold">${String.fromCharCode(65 + index)}</span>
+            ${option}
+          </button>
+        `;
+      });
+      
+      html += `</div>
+        <div id="explanation" class="hidden mt-4 p-4 rounded-xl"></div>
+        <div class="mt-6 text-center">
+          <button onclick="nextQuestion()" id="next-question-btn" class="hidden bg-gradient-to-r from-rose-500 to-red-500 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg transition">
+            ${currentQuestion < quizQuestions.length - 1 ? 'Soal Berikutnya →' : 'Lihat Hasil'}
+          </button>
+        </div>
+      `;
+      
+      document.getElementById('quiz-container').innerHTML = html;
+      document.getElementById('quiz-current').textContent = currentQuestion + 1;
+      document.getElementById('quiz-progress').style.width = `${((currentQuestion + 1) / quizQuestions.length) * 100}%`;
+    }
+
+    function selectAnswer(index) {
+      if (answered) return;
+      answered = true;
+      
+      const q = quizQuestions[currentQuestion];
+      const options = document.querySelectorAll('.quiz-option');
+      const explanation = document.getElementById('explanation');
+      
+      options.forEach((opt, i) => {
+        opt.classList.remove('hover:border-blue-300');
+        if (i === q.correct) {
+          opt.classList.add('correct');
+        }
+        if (i === index && index !== q.correct) {
+          opt.classList.add('incorrect');
+        }
+      });
+      
+      if (index === q.correct) {
+        score++;
+        document.getElementById('quiz-score').textContent = score;
+        explanation.className = 'mt-4 p-4 rounded-xl bg-green-50 border border-green-200';
+        explanation.innerHTML = `<p class="text-green-800"><strong>✓ Benar!</strong> ${q.explanation}</p>`;
+      } else {
+        explanation.className = 'mt-4 p-4 rounded-xl bg-red-50 border border-red-200';
+        explanation.innerHTML = `<p class="text-red-800"><strong>✗ Kurang tepat.</strong> ${q.explanation}</p>`;
+      }
+      
+      explanation.classList.remove('hidden');
+      document.getElementById('next-question-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < quizQuestions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      document.getElementById('final-score').textContent = score;
+      
+      let emoji, message;
+      if (score >= 9) {
+        emoji = '🏆';
+        message = 'Luar biasa! Kamu menguasai materi dengan sangat baik!';
+      } else if (score >= 7) {
+        emoji = '🌟';
+        message = 'Bagus sekali! Pemahaman kamu sudah baik!';
+      } else if (score >= 5) {
+        emoji = '👍';
+        message = 'Cukup baik! Terus belajar untuk hasil yang lebih baik!';
+      } else {
+        emoji = '📚';
+        message = 'Ayo ulangi materinya dan coba lagi! Kamu pasti bisa!';
+      }
+      
+      document.getElementById('result-emoji').textContent = emoji;
+      document.getElementById('result-message').textContent = message;
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answered = false;
+      document.getElementById('quiz-score').textContent = 0;
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('quiz-container').classList.remove('hidden');
+      loadQuestion();
+    }
+
+    // Element SDK Integration
+    async function onConfigChange(newConfig) {
+      // Update main title
+      const mainTitle = document.getElementById('main-title');
+      if (mainTitle) {
+        mainTitle.textContent = newConfig.main_title || defaultConfig.main_title;
+      }
+      
+      // Update footer text
+      const footerText = document.getElementById('footer-text');
+      if (footerText) {
+        footerText.textContent = newConfig.footer_text || defaultConfig.footer_text;
+      }
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              config.secondary_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["main_title", config.main_title || defaultConfig.main_title],
+        ["footer_text", config.footer_text || defaultConfig.footer_text]
+      ]);
+    }
+
+    // Initialize
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    // Load first quiz question when reaching slide 10
+    document.addEventListener('DOMContentLoaded', () => {
+      loadQuestion();
+      document.getElementById('total-slides').textContent = totalSlides;
+    });
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cfa089f03b81564',t:'MTc3MTM4MTEwNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

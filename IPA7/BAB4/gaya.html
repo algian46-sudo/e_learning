@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pembelajaran Gaya dan Hukum Newton</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <script>
+    MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    * { font-family: 'Poppins', sans-serif; }
+    .title-font { font-family: 'Playfair Display', serif; }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+    
+    .card-glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:hover, .nav-item.active {
+      background: linear-gradient(135deg, #e94560, #ff6b6b);
+      transform: translateY(-2px);
+    }
+    
+    .section-card {
+      animation: fadeInUp 0.6s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .float-animation { animation: float 3s ease-in-out infinite; }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(233, 69, 96, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(233, 69, 96, 0.6); }
+    }
+    
+    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    
+    .quiz-option {
+      transition: all 0.3s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.wrong) {
+      background: rgba(233, 69, 96, 0.2);
+      border-color: #e94560;
+    }
+    
+    .quiz-option.selected { background: rgba(233, 69, 96, 0.3); border-color: #e94560; }
+    .quiz-option.correct { background: rgba(34, 197, 94, 0.3); border-color: #22c55e; }
+    .quiz-option.wrong { background: rgba(239, 68, 68, 0.3); border-color: #ef4444; }
+    
+    .progress-bar {
+      background: linear-gradient(90deg, #e94560, #ff6b6b);
+      transition: width 0.5s ease;
+    }
+    
+    .illustration-container {
+      background: linear-gradient(135deg, rgba(233, 69, 96, 0.1), rgba(255, 107, 107, 0.1));
+      border-radius: 20px;
+      padding: 20px;
+    }
+    
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+    ::-webkit-scrollbar-thumb { background: #e94560; border-radius: 4px; }
+    
+    .interactive-demo {
+      min-height: 200px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .force-arrow {
+      position: absolute;
+      height: 4px;
+      background: linear-gradient(90deg, #e94560, #ff6b6b);
+      transform-origin: left center;
+      border-radius: 2px;
+    }
+    
+    .force-arrow::after {
+      content: '';
+      position: absolute;
+      right: -8px;
+      top: -6px;
+      border: 8px solid transparent;
+      border-left-color: #ff6b6b;
+    }
+  </style>
+</head>
+<body class="h-full gradient-bg text-white overflow-auto">
+  <div id="app-container" class="min-h-full flex flex-col">
+    
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-opacity-90 backdrop-blur-lg border-b border-white/10 px-4 py-3">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 to-pink-500 flex items-center justify-center pulse-glow">
+            <i class="fas fa-atom text-2xl"></i>
+          </div>
+          <div>
+            <h1 id="main-title" class="title-font text-xl md:text-2xl font-bold bg-gradient-to-r from-white to-pink-200 bg-clip-text text-transparent">Gaya & Hukum Newton</h1>
+            <p class="text-xs text-gray-400">Fisika Kelas VIII SMP</p>
+          </div>
+        </div>
+        <div class="hidden md:flex items-center gap-2 text-sm">
+          <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full"><i class="fas fa-book-open mr-1"></i> 9 Materi</span>
+          <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full"><i class="fas fa-question-circle mr-1"></i> 10 Soal HOTS</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="sticky top-16 z-40 bg-black/30 backdrop-blur-md border-b border-white/5 px-4 py-2 overflow-x-auto">
+      <div class="max-w-7xl mx-auto flex gap-2 min-w-max">
+        <button onclick="showSection('intro')" class="nav-item active px-4 py-2 rounded-lg text-sm font-medium" data-section="intro">
+          <i class="fas fa-home mr-1"></i> Beranda
+        </button>
+        <button onclick="showSection('gaya')" class="nav-item px-4 py-2 rounded-lg text-sm font-medium" data-section="gaya">
+          <i class="fas fa-hand-rock mr-1"></i> Apa itu Gaya?
+        </button>
+        <button onclick="showSection('resultan')" class="nav-item px-4 py-2 rounded-lg text-sm font-medium" data-section="resultan">
+          <i class="fas fa-arrows-alt mr-1"></i> Resultan Gaya
+        </button>
+        <button onclick="showSection('macam')" class="nav-item px-4 py-2 rounded-lg text-sm font-medium" data-section="macam">
+          <i class="fas fa-list mr-1"></i> Macam Gaya
+        </button>
+        <button onclick="showSection('gesek')" class="nav-item px-4 py-2 rounded-lg text-sm font-medium" data-section="gesek">
+          <i class="fas fa-road mr-1"></i> Gaya Gesek
+        </button>
+        <button onclick="showSection('newton1')" class="nav-item px-4 py-2 rounded-lg text-sm font-medium" data-section="newton1">
+          <i class="fas fa-balance-scale mr-1"></i> Hukum I
+        </button>
+        <button onclick="showSection('newton2')" class="nav-item px-4 py-2 rounded-lg text-sm font-medium" data-section="newton2">
+          <i class="fas fa-tachometer-alt mr-1"></i> Hukum II
+        </button>
+        <button onclick="showSection('newton3')" class="nav-item px-4 py-2 rounded-lg text-sm font-medium" data-section="newton3">
+          <i class="fas fa-exchange-alt mr-1"></i> Hukum III
+        </button>
+        <button onclick="showSection('penerapan')" class="nav-item px-4 py-2 rounded-lg text-sm font-medium" data-section="penerapan">
+          <i class="fas fa-rocket mr-1"></i> Penerapan
+        </button>
+        <button onclick="showSection('quiz')" class="nav-item px-4 py-2 rounded-lg text-sm font-medium" data-section="quiz">
+          <i class="fas fa-clipboard-check mr-1"></i> Kuis HOTS
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 px-4 py-6">
+      <div class="max-w-5xl mx-auto">
+        
+        <!-- Intro Section -->
+        <section id="intro" class="section-card">
+          <div class="card-glass rounded-3xl p-8 mb-6">
+            <div class="text-center mb-8">
+              <div class="inline-block p-6 rounded-full bg-gradient-to-br from-red-500/20 to-pink-500/20 mb-4 float-animation">
+                <i class="fas fa-atom text-6xl text-pink-400"></i>
+              </div>
+              <h2 class="title-font text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white via-pink-200 to-red-200 bg-clip-text text-transparent">
+                Memahami Gaya dan Hukum Newton
+              </h2>
+              <p class="text-gray-300 text-lg max-w-2xl mx-auto">
+                Pelajari konsep gaya, macam-macam gaya, dan tiga hukum gerak Newton yang mendasari pergerakan benda di sekitar kita.
+              </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4 mb-8">
+              <div class="bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl p-5 text-center border border-blue-500/30">
+                <div class="w-14 h-14 mx-auto mb-3 rounded-xl bg-blue-500/30 flex items-center justify-center">
+                  <i class="fas fa-lightbulb text-2xl text-blue-400"></i>
+                </div>
+                <h3 class="font-semibold mb-1">Konsep Gaya</h3>
+                <p class="text-sm text-gray-400">Dorongan atau tarikan pada benda</p>
+              </div>
+              <div class="bg-gradient-to-br from-purple-500/20 to-violet-500/20 rounded-2xl p-5 text-center border border-purple-500/30">
+                <div class="w-14 h-14 mx-auto mb-3 rounded-xl bg-purple-500/30 flex items-center justify-center">
+                  <i class="fas fa-layer-group text-2xl text-purple-400"></i>
+                </div>
+                <h3 class="font-semibold mb-1">Macam Gaya</h3>
+                <p class="text-sm text-gray-400">Berbagai jenis gaya dalam kehidupan</p>
+              </div>
+              <div class="bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl p-5 text-center border border-green-500/30">
+                <div class="w-14 h-14 mx-auto mb-3 rounded-xl bg-green-500/30 flex items-center justify-center">
+                  <i class="fas fa-scroll text-2xl text-green-400"></i>
+                </div>
+                <h3 class="font-semibold mb-1">Hukum Newton</h3>
+                <p class="text-sm text-gray-400">Tiga hukum dasar gerak benda</p>
+              </div>
+            </div>
+
+            <div class="illustration-container">
+              <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="flex-1">
+                  <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600&h=400&fit=crop" alt="Ilustrasi Fisika Newton" loading="lazy" class="rounded-2xl w-full object-cover shadow-2xl" onerror="this.style.background='linear-gradient(135deg, #1a1a2e, #16213e)'; this.alt='Gambar tidak tersedia';">
+                </div>
+                <div class="flex-1 space-y-4">
+                  <h3 class="text-xl font-semibold text-pink-300"><i class="fas fa-star mr-2"></i>Tujuan Pembelajaran</h3>
+                  <ul class="space-y-2 text-gray-300">
+                    <li class="flex items-start gap-2">
+                      <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                      <span>Memahami konsep gaya sebagai besaran vektor</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                      <span>Mengenal macam-macam gaya dalam kehidupan sehari-hari</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                      <span>Menjelaskan tiga hukum gerak Newton</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <i class="fas fa-check-circle text-green-400 mt-1"></i>
+                      <span>Menerapkan konsep gaya dan hukum Newton dalam teknologi</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 text-center">
+              <button onclick="showSection('gaya')" class="px-8 py-4 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl font-semibold text-lg hover:shadow-lg hover:shadow-pink-500/30 transition-all">
+                <i class="fas fa-play mr-2"></i> Mulai Belajar
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Apa itu Gaya Section -->
+        <section id="gaya" class="section-card hidden">
+          <div class="card-glass rounded-3xl p-8 mb-6">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                <i class="fas fa-hand-rock text-2xl"></i>
+              </div>
+              <div>
+                <h2 class="title-font text-2xl md:text-3xl font-bold">Apa itu Gaya?</h2>
+                <p class="text-gray-400">Konsep dasar tentang gaya dalam fisika</p>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+              <div class="space-y-4">
+                <div class="bg-blue-500/10 border border-blue-500/30 rounded-2xl p-5">
+                  <h3 class="font-semibold text-blue-400 mb-3"><i class="fas fa-book mr-2"></i>Definisi Gaya</h3>
+                  <p class="text-gray-300">
+                    <strong>Gaya adalah dorongan atau tarikan</strong> yang diberikan pada suatu benda. Gaya dapat menyebabkan perubahan pada keadaan benda, baik itu perubahan gerak, bentuk, maupun arah.
+                  </p>
+                </div>
+
+                <div class="bg-purple-500/10 border border-purple-500/30 rounded-2xl p-5">
+                  <h3 class="font-semibold text-purple-400 mb-3"><i class="fas fa-vector-square mr-2"></i>Sifat Gaya</h3>
+                  <p class="text-gray-300">
+                    Gaya termasuk <strong>besaran vektor</strong> karena memiliki:
+                  </p>
+                  <ul class="mt-2 space-y-1 text-gray-300">
+                    <li><i class="fas fa-arrow-right text-purple-400 mr-2"></i>Nilai (besar)</li>
+                    <li><i class="fas fa-arrow-right text-purple-400 mr-2"></i>Arah</li>
+                  </ul>
+                  <p class="mt-2 text-sm text-gray-400">Satuan gaya adalah <strong>Newton (N)</strong></p>
+                </div>
+              </div>
+
+              <div class="illustration-container">
+                <h3 class="font-semibold text-pink-300 mb-4 text-center"><i class="fas fa-image mr-2"></i>Ilustrasi Gaya</h3>
+                <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500&h=350&fit=crop" alt="Ilustrasi seseorang mendorong benda" loading="lazy" class="rounded-xl w-full object-cover mb-4" onerror="this.style.background='linear-gradient(135deg, #1a1a2e, #16213e)'; this.alt='Gambar tidak tersedia';">
+                <p class="text-sm text-gray-400 text-center">Seorang pekerja mendorong troli - contoh gaya dorong</p>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30 rounded-2xl p-6">
+              <h3 class="font-semibold text-green-400 mb-4"><i class="fas fa-magic mr-2"></i>Efek Gaya pada Benda</h3>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center p-4 bg-black/20 rounded-xl">
+                  <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-green-500/20 flex items-center justify-center">
+                    <i class="fas fa-running text-green-400"></i>
+                  </div>
+                  <p class="text-sm">Benda <strong>bergerak</strong></p>
+                </div>
+                <div class="text-center p-4 bg-black/20 rounded-xl">
+                  <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-yellow-500/20 flex items-center justify-center">
+                    <i class="fas fa-directions text-yellow-400"></i>
+                  </div>
+                  <p class="text-sm">Berubah <strong>arah</strong></p>
+                </div>
+                <div class="text-center p-4 bg-black/20 rounded-xl">
+                  <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-blue-500/20 flex items-center justify-center">
+                    <i class="fas fa-tachometer-alt text-blue-400"></i>
+                  </div>
+                  <p class="text-sm">Berubah <strong>kecepatan</strong></p>
+                </div>
+                <div class="text-center p-4 bg-black/20 rounded-xl">
+                  <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-red-500/20 flex items-center justify-center">
+                    <i class="fas fa-compress-alt text-red-400"></i>
+                  </div>
+                  <p class="text-sm">Berubah <strong>bentuk</strong></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Demo -->
+            <div class="mt-8">
+              <h3 class="font-semibold text-pink-300 mb-4"><i class="fas fa-gamepad mr-2"></i>Aktivitas Interaktif: Simulasi Gaya</h3>
+              <div class="interactive-demo p-6">
+                <div class="flex flex-col items-center">
+                  <p class="text-gray-300 mb-4">Klik tombol untuk melihat efek gaya pada benda:</p>
+                  <div id="force-demo-box" class="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center text-2xl transition-all duration-500" style="transform: translateX(0);">
+                    📦
+                  </div>
+                  <div class="flex gap-4 mt-6">
+                    <button onclick="applyForce('left')" class="px-6 py-3 bg-red-500/30 border border-red-500 rounded-xl hover:bg-red-500/50 transition">
+                      <i class="fas fa-arrow-left mr-2"></i>Dorong Kiri
+                    </button>
+                    <button onclick="applyForce('reset')" class="px-6 py-3 bg-gray-500/30 border border-gray-500 rounded-xl hover:bg-gray-500/50 transition">
+                      <i class="fas fa-redo mr-2"></i>Reset
+                    </button>
+                    <button onclick="applyForce('right')" class="px-6 py-3 bg-green-500/30 border border-green-500 rounded-xl hover:bg-green-500/50 transition">
+                      Dorong Kanan<i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-between mt-8">
+              <button onclick="showSection('intro')" class="px-6 py-3 bg-gray-600/50 rounded-xl hover:bg-gray-600 transition">
+                <i class="fas fa-arrow-left mr-2"></i>Sebelumnya
+              </button>
+              <button onclick="showSection('resultan')" class="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl hover:shadow-lg transition">
+                Selanjutnya<i class="fas fa-arrow-right ml-2"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Resultan Gaya Section -->
+        <section id="resultan" class="section-card hidden">
+          <div class="card-glass rounded-3xl p-8 mb-6">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center">
+                <i class="fas fa-arrows-alt text-2xl"></i>
+              </div>
+              <div>
+                <h2 class="title-font text-2xl md:text-3xl font-bold">Resultan Gaya (Paduan Gaya)</h2>
+                <p class="text-gray-400">Menghitung gabungan dari beberapa gaya</p>
+              </div>
+            </div>
+
+            <div class="bg-orange-500/10 border border-orange-500/30 rounded-2xl p-6 mb-6">
+              <h3 class="font-semibold text-orange-400 mb-3"><i class="fas fa-info-circle mr-2"></i>Konsep Resultan Gaya</h3>
+              <p class="text-gray-300">
+                Jika ada <strong>lebih dari satu gaya</strong> yang bekerja pada suatu benda, maka gaya-gaya tersebut dapat digabungkan menjadi satu gaya pengganti yang disebut <strong>resultan gaya ($R$)</strong>.
+              </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+              <div class="bg-green-500/10 border border-green-500/30 rounded-2xl p-5">
+                <h3 class="font-semibold text-green-400 mb-3"><i class="fas fa-arrows-alt-h mr-2"></i>Gaya Searah</h3>
+                <div class="bg-black/30 rounded-xl p-4 text-center mb-3">
+                  <p class="text-xl">$R = F_1 + F_2 + F_3 + \dots$</p>
+                </div>
+                <div class="flex items-center justify-center gap-2 my-4">
+                  <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">📦</div>
+                  <div class="flex items-center">
+                    <div class="w-16 h-2 bg-green-500 rounded"></div>
+                    <i class="fas fa-caret-right text-green-500 text-2xl -ml-1"></i>
+                  </div>
+                  <div class="flex items-center">
+                    <div class="w-12 h-2 bg-green-500 rounded"></div>
+                    <i class="fas fa-caret-right text-green-500 text-2xl -ml-1"></i>
+                  </div>
+                </div>
+                <p class="text-sm text-gray-400">Contoh: $F_1 = 10N$ dan $F_2 = 5N$ searah<br>$R = 10 + 5 = 15N$</p>
+              </div>
+
+              <div class="bg-red-500/10 border border-red-500/30 rounded-2xl p-5">
+                <h3 class="font-semibold text-red-400 mb-3"><i class="fas fa-exchange-alt mr-2"></i>Gaya Berlawanan Arah</h3>
+                <div class="bg-black/30 rounded-xl p-4 text-center mb-3">
+                  <p class="text-xl">$R = F_1 + (-F_2)$ atau $R = F_1 - F_2$</p>
+                </div>
+                <div class="flex items-center justify-center gap-2 my-4">
+                  <div class="flex items-center">
+                    <i class="fas fa-caret-left text-red-500 text-2xl -mr-1"></i>
+                    <div class="w-12 h-2 bg-red-500 rounded"></div>
+                  </div>
+                  <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">📦</div>
+                  <div class="flex items-center">
+                    <div class="w-16 h-2 bg-green-500 rounded"></div>
+                    <i class="fas fa-caret-right text-green-500 text-2xl -ml-1"></i>
+                  </div>
+                </div>
+                <p class="text-sm text-gray-400">Contoh: $F_1 = 10N$ kanan, $F_2 = 3N$ kiri<br>$R = 10 - 3 = 7N$ (ke kanan)</p>
+              </div>
+            </div>
+
+            <div class="bg-purple-500/10 border border-purple-500/30 rounded-2xl p-6 mb-6">
+              <h3 class="font-semibold text-purple-400 mb-3"><i class="fas fa-balance-scale mr-2"></i>Keseimbangan Gaya</h3>
+              <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="flex-1">
+                  <p class="text-gray-300 mb-4">
+                    Jika gaya yang diberikan <strong>sama besar</strong> dari arah berlawanan, maka resultan gaya bernilai <strong>nol ($0$)</strong> dan benda tetap diam (seimbang).
+                  </p>
+                  <div class="bg-black/30 rounded-xl p-4 text-center">
+                    <p class="text-xl">$F_1 = F_2$ → $R = 0$</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="flex items-center">
+                    <i class="fas fa-caret-left text-red-500 text-3xl -mr-1"></i>
+                    <div class="w-20 h-3 bg-red-500 rounded"></div>
+                  </div>
+                  <div class="w-14 h-14 bg-blue-500 rounded-lg flex items-center justify-center text-2xl">📦</div>
+                  <div class="flex items-center">
+                    <div class="w-20 h-3 bg-green-500 rounded"></div>
+                    <i class="fas fa-caret-right text-green-500 text-3xl -ml-1"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Calculator -->
+            <div class="bg-cyan-500/10 border border-cyan-500/30 rounded-2xl p-6">
+              <h3 class="font-semibold text-cyan-400 mb-4"><i class="fas fa-calculator mr-2"></i>Kalkulator Resultan Gaya</h3>
+              <div class="grid md:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-sm text-gray-400 mb-2">Gaya 1 (N) - ke kanan:</label>
+                  <input type="number" id="force1" value="10" class="w-full px-4 py-3 bg-black/30 border border-cyan-500/30 rounded-xl text-white focus:outline-none focus:border-cyan-500">
+                </div>
+                <div>
+                  <label class="block text-sm text-gray-400 mb-2">Gaya 2 (N) - ke kiri:</label>
+                  <input type="number" id="force2" value="5" class="w-full px-4 py-3 bg-black/30 border border-cyan-500/30 rounded-xl text-white focus:outline-none focus:border-cyan-500">
+                </div>
+                <div class="flex items-end">
+                  <button onclick="calculateResultan()" class="w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl font-semibold hover:shadow-lg transition">
+                    <i class="fas fa-calculator mr-2"></i>Hitung
+                  </button>
+                </div>
+              </div>
+              <div id="resultan-result" class="mt-4 p-4 bg-black/30 rounded-xl text-center hidden">
+                <p class="text-lg">Resultan Gaya: <span id="resultan-value" class="text-2xl font-bold text-cyan-400"></span></p>
+                <p id="resultan-direction" class="text-gray-400"></p>
+              </div>
+            </div>
+
+            <div class="flex justify-between mt-8">
+              <button onclick="showSection('gaya')" class="px-6 py-3 bg-gray-600/50 rounded-xl hover:bg-gray-600 transition">
+                <i class="fas fa-arrow-left mr-2"></i>Sebelumnya
+              </button>
+              <button onclick="showSection('macam')" class="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl hover:shadow-lg transition">
+                Selanjutnya<i class="fas fa-arrow-right ml-2"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Macam-macam Gaya Section -->
+        <section id="macam" class="section-card hidden">
+          <div class="card-glass rounded-3xl p-8 mb-6">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center">
+                <i class="fas fa-list text-2xl"></i>
+              </div>
+              <div>
+                <h2 class="title-font text-2xl md:text-3xl font-bold">Macam-Macam Gaya</h2>
+                <p class="text-gray-400">Berbagai jenis gaya dalam kehidupan sehari-hari</p>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+              <!-- Gaya Otot -->
+              <div class="bg-gradient-to-br from-red-500/10 to-orange-500/10 border border-red-500/30 rounded-2xl p-5 hover:scale-105 transition-transform">
+                <div class="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center mb-3">
+                  <span class="text-2xl">💪</span>
+                </div>
+                <h3 class="font-semibold text-red-400 mb-2">Gaya Otot</h3>
+                <p class="text-sm text-gray-300 mb-3">Gaya yang dihasilkan oleh otot manusia atau hewan.</p>
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop" alt="Orang mengangkat beban" loading="lazy" class="rounded-lg w-full h-24 object-cover" onerror="this.style.background='#374151'; this.alt='Gambar tidak tersedia';">
+                <p class="text-xs text-gray-400 mt-2">Contoh: Mengangkat barbel, mendorong meja</p>
+              </div>
+
+              <!-- Gaya Gesek -->
+              <div class="bg-gradient-to-br from-yellow-500/10 to-amber-500/10 border border-yellow-500/30 rounded-2xl p-5 hover:scale-105 transition-transform">
+                <div class="w-12 h-12 rounded-xl bg-yellow-500/20 flex items-center justify-center mb-3">
+                  <span class="text-2xl">🛞</span>
+                </div>
+                <h3 class="font-semibold text-yellow-400 mb-2">Gaya Gesek</h3>
+                <p class="text-sm text-gray-300 mb-3">Timbul akibat dua permukaan benda yang saling bersentuhan.</p>
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop" alt="Ban mobil di jalan" loading="lazy" class="rounded-lg w-full h-24 object-cover" onerror="this.style.background='#374151'; this.alt='Gambar tidak tersedia';">
+                <p class="text-xs text-gray-400 mt-2">Contoh: Rem sepeda, sepatu di lantai</p>
+              </div>
+
+              <!-- Gaya Magnet -->
+              <div class="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/30 rounded-2xl p-5 hover:scale-105 transition-transform">
+                <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center mb-3">
+                  <span class="text-2xl">🧲</span>
+                </div>
+                <h3 class="font-semibold text-blue-400 mb-2">Gaya Magnet</h3>
+                <p class="text-sm text-gray-300 mb-3">Tarikan atau dorongan yang dihasilkan oleh magnet.</p>
+                <img src="https://images.unsplash.com/photo-1620428268482-cf1851a36764?w=300&h=200&fit=crop" alt="Magnet menarik besi" loading="lazy" class="rounded-lg w-full h-24 object-cover" onerror="this.style.background='#374151'; this.alt='Gambar tidak tersedia';">
+                <p class="text-xs text-gray-400 mt-2">Contoh: Kulkas magnet, kompas</p>
+              </div>
+
+              <!-- Gaya Gravitasi -->
+              <div class="bg-gradient-to-br from-indigo-500/10 to-violet-500/10 border border-indigo-500/30 rounded-2xl p-5 hover:scale-105 transition-transform">
+                <div class="w-12 h-12 rounded-xl bg-indigo-500/20 flex items-center justify-center mb-3">
+                  <span class="text-2xl">🌍</span>
+                </div>
+                <h3 class="font-semibold text-indigo-400 mb-2">Gaya Gravitasi</h3>
+                <p class="text-sm text-gray-300 mb-3">Gaya tarik bumi terhadap semua benda yang ada di permukaannya.</p>
+                <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=300&h=200&fit=crop" alt="Bumi dari luar angkasa" loading="lazy" class="rounded-lg w-full h-24 object-cover" onerror="this.style.background='#374151'; this.alt='Gambar tidak tersedia';">
+                <p class="text-xs text-gray-400 mt-2">Contoh: Buah jatuh dari pohon</p>
+              </div>
+
+              <!-- Gaya Pegas -->
+              <div class="bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/30 rounded-2xl p-5 hover:scale-105 transition-transform">
+                <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center mb-3">
+                  <span class="text-2xl">🔩</span>
+                </div>
+                <h3 class="font-semibold text-green-400 mb-2">Gaya Pegas</h3>
+                <p class="text-sm text-gray-300 mb-3">Gaya yang dihasilkan oleh benda elastis seperti pegas atau karet.</p>
+                <img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=300&h=200&fit=crop" alt="Pegas" loading="lazy" class="rounded-lg w-full h-24 object-cover" onerror="this.style.background='#374151'; this.alt='Gambar tidak tersedia';">
+                <p class="text-xs text-gray-400 mt-2">Contoh: Per kasur, ketapel</p>
+              </div>
+
+              <!-- Gaya Listrik -->
+              <div class="bg-gradient-to-br from-pink-500/10 to-rose-500/10 border border-pink-500/30 rounded-2xl p-5 hover:scale-105 transition-transform">
+                <div class="w-12 h-12 rounded-xl bg-pink-500/20 flex items-center justify-center mb-3">
+                  <span class="text-2xl">⚡</span>
+                </div>
+                <h3 class="font-semibold text-pink-400 mb-2">Gaya Listrik</h3>
+                <p class="text-sm text-gray-300 mb-3">Gaya tarik atau tolak antara benda yang bermuatan listrik.</p>
+                <img src="https://images.unsplash.com/photo-1509475826633-fed577a2c71b?w=300&h=200&fit=crop" alt="Petir" loading="lazy" class="rounded-lg w-full h-24 object-cover" onerror="this.style.background='#374151'; this.alt='Gambar tidak tersedia';">
+                <p class="text-xs text-gray-400 mt-2">Contoh: Penggaris digosok menarik kertas</p>
+              </div>
+            </div>
+
+            <!-- Interactive Matching Game -->
+            <div class="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/30 rounded-2xl p-6">
+              <h3 class="font-semibold text-purple-400 mb-4"><i class="fas fa-puzzle-piece mr-2"></i>Aktivitas: Cocokkan Jenis Gaya!</h3>
+              <p class="text-gray-300 mb-4">Pilih jenis gaya yang tepat untuk setiap contoh:</p>
+              
+              <div id="matching-game" class="space-y-4">
+                <div class="flex flex-col md:flex-row items-center gap-4 p-4 bg-black/20 rounded-xl">
+                  <span class="text-lg">🍎 Apel jatuh dari pohon</span>
+                  <select onchange="checkMatch(this, 'gravitasi')" class="px-4 py-2 bg-black/30 border border-purple-500/30 rounded-lg text-white focus:outline-none">
+                    <option value="">Pilih jawaban...</option>
+                    <option value="otot">Gaya Otot</option>
+                    <option value="gravitasi">Gaya Gravitasi</option>
+                    <option value="magnet">Gaya Magnet</option>
+                    <option value="gesek">Gaya Gesek</option>
+                  </select>
+                  <span class="match-result"></span>
+                </div>
+                <div class="flex flex-col md:flex-row items-center gap-4 p-4 bg-black/20 rounded-xl">
+                  <span class="text-lg">🚴 Rem sepeda menghentikan laju</span>
+                  <select onchange="checkMatch(this, 'gesek')" class="px-4 py-2 bg-black/30 border border-purple-500/30 rounded-lg text-white focus:outline-none">
+                    <option value="">Pilih jawaban...</option>
+                    <option value="otot">Gaya Otot</option>
+                    <option value="gravitasi">Gaya Gravitasi</option>
+                    <option value="magnet">Gaya Magnet</option>
+                    <option value="gesek">Gaya Gesek</option>
+                  </select>
+                  <span class="match-result"></span>
+                </div>
+                <div class="flex flex-col md:flex-row items-center gap-4 p-4 bg-black/20 rounded-xl">
+                  <span class="text-lg">🏋️ Atlet mengangkat barbel</span>
+                  <select onchange="checkMatch(this, 'otot')" class="px-4 py-2 bg-black/30 border border-purple-500/30 rounded-lg text-white focus:outline-none">
+                    <option value="">Pilih jawaban...</option>
+                    <option value="otot">Gaya Otot</option>
+                    <option value="gravitasi">Gaya Gravitasi</option>
+                    <option value="magnet">Gaya Magnet</option>
+                    <option value="gesek">Gaya Gesek</option>
+                  </select>
+                  <span class="match-result"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-between mt-8">
+              <button onclick="showSection('resultan')" class="px-6 py-3 bg-gray-600/50 rounded-xl hover:bg-gray-600 transition">
+                <i class="fas fa-arrow-left mr-2"></i>Sebelumnya
+              </button>
+              <button onclick="showSection('gesek')" class="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl hover:shadow-lg transition">
+                Selanjutnya<i class="fas fa-arrow-right ml-2"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Gaya Gesek Section -->
+        <section id="gesek" class="section-card hidden">
+          <div class="card-glass rounded-3xl p-8 mb-6">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center">
+                <i class="fas fa-road text-2xl"></i>
+              </div>
+              <div>
+                <h2 class="title-font text-2xl md:text-3xl font-bold">Mengenal Gaya Gesek</h2>
+                <p class="text-gray-400">Gaya yang menghambat gerakan benda</p>
+              </div>
+            </div>
+
+            <div class="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-6 mb-6">
+              <h3 class="font-semibold text-amber-400 mb-3"><i class="fas fa-book mr-2"></i>Definisi</h3>
+              <p class="text-gray-300 text-lg">
+                Gaya gesek adalah gaya yang arahnya <strong>berlawanan dengan arah gerak benda</strong>. Gaya ini timbul ketika dua permukaan benda saling bersentuhan.
+              </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+              <div class="bg-blue-500/10 border border-blue-500/30 rounded-2xl p-5">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                    <i class="fas fa-stop text-blue-400"></i>
+                  </div>
+                  <h3 class="font-semibold text-blue-400">Gaya Gesek Statis ($f_s$)</h3>
+                </div>
+                <p class="text-gray-300 mb-4">
+                  Terjadi saat benda <strong>belum bergerak</strong>. Gaya ini membuat benda terasa lebih berat saat mulai didorong.
+                </p>
+                <div class="illustration-container p-4">
+                  <img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=400&h=250&fit=crop" alt="Orang mendorong mobil" loading="lazy" class="rounded-xl w-full object-cover" onerror="this.style.background='#374151'; this.alt='Gambar tidak tersedia';">
+                  <p class="text-xs text-gray-400 mt-2 text-center">Mendorong mobil mogok memerlukan gaya besar untuk mengatasi gesek statis</p>
+                </div>
+              </div>
+
+              <div class="bg-green-500/10 border border-green-500/30 rounded-2xl p-5">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center">
+                    <i class="fas fa-running text-green-400"></i>
+                  </div>
+                  <h3 class="font-semibold text-green-400">Gaya Gesek Kinetis ($f_k$)</h3>
+                </div>
+                <p class="text-gray-300 mb-4">
+                  Terjadi setelah benda <strong>mulai bergerak</strong>. Nilainya lebih kecil dari gesek statis.
+                </p>
+                <div class="illustration-container p-4">
+                  <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=250&fit=crop" alt="Mobil meluncur" loading="lazy" class="rounded-xl w-full object-cover" onerror="this.style.background='#374151'; this.alt='Gambar tidak tersedia';">
+                  <p class="text-xs text-gray-400 mt-2 text-center">Setelah bergerak, gaya yang dibutuhkan untuk menjaga gerakan lebih kecil</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-purple-500/10 border border-purple-500/30 rounded-2xl p-6 mb-6">
+              <h3 class="font-semibold text-purple-400 mb-4"><i class="fas fa-cogs mr-2"></i>Faktor yang Mempengaruhi Gaya Gesek</h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0">
+                    <span class="text-2xl">🪨</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold mb-1">Kekasaran Permukaan</h4>
+                    <p class="text-sm text-gray-300">Semakin kasar permukaan, semakin besar gaya gesek.</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0">
+                    <span class="text-2xl">⚖️</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold mb-1">Berat Benda</h4>
+                    <p class="text-sm text-gray-300">Semakin berat benda, semakin besar gaya gesek.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4 p-4 bg-black/20 rounded-xl">
+                <p class="text-sm text-gray-400"><i class="fas fa-info-circle mr-2 text-purple-400"></i><strong>Catatan Penting:</strong> Luas permukaan TIDAK mempengaruhi besar gaya gesek!</p>
+              </div>
+            </div>
+
+            <!-- Friction Simulation -->
+            <div class="bg-cyan-500/10 border border-cyan-500/30 rounded-2xl p-6">
+              <h3 class="font-semibold text-cyan-400 mb-4"><i class="fas fa-gamepad mr-2"></i>Simulasi: Pengaruh Permukaan terhadap Gesek</h3>
+              <div class="grid md:grid-cols-3 gap-4">
+                <button onclick="simulateFriction('licin')" class="p-4 bg-black/30 rounded-xl hover:bg-cyan-500/20 transition text-center">
+                  <span class="text-3xl mb-2 block">🧊</span>
+                  <span class="font-semibold">Permukaan Licin</span>
+                  <p class="text-xs text-gray-400 mt-1">Es, lantai licin</p>
+                </button>
+                <button onclick="simulateFriction('sedang')" class="p-4 bg-black/30 rounded-xl hover:bg-cyan-500/20 transition text-center">
+                  <span class="text-3xl mb-2 block">🪵</span>
+                  <span class="font-semibold">Permukaan Sedang</span>
+                  <p class="text-xs text-gray-400 mt-1">Kayu, keramik</p>
+                </button>
+                <button onclick="simulateFriction('kasar')" class="p-4 bg-black/30 rounded-xl hover:bg-cyan-500/20 transition text-center">
+                  <span class="text-3xl mb-2 block">🪨</span>
+                  <span class="font-semibold">Permukaan Kasar</span>
+                  <p class="text-xs text-gray-400 mt-1">Aspal, batu</p>
+                </button>
+              </div>
+              <div id="friction-result" class="mt-4 p-4 bg-black/30 rounded-xl hidden">
+                <div class="flex items-center gap-4">
+                  <div id="friction-box" class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center text-2xl">📦</div>
+                  <div>
+                    <p id="friction-text" class="text-lg font-semibold"></p>
+                    <p id="friction-detail" class="text-sm text-gray-400"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-between mt-8">
+              <button onclick="showSection('macam')" class="px-6 py-3 bg-gray-600/50 rounded-xl hover:bg-gray-600 transition">
+                <i class="fas fa-arrow-left mr-2"></i>Sebelumnya
+              </button>
+              <button onclick="showSection('newton1')" class="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl hover:shadow-lg transition">
+                Selanjutnya<i class="fas fa-arrow-right ml-2"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Hukum I Newton Section -->
+        <section id="newton1" class="section-card hidden">
+          <div class="card-glass rounded-3xl p-8 mb-6">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
+                <i class="fas fa-balance-scale text-2xl"></i>
+              </div>
+              <div>
+                <h2 class="title-font text-2xl md:text-3xl font-bold">Hukum I Newton</h2>
+                <p class="text-gray-400">Hukum Kelembaman (Inersia)</p>
+              </div>
+            </div>
+
+            <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-6 mb-6">
+              <h3 class="font-semibold text-emerald-400 mb-3"><i class="fas fa-scroll mr-2"></i>Bunyi Hukum I Newton</h3>
+              <blockquote class="text-lg text-gray-200 italic border-l-4 border-emerald-500 pl-4">
+                "Jika resultan gaya pada benda nol, maka benda yang <strong>diam akan tetap diam</strong>, dan benda yang <strong>bergerak akan tetap bergerak</strong> dengan kecepatan tetap (lurus beraturan)."
+              </blockquote>
+              <div class="mt-4 bg-black/30 rounded-xl p-4 text-center">
+                <p class="text-xl">$\Sigma F = 0$ → benda diam atau bergerak lurus beraturan</p>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+              <div class="bg-blue-500/10 border border-blue-500/30 rounded-2xl p-5">
+                <h3 class="font-semibold text-blue-400 mb-3"><i class="fas fa-brain mr-2"></i>Konsep Kelembaman (Inersia)</h3>
+                <p class="text-gray-300 mb-4">
+                  Kelembaman adalah sifat <strong>"malas"</strong> benda untuk mengubah posisinya. Benda cenderung mempertahankan keadaannya semula.
+                </p>
+                <div class="p-4 bg-black/20 rounded-xl">
+                  <p class="text-sm text-gray-400"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i>Semakin besar massa benda, semakin besar pula kelembamannya!</p>
+                </div>
+              </div>
+
+              <div class="illustration-container">
+                <h3 class="font-semibold text-pink-300 mb-3 text-center"><i class="fas fa-car mr-2"></i>Contoh Kelembaman</h3>
+                <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=500&h=300&fit=crop" alt="Penumpang mobil" loading="lazy" class="rounded-xl w-full object-cover" onerror="this.style.background='#374151'; this.alt='Gambar tidak tersedia';">
+                <p class="text-sm text-gray-400 mt-3 text-center">Penumpang terdorong ke depan saat mobil direm mendadak karena tubuh cenderung mempertahankan geraknya</p>
+              </div>
+            </div>
+
+            <div class="bg-purple-500/10 border border-purple-500/30 rounded-2xl p-6 mb-6">
+              <h3 class="font-semibold text-purple-400 mb-4"><i class="fas fa-flask mr-2"></i>Contoh Penerapan Hukum I Newton</h3>
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="p-4 bg-black/20 rounded-xl text-center">
+                  <span class="text-3xl mb-2 block">🚌</span>
+                  <p class="text-sm">Penumpang bus terdorong ke depan saat bus berhenti mendadak</p>
+                </div>
+                <div class="p-4 bg-black/20 rounded-xl text-center">
+                  <span class="text-3xl mb-2 block">🎱</span>
+                  <p class="text-sm">Bola biliar diam hingga dipukul dengan stik</p>
+                </div>
+                <div class="p-4 bg-black/20 rounded-xl text-center">
+                  <span class="text-3xl mb-2 block">🧥</span>
+                  <p class="text-sm">Debu rontok saat baju ditepuk-tepuk</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Demo -->
+            <div class="bg-teal-500/10 border border-teal-500/30 rounded-2xl p-6">
+              <h3 class="font-semibold text-teal-400 mb-4"><i class="fas fa-gamepad mr-2"></i>Simulasi: Kelembaman di Mobil</h3>
+              <div class="interactive-demo p-6 relative">
+                <div class="flex items-end justify-center gap-2">
+                  <div id="car-demo" class="relative transition-all duration-700" style="transform: translateX(0);">
+                    <div class="text-6xl">🚗</div>
+                    <div id="passenger" class="absolute -top-2 left-1/2 -translate-x-1/2 text-2xl transition-all duration-300">🧑</div>
+                  </div>
+                </div>
+                <div class="flex justify-center gap-4 mt-6">
+                  <button onclick="carDemo('accelerate')" class="px-6 py-3 bg-green-500/30 border border-green-500 rounded-xl hover:bg-green-500/50 transition">
+                    <i class="fas fa-play mr-2"></i>Gas (Percepat)
+                  </button>
+                  <button onclick="carDemo('brake')" class="px-6 py-3 bg-red-500/30 border border-red-500 rounded-xl hover:bg-red-500/50 transition">
+                    <i class="fas fa-stop mr-2"></i>Rem Mendadak
+                  </button>
+                  <button onclick="carDemo('reset')" class="px-6 py-3 bg-gray-500/30 border border-gray-500 rounded-xl hover:bg-gray-500/50 transition">
+                    <i class="fas fa-redo mr-2"></i>Reset
+                  </button>
+                </div>
+                <p id="car-explanation" class="text-center mt-4 text-gray-300"></p>
+              </div>
+            </div>
+
+            <div class="flex justify-between mt-8">
+              <button onclick="showSection('gesek')" class="px-6 py-3 bg-gray-600/50 rounded-xl hover:bg-gray-600 transition">
+                <i class="fas fa-arrow-left mr-2"></i>Sebelumnya
+              </button>
+              <button onclick="showSection('newton2')" class="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl hover:shadow-lg transition">
+                Selanjutnya<i class="fas fa-arrow-right ml-2"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Hukum II Newton Section -->
+        <section id="newton2" class="section-card hidden">
+          <div class="card-glass rounded-3xl p-8 mb-6">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center">
+                <i class="fas fa-tachometer-alt text-2xl"></i>
+              </div>
+              <div>
+                <h2 class="title-font text-2xl md:text-3xl font-bold">Hukum II Newton</h2>
+                <p class="text-gray-400">Hukum Percepatan</p>
+              </div>
+            </div>
+
+            <div class="bg-blue-500/10 border border-blue-500/30 rounded-2xl p-6 mb-6">
+              <h3 class="font-semibold text-blue-400 mb-3"><i class="fas fa-scroll mr-2"></i>Konsep Hukum II Newton</h3>
+              <p class="text-gray-300 text-lg mb-4">
+                Percepatan benda <strong>sebanding dengan gaya</strong> yang diberikan dan <strong>berbanding terbalik dengan massa</strong> benda.
+              </p>
+              <div class="bg-black/30 rounded-xl p-6 text-center">
+                <p class="text-3xl font-bold text-blue-400 mb-4">$F = m \cdot a$</p>
+                <div class="grid grid-cols-3 gap-4 text-sm">
+                  <div class="p-3 bg-blue-500/20 rounded-lg">
+                    <p class="font-semibold">$F$ = Gaya</p>
+                    <p class="text-gray-400">Satuan: Newton (N)</p>
+                  </div>
+                  <div class="p-3 bg-indigo-500/20 rounded-lg">
+                    <p class="font-semibold">$m$ = Massa</p>
+                    <p class="text-gray-400">Satuan: kilogram (kg)</p>
+                  </div>
+                  <div class="p-3 bg-violet-500/20 rounded-lg">
+                    <p class="font-semibold">$a$ = Percepatan</p>
+                    <p class="text-gray-400">Satuan: m/s²</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+              <div class="bg-green-500/10 border border-green-500/30 rounded-2xl p-5">
+                <h3 class="font-semibold text-green-400 mb-3"><i class="fas fa-arrow-up mr-2"></i>Hubungan Gaya & Percepatan</h3>
+                <p class="text-gray-300 mb-3">Jika massa tetap:</p>
+                <ul class="space-y-2 text-gray-300">
+                  <li><i class="fas fa-plus text-green-400 mr-2"></i>Gaya besar → Percepatan besar</li>
+                  <li><i class="fas fa-minus text-red-400 mr-2"></i>Gaya kecil → Percepatan kecil</li>
+                </ul>
+                <div class="mt-4 p-3 bg-black/20 rounded-lg text-sm">
+                  <p>$a = \frac{F}{m}$ (percepatan sebanding dengan gaya)</p>
+                </div>
+              </div>
+
+              <div class="bg-orange-500/10 border border-orange-500/30 rounded-2xl p-5">
+                <h3 class="font-semibold text-orange-400 mb-3"><i class="fas fa-weight-hanging mr-2"></i>Hubungan Massa & Percepatan</h3>
+                <p class="text-gray-300 mb-3">Jika gaya tetap:</p>
+                <ul class="space-y-2 text-gray-300">
+                  <li><i class="fas fa-arrow-down text-orange-400 mr-2"></i>Massa besar → Percepatan kecil</li>
+                  <li><i class="fas fa-arrow-up text-green-400 mr-2"></i>Massa kecil → Percepatan besar</li>
+                </ul>
+                <div class="mt-4 p-3 bg-black/20 rounded-lg text-sm">
+                  <p>$a = \frac{F}{m}$ (percepatan berbanding terbalik dengan massa)</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="illustration-container mb-6">
+              <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="flex-1">
+                  <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=350&fit=crop" alt="Mobil balap berakselerasi" loading="lazy" class="rounded-2xl w-full object-cover" onerror="this.style.background='#374151'; this.alt='Gambar tidak tersedia';">
+                </div>
+                <div class="flex-1">
+                  <h3 class="font-semibold text-pink-300 mb-3"><i class="fas fa-car mr-2"></i>Contoh Penerapan</h3>
+                  <p class="text-gray-300 mb-4">Mobil sport dengan mesin besar (gaya besar) dan bodi ringan (massa kecil) dapat berakselerasi sangat cepat!</p>
+                  <div class="p-4 bg-black/20 rounded-xl">
+                    <p class="text-sm"><strong>Contoh Perhitungan:</strong></p>
+                    <p class="text-sm text-gray-400 mt-2">Mobil bermassa 1000 kg didorong gaya 5000 N</p>
+                    <p class="text-sm text-gray-400">$a = \frac{F}{m} = \frac{5000}{1000} = 5$ m/s²</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Calculator -->
+            <div class="bg-indigo-500/10 border border-indigo-500/30 rounded-2xl p-6">
+              <h3 class="font-semibold text-indigo-400 mb-4"><i class="fas fa-calculator mr-2"></i>Kalkulator Hukum II Newton</h3>
+              <div class="grid md:grid-cols-4 gap-4">
+                <div>
+                  <label class="block text-sm text-gray-400 mb-2">Massa (kg):</label>
+                  <input type="number" id="mass-input" value="10" class="w-full px-4 py-3 bg-black/30 border border-indigo-500/30 rounded-xl text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                  <label class="block text-sm text-gray-400 mb-2">Gaya (N):</label>
+                  <input type="number" id="force-input" value="50" class="w-full px-4 py-3 bg-black/30 border border-indigo-500/30 rounded-xl text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <div>
+                  <label class="block text-sm text-gray-400 mb-2">Percepatan (m/s²):</label>
+                  <input type="number" id="accel-input" placeholder="Hasil" readonly class="w-full px-4 py-3 bg-black/30 border border-indigo-500/30 rounded-xl text-white focus:outline-none">
+                </div>
+                <div class="flex items-end">
+                  <button onclick="calculateNewton2()" class="w-full px-6 py-3 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-xl font-semibold hover:shadow-lg transition">
+                    <i class="fas fa-calculator mr-2"></i>Hitung
+                  </button>
+                </div>
+              </div>
+              <div id="newton2-result" class="mt-4 p-4 bg-black/30 rounded-xl hidden">
+                <p class="text-lg text-center">Dengan gaya <span id="n2-force" class="text-blue-400 font-bold"></span> N pada benda bermassa <span id="n2-mass" class="text-indigo-400 font-bold"></span> kg,<br>percepatan yang dihasilkan adalah <span id="n2-accel" class="text-2xl text-green-400 font-bold"></span> m/s²</p>
+              </div>
+            </div>
+
+            <div class="flex justify-between mt-8">
+              <button onclick="showSection('newton1')" class="px-6 py-3 bg-gray-600/50 rounded-xl hover:bg-gray-600 transition">
+                <i class="fas fa-arrow-left mr-2"></i>Sebelumnya
+              </button>
+              <button onclick="showSection('newton3')" class="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl hover:shadow-lg transition">
+                Selanjutnya<i class="fas fa-arrow-right ml-2"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Hukum III Newton Section -->
+        <section id="newton3" class="section-card hidden">
+          <div class="card-glass rounded-3xl p-8 mb-6">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center">
+                <i class="fas fa-exchange-alt text-2xl"></i>
+              </div>
+              <div>
+                <h2 class="title-font text-2xl md:text-3xl font-bold">Hukum III Newton</h2>
+                <p class="text-gray-400">Hukum Aksi-Reaksi</p>
+              </div>
+            </div>
+
+            <div class="bg-rose-500/10 border border-rose-500/30 rounded-2xl p-6 mb-6">
+              <h3 class="font-semibold text-rose-400 mb-3"><i class="fas fa-scroll mr-2"></i>Bunyi Hukum III Newton</h3>
+              <blockquote class="text-lg text-gray-200 italic border-l-4 border-rose-500 pl-4">
+                "Untuk setiap gaya aksi, akan ada gaya reaksi yang <strong>sama besar</strong> tetapi <strong>berlawanan arah</strong>."
+              </blockquote>
+              <div class="mt-4 bg-black/30 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-rose-400">$F_{aksi} = -F_{reaksi}$</p>
+              </div>
+            </div>
+
+            <div class="bg-purple-500/10 border border-purple-500/30 rounded-2xl p-6 mb-6">
+              <h3 class="font-semibold text-purple-400 mb-3"><i class="fas fa-exclamation-circle mr-2"></i>Hal Penting!</h3>
+              <p class="text-gray-300">
+                Gaya aksi dan reaksi <strong>selalu bekerja pada dua benda yang berbeda</strong>, tidak pernah pada benda yang sama!
+              </p>
+              <div class="flex items-center justify-center gap-4 mt-4">
+                <div class="p-4 bg-blue-500/20 rounded-xl text-center">
+                  <span class="text-3xl">🧑</span>
+                  <p class="text-sm mt-1">Benda A</p>
+                  <p class="text-xs text-gray-400">Memberi gaya aksi</p>
+                </div>
+                <div class="flex items-center">
+                  <div class="w-12 h-2 bg-green-500 rounded"></div>
+                  <i class="fas fa-caret-right text-green-500 text-xl -ml-1"></i>
+                </div>
+                <div class="text-center text-gray-400">
+                  <i class="fas fa-exchange-alt text-2xl"></i>
+                </div>
+                <div class="flex items-center">
+                  <i class="fas fa-caret-left text-red-500 text-xl -mr-1"></i>
+                  <div class="w-12 h-2 bg-red-500 rounded"></div>
+                </div>
+                <div class="p-4 bg-orange-500/20 rounded-xl text-center">
+                  <span class="text-3xl">🧱</span>
+                  <p class="text-sm mt-1">Benda B</p>
+                  <p class="text-xs text-gray-400">Memberi gaya reaksi</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+              <div class="illustration-container">
+                <h3 class="font-semibold text-pink-300 mb-3 text-center"><i class="fas fa-hand-rock mr-2"></i>Contoh: Mencangkul Tanah</h3>
+                <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=500&h=350&fit=crop" alt="Petani mencangkul" loading="lazy" class="rounded-xl w-full object-cover mb-3" onerror="this.style.background='#374151'; this.alt='Gambar tidak tersedia';">
+                <p class="text-sm text-gray-300">Saat mencangkul tanah, tangan kita merasakan <strong>gaya balik</strong> dari tanah. Semakin keras kita mencangkul, semakin besar pula gaya yang dirasakan tangan.</p>
+              </div>
+
+              <div class="illustration-container">
+                <h3 class="font-semibold text-pink-300 mb-3 text-center"><i class="fas fa-swimmer mr-2"></i>Contoh: Berenang</h3>
+                <img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=500&h=350&fit=crop" alt="Orang berenang" loading="lazy" class="rounded-xl w-full object-cover mb-3" onerror="this.style.background='#374151'; this.alt='Gambar tidak tersedia';">
+                <p class="text-sm text-gray-300">Perenang mendorong air ke belakang (aksi), air memberikan gaya ke depan pada perenang (reaksi) sehingga perenang bergerak maju.</p>
+              </div>
+            </div>
+
+            <div class="bg-cyan-500/10 border border-cyan-500/30 rounded-2xl p-6">
+              <h3 class="font-semibold text-cyan-400 mb-4"><i class="fas fa-list-ol mr-2"></i>Contoh Lain Aksi-Reaksi</h3>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="p-4 bg-black/20 rounded-xl">
+                  <div class="flex items-center gap-3 mb-2">
+                    <span class="text-2xl">🚶</span>
+                    <h4 class="font-semibold">Berjalan</h4>
+                  </div>
+                  <p class="text-sm text-gray-300">Kaki mendorong tanah ke belakang (aksi), tanah mendorong kaki ke depan (reaksi)</p>
+                </div>
+                <div class="p-4 bg-black/20 rounded-xl">
+                  <div class="flex items-center gap-3 mb-2">
+                    <span class="text-2xl">🚀</span>
+                    <h4 class="font-semibold">Peluncuran Roket</h4>
+                  </div>
+                  <p class="text-sm text-gray-300">Gas terbakar keluar ke bawah (aksi), roket terdorong ke atas (reaksi)</p>
+                </div>
+                <div class="p-4 bg-black/20 rounded-xl">
+                  <div class="flex items-center gap-3 mb-2">
+                    <span class="text-2xl">🔫</span>
+                    <h4 class="font-semibold">Menembak</h4>
+                  </div>
+                  <p class="text-sm text-gray-300">Peluru keluar ke depan (aksi), senapan terdorong ke belakang (reaksi)</p>
+                </div>
+                <div class="p-4 bg-black/20 rounded-xl">
+                  <div class="flex items-center gap-3 mb-2">
+                    <span class="text-2xl">🎈</span>
+                    <h4 class="font-semibold">Balon Terbang</h4>
+                  </div>
+                  <p class="text-sm text-gray-300">Udara keluar dari balon (aksi), balon bergerak berlawanan arah (reaksi)</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Demo -->
+            <div class="mt-6 bg-pink-500/10 border border-pink-500/30 rounded-2xl p-6">
+              <h3 class="font-semibold text-pink-400 mb-4"><i class="fas fa-gamepad mr-2"></i>Simulasi Aksi-Reaksi</h3>
+              <div class="interactive-demo p-6">
+                <div class="flex items-center justify-center gap-8">
+                  <div id="action-obj" class="text-center transition-all duration-500">
+                    <div class="text-6xl">🧑</div>
+                    <p class="text-sm mt-2">Orang</p>
+                  </div>
+                  <div id="action-arrows" class="flex flex-col items-center opacity-0 transition-opacity duration-300">
+                    <div class="flex items-center text-green-400">
+                      <span class="text-sm mr-2">Aksi</span>
+                      <i class="fas fa-arrow-right text-2xl"></i>
+                    </div>
+                    <div class="flex items-center text-red-400 mt-2">
+                      <i class="fas fa-arrow-left text-2xl"></i>
+                      <span class="text-sm ml-2">Reaksi</span>
+                    </div>
+                  </div>
+                  <div id="reaction-obj" class="text-center transition-all duration-500">
+                    <div class="text-6xl">🧱</div>
+                    <p class="text-sm mt-2">Tembok</p>
+                  </div>
+                </div>
+                <div class="text-center mt-6">
+                  <button onclick="demonstrateActionReaction()" class="px-8 py-3 bg-gradient-to-r from-pink-500 to-rose-500 rounded-xl font-semibold hover:shadow-lg transition">
+                    <i class="fas fa-hand-point-right mr-2"></i>Dorong Tembok!
+                  </button>
+                </div>
+                <p id="action-explanation" class="text-center mt-4 text-gray-300"></p>
+              </div>
+            </div>
+
+            <div class="flex justify-between mt-8">
+              <button onclick="showSection('newton2')" class="px-6 py-3 bg-gray-600/50 rounded-xl hover:bg-gray-600 transition">
+                <i class="fas fa-arrow-left mr-2"></i>Sebelumnya
+              </button>
+              <button onclick="showSection('penerapan')" class="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl hover:shadow-lg transition">
+                Selanjutnya<i class="fas fa-arrow-right ml-2"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Penerapan Section -->
+        <section id="penerapan" class="section-card hidden">
+          <div class="card-glass rounded-3xl p-8 mb-6">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
+                <i class="fas fa-rocket text-2xl"></i>
+              </div>
+              <div>
+                <h2 class="title-font text-2xl md:text-3xl font-bold">Penerapan Teknologi & Eksperimen</h2>
+                <p class="text-gray-400">Aplikasi hukum Newton dalam kehidupan nyata</p>
+              </div>
+            </div>
+
+            <!-- Rocket Explanation -->
+            <div class="bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/30 rounded-2xl p-6 mb-6">
+              <h3 class="font-semibold text-orange-400 mb-4"><i class="fas fa-rocket mr-2"></i>Prinsip Kerja Peluncuran Roket</h3>
+              <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="flex-1">
+                  <img src="https://images.unsplash.com/photo-1457364559154-aa2644600ebb?w=500&h=400&fit=crop" alt="Peluncuran roket" loading="lazy" class="rounded-2xl w-full object-cover" onerror="this.style.background='#374151'; this.alt='Gambar tidak tersedia';">
+                </div>
+                <div class="flex-1 space-y-4">
+                  <p class="text-gray-300">
+                    Peluncuran roket merupakan contoh nyata penerapan <strong>Hukum III Newton</strong> (Aksi-Reaksi).
+                  </p>
+                  <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                      <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center shrink-0">
+                        <span>1</span>
+                      </div>
+                      <p class="text-sm text-gray-300">Bahan bakar roket dibakar dan menghasilkan gas panas bertekanan tinggi</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <div class="w-8 h-8 rounded-full bg-orange-500/20 flex items-center justify-center shrink-0">
+                        <span>2</span>
+                      </div>
+                      <p class="text-sm text-gray-300">Gas panas keluar dengan kecepatan tinggi ke bawah (Gaya Aksi)</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <div class="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0">
+                        <span>3</span>
+                      </div>
+                      <p class="text-sm text-gray-300">Roket terdorong ke atas dengan gaya yang sama besar (Gaya Reaksi)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Experiment -->
+            <div class="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl p-6">
+              <h3 class="font-semibold text-cyan-400 mb-4"><i class="fas fa-flask mr-2"></i>Aktivitas Siswa: Penyiram Air yang Menari-nari</h3>
+              
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h4 class="font-semibold text-white mb-3">📦 Alat dan Bahan:</h4>
+                  <ul class="space-y-2 text-gray-300 text-sm">
+                    <li><i class="fas fa-check text-green-400 mr-2"></i>Kotak susu bekas (1 liter)</li>
+                    <li><i class="fas fa-check text-green-400 mr-2"></i>Benang atau tali</li>
+                    <li><i class="fas fa-check text-green-400 mr-2"></i>Paku atau gunting</li>
+                    <li><i class="fas fa-check text-green-400 mr-2"></i>Air</li>
+                    <li><i class="fas fa-check text-green-400 mr-2"></i>Wadah atau baskom</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-white mb-3">🔧 Langkah Kerja:</h4>
+                  <ol class="space-y-2 text-gray-300 text-sm list-decimal list-inside">
+                    <li>Lubangi bagian bawah kotak susu di 4 sisi (arahkan miring)</li>
+                    <li>Ikat benang di bagian atas kotak</li>
+                    <li>Gantung kotak di atas wadah</li>
+                    <li>Isi kotak dengan air</li>
+                    <li>Amati gerakan kotak!</li>
+                  </ol>
+                </div>
+              </div>
+
+              <div class="mt-6 p-4 bg-black/30 rounded-xl">
+                <h4 class="font-semibold text-yellow-400 mb-2"><i class="fas fa-lightbulb mr-2"></i>Penjelasan:</h4>
+                <p class="text-gray-300 text-sm">
+                  Air yang keluar dari lubang memberikan <strong>gaya aksi</strong>. Sebagai reaksinya, kotak berputar ke arah berlawanan. Ini membuktikan <strong>Hukum III Newton</strong>! Semakin deras air keluar, semakin cepat kotak berputar.
+                </p>
+              </div>
+
+              <!-- Animated Experiment Demo -->
+              <div class="mt-6">
+                <h4 class="font-semibold text-white mb-4 text-center">🎬 Simulasi Eksperimen</h4>
+                <div class="interactive-demo p-8">
+                  <div class="flex flex-col items-center">
+                    <div class="text-gray-400 text-sm mb-2">|</div>
+                    <div id="water-box" class="relative transition-all duration-100" style="transform: rotate(0deg);">
+                      <div class="w-20 h-24 bg-gradient-to-b from-blue-400 to-blue-600 rounded-lg flex items-center justify-center border-4 border-blue-300">
+                        <span class="text-white font-bold">💧</span>
+                      </div>
+                      <div id="water-spray-1" class="absolute -right-4 top-1/2 text-blue-400 opacity-0">💦</div>
+                      <div id="water-spray-2" class="absolute -left-4 top-1/2 text-blue-400 opacity-0">💦</div>
+                      <div id="water-spray-3" class="absolute right-0 -bottom-4 text-blue-400 opacity-0">💦</div>
+                      <div id="water-spray-4" class="absolute left-0 -bottom-4 text-blue-400 opacity-0">💦</div>
+                    </div>
+                    <div class="w-32 h-8 bg-gray-700 rounded-b-xl mt-8 flex items-center justify-center text-xs text-gray-400">
+                      Wadah
+                    </div>
+                  </div>
+                  <div class="text-center mt-6">
+                    <button onclick="startWaterExperiment()" class="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl font-semibold hover:shadow-lg transition">
+                      <i class="fas fa-play mr-2"></i>Mulai Eksperimen
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-between mt-8">
+              <button onclick="showSection('newton3')" class="px-6 py-3 bg-gray-600/50 rounded-xl hover:bg-gray-600 transition">
+                <i class="fas fa-arrow-left mr-2"></i>Sebelumnya
+              </button>
+              <button onclick="showSection('quiz')" class="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl hover:shadow-lg transition">
+                Kuis HOTS<i class="fas fa-arrow-right ml-2"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz" class="section-card hidden">
+          <div class="card-glass rounded-3xl p-8 mb-6">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-yellow-500 to-amber-500 flex items-center justify-center">
+                <i class="fas fa-clipboard-check text-2xl"></i>
+              </div>
+              <div>
+                <h2 class="title-font text-2xl md:text-3xl font-bold">Kuis HOTS</h2>
+                <p class="text-gray-400">10 Soal Higher Order Thinking Skills</p>
+              </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="mb-6">
+              <div class="flex justify-between text-sm mb-2">
+                <span>Progres</span>
+                <span id="quiz-progress-text">0/10</span>
+              </div>
+              <div class="h-3 bg-gray-700 rounded-full overflow-hidden">
+                <div id="quiz-progress-bar" class="progress-bar h-full" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <!-- Quiz Container -->
+            <div id="quiz-container">
+              <!-- Questions will be rendered here -->
+            </div>
+
+            <!-- Quiz Result -->
+            <div id="quiz-result" class="hidden text-center py-8">
+              <div class="inline-block p-6 rounded-full bg-gradient-to-br from-yellow-500/20 to-amber-500/20 mb-4">
+                <i class="fas fa-trophy text-6xl text-yellow-400"></i>
+              </div>
+              <h3 class="text-2xl font-bold mb-2">Kuis Selesai!</h3>
+              <p class="text-xl mb-4">Skor Anda: <span id="final-score" class="text-3xl font-bold text-yellow-400"></span></p>
+              <p id="score-message" class="text-gray-300 mb-6"></p>
+              <button onclick="restartQuiz()" class="px-8 py-3 bg-gradient-to-r from-yellow-500 to-amber-500 rounded-xl font-semibold hover:shadow-lg transition">
+                <i class="fas fa-redo mr-2"></i>Ulangi Kuis
+              </button>
+            </div>
+
+            <div class="flex justify-between mt-8">
+              <button onclick="showSection('penerapan')" class="px-6 py-3 bg-gray-600/50 rounded-xl hover:bg-gray-600 transition">
+                <i class="fas fa-arrow-left mr-2"></i>Kembali ke Materi
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 px-4 py-6 mt-auto">
+      <div class="max-w-5xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" loading="lazy" class="w-12 h-12 rounded-full object-cover border-2 border-pink-500" onerror="this.style.background='#374151'; this.alt='Foto tidak tersedia';">
+            <div>
+              <p class="font-semibold" id="creator-name">Algian Manggara, S.Agr</p>
+              <p class="text-sm text-gray-400">Pembuat Materi Pembelajaran</p>
+            </div>
+          </div>
+          <div class="text-center md:text-right">
+            <p class="text-gray-400 text-sm">Media Pembelajaran Interaktif</p>
+            <p class="text-gray-500 text-sm">© 2026 Algian Manggara, S.Agr. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Gaya & Hukum Newton',
+      creator_name: 'Algian Manggara, S.Agr',
+      background_color: '#1a1a2e',
+      surface_color: '#16213e',
+      text_color: '#ffffff',
+      primary_action: '#e94560',
+      secondary_action: '#ff6b6b'
+    };
+
+    let config = { ...defaultConfig };
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (value) => { cfg.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+            },
+            {
+              get: () => cfg.surface_color || defaultConfig.surface_color,
+              set: (value) => { cfg.surface_color = value; window.elementSdk.setConfig({ surface_color: value }); }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (value) => { cfg.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+            },
+            {
+              get: () => cfg.primary_action || defaultConfig.primary_action,
+              set: (value) => { cfg.primary_action = value; window.elementSdk.setConfig({ primary_action: value }); }
+            },
+            {
+              get: () => cfg.secondary_action || defaultConfig.secondary_action,
+              set: (value) => { cfg.secondary_action = value; window.elementSdk.setConfig({ secondary_action: value }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['main_title', cfg.main_title || defaultConfig.main_title],
+          ['creator_name', cfg.creator_name || defaultConfig.creator_name]
+        ])
+      });
+    }
+
+    function applyConfig() {
+      document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+      document.getElementById('creator-name').textContent = config.creator_name || defaultConfig.creator_name;
+      
+      document.body.style.background = `linear-gradient(135deg, ${config.background_color || defaultConfig.background_color} 0%, ${config.surface_color || defaultConfig.surface_color} 50%, #0f3460 100%)`;
+    }
+
+    // Navigation
+    function showSection(sectionId) {
+      document.querySelectorAll('.section-card').forEach(s => s.classList.add('hidden'));
+      document.getElementById(sectionId).classList.remove('hidden');
+      
+      document.querySelectorAll('.nav-item').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.section === sectionId) btn.classList.add('active');
+      });
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      if (sectionId === 'quiz' && !quizInitialized) {
+        initQuiz();
+      }
+    }
+
+    // Force Demo
+    let forcePosition = 0;
+    function applyForce(direction) {
+      const box = document.getElementById('force-demo-box');
+      if (direction === 'left') {
+        forcePosition -= 80;
+      } else if (direction === 'right') {
+        forcePosition += 80;
+      } else {
+        forcePosition = 0;
+      }
+      forcePosition = Math.max(-150, Math.min(150, forcePosition));
+      box.style.transform = `translateX(${forcePosition}px)`;
+    }
+
+    // Resultan Calculator
+    function calculateResultan() {
+      const f1 = parseFloat(document.getElementById('force1').value) || 0;
+      const f2 = parseFloat(document.getElementById('force2').value) || 0;
+      const resultan = f1 - f2;
+      
+      document.getElementById('resultan-result').classList.remove('hidden');
+      document.getElementById('resultan-value').textContent = Math.abs(resultan) + ' N';
+      
+      let direction = '';
+      if (resultan > 0) direction = '→ ke kanan';
+      else if (resultan < 0) direction = '← ke kiri';
+      else direction = 'Seimbang (diam)';
+      
+      document.getElementById('resultan-direction').textContent = direction;
+    }
+
+    // Matching Game
+    function checkMatch(select, correctAnswer) {
+      const resultSpan = select.parentElement.querySelector('.match-result');
+      if (select.value === correctAnswer) {
+        resultSpan.innerHTML = '<i class="fas fa-check-circle text-green-400 text-xl"></i>';
+        select.classList.add('border-green-500');
+      } else if (select.value) {
+        resultSpan.innerHTML = '<i class="fas fa-times-circle text-red-400 text-xl"></i>';
+        select.classList.add('border-red-500');
+      }
+    }
+
+    // Friction Simulation
+    function simulateFriction(type) {
+      const result = document.getElementById('friction-result');
+      const text = document.getElementById('friction-text');
+      const detail = document.getElementById('friction-detail');
+      const box = document.getElementById('friction-box');
+      
+      result.classList.remove('hidden');
+      
+      if (type === 'licin') {
+        text.textContent = 'Gaya gesek KECIL';
+        detail.textContent = 'Benda mudah bergerak dan meluncur jauh';
+        box.style.animation = 'slideRight 1s ease-out';
+      } else if (type === 'sedang') {
+        text.textContent = 'Gaya gesek SEDANG';
+        detail.textContent = 'Benda bergerak dengan hambatan normal';
+        box.style.animation = 'slideRight 2s ease-out';
+      } else {
+        text.textContent = 'Gaya gesek BESAR';
+        detail.textContent = 'Benda sulit bergerak dan cepat berhenti';
+        box.style.animation = 'slideRight 3s ease-out';
+      }
+      
+      setTimeout(() => box.style.animation = '', 3000);
+    }
+
+    // Car Demo
+    function carDemo(action) {
+      const car = document.getElementById('car-demo');
+      const passenger = document.getElementById('passenger');
+      const explanation = document.getElementById('car-explanation');
+      
+      if (action === 'accelerate') {
+        car.style.transform = 'translateX(100px)';
+        passenger.style.transform = 'translateX(-50%) translateX(-15px)';
+        explanation.textContent = 'Saat mobil dipercepat, penumpang terdorong ke BELAKANG karena tubuh cenderung mempertahankan keadaan diam (kelembaman)';
+      } else if (action === 'brake') {
+        car.style.transform = 'translateX(-50px)';
+        passenger.style.transform = 'translateX(-50%) translateX(15px)';
+        explanation.textContent = 'Saat mobil direm mendadak, penumpang terdorong ke DEPAN karena tubuh cenderung mempertahankan geraknya (kelembaman)';
+      } else {
+        car.style.transform = 'translateX(0)';
+        passenger.style.transform = 'translateX(-50%)';
+        explanation.textContent = '';
+      }
+    }
+
+    // Newton 2 Calculator
+    function calculateNewton2() {
+      const mass = parseFloat(document.getElementById('mass-input').value) || 1;
+      const force = parseFloat(document.getElementById('force-input').value) || 0;
+      const accel = force / mass;
+      
+      document.getElementById('accel-input').value = accel.toFixed(2);
+      document.getElementById('newton2-result').classList.remove('hidden');
+      document.getElementById('n2-force').textContent = force;
+      document.getElementById('n2-mass').textContent = mass;
+      document.getElementById('n2-accel').textContent = accel.toFixed(2);
+    }
+
+    // Action-Reaction Demo
+    function demonstrateActionReaction() {
+      const arrows = document.getElementById('action-arrows');
+      const actionObj = document.getElementById('action-obj');
+      const reactionObj = document.getElementById('reaction-obj');
+      const explanation = document.getElementById('action-explanation');
+      
+      arrows.style.opacity = '1';
+      actionObj.style.transform = 'translateX(20px)';
+      
+      setTimeout(() => {
+        actionObj.style.transform = 'translateX(-10px)';
+        explanation.textContent = 'Orang mendorong tembok (aksi), tembok mendorong balik orang dengan gaya yang sama besar (reaksi)!';
+      }, 500);
+      
+      setTimeout(() => {
+        actionObj.style.transform = 'translateX(0)';
+        arrows.style.opacity = '0';
+      }, 3000);
+    }
+
+    // Water Experiment
+    let waterInterval;
+    function startWaterExperiment() {
+      const box = document.getElementById('water-box');
+      const sprays = [
+        document.getElementById('water-spray-1'),
+        document.getElementById('water-spray-2'),
+        document.getElementById('water-spray-3'),
+        document.getElementById('water-spray-4')
+      ];
+      
+      let rotation = 0;
+      clearInterval(waterInterval);
+      
+      sprays.forEach(s => s.style.opacity = '1');
+      
+      waterInterval = setInterval(() => {
+        rotation += 15;
+        box.style.transform = `rotate(${rotation}deg)`;
+      }, 100);
+      
+      setTimeout(() => {
+        clearInterval(waterInterval);
+        sprays.forEach(s => s.style.opacity = '0');
+        box.style.transform = 'rotate(0deg)';
+      }, 5000);
+    }
+
+    // Quiz System
+    const quizQuestions = [
+      {
+        question: "Sebuah mobil bermassa 1200 kg bergerak dengan kecepatan tetap 60 km/jam di jalan lurus. Berapakah resultan gaya yang bekerja pada mobil tersebut?",
+        options: ["7200 N", "72000 N", "0 N", "1200 N"],
+        correct: 2,
+        explanation: "Berdasarkan Hukum I Newton, benda yang bergerak dengan kecepatan tetap (tidak ada percepatan) memiliki resultan gaya = 0 N."
+      },
+      {
+        question: "Perhatikan pernyataan berikut:\n(1) Penumpang bus terdorong ke depan saat bus direm\n(2) Koin jatuh ke dalam gelas saat kertas ditarik cepat\n(3) Roket meluncur ke atas\n\nManakah yang merupakan contoh Hukum I Newton?",
+        options: ["(1) dan (2) saja", "(2) dan (3) saja", "(1) dan (3) saja", "(1), (2), dan (3)"],
+        correct: 0,
+        explanation: "Pernyataan (1) dan (2) adalah contoh kelembaman (Hukum I Newton). Pernyataan (3) adalah contoh aksi-reaksi (Hukum III Newton)."
+      },
+      {
+        question: "Sebuah balok ditarik dengan gaya 50 N ke kanan dan 30 N ke kiri secara bersamaan. Jika massa balok 4 kg, berapakah percepatan balok?",
+        options: ["20 m/s² ke kanan", "5 m/s² ke kanan", "12,5 m/s² ke kiri", "80 m/s² ke kanan"],
+        correct: 1,
+        explanation: "Resultan gaya = 50 - 30 = 20 N ke kanan. Menggunakan F = ma, maka a = F/m = 20/4 = 5 m/s² ke kanan."
+      },
+      {
+        question: "Mengapa seorang astronot di luar angkasa dapat bergerak dengan menyemprotkan gas dari tabung di punggungnya?",
+        options: [
+          "Karena tidak ada gravitasi di luar angkasa",
+          "Karena gas mendorong udara di sekitarnya",
+          "Karena gaya reaksi dari gas yang keluar mendorong astronot ke arah berlawanan",
+          "Karena massa astronot menjadi lebih ringan"
+        ],
+        correct: 2,
+        explanation: "Ini adalah penerapan Hukum III Newton. Gas keluar ke satu arah (aksi), dan astronot terdorong ke arah berlawanan (reaksi)."
+      },
+      {
+        question: "Dua bola dengan massa berbeda (m₁ = 2 kg dan m₂ = 4 kg) didorong dengan gaya yang sama besar. Manakah pernyataan yang BENAR?",
+        options: [
+          "Kedua bola memiliki percepatan sama",
+          "Bola m₂ memiliki percepatan 2× lebih besar",
+          "Bola m₁ memiliki percepatan 2× lebih besar",
+          "Percepatan tidak bergantung pada massa"
+        ],
+        correct: 2,
+        explanation: "Berdasarkan Hukum II Newton (a = F/m), jika gaya sama maka benda dengan massa lebih kecil akan memiliki percepatan lebih besar. a₁/a₂ = m₂/m₁ = 4/2 = 2."
+      },
+      {
+        question: "Seorang anak bermassa 40 kg berdiri di atas timbangan dalam lift. Saat lift bergerak ke atas dengan percepatan 2 m/s², berapakah pembacaan timbangan? (g = 10 m/s²)",
+        options: ["320 N", "400 N", "480 N", "560 N"],
+        correct: 2,
+        explanation: "Saat lift naik dengan percepatan, N = m(g + a) = 40(10 + 2) = 40 × 12 = 480 N. Pembacaan timbangan lebih besar dari berat sebenarnya."
+      },
+      {
+        question: "Mengapa lebih sulit mendorong lemari berat yang diam dibandingkan menjaga lemari tetap bergerak setelah mulai bergerak?",
+        options: [
+          "Karena lemari kehilangan massa saat bergerak",
+          "Karena gaya gesek statis lebih besar dari gaya gesek kinetis",
+          "Karena gravitasi berkurang saat benda bergerak",
+          "Karena gaya dorong berkurang saat benda bergerak"
+        ],
+        correct: 1,
+        explanation: "Gaya gesek statis (saat diam) selalu lebih besar dari gaya gesek kinetis (saat bergerak). Itulah mengapa dibutuhkan gaya lebih besar untuk memulai gerakan."
+      },
+      {
+        question: "Sebuah pesawat terbang dengan kecepatan konstan pada ketinggian tetap. Jika gaya dorong mesin = 50.000 N, berapakah gaya hambat udara pada pesawat?",
+        options: ["0 N", "25.000 N", "50.000 N", "100.000 N"],
+        correct: 2,
+        explanation: "Karena pesawat bergerak dengan kecepatan konstan (tidak ada percepatan), maka resultan gaya = 0. Ini berarti gaya hambat udara = gaya dorong mesin = 50.000 N."
+      },
+      {
+        question: "Perhatikan grafik hubungan gaya (F) dan percepatan (a) untuk benda bermassa tetap. Grafik yang benar menunjukkan hubungan...",
+        options: [
+          "Garis lurus melalui titik asal (linear)",
+          "Kurva parabola",
+          "Garis horizontal",
+          "Kurva hiperbola"
+        ],
+        correct: 0,
+        explanation: "Berdasarkan F = ma (dengan m tetap), hubungan F dan a adalah linear (berbanding lurus). Grafiknya berupa garis lurus yang melalui titik asal."
+      },
+      {
+        question: "Saat bermain tarik tambang, tim A memberikan gaya 800 N dan tim B memberikan gaya 750 N. Jika massa total pemain dan tali adalah 200 kg, ke arah mana dan berapa percepatan gerak?",
+        options: [
+          "Ke arah tim A dengan percepatan 0,25 m/s²",
+          "Ke arah tim B dengan percepatan 0,25 m/s²",
+          "Ke arah tim A dengan percepatan 7,75 m/s²",
+          "Tidak bergerak karena gaya seimbang"
+        ],
+        correct: 0,
+        explanation: "Resultan gaya = 800 - 750 = 50 N ke arah tim A. Percepatan a = F/m = 50/200 = 0,25 m/s² ke arah tim A (tim A yang menarik lebih kuat)."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answeredQuestions = [];
+    let quizInitialized = false;
+
+    function initQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answeredQuestions = [];
+      quizInitialized = true;
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('quiz-container').classList.remove('hidden');
+      renderQuestion();
+      updateProgress();
+    }
+
+    function renderQuestion() {
+      const q = quizQuestions[currentQuestion];
+      const container = document.getElementById('quiz-container');
+      
+      let optionsHtml = q.options.map((opt, i) => `
+        <button onclick="selectAnswer(${i})" class="quiz-option w-full p-4 text-left border border-white/20 rounded-xl hover:border-pink-500 transition ${answeredQuestions[currentQuestion] !== undefined ? 'pointer-events-none' : ''} ${answeredQuestions[currentQuestion] === i ? 'selected' : ''} ${answeredQuestions[currentQuestion] !== undefined && i === q.correct ? 'correct' : ''} ${answeredQuestions[currentQuestion] !== undefined && answeredQuestions[currentQuestion] === i && i !== q.correct ? 'wrong' : ''}">
+          <span class="font-semibold mr-2">${String.fromCharCode(65 + i)}.</span> ${opt}
+        </button>
+      `).join('');
+      
+      let explanationHtml = '';
+      if (answeredQuestions[currentQuestion] !== undefined) {
+        const isCorrect = answeredQuestions[currentQuestion] === q.correct;
+        explanationHtml = `
+          <div class="mt-4 p-4 ${isCorrect ? 'bg-green-500/20 border-green-500' : 'bg-red-500/20 border-red-500'} border rounded-xl">
+            <p class="font-semibold ${isCorrect ? 'text-green-400' : 'text-red-400'}">
+              <i class="fas ${isCorrect ? 'fa-check-circle' : 'fa-times-circle'} mr-2"></i>
+              ${isCorrect ? 'Benar!' : 'Kurang tepat!'}
+            </p>
+            <p class="text-gray-300 mt-2">${q.explanation}</p>
+          </div>
+        `;
+      }
+      
+      container.innerHTML = `
+        <div class="bg-gradient-to-r from-yellow-500/10 to-amber-500/10 border border-yellow-500/30 rounded-2xl p-6 mb-6">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm font-semibold">
+              Soal ${currentQuestion + 1} dari 10
+            </span>
+            <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">
+              HOTS
+            </span>
+          </div>
+          <p class="text-lg text-white whitespace-pre-line">${q.question}</p>
+        </div>
+        
+        <div class="space-y-3 mb-6">
+          ${optionsHtml}
+        </div>
+        
+        ${explanationHtml}
+        
+        <div class="flex justify-between mt-6">
+          <button onclick="prevQuestion()" class="px-6 py-3 bg-gray-600/50 rounded-xl hover:bg-gray-600 transition ${currentQuestion === 0 ? 'opacity-50 cursor-not-allowed' : ''}" ${currentQuestion === 0 ? 'disabled' : ''}>
+            <i class="fas fa-arrow-left mr-2"></i>Sebelumnya
+          </button>
+          <button onclick="nextQuestion()" class="px-6 py-3 bg-gradient-to-r from-yellow-500 to-amber-500 rounded-xl font-semibold hover:shadow-lg transition">
+            ${currentQuestion === quizQuestions.length - 1 ? 'Lihat Hasil' : 'Selanjutnya'}<i class="fas fa-arrow-right ml-2"></i>
+          </button>
+        </div>
+      `;
+    }
+
+    function selectAnswer(index) {
+      if (answeredQuestions[currentQuestion] !== undefined) return;
+      
+      answeredQuestions[currentQuestion] = index;
+      if (index === quizQuestions[currentQuestion].correct) {
+        score++;
+      }
+      updateProgress();
+      renderQuestion();
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function updateProgress() {
+      const answered = answeredQuestions.filter(a => a !== undefined).length;
+      const percentage = (answered / quizQuestions.length) * 100;
+      document.getElementById('quiz-progress-bar').style.width = percentage + '%';
+      document.getElementById('quiz-progress-text').textContent = `${answered}/10`;
+    }
+
+    function showResult() {
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      
+      const percentage = (score / quizQuestions.length) * 100;
+      document.getElementById('final-score').textContent = `${score}/10 (${percentage}%)`;
+      
+      let message = '';
+      if (percentage >= 90) message = '🌟 Luar biasa! Kamu menguasai materi dengan sangat baik!';
+      else if (percentage >= 70) message = '👍 Bagus! Kamu memahami sebagian besar materi.';
+      else if (percentage >= 50) message = '📚 Cukup baik. Terus belajar untuk meningkatkan pemahamanmu!';
+      else message = '💪 Jangan menyerah! Pelajari lagi materinya dan coba lagi.';
+      
+      document.getElementById('score-message').textContent = message;
+    }
+
+    function restartQuiz() {
+      initQuiz();
+    }
+
+    // Initial setup
+    applyConfig();
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf948fcf251514a',t:'MTc3MTM3MzI1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

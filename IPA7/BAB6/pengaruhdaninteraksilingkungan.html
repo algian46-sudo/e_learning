@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memahami Ekosistem dan Pelestarian Lingkungan</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { font-family: 'Nunito', sans-serif; }
+    .heading-font { font-family: 'Quicksand', sans-serif; }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.6); }
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    .animate-float { animation: float 3s ease-in-out infinite; }
+    .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    .animate-fadeInUp { animation: fadeInUp 0.6s ease-out forwards; }
+    .animate-slideIn { animation: slideIn 0.5s ease-out forwards; }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .nature-gradient {
+      background: linear-gradient(135deg, #065f46 0%, #047857 25%, #059669 50%, #10b981 75%, #34d399 100%);
+    }
+    
+    .section-card {
+      transition: all 0.3s ease;
+    }
+    
+    .section-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-item {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:hover, .nav-item.active {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.02);
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    
+    .quiz-option:hover:not(.selected):not(.correct):not(.incorrect) {
+      background: #ecfdf5;
+      border-color: #10b981;
+    }
+    
+    .quiz-option.selected {
+      background: #dbeafe;
+      border-color: #3b82f6;
+    }
+    
+    .quiz-option.correct {
+      background: #dcfce7;
+      border-color: #22c55e;
+    }
+    
+    .quiz-option.incorrect {
+      background: #fee2e2;
+      border-color: #ef4444;
+    }
+    
+    .illustration-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    
+    .illustration-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
+      z-index: 1;
+      pointer-events: none;
+    }
+    
+    .scroll-smooth {
+      scroll-behavior: smooth;
+    }
+    
+    .energy-flow-arrow {
+      animation: flowRight 2s ease-in-out infinite;
+    }
+    
+    @keyframes flowRight {
+      0%, 100% { transform: translateX(0); opacity: 1; }
+      50% { transform: translateX(10px); opacity: 0.7; }
+    }
+    
+    .water-drop {
+      animation: dropFall 2s ease-in-out infinite;
+    }
+    
+    @keyframes dropFall {
+      0% { transform: translateY(-10px); opacity: 0; }
+      50% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(10px); opacity: 0; }
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body class="h-full overflow-auto">
+  <div id="app-container" class="min-h-full" style="background: linear-gradient(180deg, #ecfdf5 0%, #d1fae5 50%, #a7f3d0 100%);">
+    
+    <!-- Header -->
+    <header class="nature-gradient text-white py-6 px-4 sticky top-0 z-50 shadow-lg">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center animate-float">
+              <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+            </div>
+            <div>
+              <h1 id="main-title" class="heading-font text-2xl md:text-3xl font-bold">Memahami Ekosistem dan Pelestarian Lingkungan</h1>
+              <p class="text-emerald-100 text-sm mt-1">🎯 Tujuan: Mengidentifikasi interaksi antarmakhluk hidup dan lingkungannya</p>
+            </div>
+          </div>
+          <div class="hidden md:flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
+            <span class="text-sm">Progress:</span>
+            <div class="w-32 h-2 bg-white/30 rounded-full overflow-hidden">
+              <div id="progress-bar" class="progress-bar h-full bg-yellow-400 rounded-full" style="width: 0%"></div>
+            </div>
+            <span id="progress-text" class="text-sm font-bold">0%</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nature-gradient bg-opacity-90 py-3 px-4 sticky top-24 z-40 border-t border-white/20">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+          <button onclick="scrollToSection('lingkungan')" class="nav-item px-4 py-2 rounded-full text-white text-sm font-semibold whitespace-nowrap">🌍 Lingkungan</button>
+          <button onclick="scrollToSection('organisasi')" class="nav-item px-4 py-2 rounded-full text-white text-sm font-semibold whitespace-nowrap">📊 Organisasi</button>
+          <button onclick="scrollToSection('energi')" class="nav-item px-4 py-2 rounded-full text-white text-sm font-semibold whitespace-nowrap">⚡ Aliran Energi</button>
+          <button onclick="scrollToSection('daur')" class="nav-item px-4 py-2 rounded-full text-white text-sm font-semibold whitespace-nowrap">🔄 Daur Biogeokimia</button>
+          <button onclick="scrollToSection('interaksi')" class="nav-item px-4 py-2 rounded-full text-white text-sm font-semibold whitespace-nowrap">🤝 Interaksi</button>
+          <button onclick="scrollToSection('aktivitas')" class="nav-item px-4 py-2 rounded-full text-white text-sm font-semibold whitespace-nowrap">🔬 Aktivitas</button>
+          <button onclick="scrollToSection('quiz')" class="nav-item px-4 py-2 rounded-full text-white text-sm font-semibold whitespace-nowrap animate-pulse-glow">📝 Quiz HOTS</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8 space-y-12">
+      
+      <!-- Section 1: Lingkungan -->
+      <section id="lingkungan" class="section-card glass-card rounded-3xl p-6 md:p-8 shadow-xl animate-fadeInUp">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg">🌍</div>
+          <h2 class="heading-font text-2xl md:text-3xl font-bold text-emerald-800">1. Apa itu Lingkungan?</h2>
+        </div>
+        
+        <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-5 mb-6 border-l-4 border-emerald-500">
+          <p class="text-lg text-gray-700"><strong class="text-emerald-700">Definisi:</strong> Lingkungan adalah segala sesuatu di luar organisme yang memengaruhi kehidupannya, baik secara langsung maupun tidak langsung.</p>
+        </div>
+
+        <!-- Ilustrasi Lingkungan -->
+        <div class="illustration-container mb-6 bg-gradient-to-br from-sky-100 via-emerald-50 to-amber-50 p-6 relative">
+          <svg viewBox="0 0 800 400" class="w-full h-auto">
+            <!-- Sky Background -->
+            <defs>
+              <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#87CEEB"/>
+                <stop offset="100%" style="stop-color:#E0F4FF"/>
+              </linearGradient>
+              <linearGradient id="sunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#FFD700"/>
+                <stop offset="100%" style="stop-color:#FFA500"/>
+              </linearGradient>
+              <linearGradient id="grassGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#22C55E"/>
+                <stop offset="100%" style="stop-color:#166534"/>
+              </linearGradient>
+              <linearGradient id="waterGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#3B82F6"/>
+                <stop offset="100%" style="stop-color:#06B6D4"/>
+              </linearGradient>
+            </defs>
+            
+            <!-- Sun with rays -->
+            <circle cx="700" cy="80" r="50" fill="url(#sunGrad)">
+              <animate attributeName="r" values="50;55;50" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            <g stroke="#FFD700" stroke-width="3" opacity="0.7">
+              <line x1="700" y1="15" x2="700" y2="5"><animate attributeName="y2" values="5;0;5" dur="2s" repeatCount="indefinite"/></line>
+              <line x1="750" y1="35" x2="760" y2="25"><animate attributeName="x2" values="760;765;760" dur="2s" repeatCount="indefinite"/></line>
+              <line x1="765" y1="80" x2="780" y2="80"><animate attributeName="x2" values="780;785;780" dur="2s" repeatCount="indefinite"/></line>
+              <line x1="750" y1="125" x2="760" y2="135"><animate attributeName="x2" values="760;765;760" dur="2s" repeatCount="indefinite"/></line>
+            </g>
+            
+            <!-- Clouds -->
+            <g fill="white" opacity="0.9">
+              <ellipse cx="150" cy="60" rx="50" ry="25"/>
+              <ellipse cx="180" cy="50" rx="40" ry="20"/>
+              <ellipse cx="120" cy="55" rx="35" ry="18"/>
+              <animateTransform attributeName="transform" type="translate" values="0,0;20,0;0,0" dur="10s" repeatCount="indefinite"/>
+            </g>
+            <g fill="white" opacity="0.8">
+              <ellipse cx="450" cy="40" rx="45" ry="22"/>
+              <ellipse cx="480" cy="35" rx="35" ry="17"/>
+              <ellipse cx="420" cy="38" rx="30" ry="15"/>
+              <animateTransform attributeName="transform" type="translate" values="0,0;-15,0;0,0" dur="12s" repeatCount="indefinite"/>
+            </g>
+            
+            <!-- Mountains -->
+            <polygon points="0,350 100,200 200,350" fill="#6B7280"/>
+            <polygon points="100,350 200,180 300,350" fill="#4B5563"/>
+            <polygon points="150,200 175,160 200,200" fill="white" opacity="0.8"/>
+            
+            <!-- Ground -->
+            <rect x="0" y="300" width="800" height="100" fill="url(#grassGrad)"/>
+            
+            <!-- Pond/Water -->
+            <ellipse cx="600" cy="340" rx="100" ry="40" fill="url(#waterGrad)" opacity="0.8"/>
+            <ellipse cx="600" cy="335" rx="80" ry="30" fill="#60A5FA" opacity="0.5"/>
+            
+            <!-- Trees -->
+            <g transform="translate(100, 220)">
+              <rect x="15" y="60" width="20" height="40" fill="#8B4513"/>
+              <polygon points="25,0 0,70 50,70" fill="#166534"/>
+              <polygon points="25,20 5,60 45,60" fill="#22C55E"/>
+            </g>
+            <g transform="translate(250, 200)">
+              <rect x="20" y="80" width="25" height="50" fill="#A0522D"/>
+              <circle cx="32" cy="40" r="45" fill="#15803D"/>
+              <circle cx="50" cy="50" r="35" fill="#22C55E"/>
+              <circle cx="15" cy="55" r="30" fill="#16A34A"/>
+            </g>
+            <g transform="translate(350, 230)">
+              <rect x="12" y="50" width="16" height="35" fill="#8B4513"/>
+              <polygon points="20,0 0,55 40,55" fill="#166534"/>
+              <polygon points="20,15 5,50 35,50" fill="#22C55E"/>
+            </g>
+            
+            <!-- Grass tufts -->
+            <g fill="#22C55E">
+              <path d="M50,300 Q55,280 60,300"/>
+              <path d="M55,300 Q60,275 65,300"/>
+              <path d="M200,310 Q205,290 210,310"/>
+              <path d="M400,305 Q405,285 410,305"/>
+              <path d="M450,310 Q455,292 460,310"/>
+            </g>
+            
+            <!-- Birds -->
+            <g fill="none" stroke="#374151" stroke-width="2">
+              <path d="M300,100 Q310,90 320,100 Q330,90 340,100">
+                <animateTransform attributeName="transform" type="translate" values="0,0;50,-20;100,0" dur="5s" repeatCount="indefinite"/>
+              </path>
+              <path d="M350,120 Q358,112 366,120 Q374,112 382,120">
+                <animateTransform attributeName="transform" type="translate" values="0,0;40,-15;80,0" dur="6s" repeatCount="indefinite"/>
+              </path>
+            </g>
+            
+            <!-- Deer -->
+            <g transform="translate(500, 260)">
+              <ellipse cx="30" cy="35" rx="25" ry="15" fill="#D2691E"/>
+              <circle cx="50" cy="20" r="12" fill="#D2691E"/>
+              <rect x="15" y="45" width="5" height="25" fill="#8B4513"/>
+              <rect x="25" y="45" width="5" height="25" fill="#8B4513"/>
+              <rect x="35" y="45" width="5" height="25" fill="#8B4513"/>
+              <rect x="45" y="45" width="5" height="25" fill="#8B4513"/>
+              <ellipse cx="55" cy="18" r="3" fill="#1F2937"/>
+              <path d="M58,15 Q70,0 65,10 M58,15 Q72,5 68,12" stroke="#8B4513" stroke-width="3" fill="none"/>
+            </g>
+            
+            <!-- Fish in water -->
+            <g transform="translate(570, 330)">
+              <ellipse cx="15" cy="10" rx="12" ry="6" fill="#F97316"/>
+              <polygon points="0,10 8,5 8,15" fill="#F97316"/>
+              <circle cx="22" cy="8" r="2" fill="#1F2937"/>
+              <animateTransform attributeName="transform" type="translate" values="570,330;590,335;570,330" dur="4s" repeatCount="indefinite"/>
+            </g>
+            <g transform="translate(610, 340)">
+              <ellipse cx="10" cy="8" rx="8" ry="4" fill="#3B82F6"/>
+              <polygon points="0,8 5,4 5,12" fill="#3B82F6"/>
+              <circle cx="15" cy="6" r="1.5" fill="#1F2937"/>
+              <animateTransform attributeName="transform" type="translate" values="610,340;625,342;610,340" dur="3s" repeatCount="indefinite"/>
+            </g>
+            
+            <!-- Butterfly -->
+            <g transform="translate(320, 250)">
+              <ellipse cx="0" cy="0" rx="2" ry="8" fill="#1F2937"/>
+              <ellipse cx="-10" cy="-5" rx="10" ry="8" fill="#EC4899" opacity="0.8">
+                <animate attributeName="rx" values="10;8;10" dur="0.3s" repeatCount="indefinite"/>
+              </ellipse>
+              <ellipse cx="10" cy="-5" rx="10" ry="8" fill="#EC4899" opacity="0.8">
+                <animate attributeName="rx" values="10;8;10" dur="0.3s" repeatCount="indefinite"/>
+              </ellipse>
+              <ellipse cx="-8" cy="5" rx="7" ry="5" fill="#F472B6" opacity="0.8">
+                <animate attributeName="rx" values="7;5;7" dur="0.3s" repeatCount="indefinite"/>
+              </ellipse>
+              <ellipse cx="8" cy="5" rx="7" ry="5" fill="#F472B6" opacity="0.8">
+                <animate attributeName="rx" values="7;5;7" dur="0.3s" repeatCount="indefinite"/>
+              </ellipse>
+              <animateTransform attributeName="transform" type="translate" values="320,250;340,240;360,255;340,250;320,250" dur="8s" repeatCount="indefinite"/>
+            </g>
+            
+            <!-- Labels -->
+            <g font-family="Nunito, sans-serif" font-size="14" font-weight="bold">
+              <rect x="670" y="55" width="60" height="20" rx="10" fill="rgba(255,255,255,0.9)"/>
+              <text x="700" y="69" text-anchor="middle" fill="#F59E0B">Matahari</text>
+              
+              <rect x="70" y="130" width="50" height="20" rx="10" fill="rgba(255,255,255,0.9)"/>
+              <text x="95" y="144" text-anchor="middle" fill="#6B7280">Udara</text>
+              
+              <rect x="560" y="370" width="80" height="20" rx="10" fill="rgba(255,255,255,0.9)"/>
+              <text x="600" y="384" text-anchor="middle" fill="#3B82F6">Air (Kolam)</text>
+              
+              <rect x="10" y="340" width="50" height="20" rx="10" fill="rgba(255,255,255,0.9)"/>
+              <text x="35" y="354" text-anchor="middle" fill="#166534">Tanah</text>
+            </g>
+          </svg>
+          <p class="text-center text-sm text-gray-600 mt-3 italic">🎨 Ilustrasi Ekosistem: Interaksi komponen biotik dan abiotik</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Komponen Abiotik -->
+          <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-5 border border-blue-200">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-3xl">🌡️</span>
+              <h3 class="heading-font text-xl font-bold text-blue-800">Komponen Abiotik (Tak Hidup)</h3>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3 bg-white/70 rounded-xl p-3 hover:bg-white transition-all">
+                <span class="text-2xl">☀️</span>
+                <div>
+                  <strong class="text-blue-700">Cahaya Matahari</strong>
+                  <p class="text-sm text-gray-600">Sumber energi utama untuk fotosintesis</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 bg-white/70 rounded-xl p-3 hover:bg-white transition-all">
+                <span class="text-2xl">🌡️</span>
+                <div>
+                  <strong class="text-blue-700">Suhu</strong>
+                  <p class="text-sm text-gray-600">Memengaruhi metabolisme organisme</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 bg-white/70 rounded-xl p-3 hover:bg-white transition-all">
+                <span class="text-2xl">💧</span>
+                <div>
+                  <strong class="text-blue-700">Air</strong>
+                  <p class="text-sm text-gray-600">Kebutuhan vital semua makhluk hidup</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 bg-white/70 rounded-xl p-3 hover:bg-white transition-all">
+                <span class="text-2xl">💨</span>
+                <div>
+                  <strong class="text-blue-700">Udara</strong>
+                  <p class="text-sm text-gray-600">Mengandung O₂ dan CO₂ untuk respirasi</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 bg-white/70 rounded-xl p-3 hover:bg-white transition-all">
+                <span class="text-2xl">🪨</span>
+                <div>
+                  <strong class="text-blue-700">Tanah</strong>
+                  <p class="text-sm text-gray-600">Media tumbuh dan sumber mineral</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Komponen Biotik -->
+          <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-5 border border-green-200">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-3xl">🌱</span>
+              <h3 class="heading-font text-xl font-bold text-green-800">Komponen Biotik (Hidup)</h3>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3 bg-white/70 rounded-xl p-3 hover:bg-white transition-all">
+                <span class="text-2xl">🌿</span>
+                <div>
+                  <strong class="text-green-700">Tumbuhan (Produsen)</strong>
+                  <p class="text-sm text-gray-600">Menghasilkan makanan melalui fotosintesis</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 bg-white/70 rounded-xl p-3 hover:bg-white transition-all">
+                <span class="text-2xl">🐄</span>
+                <div>
+                  <strong class="text-green-700">Hewan Herbivora</strong>
+                  <p class="text-sm text-gray-600">Konsumen tingkat pertama (pemakan tumbuhan)</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 bg-white/70 rounded-xl p-3 hover:bg-white transition-all">
+                <span class="text-2xl">🦁</span>
+                <div>
+                  <strong class="text-green-700">Hewan Karnivora</strong>
+                  <p class="text-sm text-gray-600">Konsumen tingkat tinggi (pemakan daging)</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 bg-white/70 rounded-xl p-3 hover:bg-white transition-all">
+                <span class="text-2xl">👤</span>
+                <div>
+                  <strong class="text-green-700">Manusia</strong>
+                  <p class="text-sm text-gray-600">Omnivora, berperan sebagai konsumen</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 bg-white/70 rounded-xl p-3 hover:bg-white transition-all">
+                <span class="text-2xl">🦠</span>
+                <div>
+                  <strong class="text-green-700">Pengurai (Dekomposer)</strong>
+                  <p class="text-sm text-gray-600">Bakteri & jamur pengurai bahan organik</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Interactive Mini Quiz -->
+        <div class="mt-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-5 border border-purple-200">
+          <h4 class="heading-font text-lg font-bold text-purple-800 mb-3">🎯 Cek Pemahamanmu!</h4>
+          <p class="text-gray-700 mb-3">Manakah yang termasuk komponen abiotik?</p>
+          <div class="flex flex-wrap gap-3" id="check1">
+            <button onclick="checkAnswer(this, false, 'check1')" class="px-4 py-2 bg-white rounded-full border-2 border-gray-300 hover:border-purple-500 transition-all">🌳 Pohon</button>
+            <button onclick="checkAnswer(this, true, 'check1')" class="px-4 py-2 bg-white rounded-full border-2 border-gray-300 hover:border-purple-500 transition-all">☀️ Cahaya</button>
+            <button onclick="checkAnswer(this, false, 'check1')" class="px-4 py-2 bg-white rounded-full border-2 border-gray-300 hover:border-purple-500 transition-all">🐛 Ulat</button>
+            <button onclick="checkAnswer(this, true, 'check1')" class="px-4 py-2 bg-white rounded-full border-2 border-gray-300 hover:border-purple-500 transition-all">🌡️ Suhu</button>
+          </div>
+          <p id="check1-feedback" class="mt-3 text-sm font-semibold hidden"></p>
+        </div>
+      </section>
+
+      <!-- Section 2: Tingkatan Organisasi Kehidupan -->
+      <section id="organisasi" class="section-card glass-card rounded-3xl p-6 md:p-8 shadow-xl">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg">📊</div>
+          <h2 class="heading-font text-2xl md:text-3xl font-bold text-violet-800">2. Tingkatan Organisasi Kehidupan</h2>
+        </div>
+
+        <!-- Ilustrasi Piramida Organisasi -->
+        <div class="illustration-container mb-6 bg-gradient-to-br from-violet-50 to-purple-50 p-6">
+          <svg viewBox="0 0 800 500" class="w-full h-auto">
+            <defs>
+              <linearGradient id="level1" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#8B5CF6"/>
+                <stop offset="100%" style="stop-color:#7C3AED"/>
+              </linearGradient>
+              <linearGradient id="level2" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#A78BFA"/>
+                <stop offset="100%" style="stop-color:#8B5CF6"/>
+              </linearGradient>
+              <linearGradient id="level3" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#C4B5FD"/>
+                <stop offset="100%" style="stop-color:#A78BFA"/>
+              </linearGradient>
+              <linearGradient id="level4" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#DDD6FE"/>
+                <stop offset="100%" style="stop-color:#C4B5FD"/>
+              </linearGradient>
+              <linearGradient id="level5" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#EDE9FE"/>
+                <stop offset="100%" style="stop-color:#DDD6FE"/>
+              </linearGradient>
+              <linearGradient id="level6" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#F5F3FF"/>
+                <stop offset="100%" style="stop-color:#EDE9FE"/>
+              </linearGradient>
+            </defs>
+            
+            <!-- Biosfer - Paling Besar -->
+            <path d="M50,450 L400,30 L750,450 Z" fill="url(#level1)" opacity="0.9"/>
+            <text x="400" y="420" text-anchor="middle" fill="white" font-size="18" font-weight="bold">🌍 BIOSFER</text>
+            <text x="400" y="445" text-anchor="middle" fill="white" font-size="12">Seluruh lapisan Bumi yang mendukung kehidupan</text>
+            
+            <!-- Bioma -->
+            <path d="M110,380 L400,80 L690,380 Z" fill="url(#level2)" opacity="0.9"/>
+            <text x="400" y="355" text-anchor="middle" fill="white" font-size="16" font-weight="bold">🌲 BIOMA</text>
+            <text x="400" y="375" text-anchor="middle" fill="white" font-size="11">Ekosistem luas dengan vegetasi khas</text>
+            
+            <!-- Ekosistem -->
+            <path d="M170,310 L400,130 L630,310 Z" fill="url(#level3)" opacity="0.9"/>
+            <text x="400" y="290" text-anchor="middle" fill="#5B21B6" font-size="15" font-weight="bold">🏞️ EKOSISTEM</text>
+            <text x="400" y="308" text-anchor="middle" fill="#6D28D9" font-size="10">Interaksi biotik + abiotik</text>
+            
+            <!-- Komunitas -->
+            <path d="M230,245 L400,175 L570,245 Z" fill="url(#level4)" opacity="0.9"/>
+            <text x="400" y="230" text-anchor="middle" fill="#6D28D9" font-size="14" font-weight="bold">🦜 KOMUNITAS</text>
+            <text x="400" y="245" text-anchor="middle" fill="#7C3AED" font-size="9">Berbagai populasi berinteraksi</text>
+            
+            <!-- Populasi -->
+            <path d="M290,190 L400,215 L510,190 L400,140 Z" fill="url(#level5)" opacity="0.9"/>
+            <text x="400" y="175" text-anchor="middle" fill="#7C3AED" font-size="13" font-weight="bold">🐁🐁 POPULASI</text>
+            
+            <!-- Individu -->
+            <circle cx="400" cy="95" r="40" fill="url(#level6)" stroke="#8B5CF6" stroke-width="3"/>
+            <text x="400" y="90" text-anchor="middle" fill="#5B21B6" font-size="20">🐁</text>
+            <text x="400" y="108" text-anchor="middle" fill="#6D28D9" font-size="10" font-weight="bold">INDIVIDU</text>
+            
+            <!-- Arrows -->
+            <g fill="#8B5CF6" opacity="0.7">
+              <polygon points="760,250 780,260 780,240">
+                <animate attributeName="opacity" values="0.7;1;0.7" dur="1.5s" repeatCount="indefinite"/>
+              </polygon>
+              <text x="785" y="265" font-size="12" fill="#6D28D9">Tingkat kompleksitas meningkat</text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Detail Cards -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="bg-gradient-to-br from-violet-100 to-purple-100 rounded-xl p-4 border border-violet-200 hover:shadow-lg transition-all cursor-pointer" onclick="toggleDetail('ind')">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-2xl">🐁</span>
+              <h4 class="font-bold text-violet-800">Individu</h4>
+            </div>
+            <p class="text-sm text-gray-700">Makhluk hidup tunggal dari satu spesies.</p>
+            <div id="ind-detail" class="hidden mt-3 p-3 bg-white/70 rounded-lg">
+              <p class="text-xs text-gray-600"><strong>Contoh:</strong> Seekor tikus, sebatang pohon mangga, seorang manusia</p>
+            </div>
+          </div>
+          
+          <div class="bg-gradient-to-br from-violet-100 to-purple-100 rounded-xl p-4 border border-violet-200 hover:shadow-lg transition-all cursor-pointer" onclick="toggleDetail('pop')">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-2xl">🐁🐁🐁</span>
+              <h4 class="font-bold text-violet-800">Populasi</h4>
+            </div>
+            <p class="text-sm text-gray-700">Kumpulan individu sejenis di tempat & waktu sama.</p>
+            <div id="pop-detail" class="hidden mt-3 p-3 bg-white/70 rounded-lg">
+              <p class="text-xs text-gray-600"><strong>Contoh:</strong> Populasi tikus di sawah, populasi ikan di danau</p>
+            </div>
+          </div>
+          
+          <div class="bg-gradient-to-br from-violet-100 to-purple-100 rounded-xl p-4 border border-violet-200 hover:shadow-lg transition-all cursor-pointer" onclick="toggleDetail('kom')">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-2xl">🦜🐛🌿</span>
+              <h4 class="font-bold text-violet-800">Komunitas</h4>
+            </div>
+            <p class="text-sm text-gray-700">Berbagai populasi yang berinteraksi di suatu area.</p>
+            <div id="kom-detail" class="hidden mt-3 p-3 bg-white/70 rounded-lg">
+              <p class="text-xs text-gray-600"><strong>Contoh:</strong> Komunitas sawah (padi, tikus, ular, burung, serangga)</p>
+            </div>
+          </div>
+          
+          <div class="bg-gradient-to-br from-violet-100 to-purple-100 rounded-xl p-4 border border-violet-200 hover:shadow-lg transition-all cursor-pointer" onclick="toggleDetail('eko')">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-2xl">🏞️</span>
+              <h4 class="font-bold text-violet-800">Ekosistem</h4>
+            </div>
+            <p class="text-sm text-gray-700">Hubungan timbal balik biotik & abiotik.</p>
+            <div id="eko-detail" class="hidden mt-3 p-3 bg-white/70 rounded-lg">
+              <p class="text-xs text-gray-600"><strong>Contoh:</strong> Ekosistem danau, ekosistem hutan, ekosistem padang rumput</p>
+            </div>
+          </div>
+          
+          <div class="bg-gradient-to-br from-violet-100 to-purple-100 rounded-xl p-4 border border-violet-200 hover:shadow-lg transition-all cursor-pointer" onclick="toggleDetail('bio')">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-2xl">🌲</span>
+              <h4 class="font-bold text-violet-800">Bioma</h4>
+            </div>
+            <p class="text-sm text-gray-700">Ekosistem luas dengan vegetasi khas.</p>
+            <div id="bio-detail" class="hidden mt-3 p-3 bg-white/70 rounded-lg">
+              <p class="text-xs text-gray-600"><strong>Contoh:</strong> Bioma hutan hujan tropis, bioma gurun, bioma tundra</p>
+            </div>
+          </div>
+          
+          <div class="bg-gradient-to-br from-violet-100 to-purple-100 rounded-xl p-4 border border-violet-200 hover:shadow-lg transition-all cursor-pointer" onclick="toggleDetail('bios')">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-2xl">🌍</span>
+              <h4 class="font-bold text-violet-800">Biosfer</h4>
+            </div>
+            <p class="text-sm text-gray-700">Seluruh lapisan Bumi yang mendukung kehidupan.</p>
+            <div id="bios-detail" class="hidden mt-3 p-3 bg-white/70 rounded-lg">
+              <p class="text-xs text-gray-600"><strong>Meliputi:</strong> Litosfer (tanah), hidrosfer (air), atmosfer (udara)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Aliran Energi -->
+      <section id="energi" class="section-card glass-card rounded-3xl p-6 md:p-8 shadow-xl">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg">⚡</div>
+          <h2 class="heading-font text-2xl md:text-3xl font-bold text-amber-800">3. Aliran Energi dalam Ekosistem</h2>
+        </div>
+
+        <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-5 mb-6 border-l-4 border-amber-500">
+          <p class="text-lg text-gray-700">Energi mengalir melalui ekosistem dalam bentuk <strong class="text-amber-700">rantai makanan</strong> dan <strong class="text-amber-700">jaring-jaring makanan</strong>.</p>
+        </div>
+
+        <!-- Ilustrasi Rantai Makanan -->
+        <div class="illustration-container mb-6 bg-gradient-to-br from-amber-50 to-yellow-50 p-6">
+          <h3 class="heading-font text-xl font-bold text-amber-800 mb-4 text-center">🔗 Rantai Makanan</h3>
+          <svg viewBox="0 0 900 250" class="w-full h-auto">
+            <defs>
+              <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#F59E0B"/>
+              </marker>
+            </defs>
+            
+            <!-- Sun -->
+            <circle cx="80" cy="125" r="45" fill="#FCD34D">
+              <animate attributeName="r" values="45;48;45" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <text x="80" y="130" text-anchor="middle" font-size="30">☀️</text>
+            <text x="80" y="190" text-anchor="middle" font-size="12" fill="#92400E" font-weight="bold">Matahari</text>
+            <text x="80" y="205" text-anchor="middle" font-size="10" fill="#B45309">(Sumber Energi)</text>
+            
+            <!-- Arrow 1 -->
+            <line x1="135" y1="125" x2="175" y2="125" stroke="#F59E0B" stroke-width="4" marker-end="url(#arrowhead)">
+              <animate attributeName="stroke-dasharray" values="0,100;40,0" dur="1s" repeatCount="indefinite"/>
+            </line>
+            
+            <!-- Producer -->
+            <circle cx="230" cy="125" r="45" fill="#86EFAC"/>
+            <text x="230" y="130" text-anchor="middle" font-size="35">🌿</text>
+            <text x="230" y="190" text-anchor="middle" font-size="12" fill="#166534" font-weight="bold">Produsen</text>
+            <text x="230" y="205" text-anchor="middle" font-size="10" fill="#15803D">(Tumbuhan)</text>
+            
+            <!-- Arrow 2 -->
+            <line x1="285" y1="125" x2="325" y2="125" stroke="#F59E0B" stroke-width="4" marker-end="url(#arrowhead)">
+              <animate attributeName="stroke-dasharray" values="0,100;40,0" dur="1s" repeatCount="indefinite" begin="0.2s"/>
+            </line>
+            
+            <!-- Primary Consumer -->
+            <circle cx="380" cy="125" r="45" fill="#93C5FD"/>
+            <text x="380" y="130" text-anchor="middle" font-size="35">🐛</text>
+            <text x="380" y="190" text-anchor="middle" font-size="12" fill="#1E40AF" font-weight="bold">Konsumen I</text>
+            <text x="380" y="205" text-anchor="middle" font-size="10" fill="#2563EB">(Herbivora)</text>
+            
+            <!-- Arrow 3 -->
+            <line x1="435" y1="125" x2="475" y2="125" stroke="#F59E0B" stroke-width="4" marker-end="url(#arrowhead)">
+              <animate attributeName="stroke-dasharray" values="0,100;40,0" dur="1s" repeatCount="indefinite" begin="0.4s"/>
+            </line>
+            
+            <!-- Secondary Consumer -->
+            <circle cx="530" cy="125" r="45" fill="#FCA5A5"/>
+            <text x="530" y="130" text-anchor="middle" font-size="35">🐸</text>
+            <text x="530" y="190" text-anchor="middle" font-size="12" fill="#991B1B" font-weight="bold">Konsumen II</text>
+            <text x="530" y="205" text-anchor="middle" font-size="10" fill="#DC2626">(Karnivora Kecil)</text>
+            
+            <!-- Arrow 4 -->
+            <line x1="585" y1="125" x2="625" y2="125" stroke="#F59E0B" stroke-width="4" marker-end="url(#arrowhead)">
+              <animate attributeName="stroke-dasharray" values="0,100;40,0" dur="1s" repeatCount="indefinite" begin="0.6s"/>
+            </line>
+            
+            <!-- Tertiary Consumer -->
+            <circle cx="680" cy="125" r="45" fill="#FDE68A"/>
+            <text x="680" y="130" text-anchor="middle" font-size="35">🐍</text>
+            <text x="680" y="190" text-anchor="middle" font-size="12" fill="#92400E" font-weight="bold">Konsumen III</text>
+            <text x="680" y="205" text-anchor="middle" font-size="10" fill="#B45309">(Karnivora Besar)</text>
+            
+            <!-- Arrow 5 -->
+            <line x1="735" y1="125" x2="775" y2="125" stroke="#F59E0B" stroke-width="4" marker-end="url(#arrowhead)">
+              <animate attributeName="stroke-dasharray" values="0,100;40,0" dur="1s" repeatCount="indefinite" begin="0.8s"/>
+            </line>
+            
+            <!-- Decomposer -->
+            <circle cx="830" cy="125" r="45" fill="#D8B4FE"/>
+            <text x="830" y="130" text-anchor="middle" font-size="35">🦠</text>
+            <text x="830" y="190" text-anchor="middle" font-size="12" fill="#6B21A8" font-weight="bold">Pengurai</text>
+            <text x="830" y="205" text-anchor="middle" font-size="10" fill="#7C3AED">(Dekomposer)</text>
+            
+            <!-- Curved arrow back to soil -->
+            <path d="M830,170 Q830,240 400,240 Q100,240 100,200" stroke="#A78BFA" stroke-width="3" fill="none" stroke-dasharray="5,5">
+              <animate attributeName="stroke-dashoffset" values="0;-20" dur="2s" repeatCount="indefinite"/>
+            </path>
+            <text x="450" y="235" text-anchor="middle" font-size="10" fill="#7C3AED">Mengembalikan nutrisi ke tanah</text>
+          </svg>
+        </div>
+
+        <!-- Hukum 10% -->
+        <div class="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-5 mb-6 border border-red-200">
+          <div class="flex items-start gap-4">
+            <span class="text-4xl">📉</span>
+            <div>
+              <h4 class="heading-font text-lg font-bold text-red-800 mb-2">Hukum 10% (Lindeman's Rule)</h4>
+              <p class="text-gray-700 mb-3">Hanya sekitar <strong class="text-red-600">10% energi</strong> yang berpindah ke tingkat trofik berikutnya. Sisanya hilang sebagai:</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-red-100 rounded-full text-sm text-red-700">🔥 Panas (respirasi)</span>
+                <span class="px-3 py-1 bg-orange-100 rounded-full text-sm text-orange-700">💩 Feses</span>
+                <span class="px-3 py-1 bg-amber-100 rounded-full text-sm text-amber-700">🦴 Bagian tidak dimakan</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Energy Pyramid Visual -->
+          <div class="mt-4 flex justify-center">
+            <svg viewBox="0 0 400 200" class="w-full max-w-md">
+              <polygon points="200,10 350,180 50,180" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+              <rect x="75" y="140" width="250" height="35" fill="#86EFAC" rx="5"/>
+              <rect x="110" y="100" width="180" height="35" fill="#93C5FD" rx="5"/>
+              <rect x="145" y="60" width="110" height="35" fill="#FCA5A5" rx="5"/>
+              <rect x="175" y="25" width="50" height="30" fill="#FDE68A" rx="5"/>
+              
+              <text x="200" y="162" text-anchor="middle" font-size="12" fill="#166534" font-weight="bold">Produsen (1000 kkal)</text>
+              <text x="200" y="122" text-anchor="middle" font-size="11" fill="#1E40AF" font-weight="bold">Konsumen I (100 kkal)</text>
+              <text x="200" y="82" text-anchor="middle" font-size="10" fill="#991B1B" font-weight="bold">Konsumen II (10 kkal)</text>
+              <text x="200" y="45" text-anchor="middle" font-size="9" fill="#92400E" font-weight="bold">K.III (1)</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Jaring-jaring Makanan -->
+        <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-2xl p-5 border border-green-200">
+          <h4 class="heading-font text-lg font-bold text-green-800 mb-3">🕸️ Jaring-Jaring Makanan</h4>
+          <p class="text-gray-700 mb-4">Jaring-jaring makanan adalah gabungan dari beberapa rantai makanan yang saling berhubungan dalam suatu ekosistem.</p>
+          
+          <div class="illustration-container bg-white/50 p-4 rounded-xl">
+            <svg viewBox="0 0 600 350" class="w-full h-auto">
+              <!-- Producers -->
+              <circle cx="100" cy="300" r="35" fill="#86EFAC" stroke="#22C55E" stroke-width="2"/>
+              <text x="100" y="305" text-anchor="middle" font-size="25">🌾</text>
+              <text x="100" y="345" text-anchor="middle" font-size="10" fill="#166534">Padi</text>
+              
+              <circle cx="250" cy="300" r="35" fill="#86EFAC" stroke="#22C55E" stroke-width="2"/>
+              <text x="250" y="305" text-anchor="middle" font-size="25">🌿</text>
+              <text x="250" y="345" text-anchor="middle" font-size="10" fill="#166534">Rumput</text>
+              
+              <circle cx="400" cy="300" r="35" fill="#86EFAC" stroke="#22C55E" stroke-width="2"/>
+              <text x="400" y="305" text-anchor="middle" font-size="25">🌻</text>
+              <text x="400" y="345" text-anchor="middle" font-size="10" fill="#166534">Bunga</text>
+              
+              <!-- Primary Consumers -->
+              <circle cx="100" cy="180" r="30" fill="#93C5FD" stroke="#3B82F6" stroke-width="2"/>
+              <text x="100" y="185" text-anchor="middle" font-size="22">🐁</text>
+              <text x="100" y="220" text-anchor="middle" font-size="9" fill="#1E40AF">Tikus</text>
+              
+              <circle cx="250" cy="180" r="30" fill="#93C5FD" stroke="#3B82F6" stroke-width="2"/>
+              <text x="250" y="185" text-anchor="middle" font-size="22">🦗</text>
+              <text x="250" y="220" text-anchor="middle" font-size="9" fill="#1E40AF">Belalang</text>
+              
+              <circle cx="400" cy="180" r="30" fill="#93C5FD" stroke="#3B82F6" stroke-width="2"/>
+              <text x="400" y="185" text-anchor="middle" font-size="22">🐛</text>
+              <text x="400" y="220" text-anchor="middle" font-size="9" fill="#1E40AF">Ulat</text>
+              
+              <circle cx="500" cy="180" r="30" fill="#93C5FD" stroke="#3B82F6" stroke-width="2"/>
+              <text x="500" y="185" text-anchor="middle" font-size="22">🐰</text>
+              <text x="500" y="220" text-anchor="middle" font-size="9" fill="#1E40AF">Kelinci</text>
+              
+              <!-- Secondary Consumers -->
+              <circle cx="175" cy="80" r="30" fill="#FCA5A5" stroke="#EF4444" stroke-width="2"/>
+              <text x="175" y="85" text-anchor="middle" font-size="22">🐍</text>
+              <text x="175" y="120" text-anchor="middle" font-size="9" fill="#991B1B">Ular</text>
+              
+              <circle cx="325" cy="80" r="30" fill="#FCA5A5" stroke="#EF4444" stroke-width="2"/>
+              <text x="325" y="85" text-anchor="middle" font-size="22">🐸</text>
+              <text x="325" y="120" text-anchor="middle" font-size="9" fill="#991B1B">Katak</text>
+              
+              <circle cx="475" cy="80" r="30" fill="#FCA5A5" stroke="#EF4444" stroke-width="2"/>
+              <text x="475" y="85" text-anchor="middle" font-size="22">🦅</text>
+              <text x="475" y="120" text-anchor="middle" font-size="9" fill="#991B1B">Elang</text>
+              
+              <!-- Lines (Food web connections) -->
+              <g stroke="#9CA3AF" stroke-width="1.5" fill="none" opacity="0.6">
+                <!-- Padi connections -->
+                <line x1="100" y1="265" x2="100" y2="210"/>
+                <line x1="100" y1="265" x2="250" y2="210"/>
+                
+                <!-- Rumput connections -->
+                <line x1="250" y1="265" x2="250" y2="210"/>
+                <line x1="250" y1="265" x2="400" y2="210"/>
+                <line x1="250" y1="265" x2="500" y2="210"/>
+                
+                <!-- Bunga connections -->
+                <line x1="400" y1="265" x2="400" y2="210"/>
+                <line x1="400" y1="265" x2="250" y2="210"/>
+                
+                <!-- Tikus to predators -->
+                <line x1="100" y1="150" x2="175" y2="110"/>
+                <line x1="100" y1="150" x2="475" y2="110"/>
+                
+                <!-- Belalang to predators -->
+                <line x1="250" y1="150" x2="325" y2="110"/>
+                <line x1="250" y1="150" x2="175" y2="110"/>
+                
+                <!-- Ulat to predators -->
+                <line x1="400" y1="150" x2="325" y2="110"/>
+                <line x1="400" y1="150" x2="475" y2="110"/>
+                
+                <!-- Kelinci to predators -->
+                <line x1="500" y1="150" x2="475" y2="110"/>
+                <line x1="500" y1="150" x2="175" y2="110"/>
+                
+                <!-- Secondary to tertiary -->
+                <line x1="175" y1="50" x2="475" y2="50"/>
+                <line x1="325" y1="50" x2="475" y2="50"/>
+              </g>
+              
+              <!-- Legend -->
+              <g transform="translate(10, 10)">
+                <rect x="0" y="0" width="120" height="80" fill="white" opacity="0.9" rx="8"/>
+                <circle cx="20" cy="20" r="8" fill="#86EFAC"/>
+                <text x="35" y="24" font-size="10" fill="#166534">Produsen</text>
+                <circle cx="20" cy="42" r="8" fill="#93C5FD"/>
+                <text x="35" y="46" font-size="10" fill="#1E40AF">Konsumen I</text>
+                <circle cx="20" cy="64" r="8" fill="#FCA5A5"/>
+                <text x="35" y="68" font-size="10" fill="#991B1B">Konsumen II/III</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Daur Biogeokimia -->
+      <section id="daur" class="section-card glass-card rounded-3xl p-6 md:p-8 shadow-xl">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg">🔄</div>
+          <h2 class="heading-font text-2xl md:text-3xl font-bold text-cyan-800">4. Daur Biogeokimia (Siklus Alam)</h2>
+        </div>
+
+        <div class="bg-gradient-to-r from-cyan-50 to-blue-50 rounded-2xl p-5 mb-6 border-l-4 border-cyan-500">
+          <p class="text-lg text-gray-700">Unsur kimia beredar dari <strong class="text-cyan-700">lingkungan ke makhluk hidup</strong> dan kembali lagi ke lingkungan secara berulang.</p>
+        </div>
+
+        <!-- Tabs for Different Cycles -->
+        <div class="flex gap-2 mb-6 overflow-x-auto pb-2">
+          <button onclick="showCycle('water')" id="tab-water" class="cycle-tab px-5 py-2 rounded-full bg-blue-500 text-white font-semibold whitespace-nowrap transition-all">💧 Siklus Air</button>
+          <button onclick="showCycle('carbon')" id="tab-carbon" class="cycle-tab px-5 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold whitespace-nowrap transition-all hover:bg-gray-300">🌫️ Siklus Karbon</button>
+        </div>
+
+        <!-- Water Cycle -->
+        <div id="cycle-water" class="cycle-content">
+          <div class="illustration-container bg-gradient-to-b from-sky-100 to-blue-50 p-4 rounded-2xl mb-4">
+            <svg viewBox="0 0 800 450" class="w-full h-auto">
+              <defs>
+                <linearGradient id="oceanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#3B82F6"/>
+                  <stop offset="100%" style="stop-color:#1E40AF"/>
+                </linearGradient>
+                <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#F3F4F6"/>
+                  <stop offset="100%" style="stop-color:#D1D5DB"/>
+                </linearGradient>
+              </defs>
+              
+              <!-- Sky -->
+              <rect x="0" y="0" width="800" height="300" fill="#E0F2FE"/>
+              
+              <!-- Sun -->
+              <circle cx="700" cy="70" r="50" fill="#FCD34D">
+                <animate attributeName="r" values="50;55;50" dur="3s" repeatCount="indefinite"/>
+              </circle>
+              <text x="700" y="75" text-anchor="middle" font-size="30">☀️</text>
+              
+              <!-- Mountain -->
+              <polygon points="150,300 300,100 450,300" fill="#6B7280"/>
+              <polygon points="280,130 300,100 320,130" fill="white"/>
+              
+              <!-- Ground -->
+              <rect x="0" y="300" width="800" height="150" fill="#86EFAC"/>
+              
+              <!-- Ocean -->
+              <ellipse cx="650" cy="380" rx="140" ry="60" fill="url(#oceanGrad)"/>
+              <text x="650" y="390" text-anchor="middle" font-size="14" fill="white" font-weight="bold">🌊 Laut/Danau</text>
+              
+              <!-- Cloud -->
+              <g transform="translate(350, 50)">
+                <ellipse cx="50" cy="30" rx="60" ry="30" fill="url(#cloudGrad)"/>
+                <ellipse cx="90" cy="25" rx="45" ry="25" fill="url(#cloudGrad)"/>
+                <ellipse cx="20" cy="35" rx="40" ry="22" fill="url(#cloudGrad)"/>
+              </g>
+              
+              <!-- Evaporation arrows -->
+              <g stroke="#60A5FA" stroke-width="3" fill="none" opacity="0.8">
+                <path d="M600,350 Q580,280 420,100">
+                  <animate attributeName="stroke-dasharray" values="0,200;200,0" dur="3s" repeatCount="indefinite"/>
+                </path>
+                <path d="M680,340 Q650,260 450,90">
+                  <animate attributeName="stroke-dasharray" values="0,200;200,0" dur="3s" repeatCount="indefinite" begin="0.5s"/>
+                </path>
+              </g>
+              <text x="520" y="200" text-anchor="middle" font-size="12" fill="#2563EB" font-weight="bold">Evaporasi ↑</text>
+              
+              <!-- Transpiration from tree -->
+              <g transform="translate(100, 220)">
+                <rect x="20" y="60" width="20" height="50" fill="#8B4513"/>
+                <ellipse cx="30" cy="35" rx="40" ry="40" fill="#22C55E"/>
+                <path d="M30,0 Q50,-30 70,-20" stroke="#60A5FA" stroke-width="2" fill="none" stroke-dasharray="3,3">
+                  <animate attributeName="stroke-dashoffset" values="0;-10" dur="1s" repeatCount="indefinite"/>
+                </path>
+              </g>
+              <text x="180" y="180" text-anchor="middle" font-size="11" fill="#2563EB" font-weight="bold">Transpirasi ↑</text>
+              
+              <!-- Condensation label -->
+              <text x="400" y="40" text-anchor="middle" font-size="12" fill="#6B7280" font-weight="bold">☁️ Kondensasi</text>
+              
+              <!-- Rain drops -->
+              <g fill="#3B82F6">
+                <ellipse cx="280" cy="150" rx="4" ry="8">
+                  <animate attributeName="cy" values="120;250" dur="1.5s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="1;0" dur="1.5s" repeatCount="indefinite"/>
+                </ellipse>
+                <ellipse cx="320" cy="140" rx="4" ry="8">
+                  <animate attributeName="cy" values="130;260" dur="1.8s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="1;0" dur="1.8s" repeatCount="indefinite"/>
+                </ellipse>
+                <ellipse cx="360" cy="155" rx="4" ry="8">
+                  <animate attributeName="cy" values="125;255" dur="1.6s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="1;0" dur="1.6s" repeatCount="indefinite"/>
+                </ellipse>
+                <ellipse cx="400" cy="145" rx="4" ry="8">
+                  <animate attributeName="cy" values="135;265" dur="1.7s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="1;0" dur="1.7s" repeatCount="indefinite"/>
+                </ellipse>
+              </g>
+              <text x="340" y="200" text-anchor="middle" font-size="12" fill="#1E40AF" font-weight="bold">🌧️ Presipitasi</text>
+              
+              <!-- Runoff arrow -->
+              <path d="M350,310 Q450,350 550,360" stroke="#2563EB" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+              <text x="450" y="355" text-anchor="middle" font-size="11" fill="#1E40AF" font-weight="bold">Limpasan →</text>
+              
+              <!-- Groundwater -->
+              <rect x="200" y="380" width="150" height="40" fill="#1E3A5F" rx="5" opacity="0.7"/>
+              <text x="275" y="405" text-anchor="middle" font-size="11" fill="white" font-weight="bold">Air Tanah 💧</text>
+              <path d="M280,320 L280,380" stroke="#60A5FA" stroke-width="2" stroke-dasharray="5,5">
+                <animate attributeName="stroke-dashoffset" values="0;-20" dur="2s" repeatCount="indefinite"/>
+              </path>
+              <text x="295" y="350" font-size="10" fill="#2563EB">Infiltrasi ↓</text>
+            </svg>
+          </div>
+          
+          <div class="grid md:grid-cols-4 gap-3">
+            <div class="bg-blue-100 rounded-xl p-3 text-center">
+              <span class="text-2xl">☀️💧</span>
+              <h5 class="font-bold text-blue-800 text-sm mt-1">Evaporasi</h5>
+              <p class="text-xs text-gray-600">Penguapan air oleh panas matahari</p>
+            </div>
+            <div class="bg-green-100 rounded-xl p-3 text-center">
+              <span class="text-2xl">🌳💨</span>
+              <h5 class="font-bold text-green-800 text-sm mt-1">Transpirasi</h5>
+              <p class="text-xs text-gray-600">Penguapan dari tumbuhan</p>
+            </div>
+            <div class="bg-gray-100 rounded-xl p-3 text-center">
+              <span class="text-2xl">☁️</span>
+              <h5 class="font-bold text-gray-800 text-sm mt-1">Kondensasi</h5>
+              <p class="text-xs text-gray-600">Uap air menjadi awan</p>
+            </div>
+            <div class="bg-indigo-100 rounded-xl p-3 text-center">
+              <span class="text-2xl">🌧️</span>
+              <h5 class="font-bold text-indigo-800 text-sm mt-1">Presipitasi</h5>
+              <p class="text-xs text-gray-600">Hujan/salju turun ke bumi</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carbon Cycle -->
+        <div id="cycle-carbon" class="cycle-content hidden">
+          <div class="illustration-container bg-gradient-to-b from-gray-100 to-emerald-50 p-4 rounded-2xl mb-4">
+            <svg viewBox="0 0 800 450" class="w-full h-auto">
+              <!-- Atmosphere -->
+              <rect x="0" y="0" width="800" height="150" fill="#F3F4F6"/>
+              <text x="400" y="40" text-anchor="middle" font-size="16" fill="#4B5563" font-weight="bold">🌫️ ATMOSFER (CO₂)</text>
+              
+              <!-- CO2 molecules floating -->
+              <g fill="#6B7280" font-size="14">
+                <text x="100" y="80">CO₂</text>
+                <text x="250" y="60">CO₂</text>
+                <text x="400" y="90">CO₂</text>
+                <text x="550" y="70">CO₂</text>
+                <text x="700" y="85">CO₂</text>
+                <animateTransform attributeName="transform" type="translate" values="0,0;20,5;0,0" dur="5s" repeatCount="indefinite"/>
+              </g>
+              
+              <!-- Ground -->
+              <rect x="0" y="150" width="800" height="300" fill="#86EFAC"/>
+              
+              <!-- Factory (emission source) -->
+              <g transform="translate(650, 100)">
+                <rect x="0" y="50" width="80" height="100" fill="#6B7280"/>
+                <rect x="15" y="20" width="20" height="50" fill="#4B5563"/>
+                <rect x="45" y="30" width="20" height="40" fill="#4B5563"/>
+                <!-- Smoke -->
+                <ellipse cx="25" cy="10" rx="15" ry="10" fill="#9CA3AF" opacity="0.7">
+                  <animate attributeName="cy" values="10;-20" dur="2s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0.7;0" dur="2s" repeatCount="indefinite"/>
+                </ellipse>
+                <ellipse cx="55" cy="20" rx="12" ry="8" fill="#9CA3AF" opacity="0.7">
+                  <animate attributeName="cy" values="20;-10" dur="2.5s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0.7;0" dur="2.5s" repeatCount="indefinite"/>
+                </ellipse>
+              </g>
+              <text x="690" y="270" text-anchor="middle" font-size="11" fill="#4B5563" font-weight="bold">Pembakaran</text>
+              <text x="690" y="285" text-anchor="middle" font-size="10" fill="#6B7280">Bahan Bakar</text>
+              
+              <!-- Tree (photosynthesis) -->
+              <g transform="translate(100, 150)">
+                <rect x="30" y="100" width="30" height="80" fill="#8B4513"/>
+                <ellipse cx="45" cy="60" rx="60" ry="60" fill="#22C55E"/>
+                <ellipse cx="70" cy="80" rx="40" ry="40" fill="#16A34A"/>
+                <ellipse cx="20" cy="75" rx="35" ry="35" fill="#15803D"/>
+              </g>
+              <!-- Photosynthesis arrow (CO2 in) -->
+              <path d="M200,100 Q180,130 160,180" stroke="#22C55E" stroke-width="3" fill="none" marker-end="url(#arrowhead)">
+                <animate attributeName="stroke-dasharray" values="0,100;100,0" dur="2s" repeatCount="indefinite"/>
+              </path>
+              <text x="120" y="130" font-size="11" fill="#166534" font-weight="bold">Fotosintesis</text>
+              <text x="120" y="145" font-size="9" fill="#15803D">CO₂ diserap</text>
+              
+              <!-- O2 release arrow -->
+              <path d="M160,200 Q130,180 130,130" stroke="#60A5FA" stroke-width="2" fill="none" stroke-dasharray="4,4">
+                <animate attributeName="stroke-dashoffset" values="0;-16" dur="1s" repeatCount="indefinite"/>
+              </path>
+              <text x="80" y="180" font-size="10" fill="#2563EB">O₂ ↑</text>
+              
+              <!-- Cow (respiration) -->
+              <g transform="translate(350, 280)">
+                <ellipse cx="40" cy="30" rx="45" ry="25" fill="#F59E0B"/>
+                <ellipse cx="80" cy="20" rx="20" ry="18" fill="#F59E0B"/>
+                <rect x="10" y="50" width="8" height="30" fill="#92400E"/>
+                <rect x="25" y="50" width="8" height="30" fill="#92400E"/>
+                <rect x="55" y="50" width="8" height="30" fill="#92400E"/>
+                <rect x="70" y="50" width="8" height="30" fill="#92400E"/>
+                <ellipse cx="90" cy="15" r="3" fill="#1F2937"/>
+              </g>
+              <!-- Respiration arrow -->
+              <path d="M400,260 Q420,200 400,130" stroke="#EF4444" stroke-width="2" fill="none" marker-end="url(#arrowhead)">
+                <animate attributeName="stroke-dasharray" values="0,150;150,0" dur="2s" repeatCount="indefinite"/>
+              </path>
+              <text x="430" y="200" font-size="11" fill="#DC2626" font-weight="bold">Respirasi</text>
+              <text x="430" y="215" font-size="9" fill="#EF4444">CO₂ dilepas</text>
+              
+              <!-- Dead matter / decomposition -->
+              <g transform="translate(250, 380)">
+                <ellipse cx="40" cy="20" rx="50" ry="20" fill="#92400E"/>
+                <text x="40" y="25" text-anchor="middle" font-size="12">🍂🦴</text>
+              </g>
+              <!-- Decomposition arrow -->
+              <path d="M300,370 Q320,300 350,130" stroke="#8B5CF6" stroke-width="2" fill="none" stroke-dasharray="5,5">
+                <animate attributeName="stroke-dashoffset" values="0;-20" dur="1.5s" repeatCount="indefinite"/>
+              </path>
+              <text x="280" y="350" font-size="10" fill="#7C3AED" font-weight="bold">Dekomposisi</text>
+              
+              <!-- Fossil fuels underground -->
+              <rect x="500" y="400" width="120" height="40" fill="#1F2937" rx="5"/>
+              <text x="560" y="425" text-anchor="middle" font-size="10" fill="white" font-weight="bold">⛽ Bahan Bakar Fosil</text>
+              
+              <!-- Ocean absorption -->
+              <ellipse cx="550" cy="350" rx="80" ry="35" fill="#3B82F6" opacity="0.7"/>
+              <text x="550" y="355" text-anchor="middle" font-size="10" fill="white" font-weight="bold">🌊 Lautan</text>
+              <path d="M550,100 Q560,200 550,320" stroke="#60A5FA" stroke-width="2" fill="none" stroke-dasharray="4,4">
+                <animate attributeName="stroke-dashoffset" values="0;-16" dur="1.5s" repeatCount="indefinite"/>
+              </path>
+              <text x="575" y="220" font-size="9" fill="#2563EB">Absorpsi CO₂</text>
+            </svg>
+          </div>
+          
+          <div class="grid md:grid-cols-4 gap-3">
+            <div class="bg-green-100 rounded-xl p-3 text-center">
+              <span class="text-2xl">🌿☀️</span>
+              <h5 class="font-bold text-green-800 text-sm mt-1">Fotosintesis</h5>
+              <p class="text-xs text-gray-600">CO₂ + H₂O → Glukosa + O₂</p>
+            </div>
+            <div class="bg-red-100 rounded-xl p-3 text-center">
+              <span class="text-2xl">🐄💨</span>
+              <h5 class="font-bold text-red-800 text-sm mt-1">Respirasi</h5>
+              <p class="text-xs text-gray-600">Makhluk hidup melepas CO₂</p>
+            </div>
+            <div class="bg-purple-100 rounded-xl p-3 text-center">
+              <span class="text-2xl">🍂🦠</span>
+              <h5 class="font-bold text-purple-800 text-sm mt-1">Dekomposisi</h5>
+              <p class="text-xs text-gray-600">Pengurai melepas CO₂</p>
+            </div>
+            <div class="bg-gray-200 rounded-xl p-3 text-center">
+              <span class="text-2xl">🏭🔥</span>
+              <h5 class="font-bold text-gray-800 text-sm mt-1">Pembakaran</h5>
+              <p class="text-xs text-gray-600">Fosil → CO₂ ke atmosfer</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Interaksi Manusia dan Lingkungan -->
+      <section id="interaksi" class="section-card glass-card rounded-3xl p-6 md:p-8 shadow-xl">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-gradient-to-br from-rose-500 to-red-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg">🤝</div>
+          <h2 class="heading-font text-2xl md:text-3xl font-bold text-rose-800">5. Interaksi Manusia dan Lingkungan</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <!-- Dampak Negatif -->
+          <div class="bg-gradient-to-br from-red-50 to-rose-50 rounded-2xl p-5 border border-red-200">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-3xl">⚠️</span>
+              <h3 class="heading-font text-xl font-bold text-red-800">Dampak Negatif</h3>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="bg-white/70 rounded-xl p-4">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-2xl">🪓</span>
+                  <h4 class="font-bold text-red-700">Deforestasi</h4>
+                </div>
+                <p class="text-sm text-gray-700 mb-2">Penebangan hutan secara luas menyebabkan:</p>
+                <ul class="text-sm text-gray-600 space-y-1 pl-4">
+                  <li>• Hilangnya habitat satwa liar</li>
+                  <li>• Erosi tanah dan banjir</li>
+                  <li>• Peningkatan CO₂ di atmosfer</li>
+                  <li>• Perubahan iklim global</li>
+                </ul>
+              </div>
+              
+              <div class="bg-white/70 rounded-xl p-4">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-2xl">🏭</span>
+                  <h4 class="font-bold text-red-700">Polusi</h4>
+                </div>
+                <p class="text-sm text-gray-700 mb-2">Pencemaran dari berbagai sumber:</p>
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-2 py-1 bg-red-100 rounded-full text-xs text-red-700">💨 Polusi udara</span>
+                  <span class="px-2 py-1 bg-blue-100 rounded-full text-xs text-blue-700">💧 Polusi air</span>
+                  <span class="px-2 py-1 bg-amber-100 rounded-full text-xs text-amber-700">🪨 Polusi tanah</span>
+                </div>
+              </div>
+              
+              <div class="bg-white/70 rounded-xl p-4">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-2xl">🔥</span>
+                  <h4 class="font-bold text-red-700">Pembakaran Lahan</h4>
+                </div>
+                <p class="text-sm text-gray-600">Membuka lahan dengan membakar menyebabkan kabut asap, kerusakan habitat, dan emisi karbon besar.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upaya Konservasi -->
+          <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-5 border border-green-200">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-3xl">🌱</span>
+              <h3 class="heading-font text-xl font-bold text-green-800">Upaya Konservasi</h3>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="bg-white/70 rounded-xl p-4">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-2xl">🌲</span>
+                  <h4 class="font-bold text-green-700">Reboisasi</h4>
+                </div>
+                <p class="text-sm text-gray-600">Menanam kembali pohon di area yang gundul untuk memulihkan ekosistem hutan.</p>
+              </div>
+              
+              <div class="bg-white/70 rounded-xl p-4">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-2xl">🏞️</span>
+                  <h4 class="font-bold text-green-700">Kawasan Konservasi</h4>
+                </div>
+                <p class="text-sm text-gray-600">Taman nasional, cagar alam, dan suaka margasatwa melindungi keanekaragaman hayati.</p>
+              </div>
+              
+              <div class="bg-white/70 rounded-xl p-4">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-2xl">♻️</span>
+                  <h4 class="font-bold text-green-700">3R (Reduce, Reuse, Recycle)</h4>
+                </div>
+                <p class="text-sm text-gray-600">Mengurangi sampah, menggunakan ulang, dan mendaur ulang untuk menjaga lingkungan.</p>
+              </div>
+              
+              <div class="bg-white/70 rounded-xl p-4">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-2xl">🎓</span>
+                  <h4 class="font-bold text-green-700">Peran Siswa</h4>
+                </div>
+                <ul class="text-sm text-gray-600 space-y-1">
+                  <li>✅ Hemat air dan listrik</li>
+                  <li>✅ Membawa botol minum sendiri</li>
+                  <li>✅ Ikut kegiatan penghijauan</li>
+                  <li>✅ Tidak membuang sampah sembarangan</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ilustrasi Perbandingan -->
+        <div class="illustration-container bg-gradient-to-r from-red-50 via-gray-50 to-green-50 p-4 rounded-2xl">
+          <div class="grid md:grid-cols-2 gap-4">
+            <!-- Damaged Ecosystem -->
+            <div class="bg-white/80 rounded-xl p-4">
+              <h4 class="text-center font-bold text-red-700 mb-3">❌ Ekosistem Rusak</h4>
+              <svg viewBox="0 0 300 200" class="w-full h-auto">
+                <!-- Polluted sky -->
+                <rect x="0" y="0" width="300" height="80" fill="#9CA3AF"/>
+                <text x="150" y="30" text-anchor="middle" font-size="12" fill="#4B5563">Langit berpolusi 🌫️</text>
+                
+                <!-- Barren ground -->
+                <rect x="0" y="80" width="300" height="120" fill="#D2B48C"/>
+                
+                <!-- Dead trees -->
+                <g transform="translate(50, 60)">
+                  <rect x="10" y="30" width="10" height="60" fill="#8B4513"/>
+                  <line x1="15" y1="30" x2="5" y2="10" stroke="#8B4513" stroke-width="3"/>
+                  <line x1="15" y1="40" x2="30" y2="25" stroke="#8B4513" stroke-width="3"/>
+                </g>
+                <g transform="translate(180, 70)">
+                  <rect x="10" y="30" width="8" height="50" fill="#8B4513"/>
+                  <line x1="14" y1="30" x2="5" y2="15" stroke="#8B4513" stroke-width="2"/>
+                  <line x1="14" y1="40" x2="25" y2="30" stroke="#8B4513" stroke-width="2"/>
+                </g>
+                
+                <!-- Factory -->
+                <rect x="220" y="50" width="50" height="70" fill="#4B5563"/>
+                <rect x="230" y="30" width="15" height="30" fill="#374151"/>
+                <ellipse cx="237" cy="25" rx="10" ry="8" fill="#6B7280" opacity="0.8">
+                  <animate attributeName="cy" values="25;10" dur="1.5s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0.8;0" dur="1.5s" repeatCount="indefinite"/>
+                </ellipse>
+                
+                <!-- Trash -->
+                <text x="100" y="150" font-size="16">🗑️</text>
+                <text x="130" y="160" font-size="14">📦</text>
+                <text x="80" y="170" font-size="12">🥤</text>
+                
+                <!-- No animals text -->
+                <text x="150" y="190" text-anchor="middle" font-size="10" fill="#991B1B">Tidak ada kehidupan</text>
+              </svg>
+            </div>
+            
+            <!-- Healthy Ecosystem -->
+            <div class="bg-white/80 rounded-xl p-4">
+              <h4 class="text-center font-bold text-green-700 mb-3">✅ Ekosistem Sehat</h4>
+              <svg viewBox="0 0 300 200" class="w-full h-auto">
+                <!-- Clean sky -->
+                <rect x="0" y="0" width="300" height="80" fill="#87CEEB"/>
+                <circle cx="250" cy="35" r="25" fill="#FCD34D"/>
+                <text x="50" y="30" font-size="12" fill="white">☁️</text>
+                <text x="120" y="50" font-size="10" fill="white">☁️</text>
+                
+                <!-- Green ground -->
+                <rect x="0" y="80" width="300" height="120" fill="#86EFAC"/>
+                
+                <!-- Healthy trees -->
+                <g transform="translate(40, 40)">
+                  <rect x="15" y="50" width="15" height="50" fill="#8B4513"/>
+                  <ellipse cx="22" cy="30" rx="35" ry="35" fill="#22C55E"/>
+                </g>
+                <g transform="translate(180, 50)">
+                  <rect x="12" y="40" width="12" height="40" fill="#8B4513"/>
+                  <ellipse cx="18" cy="25" rx="28" ry="28" fill="#16A34A"/>
+                </g>
+                
+                <!-- Flowers -->
+                <text x="100" y="140" font-size="14">🌸</text>
+                <text x="130" y="150" font-size="12">🌺</text>
+                <text x="160" y="145" font-size="13">🌻</text>
+                
+                <!-- Animals -->
+                <text x="80" y="170" font-size="16">🦋</text>
+                <text x="200" y="165" font-size="14">🐦</text>
+                <text x="140" y="180" font-size="12">🐿️</text>
+                <text x="230" y="185" font-size="14">🦎</text>
+                
+                <!-- River -->
+                <path d="M0,150 Q50,140 100,155 Q150,170 200,160 Q250,150 300,160" fill="none" stroke="#3B82F6" stroke-width="15" opacity="0.6"/>
+                <text x="50" y="155" font-size="10">🐟</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Aktivitas Interaktif -->
+      <section id="aktivitas" class="section-card glass-card rounded-3xl p-6 md:p-8 shadow-xl">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg">🔬</div>
+          <h2 class="heading-font text-2xl md:text-3xl font-bold text-indigo-800">6. Aktivitas Interaktif</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Aktivitas 1: Eksperimen -->
+          <div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-5 border border-indigo-200">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-3xl">🧪</span>
+              <h3 class="heading-font text-lg font-bold text-indigo-800">Ayo Amati! (Aktivitas 6.1)</h3>
+            </div>
+            
+            <p class="text-gray-700 mb-4">Eksperimen pengaruh faktor abiotik terhadap pertumbuhan kacang hijau:</p>
+            
+            <div class="bg-white/70 rounded-xl p-4 mb-4">
+              <h4 class="font-bold text-indigo-700 mb-2">📋 Langkah Percobaan:</h4>
+              <ol class="text-sm text-gray-700 space-y-2 list-decimal list-inside">
+                <li>Siapkan 4 pot berisi tanah dan biji kacang hijau</li>
+                <li>Pot A: Tempat terang + air (kontrol)</li>
+                <li>Pot B: Tempat gelap + air</li>
+                <li>Pot C: Tempat terang + cuka encer</li>
+                <li>Pot D: Tempat terang + tanpa air</li>
+                <li>Amati pertumbuhan selama 1 minggu</li>
+              </ol>
+            </div>
+            
+            <!-- Simulasi Hasil -->
+            <div class="bg-white/70 rounded-xl p-4">
+              <h4 class="font-bold text-indigo-700 mb-3">🌱 Simulasi Hasil:</h4>
+              <div class="grid grid-cols-4 gap-2 text-center">
+                <div class="bg-green-100 rounded-lg p-2">
+                  <div class="text-2xl mb-1">🌱🌱🌱</div>
+                  <p class="text-xs font-bold text-green-700">Pot A</p>
+                  <p class="text-xs text-green-600">Tumbuh baik</p>
+                </div>
+                <div class="bg-yellow-100 rounded-lg p-2">
+                  <div class="text-2xl mb-1">🌱</div>
+                  <p class="text-xs font-bold text-yellow-700">Pot B</p>
+                  <p class="text-xs text-yellow-600">Pucat, lemah</p>
+                </div>
+                <div class="bg-red-100 rounded-lg p-2">
+                  <div class="text-2xl mb-1">💀</div>
+                  <p class="text-xs font-bold text-red-700">Pot C</p>
+                  <p class="text-xs text-red-600">Mati</p>
+                </div>
+                <div class="bg-orange-100 rounded-lg p-2">
+                  <div class="text-2xl mb-1">🥀</div>
+                  <p class="text-xs font-bold text-orange-700">Pot D</p>
+                  <p class="text-xs text-orange-600">Layu, mati</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aktivitas 2: Detektif Ekosistem -->
+          <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-5 border border-emerald-200">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-3xl">🔍</span>
+              <h3 class="heading-font text-lg font-bold text-emerald-800">Detektif Ekosistem</h3>
+            </div>
+            
+            <p class="text-gray-700 mb-4">Kunjungi taman sekolah dan catat temuanmu!</p>
+            
+            <div class="bg-white/70 rounded-xl p-4 mb-4">
+              <h4 class="font-bold text-emerald-700 mb-3">📝 Lembar Pengamatan:</h4>
+              
+              <div class="space-y-3">
+                <div>
+                  <label class="text-sm font-semibold text-emerald-700">Komponen Biotik yang ditemukan:</label>
+                  <div class="flex flex-wrap gap-2 mt-2">
+                    <label class="flex items-center gap-1 bg-green-100 px-2 py-1 rounded-full text-sm cursor-pointer hover:bg-green-200">
+                      <input type="checkbox" class="rounded text-green-600"> 🌳 Pohon
+                    </label>
+                    <label class="flex items-center gap-1 bg-green-100 px-2 py-1 rounded-full text-sm cursor-pointer hover:bg-green-200">
+                      <input type="checkbox" class="rounded text-green-600"> 🌿 Rumput
+                    </label>
+                    <label class="flex items-center gap-1 bg-green-100 px-2 py-1 rounded-full text-sm cursor-pointer hover:bg-green-200">
+                      <input type="checkbox" class="rounded text-green-600"> 🐜 Semut
+                    </label>
+                    <label class="flex items-center gap-1 bg-green-100 px-2 py-1 rounded-full text-sm cursor-pointer hover:bg-green-200">
+                      <input type="checkbox" class="rounded text-green-600"> 🦋 Kupu-kupu
+                    </label>
+                    <label class="flex items-center gap-1 bg-green-100 px-2 py-1 rounded-full text-sm cursor-pointer hover:bg-green-200">
+                      <input type="checkbox" class="rounded text-green-600"> 🐦 Burung
+                    </label>
+                    <label class="flex items-center gap-1 bg-green-100 px-2 py-1 rounded-full text-sm cursor-pointer hover:bg-green-200">
+                      <input type="checkbox" class="rounded text-green-600"> 🐛 Ulat
+                    </label>
+                  </div>
+                </div>
+                
+                <div>
+                  <label class="text-sm font-semibold text-blue-700">Komponen Abiotik yang diamati:</label>
+                  <div class="flex flex-wrap gap-2 mt-2">
+                    <label class="flex items-center gap-1 bg-blue-100 px-2 py-1 rounded-full text-sm cursor-pointer hover:bg-blue-200">
+                      <input type="checkbox" class="rounded text-blue-600"> ☀️ Cahaya
+                    </label>
+                    <label class="flex items-center gap-1 bg-blue-100 px-2 py-1 rounded-full text-sm cursor-pointer hover:bg-blue-200">
+                      <input type="checkbox" class="rounded text-blue-600"> 💨 Udara
+                    </label>
+                    <label class="flex items-center gap-1 bg-blue-100 px-2 py-1 rounded-full text-sm cursor-pointer hover:bg-blue-200">
+                      <input type="checkbox" class="rounded text-blue-600"> 🪨 Tanah
+                    </label>
+                    <label class="flex items-center gap-1 bg-blue-100 px-2 py-1 rounded-full text-sm cursor-pointer hover:bg-blue-200">
+                      <input type="checkbox" class="rounded text-blue-600"> 💧 Air
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Mini Food Chain Builder -->
+            <div class="bg-white/70 rounded-xl p-4">
+              <h4 class="font-bold text-emerald-700 mb-3">🔗 Buat Rantai Makanan!</h4>
+              <p class="text-sm text-gray-600 mb-3">Susun rantai makanan dari organisme yang kamu temukan:</p>
+              
+              <div id="food-chain-builder" class="flex items-center gap-2 flex-wrap justify-center bg-emerald-50 rounded-lg p-3 min-h-16">
+                <span class="text-gray-400 text-sm" id="chain-placeholder">Klik organisme di bawah untuk menyusun rantai makanan</span>
+              </div>
+              
+              <div class="flex flex-wrap gap-2 mt-3 justify-center">
+                <button onclick="addToChain('🌿', 'Rumput')" class="px-3 py-1 bg-green-200 rounded-full text-sm hover:bg-green-300 transition-all">🌿 Rumput</button>
+                <button onclick="addToChain('🐛', 'Ulat')" class="px-3 py-1 bg-blue-200 rounded-full text-sm hover:bg-blue-300 transition-all">🐛 Ulat</button>
+                <button onclick="addToChain('🐸', 'Katak')" class="px-3 py-1 bg-purple-200 rounded-full text-sm hover:bg-purple-300 transition-all">🐸 Katak</button>
+                <button onclick="addToChain('🐍', 'Ular')" class="px-3 py-1 bg-red-200 rounded-full text-sm hover:bg-red-300 transition-all">🐍 Ular</button>
+                <button onclick="addToChain('🦅', 'Elang')" class="px-3 py-1 bg-amber-200 rounded-full text-sm hover:bg-amber-300 transition-all">🦅 Elang</button>
+                <button onclick="clearChain()" class="px-3 py-1 bg-gray-200 rounded-full text-sm hover:bg-gray-300 transition-all">🗑️ Reset</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 7: Quiz HOTS -->
+      <section id="quiz" class="section-card glass-card rounded-3xl p-6 md:p-8 shadow-xl">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg animate-pulse-glow">📝</div>
+          <div>
+            <h2 class="heading-font text-2xl md:text-3xl font-bold text-rose-800">Quiz HOTS</h2>
+            <p class="text-sm text-gray-600">Higher Order Thinking Skills - 10 Soal Tantangan</p>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-rose-50 to-pink-50 rounded-2xl p-4 mb-6 border border-rose-200">
+          <div class="flex items-center justify-between flex-wrap gap-4">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🏆</span>
+              <div>
+                <p class="font-bold text-rose-800">Skor Anda: <span id="quiz-score">0</span>/10</p>
+                <p class="text-sm text-gray-600">Soal <span id="current-question">1</span> dari 10</p>
+              </div>
+            </div>
+            <button onclick="resetQuiz()" class="px-4 py-2 bg-rose-500 text-white rounded-full text-sm font-semibold hover:bg-rose-600 transition-all">🔄 Mulai Ulang</button>
+          </div>
+          <div class="mt-3 h-3 bg-white rounded-full overflow-hidden">
+            <div id="quiz-progress" class="h-full bg-gradient-to-r from-rose-400 to-pink-500 transition-all duration-500" style="width: 10%"></div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quiz-container">
+          <!-- Questions will be rendered here -->
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex justify-between mt-6">
+          <button id="prev-btn" onclick="prevQuestion()" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-300 transition-all disabled:opacity-50" disabled>
+            ← Sebelumnya
+          </button>
+          <button id="next-btn" onclick="nextQuestion()" class="px-6 py-3 bg-rose-500 text-white rounded-xl font-semibold hover:bg-rose-600 transition-all">
+            Selanjutnya →
+          </button>
+        </div>
+
+        <!-- Results Modal -->
+        <div id="results-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center animate-fadeInUp">
+            <div class="text-6xl mb-4" id="result-emoji">🎉</div>
+            <h3 class="heading-font text-2xl font-bold text-gray-800 mb-2">Hasil Quiz Anda</h3>
+            <p class="text-5xl font-bold text-rose-600 mb-2" id="final-score">0/10</p>
+            <p class="text-gray-600 mb-4" id="result-message">Hebat! Kamu menguasai materi dengan baik!</p>
+            <div class="flex gap-3 justify-center">
+              <button onclick="closeResults()" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-300 transition-all">Tutup</button>
+              <button onclick="resetQuiz(); closeResults();" class="px-6 py-3 bg-rose-500 text-white rounded-xl font-semibold hover:bg-rose-600 transition-all">Coba Lagi</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="nature-gradient text-white py-8 px-4 mt-12">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <img src="https://i.imgur.com/mRmw86t.jpeg" alt="Algian Manggara" class="w-16 h-16 rounded-full border-3 border-white/50 object-cover" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #10b981, #059669)'; this.alt='AM';">
+            <div>
+              <p class="font-bold text-lg" id="author-name">Algian Manggara, S.Agr</p>
+              <p class="text-emerald-200 text-sm">Pembuat Konten Pembelajaran</p>
+            </div>
+          </div>
+          <div class="text-center md:text-right">
+            <p class="text-emerald-100 text-sm">Media Pembelajaran Ekosistem dan Pelestarian Lingkungan</p>
+            <p class="text-emerald-200 text-xs mt-1">© 2026 Algian Manggara, S.Agr - Hak Cipta Dilindungi</p>
+          </div>
+        </div>
+        <div class="mt-6 pt-6 border-t border-white/20 text-center">
+          <p class="text-emerald-100 text-sm">🌿 Mari bersama menjaga kelestarian lingkungan untuk generasi mendatang 🌍</p>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Memahami Ekosistem dan Pelestarian Lingkungan',
+      author_name: 'Algian Manggara, S.Agr',
+      background_color: '#ecfdf5',
+      surface_color: '#ffffff',
+      text_color: '#1f2937',
+      primary_color: '#059669',
+      accent_color: '#f59e0b'
+    };
+
+    let config = { ...defaultConfig };
+
+    // Element SDK initialization
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (v) => { cfg.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
+            },
+            {
+              get: () => cfg.surface_color || defaultConfig.surface_color,
+              set: (v) => { cfg.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); }
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+            },
+            {
+              get: () => cfg.primary_color || defaultConfig.primary_color,
+              set: (v) => { cfg.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); }
+            },
+            {
+              get: () => cfg.accent_color || defaultConfig.accent_color,
+              set: (v) => { cfg.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['main_title', cfg.main_title || defaultConfig.main_title],
+          ['author_name', cfg.author_name || defaultConfig.author_name]
+        ])
+      });
+    }
+
+    function applyConfig() {
+      document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+      document.getElementById('author-name').textContent = config.author_name || defaultConfig.author_name;
+    }
+
+    // Quiz data - 10 HOTS questions
+    const quizQuestions = [
+      {
+        question: "Jika semua produsen di suatu ekosistem punah, apa dampak yang paling mungkin terjadi pada konsumen tingkat pertama?",
+        options: [
+          "Populasinya akan meningkat karena tidak ada kompetisi",
+          "Populasinya akan menurun drastis atau punah karena kehilangan sumber makanan",
+          "Tidak ada dampak karena bisa beralih ke makanan lain",
+          "Populasinya tetap stabil karena ada cadangan energi"
+        ],
+        correct: 1,
+        explanation: "Produsen adalah dasar rantai makanan. Tanpa produsen, herbivora (konsumen I) akan kehilangan sumber makanan utamanya sehingga populasinya akan menurun drastis atau punah."
+      },
+      {
+        question: "Sebuah danau mengalami eutrofikasi akibat limbah pertanian. Mengapa populasi ikan dapat menurun meskipun nutrisi melimpah?",
+        options: [
+          "Ikan tidak menyukai air yang terlalu subur",
+          "Pertumbuhan alga berlebihan menyebabkan penurunan kadar oksigen terlarut",
+          "Nutrisi berlebih membuat ikan malas mencari makan",
+          "Air danau menjadi terlalu hangat untuk ikan"
+        ],
+        correct: 1,
+        explanation: "Eutrofikasi menyebabkan ledakan populasi alga (algal bloom). Saat alga mati dan terdekomposisi, proses ini mengonsumsi banyak oksigen terlarut, menyebabkan kondisi hipoksia yang membunuh ikan."
+      },
+      {
+        question: "Dalam piramida energi, mengapa energi yang tersedia untuk konsumen puncak sangat kecil dibandingkan produsen?",
+        options: [
+          "Konsumen puncak memiliki metabolisme yang sangat lambat",
+          "Setiap transfer energi kehilangan sekitar 90% sebagai panas dan aktivitas metabolisme",
+          "Produsen menyimpan sebagian besar energi untuk dirinya sendiri",
+          "Konsumen puncak tidak efisien dalam mencerna makanan"
+        ],
+        correct: 1,
+        explanation: "Hukum 10% Lindeman menyatakan bahwa hanya sekitar 10% energi yang ditransfer ke tingkat trofik berikutnya. Sisanya hilang sebagai panas melalui respirasi dan aktivitas metabolisme."
+      },
+      {
+        question: "Hutan hujan tropis mampu menyerap CO₂ dalam jumlah besar. Jika sebagian besar hutan ditebang, bagaimana dampaknya terhadap siklus karbon global?",
+        options: [
+          "Tidak berpengaruh karena CO₂ akan diserap lautan",
+          "Kadar CO₂ atmosfer meningkat dan mempercepat pemanasan global",
+          "Siklus karbon akan berhenti total",
+          "CO₂ akan berubah menjadi oksigen secara alami"
+        ],
+        correct: 1,
+        explanation: "Hutan berperan sebagai 'paru-paru bumi' yang menyerap CO₂ melalui fotosintesis. Deforestasi mengurangi penyerapan CO₂ dan melepaskan karbon tersimpan, meningkatkan efek rumah kaca."
+      },
+      {
+        question: "Di suatu ekosistem sawah, petani menggunakan pestisida untuk membasmi hama. Mengapa populasi katak dan burung juga ikut terancam?",
+        options: [
+          "Katak dan burung memakan pestisida secara langsung",
+          "Terjadi bioakumulasi dan biomagnifikasi zat beracun melalui rantai makanan",
+          "Pestisida membuat habitat menjadi terlalu bersih",
+          "Katak dan burung alergi terhadap pestisida"
+        ],
+        correct: 1,
+        explanation: "Pestisida terakumulasi dalam tubuh organisme dan konsentrasinya meningkat pada tingkat trofik yang lebih tinggi (biomagnifikasi). Katak dan burung sebagai predator serangga menerima dosis racun yang lebih tinggi."
+      },
+      {
+        question: "Mengapa introduksi spesies invasif ke suatu ekosistem dapat menyebabkan kepunahan spesies asli?",
+        options: [
+          "Spesies invasif selalu lebih besar ukurannya",
+          "Spesies invasif berkompetisi untuk sumber daya, memangsa, atau membawa penyakit tanpa predator alami",
+          "Spesies asli tidak menyukai kehadiran spesies baru",
+          "Iklim berubah saat spesies invasif datang"
+        ],
+        correct: 1,
+        explanation: "Spesies invasif tidak memiliki predator alami di habitat baru, sehingga populasinya meledak. Mereka berkompetisi untuk makanan dan habitat, memangsa spesies asli, atau menyebarkan penyakit baru."
+      },
+      {
+        question: "Sebuah komunitas memutuskan untuk membangun bendungan di sungai. Analisis dampak yang mungkin terjadi pada ekosistem hilir:",
+        options: [
+          "Tidak ada dampak karena air tetap mengalir",
+          "Perubahan aliran air, berkurangnya nutrisi, dan gangguan migrasi ikan",
+          "Ekosistem hilir akan menjadi lebih subur",
+          "Populasi semua organisme akan meningkat"
+        ],
+        correct: 1,
+        explanation: "Bendungan mengubah pola aliran sungai, menahan sedimen dan nutrisi, mengubah suhu air, dan memblokir jalur migrasi ikan. Ini menyebabkan perubahan signifikan pada ekosistem hilir."
+      },
+      {
+        question: "Dalam konteks perubahan iklim, mengapa terumbu karang sangat rentan terhadap kenaikan suhu laut?",
+        options: [
+          "Karang tidak menyukai air hangat sama sekali",
+          "Kenaikan suhu menyebabkan coral bleaching akibat hilangnya zooxanthellae simbiosis",
+          "Air hangat membuat karang tumbuh terlalu cepat",
+          "Predator karang berkembang biak lebih cepat di air hangat"
+        ],
+        correct: 1,
+        explanation: "Karang hidup bersimbiosis dengan alga zooxanthellae yang memberi nutrisi dan warna. Stres suhu menyebabkan karang mengeluarkan alga ini (pemutihan/bleaching), kehilangan sumber nutrisi utama, dan akhirnya mati."
+      },
+      {
+        question: "Seorang peneliti menemukan bahwa populasi serigala yang diintroduksi kembali ke Yellowstone menyebabkan perubahan aliran sungai. Bagaimana ini bisa terjadi?",
+        options: [
+          "Serigala meminum terlalu banyak air sungai",
+          "Efek kaskade trofik: serigala mengurangi rusa yang overgrazing → vegetasi tepi sungai pulih → erosi berkurang",
+          "Serigala membangun bendungan seperti berang-berang",
+          "Ini tidak mungkin terjadi, penelitian pasti salah"
+        ],
+        correct: 1,
+        explanation: "Ini adalah contoh kaskade trofik. Serigala mengurangi populasi rusa dan mengubah perilaku mereka. Vegetasi tepi sungai yang sebelumnya dimakan rusa pulih, akarnya menstabilkan tanah, mengurangi erosi, dan mengubah morfologi sungai."
+      },
+      {
+        question: "Mengapa menjaga keanekaragaman hayati penting untuk ketahanan ekosistem terhadap perubahan lingkungan?",
+        options: [
+          "Agar ekosistem terlihat lebih indah dan menarik wisatawan",
+          "Keanekaragaman tinggi memberikan redundansi fungsional dan adaptabilitas terhadap gangguan",
+          "Supaya tidak ada satu spesies yang terlalu dominan",
+          "Karena semua spesies memiliki hak yang sama untuk hidup"
+        ],
+        correct: 1,
+        explanation: "Keanekaragaman hayati menyediakan 'asuransi ekologi'. Jika satu spesies punah, spesies lain dengan fungsi serupa dapat mengambil alih. Ekosistem dengan keanekaragaman tinggi lebih tahan terhadap gangguan dan dapat pulih lebih cepat."
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let userAnswers = new Array(quizQuestions.length).fill(null);
+    let score = 0;
+
+    // Initialize quiz
+    function initQuiz() {
+      renderQuestion();
+      updateProgress();
+    }
+
+    function renderQuestion() {
+      const q = quizQuestions[currentQuestionIndex];
+      const container = document.getElementById('quiz-container');
+      
+      let optionsHTML = q.options.map((option, index) => {
+        let statusClass = '';
+        let statusIcon = '';
+        
+        if (userAnswers[currentQuestionIndex] !== null) {
+          if (index === q.correct) {
+            statusClass = 'correct';
+            statusIcon = '✅';
+          } else if (index === userAnswers[currentQuestionIndex]) {
+            statusClass = 'incorrect';
+            statusIcon = '❌';
+          }
+        }
+        
+        return `
+          <button 
+            onclick="selectAnswer(${index})" 
+            class="quiz-option w-full text-left p-4 rounded-xl border-2 border-gray-200 ${statusClass} ${userAnswers[currentQuestionIndex] !== null ? 'pointer-events-none' : ''}"
+            ${userAnswers[currentQuestionIndex] !== null ? 'disabled' : ''}
+          >
+            <div class="flex items-start gap-3">
+              <span class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-bold text-gray-600 flex-shrink-0">
+                ${statusIcon || String.fromCharCode(65 + index)}
+              </span>
+              <span class="text-gray-700">${option}</span>
+            </div>
+          </button>
+        `;
+      }).join('');
+      
+      let explanationHTML = '';
+      if (userAnswers[currentQuestionIndex] !== null) {
+        explanationHTML = `
+          <div class="mt-4 p-4 bg-blue-50 rounded-xl border border-blue-200 animate-fadeInUp">
+            <div class="flex items-start gap-2">
+              <span class="text-xl">💡</span>
+              <div>
+                <p class="font-bold text-blue-800">Penjelasan:</p>
+                <p class="text-gray-700 text-sm">${q.explanation}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+      
+      container.innerHTML = `
+        <div class="bg-gradient-to-br from-rose-50 to-pink-50 rounded-2xl p-6 border border-rose-200">
+          <div class="flex items-start gap-3 mb-4">
+            <span class="w-10 h-10 rounded-full bg-rose-500 text-white flex items-center justify-center font-bold flex-shrink-0">
+              ${currentQuestionIndex + 1}
+            </span>
+            <p class="text-lg text-gray-800 font-medium">${q.question}</p>
+          </div>
+          <div class="space-y-3">
+            ${optionsHTML}
+          </div>
+          ${explanationHTML}
+        </div>
+      `;
+    }
+
+    function selectAnswer(answerIndex) {
+      if (userAnswers[currentQuestionIndex] !== null) return;
+      
+      userAnswers[currentQuestionIndex] = answerIndex;
+      
+      if (answerIndex === quizQuestions[currentQuestionIndex].correct) {
+        score++;
+      }
+      
+      updateScore();
+      renderQuestion();
+    }
+
+    function updateScore() {
+      document.getElementById('quiz-score').textContent = score;
+    }
+
+    function updateProgress() {
+      document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+      const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+      document.getElementById('quiz-progress').style.width = `${progress}%`;
+      
+      // Update page progress
+      const pageProgress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+      document.getElementById('progress-bar').style.width = `${Math.min(pageProgress, 100)}%`;
+      document.getElementById('progress-text').textContent = `${Math.round(pageProgress)}%`;
+      
+      // Update navigation buttons
+      document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+      document.getElementById('next-btn').textContent = currentQuestionIndex === quizQuestions.length - 1 ? 'Lihat Hasil 🎯' : 'Selanjutnya →';
+    }
+
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion();
+        updateProgress();
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestionIndex < quizQuestions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion();
+        updateProgress();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults() {
+      const modal = document.getElementById('results-modal');
+      const finalScore = document.getElementById('final-score');
+      const resultEmoji = document.getElementById('result-emoji');
+      const resultMessage = document.getElementById('result-message');
+      
+      finalScore.textContent = `${score}/10`;
+      
+      if (score >= 9) {
+        resultEmoji.textContent = '🏆';
+        resultMessage.textContent = 'Luar biasa! Kamu benar-benar menguasai materi ekosistem!';
+      } else if (score >= 7) {
+        resultEmoji.textContent = '🎉';
+        resultMessage.textContent = 'Hebat! Kamu memiliki pemahaman yang baik tentang ekosistem!';
+      } else if (score >= 5) {
+        resultEmoji.textContent = '👍';
+        resultMessage.textContent = 'Bagus! Terus belajar untuk meningkatkan pemahamanmu!';
+      } else {
+        resultEmoji.textContent = '💪';
+        resultMessage.textContent = 'Jangan menyerah! Pelajari lagi materinya dan coba lagi!';
+      }
+      
+      modal.classList.remove('hidden');
+    }
+
+    function closeResults() {
+      document.getElementById('results-modal').classList.add('hidden');
+    }
+
+    function resetQuiz() {
+      currentQuestionIndex = 0;
+      userAnswers = new Array(quizQuestions.length).fill(null);
+      score = 0;
+      updateScore();
+      renderQuestion();
+      updateProgress();
+    }
+
+    // Utility functions
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function checkAnswer(btn, isCorrect, checkId) {
+      const feedbackEl = document.getElementById(`${checkId}-feedback`);
+      feedbackEl.classList.remove('hidden');
+      
+      if (isCorrect) {
+        btn.classList.add('bg-green-200', 'border-green-500');
+        feedbackEl.textContent = '✅ Benar! Cahaya dan suhu adalah komponen abiotik.';
+        feedbackEl.className = 'mt-3 text-sm font-semibold text-green-700';
+      } else {
+        btn.classList.add('bg-red-200', 'border-red-500');
+        feedbackEl.textContent = '❌ Kurang tepat. Itu termasuk komponen biotik (makhluk hidup).';
+        feedbackEl.className = 'mt-3 text-sm font-semibold text-red-700';
+      }
+    }
+
+    function toggleDetail(id) {
+      const detail = document.getElementById(`${id}-detail`);
+      if (detail) {
+        detail.classList.toggle('hidden');
+      }
+    }
+
+    function showCycle(cycle) {
+      // Hide all cycle contents
+      document.querySelectorAll('.cycle-content').forEach(el => el.classList.add('hidden'));
+      
+      // Reset all tabs
+      document.querySelectorAll('.cycle-tab').forEach(el => {
+        el.classList.remove('bg-blue-500', 'text-white');
+        el.classList.add('bg-gray-200', 'text-gray-700');
+      });
+      
+      // Show selected cycle
+      document.getElementById(`cycle-${cycle}`).classList.remove('hidden');
+      
+      // Activate selected tab
+      const activeTab = document.getElementById(`tab-${cycle}`);
+      activeTab.classList.remove('bg-gray-200', 'text-gray-700');
+      activeTab.classList.add('bg-blue-500', 'text-white');
+    }
+
+    // Food chain builder
+    let foodChain = [];
+
+    function addToChain(emoji, name) {
+      if (foodChain.length < 5) {
+        foodChain.push({ emoji, name });
+        renderChain();
+      }
+    }
+
+    function renderChain() {
+      const container = document.getElementById('food-chain-builder');
+      const placeholder = document.getElementById('chain-placeholder');
+      
+      if (foodChain.length === 0) {
+        container.innerHTML = '<span class="text-gray-400 text-sm" id="chain-placeholder">Klik organisme di bawah untuk menyusun rantai makanan</span>';
+        return;
+      }
+      
+      let html = foodChain.map((item, index) => {
+        let arrow = index < foodChain.length - 1 ? '<span class="text-amber-500 text-xl energy-flow-arrow mx-1">→</span>' : '';
+        return `<span class="bg-white px-3 py-1 rounded-full text-sm shadow-sm">${item.emoji} ${item.name}</span>${arrow}`;
+      }).join('');
+      
+      container.innerHTML = html;
+    }
+
+    function clearChain() {
+      foodChain = [];
+      renderChain();
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', function() {
+      initQuiz();
+      applyConfig();
+    });
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cfae77e34327550',t:'MTc3MTM5MDIzMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zat dan Perubahannya - Media Pembelajaran Interaktif</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/mRmw86t.jpeg">
+  <style>
+    * { font-family: 'Nunito', sans-serif; }
+    .title-font { font-family: 'Fredoka One', cursive; }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
+    }
+    @keyframes water-cycle {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      50% { transform: translateY(-30px) scale(0.8); opacity: 0.7; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    @keyframes rain-drop {
+      0% { transform: translateY(-20px); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(20px); opacity: 0; }
+    }
+    @keyframes burn {
+      0%, 100% { transform: scale(1); filter: brightness(1); }
+      50% { transform: scale(1.1); filter: brightness(1.3); }
+    }
+    @keyframes bubble {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-40px) scale(0.5); opacity: 0; }
+    }
+    .float-animation { animation: float 3s ease-in-out infinite; }
+    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    .water-cycle-anim { animation: water-cycle 4s ease-in-out infinite; }
+    .rain-anim { animation: rain-drop 1.5s ease-in-out infinite; }
+    .burn-anim { animation: burn 0.5s ease-in-out infinite; }
+    .bubble-anim { animation: bubble 2s ease-in-out infinite; }
+    
+    .nav-link { transition: all 0.3s ease; }
+    .nav-link:hover { transform: translateY(-2px); }
+    .card-hover { transition: all 0.3s ease; }
+    .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+    
+    .progress-bar { transition: width 0.5s ease; }
+    
+    html, body { height: 100%; margin: 0; }
+    .app-wrapper { min-height: 100%; }
+    
+    .section-transition { opacity: 0; transform: translateY(20px); transition: all 0.5s ease; }
+    .section-visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body class="h-full bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50">
+  <div class="app-wrapper overflow-auto">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 py-3">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
+              <span class="text-white text-xl">🔬</span>
+            </div>
+            <h1 id="nav-title" class="title-font text-lg md:text-xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600">Zat & Perubahannya</h1>
+          </div>
+          <div class="flex gap-2 flex-wrap text-sm">
+            <a href="#pendahuluan" class="nav-link px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 hover:bg-blue-200">Pendahuluan</a>
+            <a href="#fisika" class="nav-link px-3 py-1.5 rounded-full bg-green-100 text-green-700 hover:bg-green-200">Fisika</a>
+            <a href="#siklus-air" class="nav-link px-3 py-1.5 rounded-full bg-cyan-100 text-cyan-700 hover:bg-cyan-200">Siklus Air</a>
+            <a href="#kimia" class="nav-link px-3 py-1.5 rounded-full bg-orange-100 text-orange-700 hover:bg-orange-200">Kimia</a>
+            <a href="#quiz" class="nav-link px-3 py-1.5 rounded-full bg-purple-100 text-purple-700 hover:bg-purple-200">Quiz</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative py-16 px-4 overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 left-10 w-32 h-32 bg-blue-400 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 right-10 w-40 h-40 bg-cyan-400 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 w-48 h-48 bg-teal-400 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+      </div>
+      <div class="max-w-4xl mx-auto text-center relative z-10">
+        <div class="float-animation mb-6">
+          <span class="text-7xl">🧪</span>
+        </div>
+        <h1 id="main-title" class="title-font text-4xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 mb-4">Zat dan Perubahannya</h1>
+        <p class="text-xl text-gray-600 mb-2">Perubahan Fisika & Kimia serta Siklus Air</p>
+        <p class="text-gray-500">Media Pembelajaran Interaktif untuk Siswa</p>
+        <div class="mt-8 flex justify-center gap-4 flex-wrap">
+          <a href="#pendahuluan" class="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
+            Mulai Belajar 🚀
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Section 1: Pendahuluan -->
+    <section id="pendahuluan" class="py-12 px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-10">
+          <span class="inline-block px-4 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-3">Bagian 1</span>
+          <h2 class="title-font text-3xl md:text-4xl text-gray-800 mb-3">Eksperimen Kertas 📄</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">Mari kita mulai dengan membayangkan dua perlakuan pada kertas!</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-10">
+          <!-- Perlakuan A -->
+          <div class="card-hover bg-white rounded-3xl p-6 shadow-lg border-2 border-green-200">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-2xl">✂️</div>
+              <h3 class="text-xl font-bold text-green-700">Perlakuan A</h3>
+            </div>
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 mb-4">
+              <!-- Paper Tearing Illustration -->
+              <svg viewBox="0 0 200 150" class="w-full h-40">
+                <rect x="20" y="30" width="60" height="80" fill="#f5f5f5" stroke="#d4d4d4" stroke-width="2" rx="2"/>
+                <rect x="90" y="25" width="25" height="35" fill="#fafafa" stroke="#d4d4d4" stroke-width="1" rx="1" transform="rotate(10 102 42)"/>
+                <rect x="120" y="35" width="30" height="40" fill="#f5f5f5" stroke="#d4d4d4" stroke-width="1" rx="1" transform="rotate(-5 135 55)"/>
+                <rect x="95" y="70" width="28" height="32" fill="#fafafa" stroke="#d4d4d4" stroke-width="1" rx="1" transform="rotate(15 109 86)"/>
+                <rect x="130" y="85" width="35" height="45" fill="#f5f5f5" stroke="#d4d4d4" stroke-width="1" rx="1" transform="rotate(-8 147 107)"/>
+                <text x="100" y="140" text-anchor="middle" fill="#059669" font-size="12" font-weight="bold">Kertas Disobek</text>
+              </svg>
+            </div>
+            <p class="text-gray-700 font-medium">Kertas disobek-sobek menjadi potongan kecil</p>
+            <div class="mt-4 p-3 bg-green-50 rounded-xl">
+              <p class="text-green-700 text-sm"><strong>Hasil:</strong> Potongan-potongan kertas tetap berupa KERTAS</p>
+            </div>
+          </div>
+
+          <!-- Perlakuan B -->
+          <div class="card-hover bg-white rounded-3xl p-6 shadow-lg border-2 border-orange-200">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-2xl">🔥</div>
+              <h3 class="text-xl font-bold text-orange-700">Perlakuan B</h3>
+            </div>
+            <div class="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-6 mb-4">
+              <!-- Paper Burning Illustration -->
+              <svg viewBox="0 0 200 150" class="w-full h-40">
+                <rect x="60" y="60" width="80" height="70" fill="#8B4513" rx="3" opacity="0.6"/>
+                <ellipse cx="100" cy="125" rx="50" ry="10" fill="#4a4a4a" opacity="0.5"/>
+                <path class="burn-anim" d="M80 70 Q85 40 100 50 Q115 40 120 70 Q125 45 130 60 Q135 30 140 55 Q145 35 145 70 L140 90 L60 90 L55 70 Q60 45 65 65 Q70 35 80 70Z" fill="url(#fireGradient)"/>
+                <defs>
+                  <linearGradient id="fireGradient" x1="0%" y1="100%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="#ff6b35"/>
+                    <stop offset="50%" stop-color="#f7931e"/>
+                    <stop offset="100%" stop-color="#ffcd3c"/>
+                  </linearGradient>
+                </defs>
+                <text x="100" y="145" text-anchor="middle" fill="#ea580c" font-size="12" font-weight="bold">Kertas Dibakar</text>
+              </svg>
+            </div>
+            <p class="text-gray-700 font-medium">Kertas dibakar menggunakan api</p>
+            <div class="mt-4 p-3 bg-orange-50 rounded-xl">
+              <p class="text-orange-700 text-sm"><strong>Hasil:</strong> Kertas berubah menjadi ABU (zat baru!)</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Question -->
+        <div class="bg-gradient-to-r from-indigo-500 to-purple-500 rounded-3xl p-8 text-white">
+          <h3 class="text-2xl font-bold mb-4 flex items-center gap-3">
+            <span class="text-3xl">🤔</span> Pertanyaan Diskusi
+          </h3>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-white/20 backdrop-blur rounded-xl p-4">
+              <p class="font-semibold mb-2">Manakah yang masih berupa kertas?</p>
+              <button onclick="showAnswer('answerA', 'Perlakuan A - Kertas yang disobek tetap berupa kertas, hanya bentuknya yang berubah!')" class="w-full py-2 bg-white text-indigo-600 rounded-lg font-semibold hover:bg-indigo-50 transition-all">
+                Lihat Jawaban
+              </button>
+              <p id="answerA" class="mt-2 text-sm hidden bg-white/30 p-2 rounded-lg"></p>
+            </div>
+            <div class="bg-white/20 backdrop-blur rounded-xl p-4">
+              <p class="font-semibold mb-2">Manakah yang sudah menjadi zat baru?</p>
+              <button onclick="showAnswer('answerB', 'Perlakuan B - Kertas yang dibakar menjadi abu, sebuah zat baru yang berbeda!')" class="w-full py-2 bg-white text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition-all">
+                Lihat Jawaban
+              </button>
+              <p id="answerB" class="mt-2 text-sm hidden bg-white/30 p-2 rounded-lg"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Perubahan Fisika -->
+    <section id="fisika" class="py-12 px-4 bg-gradient-to-br from-green-50 to-emerald-50">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-10">
+          <span class="inline-block px-4 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold mb-3">Bagian 2</span>
+          <h2 class="title-font text-3xl md:text-4xl text-gray-800 mb-3">Perubahan Fisika 🧊</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">Perubahan yang hanya mengubah bentuk atau ukuran, tanpa menghasilkan zat baru</p>
+        </div>
+
+        <!-- Definition Card -->
+        <div class="bg-white rounded-3xl p-8 shadow-lg mb-10 border-l-8 border-green-500">
+          <div class="flex items-start gap-4">
+            <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0">📖</div>
+            <div>
+              <h3 class="text-2xl font-bold text-green-700 mb-2">Definisi</h3>
+              <p class="text-gray-700 text-lg"><strong>Perubahan Fisika</strong> adalah perubahan yang hanya mengubah <span class="text-green-600 font-semibold">bentuk, ukuran, atau wujud</span> suatu zat, tanpa menghasilkan zat baru.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Characteristics -->
+        <div class="grid md:grid-cols-2 gap-6 mb-10">
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                <span class="text-2xl">🔄</span>
+              </div>
+              <h4 class="text-xl font-bold text-blue-700">Sifat Materi Tetap</h4>
+            </div>
+            <p class="text-gray-600">Meskipun bentuk berubah, ciri-ciri dan sifat zatnya tetap sama. Es yang mencair tetap adalah H₂O!</p>
+          </div>
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                <span class="text-2xl">↩️</span>
+              </div>
+              <h4 class="text-xl font-bold text-purple-700">Reversibel (Dapat Balik)</h4>
+            </div>
+            <p class="text-gray-600">Dapat kembali ke bentuk semula. Es yang meleleh bisa dibekukan kembali menjadi es!</p>
+          </div>
+        </div>
+
+        <!-- Interactive Examples -->
+        <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Contoh dalam Keseharian</h3>
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Example 1: Ice Melting -->
+          <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg">
+            <div class="bg-gradient-to-br from-cyan-400 to-blue-500 p-6">
+              <svg viewBox="0 0 150 100" class="w-full h-32">
+                <rect x="20" y="40" width="40" height="40" fill="#e0f7fa" stroke="#00bcd4" stroke-width="2" rx="5"/>
+                <text x="40" y="65" text-anchor="middle" fill="#0097a7" font-size="20">🧊</text>
+                <path d="M70 60 L90 60" stroke="white" stroke-width="3" marker-end="url(#arrowhead)"/>
+                <ellipse cx="115" cy="60" rx="20" ry="15" fill="#b3e5fc" opacity="0.8"/>
+                <text x="115" y="65" text-anchor="middle" fill="#0288d1" font-size="16">💧</text>
+                <defs>
+                  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="white"/>
+                  </marker>
+                </defs>
+              </svg>
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-lg text-gray-800 mb-2">Es Mencair</h4>
+              <p class="text-gray-600 text-sm">Es berubah menjadi air cair. Bisa dibekukan kembali!</p>
+              <span class="inline-block mt-3 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">✓ Reversibel</span>
+            </div>
+          </div>
+
+          <!-- Example 2: Sugar Dissolving -->
+          <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg">
+            <div class="bg-gradient-to-br from-amber-400 to-orange-500 p-6">
+              <svg viewBox="0 0 150 100" class="w-full h-32">
+                <ellipse cx="75" cy="70" rx="45" ry="20" fill="#fff3e0"/>
+                <ellipse cx="75" cy="50" rx="45" ry="20" fill="#ffe0b2"/>
+                <rect x="55" y="30" width="40" height="40" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="5,3"/>
+                <circle cx="65" cy="55" r="3" fill="#fff"/>
+                <circle cx="80" cy="50" r="2" fill="#fff"/>
+                <circle cx="72" cy="60" r="2.5" fill="#fff"/>
+                <circle cx="85" cy="58" r="2" fill="#fff"/>
+                <text x="75" y="95" text-anchor="middle" fill="white" font-size="10" font-weight="bold">Gula + Air</text>
+              </svg>
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-lg text-gray-800 mb-2">Melarutkan Gula</h4>
+              <p class="text-gray-600 text-sm">Rasa manis tetap ada. Gula bisa didapat kembali jika air diuapkan!</p>
+              <span class="inline-block mt-3 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">✓ Reversibel</span>
+            </div>
+          </div>
+
+          <!-- Example 3: Water Evaporating -->
+          <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg">
+            <div class="bg-gradient-to-br from-purple-400 to-pink-500 p-6">
+              <svg viewBox="0 0 150 100" class="w-full h-32">
+                <ellipse cx="75" cy="75" rx="40" ry="15" fill="#e1bee7"/>
+                <ellipse cx="75" cy="60" rx="40" ry="15" fill="#ce93d8"/>
+                <g class="water-cycle-anim">
+                  <path d="M60 50 Q65 30 70 50" stroke="#fff" stroke-width="2" fill="none" opacity="0.7"/>
+                  <path d="M75 45 Q80 25 85 45" stroke="#fff" stroke-width="2" fill="none" opacity="0.7"/>
+                  <path d="M90 50 Q95 30 100 50" stroke="#fff" stroke-width="2" fill="none" opacity="0.7"/>
+                </g>
+                <text x="75" y="95" text-anchor="middle" fill="white" font-size="10" font-weight="bold">Menguap</text>
+              </svg>
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-lg text-gray-800 mb-2">Air Menguap</h4>
+              <p class="text-gray-600 text-sm">Air cair berubah menjadi uap air (gas). Tetap H₂O!</p>
+              <span class="inline-block mt-3 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">✓ Reversibel</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase Changes Diagram -->
+        <div class="mt-10 bg-white rounded-3xl p-8 shadow-lg">
+          <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Perubahan Wujud Zat</h3>
+          <div class="relative">
+            <svg viewBox="0 0 600 250" class="w-full max-w-3xl mx-auto">
+              <!-- Solid -->
+              <rect x="50" y="80" width="100" height="100" fill="#e3f2fd" stroke="#1976d2" stroke-width="3" rx="10"/>
+              <text x="100" y="140" text-anchor="middle" font-size="40">🧊</text>
+              <text x="100" y="210" text-anchor="middle" fill="#1976d2" font-weight="bold" font-size="16">PADAT</text>
+              
+              <!-- Liquid -->
+              <ellipse cx="300" cy="130" rx="60" ry="50" fill="#bbdefb" stroke="#1976d2" stroke-width="3"/>
+              <text x="300" y="140" text-anchor="middle" font-size="40">💧</text>
+              <text x="300" y="210" text-anchor="middle" fill="#1976d2" font-weight="bold" font-size="16">CAIR</text>
+              
+              <!-- Gas -->
+              <ellipse cx="500" cy="130" rx="60" ry="50" fill="#e1f5fe" stroke="#1976d2" stroke-width="3" stroke-dasharray="10,5"/>
+              <text x="500" y="140" text-anchor="middle" font-size="40">💨</text>
+              <text x="500" y="210" text-anchor="middle" fill="#1976d2" font-weight="bold" font-size="16">GAS</text>
+              
+              <!-- Arrows with labels -->
+              <path d="M160 110 Q200 90 230 110" stroke="#4caf50" stroke-width="3" fill="none" marker-end="url(#greenArrow)"/>
+              <text x="195" y="85" text-anchor="middle" fill="#4caf50" font-size="11" font-weight="bold">Mencair</text>
+              
+              <path d="M230 150 Q200 170 160 150" stroke="#2196f3" stroke-width="3" fill="none" marker-end="url(#blueArrow)"/>
+              <text x="195" y="185" text-anchor="middle" fill="#2196f3" font-size="11" font-weight="bold">Membeku</text>
+              
+              <path d="M370 110 Q410 90 440 110" stroke="#ff9800" stroke-width="3" fill="none" marker-end="url(#orangeArrow)"/>
+              <text x="405" y="85" text-anchor="middle" fill="#ff9800" font-size="11" font-weight="bold">Menguap</text>
+              
+              <path d="M440 150 Q410 170 370 150" stroke="#9c27b0" stroke-width="3" fill="none" marker-end="url(#purpleArrow)"/>
+              <text x="405" y="185" text-anchor="middle" fill="#9c27b0" font-size="11" font-weight="bold">Mengembun</text>
+              
+              <!-- Sublimation -->
+              <path d="M130 70 Q300 20 470 70" stroke="#f44336" stroke-width="2" fill="none" stroke-dasharray="5,3" marker-end="url(#redArrow)"/>
+              <text x="300" y="35" text-anchor="middle" fill="#f44336" font-size="10">Menyublim</text>
+              
+              <path d="M470 190 Q300 240 130 190" stroke="#795548" stroke-width="2" fill="none" stroke-dasharray="5,3" marker-end="url(#brownArrow)"/>
+              <text x="300" y="245" text-anchor="middle" fill="#795548" font-size="10">Mengkristal</text>
+              
+              <defs>
+                <marker id="greenArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#4caf50"/></marker>
+                <marker id="blueArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#2196f3"/></marker>
+                <marker id="orangeArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#ff9800"/></marker>
+                <marker id="purpleArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#9c27b0"/></marker>
+                <marker id="redArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#f44336"/></marker>
+                <marker id="brownArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#795548"/></marker>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Siklus Air -->
+    <section id="siklus-air" class="py-12 px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-10">
+          <span class="inline-block px-4 py-1 bg-cyan-100 text-cyan-700 rounded-full text-sm font-semibold mb-3">Bagian 3</span>
+          <h2 class="title-font text-3xl md:text-4xl text-gray-800 mb-3">Siklus Air 🌊</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">Contoh Perubahan Fisika di Alam - Perputaran air secara terus-menerus</p>
+        </div>
+
+        <!-- Water Cycle Illustration -->
+        <div class="bg-white rounded-3xl p-6 shadow-lg mb-10 overflow-hidden">
+          <div class="relative bg-gradient-to-b from-sky-300 via-sky-200 to-green-300 rounded-2xl p-4" style="min-height: 400px;">
+            <svg viewBox="0 0 800 450" class="w-full h-auto">
+              <!-- Sky background -->
+              <rect x="0" y="0" width="800" height="280" fill="url(#skyGradient)"/>
+              
+              <!-- Sun -->
+              <circle cx="700" cy="60" r="45" fill="#ffd93d">
+                <animate attributeName="r" values="45;48;45" dur="2s" repeatCount="indefinite"/>
+              </circle>
+              <g stroke="#ffd93d" stroke-width="3">
+                <line x1="700" y1="5" x2="700" y2="20"/>
+                <line x1="700" y1="100" x2="700" y2="115"/>
+                <line x1="645" y1="60" x2="660" y2="60"/>
+                <line x1="740" y1="60" x2="755" y2="60"/>
+                <line x1="665" y1="25" x2="675" y2="35"/>
+                <line x1="725" y1="85" x2="735" y2="95"/>
+                <line x1="665" y1="95" x2="675" y2="85"/>
+                <line x1="725" y1="35" x2="735" y2="25"/>
+              </g>
+              
+              <!-- Mountains -->
+              <polygon points="0,280 150,150 300,280" fill="#6b7280"/>
+              <polygon points="200,280 400,100 600,280" fill="#4b5563"/>
+              <polygon points="100,280 250,180 400,280" fill="#9ca3af"/>
+              <polygon points="350,150 380,120 400,100 420,120 450,150" fill="white"/>
+              
+              <!-- Ocean -->
+              <ellipse cx="200" cy="380" rx="180" ry="60" fill="#0ea5e9"/>
+              <ellipse cx="200" cy="370" rx="150" ry="40" fill="#38bdf8"/>
+              <text x="200" y="385" text-anchor="middle" fill="white" font-weight="bold" font-size="14">LAUT</text>
+              
+              <!-- Land -->
+              <rect x="400" y="280" width="400" height="170" fill="#22c55e"/>
+              <ellipse cx="550" cy="350" rx="80" ry="30" fill="#16a34a"/>
+              
+              <!-- Trees -->
+              <g transform="translate(480, 300)">
+                <rect x="15" y="30" width="10" height="30" fill="#92400e"/>
+                <polygon points="20,0 0,35 40,35" fill="#15803d"/>
+              </g>
+              <g transform="translate(550, 290)">
+                <rect x="15" y="30" width="10" height="35" fill="#92400e"/>
+                <polygon points="20,0 0,40 40,40" fill="#166534"/>
+              </g>
+              <g transform="translate(620, 305)">
+                <rect x="12" y="25" width="8" height="25" fill="#92400e"/>
+                <polygon points="16,0 0,30 32,30" fill="#15803d"/>
+              </g>
+              
+              <!-- River -->
+              <path d="M600 280 Q580 320 620 350 Q650 380 700 390 L800 400 L800 450 L600 450 Q550 420 580 380 Q600 340 570 300 L600 280" fill="#38bdf8"/>
+              
+              <!-- Clouds -->
+              <g class="float-animation">
+                <ellipse cx="300" cy="80" rx="60" ry="30" fill="white"/>
+                <ellipse cx="350" cy="70" rx="50" ry="25" fill="white"/>
+                <ellipse cx="260" cy="70" rx="40" ry="20" fill="white"/>
+                <ellipse cx="320" cy="60" rx="35" ry="20" fill="#f0f9ff"/>
+              </g>
+              <g class="float-animation" style="animation-delay: 0.5s;">
+                <ellipse cx="550" cy="100" rx="50" ry="25" fill="white"/>
+                <ellipse cx="590" cy="90" rx="40" ry="22" fill="white"/>
+                <ellipse cx="520" cy="90" rx="35" ry="18" fill="white"/>
+              </g>
+              
+              <!-- Evaporation arrows -->
+              <g class="water-cycle-anim">
+                <path d="M150 340 Q140 300 160 260" stroke="#60a5fa" stroke-width="3" fill="none" stroke-dasharray="8,4"/>
+                <path d="M200 330 Q200 280 210 240" stroke="#60a5fa" stroke-width="3" fill="none" stroke-dasharray="8,4"/>
+                <path d="M250 340 Q260 290 250 250" stroke="#60a5fa" stroke-width="3" fill="none" stroke-dasharray="8,4"/>
+              </g>
+              
+              <!-- Rain drops -->
+              <g class="rain-anim">
+                <line x1="280" y1="110" x2="285" y2="130" stroke="#3b82f6" stroke-width="2"/>
+                <line x1="310" y1="100" x2="315" y2="120" stroke="#3b82f6" stroke-width="2"/>
+                <line x1="340" y1="105" x2="345" y2="125" stroke="#3b82f6" stroke-width="2"/>
+              </g>
+              <g class="rain-anim" style="animation-delay: 0.3s;">
+                <line x1="295" y1="115" x2="300" y2="135" stroke="#3b82f6" stroke-width="2"/>
+                <line x1="325" y1="110" x2="330" y2="130" stroke="#3b82f6" stroke-width="2"/>
+              </g>
+              
+              <!-- Labels -->
+              <g font-weight="bold" font-size="14">
+                <rect x="120" y="200" width="100" height="30" rx="15" fill="#f97316"/>
+                <text x="170" y="220" text-anchor="middle" fill="white">EVAPORASI</text>
+                
+                <rect x="360" y="40" width="110" height="30" rx="15" fill="#8b5cf6"/>
+                <text x="415" y="60" text-anchor="middle" fill="white">KONDENSASI</text>
+                
+                <rect x="260" y="160" width="100" height="30" rx="15" fill="#3b82f6"/>
+                <text x="310" y="180" text-anchor="middle" fill="white">PRESIPITASI</text>
+              </g>
+              
+              <defs>
+                <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#7dd3fc"/>
+                  <stop offset="100%" stop-color="#bae6fd"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Stages Explanation -->
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="card-hover bg-gradient-to-br from-orange-400 to-red-400 rounded-2xl p-6 text-white">
+            <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center text-3xl mb-4">☀️</div>
+            <h4 class="text-xl font-bold mb-2">1. Evaporasi</h4>
+            <p class="text-white/90">Air dari laut, sungai, dan tanaman <strong>menguap</strong> menjadi uap air karena panas matahari.</p>
+          </div>
+          <div class="card-hover bg-gradient-to-br from-purple-400 to-indigo-400 rounded-2xl p-6 text-white">
+            <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center text-3xl mb-4">☁️</div>
+            <h4 class="text-xl font-bold mb-2">2. Kondensasi</h4>
+            <p class="text-white/90">Uap air naik dan <strong>mendingin</strong>, lalu mengembun membentuk awan.</p>
+          </div>
+          <div class="card-hover bg-gradient-to-br from-blue-400 to-cyan-400 rounded-2xl p-6 text-white">
+            <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center text-3xl mb-4">🌧️</div>
+            <h4 class="text-xl font-bold mb-2">3. Presipitasi</h4>
+            <p class="text-white/90">Air dari awan <strong>jatuh</strong> ke tanah dalam bentuk hujan, salju, atau hujan es.</p>
+          </div>
+        </div>
+
+        <!-- Important Note -->
+        <div class="mt-8 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-2xl p-6 text-white">
+          <div class="flex items-start gap-4">
+            <div class="text-4xl">💡</div>
+            <div>
+              <h4 class="text-xl font-bold mb-2">Catatan Penting!</h4>
+              <p>Dalam siklus air, zat tetaplah <strong>air (H₂O)</strong>. Hanya <strong>wujudnya</strong> yang berganti-ganti: cair → gas → cair. Ini adalah contoh sempurna <strong>perubahan fisika</strong> di alam!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Perubahan Kimia -->
+    <section id="kimia" class="py-12 px-4 bg-gradient-to-br from-orange-50 to-red-50">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-10">
+          <span class="inline-block px-4 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-semibold mb-3">Bagian 4</span>
+          <h2 class="title-font text-3xl md:text-4xl text-gray-800 mb-3">Perubahan Kimia 🔥</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">Perubahan yang menghasilkan materi atau zat baru yang berbeda dari zat asalnya</p>
+        </div>
+
+        <!-- Definition Card -->
+        <div class="bg-white rounded-3xl p-8 shadow-lg mb-10 border-l-8 border-orange-500">
+          <div class="flex items-start gap-4">
+            <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0">📖</div>
+            <div>
+              <h3 class="text-2xl font-bold text-orange-700 mb-2">Definisi</h3>
+              <p class="text-gray-700 text-lg"><strong>Perubahan Kimia</strong> adalah perubahan yang menghasilkan <span class="text-orange-600 font-semibold">materi atau zat baru</span> yang berbeda dari zat asalnya. Disebut juga <strong>Reaksi Kimia</strong>.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Characteristics -->
+        <div class="grid md:grid-cols-2 gap-6 mb-10">
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                <span class="text-2xl">🚫</span>
+              </div>
+              <h4 class="text-xl font-bold text-red-700">Irreversibel (Tidak Dapat Balik)</h4>
+            </div>
+            <p class="text-gray-600">Tidak dapat kembali ke bentuk semula dengan cara sederhana. Nasi tidak bisa kembali menjadi beras!</p>
+          </div>
+          <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center">
+                <span class="text-2xl">✨</span>
+              </div>
+              <h4 class="text-xl font-bold text-amber-700">Terbentuk Zat Baru</h4>
+            </div>
+            <p class="text-gray-600">Materi sebelum dan sesudah perubahan memiliki sifat yang berbeda sepenuhnya.</p>
+          </div>
+        </div>
+
+        <!-- Examples -->
+        <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Contoh Perubahan Kimia</h3>
+        <div class="grid md:grid-cols-3 gap-6 mb-10">
+          <!-- Example 1: Cooking Rice -->
+          <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg">
+            <div class="bg-gradient-to-br from-amber-400 to-yellow-500 p-6">
+              <svg viewBox="0 0 150 100" class="w-full h-32">
+                <ellipse cx="75" cy="70" rx="50" ry="20" fill="#d97706"/>
+                <ellipse cx="75" cy="50" rx="50" ry="25" fill="#fbbf24"/>
+                <ellipse cx="75" cy="45" rx="40" ry="18" fill="#fef3c7"/>
+                <g fill="#fef3c7">
+                  <ellipse cx="55" cy="45" rx="8" ry="5"/>
+                  <ellipse cx="75" cy="42" rx="9" ry="5"/>
+                  <ellipse cx="95" cy="45" rx="8" ry="5"/>
+                  <ellipse cx="65" cy="50" rx="7" ry="4"/>
+                  <ellipse cx="85" cy="50" rx="7" ry="4"/>
+                </g>
+                <path d="M50 30 Q55 15 60 30" stroke="#9ca3af" stroke-width="2" fill="none" opacity="0.5"/>
+                <path d="M70 25 Q75 10 80 25" stroke="#9ca3af" stroke-width="2" fill="none" opacity="0.5"/>
+                <path d="M90 30 Q95 15 100 30" stroke="#9ca3af" stroke-width="2" fill="none" opacity="0.5"/>
+              </svg>
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-lg text-gray-800 mb-2">🍚 Memasak Nasi</h4>
+              <p class="text-gray-600 text-sm">Beras yang dimasak menjadi nasi tidak bisa kembali menjadi beras.</p>
+              <span class="inline-block mt-3 px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold">✗ Irreversibel</span>
+            </div>
+          </div>
+
+          <!-- Example 2: Rusting -->
+          <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg">
+            <div class="bg-gradient-to-br from-gray-400 to-gray-600 p-6">
+              <svg viewBox="0 0 150 100" class="w-full h-32">
+                <rect x="30" y="30" width="90" height="50" rx="5" fill="#71717a"/>
+                <rect x="35" y="35" width="80" height="40" rx="3" fill="#a1a1aa"/>
+                <g fill="#b45309" opacity="0.8">
+                  <ellipse cx="50" cy="50" rx="12" ry="8"/>
+                  <ellipse cx="80" cy="45" rx="15" ry="10"/>
+                  <ellipse cx="100" cy="60" rx="10" ry="7"/>
+                  <ellipse cx="65" cy="65" rx="8" ry="5"/>
+                </g>
+                <text x="75" y="95" text-anchor="middle" fill="#78350f" font-size="10" font-weight="bold">Besi + O₂ → Karat</text>
+              </svg>
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-lg text-gray-800 mb-2">🔩 Besi Berkarat</h4>
+              <p class="text-gray-600 text-sm">Besi bereaksi dengan oksigen dan air membentuk karat (Fe₂O₃).</p>
+              <span class="inline-block mt-3 px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold">✗ Irreversibel</span>
+            </div>
+          </div>
+
+          <!-- Example 3: Burning Paper -->
+          <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg">
+            <div class="bg-gradient-to-br from-orange-500 to-red-600 p-6">
+              <svg viewBox="0 0 150 100" class="w-full h-32">
+                <rect x="55" y="50" width="40" height="35" fill="#78716c" rx="2"/>
+                <ellipse cx="75" cy="85" rx="30" ry="8" fill="#57534e" opacity="0.5"/>
+                <path class="burn-anim" d="M55 55 Q60 30 75 40 Q90 30 95 55 Q100 35 100 50 L95 65 L55 65 Z" fill="url(#fireGrad2)"/>
+                <defs>
+                  <linearGradient id="fireGrad2" x1="0%" y1="100%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="#dc2626"/>
+                    <stop offset="50%" stop-color="#f97316"/>
+                    <stop offset="100%" stop-color="#fbbf24"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-lg text-gray-800 mb-2">📄🔥 Membakar Kertas</h4>
+              <p class="text-gray-600 text-sm">Kertas berubah menjadi abu dan gas CO₂. Tidak bisa kembali!</p>
+              <span class="inline-block mt-3 px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold">✗ Irreversibel</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Four Signs of Chemical Reaction -->
+        <div class="bg-white rounded-3xl p-8 shadow-lg mb-10">
+          <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">🔬 Empat Tanda Terjadinya Reaksi Kimia</h3>
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Sign 1 -->
+            <div class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-5 border-2 border-pink-200">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center text-2xl">🎨</div>
+                <h4 class="text-lg font-bold text-pink-700">1. Perubahan Warna</h4>
+              </div>
+              <p class="text-gray-600 text-sm mb-3">Muncul warna baru yang tidak ada sebelumnya.</p>
+              <div class="bg-white rounded-xl p-3">
+                <p class="text-xs text-gray-500"><strong>Contoh:</strong> Mengecat rambut, memanggang kue hingga cokelat</p>
+              </div>
+            </div>
+
+            <!-- Sign 2 -->
+            <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-5 border-2 border-blue-200">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl">💨</div>
+                <h4 class="text-lg font-bold text-blue-700">2. Terbentuk Gas</h4>
+              </div>
+              <p class="text-gray-600 text-sm mb-3">Muncul gelembung udara hasil reaksi.</p>
+              <div class="bg-white rounded-xl p-3">
+                <p class="text-xs text-gray-500"><strong>Contoh:</strong> Magnesium + asam klorida → gas hidrogen (H₂)</p>
+              </div>
+            </div>
+
+            <!-- Sign 3 -->
+            <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-5 border-2 border-amber-200">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center text-2xl">🧪</div>
+                <h4 class="text-lg font-bold text-amber-700">3. Terbentuk Endapan</h4>
+              </div>
+              <p class="text-gray-600 text-sm mb-3">Muncul zat padat yang tidak larut di dasar cairan.</p>
+              <div class="bg-white rounded-xl p-3">
+                <p class="text-xs text-gray-500"><strong>Contoh:</strong> Na₂CO₃ + CaCl₂ → endapan putih CaCO₃</p>
+              </div>
+            </div>
+
+            <!-- Sign 4 -->
+            <div class="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-5 border-2 border-orange-200">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-2xl">⚡</div>
+                <h4 class="text-lg font-bold text-orange-700">4. Perubahan Energi</h4>
+              </div>
+              <p class="text-gray-600 text-sm mb-3">Pelepasan energi berupa cahaya atau panas.</p>
+              <div class="bg-white rounded-xl p-3">
+                <p class="text-xs text-gray-500"><strong>Contoh:</strong> Kembang api meledak, pembakaran magnesium</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chemical Equation -->
+        <div class="bg-gradient-to-r from-purple-500 to-indigo-500 rounded-3xl p-8 text-white">
+          <h3 class="text-2xl font-bold mb-4 flex items-center gap-3">
+            <span class="text-3xl">📝</span> Rumus Reaksi Kimia Sederhana
+          </h3>
+          <div class="bg-white/20 backdrop-blur rounded-2xl p-6 mb-4">
+            <p class="text-2xl font-mono text-center mb-2">Pereaksi (Bahan) → Produk (Hasil)</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 text-gray-800">
+            <h4 class="font-bold text-lg mb-3 text-purple-700">🍩 Contoh: Membuat Donat</h4>
+            <div class="flex flex-wrap items-center justify-center gap-2 text-lg">
+              <span class="px-3 py-1 bg-amber-100 rounded-lg">Tepung</span>
+              <span>+</span>
+              <span class="px-3 py-1 bg-yellow-100 rounded-lg">Mentega</span>
+              <span>+</span>
+              <span class="px-3 py-1 bg-orange-100 rounded-lg">Telur</span>
+              <span>+</span>
+              <span class="px-3 py-1 bg-pink-100 rounded-lg">Gula</span>
+              <span class="text-2xl">→</span>
+              <span class="px-4 py-2 bg-gradient-to-r from-amber-400 to-orange-400 text-white rounded-xl font-bold text-xl">🍩 Donat</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="py-12 px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-10">
+          <h2 class="title-font text-3xl md:text-4xl text-gray-800 mb-3">Perbandingan Perubahan ⚖️</h2>
+          <p class="text-gray-600">Perbedaan utama antara Perubahan Fisika dan Kimia</p>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-lg overflow-hidden">
+          <table class="w-full">
+            <thead>
+              <tr class="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+                <th class="px-6 py-4 text-left">Aspek</th>
+                <th class="px-6 py-4 text-center">🧊 Perubahan Fisika</th>
+                <th class="px-6 py-4 text-center">🔥 Perubahan Kimia</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr class="hover:bg-gray-50">
+                <td class="px-6 py-4 font-semibold text-gray-700">Zat Baru</td>
+                <td class="px-6 py-4 text-center"><span class="px-3 py-1 bg-green-100 text-green-700 rounded-full">Tidak terbentuk</span></td>
+                <td class="px-6 py-4 text-center"><span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full">Terbentuk zat baru</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-6 py-4 font-semibold text-gray-700">Sifat Zat</td>
+                <td class="px-6 py-4 text-center">Tetap sama</td>
+                <td class="px-6 py-4 text-center">Berubah</td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-6 py-4 font-semibold text-gray-700">Reversibilitas</td>
+                <td class="px-6 py-4 text-center"><span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full">Reversibel ↩️</span></td>
+                <td class="px-6 py-4 text-center"><span class="px-3 py-1 bg-red-100 text-red-700 rounded-full">Irreversibel 🚫</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-6 py-4 font-semibold text-gray-700">Contoh</td>
+                <td class="px-6 py-4 text-center text-sm">Es mencair, gula larut</td>
+                <td class="px-6 py-4 text-center text-sm">Kayu terbakar, besi berkarat</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Activity Section -->
+    <section class="py-12 px-4 bg-gradient-to-br from-emerald-50 to-teal-50">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-10">
+          <span class="inline-block px-4 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-semibold mb-3">Aktivitas</span>
+          <h2 class="title-font text-3xl md:text-4xl text-gray-800 mb-3">Ayo Amati! 👀</h2>
+          <p class="text-gray-600">Tugas observasi untuk mengasah pemahamanmu</p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-8 shadow-lg">
+          <div class="flex items-start gap-4 mb-6">
+            <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0">📋</div>
+            <div>
+              <h3 class="text-xl font-bold text-emerald-700 mb-2">Instruksi Kegiatan</h3>
+              <ol class="list-decimal list-inside text-gray-600 space-y-2">
+                <li>Amati perubahan di sekitar rumahmu selama <strong>24 jam</strong></li>
+                <li>Catat dalam tabel: apa yang berubah, kondisi sebelum dan sesudah</li>
+                <li>Tentukan apakah itu perubahan fisika atau kimia beserta alasannya</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="bg-gray-50 rounded-2xl p-4 overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-emerald-500 text-white">
+                  <th class="px-3 py-2 rounded-tl-lg">No</th>
+                  <th class="px-3 py-2">Perubahan</th>
+                  <th class="px-3 py-2">Sebelum</th>
+                  <th class="px-3 py-2">Sesudah</th>
+                  <th class="px-3 py-2">Jenis</th>
+                  <th class="px-3 py-2 rounded-tr-lg">Alasan</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b">
+                  <td class="px-3 py-3 text-center">1</td>
+                  <td class="px-3 py-3 text-gray-500 italic">Es batu di gelas</td>
+                  <td class="px-3 py-3 text-gray-500 italic">Padat, dingin</td>
+                  <td class="px-3 py-3 text-gray-500 italic">Cair, suhu normal</td>
+                  <td class="px-3 py-3 text-center"><span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">Fisika</span></td>
+                  <td class="px-3 py-3 text-gray-500 italic text-xs">Hanya berubah wujud, tetap H₂O</td>
+                </tr>
+                <tr class="bg-gray-50">
+                  <td class="px-3 py-3 text-center">2</td>
+                  <td class="px-3 py-3 text-gray-400">...</td>
+                  <td class="px-3 py-3 text-gray-400">...</td>
+                  <td class="px-3 py-3 text-gray-400">...</td>
+                  <td class="px-3 py-3 text-gray-400">...</td>
+                  <td class="px-3 py-3 text-gray-400">...</td>
+                </tr>
+                <tr class="bg-white">
+                  <td class="px-3 py-3 text-center">3</td>
+                  <td class="px-3 py-3 text-gray-400">...</td>
+                  <td class="px-3 py-3 text-gray-400">...</td>
+                  <td class="px-3 py-3 text-gray-400">...</td>
+                  <td class="px-3 py-3 text-gray-400">...</td>
+                  <td class="px-3 py-3 text-gray-400">...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-center text-gray-500 text-sm mt-4">💡 Tip: Perhatikan kegiatan memasak, perubahan cuaca, dan benda-benda di sekitarmu!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="py-12 px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-10">
+          <span class="inline-block px-4 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold mb-3">Quiz HOTS</span>
+          <h2 class="title-font text-3xl md:text-4xl text-gray-800 mb-3">Uji Pemahamanmu! 🧠</h2>
+          <p class="text-gray-600">10 Soal Higher Order Thinking Skills</p>
+        </div>
+
+        <div id="quiz-container" class="bg-white rounded-3xl p-8 shadow-lg">
+          <!-- Progress Bar -->
+          <div class="mb-6">
+            <div class="flex justify-between text-sm text-gray-600 mb-2">
+              <span>Progres</span>
+              <span id="progress-text">0/10</span>
+            </div>
+            <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
+              <div id="progress-bar" class="h-full bg-gradient-to-r from-purple-500 to-pink-500 progress-bar" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Question Area -->
+          <div id="question-area">
+            <div id="question-number" class="inline-block px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold mb-3">Soal 1</div>
+            <h3 id="question-text" class="text-xl font-bold text-gray-800 mb-6"></h3>
+            <div id="options-container" class="space-y-3"></div>
+            <div id="feedback" class="mt-6 p-4 rounded-xl hidden"></div>
+            <button id="next-btn" onclick="nextQuestion()" class="mt-6 w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold hover:shadow-lg transition-all hidden">
+              Soal Berikutnya →
+            </button>
+          </div>
+
+          <!-- Result Area -->
+          <div id="result-area" class="hidden text-center">
+            <div class="text-6xl mb-4" id="result-emoji">🎉</div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">Quiz Selesai!</h3>
+            <p class="text-gray-600 mb-4">Skor kamu:</p>
+            <div class="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-4" id="final-score">0/10</div>
+            <p id="result-message" class="text-gray-600 mb-6"></p>
+            <button onclick="restartQuiz()" class="px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold hover:shadow-lg transition-all">
+              Ulangi Quiz 🔄
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-10 px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="flex items-center gap-4">
+            <img src="https://i.imgur.com/mRmw86t.jpeg" alt="Profile" class="w-16 h-16 rounded-full border-3 border-white/30 object-cover" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='linear-gradient(135deg, #6366f1, #8b5cf6)'; this.alt='Profile';">
+            <div>
+              <p id="footer-name" class="font-bold text-lg">Algian Manggara, S.Agr</p>
+              <p class="text-gray-400 text-sm">Pengembang Media Pembelajaran</p>
+            </div>
+          </div>
+          <div class="text-center md:text-right">
+            <p class="text-gray-400 text-sm">Media Pembelajaran Interaktif</p>
+            <p class="text-gray-500 text-xs mt-1">© 2026 Algian Manggara, S.Agr. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      main_title: 'Zat dan Perubahannya',
+      teacher_name: 'Algian Manggara, S.Agr',
+      primary_color: '#3b82f6',
+      secondary_color: '#8b5cf6',
+      accent_color: '#06b6d4',
+      text_color: '#1f2937',
+      bg_color: '#f0fdfa',
+      font_family: 'Nunito'
+    };
+
+    // Quiz Questions - HOTS Level
+    const questions = [
+      {
+        q: "Seorang siswa memanaskan gula dalam panci hingga berubah menjadi cairan coklat dan berbau seperti karamel. Ketika didinginkan, cairan tersebut mengeras menjadi permen. Mengapa proses ini termasuk perubahan kimia?",
+        options: [
+          "Karena gula berubah wujud dari padat menjadi cair",
+          "Karena terjadi perubahan warna dan terbentuk zat baru dengan sifat berbeda (karamel)",
+          "Karena gula dapat dikembalikan menjadi bentuk semula",
+          "Karena hanya terjadi perubahan suhu"
+        ],
+        correct: 1,
+        explanation: "Pemanasan gula menghasilkan karamelisasi, yaitu reaksi kimia yang mengubah struktur molekul gula menjadi senyawa baru (karamel) dengan warna, bau, dan rasa yang berbeda. Ini adalah ciri perubahan kimia!"
+      },
+      {
+        q: "Di daerah pegunungan, pada pagi hari sering terlihat embun di dedaunan. Menjelang siang, embun tersebut menghilang. Proses apa yang terjadi pada embun dan mengapa termasuk perubahan fisika?",
+        options: [
+          "Embun bereaksi dengan udara membentuk zat baru",
+          "Embun menguap karena panas matahari, hanya berubah wujud dari cair ke gas tanpa mengubah komposisi (tetap H₂O)",
+          "Embun diserap oleh daun dan berubah menjadi nutrisi",
+          "Embun mengalami pembakaran oleh sinar matahari"
+        ],
+        correct: 1,
+        explanation: "Embun (air cair) menguap menjadi uap air (gas) karena panas matahari. Ini adalah perubahan fisika karena hanya terjadi perubahan wujud, zatnya tetap H₂O dan prosesnya reversibel."
+      },
+      {
+        q: "Pak Budi menyimpan sepotong apel yang sudah dikupas di atas meja. Setelah 30 menit, permukaan apel berubah menjadi kecoklatan. Analisis apa yang menyebabkan perubahan ini!",
+        options: [
+          "Apel kehilangan air sehingga mengering",
+          "Apel bereaksi dengan oksigen di udara (oksidasi enzimatis) membentuk senyawa melanin yang berwarna coklat",
+          "Apel terkena debu sehingga berubah warna",
+          "Apel menyerap cahaya matahari"
+        ],
+        correct: 1,
+        explanation: "Perubahan warna apel disebabkan oleh reaksi oksidasi enzimatis. Enzim dalam apel bereaksi dengan oksigen menghasilkan melanin (zat baru berwarna coklat). Ini adalah perubahan kimia!"
+      },
+      {
+        q: "Dalam proses pembuatan roti, adonan yang sudah dicampur ragi akan mengembang setelah beberapa jam. Gelembung-gelembung kecil terlihat di dalam adonan. Identifikasi jenis perubahan dan berikan alasannya!",
+        options: [
+          "Perubahan fisika karena adonan hanya berubah ukuran",
+          "Perubahan kimia karena ragi melakukan fermentasi, mengubah gula menjadi CO₂ dan alkohol (zat baru)",
+          "Perubahan fisika karena dapat dikembalikan seperti semula",
+          "Perubahan fisika karena tidak ada perubahan warna"
+        ],
+        correct: 1,
+        explanation: "Fermentasi oleh ragi adalah perubahan kimia. Ragi mengubah gula dalam adonan menjadi karbon dioksida (CO₂) dan alkohol. Gas CO₂ membentuk gelembung yang membuat adonan mengembang. Terbentuk zat baru!"
+      },
+      {
+        q: "Seorang nelayan menjemur ikan di bawah terik matahari untuk membuat ikan asin. Setelah beberapa hari, ikan menjadi keras dan kering. Apakah proses pengeringan ikan ini termasuk perubahan fisika atau kimia? Jelaskan!",
+        options: [
+          "Perubahan kimia karena ikan berubah bentuk",
+          "Perubahan fisika karena hanya air yang menguap, komposisi ikan tetap sama",
+          "Perubahan kimia karena ikan tidak bisa kembali segar",
+          "Perubahan kimia karena ada penambahan garam"
+        ],
+        correct: 1,
+        explanation: "Pengeringan ikan adalah perubahan fisika karena yang terjadi hanyalah penguapan air dari ikan. Meskipun ikan menjadi keras, komposisi proteinnya tidak berubah menjadi zat baru."
+      },
+      {
+        q: "Dalam laboratorium, seorang siswa mencampurkan larutan bening natrium karbonat dengan larutan bening kalsium klorida. Tiba-tiba muncul endapan putih di dasar gelas. Apa yang dapat disimpulkan dari pengamatan ini?",
+        options: [
+          "Terjadi perubahan fisika karena kedua larutan bercampur",
+          "Terjadi perubahan kimia karena terbentuk zat baru berupa endapan kalsium karbonat yang tidak larut",
+          "Terjadi perubahan fisika karena warna larutan tetap",
+          "Tidak terjadi perubahan apapun"
+        ],
+        correct: 1,
+        explanation: "Terbentuknya endapan adalah salah satu tanda reaksi kimia. Natrium karbonat bereaksi dengan kalsium klorida menghasilkan kalsium karbonat (endapan putih), sebuah zat baru dengan sifat berbeda!"
+      },
+      {
+        q: "Mengapa petani membakar jerami di sawah setelah panen daripada membiarkannya membusuk secara alami? Bandingkan kedua proses tersebut dari sudut pandang perubahan zat!",
+        options: [
+          "Keduanya adalah perubahan fisika",
+          "Keduanya adalah perubahan kimia; pembakaran menghasilkan abu dan CO₂ dengan cepat, sedangkan pembusukan menghasilkan kompos secara lambat",
+          "Pembakaran adalah perubahan fisika, pembusukan adalah perubahan kimia",
+          "Pembakaran adalah perubahan kimia, pembusukan adalah perubahan fisika"
+        ],
+        correct: 1,
+        explanation: "Kedua proses adalah perubahan kimia! Pembakaran adalah reaksi cepat dengan oksigen menghasilkan abu dan CO₂. Pembusukan adalah reaksi lambat oleh mikroorganisme menghasilkan kompos. Keduanya menghasilkan zat baru."
+      },
+      {
+        q: "Air laut di daerah tropis menguap karena panas matahari, membentuk awan, kemudian turun sebagai hujan di pegunungan, mengalir melalui sungai, dan kembali ke laut. Sepanjang siklus ini, jenis perubahan apa yang dominan terjadi?",
+        options: [
+          "Perubahan kimia karena air berpindah tempat",
+          "Perubahan fisika karena air hanya berubah wujud (cair-gas-cair) tanpa mengubah komposisi molekulnya",
+          "Perubahan kimia karena air tercampur dengan zat lain",
+          "Campuran perubahan fisika dan kimia secara berimbang"
+        ],
+        correct: 1,
+        explanation: "Siklus air didominasi perubahan fisika. Air mengalami perubahan wujud: evaporasi (cair→gas), kondensasi (gas→cair), dan presipitasi. Sepanjang proses, molekul air tetap H₂O!"
+      },
+      {
+        q: "Seorang koki memasukkan telur mentah ke dalam air mendidih. Setelah 10 menit, putih telur yang tadinya bening menjadi putih dan padat. Analisis mengapa perubahan ini bersifat irreversibel!",
+        options: [
+          "Karena telur menyerap air panas",
+          "Karena protein dalam telur mengalami denaturasi (perubahan struktur permanen) akibat panas, membentuk struktur baru yang tidak bisa dikembalikan",
+          "Karena telur kehilangan air",
+          "Karena telur bereaksi dengan garam dalam air"
+        ],
+        correct: 1,
+        explanation: "Memasak telur adalah perubahan kimia. Protein dalam telur mengalami denaturasi - struktur molekulnya berubah secara permanen akibat panas. Telur matang tidak bisa kembali menjadi telur mentah!"
+      },
+      {
+        q: "Sebuah patung perunggu kuno yang awalnya berwarna keemasan, setelah ratusan tahun terpapar udara menjadi berwarna hijau. Para arkeolog menyebut lapisan hijau ini sebagai 'patina'. Jelaskan fenomena ini dari konsep perubahan zat!",
+        options: [
+          "Perubahan fisika karena hanya perubahan warna",
+          "Perubahan kimia karena perunggu (tembaga) bereaksi dengan oksigen dan karbon dioksida membentuk senyawa baru (tembaga karbonat) yang berwarna hijau",
+          "Perubahan fisika karena dapat dibersihkan",
+          "Perubahan fisika karena patung tidak berubah bentuk"
+        ],
+        correct: 1,
+        explanation: "Terbentuknya patina adalah perubahan kimia! Tembaga dalam perunggu bereaksi dengan O₂, CO₂, dan uap air di udara selama ratusan tahun membentuk tembaga karbonat (hijau) - zat baru dengan sifat berbeda dari logam aslinya."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+
+    function showAnswer(elementId, answer) {
+      const element = document.getElementById(elementId);
+      element.textContent = answer;
+      element.classList.remove('hidden');
+    }
+
+    function loadQuestion() {
+      answered = false;
+      const q = questions[currentQuestion];
+      document.getElementById('question-number').textContent = `Soal ${currentQuestion + 1}`;
+      document.getElementById('question-text').textContent = q.q;
+      
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+      
+      q.options.forEach((option, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'w-full p-4 text-left rounded-xl border-2 border-gray-200 hover:border-purple-400 hover:bg-purple-50 transition-all';
+        btn.innerHTML = `<span class="font-bold text-purple-600 mr-2">${String.fromCharCode(65 + index)}.</span> ${option}`;
+        btn.onclick = () => selectAnswer(index);
+        optionsContainer.appendChild(btn);
+      });
+      
+      document.getElementById('feedback').classList.add('hidden');
+      document.getElementById('next-btn').classList.add('hidden');
+      
+      // Update progress
+      const progress = (currentQuestion / questions.length) * 100;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+      document.getElementById('progress-text').textContent = `${currentQuestion}/${questions.length}`;
+    }
+
+    function selectAnswer(index) {
+      if (answered) return;
+      answered = true;
+      
+      const q = questions[currentQuestion];
+      const options = document.getElementById('options-container').children;
+      const feedback = document.getElementById('feedback');
+      
+      // Disable all buttons and show correct/incorrect
+      for (let i = 0; i < options.length; i++) {
+        options[i].disabled = true;
+        options[i].classList.remove('hover:border-purple-400', 'hover:bg-purple-50');
+        
+        if (i === q.correct) {
+          options[i].classList.add('border-green-500', 'bg-green-50');
+        } else if (i === index && index !== q.correct) {
+          options[i].classList.add('border-red-500', 'bg-red-50');
+        }
+      }
+      
+      // Show feedback
+      if (index === q.correct) {
+        score++;
+        feedback.className = 'mt-6 p-4 rounded-xl bg-green-50 border-2 border-green-200';
+        feedback.innerHTML = `<p class="font-bold text-green-700 mb-2">✅ Benar! Hebat!</p><p class="text-green-600 text-sm">${q.explanation}</p>`;
+      } else {
+        feedback.className = 'mt-6 p-4 rounded-xl bg-red-50 border-2 border-red-200';
+        feedback.innerHTML = `<p class="font-bold text-red-700 mb-2">❌ Kurang tepat</p><p class="text-red-600 text-sm">${q.explanation}</p>`;
+      }
+      feedback.classList.remove('hidden');
+      
+      // Show next button
+      document.getElementById('next-btn').classList.remove('hidden');
+      document.getElementById('next-btn').textContent = currentQuestion === questions.length - 1 ? 'Lihat Hasil 🎯' : 'Soal Berikutnya →';
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion >= questions.length) {
+        showResult();
+      } else {
+        loadQuestion();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('question-area').classList.add('hidden');
+      document.getElementById('result-area').classList.remove('hidden');
+      document.getElementById('final-score').textContent = `${score}/${questions.length}`;
+      
+      // Update progress to 100%
+      document.getElementById('progress-bar').style.width = '100%';
+      document.getElementById('progress-text').textContent = `${questions.length}/${questions.length}`;
+      
+      let emoji, message;
+      const percentage = (score / questions.length) * 100;
+      
+      if (percentage >= 90) {
+        emoji = '🏆';
+        message = 'Luar biasa! Kamu sangat memahami materi ini!';
+      } else if (percentage >= 70) {
+        emoji = '🌟';
+        message = 'Bagus sekali! Pemahamanmu sudah baik!';
+      } else if (percentage >= 50) {
+        emoji = '💪';
+        message = 'Cukup baik! Terus belajar untuk hasil lebih baik!';
+      } else {
+        emoji = '📚';
+        message = 'Ayo pelajari lagi materinya dan coba lagi!';
+      }
+      
+      document.getElementById('result-emoji').textContent = emoji;
+      document.getElementById('result-message').textContent = message;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answered = false;
+      document.getElementById('question-area').classList.remove('hidden');
+      document.getElementById('result-area').classList.add('hidden');
+      loadQuestion();
+    }
+
+    // Element SDK initialization
+    function initApp() {
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (config) => {
+            const title = config.main_title || defaultConfig.main_title;
+            const teacherName = config.teacher_name || defaultConfig.teacher_name;
+            
+            document.getElementById('main-title').textContent = title;
+            document.getElementById('nav-title').textContent = title.length > 20 ? title.substring(0, 18) + '...' : title;
+            document.getElementById('footer-name').textContent = teacherName;
+          },
+          mapToCapabilities: (config) => ({
+            recolorables: [],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ['main_title', config.main_title || defaultConfig.main_title],
+            ['teacher_name', config.teacher_name || defaultConfig.teacher_name]
+          ])
+        });
+      }
+      
+      // Initialize quiz
+      loadQuestion();
+      
+      // Add smooth scroll for navigation
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    }
+
+    // Initialize when ready
+    initApp();
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf696070158ea8a',t:'MTc3MTM0NDk1My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
